@@ -5,7 +5,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ManaTEA - Stop Overpaying for Developers</title>
     <style>
-        *{margin:0;padding:0;box-sizing:border-box}body{font-family:Arial,sans-serif;background:#0a0e1a;color:#ecf0f1;line-height:1.6}.container{max-width:1200px;margin:0 auto;padding:0 20px}.header{position:fixed;top:0;left:0;right:0;background:rgba(10,14,26,.95);backdrop-filter:blur(10px);z-index:1000;padding:15px 0;border-bottom:2px solid #3498db}.nav{display:flex;justify-content:space-between;align-items:center}.logo{font-size:2rem;font-weight:900;color:#3498db;text-decoration:none}.nav-links{display:flex;gap:30px;list-style:none}.nav-links a{color:#ecf0f1;text-decoration:none;font-weight:600;transition:color .3s}.nav-links a:hover{color:#3498db}.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;background:linear-gradient(135deg,#0a0e1a 0%,#1a2332 50%,#0a0e1a 100%);margin-top:80px}.stop-text{font-size:clamp(3rem,8vw,6rem);font-weight:900;color:#e74c3c;margin-bottom:20px;animation:pulse 2s infinite}@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}.overpaying-text{font-size:clamp(2rem,6vw,4rem);font-weight:700;color:#3498db;margin-bottom:40px}.manatee-intro{font-size:clamp(4rem,12vw,8rem);margin:40px 0;animation:float 4s infinite}@keyframes float{0%,100%{transform:translateY(0px)}50%{transform:translateY(-20px)}}.promise-text{font-size:clamp(1.2rem,4vw,2.5rem);font-weight:600;margin:30px 0;background:linear-gradient(135deg,#3498db,#27ae60);-webkit-background-clip:text;-webkit-text-fill-color:transparent}.manatee-tease{font-size:clamp(1rem,3vw,1.8rem);color:#f39c12;margin:20px 0}.calculator-section{padding:100px 0;background:linear-gradient(135deg,#1a2332,#0a0e1a,#1a2332)}.calc-title{text-align:center;font-size:clamp(2rem,6vw,4rem);font-weight:800;margin-bottom:30px;color:#3498db}.calc-subtitle{text-align:center;font-size:clamp(1rem,3vw,1.5rem);color:#95a5a6;margin-bottom:50px;max-width:800px;margin-left:auto;margin-right:auto}.calculator{background:rgba(52,152,219,.1);border:2px solid #3498db;border-radius:25px;padding:50px;margin:0 auto;max-width:900px}.calc-row{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin:30px 0}.calc-input-group{display:flex;flex-direction:column}.calc-label{color:#3498db;font-weight:bold;margin-bottom:10px;font-size:1.2rem}.calc-select{background:#1a2332;border:2px solid #3498db;border-radius:15px;padding:20px;color:#fff;font-size:1.1rem;cursor:pointer}.calc-select:focus{outline:none;border-color:#f39c12}.calc-result{background:linear-gradient(135deg,#2c3e50,#1a2332);border-radius:20px;padding:40px;margin:40px 0;border:3px solid #3498db}.result-row{display:flex;justify-content:space-between;align-items:center;margin:15px 0;padding:10px 0;border-bottom:1px solid rgba(52,152,219,.2)}.result-row:last-child{border-bottom:none}.traditional-cost{color:#e74c3c;font-size:1.4rem;font-weight:700}.manatea-cost{color:#27ae60;font-size:1.4rem;font-weight:700}.savings{color:#f39c12;font-size:1.8rem;font-weight:900}.goals-section{margin-top:30px;padding:25px 0;border-top:2px solid rgba(52,152,219,.3)}.goals-title{color:#f39c12;font-size:1.4rem;font-weight:bold;margin-bottom:20px;text-align:center}.goal-item{display:flex;justify-content:space-between;align-items:center;margin:12px 0;padding:10px 0}.goal-time{font-weight:bold;color:#f39c12}.goal-time-prefix{color:#95a5a6;font-size:.85rem;font-weight:normal}.benefits-section{padding:100px 0;background:#0a0e1a}.benefits-title{text-align:center;font-size:clamp(2rem,6vw,3.5rem);font-weight:800;margin-bottom:80px;color:#f39c12}.benefits-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:40px}.benefit-card{background:linear-gradient(135deg,#1a2332,#2c3e50);border:2px solid #3498db;border-radius:20px;padding:40px;text-align:center;transition:all .3s}.benefit-card:hover{transform:translateY(-10px);border-color:#f39c12}.benefit-icon{font-size:4rem;margin-bottom:20px}.benefit-title{font-size:1.5rem;font-weight:700;color:#3498db;margin-bottom:15px}.benefit-text{color:#95a5a6;line-height:1.6}.benefit-price{font-size:1.2rem;color:#f39c12;font-weight:700;margin-top:15px}.tea-section{padding:100px 0;background:linear-gradient(135deg,#2c3e50,#1a2332);text-align:center}.tea-title{font-size:clamp(2rem,6vw,3.5rem);font-weight:800;margin-bottom:40px;color:#27ae60}.tea-content{max-width:800px;margin:0 auto;padding:50px;background:rgba(52,152,219,.1);border-radius:25px;border:2px solid #3498db}.tea-manatee{font-size:6rem;margin:30px 0;animation:float 4s infinite}.tea-text{font-size:clamp(1.1rem,3vw,1.6rem);color:#ecf0f1;line-height:1.8;text-align:left}.tea-highlight{color:#f39c12;font-weight:700}.anti-corporate{padding:100px 0;background:linear-gradient(135deg,#e74c3c,#0a0e1a,#e74c3c);text-align:center}.anti-title{font-size:clamp(2rem,6vw,4rem);font-weight:900;margin-bottom:50px;color:#fff}.anti-text{font-size:clamp(1rem,3vw,1.5rem);max-width:900px;margin:0 auto;line-height:1.8;color:#fff}.anti-list{margin:40px auto;font-size:clamp(1rem,3vw,1.3rem);line-height:2;text-align:left;max-width:700px}.anti-list div{margin:15px 0}.final-cta{margin:60px auto;padding:40px;background:rgba(0,0,0,.7);border-radius:20px;border:2px solid #f39c12;max-width:600px}.cta-text{font-size:clamp(1.2rem,4vw,2rem);font-weight:700;color:#f39c12;margin-bottom:30px}.cta-buttons{display:flex;gap:20px;justify-content:center;flex-wrap:wrap}.cta-btn{background:linear-gradient(135deg,#3498db,#27ae60);color:#fff;padding:20px 40px;border:none;border-radius:50px;font-size:1.2rem;font-weight:700;cursor:pointer;transition:all .3s;text-decoration:none;display:inline-block}.cta-btn:hover{transform:translateY(-5px)}.guarantee-text{margin-top:30px;color:#3498db;font-weight:600}.footer{background:#0a0e1a;padding:50px 0;text-align:center;border-top:2px solid #3498db}.footer-logo{font-size:2rem;font-weight:900;color:#3498db;margin-bottom:20px}.footer-text{color:#95a5a6}@media (max-width:768px){.nav-links{display:none}.calc-row{grid-template-columns:1fr}.benefits-grid{grid-template-columns:1fr}.cta-buttons{flex-direction:column;align-items:center}.calculator{padding:30px 20px}.result-row,.goal-item{flex-direction:column;align-items:flex-start;gap:5px}.tea-text{text-align:center}}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:Arial,sans-serif;background:#0a0e1a;color:#ecf0f1;line-height:1.6}
+        .container{max-width:1200px;margin:0 auto;padding:0 20px}
+        .header{position:fixed;top:0;left:0;right:0;background:rgba(10,14,26,.95);backdrop-filter:blur(10px);z-index:1000;padding:15px 0;border-bottom:2px solid #3498db}
+        .nav{display:flex;justify-content:space-between;align-items:center}
+        .logo{font-size:2rem;font-weight:900;color:#3498db;text-decoration:none}
+        .nav-links{display:flex;gap:30px;list-style:none}
+        .nav-links a{color:#ecf0f1;text-decoration:none;font-weight:600;transition:color .3s}
+        .nav-links a:hover{color:#3498db}
+        .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;background:linear-gradient(135deg,#0a0e1a 0%,#1a2332 50%,#0a0e1a 100%);margin-top:80px}
+        .stop-text{font-size:clamp(3rem,8vw,6rem);font-weight:900;color:#e74c3c;margin-bottom:20px;animation:pulse 2s infinite}
+        @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+        .overpaying-text{font-size:clamp(2rem,6vw,4rem);font-weight:700;color:#3498db;margin-bottom:40px}
+        .manatee-intro{font-size:clamp(4rem,12vw,8rem);margin:40px 0;animation:float 4s infinite}
+        @keyframes float{0%,100%{transform:translateY(0px)}50%{transform:translateY(-20px)}}
+        .promise-text{font-size:clamp(1.2rem,4vw,2.5rem);font-weight:600;margin:30px 0;background:linear-gradient(135deg,#3498db,#27ae60);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .manatee-tease{font-size:clamp(1rem,3vw,1.8rem);color:#f39c12;margin:20px 0}
+        .calculator-section{padding:100px 0;background:linear-gradient(135deg,#1a2332,#0a0e1a,#1a2332)}
+        .calc-title{text-align:center;font-size:clamp(2rem,6vw,4rem);font-weight:800;margin-bottom:30px;color:#3498db}
+        .calc-subtitle{text-align:center;font-size:clamp(1rem,3vw,1.5rem);color:#95a5a6;margin-bottom:50px;max-width:800px;margin-left:auto;margin-right:auto}
+        .calculator{background:rgba(52,152,219,.1);border:2px solid #3498db;border-radius:25px;padding:50px;margin:0 auto;max-width:900px}
+        .calc-row{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin:30px 0}
+        .calc-input-group{display:flex;flex-direction:column}
+        .calc-label{color:#3498db;font-weight:bold;margin-bottom:10px;font-size:1.2rem}
+        .calc-select{background:#1a2332;border:2px solid #3498db;border-radius:15px;padding:20px;color:#fff;font-size:1.1rem;cursor:pointer}
+        .calc-select:focus{outline:none;border-color:#f39c12}
+        .calc-result{background:linear-gradient(135deg,#2c3e50,#1a2332);border-radius:20px;padding:40px;margin:40px 0;border:3px solid #3498db}
+        .result-row{display:flex;justify-content:space-between;align-items:center;margin:15px 0;padding:10px 0;border-bottom:1px solid rgba(52,152,219,.2)}
+        .result-row:last-child{border-bottom:none}
+        .traditional-cost{color:#e74c3c;font-size:1.4rem;font-weight:700}
+        .manatea-cost{color:#27ae60;font-size:1.4rem;font-weight:700}
+        .savings{color:#f39c12;font-size:1.8rem;font-weight:900}
+        .goals-section{margin-top:30px;padding:25px 0;border-top:2px solid rgba(52,152,219,.3)}
+        .goals-title{color:#f39c12;font-size:1.4rem;font-weight:bold;margin-bottom:20px;text-align:center}
+        .goal-item{display:flex;justify-content:space-between;align-items:center;margin:12px 0;padding:10px 0}
+        .goal-time{font-weight:bold;color:#f39c12}
+        
+        /* Team Slider Styles */
+        .slider-container{display:flex;flex-direction:column;gap:15px}
+        .team-slider{width:100%;height:8px;border-radius:15px;background:linear-gradient(to right,#3498db,#27ae60);outline:none;transition:all .3s;cursor:pointer}
+        .team-slider::-webkit-slider-thumb{appearance:none;width:25px;height:25px;border-radius:50%;background:linear-gradient(45deg,#f39c12,#e67e22);cursor:pointer;box-shadow:0 0 15px rgba(243,156,18,.5);transition:all .3s}
+        .team-slider::-webkit-slider-thumb:hover{transform:scale(1.2);box-shadow:0 0 25px rgba(243,156,18,.8)}
+        .team-slider::-moz-range-thumb{width:25px;height:25px;border-radius:50%;background:linear-gradient(45deg,#f39c12,#e67e22);cursor:pointer;border:none;box-shadow:0 0 15px rgba(243,156,18,.5)}
+        .slider-value{color:#3498db;font-size:1.2rem;font-weight:bold;text-align:center;margin-top:10px}
+        .manatees-display{text-align:center;font-size:1.5rem;margin-top:15px;min-height:50px;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px;max-width:100%;overflow:hidden}
+        .manatee{display:inline-block;animation:float 2s ease-in-out infinite;transition:all .3s;font-size:1.5rem}
+        .manatee:nth-child(2n){animation-delay:0.3s}
+        .manatee:nth-child(3n){animation-delay:0.6s}
+        .manatee:nth-child(4n){animation-delay:0.9s}
+        .manatee:nth-child(5n){animation-delay:1.2s}
+        .manatee.new{animation:pop-in .5s ease-out}
+        @keyframes pop-in{0%{transform:scale(0) rotate(180deg);opacity:0}50%{transform:scale(1.3) rotate(90deg)}100%{transform:scale(1) rotate(0deg);opacity:1}}
         
         /* Game Modal Styles */
         .game-trigger-btn{background:linear-gradient(45deg,#f39c12,#e67e22);color:#fff;border:none;padding:20px 40px;border-radius:15px;font-size:1.3rem;font-weight:bold;cursor:pointer;transition:all .3s;box-shadow:0 10px 25px rgba(243,156,18,.3);animation:pulse-glow 2s infinite}
@@ -29,48 +80,70 @@
         .code-number{color:#bb86fc}
         .code-comment{color:#6a994e}
         .code-function{color:#3498db}
-        .bug{color:#00ff00;background:transparent}
-        .bug:hover{background:#001100;cursor:pointer}
-        .manatee-cursor{color:#00ffff;font-size:1.2rem;animation:float 2s ease-in-out infinite}
+        .bug{color:#00ff00;background:transparent;border:1px solid #00ff00;padding:2px 4px;border-radius:3px}
+        .bug:hover{background:#001100;cursor:pointer;transform:scale(1.1)}
         .challenge-desc{color:#95a5a6;margin:15px 0;text-align:center;padding:15px;background:#1a2332;border-radius:8px}
         .hint{color:#f39c12;font-size:.9rem;margin:10px 0;padding:10px;background:#2d1b00;border-radius:5px}
-        .game-result{margin:20px 0;padding:15px;border-radius:8px;text-align:center;font-weight:bold}
-        .success{background:#004d00;color:#00ff00;border:1px solid #00ff00}
-        .error{background:#4d0000;color:#ff4444;border:1px solid #ff4444}
-        .promo-code{background:linear-gradient(45deg,#00ff00,#00ffff);color:#000;padding:20px;border-radius:10px;text-align:center;margin:20px 0;font-size:1.3rem;font-weight:bold;animation:glow 2s ease-in-out infinite}
-        
-        /* Popup Messages */
-        .popup-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:99999;display:flex;align-items:center;justify-content:center}
-        .popup-content{background:#0a0e1a;border:3px solid;border-radius:20px;padding:40px;text-align:center;max-width:500px;margin:20px;box-shadow:0 0 50px}
-        .popup-success{border-color:#00ff00;box-shadow:0 0 50px #00ff00}
-        .popup-error{border-color:#ff4444;box-shadow:0 0 50px #ff4444}
-        .popup-title{font-size:2rem;margin-bottom:20px}
-        .popup-text{font-size:1.3rem;margin:15px 0;line-height:1.6}
-        .popup-promo{background:linear-gradient(45deg,#00ff00,#00ffff);color:#000;padding:20px;border-radius:15px;margin:20px 0;font-size:1.5rem;font-weight:bold;animation:glow 2s infinite}
-        .popup-btn{background:#3498db;color:#fff;border:none;padding:15px 30px;border-radius:10px;font-size:1.2rem;cursor:pointer;margin:10px;transition:all .3s}
-        .popup-btn:hover{background:#2980b9}
-        @keyframes glow{0%,100%{box-shadow:0 0 5px #00ff00}50%{box-shadow:0 0 20px #00ffff,0 0 30px #00ff00}}
         .game-buttons{text-align:center;margin:20px 0}
         .difficulty{display:flex;justify-content:center;gap:15px;margin:20px 0;flex-wrap:wrap}
         .diff-btn{background:#2c3e50;color:#ecf0f1;border:2px solid #34495e;padding:10px 20px;border-radius:8px;cursor:pointer;transition:all .3s}
+        .diff-btn:hover{background:#34495e;transform:scale(1.05)}
         .diff-btn.active{background:#e74c3c;border-color:#c0392b;color:#fff}
         .attempts{color:#f39c12;text-align:center;margin:10px 0;font-size:1.1rem}
         
-        /* Team Slider Styles */
-        .slider-container{display:flex;flex-direction:column;gap:15px}
-        .team-slider{width:100%;height:8px;border-radius:15px;background:linear-gradient(to right,#3498db,#27ae60);outline:none;transition:all .3s;cursor:pointer}
-        .team-slider::-webkit-slider-thumb{appearance:none;width:25px;height:25px;border-radius:50%;background:linear-gradient(45deg,#f39c12,#e67e22);cursor:pointer;box-shadow:0 0 15px rgba(243,156,18,.5);transition:all .3s}
-        .team-slider::-webkit-slider-thumb:hover{transform:scale(1.2);box-shadow:0 0 25px rgba(243,156,18,.8)}
-        .team-slider::-moz-range-thumb{width:25px;height:25px;border-radius:50%;background:linear-gradient(45deg,#f39c12,#e67e22);cursor:pointer;border:none;box-shadow:0 0 15px rgba(243,156,18,.5)}
-        .slider-value{color:#3498db;font-size:1.2rem;font-weight:bold;text-align:center;margin-top:10px}
-        .manatees-display{text-align:center;font-size:1.5rem;margin-top:15px;min-height:50px;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px;max-width:100%;overflow:hidden}
-        .manatee{display:inline-block;animation:float 2s ease-in-out infinite;transition:all .3s;font-size:1.5rem}
-        .manatee:nth-child(2n){animation-delay:0.3s}
-        .manatee:nth-child(3n){animation-delay:0.6s}
-        .manatee:nth-child(4n){animation-delay:0.9s}
-        .manatee:nth-child(5n){animation-delay:1.2s}
-        .manatee.new{animation:pop-in .5s ease-out}
-        @keyframes pop-in{0%{transform:scale(0) rotate(180deg);opacity:0}50%{transform:scale(1.3) rotate(90deg)}100%{transform:scale(1) rotate(0deg);opacity:1}}
+        /* Popup Messages */
+        .popup-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:99999;display:flex;align-items:center;justify-content:center}
+        .popup-content{background:#0a0e1a;border:3px solid;border-radius:20px;padding:40px;text-align:center;max-width:500px;margin:20px;box-shadow:0 0 50px}
+        .popup-success{border-color:#00ff00;box-shadow:0 0 50px #00ff00}
+        .popup-error{border-color:#ff4444;box-shadow:0 0 50px #ff4444}
+        .popup-title{font-size:2rem;margin-bottom:20px;color:#fff}
+        .popup-text{font-size:1.3rem;margin:15px 0;line-height:1.6;color:#fff}
+        .popup-promo{background:linear-gradient(45deg,#00ff00,#00ffff);color:#000;padding:20px;border-radius:15px;margin:20px 0;font-size:1.5rem;font-weight:bold;animation:glow 2s infinite}
+        .popup-btn{background:#3498db;color:#fff;border:none;padding:15px 30px;border-radius:10px;font-size:1.2rem;cursor:pointer;margin:10px;transition:all .3s}
+        .popup-btn:hover{background:#2980b9;transform:scale(1.05)}
+        @keyframes glow{0%,100%{box-shadow:0 0 5px #00ff00}50%{box-shadow:0 0 20px #00ffff,0 0 30px #00ff00}}
+        
+        .benefits-section{padding:100px 0;background:#0a0e1a}
+        .benefits-title{text-align:center;font-size:clamp(2rem,6vw,3.5rem);font-weight:800;margin-bottom:80px;color:#f39c12}
+        .benefits-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:40px}
+        .benefit-card{background:linear-gradient(135deg,#1a2332,#2c3e50);border:2px solid #3498db;border-radius:20px;padding:40px;text-align:center;transition:all .3s}
+        .benefit-card:hover{transform:translateY(-10px);border-color:#f39c12}
+        .benefit-icon{font-size:4rem;margin-bottom:20px}
+        .benefit-title{font-size:1.5rem;font-weight:700;color:#3498db;margin-bottom:15px}
+        .benefit-text{color:#95a5a6;line-height:1.6}
+        .benefit-price{font-size:1.2rem;color:#f39c12;font-weight:700;margin-top:15px}
+        
+        .tea-section{padding:100px 0;background:linear-gradient(135deg,#2c3e50,#1a2332);text-align:center}
+        .tea-title{font-size:clamp(2rem,6vw,3.5rem);font-weight:800;margin-bottom:40px;color:#27ae60}
+        .tea-content{max-width:800px;margin:0 auto;padding:50px;background:rgba(52,152,219,.1);border-radius:25px;border:2px solid #3498db}
+        .tea-manatee{font-size:6rem;margin:30px 0;animation:float 4s infinite}
+        .tea-text{font-size:clamp(1.1rem,3vw,1.6rem);color:#ecf0f1;line-height:1.8;text-align:left}
+        .tea-highlight{color:#f39c12;font-weight:700}
+        
+        .anti-corporate{padding:100px 0;background:linear-gradient(135deg,#e74c3c,#0a0e1a,#e74c3c);text-align:center}
+        .anti-title{font-size:clamp(2rem,6vw,4rem);font-weight:900;margin-bottom:50px;color:#fff}
+        .anti-text{font-size:clamp(1rem,3vw,1.5rem);max-width:900px;margin:0 auto;line-height:1.8;color:#fff}
+        .anti-list{margin:40px auto;font-size:clamp(1rem,3vw,1.3rem);line-height:2;text-align:left;max-width:700px}
+        .anti-list div{margin:15px 0}
+        .final-cta{margin:60px auto;padding:40px;background:rgba(0,0,0,.7);border-radius:20px;border:2px solid #f39c12;max-width:600px}
+        .cta-text{font-size:clamp(1.2rem,4vw,2rem);font-weight:700;color:#f39c12;margin-bottom:30px}
+        .cta-buttons{display:flex;gap:20px;justify-content:center;flex-wrap:wrap}
+        .cta-btn{background:linear-gradient(135deg,#3498db,#27ae60);color:#fff;padding:20px 40px;border:none;border-radius:50px;font-size:1.2rem;font-weight:700;cursor:pointer;transition:all .3s;text-decoration:none;display:inline-block}
+        .cta-btn:hover{transform:translateY(-5px)}
+        .guarantee-text{margin-top:30px;color:#3498db;font-weight:600}
+        .footer{background:#0a0e1a;padding:50px 0;text-align:center;border-top:2px solid #3498db}
+        .footer-logo{font-size:2rem;font-weight:900;color:#3498db;margin-bottom:20px}
+        .footer-text{color:#95a5a6}
+        
+        @media (max-width:768px){
+            .nav-links{display:none}
+            .calc-row{grid-template-columns:1fr}
+            .benefits-grid{grid-template-columns:1fr}
+            .cta-buttons{flex-direction:column;align-items:center}
+            .calculator{padding:30px 20px}
+            .result-row,.goal-item{flex-direction:column;align-items:flex-start;gap:5px}
+            .tea-text{text-align:center}
+        }
     </style>
 </head>
 <body>
@@ -115,11 +188,9 @@
                     <div class="calc-input-group">
                         <label class="calc-label">Team Size:</label>
                         <div class="slider-container">
-                            <input type="range" class="team-slider" id="devCount" min="1" max="10" value="1" oninput="updateTeamDisplay()">
+                            <input type="range" class="team-slider" id="devCount" min="1" max="10" value="1">
                             <div class="slider-value" id="sliderValue">1 developer</div>
-                            <div class="manatees-display" id="manateesDisplay">
-                                <!-- Ламантини додаються динамічно -->
-                            </div>
+                            <div class="manatees-display" id="manateesDisplay"></div>
                         </div>
                     </div>
                 </div>
@@ -163,7 +234,7 @@
         
         <!-- Game Button -->
         <div class="container" style="text-align:center;margin-top:40px">
-            <button class="game-trigger-btn" onclick="openGameModal()">
+            <button class="game-trigger-btn" id="gameBtn">
                 🎮 Get Extra Discount - Debug Challenge! 🦭
             </button>
             <p style="color:#95a5a6;margin-top:10px;font-size:0.9rem">Play our coding game and win up to $100 off your first developer!</p>
@@ -172,7 +243,7 @@
         <!-- Game Modal -->
         <div id="gameModal" class="game-modal">
             <div class="game-modal-content">
-                <span class="game-close" onclick="closeGameModal()">&times;</span>
+                <span class="game-close" id="gameClose">&times;</span>
                 
                 <div class="game-container">
                     <div class="game-title">🦭 ManaTEA Debug Challenge</div>
@@ -182,20 +253,18 @@
                     </div>
                     
                     <div class="difficulty">
-                        <div class="diff-btn active" onclick="setDifficulty('junior')">Junior Level</div>
-                        <div class="diff-btn" onclick="setDifficulty('senior')">Senior Level</div>
-                        <div class="diff-btn" onclick="setDifficulty('expert')">Expert Level</div>
+                        <div class="diff-btn active" data-level="junior">Junior Level</div>
+                        <div class="diff-btn" data-level="senior">Senior Level</div>
+                        <div class="diff-btn" data-level="expert">Expert Level</div>
                     </div>
                     
-                    <div class="attempts" id="attempts">First attempt = $50 discount! 🎯</div>
+                    <div class="attempts" id="attempts">Find 3 bugs to win your discount! 🎯</div>
                     
                     <div class="terminal">
                         <div class="terminal-header">
                             📁 ManaTEA Development Environment | 🦭 Debug Mode Active
                         </div>
-                        <div id="code-area">
-                            <!-- Code will be generated here -->
-                        </div>
+                        <div id="code-area"></div>
                     </div>
                     
                     <div class="hint" id="hint-area">
@@ -203,12 +272,10 @@
                     </div>
                     
                     <div class="game-buttons">
-                        <div class="btn" onclick="generateChallenge()">🔄 Generate New Challenge</div>
-                        <div class="btn" onclick="showSolution()">💡 Show Solution</div>
-                        <div class="btn" onclick="closeGameModal()">↩️ Back to Site</div>
+                        <button class="popup-btn" id="newChallenge">🔄 Generate New Challenge</button>
+                        <button class="popup-btn" id="showSolution">💡 Show Solution</button>
+                        <button class="popup-btn" id="backToSite">↩️ Back to Site</button>
                     </div>
-                    
-                    <div id="result-area"></div>
                 </div>
             </div>
         </div>
@@ -310,95 +377,35 @@
             </div>
         </div>
     </footer>
-<script>
-    // Quick fixes for game modal
-function openGameModal() {
-    document.getElementById('gameModal').style.display = 'block';
-    generateChallenge();
-}
 
-function closeGameModal() {
-    document.getElementById('gameModal').style.display = 'none';
-}
-// Pricing data
-const pricing = {
-    junior: { traditional: 4400, manatea: 2500 },
-    middle: { traditional: 5280, manatea: 2900 },
-    senior: { traditional: 6600, manatea: 3500 },
-    techlead: { traditional: 8800, manatea: 4200 }
-};
+    <script>
+        // Pricing data
+        const pricing = {
+            junior: { traditional: 4400, manatea: 2500 },
+            middle: { traditional: 5280, manatea: 2900 },
+            senior: { traditional: 6600, manatea: 3500 },
+            techlead: { traditional: 8800, manatea: 4200 }
+        };
 
-// Goals pricing in USD
-const goals = {
-    manatee: 400,    // Crystal River manatee tour
-    helicopter: 300, // Helicopter ride Miami  
-    tesla: 10000,    // Tesla down payment
-    vacation: 5000   // European vacation
-};
+        // Goals pricing in USD
+        const goals = {
+            manatee: 400,    // Crystal River manatee tour
+            helicopter: 300, // Helicopter ride Miami  
+            tesla: 10000,    // Tesla down payment
+            vacation: 5000   // European vacation
+        };
 
-// Update calculator
-function updateCalculator() {
-    const level = document.getElementById('devLevel').value;
-    const count = parseInt(document.getElementById('devCount').value);
-    
-    const traditional = pricing[level].traditional * count;
-    const manatea = pricing[level].manatea * count;
-    const savings = traditional - manatea;
-    
-    document.getElementById('traditionalCost').textContent = `$${traditional.toLocaleString()}/month`;
-    document.getElementById('manateaCost').textContent = `$${manatea.toLocaleString()}/month`;
-    document.getElementById('savingsAmount').textContent = `$${savings.toLocaleString()}/month`;
-    
-    // Update goals
-    document.getElementById('manateeTime').textContent = `${(goals.manatee / savings).toFixed(1)} months`;
-    document.getElementById('helicopterTime').textContent = `${(goals.helicopter / savings).toFixed(1)} months`;
-    document.getElementById('teslaTime').textContent = `${(goals.tesla / savings).toFixed(1)} months`;
-    document.getElementById('vacationTime').textContent = `${(goals.vacation / savings).toFixed(1)} months`;
-}
+        // Game variables
+        let currentDifficulty = 'junior';
+        let gameAttempts = 0;
+        let bugsFound = 0;
+        let totalBugs = 0;
+        let foundBugElements = [];
 
-// Update team display
-function updateTeamDisplay() {
-    const count = parseInt(document.getElementById('devCount').value);
-    const sliderValue = document.getElementById('sliderValue');
-    const manateesDisplay = document.getElementById('manateesDisplay');
-    
-    sliderValue.textContent = count === 1 ? '1 developer' : `${count} developers`;
-    
-    // Update manatees display
-    const currentManatees = manateesDisplay.children.length;
-    
-    if (count > currentManatees) {
-        // Add manatees
-        for (let i = currentManatees; i < count; i++) {
-            const manatee = document.createElement('span');
-            manatee.className = 'manatee new';
-            manatee.textContent = '🦭';
-            manateesDisplay.appendChild(manatee);
-            
-            // Remove new class after animation
-            setTimeout(() => manatee.classList.remove('new'), 500);
-        }
-    } else if (count < currentManatees) {
-        // Remove manatees
-        for (let i = currentManatees - 1; i >= count; i--) {
-            manateesDisplay.removeChild(manateesDisplay.children[i]);
-        }
-    }
-    
-    updateCalculator();
-}
-
-// Game functionality
-let currentDifficulty = 'junior';
-let gameAttempts = 0;
-let bugsFound = 0;
-let totalBugs = 0;
-let foundBugElements = [];
-
-const challenges = {
-    junior: {
-        bugs: 3,
-        code: `function calculatePrice(developers) {
+        const challenges = {
+            junior: {
+                bugs: 3,
+                code: `function calculatePrice(developers) {
     let price = 0;
     for (let i = 0; i <= developers; i++) {
         price += 2500;
@@ -408,13 +415,13 @@ const challenges = {
 
 let team = 5;
 console.log("Total cost: $" + calculateprice(team));`,
-        bugTexts: ['i <= developers', 'calculateprice'],
-        solutions: ['Change <= to <', 'Fix function name case'],
-        hints: ['Loop runs one extra time', 'Function name case mismatch']
-    },
-    senior: {
-        bugs: 4,
-        code: `class ManaTEATeam {
+                bugTexts: ['i <= developers', 'calculateprice', 'let price = 0'],
+                solutions: ['Change <= to <', 'Fix function name case', 'Wrong variable initialization'],
+                hints: ['Loop runs one extra time', 'Function name case mismatch', 'Check variable setup']
+            },
+            senior: {
+                bugs: 4,
+                code: `class ManaTEATeam {
     constructor(size) {
         this.teamSize = size;
         this.monthlyCost = this.calculateCost();
@@ -432,13 +439,13 @@ console.log("Total cost: $" + calculateprice(team));`,
 
 let team = new ManaTEATeam(3);
 console.log(team.addDeveloper());`,
-        bugTexts: ['this.calculateCost;', 'this.calculateCost()'],
-        solutions: ['Add () to call function', 'Update cost after adding developer'],
-        hints: ['Missing function call parentheses', 'Cost not recalculated']
-    },
-    expert: {
-        bugs: 5,
-        code: `async function fetchDeveloperRates() {
+                bugTexts: ['this.calculateCost;', 'this.calculateCost()', 'this.teamSize++', 'new ManaTEATeam'],
+                solutions: ['Add () to call function', 'Update cost after adding', 'Missing cost update', 'Constructor call'],
+                hints: ['Missing function call parentheses', 'Cost not recalculated', 'State not updated', 'Object creation']
+            },
+            expert: {
+                bugs: 5,
+                code: `async function fetchDeveloperRates() {
     try {
         const response = await fetch('/api/rates');
         const data = await response.json();
@@ -456,203 +463,281 @@ console.log(team.addDeveloper());`,
 
 const saving = calculateSavings(5000, 3000);
 console.log(\`Savings: $\${saving}\`);`,
-        bugTexts: ['eror', 'calculateSavings'],
-        solutions: ['Fix typo: error', 'Function not defined'],
-        hints: ['Variable name typo', 'Missing function definition']
-    }
-};
-
-function openGameModal() {
-    const modal = document.getElementById('gameModal');
-    if (modal) {
-        modal.style.display = 'block';
-        generateChallenge();
-    }
-}
-
-function closeGameModal() {
-    const modal = document.getElementById('gameModal');
-    if (modal) {
-        modal.style.display = 'none';
-    }
-}
-
-function setDifficulty(level) {
-    currentDifficulty = level;
-    
-    // Update active button
-    document.querySelectorAll('.diff-btn').forEach(btn => {
-        btn.classList.remove('active');
-    });
-    
-    // Find and activate the clicked button
-    const buttons = document.querySelectorAll('.diff-btn');
-    for (let btn of buttons) {
-        if (btn.textContent.toLowerCase().includes(level)) {
-            btn.classList.add('active');
-            break;
-        }
-    }
-    
-    generateChallenge();
-}
-
-function generateChallenge() {
-    const challenge = challenges[currentDifficulty];
-    if (!challenge) return;
-    
-    totalBugs = challenge.bugs;
-    bugsFound = 0;
-    foundBugElements = [];
-    
-    const codeArea = document.getElementById('code-area');
-    if (!codeArea) return;
-    
-    const lines = challenge.code.split('\n');
-    
-    let htmlContent = '';
-    lines.forEach((line, index) => {
-        const lineNum = index + 1;
-        let processedLine = line;
-        
-        // Add syntax highlighting
-        processedLine = processedLine
-            .replace(/\b(function|let|const|var|class|constructor|async|await|try|catch|if|else|for|return|throw|new|console)\b/g, '<span class="code-keyword">$1</span>')
-            .replace(/(['"`])((?:\\.|(?!\1)[^\\])*?)\1/g, '<span class="code-string">$1$2$1</span>')
-            .replace(/\b(\d+)\b/g, '<span class="code-number">$1</span>')
-            .replace(/(\/\/.*$)/g, '<span class="code-comment">$1</span>');
-        
-        // Add bugs for specific lines
-        challenge.bugTexts.forEach((bugText, bugIndex) => {
-            if (line.includes(bugText)) {
-                const bugId = `bug-${bugIndex}`;
-                processedLine = processedLine.replace(
-                    bugText, 
-                    `<span class="bug" id="${bugId}" onclick="foundBug('${bugId}', ${bugIndex})">${bugText}</span>`
-                );
+                bugTexts: ['eror', 'calculateSavings', 'data.rates', 'response.ok', 'await fetch'],
+                solutions: ['Fix typo: error', 'Function not defined', 'Property might not exist', 'Check response status', 'API call'],
+                hints: ['Variable name typo', 'Missing function definition', 'Unsafe property access', 'Response validation', 'Network request']
             }
-        });
-        
-        htmlContent += `<div class="code-line">${lineNum}: ${processedLine}</div>`;
-    });
-    
-    codeArea.innerHTML = htmlContent;
-    updateGameStatus();
-}
+        };
 
-function foundBug(bugId, bugIndex) {
-    const bugElement = document.getElementById(bugId);
-    if (!bugElement || foundBugElements.includes(bugId)) return;
-    
-    // Mark bug as found
-    bugElement.style.background = '#27ae60';
-    bugElement.style.color = '#fff';
-    bugElement.onclick = null;
-    foundBugElements.push(bugId);
-    bugsFound++;
-    
-    showPopup('success', '🎉 Bug Found!', `Great job! You found: "${challenges[currentDifficulty].solutions[bugIndex]}"`);
-    
-    updateGameStatus();
-    
-    if (bugsFound >= totalBugs) {
-        setTimeout(() => {
-            gameComplete();
-        }, 1500);
-    }
-}
-
-function updateGameStatus() {
-    const attemptsDiv = document.getElementById('attempts');
-    if (!attemptsDiv) return;
-    
-    if (bugsFound === 0) {
-        attemptsDiv.innerHTML = `Find ${totalBugs} bugs to win your discount! 🎯`;
-    } else if (bugsFound < totalBugs) {
-        attemptsDiv.innerHTML = `Found ${bugsFound}/${totalBugs} bugs! Keep going! 🦭`;
-    } else {
-        attemptsDiv.innerHTML = `All bugs found! Generating promo code... 🎉`;
-    }
-}
-
-function gameComplete() {
-    gameAttempts++;
-    let discount = gameAttempts === 1 ? 50 : Math.max(10, 50 - (gameAttempts - 1) * 10);
-    let promoCode = `MANATEA${discount}`;
-    
-    showPopup('success', '🎉 Congratulations!', 
-        `You completed the ${currentDifficulty} challenge!<div class="popup-promo">Promo Code: ${promoCode}</div>Use this code for $${discount} off your first developer!<br><br>📧 Email us at hello@manatea.team with your promo code!`);
-}
-
-function showSolution() {
-    const challenge = challenges[currentDifficulty];
-    if (!challenge) return;
-    
-    let solutionText = 'The bugs are:<br><br>';
-    challenge.solutions.forEach((solution, index) => {
-        solutionText += `${index + 1}. ${solution} - ${challenge.hints[index]}<br>`;
-    });
-    solutionText += '<br>Try the challenge again to earn your discount!';
-    
-    showPopup('error', '💡 Solution Revealed', solutionText);
-}
-
-function showPopup(type, title, message) {
-    // Remove existing popups
-    const existingPopups = document.querySelectorAll('.popup-overlay');
-    existingPopups.forEach(popup => popup.remove());
-    
-    const popup = document.createElement('div');
-    popup.className = 'popup-overlay';
-    popup.innerHTML = `
-        <div class="popup-content popup-${type}">
-            <div class="popup-title">${title}</div>
-            <div class="popup-text">${message}</div>
-            <button class="popup-btn" onclick="this.parentElement.parentElement.remove()">Close</button>
-        </div>
-    `;
-    document.body.appendChild(popup);
-    
-    // Auto remove success messages (except completion)
-    if (type === 'success' && !message.includes('Promo Code')) {
-        setTimeout(() => {
-            if (popup.parentElement) popup.remove();
-        }, 2000);
-    }
-}
-
-// Initialize when page loads
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('🦭 ManaTEA site loaded!');
-    
-    // Set up calculator event listeners
-    const devLevel = document.getElementById('devLevel');
-    const devCount = document.getElementById('devCount');
-    
-    if (devLevel) {
-        devLevel.addEventListener('change', updateCalculator);
-    }
-    
-    if (devCount) {
-        devCount.addEventListener('input', updateTeamDisplay);
-    }
-    
-    // Initialize display
-    updateTeamDisplay();
-    updateCalculator();
-    
-    // Close modal when clicking outside
-    window.onclick = function(event) {
-        const modal = document.getElementById('gameModal');
-        if (event.target === modal) {
-            closeGameModal();
+        // Calculator functions
+        function updateCalculator() {
+            const level = document.getElementById('devLevel').value;
+            const count = parseInt(document.getElementById('devCount').value);
+            
+            const traditional = pricing[level].traditional * count;
+            const manatea = pricing[level].manatea * count;
+            const savings = traditional - manatea;
+            
+            document.getElementById('traditionalCost').textContent = `${traditional.toLocaleString()}/month`;
+            document.getElementById('manateaCost').textContent = `${manatea.toLocaleString()}/month`;
+            document.getElementById('savingsAmount').textContent = `${savings.toLocaleString()}/month`;
+            
+            // Update goals
+            document.getElementById('manateeTime').textContent = `${(goals.manatee / savings).toFixed(1)} months`;
+            document.getElementById('helicopterTime').textContent = `${(goals.helicopter / savings).toFixed(1)} months`;
+            document.getElementById('teslaTime').textContent = `${(goals.tesla / savings).toFixed(1)} months`;
+            document.getElementById('vacationTime').textContent = `${(goals.vacation / savings).toFixed(1)} months`;
         }
-    }
-    
-    console.log('🎮 Game system ready!');
-});
+
+        function updateTeamDisplay() {
+            const count = parseInt(document.getElementById('devCount').value);
+            const sliderValue = document.getElementById('sliderValue');
+            const manateesDisplay = document.getElementById('manateesDisplay');
+            
+            sliderValue.textContent = count === 1 ? '1 developer' : `${count} developers`;
+            
+            // Update manatees display
+            const currentManatees = manateesDisplay.children.length;
+            
+            if (count > currentManatees) {
+                // Add manatees
+                for (let i = currentManatees; i < count; i++) {
+                    const manatee = document.createElement('span');
+                    manatee.className = 'manatee new';
+                    manatee.textContent = '🦭';
+                    manateesDisplay.appendChild(manatee);
+                    
+                    // Remove new class after animation
+                    setTimeout(() => manatee.classList.remove('new'), 500);
+                }
+            } else if (count < currentManatees) {
+                // Remove manatees
+                for (let i = currentManatees - 1; i >= count; i--) {
+                    manateesDisplay.removeChild(manateesDisplay.children[i]);
+                }
+            }
+            
+            updateCalculator();
+        }
+
+        // Game functions
+        function openGameModal() {
+            document.getElementById('gameModal').style.display = 'block';
+            generateChallenge();
+        }
+
+        function closeGameModal() {
+            document.getElementById('gameModal').style.display = 'none';
+        }
+
+        function setDifficulty(level) {
+            currentDifficulty = level;
+            
+            // Update active button
+            document.querySelectorAll('.diff-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Find and activate the clicked button
+            event.target.classList.add('active');
+            generateChallenge();
+        }
+
+        function generateChallenge() {
+            const challenge = challenges[currentDifficulty];
+            if (!challenge) return;
+            
+            totalBugs = challenge.bugs;
+            bugsFound = 0;
+            foundBugElements = [];
+            
+            const codeArea = document.getElementById('code-area');
+            if (!codeArea) return;
+            
+            const lines = challenge.code.split('\n');
+            
+            let htmlContent = '';
+            lines.forEach((line, index) => {
+                const lineNum = index + 1;
+                let processedLine = line;
+                
+                // Add syntax highlighting
+                processedLine = processedLine
+                    .replace(/\b(function|let|const|var|class|constructor|async|await|try|catch|if|else|for|return|throw|new|console)\b/g, '<span class="code-keyword">$1</span>')
+                    .replace(/(['"`])((?:\\.|(?!\1)[^\\])*?)\1/g, '<span class="code-string">$1$2$1</span>')
+                    .replace(/\b(\d+)\b/g, '<span class="code-number">$1</span>')
+                    .replace(/(\/\/.*$)/g, '<span class="code-comment">$1</span>');
+                
+                // Add bugs for specific lines
+                challenge.bugTexts.forEach((bugText, bugIndex) => {
+                    if (line.includes(bugText)) {
+                        const bugId = `bug-${bugIndex}`;
+                        processedLine = processedLine.replace(
+                            bugText, 
+                            `<span class="bug" id="${bugId}" data-bug="${bugIndex}">${bugText}</span>`
+                        );
+                    }
+                });
+                
+                htmlContent += `<div class="code-line">${lineNum}: ${processedLine}</div>`;
+            });
+            
+            codeArea.innerHTML = htmlContent;
+            updateGameStatus();
+            
+            // Add click listeners to bugs
+            document.querySelectorAll('.bug').forEach(bug => {
+                bug.addEventListener('click', function() {
+                    foundBug(this.id, parseInt(this.dataset.bug));
+                });
+            });
+        }
+
+        function foundBug(bugId, bugIndex) {
+            const bugElement = document.getElementById(bugId);
+            if (!bugElement || foundBugElements.includes(bugId)) return;
+            
+            // Mark bug as found
+            bugElement.style.background = '#27ae60';
+            bugElement.style.color = '#fff';
+            bugElement.style.border = '1px solid #27ae60';
+            foundBugElements.push(bugId);
+            bugsFound++;
+            
+            showPopup('success', '🎉 Bug Found!', `Great job! You found: "${challenges[currentDifficulty].solutions[bugIndex]}"`);
+            
+            updateGameStatus();
+            
+            if (bugsFound >= totalBugs) {
+                setTimeout(() => {
+                    gameComplete();
+                }, 1500);
+            }
+        }
+
+        function updateGameStatus() {
+            const attemptsDiv = document.getElementById('attempts');
+            if (!attemptsDiv) return;
+            
+            if (bugsFound === 0) {
+                attemptsDiv.innerHTML = `Find ${totalBugs} bugs to win your discount! 🎯`;
+            } else if (bugsFound < totalBugs) {
+                attemptsDiv.innerHTML = `Found ${bugsFound}/${totalBugs} bugs! Keep going! 🦭`;
+            } else {
+                attemptsDiv.innerHTML = `All bugs found! Generating promo code... 🎉`;
+            }
+        }
+
+        function gameComplete() {
+            gameAttempts++;
+            let discount = gameAttempts === 1 ? 50 : Math.max(10, 50 - (gameAttempts - 1) * 10);
+            let promoCode = `MANATEA${discount}`;
+            
+            showPopup('success', '🎉 Congratulations!', 
+                `You completed the ${currentDifficulty} challenge!<div class="popup-promo">Promo Code: ${promoCode}</div>Use this code for ${discount} off your first developer!<br><br>📧 Email us at hello@manatea.team with your promo code!`);
+        }
+
+        function showSolution() {
+            const challenge = challenges[currentDifficulty];
+            if (!challenge) return;
+            
+            let solutionText = 'The bugs are:<br><br>';
+            challenge.solutions.forEach((solution, index) => {
+                solutionText += `${index + 1}. ${solution} - ${challenge.hints[index]}<br>`;
+            });
+            solutionText += '<br>Try the challenge again to earn your discount!';
+            
+            showPopup('error', '💡 Solution Revealed', solutionText);
+        }
+
+        function showPopup(type, title, message) {
+            // Remove existing popups
+            const existingPopups = document.querySelectorAll('.popup-overlay');
+            existingPopups.forEach(popup => popup.remove());
+            
+            const popup = document.createElement('div');
+            popup.className = 'popup-overlay';
+            popup.innerHTML = `
+                <div class="popup-content popup-${type}">
+                    <div class="popup-title">${title}</div>
+                    <div class="popup-text">${message}</div>
+                    <button class="popup-btn" onclick="this.parentElement.parentElement.remove()">Close</button>
+                </div>
+            `;
+            document.body.appendChild(popup);
+            
+            // Auto remove success messages (except completion)
+            if (type === 'success' && !message.includes('Promo Code')) {
+                setTimeout(() => {
+                    if (popup.parentElement) popup.remove();
+                }, 2000);
+            }
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🦭 ManaTEA site loaded!');
+            
+            // Set up calculator event listeners
+            const devLevel = document.getElementById('devLevel');
+            const devCount = document.getElementById('devCount');
+            
+            if (devLevel) {
+                devLevel.addEventListener('change', updateCalculator);
+            }
+            
+            if (devCount) {
+                devCount.addEventListener('input', updateTeamDisplay);
+            }
+            
+            // Initialize display
+            updateTeamDisplay();
+            updateCalculator();
+            
+            // Game event listeners
+            const gameBtn = document.getElementById('gameBtn');
+            const gameClose = document.getElementById('gameClose');
+            const newChallenge = document.getElementById('newChallenge');
+            const showSolutionBtn = document.getElementById('showSolution');
+            const backToSite = document.getElementById('backToSite');
+            
+            if (gameBtn) {
+                gameBtn.addEventListener('click', openGameModal);
+            }
+            
+            if (gameClose) {
+                gameClose.addEventListener('click', closeGameModal);
+            }
+            
+            if (newChallenge) {
+                newChallenge.addEventListener('click', generateChallenge);
+            }
+            
+            if (showSolutionBtn) {
+                showSolutionBtn.addEventListener('click', showSolution);
+            }
+            
+            if (backToSite) {
+                backToSite.addEventListener('click', closeGameModal);
+            }
+            
+            // Difficulty buttons
+            document.querySelectorAll('.diff-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    setDifficulty(this.dataset.level);
+                });
+            });
+            
+            // Close modal when clicking outside
+            window.addEventListener('click', function(event) {
+                const modal = document.getElementById('gameModal');
+                if (event.target === modal) {
+                    closeGameModal();
+                }
+            });
+            
+            console.log('🎮 Game system ready!');
+        });
     </script>
-</body>
-</html>
 </body>
 </html>
