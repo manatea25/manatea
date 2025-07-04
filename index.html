@@ -312,536 +312,7 @@
     </footer>
 
     <script>
-        const goals = {manatee: 4000, helicopter: 3000, tesla: 10000, vacation: 5000};
-        
-        function updateCalculator() {
-            const level = document.getElementById('devLevel').value;
-            const count = parseInt(document.getElementById('devCount').value) || 1;
-            
-            let developerSalary, manateaFee, agencyHourlyRate;
-            
-            switch(level) {
-                case 'junior': developerSalary = 1000; manateaFee = 200; agencyHourlyRate = 20; break;
-                case 'middle': developerSalary = 2500; manateaFee = 400; agencyHourlyRate = 30; break;
-                case 'senior': developerSalary = 4500; manateaFee = 700; agencyHourlyRate = 40; break;
-                case 'techlead': developerSalary = 6000; manateaFee = 1000; agencyHourlyRate = 50; break;
-                default: developerSalary = 2500; manateaFee = 400; agencyHourlyRate = 30;
-            }
-            
-            const manateaTotal = (developerSalary + manateaFee) * count;
-            const traditionalTotal = (agencyHourlyRate * 176) * count;
-            const savings = traditionalTotal - manateaTotal;
-            
-            const formatMoney = (amount) => new Intl.NumberFormat('en-US').format(amount);
-            const calculateTime = (goalCost) => savings <= 0 ? "∞" : (goalCost / savings).toFixed(1) + " months";
-            
-            document.getElementById('traditionalCost').textContent = `$${formatMoney(traditionalTotal)}/month`;
-            document.getElementById('manateaCost').textContent = `$${formatMoney(manateaTotal)}/month`;
-            document.getElementById('savingsAmount').textContent = `$${formatMoney(savings)}/month`;
-            
-            document.getElementById('manateeTime').textContent = calculateTime(goals.manatee);
-            document.getElementById('helicopterTime').textContent = calculateTime(goals.helicopter);
-            document.getElementById('teslaTime').textContent = calculateTime(goals.tesla);
-            document.getElementById('vacationTime').textContent = calculateTime(goals.vacation);
-        }
-        
-        document.getElementById('devLevel').addEventListener('change', updateCalculator);
-        document.getElementById('devCount').addEventListener('input', updateCalculator);
-        updateCalculator();
-        
-        // Team slider functionality
-        function updateTeamDisplay() {
-            const count = document.getElementById('devCount').value;
-            const sliderValue = document.getElementById('sliderValue');
-            const manateesDisplay = document.getElementById('manateesDisplay');
-            
-            // Update text
-            sliderValue.textContent = count == 1 ? '1 developer' : `${count} developers`;
-            
-            // Clear all manatees and add the correct amount
-            manateesDisplay.innerHTML = '';
-            
-            // Add manatees with staggered animation
-            for (let i = 0; i < parseInt(count); i++) {
-                setTimeout(() => {
-                    const manatee = document.createElement('span');
-                    manatee.className = 'manatee new';
-                    manatee.textContent = '🦭';
-                    manatee.style.animationDelay = `${i * 0.1}s`;
-                    manateesDisplay.appendChild(manatee);
-                    
-                    // Remove 'new' class after animation
-                    setTimeout(() => {
-                        manatee.classList.remove('new');
-                    }, 500);
-                }, i * 100);
-            }
-            
-            updateCalculator();
-        }
-        
-        // Initialize team display
-        updateTeamDisplay();
-        
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) target.scrollIntoView({behavior: 'smooth'});
-            });
-        });
-        
-        document.querySelectorAll('.cta-btn').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                e.preventDefault();
-                if (this.textContent.includes('Start Saving')) {
-                    alert('🦭 Contact form (Add your URL here)');
-                } else {
-                    alert('📞 Call: +1-XXX-XXX-XXXX');
-                }
-            });
-        });
-        
-        // Game Modal Functions
-        function openGameModal() {
-            // Перевірити чи кнопка заблокована
-            const gameBtn = document.querySelector('.game-trigger-btn');
-            if (gameBtn.disabled) {
-                alert('🦭 Please refresh the page to play again!');
-                return;
-            }
-            
-            document.getElementById('gameModal').style.display = 'block';
-            document.body.style.overflow = 'hidden';
-            generateChallenge();
-        }
-        
-        function closeGameModal() {
-            document.getElementById('gameModal').style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-        
-        window.onclick = function(event) {
-            const modal = document.getElementById('gameModal');
-            if (event.target === modal) {
-                closeGameModal();
-            }
-        }
-        
-        // Game Logic
-        let currentDifficulty = 'junior';
-        let bugsFound = 0;
-        let totalBugs = 0;
-        let attempts = 0;
-        let challengeStarted = false;
-        
-        const codeTemplates = {
-            junior: [
-                {
-                    code: [
-                        'function calculateDeveloperCost(level, teamSize) {',
-                        '    let juniorSalary = 1000;',
-                        '    let middleSalary = 2500;',
-                        '    let seniorSalary = 4500;',
-                        '    ',
-                        '    if (level === "junior") {',
-                        '        return juniorSalary * teamSize;',
-                        '    } else if (level === "middle") {',
-                        '        return salary * teamSize;',
-                        '    } else {',
-                        '        return seniorSalary * teamSize;',
-                        '    }',
-                        '}'
-                    ],
-                    bugs: [8],
-                    hints: ['Variable "salary" is not defined', 'Which salary variable should be used?']
-                },
-                {
-                    code: [
-                        'function findDeveloper(skills, experience) {',
-                        '    let developers = getDeveloperPool();',
-                        '    ',
-                        '    for (let i = 0; i < developers.length; i++) {',
-                        '        let dev = developers[i];',
-                        '        ',
-                        '        if (dev.skills.includes(skills) && ',
-                        '            dev.experience >= experince) {',
-                        '            return dev;',
-                        '        }',
-                        '    }',
-                        '    ',
-                        '    return null;',
-                        '}'
-                    ],
-                    bugs: [7],
-                    hints: ['Typo in variable name', 'Check spelling carefully']
-                },
-                {
-                    code: [
-                        'class TeamBuilder {',
-                        '    constructor() {',
-                        '        this.developers = [];',
-                        '        this.budget = 0;',
-                        '    }',
-                        '    ',
-                        '    addDeveloper(dev) {',
-                        '        this.developers.push(dev);',
-                        '        this.budget += dev.salary;',
-                        '    }',
-                        '    ',
-                        '    getTotalCost() {',
-                        '        return this.budget;',
-                        '    }',
-                        '}',
-                        '',
-                        'let team = new TeamBuilder();',
-                        'team.addDeveloper({name: "John", salary: 5000});',
-                        'console.log(team.getTotalCost());'
-                    ],
-                    bugs: [16],
-                    hints: ['Missing parameter in method call', 'Function expects 2 parameters']
-                }
-            ],
-            senior: [
-                {
-                    code: [
-                        'class DeveloperMatcher {',
-                        '    constructor(requirements) {',
-                        '        this.requirements = requirements;',
-                        '        this.cache = new Map();',
-                        '    }',
-                        '    ',
-                        '    async findMatches() {',
-                        '        const cacheKey = JSON.stringify(this.requirements);',
-                        '        ',
-                        '        if (this.cache.has(cacheKey)) {',
-                        '            return this.cache.get(cacheKey);',
-                        '        }',
-                        '        ',
-                        '        const results = await this.searchDatabase();',
-                        '        this.cache.set(cacheKey, results);',
-                        '        return results;',
-                        '    }',
-                        '    ',
-                        '    searchDatabase() {',
-                        '        fetch("/api/developers");',
-                        '    }',
-                        '}'
-                    ],
-                    bugs: [18],
-                    hints: ['Async function missing return statement', 'fetch() result not returned']
-                },
-                {
-                    code: [
-                        'const DeveloperAPI = {',
-                        '    async getDevelopers(filters) {',
-                        '        try {',
-                        '            const response = await fetch("/api/developers", {',
-                        '                method: "POST",',
-                        '                headers: {',
-                        '                    "Content-Type": "application/json"',
-                        '                },',
-                        '                body: JSON.stringify(filters)',
-                        '            });',
-                        '            ',
-                        '            if (!response.ok) {',
-                        '                throw new Error("Failed to fetch");',
-                        '            }',
-                        '            ',
-                        '            const data = await response.json();',
-                        '            return data.developers;',
-                        '        } catch (error) {',
-                        '            console.error("Error:", error);',
-                        '        }',
-                        '    }',
-                        '};'
-                    ],
-                    bugs: [17],
-                    hints: ['Missing return in catch block', 'Function should return something on error']
-                }
-            ],
-            expert: [
-                {
-                    code: [
-                        'const ManaTEAOptimizer = {',
-                        '    calculateSavings(agencyCost, directCost) {',
-                        '        const savings = agencyCost - directCost;',
-                        '        const roi = (savings / directCost) * 100;',
-                        '        ',
-                        '        return {',
-                        '            monthlySavings: savings,',
-                        '            yearlyROI: roi,',
-                        '            breakEvenMonths: directCost / savings,',
-                        '            recommendation: savings > 0 ? "hire" : "reconsider"',
-                        '        };',
-                        '    },',
-                        '    ',
-                        '    optimizeTeamCost(developers, maxBudget) {',
-                        '        return developers',
-                        '            .sort((a, b) => (a.productivity / a.salary) - (b.productivity / b.salary))',
-                        '            .filter(dev => dev.salary <= maxBudget)',
-                        '            .slice(0, Math.floor(maxBudget / developers[0].salary));',
-                        '    }',
-                        '};'
-                    ],
-                    bugs: [8],
-                    hints: ['Division by zero risk', 'What if savings equals 0?', 'Add safety check']
-                },
-                {
-                    code: [
-                        'class PerformanceTracker {',
-                        '    constructor() {',
-                        '        this.metrics = new WeakMap();',
-                        '        this.observers = [];',
-                        '    }',
-                        '    ',
-                        '    trackDeveloper(dev, performance) {',
-                        '        this.metrics.set(dev, performance);',
-                        '        this.notifyObservers(dev, performance);',
-                        '    }',
-                        '    ',
-                        '    getAveragePerformance() {',
-                        '        const values = Array.from(this.metrics.values());',
-                        '        return values.reduce((sum, val) => sum + val, 0) / values.length;',
-                        '    }',
-                        '    ',
-                        '    notifyObservers(dev, performance) {',
-                        '        this.observers.forEach(observer => observer(dev, performance));',
-                        '    }',
-                        '}'
-                    ],
-                    bugs: [13],
-                    hints: ['WeakMap values cannot be iterated', 'WeakMap.values() does not exist', 'Use Map instead']
-                }
-            ]
-        };
-        
-        function setDifficulty(level) {
-            currentDifficulty = level;
-            document.querySelectorAll('.diff-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            const discounts = {junior: '$50', senior: '$75', expert: '$100'};
-            document.getElementById('attempts').innerHTML = `First attempt = ${discounts[level]} discount! 🎯`;
-            
-            generateChallenge();
-        }
-        
-        function generateChallenge() {
-            attempts = 0;
-            bugsFound = 0;
-            challengeStarted = true;
-            
-            const templates = codeTemplates[currentDifficulty];
-            const template = templates[Math.floor(Math.random() * templates.length)];
-            totalBugs = template.bugs.length;
-            
-            const codeArea = document.getElementById('code-area');
-            codeArea.innerHTML = '';
-            
-            template.code.forEach((line, index) => {
-                const lineDiv = document.createElement('div');
-                lineDiv.className = 'code-line';
-                lineDiv.innerHTML = `<span style="color:#555">${String(index + 1).padStart(2, '0')}:</span> ${formatCode(line)}`;
-                
-                if (template.bugs.includes(index)) {
-                    lineDiv.classList.add('bug');
-                    lineDiv.onclick = () => foundBug(index, lineDiv, template);
-                } else {
-                    lineDiv.onclick = () => wrongClick();
-                }
-                
-                codeArea.appendChild(lineDiv);
-            });
-            
-            const cursorDiv = document.createElement('div');
-            cursorDiv.innerHTML = '<span class="manatee-cursor">🦭 ManaTEA is analyzing...</span>';
-            codeArea.appendChild(cursorDiv);
-            
-            document.getElementById('result-area').innerHTML = '';
-            currentTemplate = template;
-            updateHint();
-        }
-        
-        function formatCode(line) {
-            return line
-                .replace(/\b(function|class|const|let|var|if|return|async|await)\b/g, '<span class="code-keyword">$1</span>')
-                .replace(/\b(\d+)\b/g, '<span class="code-number">$1</span>')
-                .replace(/"([^"]*)"/g, '<span class="code-string">"$1"</span>')
-                .replace(/\/\/.*$/g, '<span class="code-comment">        window.onclick = function(event) {
-            const modal = document.getElementById('gameModal');
-            if (event.target === modal) {
-                closeGameModal();</span>')
-                .replace(/\b(calculateDeveloperCost|findMatches|searchDatabase|calculateSavings)\b/g, '<span class="code-function">$1</span>');
-        }
-        
-        let currentTemplate = null;
-        
-        function showPopup(type, title, text, promoCode = null) {
-            const popup = document.createElement('div');
-            popup.className = 'popup-overlay';
-            
-            const content = document.createElement('div');
-            content.className = `popup-content popup-${type}`;
-            
-            let popupHTML = `
-                <div class="popup-title" style="color:${type === 'success' ? '#00ff00' : '#ff4444'}">${title}</div>
-                <div class="popup-text" style="color:${type === 'success' ? '#00ffff' : '#ffaaaa'}">${text}</div>
-            `;
-            
-            if (promoCode) {
-                popupHTML += `
-                    <div class="popup-promo">
-                        🎯 Your Promo Code: <strong>${promoCode}</strong><br>
-                        Use when contacting ManaTEA! 🚀
-                    </div>
-                `;
-            }
-            
-            popupHTML += `<button class="popup-btn" onclick="closePopup()">OK</button>`;
-            
-            content.innerHTML = popupHTML;
-            popup.appendChild(content);
-            document.body.appendChild(popup);
-            
-            return popup;
-        }
-        
-        function closePopup() {
-            const popup = document.querySelector('.popup-overlay');
-            if (popup) {
-                popup.remove();
-            }
-        }
-        
-        function foundBug(bugIndex, element, template) {
-            if (!challengeStarted) return;
-            
-            bugsFound++;
-            element.style.background = '#004d00';
-            element.style.border = '1px solid #00ff00';
-            element.onclick = null;
-            
-            if (bugsFound === totalBugs) {
-                attempts++;
-                challengeStarted = false;
-                
-                if (attempts === 1) {
-                    const discounts = {junior: ['$50', 'MANATEE50'], senior: ['$75', 'MANATEE75'], expert: ['$100', 'MANATEE100']};
-                    const [discount, promoCode] = discounts[currentDifficulty];
-                    
-                    showPopup('success', 
-                        '🎉 PERFECT! First attempt victory! 🦭', 
-                        `Bug squashed like a pro developer!<br>Save ${discount} on your first developer!`,
-                        promoCode
-                    );
-                } else {
-                    showPopup('success',
-                        '✅ Well done! Bug fixed! 🦭',
-                        `Took ${attempts} attempts - practice makes perfect!<br>Try a harder difficulty for a bigger discount! 💪`
-                    );
-                }
-            } else {
-                updateHint();
-            }
-        }
-        
-        function wrongClick() {
-            if (!challengeStarted) return;
-            
-            attempts++;
-            
-            // Якщо перша спроба - закрити гру
-            if (attempts === 1) {
-                challengeStarted = false;
-                
-                showPopup('error',
-                    '🦭 ManaTEA says: "Sorry, better luck next time!"',
-                    'The game will close and lock.<br>Refresh the page to try again! 🔄'
-                );
-                
-                // Закрити гру через 3 секунди
-                setTimeout(() => {
-                    closePopup();
-                    closeGameModal();
-                    // Заблокувати кнопку гри до перезавантаження
-                    const gameBtn = document.querySelector('.game-trigger-btn');
-                    gameBtn.disabled = true;
-                    gameBtn.style.opacity = '0.5';
-                    gameBtn.style.cursor = 'not-allowed';
-                    gameBtn.innerHTML = '🔒 Game Locked - Refresh Page to Play Again';
-                    gameBtn.onclick = () => {
-                        alert('🦭 Please refresh the page to play again!');
-                    };
-                }, 3000);
-                
-                return;
-            }
-            
-            // Для наступних спроб (якщо дійде до них)
-            const resultArea = document.getElementById('result-area');
-            resultArea.innerHTML = '<div class="error">❌ Not a bug! Keep looking... ManaTEA believes in you! 🦭</div>';
-            
-            setTimeout(() => {
-                resultArea.innerHTML = '';
-            }, 2000);
-        }
-        
-        function updateHint() {
-            const hints = currentTemplate.hints;
-            const hintIndex = Math.min(bugsFound, hints.length - 1);
-            
-            document.getElementById('hint-area').innerHTML = `💡 Hint: ${hints[hintIndex]} 🦭`;
-        }
-        
-        function showVictory() {
-            challengeStarted = false;
-            const resultArea = document.getElementById('result-area');
-            
-            if (attempts === 1) {
-                const discounts = {junior: ['$50', 'MANATEE50'], senior: ['$75', 'MANATEE75'], expert: ['$100', 'MANATEE100']};
-                const [discount, promoCode] = discounts[currentDifficulty];
-                
-                resultArea.innerHTML = `
-                    <div class="success">
-                        🎉 PERFECT! First attempt victory! 🦭<br>
-                        Bug squashed like a pro developer!
-                    </div>
-                    <div class="promo-code">
-                        🎯 Your Promo Code: <strong>${promoCode}</strong><br>
-                        Save ${discount} on your first developer!
-                    </div>
-                    <div style="color:#00ffff;text-align:center;margin-top:15px">
-                        Use this code when contacting ManaTEA! 🚀
-                    </div>
-                `;
-            } else {
-                resultArea.innerHTML = `
-                    <div class="success">
-                        ✅ Well done! Bug fixed! 🦭<br>
-                        Took ${attempts} attempts - practice makes perfect!
-                    </div>
-                    <div style="color:#f39c12;text-align:center;margin-top:15px">
-                        Try a harder difficulty for a bigger discount! 💪
-                    </div>
-                `;
-            }
-        }
-        
-        function showSolution() {
-            const solutions = {
-                junior: 'Check for undefined variables, typos in variable names, or missing parameters',
-                senior: 'Look for missing return statements in async functions or error handling',
-                expert: 'Find division by zero risks, incorrect data structure usage, or logic errors'
-            };
-            
-            document.getElementById('result-area').innerHTML = `
-                <div class="hint">
-                    🔍 General hint: ${solutions[currentDifficulty]}<br>
-                    <small>Try again for the promo code discount! 🦭</small>
-                </div>
-            `;
-        }
+       
     </script>
     <script>
 // Pricing data
@@ -861,7 +332,342 @@ const goals = {
 };
 
 // Update calculator
+function updateCalculator() {<script>
+// Pricing data
+const pricing = {
+    junior: { traditional: 4400, manatea: 2500 },
+    middle: { traditional: 5280, manatea: 2900 },
+    senior: { traditional: 6600, manatea: 3500 },
+    techlead: { traditional: 8800, manatea: 4200 }
+};
+
+// Goals pricing in USD
+const goals = {
+    manatee: 400,    // Crystal River manatee tour
+    helicopter: 300, // Helicopter ride Miami  
+    tesla: 10000,    // Tesla down payment
+    vacation: 5000   // European vacation
+};
+
+// Update calculator
 function updateCalculator() {
+    const level = document.getElementById('devLevel').value;
+    const count = parseInt(document.getElementById('devCount').value);
+    
+    const traditional = pricing[level].traditional * count;
+    const manatea = pricing[level].manatea * count;
+    const savings = traditional - manatea;
+    
+    document.getElementById('traditionalCost').textContent = `$${traditional.toLocaleString()}/month`;
+    document.getElementById('manateaCost').textContent = `$${manatea.toLocaleString()}/month`;
+    document.getElementById('savingsAmount').textContent = `$${savings.toLocaleString()}/month`;
+    
+    // Update goals
+    document.getElementById('manateeTime').textContent = `${(goals.manatee / savings).toFixed(1)} months`;
+    document.getElementById('helicopterTime').textContent = `${(goals.helicopter / savings).toFixed(1)} months`;
+    document.getElementById('teslaTime').textContent = `${(goals.tesla / savings).toFixed(1)} months`;
+    document.getElementById('vacationTime').textContent = `${(goals.vacation / savings).toFixed(1)} months`;
+}
+
+// Update team display
+function updateTeamDisplay() {
+    const count = parseInt(document.getElementById('devCount').value);
+    const sliderValue = document.getElementById('sliderValue');
+    const manateesDisplay = document.getElementById('manateesDisplay');
+    
+    sliderValue.textContent = count === 1 ? '1 developer' : `${count} developers`;
+    
+    // Update manatees display
+    const currentManatees = manateesDisplay.children.length;
+    
+    if (count > currentManatees) {
+        // Add manatees
+        for (let i = currentManatees; i < count; i++) {
+            const manatee = document.createElement('span');
+            manatee.className = 'manatee new';
+            manatee.textContent = '🦭';
+            manateesDisplay.appendChild(manatee);
+            
+            // Remove new class after animation
+            setTimeout(() => manatee.classList.remove('new'), 500);
+        }
+    } else if (count < currentManatees) {
+        // Remove manatees
+        for (let i = currentManatees - 1; i >= count; i--) {
+            manateesDisplay.removeChild(manateesDisplay.children[i]);
+        }
+    }
+    
+    updateCalculator();
+}
+
+// Game functionality
+let currentDifficulty = 'junior';
+let gameAttempts = 0;
+let bugsFound = 0;
+let totalBugs = 0;
+let foundBugElements = [];
+
+const challenges = {
+    junior: {
+        bugs: 3,
+        code: `function calculatePrice(developers) {
+    let price = 0;
+    for (let i = 0; i <= developers; i++) {
+        price += 2500;
+    }
+    return price;
+}
+
+let team = 5;
+console.log("Total cost: $" + calculateprice(team));`,
+        bugLines: [3, 8], // Lines with bugs
+        bugTexts: ['i <= developers', 'calculateprice'],
+        solutions: ['Change <= to <', 'Fix function name case'],
+        hints: ['Loop runs one extra time', 'Function name case mismatch']
+    },
+    senior: {
+        bugs: 4,
+        code: `class ManaTEATeam {
+    constructor(size) {
+        this.teamSize = size;
+        this.monthlyCost = this.calculateCost();
+    }
+    
+    calculateCost() {
+        return this.teamSize * 2900;
+    }
+    
+    addDeveloper() {
+        this.teamSize++;
+        return this.calculateCost;
+    }
+}
+
+let team = new ManaTEATeam(3);
+console.log(team.addDeveloper());`,
+        bugLines: [11, 4],
+        bugTexts: ['this.calculateCost;', 'this.calculateCost()'],
+        solutions: ['Add () to call function', 'Update cost after adding developer'],
+        hints: ['Missing function call parentheses', 'Cost not recalculated']
+    },
+    expert: {
+        bugs: 5,
+        code: `async function fetchDeveloperRates() {
+    try {
+        const response = await fetch('/api/rates');
+        const data = await response.json();
+        
+        if (response.ok) {
+            return data.rates;
+        } else {
+            throw new Error('Failed to fetch');
+        }
+    } catch (error) {
+        console.error('Error:', eror);
+        return null;
+    }
+}
+
+const saving = calculateSavings(5000, 3000);
+console.log(\`Savings: $\${saving}\`);`,
+        bugLines: [11, 15],
+        bugTexts: ['eror', 'calculateSavings'],
+        solutions: ['Fix typo: error', 'Function not defined'],
+        hints: ['Variable name typo', 'Missing function definition']
+    }
+};
+
+function openGameModal() {
+    const modal = document.getElementById('gameModal');
+    if (modal) {
+        modal.style.display = 'block';
+        generateChallenge();
+    }
+}
+
+function closeGameModal() {
+    const modal = document.getElementById('gameModal');
+    if (modal) {
+        modal.style.display = 'none';
+    }
+}
+
+function setDifficulty(level) {
+    currentDifficulty = level;
+    
+    // Update active button
+    document.querySelectorAll('.diff-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    
+    // Find and activate the clicked button
+    const buttons = document.querySelectorAll('.diff-btn');
+    for (let btn of buttons) {
+        if (btn.textContent.toLowerCase().includes(level)) {
+            btn.classList.add('active');
+            break;
+        }
+    }
+    
+    generateChallenge();
+}
+
+function generateChallenge() {
+    const challenge = challenges[currentDifficulty];
+    if (!challenge) return;
+    
+    totalBugs = challenge.bugs;
+    bugsFound = 0;
+    foundBugElements = [];
+    
+    const codeArea = document.getElementById('code-area');
+    if (!codeArea) return;
+    
+    const lines = challenge.code.split('\n');
+    
+    let htmlContent = '';
+    lines.forEach((line, index) => {
+        const lineNum = index + 1;
+        let processedLine = line;
+        
+        // Add syntax highlighting
+        processedLine = processedLine
+            .replace(/\b(function|let|const|var|class|constructor|async|await|try|catch|if|else|for|return|throw|new|console)\b/g, '<span class="code-keyword">$1</span>')
+            .replace(/(['"`])((?:\\.|(?!\1)[^\\])*?)\1/g, '<span class="code-string">$1$2$1</span>')
+            .replace(/\b(\d+)\b/g, '<span class="code-number">$1</span>')
+            .replace(/(\/\/.*$)/g, '<span class="code-comment">$1</span>');
+        
+        // Add bugs for specific lines
+        challenge.bugTexts.forEach((bugText, bugIndex) => {
+            if (line.includes(bugText)) {
+                const bugId = `bug-${bugIndex}`;
+                processedLine = processedLine.replace(
+                    bugText, 
+                    `<span class="bug" id="${bugId}" onclick="foundBug('${bugId}', ${bugIndex})">${bugText}</span>`
+                );
+            }
+        });
+        
+        htmlContent += `<div class="code-line">${lineNum}: ${processedLine}</div>`;
+    });
+    
+    codeArea.innerHTML = htmlContent;
+    updateGameStatus();
+}
+
+function foundBug(bugId, bugIndex) {
+    const bugElement = document.getElementById(bugId);
+    if (!bugElement || foundBugElements.includes(bugId)) return;
+    
+    // Mark bug as found
+    bugElement.style.background = '#27ae60';
+    bugElement.style.color = '#fff';
+    bugElement.onclick = null;
+    foundBugElements.push(bugId);
+    bugsFound++;
+    
+    showPopup('success', '🎉 Bug Found!', `Great job! You found: "${challenges[currentDifficulty].solutions[bugIndex]}"`);
+    
+    updateGameStatus();
+    
+    if (bugsFound >= totalBugs) {
+        setTimeout(() => {
+            gameComplete();
+        }, 1500);
+    }
+}
+
+function updateGameStatus() {
+    const attemptsDiv = document.getElementById('attempts');
+    if (!attemptsDiv) return;
+    
+    if (bugsFound === 0) {
+        attemptsDiv.innerHTML = `Find ${totalBugs} bugs to win your discount! 🎯`;
+    } else if (bugsFound < totalBugs) {
+        attemptsDiv.innerHTML = `Found ${bugsFound}/${totalBugs} bugs! Keep going! 🦭`;
+    } else {
+        attemptsDiv.innerHTML = `All bugs found! Generating promo code... 🎉`;
+    }
+}
+
+function gameComplete() {
+    gameAttempts++;
+    let discount = gameAttempts === 1 ? 50 : Math.max(10, 50 - (gameAttempts - 1) * 10);
+    let promoCode = `MANATEA${discount}`;
+    
+    showPopup('success', '🎉 Congratulations!', 
+        `You completed the ${currentDifficulty} challenge!<div class="popup-promo">Promo Code: ${promoCode}</div>Use this code for $${discount} off your first developer!<br><br>📧 Email us at hello@manatea.team with your promo code!`);
+}
+
+function showSolution() {
+    const challenge = challenges[currentDifficulty];
+    if (!challenge) return;
+    
+    let solutionText = 'The bugs are:<br><br>';
+    challenge.solutions.forEach((solution, index) => {
+        solutionText += `${index + 1}. ${solution} - ${challenge.hints[index]}<br>`;
+    });
+    solutionText += '<br>Try the challenge again to earn your discount!';
+    
+    showPopup('error', '💡 Solution Revealed', solutionText);
+}
+
+function showPopup(type, title, message) {
+    // Remove existing popups
+    const existingPopups = document.querySelectorAll('.popup-overlay');
+    existingPopups.forEach(popup => popup.remove());
+    
+    const popup = document.createElement('div');
+    popup.className = 'popup-overlay';
+    popup.innerHTML = `
+        <div class="popup-content popup-${type}">
+            <div class="popup-title">${title}</div>
+            <div class="popup-text">${message}</div>
+            <button class="popup-btn" onclick="this.parentElement.parentElement.remove()">Close</button>
+        </div>
+    `;
+    document.body.appendChild(popup);
+    
+    // Auto remove success messages (except completion)
+    if (type === 'success' && !message.includes('Promo Code')) {
+        setTimeout(() => {
+            if (popup.parentElement) popup.remove();
+        }, 2000);
+    }
+}
+
+// Initialize when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🦭 ManaTEA site loaded!');
+    
+    // Set up calculator event listeners
+    const devLevel = document.getElementById('devLevel');
+    const devCount = document.getElementById('devCount');
+    
+    if (devLevel) {
+        devLevel.addEventListener('change', updateCalculator);
+    }
+    
+    if (devCount) {
+        devCount.addEventListener('input', updateTeamDisplay);
+    }
+    
+    // Initialize display
+    updateTeamDisplay();
+    updateCalculator();
+    
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+        const modal = document.getElementById('gameModal');
+        if (event.target === modal) {
+            closeGameModal();
+        }
+    }
+    
+    console.log('🎮 Game system ready!');
+});
+</script>
     const level = document.getElementById('devLevel').value;
     const count = parseInt(document.getElementById('devCount').value);
     
