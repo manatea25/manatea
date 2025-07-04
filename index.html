@@ -89,9 +89,9 @@
         .answer-btn:hover{border-color:#3498db;background:linear-gradient(135deg,#3498db,#2980b9);transform:translateY(-3px);box-shadow:0 8px 16px rgba(52,152,219,0.3)}
         .answer-btn.correct{border-color:#27ae60;background:linear-gradient(135deg,#27ae60,#2ecc71);animation:correct-flash 0.6s}
         .answer-btn.wrong{border-color:#e74c3c;background:linear-gradient(135deg,#e74c3c,#c0392b);animation:wrong-shake 0.6s}
-        .learn-more-btn{position:absolute;top:10px;right:10px;background:#f39c12;color:#2c3e50;border:none;border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:1rem;font-weight:bold;transition:all 0.3s;opacity:0}
-        .answer-btn.correct .learn-more-btn{opacity:1}
-        .learn-more-btn:hover{background:#e67e22;transform:scale(1.1)}
+        .learn-more-btn{position:absolute;top:10px;right:10px;background:#f39c12;color:#2c3e50;border:none;border-radius:50%;width:35px;height:35px;cursor:pointer;font-size:1.1rem;font-weight:bold;transition:all 0.3s;opacity:0;z-index:10;display:none}
+        .answer-btn.correct .learn-more-btn{opacity:1;display:block}
+        .learn-more-btn:hover{background:#e67e22;transform:scale(1.2);box-shadow:0 4px 12px rgba(243,156,18,0.6)}
         @keyframes correct-flash{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
         @keyframes wrong-shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-10px)}75%{transform:translateX(10px)}}
         .tech-icon{font-size:2rem}
@@ -945,9 +945,10 @@
                 btn.innerHTML = `
                     <span class="tech-icon">${techOptions[tech].icon}</span>
                     <span>${techOptions[tech].name}</span>
-                    <button class="learn-more-btn" onclick="showTechInfo('${companyKey}')" style="display:none;">ℹ️</button>
+                    <button class="learn-more-btn">ℹ️</button>
                 `;
                 
+                // Add main click handler for the answer
                 btn.addEventListener('click', (e) => {
                     if (e.target.classList.contains('learn-more-btn')) {
                         e.stopPropagation();
@@ -955,6 +956,7 @@
                     }
                     selectAnswer(tech, correctTech, companyKey);
                 });
+                
                 answersGrid.appendChild(btn);
             });
         }
@@ -968,35 +970,59 @@
                 
                 if (btn.dataset.answer === correctTech) {
                     btn.classList.add('correct');
-                    // Show learn more button on correct answer
+                    // Show learn more button on correct answer with better visibility
                     const learnBtn = btn.querySelector('.learn-more-btn');
                     if (learnBtn) {
                         learnBtn.style.display = 'block';
+                        learnBtn.style.opacity = '1';
+                        learnBtn.style.pointerEvents = 'auto';
+                        
+                        // Add click handler directly
+                        learnBtn.onclick = function(e) {
+                            e.stopPropagation();
+                            showTechInfo(companyKey);
+                        };
                     }
                 } else if (btn.dataset.answer === selectedTech && selectedTech !== correctTech) {
                     btn.classList.add('wrong');
+                    
+                    // For wrong answers, still show the correct answer's learn more button
+                    const correctBtn = document.querySelector(`[data-answer="${correctTech}"]`);
+                    if (correctBtn) {
+                        correctBtn.classList.add('correct');
+                        const correctLearnBtn = correctBtn.querySelector('.learn-more-btn');
+                        if (correctLearnBtn) {
+                            correctLearnBtn.style.display = 'block';
+                            correctLearnBtn.style.opacity = '1';
+                            correctLearnBtn.style.pointerEvents = 'auto';
+                            correctLearnBtn.onclick = function(e) {
+                                e.stopPropagation();
+                                showTechInfo(companyKey);
+                            };
+                        }
+                    }
                 }
             });
             
             if (selectedTech === correctTech) {
                 correctAnswers++;
+                
+                setTimeout(() => {
+                    currentQuestionIndex++;
+                    
+                    if (currentQuestionIndex >= levels[currentLevel].questions) {
+                        showResult(true);
+                    } else {
+                        showQuestion();
+                    }
+                }, 3000); // Increased time to see the learn more button
             } else {
-                // Game over on wrong answer - show correct answer info
+                // Game over on wrong answer - show correct answer info for learning
                 setTimeout(() => {
                     showResult(false);
-                }, 2500);
+                }, 4000); // More time to explore the tech info
                 return;
             }
-            
-            setTimeout(() => {
-                currentQuestionIndex++;
-                
-                if (currentQuestionIndex >= levels[currentLevel].questions) {
-                    showResult(true);
-                } else {
-                    showQuestion();
-                }
-            }, 2500);
         }
         
         function showResult(success) {
