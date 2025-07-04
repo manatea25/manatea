@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ManaTEA - Meet Your Dream Team</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: #0a0f1c;
+            color: #e8eaed;
+            overflow-x: hidden;
+            line-height: 1.5;
+        }
+        
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateX(100vw);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .slide.active {
+            opacity: 1;
+            transform: translateX(0);
+            z-index: 10;
+        }
+        
+        .slide.prev {
+            transform: translateX(-100vw);
+        }
+        
+        .slide-content {
+            max-width: 1000px;
+            text-align: center;
+            width: 100%;
+        }
+        
+        .greeting {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 700;
+            color: #9aa0a6;
+            margin-bottom: 1rem;
+        }
+        
+        .client-name {
+            font-size: clamp(3.5rem, 10vw, 7rem);
+            font-weight: 900;
+            background: linear-gradient(45deg, #4285f4, #34a853);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 2rem;
+            text-transform: capitalize;
+        }
+        
+        .big-text {
+            font-size: clamp(2rem, 6vw, 4rem);
+            font-weight: 700;
+            margin: 2rem 0;
+            line-height: 1.2;
+        }
+        
+        .medium-text {
+            font-size: clamp(1.2rem, 4vw, 2rem);
+            margin: 1.5rem 0;
+            color: #9aa0a6;
+        }
+        
+        .small-text {
+            font-size: clamp(1rem, 3vw, 1.4rem);
+            color: #9aa0a6;
+            margin: 1rem 0;
+        }
+        
+        .highlight {
+            color: #4285f4;
+            font-weight: 700;
+        }
+        
+        .success {
+            color: #34a853;
+            font-weight: 700;
+        }
+        
+        .price {
+            color: #34a853;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            margin: 1rem 0;
+        }
+        
+        .floating-manatee {
+            font-size: clamp(4rem, 10vw, 8rem);
+            animation: float 3s ease-in-out infinite;
+            margin: 2rem 0;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .feature-card {
+            background: rgba(66, 133, 244, 0.1);
+            border: 2px solid #4285f4;
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: #34a853;
+            background: rgba(52, 168, 83, 0.1);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #4285f4;
+        }
+        
+        .feature-desc {
+            color: #9aa0a6;
+            line-height: 1.6;
+        }
+        
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+        
+        .tech-item {
+            background: rgba(52, 168, 83, 0.1);
+            border: 2px solid #34a853;
+            border-radius: 15px;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            transition: all 0.3s;
+            font-weight: 600;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .tech-item:hover {
+            transform: scale(1.05);
+            background: rgba(52, 168, 83, 0.2);
+        }
+        
+        .tech-icon {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+            filter: brightness(0) saturate(100%) invert(69%) sepia(57%) saturate(464%) hue-rotate(92deg) brightness(95%) contrast(89%);
+            transition: all 0.3s;
+        }
+        
+        .tech-item:hover .tech-icon {
+            filter: brightness(0) saturate(100%) invert(100%);
+            transform: scale(1.1);
+        }
+        
+        .pricing-card {
+            background: rgba(52, 168, 83, 0.1);
+            border: 3px solid #34a853;
+            border-radius: 25px;
+            padding: 3rem;
+            margin: 2rem auto;
+            max-width: 600px;
+            position: relative;
+        }
+        
+        .pricing-card::before {
+            content: "🔥 BEST DEAL";
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #34a853;
+            color: white;
+            padding: 0.5rem 2rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+        
+        .project-placeholder {
+            background: linear-gradient(45deg, rgba(66, 133, 244, 0.1), rgba(52, 168, 83, 0.1));
+            border: 3px dashed #4285f4;
+            border-radius: 20px;
+            padding: 4rem 2rem;
+            margin: 2rem 0;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .project-placeholder:hover {
+            border-color: #34a853;
+            background: linear-gradient(45deg, rgba(52, 168, 83, 0.1), rgba(66, 133, 244, 0.1));
+        }
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .project-card {
+            background: rgba(66, 133, 244, 0.1);
+            border: 2px solid #4285f4;
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: #34a853;
+        }
+        
+        .project-type {
+            color: #4285f4;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .project-desc {
+            color: #9aa0a6;
+            line-height: 1.6;
+        }
+        
+        .cta-button {
+            background: linear-gradient(45deg, #4285f4, #34a853);
+            color: white;
+            padding: 1.5rem 3rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            margin: 2rem 0;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(66, 133, 244, 0.3);
+        }
+        
+        .navigation {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 1rem;
+            z-index: 1000;
+        }
+        
+        .nav-btn {
+            background: rgba(66, 133, 244, 0.2);
+            border: 2px solid #4285f4;
+            color: #4285f4;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+        
+        .nav-btn:hover {
+            background: #4285f4;
+            color: white;
+        }
+        
+        .nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #4285f4, #34a853);
+            transition: width 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .slide-counter {
+            color: #9aa0a6;
+            font-size: 0.9rem;
+            align-self: center;
+        }
+        
+        .industry-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .industry-tag {
+            background: rgba(66, 133, 244, 0.2);
+            color: #4285f4;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .industry-tag:hover {
+            background: #4285f4;
+            color: white;
+        }
+        
+        .funny-text {
+            font-style: italic;
+            color: #9aa0a6;
+            margin: 1rem 0;
+        }
+        
+        @media (max-width: 768px) {
+            .features-grid, .tech-grid, .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .navigation {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .slide {
+                padding: 1rem;
+            }
+            
+            .slide-content {
+                max-height: 90vh;
+                overflow-y: auto;
+            }
+        }
+        
+        /* Background animation */
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(66, 133, 244, 0.02), transparent);
+            animation: rotate 20s linear infinite;
+            z-index: -1;
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Progress Bar -->
+    <div class="progress-bar" id="progressBar"></div>
+    
+    <!-- Slide 1: Welcome -->
+    <div class="slide active" id="slide1">
+        <div class="slide-content">
+            <div class="greeting">Hi,</div>
+            <div class="client-name" id="clientName">John</div>
+            <div class="big-text">Welcome to <span class="highlight">ManaTEA</span></div>
+            <div class="floating-manatee">🦭</div>
+            <div class="medium-text">Where amazing developers meet amazing projects</div>
+            <div class="small-text">
+                Let's build something incredible together ✨
+            </div>
+        </div>
+    </div>
+    
+    <!-- Slide 2: Our Pricing -->
+    <div class="slide" id="slide2">
+        <div class="slide-content">
+            <div class="big-text">Simple, transparent <span class="success">pricing</span></div>
+            
+            <div class="pricing-card">
+                <div class="price">$2,900</div>
+                <div class="medium-text">per month per developer</div>
+                <div class="small-text" style="margin: 2rem 0;">
+                    Developer salary: $2,500<br>
+                    ManaTEA fee: $400<br>
+                    <span class="success">That's it. No hidden costs.</span>
+                </div>
+                
+                <div class="features-grid" style="margin: 2rem 0;">
+                    <div>✅ 48h matching guarantee</div>
+                    <div>✅ Unlimited replacements</div>
+                    <div>✅ Direct communication</div>
+                    <div>✅ Option to hire permanently</div>
+                </div>
+            </div>
+            
+            <div class="floating-manatee">💰</div>
+            <div class="funny-text">
+                No account managers to feed. No fancy offices to rent. Just pure talent.
+            </div>
+        </div>
+    </div>
+    
+    <!-- Slide 3: Tech Stack -->
+    <div class="slide" id="slide3">
+        <div class="slide-content">
+            <div class="big-text">We speak <span class="highlight">all languages</span></div>
+            <div class="medium-text">Programming languages, that is 😄</div>
+            
+            <div class="tech-grid">
+                <div class="tech-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript" class="tech-icon">
+                    <div>JavaScript</div>
+                </div>
+                <div class="tech-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" class="tech-icon">
+                    <div>Python</div>
+                </div>
+                <div class="tech-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React" class="tech-icon">
+                    <div>React</div>
+                </div>
+                <div class="tech-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Node.js" class="tech-icon">
+                    <div>Node.js</div>
+                </div>
+                <div class="tech-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" alt="PHP" class="tech-icon">
+                    <div>PHP</div>
+                </div>
+                <div class="tech-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-plain.svg" alt="Laravel" class="tech-icon">
+                    <div>Laravel</div>
+                </div>
+                <div class="tech-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg" alt="Vue.js" class="tech-icon">
+                    <div>Vue.js</div>
+                </div>
+                <div class="tech-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg" alt="Angular" class="tech-icon">
+                    <div>Angular</div>
+                </div>
+                <div class="tech-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java" class="tech-icon">
+                    <div>Java</div>
+                </div>
+                <div class="tech-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" alt="Spring" class="tech-icon">
+                    <div>Spring</div>
+                </div>
+                <div class="tech-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg" alt="C#" class="tech-icon">
+                    <div>C#</div>
+                </div>
+                <div class="tech-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dotnetcore/dotnetcore-original.svg" alt=".NET" class="tech-icon">
+                    <div>.NET</div>
+                </div>
+                <div class="tech-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg" alt="Go" class="tech-icon">
+                    <div>Go</div>
+                </div>
+                <div class="tech-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/rust/rust-plain.svg" alt="Rust" class="tech-icon">
+                    <div>Rust</div>
+                </div>
+                <div class="tech-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/swift/swift-original.svg" alt="Swift" class="tech-icon">
+                    <div>Swift</div>
+                </div>
+                <div class="tech-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kotlin/kotlin-original.svg" alt="Kotlin" class="tech-icon">
+                    <div>Kotlin</div>
+                </div>
+                <div class="tech-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg" alt="Flutter" class="tech-icon">
+                    <div>Flutter</div>
+                </div>
+                <div class="tech-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React Native" class="tech-icon">
+                    <div>React Native</div>
+                </div>
+                <div class="tech-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="DevOps" class="tech-icon">
+                    <div>DevOps</div>
+                </div>
+                <div class="tech-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg" alt="AWS" class="tech-icon">
+                    <div>AWS</div>
+                </div>
+                <div class="tech-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg" alt="Kubernetes" class="tech-icon">
+                    <div>Kubernetes</div>
+                </div>
+                <div class="tech-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL" class="tech-icon">
+                    <div>MySQL</div>
+                </div>
+                <div class="tech-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL" class="tech-icon">
+                    <div>PostgreSQL</div>
+                </div>
+                <div class="tech-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" alt="MongoDB" class="tech-icon">
+                    <div>MongoDB</div>
+                </div>
+                <div class="tech-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg" alt="Redis" class="tech-icon">
+                    <div>Redis</div>
+                </div>
+                <div class="tech-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/graphql/graphql-plain.svg" alt="GraphQL" class="tech-icon">
+                    <div>GraphQL</div>
+                </div>
+                <div class="tech-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" alt="TypeScript" class="tech-icon">
+                    <div>TypeScript</div>
+                </div>
+                <div class="tech-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" alt="Next.js" class="tech-icon">
+                    <div>Next.js</div>
+                </div>
+            </div>
+            
+            <div class="floating-manatee">🔧</div>
+            <div class="funny-text">
+                From mobile apps to AI - we've got the stack covered!
+            </div>
+        </div>
+    </div>
+    
+    <!-- Slide 4: How We Work -->
+    <div class="slide" id="slide4">
+        <div class="slide-content">
+            <div class="big-text">How we <span class="highlight">work together</span></div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <div class="feature-title">48 Hour Matching</div>
+                    <div class="feature-desc">Tell us what you need, we find your perfect developer in 2 days max</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <div class="feature-title">Direct Communication</div>
+                    <div class="feature-desc">No middlemen, no project managers - just you and your developer</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <div class="feature-title">Unlimited Replacements</div>
+                    <div class="feature-desc">Not happy? We'll find you another developer immediately</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🏠</div>
+                    <div class="feature-title">Hire Permanently</div>
+                    <div class="feature-desc">Love your developer? Pay once and they're yours forever</div>
+                </div>
+            </div>
+            
+            <div class="floating-manatee">🤝</div>
+            <div class="funny-text">
+                Simple, transparent, effective. Like a manatee's approach to life.
+            </div>
+        </div>
+    </div>
+    
+    <!-- Slide 5: Your Project Ideas -->
+    <div class="slide" id="slide5">
+        <div class="slide-content">
+            <div class="big-text">Perfect for <span class="success">your projects</span></div>
+            
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-type">💻 Web Applications</div>
+                    <div class="project-desc">E-commerce platforms, SaaS tools, admin dashboards - we build it all</div>
+                </div>
+                <div class="project-card">
+                    <div class="project-type">📱 Mobile Apps</div>
+                    <div class="project-desc">iOS, Android, React Native, Flutter - native or cross-platform</div>
+                </div>
+                <div class="project-card">
+                    <div class="project-type">🤖 AI & ML</div>
+                    <div class="project-desc">Machine learning models, chatbots, data analysis, automation</div>
+                </div>
+                <div class="project-card">
+                    <div class="project-type">☁️ Cloud & DevOps</div>
+                    <div class="project-desc">AWS, Azure, Docker, Kubernetes - scalable infrastructure</div>
+                </div>
+                <div class="project-card">
+                    <div class="project-type">🛒 E-commerce</div>
+                    <div class="project-desc">Shopify, WooCommerce, custom stores - sell more, worry less</div>
+                </div>
+                <div class="project-card">
+                    <div class="project-type">🎨 Custom Solutions</div>
+                    <div class="project-desc">Have a crazy idea? We love challenges and unique projects</div>
+                </div>
+            </div>
+            
+            <div class="floating-manatee">🚀</div>
+        </div>
+    </div>
+    
+    <!-- Slide 6: Call to Action -->
+    <div class="slide" id="slide6">
+        <div class="slide-content">
+            <div class="big-text">Ready to <span class="success">get started</span>?</div>
+            
+            <div class="floating-manatee">🦭</div>
+            
+            <div class="medium-text">Let's build your dream project together</div>
+            
+            <div class="small-text" style="margin: 3rem 0;">
+                • 48 hours to find your developer<br>
+                • $2,900/month all-inclusive<br>
+                • Direct communication, no BS<br>
+                • Unlimited replacements<br>
+                • Option to hire permanently
+            </div>
+            
+            <a href="mailto:hello@manatea.team" class="cta-button">
+                🚀 Let's Talk
+            </a>
+            
+            <div class="funny-text">
+                Your next great developer is just a click away!
+            </div>
+        </div>
+    </div>
+    
+    <!-- Navigation -->
+    <div class="navigation">
+        <button class="nav-btn" id="prevBtn" onclick="previousSlide()">← Previous</button>
+        <span class="slide-counter" id="slideCounter">1 / 6</span>
+        <button class="nav-btn" id="nextBtn" onclick="nextSlide()">Next →</button>
+    </div>
+    
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 6;
+        
+        // Get client name from URL
+        function getClientName() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const name = urlParams.get('name');
+            return name || 'John'; // Default name if not provided
+        }
+        
+        // Initialize presentation
+        function initPresentation() {
+            const clientName = getClientName();
+            document.getElementById('clientName').textContent = clientName;
+            updateProgress();
+            updateNavigation();
+        }
+        
+        function showSlide(slideNumber) {
+            // Hide all slides
+            const slides = document.querySelectorAll('.slide');
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active', 'prev');
+                if (index + 1 < slideNumber) {
+                    slide.classList.add('prev');
+                } else if (index + 1 === slideNumber) {
+                    slide.classList.add('active');
+                }
+            });
+            
+            currentSlide = slideNumber;
+            updateProgress();
+            updateNavigation();
+        }
+        
+        function nextSlide() {
+            if (currentSlide < totalSlides) {
+                showSlide(currentSlide + 1);
+            }
+        }
+        
+        function previousSlide() {
+            if (currentSlide > 1) {
+                showSlide(currentSlide - 1);
+            }
+        }
+        
+        function updateProgress() {
+            const progress = (currentSlide / totalSlides) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+        
+        function updateNavigation() {
+            document.getElementById('slideCounter').textContent = `${currentSlide} / ${totalSlides}`;
+            document.getElementById('prevBtn').disabled = currentSlide === 1;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides;
+        }
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowRight') {
+                nextSlide();
+            } else if (event.key === 'ArrowLeft') {
+                previousSlide();
+            }
+        });
+        
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', initPresentation);
+    </script>
+</body>
+</html>
