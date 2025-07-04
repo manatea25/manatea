@@ -7,19 +7,21 @@
     <style>
         /* Custom Images - Replace these URLs with your images */
         .custom-logo {
-            width: 100px;
-            height: 100px;
+            width: 120px;
+            height: 120px;
             background-image: url('./images/logo.png');
-            background-size: cover;
+            background-size: contain;
+            background-repeat: no-repeat;
             background-position: center;
             border-radius: 8px;
         }
         
         .custom-hero-image {
-            width: 230px;
-            height: 230px;
+            width: 250px;
+            height: 250px;
             background-image: url('./images/hero.png');
-            background-size: cover;
+            background-size: contain;
+            background-repeat: no-repeat;
             background-position: center;
             border-radius: 20px;
             margin: 20px auto;
@@ -27,12 +29,20 @@
         }
         
         .custom-benefit-icon {
-            width: 80px;
-            height: 80px;
-            background-size: cover;
+            width: 100px;
+            height: 100px;
+            background-size: contain;
+            background-repeat: no-repeat;
             background-position: center;
             border-radius: 15px;
             margin: 0 auto 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .custom-benefit-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 30px rgba(243,156,18,0.3);
         }
         
         .icon1 { background-image: url('./images/icon1.png'); }
@@ -46,15 +56,15 @@
         *{margin:0;padding:0;box-sizing:border-box}
         body{font-family:Arial,sans-serif;background:#0a0e1a;color:#ecf0f1;line-height:1.6}
         .container{max-width:1200px;margin:0 auto;padding:0 20px}
-        .header{position:fixed;top:0;left:0;right:0;background:rgba(10,14,26,.95);backdrop-filter:blur(10px);z-index:1000;padding:30px 0;border-bottom:2px solid #3498db}
+        .header{position:fixed;top:0;left:0;right:0;background:rgba(10,14,26,.95);backdrop-filter:blur(10px);z-index:1000;padding:40px 0;border-bottom:2px solid #3498db}
         .nav{display:flex;justify-content:space-between;align-items:center}
-        .logo{display:flex;align-items:center;gap:20px;text-decoration:none}
-        .logo-text{font-size:2.5rem;font-weight:900;color:#3498db}
-        .nav-links{display:flex;gap:30px;list-style:none}
-        .nav-links a{color:#ecf0f1;text-decoration:none;font-weight:600;transition:color .3s}
-        .nav-links a:hover{color:#3498db}
+        .logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+        .logo-text{display:none}
+        .nav-links{display:flex;gap:40px;list-style:none}
+        .nav-links a{color:#ecf0f1;text-decoration:none;font-weight:700;font-size:1.3rem;transition:all .3s;padding:10px 20px;border-radius:8px}
+        .nav-links a:hover{color:#f39c12;background:rgba(243,156,18,0.1);transform:translateY(-2px)}
         
-        .hero{min-height:115vh;display:flex;align-items:center;justify-content:center;text-align:center;background:linear-gradient(135deg,#0a0e1a 0%,#1a2332 50%,#0a0e1a 100%);margin-top:120px}
+        .hero{min-height:115vh;display:flex;align-items:center;justify-content:center;text-align:center;background:linear-gradient(135deg,#0a0e1a 0%,#1a2332 50%,#0a0e1a 100%);margin-top:140px}
         .stop-text{font-size:clamp(3rem,8vw,6rem);font-weight:900;color:#e74c3c;margin-bottom:20px;animation:pulse 2s infinite}
         @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
         .overpaying-text{font-size:clamp(2rem,6vw,4rem);font-weight:700;color:#3498db;margin-bottom:40px}
@@ -145,7 +155,15 @@
         .play-again-btn{background:linear-gradient(45deg,#3498db,#2980b9);color:#fff;border:none;padding:15px 30px;border-radius:10px;font-size:1.2rem;font-weight:bold;cursor:pointer;transition:all 0.3s;margin-top:20px}
         .play-again-btn:hover{transform:translateY(-3px);box-shadow:0 10px 20px rgba(52,152,219,0.3)}
         
-        /* Tech Info Modal */
+        /* Benefit Modal Styles */
+        .benefit-modal{display:none;position:fixed;z-index:20000;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,0.8);backdrop-filter:blur(8px)}
+        .benefit-modal-content{background:#0a0e1a;margin:5% auto;padding:0;border:3px solid #f39c12;border-radius:20px;width:90%;max-width:600px;max-height:80vh;overflow-y:auto;box-shadow:0 0 50px rgba(243,156,18,0.5)}
+        .benefit-modal-header{background:linear-gradient(135deg,#f39c12,#e67e22);color:#2c3e50;padding:20px;border-radius:17px 17px 0 0;display:flex;justify-content:space-between;align-items:center}
+        .benefit-modal-close{background:none;border:none;color:#2c3e50;font-size:2rem;cursor:pointer;font-weight:bold}
+        .benefit-modal-body{padding:30px;color:#ecf0f1;text-align:center}
+        .benefit-modal-image{width:150px;height:150px;background-size:contain;background-repeat:no-repeat;background-position:center;margin:0 auto 20px;border-radius:15px}
+        .benefit-modal-title{color:#f39c12;font-size:2rem;font-weight:bold;margin-bottom:15px}
+        .benefit-modal-text{font-size:1.2rem;line-height:1.6;margin-bottom:20px}
         .tech-info-modal{display:none;position:fixed;z-index:20000;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,0.9);backdrop-filter:blur(8px)}
         .tech-info-content{background:#0a0e1a;margin:3% auto;padding:0;border:3px solid #f39c12;border-radius:20px;width:90%;max-width:800px;max-height:85vh;overflow-y:auto;box-shadow:0 0 50px rgba(243,156,18,0.5)}
         .tech-info-header{background:linear-gradient(135deg,#f39c12,#e67e22);color:#2c3e50;padding:20px;border-radius:17px 17px 0 0;display:flex;justify-content:space-between;align-items:center}
@@ -200,6 +218,9 @@
             .answers-grid{grid-template-columns:1fr}
             .level-selection{flex-direction:column;align-items:center}
             .game-container{padding:20px}
+            .header{padding:20px 0}
+            .custom-logo{width:80px;height:80px}
+            .nav-links a{font-size:1.1rem;padding:8px 15px}
         }
     </style>
 </head>
@@ -208,7 +229,6 @@
         <nav class="nav container">
             <a href="#" class="logo">
                 <div class="custom-logo"></div>
-                <span class="logo-text">ManaTEA</span>
             </a>
             <ul class="nav-links">
                 <li><a href="#calculator">Calculator</a></li>
@@ -226,6 +246,20 @@
             <div class="custom-hero-image"></div>
             <div class="promise-text">See how much you can save with our model</div>
             <div class="manatee-tease">🌊 We'll show you the exact numbers.</div>
+        </div>
+        
+        <!-- Benefit Details Modal -->
+        <div id="benefitModal" class="benefit-modal">
+            <div class="benefit-modal-content">
+                <div class="benefit-modal-header">
+                    <h2 id="benefit-modal-title">Benefit Details</h2>
+                    <button class="benefit-modal-close" onclick="closeBenefitModal()">&times;</button>
+                </div>
+                <div class="benefit-modal-body">
+                    <div id="benefit-modal-image" class="benefit-modal-image"></div>
+                    <div id="benefit-modal-text" class="benefit-modal-text"></div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -394,37 +428,37 @@
             <h2 class="benefits-title">⚡ What We Actually Do</h2>
             <div class="benefits-grid">
                 <div class="benefit-card">
-                    <div class="custom-benefit-icon icon1"></div>
+                    <div class="custom-benefit-icon icon1" onclick="showBenefitModal('pool')"></div>
                     <div class="benefit-title">Massive Developer Pool</div>
                     <div class="benefit-text">1000+ pre-vetted developers ready to work. We already found them.</div>
                     <div class="benefit-price">Immediate access</div>
                 </div>
                 <div class="benefit-card">
-                    <div class="custom-benefit-icon icon2"></div>
+                    <div class="custom-benefit-icon icon2" onclick="showBenefitModal('speed')"></div>
                     <div class="benefit-title">48 Hour Matching</div>
                     <div class="benefit-text">We find your developer in 2 days, not 2 weeks.</div>
                     <div class="benefit-price">Lightning fast</div>
                 </div>
                 <div class="benefit-card">
-                    <div class="custom-benefit-icon icon3"></div>
+                    <div class="custom-benefit-icon icon3" onclick="showBenefitModal('money')"></div>
                     <div class="benefit-title">Pay Salary Directly</div>
                     <div class="benefit-text">Pay their actual salary + small monthly fee to us.</div>
                     <div class="benefit-price">No markup</div>
                 </div>
                 <div class="benefit-card">
-                    <div class="custom-benefit-icon icon4"></div>
+                    <div class="custom-benefit-icon icon4" onclick="showBenefitModal('hire')"></div>
                     <div class="benefit-title">Hire Them Permanently</div>
                     <div class="benefit-text">Pay one-time fee = developer is yours forever.</div>
                     <div class="benefit-price">Own your team</div>
                 </div>
                 <div class="benefit-card">
-                    <div class="custom-benefit-icon icon5"></div>
+                    <div class="custom-benefit-icon icon5" onclick="showBenefitModal('quality')"></div>
                     <div class="benefit-title">Senior-Level Quality</div>
                     <div class="benefit-text">Every developer tested by senior engineers. No juniors pretending.</div>
                     <div class="benefit-price">Actually good devs</div>
                 </div>
                 <div class="benefit-card">
-                    <div class="custom-benefit-icon icon6"></div>
+                    <div class="custom-benefit-icon icon6" onclick="showBenefitModal('simple')"></div>
                     <div class="benefit-title">No Agency BS</div>
                     <div class="benefit-text">No account managers, no project managers, no meeting overhead.</div>
                     <div class="benefit-price">Just results</div>
@@ -928,7 +962,118 @@
             updateCalculator();
         }
 
-        // Game functions
+        // Benefit modal data with humor
+        const benefitDetails = {
+            pool: {
+                title: "🏊‍♂️ Our Developer Pool is MASSIVE",
+                image: "icon1",
+                text: `
+                    <p><strong>Think Olympic-sized pool, but filled with developers instead of water! 🏊‍♂️</strong></p>
+                    <br>
+                    <p>• <strong>1000+ developers</strong> who actually know what they're doing</p>
+                    <p>• Pre-tested so you don't get the "I'll learn React tomorrow" types</p>
+                    <p>• All swimming in different tech stacks (Python, React, Node.js, etc.)</p>
+                    <p>• No life guards needed - they're all professionals! 🦭</p>
+                    <br>
+                    <p><em>Pro tip: Our pool doesn't have a shallow end - all developers are deep-skilled!</em></p>
+                `
+            },
+            speed: {
+                title: "⚡ 48 Hours: Faster Than Your Pizza Delivery",
+                image: "icon2", 
+                text: `
+                    <p><strong>While other agencies are still "reviewing your requirements" for 2 weeks... 🐌</strong></p>
+                    <br>
+                    <p>• <strong>Monday:</strong> You tell us what you need</p>
+                    <p>• <strong>Tuesday:</strong> We find your perfect developer</p>
+                    <p>• <strong>Wednesday:</strong> They're already coding for you!</p>
+                    <br>
+                    <p>🏃‍♂️ <strong>Fun fact:</strong> Our matching process is so fast, it makes cheetahs jealous!</p>
+                    <br>
+                    <p><em>Warning: Side effects may include sudden productivity increases and uncontrollable smiling.</em></p>
+                `
+            },
+            money: {
+                title: "💰 Pay Salaries, Not Agency Markups",
+                image: "icon3",
+                text: `
+                    <p><strong>Traditional agencies be like: "That'll be $8000 for a $3000 developer" 🤡</strong></p>
+                    <br>
+                    <p>• You pay the developer's actual salary: <strong>$3000</strong></p>
+                    <p>• Plus our small fee: <strong>$400</strong></p>
+                    <p>• Agency markup you avoid: <strong>$4600</strong></p>
+                    <br>
+                    <p>🎯 <strong>Math made simple:</strong> More money in your pocket = more manatee tours! 🦭</p>
+                    <br>
+                    <p><em>Revolutionary concept: Paying fair prices for actual work!</em></p>
+                `
+            },
+            hire: {
+                title: "🔑 Own Your Developer Forever",
+                image: "icon4",
+                text: `
+                    <p><strong>Like adopting a pet, but they write code instead of chewing shoes! 🐕‍🦺</strong></p>
+                    <br>
+                    <p>• Work with them for 3 months</p>
+                    <p>• Pay one-time ownership fee</p>
+                    <p>• They become YOUR permanent team member</p>
+                    <p>• No more agencies in between</p>
+                    <br>
+                    <p>🏠 <strong>Benefits:</strong> They learn your business, your quirks, your coffee preferences!</p>
+                    <br>
+                    <p><em>Unlike pets, they don't need daily walks (but coffee breaks are appreciated).</em></p>
+                `
+            },
+            quality: {
+                title: "🎯 Senior-Level: No Fake It Till You Make It",
+                image: "icon5",
+                text: `
+                    <p><strong>Our testing process is more thorough than airport security! ✈️</strong></p>
+                    <br>
+                    <p>• <strong>Technical interview</strong> by actual senior engineers</p>
+                    <p>• <strong>Code review</strong> of real projects</p>
+                    <p>• <strong>Problem-solving test</strong> (not just "reverse a string")</p>
+                    <p>• <strong>English communication</strong> check</p>
+                    <br>
+                    <p>🚫 <strong>What we reject:</strong> Tutorial followers, copy-paste masters, "stack overflow warriors"</p>
+                    <br>
+                    <p><em>Result: Developers who actually know their stuff, not just how to Google it!</em></p>
+                `
+            },
+            simple: {
+                title: "🚫 Zero BS Policy Enforced",
+                image: "icon6",
+                text: `
+                    <p><strong>We killed all the middle managers. RIP to unnecessary meetings! 💀</strong></p>
+                    <br>
+                    <p>❌ No "account managers" managing other managers</p>
+                    <p>❌ No "let's circle back to sync up" meetings</p>
+                    <p>❌ No 47-slide presentations about synergy</p>
+                    <p>❌ No project managers managing the project of managing projects</p>
+                    <br>
+                    <p>✅ <strong>Just you + developer = magic happens</strong></p>
+                    <br>
+                    <p><em>Clean, simple, effective. Like a manatee's lifestyle! 🦭</em></p>
+                `
+            }
+        };
+
+        function showBenefitModal(benefitType) {
+            const modal = document.getElementById('benefitModal');
+            const benefit = benefitDetails[benefitType];
+            
+            document.getElementById('benefit-modal-title').textContent = benefit.title;
+            document.getElementById('benefit-modal-text').innerHTML = benefit.text;
+            
+            const imageEl = document.getElementById('benefit-modal-image');
+            imageEl.style.backgroundImage = `url('./images/${benefit.image}.png')`;
+            
+            modal.style.display = 'block';
+        }
+
+        function closeBenefitModal() {
+            document.getElementById('benefitModal').style.display = 'none';
+        }
         function openGameModal() {
             if (hasPlayedOnce) {
                 alert('🦭 You can only play once! Refresh the page to try again.');
@@ -1216,6 +1361,7 @@
             window.addEventListener('click', function(event) {
                 const gameModal = document.getElementById('gameModal');
                 const techModal = document.getElementById('techInfoModal');
+                const benefitModal = document.getElementById('benefitModal');
                 
                 if (event.target === gameModal) {
                     closeGameModal();
@@ -1223,6 +1369,10 @@
                 
                 if (event.target === techModal) {
                     closeTechInfo();
+                }
+                
+                if (event.target === benefitModal) {
+                    closeBenefitModal();
                 }
             });
             
