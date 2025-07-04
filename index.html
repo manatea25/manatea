@@ -311,6 +311,15 @@
         </div>
     </footer>
 <script>
+    // Quick fixes for game modal
+function openGameModal() {
+    document.getElementById('gameModal').style.display = 'block';
+    generateChallenge();
+}
+
+function closeGameModal() {
+    document.getElementById('gameModal').style.display = 'none';
+}
 // Pricing data
 const pricing = {
     junior: { traditional: 4400, manatea: 2500 },
