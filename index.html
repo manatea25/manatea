@@ -310,29 +310,7 @@
             </div>
         </div>
     </footer>
-
-    <script>
-       
-    </script>
-    <script>
-// Pricing data
-const pricing = {
-    junior: { traditional: 4400, manatea: 2500 },
-    middle: { traditional: 5280, manatea: 2900 },
-    senior: { traditional: 6600, manatea: 3500 },
-    techlead: { traditional: 8800, manatea: 4200 }
-};
-
-// Goals pricing in USD
-const goals = {
-    manatee: 400,    // Crystal River manatee tour
-    helicopter: 300, // Helicopter ride Miami  
-    tesla: 10000,    // Tesla down payment
-    vacation: 5000   // European vacation
-};
-
-// Update calculator
-function updateCalculator() {<script>
+<script>
 // Pricing data
 const pricing = {
     junior: { traditional: 4400, manatea: 2500 },
@@ -421,7 +399,6 @@ const challenges = {
 
 let team = 5;
 console.log("Total cost: $" + calculateprice(team));`,
-        bugLines: [3, 8], // Lines with bugs
         bugTexts: ['i <= developers', 'calculateprice'],
         solutions: ['Change <= to <', 'Fix function name case'],
         hints: ['Loop runs one extra time', 'Function name case mismatch']
@@ -446,7 +423,6 @@ console.log("Total cost: $" + calculateprice(team));`,
 
 let team = new ManaTEATeam(3);
 console.log(team.addDeveloper());`,
-        bugLines: [11, 4],
         bugTexts: ['this.calculateCost;', 'this.calculateCost()'],
         solutions: ['Add () to call function', 'Update cost after adding developer'],
         hints: ['Missing function call parentheses', 'Cost not recalculated']
@@ -471,7 +447,6 @@ console.log(team.addDeveloper());`,
 
 const saving = calculateSavings(5000, 3000);
 console.log(\`Savings: $\${saving}\`);`,
-        bugLines: [11, 15],
         bugTexts: ['eror', 'calculateSavings'],
         solutions: ['Fix typo: error', 'Function not defined'],
         hints: ['Variable name typo', 'Missing function definition']
@@ -667,264 +642,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     console.log('🎮 Game system ready!');
 });
-</script>
-    const level = document.getElementById('devLevel').value;
-    const count = parseInt(document.getElementById('devCount').value);
-    
-    const traditional = pricing[level].traditional * count;
-    const manatea = pricing[level].manatea * count;
-    const savings = traditional - manatea;
-    
-    document.getElementById('traditionalCost').textContent = `$${traditional.toLocaleString()}/month`;
-    document.getElementById('manateaCost').textContent = `$${manatea.toLocaleString()}/month`;
-    document.getElementById('savingsAmount').textContent = `$${savings.toLocaleString()}/month`;
-    
-    // Update goals
-    document.getElementById('manateeTime').textContent = `${(goals.manatee / savings).toFixed(1)} months`;
-    document.getElementById('helicopterTime').textContent = `${(goals.helicopter / savings).toFixed(1)} months`;
-    document.getElementById('teslaTime').textContent = `${(goals.tesla / savings).toFixed(1)} months`;
-    document.getElementById('vacationTime').textContent = `${(goals.vacation / savings).toFixed(1)} months`;
-}
-
-// Update team display
-function updateTeamDisplay() {
-    const count = parseInt(document.getElementById('devCount').value);
-    const sliderValue = document.getElementById('sliderValue');
-    const manateesDisplay = document.getElementById('manateesDisplay');
-    
-    sliderValue.textContent = count === 1 ? '1 developer' : `${count} developers`;
-    
-    // Update manatees display
-    const currentManatees = manateesDisplay.children.length;
-    
-    if (count > currentManatees) {
-        // Add manatees
-        for (let i = currentManatees; i < count; i++) {
-            const manatee = document.createElement('span');
-            manatee.className = 'manatee new';
-            manatee.textContent = '🦭';
-            manateesDisplay.appendChild(manatee);
-            
-            // Remove new class after animation
-            setTimeout(() => manatee.classList.remove('new'), 500);
-        }
-    } else if (count < currentManatees) {
-        // Remove manatees
-        for (let i = currentManatees - 1; i >= count; i--) {
-            manateesDisplay.removeChild(manateesDisplay.children[i]);
-        }
-    }
-    
-    updateCalculator();
-}
-
-// Game functionality
-let currentDifficulty = 'junior';
-let gameAttempts = 0;
-let bugsFound = 0;
-let totalBugs = 0;
-
-const challenges = {
-    junior: {
-        bugs: 3,
-        code: `function calculatePrice(developers) {
-    let price = 0;
-    for (let i = 0; i <= developers; i++) {
-        price += 2500;
-    }
-    return price;
-}
-
-let team = 5;
-console.log("Total cost: $" + calculateprice(team));`,
-        solutions: ['i <= developers', 'calculateprice', 'let price = 0'],
-        hints: ['Check the loop condition', 'Function name case matters', 'Check variable initialization']
-    },
-    senior: {
-        bugs: 4,
-        code: `class ManaTEATeam {
-    constructor(size) {
-        this.teamSize = size;
-        this.monthlyCost = this.calculateCost();
-    }
-    
-    calculateCost() {
-        return this.teamSize * 2900;
-    }
-    
-    addDeveloper() {
-        this.teamSize++;
-        return this.calculateCost;
-    }
-}
-
-let team = new ManaTEATeam(3);
-console.log(team.addDeveloper());`,
-        solutions: ['this.calculateCost;', 'return this.calculateCost', 'this.monthlyCost = this.calculateCost()', 'addDeveloper()'],
-        hints: ['Missing parentheses in return', 'Method not updating cost', 'Constructor missing call', 'Method call syntax']
-    },
-    expert: {
-        bugs: 5,
-        code: `async function fetchDeveloperRates() {
-    try {
-        const response = await fetch('/api/rates');
-        const data = await response.json();
-        
-        if (response.ok) {
-            return data.rates;
-        } else {
-            throw new Error('Failed to fetch');
-        }
-    } catch (error) {
-        console.error('Error:', eror);
-        return null;
-    }
-}
-
-function calculateSavings(traditional, manatea) {
-    const savings = traditional - manatea;
-    return savings > 0 ? savings : "No savings available";
-}
-
-fetchDeveloperRates().then(rates => {
-    if (rates) {
-        const saving = calculateSavings(rates.traditional, rates.manatea);
-        console.log(\`Monthly savings: $\${saving}\`);
-    }
-});`,
-        solutions: ['eror', 'saving', 'rates.traditional', 'rates.manatea', 'response.ok'],
-        hints: ['Typo in error variable', 'Variable name inconsistency', 'Property access might be undefined', 'Property access might be undefined', 'Check response status properly']
-    }
-};
-
-function openGameModal() {
-    document.getElementById('gameModal').style.display = 'block';
-    generateChallenge();
-}
-
-function closeGameModal() {
-    document.getElementById('gameModal').style.display = 'none';
-}
-
-function setDifficulty(level) {
-    currentDifficulty = level;
-    document.querySelectorAll('.diff-btn').forEach(btn => btn.classList.remove('active'));
-    event.target.classList.add('active');
-    generateChallenge();
-}
-
-function generateChallenge() {
-    const challenge = challenges[currentDifficulty];
-    totalBugs = challenge.bugs;
-    bugsFound = 0;
-    
-    const codeArea = document.getElementById('code-area');
-    const lines = challenge.code.split('\n');
-    
-    codeArea.innerHTML = lines.map((line, index) => {
-        let processedLine = line;
-        
-        // Add syntax highlighting
-        processedLine = processedLine
-            .replace(/\b(function|let|const|var|class|constructor|async|await|try|catch|if|else|for|return|throw|new|console)\b/g, '<span class="code-keyword">$1</span>')
-            .replace(/(['"`])(.*?)\1/g, '<span class="code-string">$1$2$1</span>')
-            .replace(/\b(\d+)\b/g, '<span class="code-number">$1</span>')
-            .replace(/(\/\/.*$)/g, '<span class="code-comment">$1</span>');
-        
-        // Add bugs (make them clickable)
-        challenge.solutions.forEach(bug => {
-            if (line.includes(bug)) {
-                processedLine = processedLine.replace(bug, `<span class="bug" onclick="foundBug(this)">${bug}</span>`);
-            }
-        });
-        
-        return `<div class="code-line">${index + 1}: ${processedLine}</div>`;
-    }).join('');
-    
-    updateGameStatus();
-}
-
-function foundBug(element) {
-    element.style.background = '#27ae60';
-    element.style.color = '#fff';
-    element.onclick = null;
-    bugsFound++;
-    
-    showPopup('success', '🎉 Bug Found!', 'Great job! You found a bug!');
-    
-    updateGameStatus();
-    
-    if (bugsFound >= totalBugs) {
-        setTimeout(() => {
-            gameComplete();
-        }, 1000);
-    }
-}
-
-function updateGameStatus() {
-    const attemptsDiv = document.getElementById('attempts');
-    if (bugsFound === 0) {
-        attemptsDiv.innerHTML = `Find ${totalBugs} bugs to win your discount! 🎯`;
-    } else {
-        attemptsDiv.innerHTML = `Found ${bugsFound}/${totalBugs} bugs! Keep going! 🦭`;
-    }
-}
-
-function gameComplete() {
-    gameAttempts++;
-    let discount = gameAttempts === 1 ? 50 : Math.max(10, 50 - (gameAttempts - 1) * 10);
-    let promoCode = `MANATEA${discount}`;
-    
-    showPopup('success', '🎉 Congratulations!', 
-        `You completed the challenge!<div class="popup-promo">Promo Code: ${promoCode}</div>Use this code for $${discount} off your first developer!<br><br>📧 Email us at hello@manatea.team with your promo code!`);
-}
-
-function showSolution() {
-    const challenge = challenges[currentDifficulty];
-    showPopup('error', '💡 Solution Revealed', 
-        `The bugs were in:<br><br>${challenge.solutions.map((bug, index) => 
-            `${index + 1}. ${bug} - ${challenge.hints[index]}`
-        ).join('<br>')}<br><br>Try the challenge again to earn your discount!`);
-}
-
-function showPopup(type, title, message) {
-    const popup = document.createElement('div');
-    popup.className = 'popup-overlay';
-    popup.innerHTML = `
-        <div class="popup-content popup-${type}">
-            <div class="popup-title">${title}</div>
-            <div class="popup-text">${message}</div>
-            <button class="popup-btn" onclick="this.parentElement.parentElement.remove()">Close</button>
-        </div>
-    `;
-    document.body.appendChild(popup);
-    
-    // Auto remove after 5 seconds for success messages
-    if (type === 'success' && !message.includes('Promo Code')) {
-        setTimeout(() => {
-            if (popup.parentElement) popup.remove();
-        }, 3000);
-    }
-}
-
-// Initialize when page loads
-document.addEventListener('DOMContentLoaded', function() {
-    // Set up event listeners
-    document.getElementById('devLevel').addEventListener('change', updateCalculator);
-    document.getElementById('devCount').addEventListener('input', updateTeamDisplay);
-    
-    // Initialize display
-    updateTeamDisplay();
-    updateCalculator();
-    
-    // Close modal when clicking outside
-    window.onclick = function(event) {
-        const modal = document.getElementById('gameModal');
-        if (event.target === modal) {
-            closeGameModal();
-        }
-    }
-});
-</script>
+    </script>
+</body>
+</html>
 </body>
 </html>
