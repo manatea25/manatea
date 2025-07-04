@@ -80,8 +80,10 @@
         .code-number{color:#bb86fc}
         .code-comment{color:#6a994e}
         .code-function{color:#3498db}
-        .bug{color:#00ff00;background:transparent;border:1px solid #00ff00;padding:2px 4px;border-radius:3px}
-        .bug:hover{background:#001100;cursor:pointer;transform:scale(1.1)}
+        /* Bug styles - NO VISIBLE BORDERS */
+        .bug{color:#ff4444;background:transparent;cursor:pointer;position:relative}
+        .bug:hover{background:rgba(255,68,68,0.2);text-decoration:underline}
+        .bug.found{background:#27ae60;color:#fff;text-decoration:line-through}
         .challenge-desc{color:#95a5a6;margin:15px 0;text-align:center;padding:15px;background:#1a2332;border-radius:8px}
         .hint{color:#f39c12;font-size:.9rem;margin:10px 0;padding:10px;background:#2d1b00;border-radius:5px}
         .game-buttons{text-align:center;margin:20px 0}
@@ -264,7 +266,9 @@
                         <div class="terminal-header">
                             📁 ManaTEA Development Environment | 🦭 Debug Mode Active
                         </div>
-                        <div id="code-area"></div>
+                        <div id="code-area">
+                            <!-- Code will be generated here -->
+                        </div>
                     </div>
                     
                     <div class="hint" id="hint-area">
@@ -400,8 +404,9 @@
         let gameAttempts = 0;
         let bugsFound = 0;
         let totalBugs = 0;
-        let foundBugElements = [];
+        let foundBugIds = [];
 
+        // Challenge data with EXACT bug positions
         const challenges = {
             junior: {
                 bugs: 3,
@@ -415,9 +420,11 @@
 
 let team = 5;
 console.log("Total cost: $" + calculateprice(team));`,
-                bugTexts: ['i <= developers', 'calculateprice', 'let price = 0'],
-                solutions: ['Change <= to <', 'Fix function name case', 'Wrong variable initialization'],
-                hints: ['Loop runs one extra time', 'Function name case mismatch', 'Check variable setup']
+                bugPositions: [
+                    { line: 3, text: 'i <= developers', solution: 'Should be i < developers (loop runs one extra time)' },
+                    { line: 8, text: 'calculateprice', solution: 'Should be calculatePrice (case mismatch)' },
+                    { line: 2, text: 'let price = 0', solution: 'Price should start at 0, but this creates an off-by-one error' }
+                ]
             },
             senior: {
                 bugs: 4,
@@ -439,9 +446,12 @@ console.log("Total cost: $" + calculateprice(team));`,
 
 let team = new ManaTEATeam(3);
 console.log(team.addDeveloper());`,
-                bugTexts: ['this.calculateCost;', 'this.calculateCost()', 'this.teamSize++', 'new ManaTEATeam'],
-                solutions: ['Add () to call function', 'Update cost after adding', 'Missing cost update', 'Constructor call'],
-                hints: ['Missing function call parentheses', 'Cost not recalculated', 'State not updated', 'Object creation']
+                bugPositions: [
+                    { line: 11, text: 'this.calculateCost;', solution: 'Missing parentheses - should be this.calculateCost()' },
+                    { line: 4, text: 'this.calculateCost()', solution: 'Cost should be recalculated after adding developer' },
+                    { line: 10, text: 'this.teamSize++', solution: 'Should update monthlyCost after changing teamSize' },
+                    { line: 14, text: 'team.addDeveloper()', solution: 'Method returns function reference, not result' }
+                ]
             },
             expert: {
                 bugs: 5,
@@ -463,9 +473,13 @@ console.log(team.addDeveloper());`,
 
 const saving = calculateSavings(5000, 3000);
 console.log(\`Savings: $\${saving}\`);`,
-                bugTexts: ['eror', 'calculateSavings', 'data.rates', 'response.ok', 'await fetch'],
-                solutions: ['Fix typo: error', 'Function not defined', 'Property might not exist', 'Check response status', 'API call'],
-                hints: ['Variable name typo', 'Missing function definition', 'Unsafe property access', 'Response validation', 'Network request']
+                bugPositions: [
+                    { line: 11, text: 'eror', solution: 'Typo - should be "error"' },
+                    { line: 15, text: 'calculateSavings', solution: 'Function calculateSavings is not defined' },
+                    { line: 6, text: 'data.rates', solution: 'Property rates might not exist on data object' },
+                    { line: 5, text: 'response.ok', solution: 'Should check response status before parsing JSON' },
+                    { line: 3, text: 'await fetch', solution: 'No error handling for network failures' }
+                ]
             }
         };
 
@@ -544,37 +558,49 @@ console.log(\`Savings: $\${saving}\`);`,
         }
 
         function generateChallenge() {
-            const challenge = challenges[currentDifficulty];
-            if (!challenge) return;
+            console.log('🎮 Generating challenge for:', currentDifficulty);
             
+            const challenge = challenges[currentDifficulty];
+            if (!challenge) {
+                console.error('No challenge found for difficulty:', currentDifficulty);
+                return;
+            }
+            
+            // Reset game state
             totalBugs = challenge.bugs;
             bugsFound = 0;
-            foundBugElements = [];
+            foundBugIds = [];
             
             const codeArea = document.getElementById('code-area');
-            if (!codeArea) return;
+            if (!codeArea) {
+                console.error('Code area not found');
+                return;
+            }
             
             const lines = challenge.code.split('\n');
-            
             let htmlContent = '';
+            
             lines.forEach((line, index) => {
                 const lineNum = index + 1;
                 let processedLine = line;
                 
-                // Add syntax highlighting
+                // Add syntax highlighting FIRST
                 processedLine = processedLine
                     .replace(/\b(function|let|const|var|class|constructor|async|await|try|catch|if|else|for|return|throw|new|console)\b/g, '<span class="code-keyword">$1</span>')
                     .replace(/(['"`])((?:\\.|(?!\1)[^\\])*?)\1/g, '<span class="code-string">$1$2$1</span>')
                     .replace(/\b(\d+)\b/g, '<span class="code-number">$1</span>')
                     .replace(/(\/\/.*$)/g, '<span class="code-comment">$1</span>');
                 
-                // Add bugs for specific lines
-                challenge.bugTexts.forEach((bugText, bugIndex) => {
-                    if (line.includes(bugText)) {
-                        const bugId = `bug-${bugIndex}`;
+                // THEN add bugs for this specific line
+                challenge.bugPositions.forEach((bug, bugIndex) => {
+                    if (bug.line === lineNum && line.includes(bug.text)) {
+                        const bugId = `bug-${currentDifficulty}-${bugIndex}`;
+                        console.log(`🐛 Adding bug ${bugIndex} on line ${lineNum}: "${bug.text}"`);
+                        
+                        // Replace the bug text with clickable span
                         processedLine = processedLine.replace(
-                            bugText, 
-                            `<span class="bug" id="${bugId}" data-bug="${bugIndex}">${bugText}</span>`
+                            bug.text,
+                            `<span class="bug" id="${bugId}" data-bug-index="${bugIndex}">${bug.text}</span>`
                         );
                     }
                 });
@@ -585,30 +611,50 @@ console.log(\`Savings: $\${saving}\`);`,
             codeArea.innerHTML = htmlContent;
             updateGameStatus();
             
-            // Add click listeners to bugs
-            document.querySelectorAll('.bug').forEach(bug => {
-                bug.addEventListener('click', function() {
-                    foundBug(this.id, parseInt(this.dataset.bug));
+            // Add click listeners to all bugs
+            document.querySelectorAll('.bug').forEach(bugElement => {
+                bugElement.addEventListener('click', function(event) {
+                    event.stopPropagation();
+                    const bugIndex = parseInt(this.dataset.bugIndex);
+                    foundBug(this.id, bugIndex);
                 });
             });
+            
+            console.log(`🎯 Challenge generated with ${totalBugs} bugs`);
         }
 
         function foundBug(bugId, bugIndex) {
+            console.log(`🎉 Bug clicked: ${bugId}, index: ${bugIndex}`);
+            
+            // Check if already found
+            if (foundBugIds.includes(bugId)) {
+                console.log('Bug already found, ignoring');
+                return;
+            }
+            
             const bugElement = document.getElementById(bugId);
-            if (!bugElement || foundBugElements.includes(bugId)) return;
+            if (!bugElement) {
+                console.error('Bug element not found:', bugId);
+                return;
+            }
             
             // Mark bug as found
-            bugElement.style.background = '#27ae60';
-            bugElement.style.color = '#fff';
-            bugElement.style.border = '1px solid #27ae60';
-            foundBugElements.push(bugId);
+            bugElement.classList.add('found');
+            foundBugIds.push(bugId);
             bugsFound++;
             
-            showPopup('success', '🎉 Bug Found!', `Great job! You found: "${challenges[currentDifficulty].solutions[bugIndex]}"`);
+            const challenge = challenges[currentDifficulty];
+            const bugInfo = challenge.bugPositions[bugIndex];
+            
+            console.log(`✅ Found bug ${bugsFound}/${totalBugs}: ${bugInfo.solution}`);
+            
+            showPopup('success', '🎉 Bug Found!', `Great job! ${bugInfo.solution}`);
             
             updateGameStatus();
             
+            // Check if all bugs found
             if (bugsFound >= totalBugs) {
+                console.log('🏆 All bugs found! Game complete!');
                 setTimeout(() => {
                     gameComplete();
                 }, 1500);
@@ -633,6 +679,8 @@ console.log(\`Savings: $\${saving}\`);`,
             let discount = gameAttempts === 1 ? 50 : Math.max(10, 50 - (gameAttempts - 1) * 10);
             let promoCode = `MANATEA${discount}`;
             
+            console.log(`🎊 Game completed! Attempt ${gameAttempts}, discount: ${discount}`);
+            
             showPopup('success', '🎉 Congratulations!', 
                 `You completed the ${currentDifficulty} challenge!<div class="popup-promo">Promo Code: ${promoCode}</div>Use this code for ${discount} off your first developer!<br><br>📧 Email us at hello@manatea.team with your promo code!`);
         }
@@ -641,11 +689,11 @@ console.log(\`Savings: $\${saving}\`);`,
             const challenge = challenges[currentDifficulty];
             if (!challenge) return;
             
-            let solutionText = 'The bugs are:<br><br>';
-            challenge.solutions.forEach((solution, index) => {
-                solutionText += `${index + 1}. ${solution} - ${challenge.hints[index]}<br>`;
+            let solutionText = `The ${challenge.bugs} bugs in ${currentDifficulty} level are:<br><br>`;
+            challenge.bugPositions.forEach((bug, index) => {
+                solutionText += `${index + 1}. Line ${bug.line}: ${bug.solution}<br>`;
             });
-            solutionText += '<br>Try the challenge again to earn your discount!';
+            solutionText += '<br>🔄 Click "Generate New Challenge" to try again and earn your discount!';
             
             showPopup('error', '💡 Solution Revealed', solutionText);
         }
@@ -670,7 +718,7 @@ console.log(\`Savings: $\${saving}\`);`,
             if (type === 'success' && !message.includes('Promo Code')) {
                 setTimeout(() => {
                     if (popup.parentElement) popup.remove();
-                }, 2000);
+                }, 2500);
             }
         }
 
@@ -703,22 +751,27 @@ console.log(\`Savings: $\${saving}\`);`,
             
             if (gameBtn) {
                 gameBtn.addEventListener('click', openGameModal);
+                console.log('✅ Game button listener added');
             }
             
             if (gameClose) {
                 gameClose.addEventListener('click', closeGameModal);
+                console.log('✅ Game close listener added');
             }
             
             if (newChallenge) {
                 newChallenge.addEventListener('click', generateChallenge);
+                console.log('✅ New challenge button listener added');
             }
             
             if (showSolutionBtn) {
                 showSolutionBtn.addEventListener('click', showSolution);
+                console.log('✅ Show solution button listener added');
             }
             
             if (backToSite) {
                 backToSite.addEventListener('click', closeGameModal);
+                console.log('✅ Back to site button listener added');
             }
             
             // Difficulty buttons
@@ -727,6 +780,7 @@ console.log(\`Savings: $\${saving}\`);`,
                     setDifficulty(this.dataset.level);
                 });
             });
+            console.log('✅ Difficulty buttons listeners added');
             
             // Close modal when clicking outside
             window.addEventListener('click', function(event) {
