@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ManaTEA - Stop Overpaying for Developers</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}body{font-family:Arial,sans-serif;background:#0a0e1a;color:#ecf0f1;line-height:1.6}.container{max-width:1200px;margin:0 auto;padding:0 20px}.header{position:fixed;top:0;left:0;right:0;background:rgba(10,14,26,.95);backdrop-filter:blur(10px);z-index:1000;padding:15px 0;border-bottom:2px solid #3498db}.nav{display:flex;justify-content:space-between;align-items:center}.logo{font-size:2rem;font-weight:900;color:#3498db;text-decoration:none}.nav-links{display:flex;gap:30px;list-style:none}.nav-links a{color:#ecf0f1;text-decoration:none;font-weight:600;transition:color .3s}.nav-links a:hover{color:#3498db}.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;background:linear-gradient(135deg,#0a0e1a 0%,#1a2332 50%,#0a0e1a 100%);margin-top:80px}.stop-text{font-size:clamp(3rem,8vw,6rem);font-weight:900;color:#e74c3c;margin-bottom:20px;animation:pulse 2s infinite}@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}.overpaying-text{font-size:clamp(2rem,6vw,4rem);font-weight:700;color:#3498db;margin-bottom:40px}.manatee-intro{font-size:clamp(4rem,12vw,8rem);margin:40px 0;animation:float 4s infinite}@keyframes float{0%,100%{transform:translateY(0px)}50%{transform:translateY(-20px)}}.promise-text{font-size:clamp(1.2rem,4vw,2.5rem);font-weight:600;margin:30px 0;background:linear-gradient(135deg,#3498db,#27ae60);-webkit-background-clip:text;-webkit-text-fill-color:transparent}.manatee-tease{font-size:clamp(1rem,3vw,1.8rem);color:#f39c12;margin:20px 0}.calculator-section{padding:100px 0;background:linear-gradient(135deg,#1a2332,#0a0e1a,#1a2332)}.calc-title{text-align:center;font-size:clamp(2rem,6vw,4rem);font-weight:800;margin-bottom:30px;color:#3498db}.calc-subtitle{text-align:center;font-size:clamp(1rem,3vw,1.5rem);color:#95a5a6;margin-bottom:50px;max-width:800px;margin-left:auto;margin-right:auto}.calculator{background:rgba(52,152,219,.1);border:2px solid #3498db;border-radius:25px;padding:50px;margin:0 auto;max-width:900px}.calc-row{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin:30px 0}.calc-input-group{display:flex;flex-direction:column}.calc-label{color:#3498db;font-weight:bold;margin-bottom:10px;font-size:1.2rem}.calc-select{background:#1a2332;border:2px solid #3498db;border-radius:15px;padding:20px;color:#fff;font-size:1.1rem;cursor:pointer}.calc-select:focus{outline:none;border-color:#f39c12}.calc-result{background:linear-gradient(135deg,#2c3e50,#1a2332);border-radius:20px;padding:40px;margin:40px 0;border:3px solid #3498db}.result-row{display:flex;justify-content:space-between;align-items:center;margin:15px 0;padding:10px 0;border-bottom:1px solid rgba(52,152,219,.2)}.result-row:last-child{border-bottom:none}.traditional-cost{color:#e74c3c;font-size:1.4rem;font-weight:700}.manatea-cost{color:#27ae60;font-size:1.4rem;font-weight:700}.savings{color:#f39c12;font-size:1.8rem;font-weight:900}.goals-section{margin-top:30px;padding:25px 0;border-top:2px solid rgba(52,152,219,.3)}.goals-title{color:#f39c12;font-size:1.4rem;font-weight:bold;margin-bottom:20px;text-align:center}.goal-item{display:flex;justify-content:space-between;align-items:center;margin:12px 0;padding:10px 0}.goal-time{font-weight:bold;color:#f39c12}.goal-time-prefix{color:#95a5a6;font-size:.85rem;font-weight:normal}.benefits-section{padding:100px 0;background:#0a0e1a}.benefits-title{text-align:center;font-size:clamp(2rem,6vw,3.5rem);font-weight:800;margin-bottom:80px;color:#f39c12}.benefits-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:40px}.benefit-card{background:linear-gradient(135deg,#1a2332,#2c3e50);border:2px solid #3498db;border-radius:20px;padding:40px;text-align:center;transition:all .3s}.benefit-card:hover{transform:translateY(-10px);border-color:#f39c12}.benefit-icon{font-size:4rem;margin-bottom:20px}.benefit-title{font-size:1.5rem;font-weight:700;color:#3498db;margin-bottom:15px}.benefit-text{color:#95a5a6;line-height:1.6}.benefit-price{font-size:1.2rem;color:#f39c12;font-weight:700;margin-top:15px}.tea-section{padding:100px 0;background:linear-gradient(135deg,#2c3e50,#1a2332);text-align:center}.tea-title{font-size:clamp(2rem,6vw,3.5rem);font-weight:800;margin-bottom:40px;color:#27ae60}.tea-content{max-width:800px;margin:0 auto;padding:50px;background:rgba(52,152,219,.1);border-radius:25px;border:2px solid #3498db}.tea-manatee{font-size:6rem;margin:30px 0;animation:float 4s infinite}.tea-text{font-size:clamp(1.1rem,3vw,1.6rem);color:#ecf0f1;line-height:1.8;text-align:left}.tea-highlight{color:#f39c12;font-weight:700}.anti-corporate{padding:100px 0;background:linear-gradient(135deg,#e74c3c,#0a0e1a,#e74c3c);text-align:center}.anti-title{font-size:clamp(2rem,6vw,4rem);font-weight:900;margin-bottom:50px;color:#fff}.anti-text{font-size:clamp(1rem,3vw,1.5rem);max-width:900px;margin:0 auto;line-height:1.8;color:#fff}.anti-list{margin:40px auto;font-size:clamp(1rem,3vw,1.3rem);line-height:2;text-align:left;max-width:700px}.anti-list div{margin:15px 0}.final-cta{margin:60px auto;padding:40px;background:rgba(0,0,0,.7);border-radius:20px;border:2px solid #f39c12;max-width:600px}.cta-text{font-size:clamp(1.2rem,4vw,2rem);font-weight:700;color:#f39c12;margin-bottom:30px}.cta-buttons{display:flex;gap:20px;justify-content:center;flex-wrap:wrap}.cta-btn{background:linear-gradient(135deg,#3498db,#27ae60);color:#fff;padding:20px 40px;border:none;border-radius:50px;font-size:1.2rem;font-weight:700;cursor:pointer;transition:all .3s;text-decoration:none;display:inline-block}.cta-btn:hover{transform:translateY(-5px)}.guarantee-text{margin-top:30px;color:#3498db;font-weight:600}.footer{background:#0a0e1a;padding:50px 0;text-align:center;border-top:2px solid #3498db}.footer-logo{font-size:2rem;font-weight:900;color:#3498db;margin-bottom:20px}.footer-text{color:#95a5a6}@media (max-width:768px){.nav-links{display:none}.calc-row{grid-template-columns:1fr}.benefits-grid{grid-template-columns:1fr}.cta-buttons{flex-direction:column;align-items:center}.calculator{padding:30px 20px}.result-row,.goal-item{flex-direction:column;align-items:flex-start;gap:5px}.tea-text{text-align:center}}
+        
+        /* Game Modal Styles */
+        .game-trigger-btn{background:linear-gradient(45deg,#f39c12,#e67e22);color:#fff;border:none;padding:20px 40px;border-radius:15px;font-size:1.3rem;font-weight:bold;cursor:pointer;transition:all .3s;box-shadow:0 10px 25px rgba(243,156,18,.3);animation:pulse-glow 2s infinite}
+        @keyframes pulse-glow{0%,100%{transform:scale(1);box-shadow:0 10px 25px rgba(243,156,18,.3)}50%{transform:scale(1.05);box-shadow:0 15px 35px rgba(243,156,18,.5)}}
+        .game-trigger-btn:hover{transform:translateY(-5px)}
+        
+        .game-modal{display:none;position:fixed;z-index:10000;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,.8);backdrop-filter:blur(5px)}
+        .game-modal-content{background:#0a0e1a;margin:2% auto;padding:0;border:3px solid #00ff00;border-radius:20px;width:95%;max-width:900px;max-height:90vh;overflow-y:auto;box-shadow:0 0 50px #00ff00}
+        .game-close{color:#ff4444;float:right;font-size:3rem;font-weight:bold;cursor:pointer;padding:10px 20px;transition:all .3s}
+        .game-close:hover{color:#ff0000;transform:scale(1.2)}
+        
+        /* Game Styles */
+        .game-container{font-family:'Courier New',monospace;color:#00ff00;padding:20px}
+        .game-title{color:#00ffff;font-size:1.8rem;text-align:center;margin-bottom:20px;text-shadow:0 0 10px #00ffff}
+        .terminal{background:#000;border:1px solid #333;border-radius:8px;padding:20px;margin:20px 0;min-height:300px}
+        .terminal-header{color:#888;font-size:.9rem;margin-bottom:15px;border-bottom:1px solid #333;padding-bottom:10px}
+        .code-line{margin:3px 0;cursor:pointer;transition:all .3s;padding:2px 5px;border-radius:3px}
+        .code-line:hover{background:#001100}
+        .code-keyword{color:#ff6b9d}
+        .code-string{color:#f7dc6f}
+        .code-number{color:#bb86fc}
+        .code-comment{color:#6a994e}
+        .code-function{color:#3498db}
+        .bug{color:#00ff00;background:transparent}
+        .bug:hover{background:#001100;cursor:pointer}
+        .manatee-cursor{color:#00ffff;font-size:1.2rem;animation:float 2s ease-in-out infinite}
+        .challenge-desc{color:#95a5a6;margin:15px 0;text-align:center;padding:15px;background:#1a2332;border-radius:8px}
+        .hint{color:#f39c12;font-size:.9rem;margin:10px 0;padding:10px;background:#2d1b00;border-radius:5px}
+        .game-result{margin:20px 0;padding:15px;border-radius:8px;text-align:center;font-weight:bold}
+        .success{background:#004d00;color:#00ff00;border:1px solid #00ff00}
+        .error{background:#4d0000;color:#ff4444;border:1px solid #ff4444}
+        .promo-code{background:linear-gradient(45deg,#00ff00,#00ffff);color:#000;padding:20px;border-radius:10px;text-align:center;margin:20px 0;font-size:1.3rem;font-weight:bold;animation:glow 2s ease-in-out infinite}
+        
+        /* Popup Messages */
+        .popup-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:99999;display:flex;align-items:center;justify-content:center}
+        .popup-content{background:#0a0e1a;border:3px solid;border-radius:20px;padding:40px;text-align:center;max-width:500px;margin:20px;box-shadow:0 0 50px}
+        .popup-success{border-color:#00ff00;box-shadow:0 0 50px #00ff00}
+        .popup-error{border-color:#ff4444;box-shadow:0 0 50px #ff4444}
+        .popup-title{font-size:2rem;margin-bottom:20px}
+        .popup-text{font-size:1.3rem;margin:15px 0;line-height:1.6}
+        .popup-promo{background:linear-gradient(45deg,#00ff00,#00ffff);color:#000;padding:20px;border-radius:15px;margin:20px 0;font-size:1.5rem;font-weight:bold;animation:glow 2s infinite}
+        .popup-btn{background:#3498db;color:#fff;border:none;padding:15px 30px;border-radius:10px;font-size:1.2rem;cursor:pointer;margin:10px;transition:all .3s}
+        .popup-btn:hover{background:#2980b9}
+        @keyframes glow{0%,100%{box-shadow:0 0 5px #00ff00}50%{box-shadow:0 0 20px #00ffff,0 0 30px #00ff00}}
+        .game-buttons{text-align:center;margin:20px 0}
+        .difficulty{display:flex;justify-content:center;gap:15px;margin:20px 0;flex-wrap:wrap}
+        .diff-btn{background:#2c3e50;color:#ecf0f1;border:2px solid #34495e;padding:10px 20px;border-radius:8px;cursor:pointer;transition:all .3s}
+        .diff-btn.active{background:#e74c3c;border-color:#c0392b;color:#fff}
+        .attempts{color:#f39c12;text-align:center;margin:10px 0;font-size:1.1rem}
+        
+        /* Team Slider Styles */
+        .slider-container{display:flex;flex-direction:column;gap:15px}
+        .team-slider{width:100%;height:8px;border-radius:15px;background:linear-gradient(to right,#3498db,#27ae60);outline:none;transition:all .3s;cursor:pointer}
+        .team-slider::-webkit-slider-thumb{appearance:none;width:25px;height:25px;border-radius:50%;background:linear-gradient(45deg,#f39c12,#e67e22);cursor:pointer;box-shadow:0 0 15px rgba(243,156,18,.5);transition:all .3s}
+        .team-slider::-webkit-slider-thumb:hover{transform:scale(1.2);box-shadow:0 0 25px rgba(243,156,18,.8)}
+        .team-slider::-moz-range-thumb{width:25px;height:25px;border-radius:50%;background:linear-gradient(45deg,#f39c12,#e67e22);cursor:pointer;border:none;box-shadow:0 0 15px rgba(243,156,18,.5)}
+        .slider-value{color:#3498db;font-size:1.2rem;font-weight:bold;text-align:center;margin-top:10px}
+        .manatees-display{text-align:center;font-size:1.5rem;margin-top:15px;min-height:50px;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px;max-width:100%;overflow:hidden}
+        .manatee{display:inline-block;animation:float 2s ease-in-out infinite;transition:all .3s;font-size:1.5rem}
+        .manatee:nth-child(2n){animation-delay:0.3s}
+        .manatee:nth-child(3n){animation-delay:0.6s}
+        .manatee:nth-child(4n){animation-delay:0.9s}
+        .manatee:nth-child(5n){animation-delay:1.2s}
+        .manatee.new{animation:pop-in .5s ease-out}
+        @keyframes pop-in{0%{transform:scale(0) rotate(180deg);opacity:0}50%{transform:scale(1.3) rotate(90deg)}100%{transform:scale(1) rotate(0deg);opacity:1}}
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav container">
+            <a href="#" class="logo">🦭 ManaTEA</a>
+            <ul class="nav-links">
+                <li><a href="#calculator">Calculator</a></li>
+                <li><a href="#benefits">Benefits</a></li>
+                <li><a href="#tea">Why Us</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <div class="stop-text">STOP</div>
+            <div class="overpaying-text">overpaying for developers</div>
+            <div class="manatee-intro">🦭</div>
+            <div class="promise-text">See how much you can save with our model</div>
+            <div class="manatee-tease">🌊 We'll show you the exact numbers.</div>
+        </div>
+    </section>
+
+    <section id="calculator" class="calculator-section">
+        <div class="container">
+            <h2 class="calc-title">🧮 Your Savings Calculator</h2>
+            <p class="calc-subtitle">See how much you can save if you work with our model.</p>
+            
+            <div class="calculator">
+                <div class="calc-row">
+                    <div class="calc-input-group">
+                        <label class="calc-label">Developer Level:</label>
+                        <select class="calc-select" id="devLevel">
+                            <option value="junior">Junior Developer</option>
+                            <option value="middle" selected>Middle Developer</option>
+                            <option value="senior">Senior Developer</option>
+                            <option value="techlead">Tech Lead</option>
+                        </select>
+                    </div>
+                    <div class="calc-input-group">
+                        <label class="calc-label">Team Size:</label>
+                        <div class="slider-container">
+                            <input type="range" class="team-slider" id="devCount" min="1" max="10" value="1" oninput="updateTeamDisplay()">
+                            <div class="slider-value" id="sliderValue">1 developer</div>
+                            <div class="manatees-display" id="manateesDisplay">
+                                <!-- Ламантини додаються динамічно -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="calc-result">
+                    <div class="result-row">
+                        <span>Traditional agencies:</span>
+                        <span class="traditional-cost" id="traditionalCost">$5,280/month</span>
+                    </div>
+                    <div class="result-row">
+                        <span>ManaTEA total:</span>
+                        <span class="manatea-cost" id="manateaCost">$2,900/month</span>
+                    </div>
+                    <div class="result-row">
+                        <span>💰 You save:</span>
+                        <span class="savings" id="savingsAmount">$2,380/month</span>
+                    </div>
+                    
+                    <div class="goals-section">
+                        <div class="goals-title">🎯 Working with us, you can afford:</div>
+                        <div class="goal-item">
+                            <span>🦭 Crystal River manatee tour</span>
+                            <span class="goal-time">in <span id="manateeTime">1.7 months</span></span>
+                        </div>
+                        <div class="goal-item">
+                            <span>🚁 Helicopter ride Miami</span>
+                            <span class="goal-time">in <span id="helicopterTime">1.3 months</span></span>
+                        </div>
+                        <div class="goal-item">
+                            <span>🚗 Tesla down payment</span>
+                            <span class="goal-time">in <span id="teslaTime">4.2 months</span></span>
+                        </div>
+                        <div class="goal-item">
+                            <span>🏖️ European vacation</span>
+                            <span class="goal-time">in <span id="vacationTime">2.1 months</span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Game Button -->
+        <div class="container" style="text-align:center;margin-top:40px">
+            <button class="game-trigger-btn" onclick="openGameModal()">
+                🎮 Get Extra Discount - Debug Challenge! 🦭
+            </button>
+            <p style="color:#95a5a6;margin-top:10px;font-size:0.9rem">Play our coding game and win up to $100 off your first developer!</p>
+        </div>
+        
+        <!-- Game Modal -->
+        <div id="gameModal" class="game-modal">
+            <div class="game-modal-content">
+                <span class="game-close" onclick="closeGameModal()">&times;</span>
+                
+                <div class="game-container">
+                    <div class="game-title">🦭 ManaTEA Debug Challenge</div>
+                    
+                    <div class="challenge-desc">
+                        Help ManaTEA the debugging manatee fix the broken code! Find and click on the bugs to earn your discount promo code.
+                    </div>
+                    
+                    <div class="difficulty">
+                        <div class="diff-btn active" onclick="setDifficulty('junior')">Junior Level</div>
+                        <div class="diff-btn" onclick="setDifficulty('senior')">Senior Level</div>
+                        <div class="diff-btn" onclick="setDifficulty('expert')">Expert Level</div>
+                    </div>
+                    
+                    <div class="attempts" id="attempts">First attempt = $50 discount! 🎯</div>
+                    
+                    <div class="terminal">
+                        <div class="terminal-header">
+                            📁 ManaTEA Development Environment | 🦭 Debug Mode Active
+                        </div>
+                        <div id="code-area">
+                            <!-- Code will be generated here -->
+                        </div>
+                    </div>
+                    
+                    <div class="hint" id="hint-area">
+                        💡 Hint: Look for syntax errors, logic bugs, and incorrect variable names. ManaTEA 🦭 will guide you!
+                    </div>
+                    
+                    <div class="game-buttons">
+                        <div class="btn" onclick="generateChallenge()">🔄 Generate New Challenge</div>
+                        <div class="btn" onclick="showSolution()">💡 Show Solution</div>
+                        <div class="btn" onclick="closeGameModal()">↩️ Back to Site</div>
+                    </div>
+                    
+                    <div id="result-area"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="benefits" class="benefits-section">
+        <div class="container">
+            <h2 class="benefits-title">⚡ What We Actually Do</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">🏊‍♂️</div>
+                    <div class="benefit-title">Massive Developer Pool</div>
+                    <div class="benefit-text">1000+ pre-vetted developers ready to work. We already found them.</div>
+                    <div class="benefit-price">Immediate access</div>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">⚡</div>
+                    <div class="benefit-title">48 Hour Matching</div>
+                    <div class="benefit-text">We find your developer in 2 days, not 2 weeks.</div>
+                    <div class="benefit-price">Lightning fast</div>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">💰</div>
+                    <div class="benefit-title">Pay Salary Directly</div>
+                    <div class="benefit-text">Pay their actual salary + small monthly fee to us.</div>
+                    <div class="benefit-price">No markup</div>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">🔑</div>
+                    <div class="benefit-title">Hire Them Permanently</div>
+                    <div class="benefit-text">Pay one-time fee = developer is yours forever.</div>
+                    <div class="benefit-price">Own your team</div>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">🎯</div>
+                    <div class="benefit-title">Senior-Level Quality</div>
+                    <div class="benefit-text">Every developer tested by senior engineers. No juniors pretending.</div>
+                    <div class="benefit-price">Actually good devs</div>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">🚫</div>
+                    <div class="benefit-title">No Agency BS</div>
+                    <div class="benefit-text">No account managers, no project managers, no meeting overhead.</div>
+                    <div class="benefit-price">Just results</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tea" class="tea-section">
+        <div class="container">
+            <h2 class="tea-title">☕ While You Sip Your Tea...</h2>
+            <div class="tea-content">
+                <div class="tea-manatee">🦭</div>
+                <div class="tea-text">
+                    Picture this: It's 9 AM. You're holding your favorite mug of tea.<br><br>
+                    While you're savoring that perfect first sip, <span class="tea-highlight">our developers are already coding for you.</span><br><br>
+                    No meetings about meetings. No project managers managing other project managers. No "syncing up to circle back."<br><br>
+                    Just clean, beautiful code being written while you enjoy your morning routine.<br>
+                    <strong class="tea-highlight">And soon... manatee vacation photos in your Instagram! 🌊</strong><br><br>
+                    <em>Because life's too short for bad tea and overpriced developers.</em>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="anti-corporate">
+        <div class="container">
+            <h2 class="anti-title">This Is NOT Your Average Website</h2>
+            <div class="anti-text">
+                <p>You won't find any bullsh*t here:</p>
+                <div class="anti-list">
+                    <div>❌ No fake success stories written by ChatGPT</div>
+                    <div>❌ No "we work in your timezone" obvious statements</div>
+                    <div>❌ No mysterious projects you can't actually see</div>
+                    <div>❌ No corporate buzzwords about "synergy"</div>
+                    <div>❌ No stock photos of people pointing at laptops</div>
+                </div>
+                <p>Our work speaks louder than our marketing copy.</p>
+            </div>
+            <div class="final-cta" id="contact">
+                <div class="cta-text">Ready to save money and build your dream team? 🦭</div>
+                <div class="cta-buttons">
+                    <a href="#" class="cta-btn">🚀 Start Saving Now</a>
+                    <a href="#" class="cta-btn">📞 Call Me Instead</a>
+                </div>
+                <div class="guarantee-text">
+                    💸 2-week money back guarantee.<br>🦭 Your savings start today!
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">🦭 ManaTEA</div>
+                <div class="footer-text">Stop overpaying for developers. Start swimming with manatees.<br>© 2025 ManaTEA. All rights reserved.</div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const goals = {manatee: 4000, helicopter: 3000, tesla: 10000, vacation: 5000};
+        
+        function updateCalculator() {
+            const level = document.getElementById('devLevel').value;
+            const count = parseInt(document.getElementById('devCount').value) || 1;
+            
+            let developerSalary, manateaFee, agencyHourlyRate;
+            
+            switch(level) {
+                case 'junior': developerSalary = 1000; manateaFee = 200; agencyHourlyRate = 20; break;
+                case 'middle': developerSalary = 2500; manateaFee = 400; agencyHourlyRate = 30; break;
+                case 'senior': developerSalary = 4500; manateaFee = 700; agencyHourlyRate = 40; break;
+                case 'techlead': developerSalary = 6000; manateaFee = 1000; agencyHourlyRate = 50; break;
+                default: developerSalary = 2500; manateaFee = 400; agencyHourlyRate = 30;
+            }
+            
+            const manateaTotal = (developerSalary + manateaFee) * count;
+            const traditionalTotal = (agencyHourlyRate * 176) * count;
+            const savings = traditionalTotal - manateaTotal;
+            
+            const formatMoney = (amount) => new Intl.NumberFormat('en-US').format(amount);
+            const calculateTime = (goalCost) => savings <= 0 ? "∞" : (goalCost / savings).toFixed(1) + " months";
+            
+            document.getElementById('traditionalCost').textContent = `$${formatMoney(traditionalTotal)}/month`;
+            document.getElementById('manateaCost').textContent = `$${formatMoney(manateaTotal)}/month`;
+            document.getElementById('savingsAmount').textContent = `$${formatMoney(savings)}/month`;
+            
+            document.getElementById('manateeTime').textContent = calculateTime(goals.manatee);
+            document.getElementById('helicopterTime').textContent = calculateTime(goals.helicopter);
+            document.getElementById('teslaTime').textContent = calculateTime(goals.tesla);
+            document.getElementById('vacationTime').textContent = calculateTime(goals.vacation);
+        }
+        
+        document.getElementById('devLevel').addEventListener('change', updateCalculator);
+        document.getElementById('devCount').addEventListener('input', updateCalculator);
+        updateCalculator();
+        
+        // Team slider functionality
+        function updateTeamDisplay() {
+            const count = document.getElementById('devCount').value;
+            const sliderValue = document.getElementById('sliderValue');
+            const manateesDisplay = document.getElementById('manateesDisplay');
+            
+            // Update text
+            sliderValue.textContent = count == 1 ? '1 developer' : `${count} developers`;
+            
+            // Clear all manatees and add the correct amount
+            manateesDisplay.innerHTML = '';
+            
+            // Add manatees with staggered animation
+            for (let i = 0; i < parseInt(count); i++) {
+                setTimeout(() => {
+                    const manatee = document.createElement('span');
+                    manatee.className = 'manatee new';
+                    manatee.textContent = '🦭';
+                    manatee.style.animationDelay = `${i * 0.1}s`;
+                    manateesDisplay.appendChild(manatee);
+                    
+                    // Remove 'new' class after animation
+                    setTimeout(() => {
+                        manatee.classList.remove('new');
+                    }, 500);
+                }, i * 100);
+            }
+            
+            updateCalculator();
+        }
+        
+        // Initialize team display
+        updateTeamDisplay();
+        
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({behavior: 'smooth'});
+            });
+        });
+        
+        document.querySelectorAll('.cta-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (this.textContent.includes('Start Saving')) {
+                    alert('🦭 Contact form (Add your URL here)');
+                } else {
+                    alert('📞 Call: +1-XXX-XXX-XXXX');
+                }
+            });
+        });
+        
+        // Game Modal Functions
+        function openGameModal() {
+            // Перевірити чи кнопка заблокована
+            const gameBtn = document.querySelector('.game-trigger-btn');
+            if (gameBtn.disabled) {
+                alert('🦭 Please refresh the page to play again!');
+                return;
+            }
+            
+            document.getElementById('gameModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            generateChallenge();
+        }
+        
+        function closeGameModal() {
+            document.getElementById('gameModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        window.onclick = function(event) {
+            const modal = document.getElementById('gameModal');
+            if (event.target === modal) {
+                closeGameModal();
+            }
+        }
+        
+        // Game Logic
+        let currentDifficulty = 'junior';
+        let bugsFound = 0;
+        let totalBugs = 0;
+        let attempts = 0;
+        let challengeStarted = false;
+        
+        const codeTemplates = {
+            junior: [
+                {
+                    code: [
+                        'function calculateDeveloperCost(level, teamSize) {',
+                        '    let juniorSalary = 1000;',
+                        '    let middleSalary = 2500;',
+                        '    let seniorSalary = 4500;',
+                        '    ',
+                        '    if (level === "junior") {',
+                        '        return juniorSalary * teamSize;',
+                        '    } else if (level === "middle") {',
+                        '        return salary * teamSize;',
+                        '    } else {',
+                        '        return seniorSalary * teamSize;',
+                        '    }',
+                        '}'
+                    ],
+                    bugs: [8],
+                    hints: ['Variable "salary" is not defined', 'Which salary variable should be used?']
+                },
+                {
+                    code: [
+                        'function findDeveloper(skills, experience) {',
+                        '    let developers = getDeveloperPool();',
+                        '    ',
+                        '    for (let i = 0; i < developers.length; i++) {',
+                        '        let dev = developers[i];',
+                        '        ',
+                        '        if (dev.skills.includes(skills) && ',
+                        '            dev.experience >= experince) {',
+                        '            return dev;',
+                        '        }',
+                        '    }',
+                        '    ',
+                        '    return null;',
+                        '}'
+                    ],
+                    bugs: [7],
+                    hints: ['Typo in variable name', 'Check spelling carefully']
+                },
+                {
+                    code: [
+                        'class TeamBuilder {',
+                        '    constructor() {',
+                        '        this.developers = [];',
+                        '        this.budget = 0;',
+                        '    }',
+                        '    ',
+                        '    addDeveloper(dev) {',
+                        '        this.developers.push(dev);',
+                        '        this.budget += dev.salary;',
+                        '    }',
+                        '    ',
+                        '    getTotalCost() {',
+                        '        return this.budget;',
+                        '    }',
+                        '}',
+                        '',
+                        'let team = new TeamBuilder();',
+                        'team.addDeveloper({name: "John", salary: 5000});',
+                        'console.log(team.getTotalCost());'
+                    ],
+                    bugs: [16],
+                    hints: ['Missing parameter in method call', 'Function expects 2 parameters']
+                }
+            ],
+            senior: [
+                {
+                    code: [
+                        'class DeveloperMatcher {',
+                        '    constructor(requirements) {',
+                        '        this.requirements = requirements;',
+                        '        this.cache = new Map();',
+                        '    }',
+                        '    ',
+                        '    async findMatches() {',
+                        '        const cacheKey = JSON.stringify(this.requirements);',
+                        '        ',
+                        '        if (this.cache.has(cacheKey)) {',
+                        '            return this.cache.get(cacheKey);',
+                        '        }',
+                        '        ',
+                        '        const results = await this.searchDatabase();',
+                        '        this.cache.set(cacheKey, results);',
+                        '        return results;',
+                        '    }',
+                        '    ',
+                        '    searchDatabase() {',
+                        '        fetch("/api/developers");',
+                        '    }',
+                        '}'
+                    ],
+                    bugs: [18],
+                    hints: ['Async function missing return statement', 'fetch() result not returned']
+                },
+                {
+                    code: [
+                        'const DeveloperAPI = {',
+                        '    async getDevelopers(filters) {',
+                        '        try {',
+                        '            const response = await fetch("/api/developers", {',
+                        '                method: "POST",',
+                        '                headers: {',
+                        '                    "Content-Type": "application/json"',
+                        '                },',
+                        '                body: JSON.stringify(filters)',
+                        '            });',
+                        '            ',
+                        '            if (!response.ok) {',
+                        '                throw new Error("Failed to fetch");',
+                        '            }',
+                        '            ',
+                        '            const data = await response.json();',
+                        '            return data.developers;',
+                        '        } catch (error) {',
+                        '            console.error("Error:", error);',
+                        '        }',
+                        '    }',
+                        '};'
+                    ],
+                    bugs: [17],
+                    hints: ['Missing return in catch block', 'Function should return something on error']
+                }
+            ],
+            expert: [
+                {
+                    code: [
+                        'const ManaTEAOptimizer = {',
+                        '    calculateSavings(agencyCost, directCost) {',
+                        '        const savings = agencyCost - directCost;',
+                        '        const roi = (savings / directCost) * 100;',
+                        '        ',
+                        '        return {',
+                        '            monthlySavings: savings,',
+                        '            yearlyROI: roi,',
+                        '            breakEvenMonths: directCost / savings,',
+                        '            recommendation: savings > 0 ? "hire" : "reconsider"',
+                        '        };',
+                        '    },',
+                        '    ',
+                        '    optimizeTeamCost(developers, maxBudget) {',
+                        '        return developers',
+                        '            .sort((a, b) => (a.productivity / a.salary) - (b.productivity / b.salary))',
+                        '            .filter(dev => dev.salary <= maxBudget)',
+                        '            .slice(0, Math.floor(maxBudget / developers[0].salary));',
+                        '    }',
+                        '};'
+                    ],
+                    bugs: [8],
+                    hints: ['Division by zero risk', 'What if savings equals 0?', 'Add safety check']
+                },
+                {
+                    code: [
+                        'class PerformanceTracker {',
+                        '    constructor() {',
+                        '        this.metrics = new WeakMap();',
+                        '        this.observers = [];',
+                        '    }',
+                        '    ',
+                        '    trackDeveloper(dev, performance) {',
+                        '        this.metrics.set(dev, performance);',
+                        '        this.notifyObservers(dev, performance);',
+                        '    }',
+                        '    ',
+                        '    getAveragePerformance() {',
+                        '        const values = Array.from(this.metrics.values());',
+                        '        return values.reduce((sum, val) => sum + val, 0) / values.length;',
+                        '    }',
+                        '    ',
+                        '    notifyObservers(dev, performance) {',
+                        '        this.observers.forEach(observer => observer(dev, performance));',
+                        '    }',
+                        '}'
+                    ],
+                    bugs: [13],
+                    hints: ['WeakMap values cannot be iterated', 'WeakMap.values() does not exist', 'Use Map instead']
+                }
+            ]
+        };
+        
+        function setDifficulty(level) {
+            currentDifficulty = level;
+            document.querySelectorAll('.diff-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            const discounts = {junior: '$50', senior: '$75', expert: '$100'};
+            document.getElementById('attempts').innerHTML = `First attempt = ${discounts[level]} discount! 🎯`;
+            
+            generateChallenge();
+        }
+        
+        function generateChallenge() {
+            attempts = 0;
+            bugsFound = 0;
+            challengeStarted = true;
+            
+            const templates = codeTemplates[currentDifficulty];
+            const template = templates[Math.floor(Math.random() * templates.length)];
+            totalBugs = template.bugs.length;
+            
+            const codeArea = document.getElementById('code-area');
+            codeArea.innerHTML = '';
+            
+            template.code.forEach((line, index) => {
+                const lineDiv = document.createElement('div');
+                lineDiv.className = 'code-line';
+                lineDiv.innerHTML = `<span style="color:#555">${String(index + 1).padStart(2, '0')}:</span> ${formatCode(line)}`;
+                
+                if (template.bugs.includes(index)) {
+                    lineDiv.classList.add('bug');
+                    lineDiv.onclick = () => foundBug(index, lineDiv, template);
+                } else {
+                    lineDiv.onclick = () => wrongClick();
+                }
+                
+                codeArea.appendChild(lineDiv);
+            });
+            
+            const cursorDiv = document.createElement('div');
+            cursorDiv.innerHTML = '<span class="manatee-cursor">🦭 ManaTEA is analyzing...</span>';
+            codeArea.appendChild(cursorDiv);
+            
+            document.getElementById('result-area').innerHTML = '';
+            currentTemplate = template;
+            updateHint();
+        }
+        
+        function formatCode(line) {
+            return line
+                .replace(/\b(function|class|const|let|var|if|return|async|await)\b/g, '<span class="code-keyword">$1</span>')
+                .replace(/\b(\d+)\b/g, '<span class="code-number">$1</span>')
+                .replace(/"([^"]*)"/g, '<span class="code-string">"$1"</span>')
+                .replace(/\/\/.*$/g, '<span class="code-comment">        window.onclick = function(event) {
+            const modal = document.getElementById('gameModal');
+            if (event.target === modal) {
+                closeGameModal();</span>')
+                .replace(/\b(calculateDeveloperCost|findMatches|searchDatabase|calculateSavings)\b/g, '<span class="code-function">$1</span>');
+        }
+        
+        let currentTemplate = null;
+        
+        function showPopup(type, title, text, promoCode = null) {
+            const popup = document.createElement('div');
+            popup.className = 'popup-overlay';
+            
+            const content = document.createElement('div');
+            content.className = `popup-content popup-${type}`;
+            
+            let popupHTML = `
+                <div class="popup-title" style="color:${type === 'success' ? '#00ff00' : '#ff4444'}">${title}</div>
+                <div class="popup-text" style="color:${type === 'success' ? '#00ffff' : '#ffaaaa'}">${text}</div>
+            `;
+            
+            if (promoCode) {
+                popupHTML += `
+                    <div class="popup-promo">
+                        🎯 Your Promo Code: <strong>${promoCode}</strong><br>
+                        Use when contacting ManaTEA! 🚀
+                    </div>
+                `;
+            }
+            
+            popupHTML += `<button class="popup-btn" onclick="closePopup()">OK</button>`;
+            
+            content.innerHTML = popupHTML;
+            popup.appendChild(content);
+            document.body.appendChild(popup);
+            
+            return popup;
+        }
+        
+        function closePopup() {
+            const popup = document.querySelector('.popup-overlay');
+            if (popup) {
+                popup.remove();
+            }
+        }
+        
+        function foundBug(bugIndex, element, template) {
+            if (!challengeStarted) return;
+            
+            bugsFound++;
+            element.style.background = '#004d00';
+            element.style.border = '1px solid #00ff00';
+            element.onclick = null;
+            
+            if (bugsFound === totalBugs) {
+                attempts++;
+                challengeStarted = false;
+                
+                if (attempts === 1) {
+                    const discounts = {junior: ['$50', 'MANATEE50'], senior: ['$75', 'MANATEE75'], expert: ['$100', 'MANATEE100']};
+                    const [discount, promoCode] = discounts[currentDifficulty];
+                    
+                    showPopup('success', 
+                        '🎉 PERFECT! First attempt victory! 🦭', 
+                        `Bug squashed like a pro developer!<br>Save ${discount} on your first developer!`,
+                        promoCode
+                    );
+                } else {
+                    showPopup('success',
+                        '✅ Well done! Bug fixed! 🦭',
+                        `Took ${attempts} attempts - practice makes perfect!<br>Try a harder difficulty for a bigger discount! 💪`
+                    );
+                }
+            } else {
+                updateHint();
+            }
+        }
+        
+        function wrongClick() {
+            if (!challengeStarted) return;
+            
+            attempts++;
+            
+            // Якщо перша спроба - закрити гру
+            if (attempts === 1) {
+                challengeStarted = false;
+                
+                showPopup('error',
+                    '🦭 ManaTEA says: "Sorry, better luck next time!"',
+                    'The game will close and lock.<br>Refresh the page to try again! 🔄'
+                );
+                
+                // Закрити гру через 3 секунди
+                setTimeout(() => {
+                    closePopup();
+                    closeGameModal();
+                    // Заблокувати кнопку гри до перезавантаження
+                    const gameBtn = document.querySelector('.game-trigger-btn');
+                    gameBtn.disabled = true;
+                    gameBtn.style.opacity = '0.5';
+                    gameBtn.style.cursor = 'not-allowed';
+                    gameBtn.innerHTML = '🔒 Game Locked - Refresh Page to Play Again';
+                    gameBtn.onclick = () => {
+                        alert('🦭 Please refresh the page to play again!');
+                    };
+                }, 3000);
+                
+                return;
+            }
+            
+            // Для наступних спроб (якщо дійде до них)
+            const resultArea = document.getElementById('result-area');
+            resultArea.innerHTML = '<div class="error">❌ Not a bug! Keep looking... ManaTEA believes in you! 🦭</div>';
+            
+            setTimeout(() => {
+                resultArea.innerHTML = '';
+            }, 2000);
+        }
+        
+        function updateHint() {
+            const hints = currentTemplate.hints;
+            const hintIndex = Math.min(bugsFound, hints.length - 1);
+            
+            document.getElementById('hint-area').innerHTML = `💡 Hint: ${hints[hintIndex]} 🦭`;
+        }
+        
+        function showVictory() {
+            challengeStarted = false;
+            const resultArea = document.getElementById('result-area');
+            
+            if (attempts === 1) {
+                const discounts = {junior: ['$50', 'MANATEE50'], senior: ['$75', 'MANATEE75'], expert: ['$100', 'MANATEE100']};
+                const [discount, promoCode] = discounts[currentDifficulty];
+                
+                resultArea.innerHTML = `
+                    <div class="success">
+                        🎉 PERFECT! First attempt victory! 🦭<br>
+                        Bug squashed like a pro developer!
+                    </div>
+                    <div class="promo-code">
+                        🎯 Your Promo Code: <strong>${promoCode}</strong><br>
+                        Save ${discount} on your first developer!
+                    </div>
+                    <div style="color:#00ffff;text-align:center;margin-top:15px">
+                        Use this code when contacting ManaTEA! 🚀
+                    </div>
+                `;
+            } else {
+                resultArea.innerHTML = `
+                    <div class="success">
+                        ✅ Well done! Bug fixed! 🦭<br>
+                        Took ${attempts} attempts - practice makes perfect!
+                    </div>
+                    <div style="color:#f39c12;text-align:center;margin-top:15px">
+                        Try a harder difficulty for a bigger discount! 💪
+                    </div>
+                `;
+            }
+        }
+        
+        function showSolution() {
+            const solutions = {
+                junior: 'Check for undefined variables, typos in variable names, or missing parameters',
+                senior: 'Look for missing return statements in async functions or error handling',
+                expert: 'Find division by zero risks, incorrect data structure usage, or logic errors'
+            };
+            
+            document.getElementById('result-area').innerHTML = `
+                <div class="hint">
+                    🔍 General hint: ${solutions[currentDifficulty]}<br>
+                    <small>Try again for the promo code discount! 🦭</small>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
