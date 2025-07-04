@@ -5,23 +5,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ManaTEA - Stop Overpaying for Developers</title>
     <style>
+        /* Custom Images - Replace these URLs with your images */
+        .custom-logo {
+            width: 50px;
+            height: 50px;
+            background-image: url('./images/logo.png');
+            background-size: cover;
+            background-position: center;
+            border-radius: 8px;
+        }
+        
+        .custom-hero-image {
+            width: 200px;
+            height: 200px;
+            background-image: url('./images/hero.png');
+            background-size: cover;
+            background-position: center;
+            border-radius: 20px;
+            margin: 20px auto;
+            animation: float 4s infinite;
+        }
+        
+        .custom-benefit-icon {
+            width: 80px;
+            height: 80px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 15px;
+            margin: 0 auto 20px;
+        }
+        
+        .icon1 { background-image: url('./images/icon1.png'); }
+        .icon2 { background-image: url('./images/icon2.png'); }
+        .icon3 { background-image: url('./images/icon3.png'); }
+        .icon4 { background-image: url('./images/icon4.png'); }
+        .icon5 { background-image: url('./images/icon5.png'); }
+        .icon6 { background-image: url('./images/icon6.png'); }
+        
+        /* Main Styles */
         *{margin:0;padding:0;box-sizing:border-box}
         body{font-family:Arial,sans-serif;background:#0a0e1a;color:#ecf0f1;line-height:1.6}
         .container{max-width:1200px;margin:0 auto;padding:0 20px}
         .header{position:fixed;top:0;left:0;right:0;background:rgba(10,14,26,.95);backdrop-filter:blur(10px);z-index:1000;padding:15px 0;border-bottom:2px solid #3498db}
         .nav{display:flex;justify-content:space-between;align-items:center}
-        .logo{font-size:2rem;font-weight:900;color:#3498db;text-decoration:none}
+        .logo{display:flex;align-items:center;gap:15px;text-decoration:none}
+        .logo-text{font-size:2rem;font-weight:900;color:#3498db}
         .nav-links{display:flex;gap:30px;list-style:none}
         .nav-links a{color:#ecf0f1;text-decoration:none;font-weight:600;transition:color .3s}
         .nav-links a:hover{color:#3498db}
+        
         .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;background:linear-gradient(135deg,#0a0e1a 0%,#1a2332 50%,#0a0e1a 100%);margin-top:80px}
         .stop-text{font-size:clamp(3rem,8vw,6rem);font-weight:900;color:#e74c3c;margin-bottom:20px;animation:pulse 2s infinite}
         @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
         .overpaying-text{font-size:clamp(2rem,6vw,4rem);font-weight:700;color:#3498db;margin-bottom:40px}
-        .manatee-intro{font-size:clamp(4rem,12vw,8rem);margin:40px 0;animation:float 4s infinite}
         @keyframes float{0%,100%{transform:translateY(0px)}50%{transform:translateY(-20px)}}
         .promise-text{font-size:clamp(1.2rem,4vw,2.5rem);font-weight:600;margin:30px 0;background:linear-gradient(135deg,#3498db,#27ae60);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
         .manatee-tease{font-size:clamp(1rem,3vw,1.8rem);color:#f39c12;margin:20px 0}
+        
         .calculator-section{padding:100px 0;background:linear-gradient(135deg,#1a2332,#0a0e1a,#1a2332)}
         .calc-title{text-align:center;font-size:clamp(2rem,6vw,4rem);font-weight:800;margin-bottom:30px;color:#3498db}
         .calc-subtitle{text-align:center;font-size:clamp(1rem,3vw,1.5rem);color:#95a5a6;margin-bottom:50px;max-width:800px;margin-left:auto;margin-right:auto}
@@ -50,13 +90,14 @@
         .team-slider::-moz-range-thumb{width:25px;height:25px;border-radius:50%;background:linear-gradient(45deg,#f39c12,#e67e22);cursor:pointer;border:none;box-shadow:0 0 15px rgba(243,156,18,.5)}
         .slider-value{color:#3498db;font-size:1.2rem;font-weight:bold;text-align:center;margin-top:10px}
         .manatees-display{text-align:center;font-size:1.5rem;margin-top:15px;min-height:50px;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px;max-width:100%;overflow:hidden}
-        .manatee{display:inline-block;animation:float 2s ease-in-out infinite;transition:all .3s;font-size:1.5rem}
+        .manatee{display:inline-block;animation:float-small 2s ease-in-out infinite;transition:all .3s;font-size:1.5rem}
         .manatee:nth-child(2n){animation-delay:0.3s}
         .manatee:nth-child(3n){animation-delay:0.6s}
         .manatee:nth-child(4n){animation-delay:0.9s}
         .manatee:nth-child(5n){animation-delay:1.2s}
         .manatee.new{animation:pop-in .5s ease-out}
         @keyframes pop-in{0%{transform:scale(0) rotate(180deg);opacity:0}50%{transform:scale(1.3) rotate(90deg)}100%{transform:scale(1) rotate(0deg);opacity:1}}
+        @keyframes float-small{0%,100%{transform:translateY(0px)}50%{transform:translateY(-10px)}}
         
         /* Game Modal Styles */
         .game-trigger-btn{background:linear-gradient(45deg,#f39c12,#e67e22);color:#fff;border:none;padding:20px 40px;border-radius:15px;font-size:1.3rem;font-weight:bold;cursor:pointer;transition:all .3s;box-shadow:0 10px 25px rgba(243,156,18,.3);animation:pulse-glow 2s infinite}
@@ -122,7 +163,6 @@
         .benefits-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:40px}
         .benefit-card{background:linear-gradient(135deg,#1a2332,#2c3e50);border:2px solid #3498db;border-radius:20px;padding:40px;text-align:center;transition:all .3s}
         .benefit-card:hover{transform:translateY(-10px);border-color:#f39c12}
-        .benefit-icon{font-size:4rem;margin-bottom:20px}
         .benefit-title{font-size:1.5rem;font-weight:700;color:#3498db;margin-bottom:15px}
         .benefit-text{color:#95a5a6;line-height:1.6}
         .benefit-price{font-size:1.2rem;color:#f39c12;font-weight:700;margin-top:15px}
@@ -166,7 +206,10 @@
 <body>
     <header class="header">
         <nav class="nav container">
-            <a href="#" class="logo">🦭 ManaTEA</a>
+            <a href="#" class="logo">
+                <div class="custom-logo"></div>
+                <span class="logo-text">ManaTEA</span>
+            </a>
             <ul class="nav-links">
                 <li><a href="#calculator">Calculator</a></li>
                 <li><a href="#benefits">Benefits</a></li>
@@ -180,7 +223,7 @@
         <div class="hero-content">
             <div class="stop-text">STOP</div>
             <div class="overpaying-text">overpaying for developers</div>
-            <div class="manatee-intro">🦭</div>
+            <div class="custom-hero-image"></div>
             <div class="promise-text">See how much you can save with our model</div>
             <div class="manatee-tease">🌊 We'll show you the exact numbers.</div>
         </div>
@@ -267,7 +310,7 @@
                     <div id="start-screen">
                         <div class="game-title">🦭 ManaTEA Tech Quiz</div>
                         <div class="game-subtitle">Guess the main tech stack of famous companies!</div>
-                        <div class="manatee-intro">🦭</div>
+                        <div class="custom-hero-image" style="width: 100px; height: 100px; margin: 20px auto;"></div>
                         
                         <div class="level-selection">
                             <div class="level-btn" data-level="junior">
@@ -322,7 +365,7 @@
                     <!-- Result Screen -->
                     <div id="result-screen" class="result-screen">
                         <div class="result-title success" id="result-title">🎉 Congratulations!</div>
-                        <div class="manatee-intro">🦭</div>
+                        <div class="custom-hero-image" style="width: 150px; height: 150px; margin: 20px auto;"></div>
                         <div id="result-message">You completed the Junior level perfectly!</div>
                         <div class="promo-code" id="promo-code">ILOVEMANATEA25</div>
                         <div>📧 Email us at hello@manatea.team with your promo code!</div>
@@ -351,37 +394,37 @@
             <h2 class="benefits-title">⚡ What We Actually Do</h2>
             <div class="benefits-grid">
                 <div class="benefit-card">
-                    <div class="benefit-icon">🏊‍♂️</div>
+                    <div class="custom-benefit-icon icon1"></div>
                     <div class="benefit-title">Massive Developer Pool</div>
                     <div class="benefit-text">1000+ pre-vetted developers ready to work. We already found them.</div>
                     <div class="benefit-price">Immediate access</div>
                 </div>
                 <div class="benefit-card">
-                    <div class="benefit-icon">⚡</div>
+                    <div class="custom-benefit-icon icon2"></div>
                     <div class="benefit-title">48 Hour Matching</div>
                     <div class="benefit-text">We find your developer in 2 days, not 2 weeks.</div>
                     <div class="benefit-price">Lightning fast</div>
                 </div>
                 <div class="benefit-card">
-                    <div class="benefit-icon">💰</div>
+                    <div class="custom-benefit-icon icon3"></div>
                     <div class="benefit-title">Pay Salary Directly</div>
                     <div class="benefit-text">Pay their actual salary + small monthly fee to us.</div>
                     <div class="benefit-price">No markup</div>
                 </div>
                 <div class="benefit-card">
-                    <div class="benefit-icon">🔑</div>
+                    <div class="custom-benefit-icon icon4"></div>
                     <div class="benefit-title">Hire Them Permanently</div>
                     <div class="benefit-text">Pay one-time fee = developer is yours forever.</div>
                     <div class="benefit-price">Own your team</div>
                 </div>
                 <div class="benefit-card">
-                    <div class="benefit-icon">🎯</div>
+                    <div class="custom-benefit-icon icon5"></div>
                     <div class="benefit-title">Senior-Level Quality</div>
                     <div class="benefit-text">Every developer tested by senior engineers. No juniors pretending.</div>
                     <div class="benefit-price">Actually good devs</div>
                 </div>
                 <div class="benefit-card">
-                    <div class="benefit-icon">🚫</div>
+                    <div class="custom-benefit-icon icon6"></div>
                     <div class="benefit-title">No Agency BS</div>
                     <div class="benefit-text">No account managers, no project managers, no meeting overhead.</div>
                     <div class="benefit-price">Just results</div>
