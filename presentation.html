@@ -25,24 +25,16 @@
             position: fixed;
             top: 0;
             left: 0;
-            display: flex;
+            display: none;
             align-items: center;
             justify-content: center;
-            opacity: 0;
-            transform: translateX(100vw);
-            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             padding: 60px 20px 120px;
             overflow-y: auto;
         }
         
         .slide.active {
-            opacity: 1;
-            transform: translateX(0);
+            display: flex;
             z-index: 10;
-        }
-        
-        .slide.prev {
-            transform: translateX(-100vw);
         }
         
         .slide-content {
@@ -104,7 +96,6 @@
             margin: 1rem 0;
         }
         
-        /* Custom Hero Image */
         .hero-manatee {
             width: 200px;
             height: 200px;
@@ -136,7 +127,6 @@
             padding: 2rem;
             transition: all 0.3s;
             cursor: pointer;
-            position: relative;
         }
         
         .feature-card:hover {
@@ -298,6 +288,7 @@
             cursor: pointer;
             transition: all 0.3s;
             font-family: inherit;
+            font-size: 1rem;
         }
         
         .nav-btn:hover {
@@ -332,64 +323,6 @@
             margin: 1rem 0;
         }
         
-        /* Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 20000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(8px);
-        }
-        
-        .modal-content {
-            background: #0a0f1c;
-            margin: 5% auto;
-            padding: 0;
-            border: 3px solid #4285f4;
-            border-radius: 20px;
-            width: 90%;
-            max-width: 600px;
-            max-height: 80vh;
-            overflow-y: auto;
-            box-shadow: 0 0 50px rgba(66, 133, 244, 0.5);
-        }
-        
-        .modal-header {
-            background: linear-gradient(135deg, #4285f4, #34a853);
-            color: white;
-            padding: 20px;
-            border-radius: 17px 17px 0 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .modal-close {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 2rem;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        
-        .modal-body {
-            padding: 30px;
-            color: #e8eaed;
-            text-align: left;
-        }
-        
-        .modal-title {
-            font-size: 1.8rem;
-            font-weight: bold;
-            margin-bottom: 20px;
-            color: #4285f4;
-        }
-        
         @media (max-width: 768px) {
             .features-grid {
                 grid-template-columns: 1fr;
@@ -407,29 +340,6 @@
             .slide {
                 padding: 40px 1rem 100px;
             }
-            
-            .slide-content {
-                max-height: 90vh;
-                overflow-y: auto;
-            }
-        }
-        
-        /* Background animation */
-        .slide::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(66, 133, 244, 0.02), transparent);
-            animation: rotate 20s linear infinite;
-            z-index: -1;
-        }
-        
-        @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
@@ -441,7 +351,7 @@
     <div class="slide active" id="slide1">
         <div class="slide-content">
             <div class="greeting">Hi,</div>
-            <div class="client-name" id="clientName">John</div>
+            <div class="client-name" id="clientName">Loading...</div>
             <div class="big-text">Welcome to <span class="highlight">ManaTEA</span></div>
             <div class="hero-manatee"></div>
             <div class="medium-text">Where amazing developers meet amazing projects</div>
@@ -487,51 +397,51 @@
             <div class="medium-text">Programming languages, that is 😄</div>
             
             <div class="tech-grid">
-                <div class="tech-item" onclick="showTechModal('javascript')">
+                <div class="tech-item">
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript" class="tech-icon">
                     <div>JavaScript</div>
                 </div>
-                <div class="tech-item" onclick="showTechModal('python')">
+                <div class="tech-item">
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" class="tech-icon">
                     <div>Python</div>
                 </div>
-                <div class="tech-item" onclick="showTechModal('react')">
+                <div class="tech-item">
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React" class="tech-icon">
                     <div>React</div>
                 </div>
-                <div class="tech-item" onclick="showTechModal('nodejs')">
+                <div class="tech-item">
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Node.js" class="tech-icon">
                     <div>Node.js</div>
                 </div>
-                <div class="tech-item" onclick="showTechModal('php')">
+                <div class="tech-item">
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" alt="PHP" class="tech-icon">
                     <div>PHP</div>
                 </div>
-                <div class="tech-item" onclick="showTechModal('laravel')">
+                <div class="tech-item">
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-plain.svg" alt="Laravel" class="tech-icon">
                     <div>Laravel</div>
                 </div>
-                <div class="tech-item" onclick="showTechModal('vue')">
+                <div class="tech-item">
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg" alt="Vue.js" class="tech-icon">
                     <div>Vue.js</div>
                 </div>
-                <div class="tech-item" onclick="showTechModal('angular')">
+                <div class="tech-item">
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg" alt="Angular" class="tech-icon">
                     <div>Angular</div>
                 </div>
-                <div class="tech-item" onclick="showTechModal('java')">
+                <div class="tech-item">
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java" class="tech-icon">
                     <div>Java</div>
                 </div>
-                <div class="tech-item" onclick="showTechModal('dotnet')">
+                <div class="tech-item">
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dotnetcore/dotnetcore-original.svg" alt=".NET" class="tech-icon">
                     <div>.NET</div>
                 </div>
-                <div class="tech-item" onclick="showTechModal('go')">
+                <div class="tech-item">
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg" alt="Go" class="tech-icon">
                     <div>Go</div>
                 </div>
-                <div class="tech-item" onclick="showTechModal('flutter')">
+                <div class="tech-item">
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg" alt="Flutter" class="tech-icon">
                     <div>Flutter</div>
                 </div>
@@ -550,22 +460,22 @@
             <div class="big-text">How we <span class="highlight">work together</span></div>
             
             <div class="features-grid">
-                <div class="feature-card" onclick="showFeatureModal('matching')">
+                <div class="feature-card">
                     <div class="feature-icon">⚡</div>
                     <div class="feature-title">48 Hour Matching</div>
                     <div class="feature-desc">Tell us what you need, we find your perfect developer in 2 days max</div>
                 </div>
-                <div class="feature-card" onclick="showFeatureModal('communication')">
+                <div class="feature-card">
                     <div class="feature-icon">🎯</div>
                     <div class="feature-title">Direct Communication</div>
                     <div class="feature-desc">No middlemen, no project managers - just you and your developer</div>
                 </div>
-                <div class="feature-card" onclick="showFeatureModal('replacement')">
+                <div class="feature-card">
                     <div class="feature-icon">🔄</div>
                     <div class="feature-title">Unlimited Replacements</div>
                     <div class="feature-desc">Not happy? We'll find you another developer immediately</div>
                 </div>
-                <div class="feature-card" onclick="showFeatureModal('hire')">
+                <div class="feature-card">
                     <div class="feature-icon">🏠</div>
                     <div class="feature-title">Hire Permanently</div>
                     <div class="feature-desc">Love your developer? Pay once and they're yours forever</div>
@@ -585,27 +495,27 @@
             <div class="big-text">Perfect for <span class="success">your projects</span></div>
             
             <div class="projects-grid">
-                <div class="project-card" onclick="showProjectModal('web')">
+                <div class="project-card">
                     <div class="project-type">💻 Web Applications</div>
                     <div class="project-desc">E-commerce platforms, SaaS tools, admin dashboards - we build it all</div>
                 </div>
-                <div class="project-card" onclick="showProjectModal('mobile')">
+                <div class="project-card">
                     <div class="project-type">📱 Mobile Apps</div>
                     <div class="project-desc">iOS, Android, React Native, Flutter - native or cross-platform</div>
                 </div>
-                <div class="project-card" onclick="showProjectModal('ai')">
+                <div class="project-card">
                     <div class="project-type">🤖 AI & ML</div>
                     <div class="project-desc">Machine learning models, chatbots, data analysis, automation</div>
                 </div>
-                <div class="project-card" onclick="showProjectModal('cloud')">
+                <div class="project-card">
                     <div class="project-type">☁️ Cloud & DevOps</div>
                     <div class="project-desc">AWS, Azure, Docker, Kubernetes - scalable infrastructure</div>
                 </div>
-                <div class="project-card" onclick="showProjectModal('ecommerce')">
+                <div class="project-card">
                     <div class="project-type">🛒 E-commerce</div>
                     <div class="project-desc">Shopify, WooCommerce, custom stores - sell more, worry less</div>
                 </div>
-                <div class="project-card" onclick="showProjectModal('custom')">
+                <div class="project-card">
                     <div class="project-type">🎨 Custom Solutions</div>
                     <div class="project-desc">Have a crazy idea? We love challenges and unique projects</div>
                 </div>
@@ -644,105 +554,150 @@
     
     <!-- Navigation -->
     <div class="navigation">
-        <button class="nav-btn" id="prevBtn" type="button">← Previous</button>
+        <button class="nav-btn" id="prevBtn">← Previous</button>
         <span class="slide-counter" id="slideCounter">1 / 6</span>
-        <button class="nav-btn" id="nextBtn" type="button">Next →</button>
-    </div>
-    
-    <!-- Modal for Tech Stack -->
-    <div id="techModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 id="techModalTitle">Technology Details</h2>
-                <button class="modal-close" onclick="closeModal('techModal')">&times;</button>
-            </div>
-            <div class="modal-body" id="techModalBody">
-                <!-- Content will be loaded dynamically -->
-            </div>
-        </div>
-    </div>
-    
-    <!-- Modal for Features -->
-    <div id="featureModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 id="featureModalTitle">Feature Details</h2>
-                <button class="modal-close" onclick="closeModal('featureModal')">&times;</button>
-            </div>
-            <div class="modal-body" id="featureModalBody">
-                <!-- Content will be loaded dynamically -->
-            </div>
-        </div>
-    </div>
-    
-    <!-- Modal for Projects -->
-    <div id="projectModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 id="projectModalTitle">Project Examples</h2>
-                <button class="modal-close" onclick="closeModal('projectModal')">&times;</button>
-            </div>
-            <div class="modal-body" id="projectModalBody">
-                <!-- Content will be loaded dynamically -->
-            </div>
-        </div>
+        <button class="nav-btn" id="nextBtn">Next →</button>
     </div>
     
     <script>
+        // Global variables
         let currentSlide = 1;
         const totalSlides = 6;
         
-        // Tech stack project examples with humor
-        const techProjects = {
-            javascript: {
-                title: "JavaScript Magic ✨",
-                content: `
-                    <div class="modal-title">🟨 JavaScript Projects That Don't Suck</div>
-                    <p><strong>Real projects we've built:</strong></p>
-                    <br>
-                    <p>🚀 <strong>E-commerce Platform:</strong> Built a shopping site so smooth, customers forgot they were spending money!</p>
-                    <p>📊 <strong>Analytics Dashboard:</strong> Made charts so beautiful, our client started framing them instead of quarterly reports.</p>
-                    <p>🎮 <strong>Interactive Game:</strong> Created a browser game so addictive, we had to add a "boss is coming" button.</p>
-                    <p>💬 <strong>Real-time Chat:</strong> Messages fly faster than gossip in a small office.</p>
-                    <br>
-                    <p><em>Fun fact: JavaScript is like duct tape - it fixes everything, works everywhere, and sometimes you're not sure how! 🦭</em></p>
-                `
-            },
-            python: {
-                title: "Python Power 🐍",
-                content: `
-                    <div class="modal-title">🐍 Python Projects That Actually Work</div>
-                    <p><strong>What we've slithered into:</strong></p>
-                    <br>
-                    <p>🤖 <strong>AI Chatbot:</strong> So smart it started giving us business advice (we're still considering its suggestions).</p>
-                    <p>📈 <strong>Data Analysis Tool:</strong> Turns boring spreadsheets into "OH WOW!" moments.</p>
-                    <p>🔍 <strong>Web Scraper:</strong> Gathers data faster than you can say "robots.txt".</p>
-                    <p>⚡ <strong>Automation Scripts:</strong> Does your boring tasks while you sip tea and think about manatees.</p>
-                    <br>
-                    <p><em>Python: The only snake that actually helps instead of biting you! 🦭</em></p>
-                `
-            },
-            react: {
-                title: "React Wizardry ⚛️",
-                content: `
-                    <div class="modal-title">⚛️ React Apps That React Right</div>
-                    <p><strong>Interfaces so smooth, butter gets jealous:</strong></p>
-                    <br>
-                    <p>📱 <strong>Social Media App:</strong> Users stopped checking other apps (our client's retention went through the roof!).</p>
-                    <p>🏪 <strong>Online Marketplace:</strong> Buying became so easy, customers' wallets filed complaints.</p>
-                    <p>📚 <strong>Learning Platform:</strong> Made education so engaging, students forgot they were studying.</p>
-                    <p>🎵 <strong>Music Streaming App:</strong> Plays tunes smoother than a manatee swimming.</p>
-                    <br>
-                    <p><em>React: Because who has time for page refreshes in 2025? 🦭</em></p>
-                `
-            },
-            nodejs: {
-                title: "Node.js Backend Beast 🟢",
-                content: `
-                    <div class="modal-title">🟢 Node.js: The Backend That Never Sleeps</div>
-                    <p><strong>Server-side sorcery:</strong></p>
-                    <br>
-                    <p>🔥 <strong>API Gateway:</strong> Handles 10,000 requests per second like a caffeinated manatee.</p>
-                    <p>💾 <strong>Database Management:</strong> Stores data so efficiently, even hoarders are impressed.</p>
-                    <p>🔐 <strong>Authentication System:</strong> More secure than Fort Knox, easier to use than a door key.</p>
-                    <p>📡 <strong>Real-time Services:</strong> Updates faster than your ex changing relationship status.</p
+        // Get name from URL
+        function getNameFromURL() {
+            try {
+                const url = new URL(window.location.href);
+                const name = url.searchParams.get('name');
+                console.log('Full URL:', window.location.href);
+                console.log('URL params:', url.searchParams.toString());
+                console.log('Name found:', name);
+                return name || 'John';
+            } catch (error) {
+                console.error('Error parsing URL:', error);
+                return 'John';
+            }
+        }
+        
+        // Show specific slide
+        function goToSlide(slideNum) {
+            console.log('Going to slide:', slideNum);
+            
+            // Hide all slides
+            const slides = document.querySelectorAll('.slide');
+            slides.forEach(slide => {
+                slide.classList.remove('active');
+            });
+            
+            // Show target slide
+            const targetSlide = document.getElementById('slide' + slideNum);
+            if (targetSlide) {
+                targetSlide.classList.add('active');
+                currentSlide = slideNum;
+                updateProgressBar();
+                updateNavButtons();
+                console.log('Slide ' + slideNum + ' is now active');
+            } else {
+                console.error('Slide not found:', slideNum);
+            }
+        }
+        
+        // Update progress bar
+        function updateProgressBar() {
+            const progressBar = document.getElementById('progressBar');
+            if (progressBar) {
+                const progress = (currentSlide / totalSlides) * 100;
+                progressBar.style.width = progress + '%';
+            }
+        }
+        
+        // Update navigation buttons
+        function updateNavButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const counter = document.getElementById('slideCounter');
+            
+            if (prevBtn) {
+                prevBtn.disabled = (currentSlide === 1);
+            }
+            
+            if (nextBtn) {
+                nextBtn.disabled = (currentSlide === totalSlides);
+            }
+            
+            if (counter) {
+                counter.textContent = currentSlide + ' / ' + totalSlides;
+            }
+        }
+        
+        // Next slide function
+        function nextSlide() {
+            if (currentSlide < totalSlides) {
+                goToSlide(currentSlide + 1);
+            }
+        }
+        
+        // Previous slide function
+        function prevSlide() {
+            if (currentSlide > 1) {
+                goToSlide(currentSlide - 1);
+            }
+        }
+        
+        // Initialize presentation
+        function initPresentation() {
+            console.log('Initializing presentation...');
+            
+            // Set client name
+            const clientName = getNameFromURL();
+            const nameElement = document.getElementById('clientName');
+            if (nameElement) {
+                nameElement.textContent = clientName;
+                console.log('Client name set to:', clientName);
+            }
+            
+            // Set up navigation
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            if (prevBtn) {
+                prevBtn.onclick = function() {
+                    console.log('Previous button clicked');
+                    prevSlide();
+                };
+            }
+            
+            if (nextBtn) {
+                nextBtn.onclick = function() {
+                    console.log('Next button clicked');
+                    nextSlide();
+                };
+            }
+            
+            // Set up keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowRight') {
+                    nextSlide();
+                } else if (e.key === 'ArrowLeft') {
+                    prevSlide();
+                }
+            });
+            
+            // Initialize first slide
+            goToSlide(1);
+            
+            console.log('Presentation initialized successfully');
+        }
+        
+        // Start when page loads
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initPresentation);
+        } else {
+            initPresentation();
+        }
+        
+        // Debug info
+        console.log('Script loaded, waiting for DOM...');
+    </script>
+</body>
+</html>
