@@ -28,7 +28,7 @@
             display: none;
             align-items: center;
             justify-content: center;
-            padding: 60px 20px 120px;
+            padding: 80px 20px 140px;
             overflow-y: auto;
         }
         
@@ -61,20 +61,20 @@
         }
         
         .big-text {
-            font-size: clamp(2rem, 6vw, 4rem);
+            font-size: clamp(2rem, 5vw, 3.5rem);
             font-weight: 700;
             margin: 2rem 0;
             line-height: 1.2;
         }
         
         .medium-text {
-            font-size: clamp(1.2rem, 4vw, 2rem);
+            font-size: clamp(1.2rem, 3.5vw, 1.8rem);
             margin: 1.5rem 0;
             color: #9aa0a6;
         }
         
         .small-text {
-            font-size: clamp(1rem, 3vw, 1.4rem);
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
             color: #9aa0a6;
             margin: 1rem 0;
         }
@@ -117,7 +117,7 @@
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 2rem;
-            margin: 3rem 0;
+            margin: 2rem 0;
         }
         
         .feature-card {
@@ -156,7 +156,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
             gap: 1.5rem;
-            margin: 3rem 0;
+            margin: 2rem 0;
         }
         
         .tech-item {
@@ -196,8 +196,8 @@
             background: rgba(52, 168, 83, 0.1);
             border: 3px solid #34a853;
             border-radius: 25px;
-            padding: 3rem;
-            margin: 2rem auto;
+            padding: 2rem;
+            margin: 1rem auto;
             max-width: 600px;
             position: relative;
         }
@@ -323,6 +323,64 @@
             margin: 1rem 0;
         }
         
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 20000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+        }
+        
+        .modal-content {
+            background: #0a0f1c;
+            margin: 5% auto;
+            padding: 0;
+            border: 3px solid #4285f4;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 0 50px rgba(66, 133, 244, 0.5);
+        }
+        
+        .modal-header {
+            background: linear-gradient(135deg, #4285f4, #34a853);
+            color: white;
+            padding: 20px;
+            border-radius: 17px 17px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .modal-body {
+            padding: 30px;
+            color: #e8eaed;
+            text-align: left;
+        }
+        
+        .modal-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #4285f4;
+        }
+        
         @media (max-width: 768px) {
             .features-grid {
                 grid-template-columns: 1fr;
@@ -338,7 +396,7 @@
             }
             
             .slide {
-                padding: 40px 1rem 100px;
+                padding: 60px 1rem 120px;
             }
         }
     </style>
@@ -369,13 +427,13 @@
             <div class="pricing-card">
                 <div class="price">$2,900</div>
                 <div class="medium-text">per month per developer</div>
-                <div class="small-text" style="margin: 2rem 0;">
+                <div class="small-text" style="margin: 1.5rem 0;">
                     Developer salary: $2,500<br>
                     ManaTEA fee: $400<br>
                     <span class="success">That's it. No hidden costs.</span>
                 </div>
                 
-                <div class="features-grid" style="margin: 2rem 0;">
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 1.5rem 0; font-size: 0.9rem;">
                     <div>✅ 48h matching guarantee</div>
                     <div>✅ Unlimited replacements</div>
                     <div>✅ Direct communication</div>
@@ -383,7 +441,7 @@
                 </div>
             </div>
             
-            <div class="hero-manatee" style="width: 150px; height: 150px;"></div>
+            <div class="hero-manatee" style="width: 120px; height: 120px;"></div>
             <div class="funny-text">
                 No account managers to feed. No fancy offices to rent. Just pure talent.
             </div>
@@ -397,51 +455,51 @@
             <div class="medium-text">Programming languages, that is 😄</div>
             
             <div class="tech-grid">
-                <div class="tech-item">
+                <div class="tech-item" onclick="showModal('JavaScript Projects', 'We built an e-commerce platform that increased sales by 340% in first quarter. Customer satisfaction through the roof! Also created analytics dashboards so beautiful, clients started framing them.')">
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript" class="tech-icon">
                     <div>JavaScript</div>
                 </div>
-                <div class="tech-item">
+                <div class="tech-item" onclick="showModal('Python Magic', 'Built an AI chatbot so smart it started giving business advice! Created data analysis tools that turn boring spreadsheets into OH WOW moments. Python: the only snake that actually helps!')">
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" class="tech-icon">
                     <div>Python</div>
                 </div>
-                <div class="tech-item">
+                <div class="tech-item" onclick="showModal('React Wizardry', 'Built social media app where users stopped checking other apps. Customer retention went through the roof! React: Because who has time for page refreshes in 2025?')">
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React" class="tech-icon">
                     <div>React</div>
                 </div>
-                <div class="tech-item">
+                <div class="tech-item" onclick="showModal('Node.js Power', 'API handles 10,000 requests per second like a caffeinated manatee. Built real-time services that update faster than your ex changing relationship status!')">
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Node.js" class="tech-icon">
                     <div>Node.js</div>
                 </div>
-                <div class="tech-item">
+                <div class="tech-item" onclick="showModal('PHP Still Rocks', 'Yes, we still use PHP and proud of it! Built e-commerce that never sleeps, CMS so user-friendly even your grandma could blog about cats. PHP: The cockroach of programming!')">
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" alt="PHP" class="tech-icon">
                     <div>PHP</div>
                 </div>
-                <div class="tech-item">
+                <div class="tech-item" onclick="showModal('Laravel Elegance', 'Framework so elegant it wears a tuxedo! Built corporate platforms that manage employee data better than HR. Making PHP developers feel fancy since 2011!')">
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-plain.svg" alt="Laravel" class="tech-icon">
                     <div>Laravel</div>
                 </div>
-                <div class="tech-item">
+                <div class="tech-item" onclick="showModal('Vue.js Simplicity', 'So easy to learn, it teaches itself! Built retail dashboards so simple, cash registers got jealous. Vue.js: The Switzerland of frameworks!')">
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg" alt="Vue.js" class="tech-icon">
                     <div>Vue.js</div>
                 </div>
-                <div class="tech-item">
+                <div class="tech-item" onclick="showModal('Angular Enterprise', 'For serious business apps! Built manufacturing systems that track production like helicopter parents. Angular: When your app needs a suit and tie!')">
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg" alt="Angular" class="tech-icon">
                     <div>Angular</div>
                 </div>
-                <div class="tech-item">
+                <div class="tech-item" onclick="showModal('Java Reliability', 'Still brewing strong since 1995! Built banking backends that process transactions more reliably than your morning routine. Write once, run everywhere!')">
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java" class="tech-icon">
                     <div>Java</div>
                 </div>
-                <div class="tech-item">
+                <div class="tech-item" onclick="showModal('.NET Microsoft Magic', 'From corporate villain to open-source hero! Built enterprise portals that make corporate life slightly less soul-crushing. Proof that even Microsoft can change!')">
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dotnetcore/dotnetcore-original.svg" alt=".NET" class="tech-icon">
                     <div>.NET</div>
                 </div>
-                <div class="tech-item">
+                <div class="tech-item" onclick="showModal('Go Speed Demon', 'Fast like a caffeinated gopher! Built microservices that scale faster than rumors in small towns. Making other languages look like swimming through honey!')">
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg" alt="Go" class="tech-icon">
                     <div>Go</div>
                 </div>
-                <div class="tech-item">
+                <div class="tech-item" onclick="showModal('Flutter Cross-Platform', 'Write once, deploy everywhere (for real this time)! Built apps that work on iOS and Android so well, users forget they use different phones!')">
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg" alt="Flutter" class="tech-icon">
                     <div>Flutter</div>
                 </div>
@@ -460,22 +518,22 @@
             <div class="big-text">How we <span class="highlight">work together</span></div>
             
             <div class="features-grid">
-                <div class="feature-card">
+                <div class="feature-card" onclick="showModal('48 Hour Matching Magic', 'Hour 1-12: We analyze your project like detectives. Hour 13-24: Review 1000+ developers faster than dating apps. Hour 25-36: Interview with our no BS filter. Hour 37-48: Perfect match found! 94% success rate.')">
                     <div class="feature-icon">⚡</div>
                     <div class="feature-title">48 Hour Matching</div>
                     <div class="feature-desc">Tell us what you need, we find your perfect developer in 2 days max</div>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card" onclick="showModal('Direct Communication Revolution', 'Remember the telephone game? You → Account Manager → Project Manager → Tech Lead → Developer. Your red button becomes red-ish circular element. Our way: You ↔ Developer. Revolutionary!')">
                     <div class="feature-icon">🎯</div>
                     <div class="feature-title">Direct Communication</div>
                     <div class="feature-desc">No middlemen, no project managers - just you and your developer</div>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card" onclick="showModal('Unlimited Replacements Policy', 'Not vibing? No problem! Developer not getting your vision? New one in 48h. Communication putting you to sleep? We find someone who sparks joy. Record replacement: 6 hours (caught using Comic Sans).')">
                     <div class="feature-icon">🔄</div>
                     <div class="feature-title">Unlimited Replacements</div>
                     <div class="feature-desc">Not happy? We'll find you another developer immediately</div>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card" onclick="showModal('Permanent Hire Program', 'Work together 3+ months, pay one-time fee, developer becomes 100% yours! Math: Save $1,800 first year + $4,800 every year after. Like adopting a pet that pays you back!')">
                     <div class="feature-icon">🏠</div>
                     <div class="feature-title">Hire Permanently</div>
                     <div class="feature-desc">Love your developer? Pay once and they're yours forever</div>
@@ -495,27 +553,27 @@
             <div class="big-text">Perfect for <span class="success">your projects</span></div>
             
             <div class="projects-grid">
-                <div class="project-card">
+                <div class="project-card" onclick="showModal('Web Applications That Work', 'E-commerce platform increased sales 340%. Analytics dashboard got standing ovations instead of putting people to sleep. Patient management reduced waiting time 60%. Learning platform jumped from 23% to 87% completion!')">
                     <div class="project-type">💻 Web Applications</div>
                     <div class="project-desc">E-commerce platforms, SaaS tools, admin dashboards - we build it all</div>
                 </div>
-                <div class="project-card">
+                <div class="project-card" onclick="showModal('Mobile Apps People Love', 'Music app so smooth users stopped using Spotify (89% daily retention). Food delivery faster than deciding what to eat. Fitness app makes exercise addictive (78% retention after 6 months).')">
                     <div class="project-type">📱 Mobile Apps</div>
                     <div class="project-desc">iOS, Android, React Native, Flutter - native or cross-platform</div>
                 </div>
-                <div class="project-card">
+                <div class="project-card" onclick="showModal('AI That Actually Works', 'Chatbot so smart it got promoted to senior advisor. Stock prediction better than fortune tellers (156% portfolio growth). Image recognition with 94.7% accuracy. Found $2.3M savings client didn\'t know existed!')">
                     <div class="project-type">🤖 AI & ML</div>
                     <div class="project-desc">Machine learning models, chatbots, data analysis, automation</div>
                 </div>
-                <div class="project-card">
+                <div class="project-card" onclick="showModal('Cloud Infrastructure Magic', 'Handled Black Friday traffic like zen master while competitors crashed. Deploy time: 3 minutes (was 4 hours). Processes 10TB daily like eating breakfast. Zero security breaches in 3+ years.')">
                     <div class="project-type">☁️ Cloud & DevOps</div>
                     <div class="project-desc">AWS, Azure, Docker, Kubernetes - scalable infrastructure</div>
                 </div>
-                <div class="project-card">
+                <div class="project-card" onclick="showModal('E-commerce Money Makers', 'Fashion boutique: 8.4% conversion rate (industry avg: 2.86%). Course marketplace increased creator revenue 420%. Furniture store with AR decreased returns 67%. Multi-restaurant platform increased orders 34%.')">
                     <div class="project-type">🛒 E-commerce</div>
                     <div class="project-desc">Shopify, WooCommerce, custom stores - sell more, worry less</div>
                 </div>
-                <div class="project-card">
+                <div class="project-card" onclick="showModal('Custom Weird & Wonderful', 'Dog walking scheduler with sniff compatibility algorithm. Office Nerf war management (productivity +23%). Smart garden AI that talks to plants. Circus performance tracker with zero dropped balls. Baby cry translator that worked!')">
                     <div class="project-type">🎨 Custom Solutions</div>
                     <div class="project-desc">Have a crazy idea? We love challenges and unique projects</div>
                 </div>
@@ -559,145 +617,135 @@
         <button class="nav-btn" id="nextBtn">Next →</button>
     </div>
     
+    <!-- Modal -->
+    <div id="projectModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Project Details</h2>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="modalBody">Content goes here</div>
+            </div>
+        </div>
+    </div>
+    
     <script>
         // Global variables
         let currentSlide = 1;
         const totalSlides = 6;
         
-        // Get name from URL
-        function getNameFromURL() {
+        // Get name from URL and set it
+        function setClientName() {
             try {
-                const url = new URL(window.location.href);
-                const name = url.searchParams.get('name');
-                console.log('Full URL:', window.location.href);
-                console.log('URL params:', url.searchParams.toString());
-                console.log('Name found:', name);
-                return name || 'John';
+                const urlParams = new URLSearchParams(window.location.search);
+                const name = urlParams.get('name') || 'John';
+                document.getElementById('clientName').textContent = name;
+                console.log('Client name set to:', name);
             } catch (error) {
-                console.error('Error parsing URL:', error);
-                return 'John';
+                document.getElementById('clientName').textContent = 'John';
+                console.log('Using default name: John');
             }
         }
         
         // Show specific slide
-        function goToSlide(slideNum) {
-            console.log('Going to slide:', slideNum);
-            
+        function showSlide(slideNumber) {
             // Hide all slides
-            const slides = document.querySelectorAll('.slide');
-            slides.forEach(slide => {
+            document.querySelectorAll('.slide').forEach(slide => {
                 slide.classList.remove('active');
             });
             
             // Show target slide
-            const targetSlide = document.getElementById('slide' + slideNum);
+            const targetSlide = document.getElementById('slide' + slideNumber);
             if (targetSlide) {
                 targetSlide.classList.add('active');
-                currentSlide = slideNum;
-                updateProgressBar();
-                updateNavButtons();
-                console.log('Slide ' + slideNum + ' is now active');
-            } else {
-                console.error('Slide not found:', slideNum);
+                currentSlide = slideNumber;
+                updateProgress();
+                updateNavigation();
             }
         }
         
         // Update progress bar
-        function updateProgressBar() {
-            const progressBar = document.getElementById('progressBar');
-            if (progressBar) {
-                const progress = (currentSlide / totalSlides) * 100;
-                progressBar.style.width = progress + '%';
-            }
+        function updateProgress() {
+            const progress = (currentSlide / totalSlides) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
         }
         
         // Update navigation buttons
-        function updateNavButtons() {
-            const prevBtn = document.getElementById('prevBtn');
-            const nextBtn = document.getElementById('nextBtn');
-            const counter = document.getElementById('slideCounter');
-            
-            if (prevBtn) {
-                prevBtn.disabled = (currentSlide === 1);
-            }
-            
-            if (nextBtn) {
-                nextBtn.disabled = (currentSlide === totalSlides);
-            }
-            
-            if (counter) {
-                counter.textContent = currentSlide + ' / ' + totalSlides;
-            }
+        function updateNavigation() {
+            document.getElementById('prevBtn').disabled = (currentSlide === 1);
+            document.getElementById('nextBtn').disabled = (currentSlide === totalSlides);
+            document.getElementById('slideCounter').textContent = currentSlide + ' / ' + totalSlides;
         }
         
-        // Next slide function
+        // Navigation functions
         function nextSlide() {
             if (currentSlide < totalSlides) {
-                goToSlide(currentSlide + 1);
+                showSlide(currentSlide + 1);
             }
         }
         
-        // Previous slide function
         function prevSlide() {
             if (currentSlide > 1) {
-                goToSlide(currentSlide - 1);
+                showSlide(currentSlide - 1);
             }
         }
         
-        // Initialize presentation
+        // Show modal with project details
+        function showModal(title, content) {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalBody').innerHTML = '<p style="line-height: 1.6; font-size: 1.1rem;">' + content + '</p>';
+            document.getElementById('projectModal').style.display = 'block';
+        }
+        
+        // Close modal
+        function closeModal() {
+            document.getElementById('projectModal').style.display = 'none';
+        }
+        
+        // Initialize everything when page loads
         function initPresentation() {
             console.log('Initializing presentation...');
             
             // Set client name
-            const clientName = getNameFromURL();
-            const nameElement = document.getElementById('clientName');
-            if (nameElement) {
-                nameElement.textContent = clientName;
-                console.log('Client name set to:', clientName);
-            }
+            setClientName();
             
-            // Set up navigation
-            const prevBtn = document.getElementById('prevBtn');
-            const nextBtn = document.getElementById('nextBtn');
-            
-            if (prevBtn) {
-                prevBtn.onclick = function() {
-                    console.log('Previous button clicked');
-                    prevSlide();
-                };
-            }
-            
-            if (nextBtn) {
-                nextBtn.onclick = function() {
-                    console.log('Next button clicked');
-                    nextSlide();
-                };
-            }
+            // Set up navigation buttons
+            document.getElementById('prevBtn').onclick = prevSlide;
+            document.getElementById('nextBtn').onclick = nextSlide;
             
             // Set up keyboard navigation
             document.addEventListener('keydown', function(e) {
-                if (e.key === 'ArrowRight') {
+                if (e.key === 'ArrowRight' || e.key === ' ') {
                     nextSlide();
                 } else if (e.key === 'ArrowLeft') {
                     prevSlide();
+                } else if (e.key === 'Escape') {
+                    closeModal();
                 }
             });
             
-            // Initialize first slide
-            goToSlide(1);
+            // Close modal when clicking outside
+            document.getElementById('projectModal').onclick = function(e) {
+                if (e.target === this) {
+                    closeModal();
+                }
+            };
             
-            console.log('Presentation initialized successfully');
+            // Initialize first slide
+            showSlide(1);
+            
+            console.log('Presentation ready!');
         }
         
-        // Start when page loads
+        // Start when DOM is ready
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', initPresentation);
         } else {
             initPresentation();
         }
         
-        // Debug info
-        console.log('Script loaded, waiting for DOM...');
+        console.log('Script loaded successfully');
     </script>
 </body>
 </html>
