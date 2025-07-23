@@ -1145,6 +1145,264 @@
             </div>
         </div>
 
+        <!-- Challenges Screen -->
+        <div class="screen" id="challenges">
+            <div class="header">
+                <button class="back-btn" onclick="showScreen('home')">←</button>
+                <h1 class="header-title">Відео та виклики</h1>
+                <button class="back-btn" onclick="createContent()">+</button>
+            </div>
+            <div class="content-screen">
+                <div class="content-card" onclick="openVideo(1)">
+                    <div class="card-header">
+                        <span class="card-icon">🎥</span>
+                        <div>
+                            <div class="card-title">Гол з 30 метрів</div>
+                            <div class="card-subtitle">Олександр К. • 2 дні тому</div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        Неймовірний гол з центру поля! Дивіться та голосуйте за найкращий момент матчу.
+                    </div>
+                    <div class="card-meta">
+                        <div class="rating">
+                            👍 <span class="rating-text">89 лайків • 1,234 переглядів</span>
+                        </div>
+                        <button class="btn btn-small btn-primary" onclick="event.stopPropagation(); voteVideo(1)">Голосувати (+2 💰)</button>
+                    </div>
+                </div>
+
+                <div class="content-card" onclick="openChallenge(1)">
+                    <div class="card-header">
+                        <span class="card-icon">🏆</span>
+                        <div>
+                            <div class="card-title">Челендж: Точність ударів</div>
+                            <div class="card-subtitle">Призовий фонд: 500 монет</div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        Влучіть у кути воріт 8 з 10 разів! Завантажте відео і змагайтеся за призи.
+                    </div>
+                    <div class="card-meta">
+                        <div style="color: #10b981;">15 учасників • Закінчується завтра</div>
+                        <button class="btn btn-small btn-primary" onclick="event.stopPropagation(); joinChallenge(1)">Взяти участь</button>
+                    </div>
+                </div>
+
+                <div class="content-card" onclick="openVideo(2)">
+                    <div class="card-header">
+                        <span class="card-icon">🎥</span>
+                        <div>
+                            <div class="card-title">Дриблінг проти 3х захисників</div>
+                            <div class="card-subtitle">Максим П. • 1 день тому</div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        Техніка обведення в реальній грі. Голосуйте за найкращий дриблінг тижня!
+                    </div>
+                    <div class="card-meta">
+                        <div class="rating">
+                            👍 <span class="rating-text">156 лайків • 2,341 переглядів</span>
+                        </div>
+                        <button class="btn btn-small btn-primary" onclick="event.stopPropagation(); voteVideo(2)">Голосувати (+2 💰)</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Matches Screen -->
+        <div class="screen" id="matches">
+            <div class="header">
+                <button class="back-btn" onclick="showScreen('home')">←</button>
+                <h1 class="header-title">Матчі</h1>
+                <button class="back-btn" onclick="createMatch()">+</button>
+            </div>
+            <div class="content-screen">
+                <div class="content-card" onclick="viewMatch(1)">
+                    <div class="card-header">
+                        <span class="card-icon">⚽</span>
+                        <div>
+                            <div class="card-title">Футбол у парку Шевченка</div>
+                            <div class="card-subtitle">Сьогодні, 18:00 • Організатор: Ви</div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <strong>Гравці:</strong> 5/6 • <strong>Локація:</strong> Парк Шевченка, Київ
+                    </div>
+                    <div class="card-meta">
+                        <div style="color: #10b981;">Статус: Майже повний</div>
+                        <button class="btn btn-small btn-secondary" onclick="event.stopPropagation(); viewMatch(1)">Деталі</button>
+                    </div>
+                </div>
+
+                <div class="content-card" onclick="applyToMatch(2)">
+                    <div class="card-header">
+                        <span class="card-icon">⚽</span>
+                        <div>
+                            <div class="card-title">Вечірній футбол</div>
+                            <div class="card-subtitle">Завтра, 19:00 • Організатор: Олександр К.</div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <strong>Гравці:</strong> 7/10 • <strong>Локація:</strong> Стадіон "Динамо", Київ
+                    </div>
+                    <div class="card-meta">
+                        <div style="color: #f59e0b;">Набір гравців</div>
+                        <button class="btn btn-small btn-primary" onclick="event.stopPropagation(); applyToMatch(2)">Подати заявку</button>
+                    </div>
+                </div>
+
+                <div class="content-card" onclick="viewMatch(3)">
+                    <div class="card-header">
+                        <span class="card-icon">🏆</span>
+                        <div>
+                            <div class="card-title">Турнір вихідного дня</div>
+                            <div class="card-subtitle">П'ятниця, 20:00 • Організатор: Денис М.</div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <strong>Команди:</strong> 6/8 • <strong>Призовий фонд:</strong> 1000 монет
+                    </div>
+                    <div class="card-meta">
+                        <div style="color: #ef4444;">Реєстрація: 50 💰</div>
+                        <button class="btn btn-small btn-primary" onclick="event.stopPropagation(); joinTournament(3)">Реєстрація</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Friends Screen -->
+        <div class="screen" id="friends">
+            <div class="header">
+                <button class="back-btn" onclick="showScreen('home')">←</button>
+                <h1 class="header-title">Друзі</h1>
+                <button class="back-btn" onclick="addFriend()">+</button>
+            </div>
+            <div class="content-screen">
+                <div class="content-card" onclick="viewPlayerProfile('alex')">
+                    <div class="card-header">
+                        <span class="card-icon">🥇</span>
+                        <div>
+                            <div class="card-title">Олександр К.</div>
+                            <div class="card-subtitle">🟢 Онлайн • Рейтинг: 2890</div>
+                        </div>
+                    </div>
+                    <div class="card-meta">
+                        <div style="color: #10b981;">Разом зіграно: 12 матчів</div>
+                        <button class="btn btn-small btn-primary" onclick="event.stopPropagation(); inviteToMatch('alex')">Запросити</button>
+                    </div>
+                </div>
+
+                <div class="content-card" onclick="viewPlayerProfile('max')">
+                    <div class="card-header">
+                        <span class="card-icon">🥈</span>
+                        <div>
+                            <div class="card-title">Максим П.</div>
+                            <div class="card-subtitle">🟡 Був 2 год тому • Рейтинг: 2654</div>
+                        </div>
+                    </div>
+                    <div class="card-meta">
+                        <div style="color: #10b981;">Разом зіграно: 8 матчів</div>
+                        <button class="btn btn-small btn-primary" onclick="event.stopPropagation(); inviteToMatch('max')">Запросити</button>
+                    </div>
+                </div>
+
+                <div class="content-card" onclick="viewPlayerProfile('denis')">
+                    <div class="card-header">
+                        <span class="card-icon">🥉</span>
+                        <div>
+                            <div class="card-title">Денис М.</div>
+                            <div class="card-subtitle">🔴 Був вчора • Рейтинг: 2341</div>
+                        </div>
+                    </div>
+                    <div class="card-meta">
+                        <div style="color: #10b981;">Разом зіграно: 15 матчів</div>
+                        <button class="btn btn-small btn-primary" onclick="event.stopPropagation(); inviteToMatch('denis')">Запросити</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Shop Screen -->
+        <div class="screen" id="shop">
+            <div class="header">
+                <button class="back-btn" onclick="showScreen('home')">←</button>
+                <h1 class="header-title">Магазин</h1>
+                <div class="coins-display">💰 <span id="shopCoins">100</span></div>
+            </div>
+            <div class="content-screen">
+                <div class="content-card">
+                    <div class="card-header">
+                        <span class="card-icon">🥇</span>
+                        <div>
+                            <div class="card-title">Золота медаль</div>
+                            <div class="card-subtitle">Значок досягнення за 10 перемог</div>
+                        </div>
+                    </div>
+                    <div class="card-meta">
+                        <div style="color: #6b7280;">Престижний значок</div>
+                        <button class="btn btn-small btn-primary" onclick="buyItem('gold-medal', 50)">50 💰</button>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <div class="card-header">
+                        <span class="card-icon">⚽</span>
+                        <div>
+                            <div class="card-title">Преміум м'яч</div>
+                            <div class="card-subtitle">+10% до точності ударів</div>
+                        </div>
+                    </div>
+                    <div class="card-meta">
+                        <div style="color: #6b7280;">Покращення навичок</div>
+                        <button class="btn btn-small btn-primary" onclick="buyItem('premium-ball', 120)">120 💰</button>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <div class="card-header">
+                        <span class="card-icon">👕</span>
+                        <div>
+                            <div class="card-title">Футболка збірної</div>
+                            <div class="card-subtitle">Ексклюзивний дизайн команди</div>
+                        </div>
+                    </div>
+                    <div class="card-meta">
+                        <div style="color: #6b7280;">Колекційний предмет</div>
+                        <button class="btn btn-small btn-primary" onclick="buyItem('team-jersey', 80)">80 💰</button>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <div class="card-header">
+                        <span class="card-icon">🏆</span>
+                        <div>
+                            <div class="card-title">Кубок чемпіона</div>
+                            <div class="card-subtitle">Символ великих перемог</div>
+                        </div>
+                    </div>
+                    <div class="card-meta">
+                        <div style="color: #6b7280;">Легендарний трофей</div>
+                        <button class="btn btn-small btn-primary" onclick="buyItem('champion-cup', 200)">200 💰</button>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <div class="card-header">
+                        <span class="card-icon">⭐</span>
+                        <div>
+                            <div class="card-title">Подвійний XP</div>
+                            <div class="card-subtitle">Подвоєний досвід на 24 години</div>
+                        </div>
+                    </div>
+                    <div class="card-meta">
+                        <div style="color: #6b7280;">Тимчасове покращення</div>
+                        <button class="btn btn-small btn-primary" onclick="buyItem('double-xp', 150)">150 💰</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Ratings Screen -->
         <div class="screen" id="ratings">
             <div class="header">
@@ -1411,7 +1669,7 @@
                 gameState.player.games > 0 ? 
                 Math.round((gameState.player.wins / gameState.player.games) * 100) + '%' : '0%';
             
-            const coinElements = ['totalCoins'];
+            const coinElements = ['totalCoins', 'shopCoins'];
             coinElements.forEach(id => {
                 const element = document.getElementById(id);
                 if (element) element.textContent = gameState.player.coins;
@@ -1741,14 +1999,185 @@
             showModal('Статистика', messages[statType] || 'Інформація недоступна');
         }
 
-        // Create match
-        function createMatch() {
-            vibrate();
-            showModal(
-                'Створення матчу',
-                'Функція створення матчу буде доступна найближчим часом!\n\nВи зможете:\n• Вказати дату та час\n• Обрати локацію\n• Встановити кількість гравців\n• Додати опис матчу'
-            );
-        }
+                 // Video and challenge functions
+         function openVideo(videoId) {
+             vibrate();
+             const videos = {
+                 1: {title: 'Гол з 30 метрів', author: 'Олександр К.', likes: 89, views: 1234},
+                 2: {title: 'Дриблінг проти 3х захисників', author: 'Максим П.', likes: 156, views: 2341}
+             };
+             const video = videos[videoId];
+             showModal(
+                 video.title,
+                 `Автор: ${video.author}\n${video.views} переглядів • ${video.likes} лайків\n\nВідео відкривається в повноекранному режимі для перегляду та оцінювання.`
+             );
+         }
+
+         function voteVideo(videoId) {
+             vibrate();
+             gameState.player.coins += 2;
+             showModal('Голос зараховано!', `Ви проголосували за відео!\n\n+2 монети додано до вашого балансу.`);
+             updateUI();
+             saveData();
+         }
+
+         function openChallenge(challengeId) {
+             vibrate();
+             const challenges = {
+                 1: {title: 'Челендж: Точність ударів', prize: 500, participants: 15}
+             };
+             const challenge = challenges[challengeId];
+             showModal(
+                 challenge.title,
+                 `Призовий фонд: ${challenge.prize} монет\nУчасників: ${challenge.participants}\n\nЗавантажте відео виконання челенджу для участі в змаганні!`,
+                 () => joinChallenge(challengeId)
+             );
+         }
+
+         function joinChallenge(challengeId) {
+             vibrate();
+             showModal(
+                 'Участь у челенджі',
+                 'Виберіть спосіб додавання відео:\n\n📹 Записати нове відео\n📁 Завантажити готовий файл\n\nПісля завантаження ви автоматично приєднаєтесь до змагання!',
+                 () => {
+                     gameState.player.coins += 50;
+                     updateUI();
+                     saveData();
+                     showModal('✅ Заявку подано!', 'Ви успішно приєдналися до челенджу!\n\n+50 монет за участь');
+                 }
+             );
+         }
+
+         function createContent() {
+             vibrate();
+             showModal(
+                 'Створити контент',
+                 'Що ви хочете створити?\n\n🎥 Відео (+10 монет)\n🏆 Челендж (+50 монет)\n\nВиберіть тип контенту для публікації.',
+                 () => {
+                     showModal(
+                         'Тип відео',
+                         'Виберіть спосіб створення:\n\n📹 Записати нове відео\n📁 Завантажити готовий файл\n\nОбидва варіанти дають +10 монет за публікацію.',
+                         () => {
+                             gameState.player.coins += 10;
+                             updateUI();
+                             saveData();
+                             showModal('✅ Відео опубліковано!', 'Ваше відео успішно додано!\n\n+10 монет за публікацію');
+                         }
+                     );
+                 }
+             );
+         }
+
+         // Match functions
+         function viewMatch(matchId) {
+             vibrate();
+             const matches = {
+                 1: {title: 'Футбол у парку Шевченка', organizer: 'Ви', players: '5/6', location: 'Парк Шевченка'},
+                 3: {title: 'Турнір вихідного дня', organizer: 'Денис М.', teams: '6/8', prize: '1000 монет'}
+             };
+             const match = matches[matchId];
+             showModal(
+                 match.title,
+                 `Організатор: ${match.organizer}\n${match.players || match.teams}\nЛокація: ${match.location || 'Стадіон'}\n\nДеталі матчу та список учасників.`
+             );
+         }
+
+         function applyToMatch(matchId) {
+             vibrate();
+             showModal(
+                 'Заявка на матч',
+                 'Ви хочете подати заявку на участь у матчі?\n\nОрганізатор розгляне вашу заявку та зв\'яжеться з вами.',
+                 () => {
+                     showModal('✅ Заявку подано!', 'Ваша заявка успішно надіслана організатору матчу!');
+                 }
+             );
+         }
+
+         function joinTournament(tournamentId) {
+             vibrate();
+             if (gameState.player.coins >= 50) {
+                 showModal(
+                     'Реєстрація в турнірі',
+                     'Вартість участі: 50 монет\nПризовий фонд: 1000 монет\n\nЗареєструватися в турнірі?',
+                     () => {
+                         gameState.player.coins -= 50;
+                         updateUI();
+                         saveData();
+                         showModal('✅ Реєстрація успішна!', 'Ви зареєстровані в турнірі!\n\nОчікуйте початку змагань.');
+                     }
+                 );
+             } else {
+                 showModal('💰 Недостатньо монет', 'Для участі в турнірі потрібно 50 монет.');
+             }
+         }
+
+         function createMatch() {
+             vibrate();
+             showModal(
+                 'Створення матчу',
+                 'Заповніть деталі матчу:\n\n📅 Дата та час\n📍 Локація\n👥 Кількість гравців\n📝 Опис\n\nПісля створення гравці зможуть подавати заявки.',
+                 () => {
+                     showModal('✅ Матч створено!', 'Ваш матч успішно створено!\n\nГравці можуть подавати заявки на участь.');
+                 }
+             );
+         }
+
+         // Friends functions
+         function addFriend() {
+             vibrate();
+             showModal(
+                 'Додати друга',
+                 'Введіть ім\'я або код гравця:\n\n🔍 Пошук за ім\'ям\n📱 За номером телефону\n🆔 За ID користувача\n\nАбо скануйте QR-код гравця.',
+                 () => {
+                     showModal('✅ Запрошення надіслано!', 'Запрошення дружби надіслано гравцю!');
+                 }
+             );
+         }
+
+         function inviteToMatch(friendId) {
+             vibrate();
+             const friends = {
+                 alex: 'Олександр К.',
+                 max: 'Максим П.',
+                 denis: 'Денис М.'
+             };
+             showModal(
+                 'Запрошення до матчу',
+                 `Запросити ${friends[friendId]} до матчу?\n\nВиберіть матч для запрошення або створіть новий.`,
+                 () => {
+                     showModal('✅ Запрошення надіслано!', `Запрошення надіслано ${friends[friendId]}!`);
+                 }
+             );
+         }
+
+         // Shop functions
+         function buyItem(itemId, price) {
+             vibrate();
+             
+             if (gameState.player.coins >= price) {
+                 showModal(
+                     'Підтвердження покупки',
+                     `Купити цей предмет за ${price} монет?`,
+                     () => {
+                         gameState.player.coins -= price;
+                         updateUI();
+                         saveData();
+                         
+                         const items = {
+                             'gold-medal': 'Золота медаль додана до вашої колекції!',
+                             'premium-ball': 'Преміум м\'яч активовано! +10% до точності ударів.',
+                             'team-jersey': 'Футболка збірної додана до гардеробу!',
+                             'champion-cup': 'Кубок чемпіона додано до колекції!',
+                             'double-xp': 'Подвійний XP активовано на 24 години!'
+                         };
+                         
+                         showModal('✅ Покупка успішна!', items[itemId] || 'Предмет куплено!');
+                     }
+                 );
+             } else {
+                 showModal('💰 Недостатньо монет', `Для покупки потрібно ${price} монет, а у вас ${gameState.player.coins}.`);
+             }
+         }
 
         // Modal functions
         function showModal(title, text, confirmCallback = null) {
