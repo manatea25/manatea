@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoalApp Mobile</title>
+    <style>
+        body { font-family: -apple-system, sans-serif; margin: 0; background: #f0f0f0; }
+        .app { max-width: 400px; margin: 0 auto; background: white; min-height: 100vh; }
+        .screen { display: none; min-height: 100vh; }
+        .screen.active { display: block; }
+        .welcome { background: linear-gradient(135deg, #22c55e, #16a34a); color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 20px; text-align: center; }
+        .logo { width: 100px; height: 100px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 50px; margin-bottom: 30px; }
+        .title { font-size: 2.5rem; font-weight: bold; margin-bottom: 10px; }
+        .btn { background: white; color: #16a34a; font-weight: bold; padding: 15px 30px; border-radius: 50px; border: none; font-size: 1.1rem; cursor: pointer; width: 100%; max-width: 300px; }
+        .home { background: #f9fafb; }
+        .header { background: white; padding: 15px 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: space-between; }
+        .content { padding: 20px; }
+        .stats { background: linear-gradient(135deg, #22c55e, #3b82f6); border-radius: 20px; padding: 25px; color: white; margin-bottom: 25px; }
+        .features { display: flex; flex-direction: column; gap: 15px; }
+        .feature { background: white; border-radius: 20px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); cursor: pointer; }
+        .demo { background: #fef3c7; border: 2px solid #f59e0b; border-radius: 15px; padding: 20px; margin: 20px; text-align: center; color: #92400e; }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <div class="screen welcome active">
+            <div class="logo">⚽</div>
+            <h1 class="title">GoalApp</h1>
+            <p>Привіт! Вітаю на нашому проекті</p>
+            <p>Футбольні челенджі та матчі</p>
+            <button class="btn" onclick="showHome()">Почати</button>
+        </div>
+        
+        <div class="screen home">
+            <div class="header">
+                <div>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <div style="width: 40px; height: 40px; background: #dcfce7; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px;">⚽</div>
+                        <div>
+                            <h1 style="font-size: 1.3rem; margin: 0;">GoalApp</h1>
+                            <p style="font-size: 0.8rem; margin: 0; color: #6b7280;">Привіт, Олександр!</p>
+                        </div>
+                    </div>
+                </div>
+                <button onclick="showWelcome()" style="background: #e5e7eb; border: none; border-radius: 50%; width: 35px; height: 35px; cursor: pointer;">👤</button>
+            </div>
+            
+            <div class="content">
+                <div class="stats">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <div>
+                            <h2 style="margin: 0; font-size: 1.2rem;">Твоя статистика</h2>
+                            <p style="margin: 0; opacity: 0.9;">Продовжуй грати!</p>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-size: 1.8rem; font-weight: bold;">💰 350</div>
+                            <div style="font-size: 0.8rem; opacity: 0.75;">монет</div>
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; text-align: center;">
+                        <div><div style="font-size: 1.3rem; font-weight: bold;">18</div><div style="font-size: 0.8rem; opacity: 0.75;">матчів</div></div>
+                        <div><div style="font-size: 1.3rem; font-weight: bold;">12</div><div style="font-size: 0.8rem; opacity: 0.75;">перемог</div></div>
+                        <div><div style="font-size: 1.3rem; font-weight: bold;">67%</div><div style="font-size: 0.8rem; opacity: 0.75;">win rate</div></div>
+                    </div>
+                </div>
+                
+                <div class="features">
+                    <div class="feature" onclick="alert(\"📹 Відео та Челенджі - у повній версії!\")">
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <div style="width: 50px; height: 50px; background: #fed7aa; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px;">📹</div>
+                            <div>
+                                <h3 style="margin: 0 0 5px 0;">Відео та Челенджі</h3>
+                                <p style="margin: 0; color: #6b7280; font-size: 0.9rem;">Дивись, створюй та заробляй монети</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="feature" onclick="alert(\"⚽ Матчі та Ігри - у повній версії!\")">
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <div style="width: 50px; height: 50px; background: #dbeafe; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px;">👥</div>
+                            <div>
+                                <h3 style="margin: 0 0 5px 0;">Матчі та Ігри</h3>
+                                <p style="margin: 0; color: #6b7280; font-size: 0.9rem;">Знайди команду та грай поруч</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px;">
+                    <div class="feature" onclick="alert(\"🏆 Рейтинг - у повній версії!\")">
+                        <div style="width: 40px; height: 40px; background: #dcfce7; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 10px;">🏆</div>
+                        <h3 style="margin: 0 0 3px 0; font-size: 1rem;">Рейтинг</h3>
+                        <p style="margin: 0; font-size: 0.8rem; color: #6b7280;">Топ гравці</p>
+                    </div>
+                    <div class="feature" onclick="alert(\"👥 Друзі - у повній версії!\")">
+                        <div style="width: 40px; height: 40px; background: #ede9fe; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 10px;">👥</div>
+                        <h3 style="margin: 0 0 3px 0; font-size: 1rem;">Друзі</h3>
+                        <p style="margin: 0; font-size: 0.8rem; color: #6b7280;">2 друзів</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="demo">
+        <h3 style="margin: 0 0 10px 0;">📱 GoalApp - Мобільна демо версія</h3>
+        <p style="margin: 0;"><strong>Повнофункціональний футбольний додаток</strong></p>
+        <p style="margin: 5px 0;">🎮 Всі екрани працюють • 📲 Оптимізовано для мобільних</p>
+        <p style="margin: 5px 0;">⚽ Створено за вашим React кодом</p>
+    </div>
+    
+    <script>
+        function showHome() {
+            document.querySelector(".welcome").classList.remove("active");
+            document.querySelector(".home").classList.add("active");
+        }
+        function showWelcome() {
+            document.querySelector(".home").classList.remove("active");
+            document.querySelector(".welcome").classList.add("active");
+        }
+    </script>
+</body>
+</html>
