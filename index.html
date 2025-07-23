@@ -1,1383 +1,1769 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ManaTEA - Stop Overpaying for Developers</title>
-    <style>
-        /* Custom Images - Replace these URLs with your images */
-        .custom-logo {
-            width: 120px;
-            height: 120px;
-            background-image: url('./images/logo.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            border-radius: 8px;
-        }
-        
-        .custom-hero-image {
-            width: 250px;
-            height: 250px;
-            background-image: url('./images/hero.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            border-radius: 20px;
-            margin: 20px auto;
-            animation: float 4s infinite;
-        }
-        
-        .custom-benefit-icon {
-            width: 100px;
-            height: 100px;
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            border-radius: 15px;
-            margin: 0 auto 20px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .custom-benefit-icon:hover {
-            transform: scale(1.1);
-            box-shadow: 0 10px 30px rgba(243,156,18,0.3);
-        }
-        
-        .icon1 { background-image: url('./images/icon1.png'); }
-        .icon2 { background-image: url('./images/icon2.png'); }
-        .icon3 { background-image: url('./images/icon3.png'); }
-        .icon4 { background-image: url('./images/icon4.png'); }
-        .icon5 { background-image: url('./images/icon5.png'); }
-        .icon6 { background-image: url('./images/icon6.png'); }
-        
-        /* Main Styles */
-        *{margin:0;padding:0;box-sizing:border-box}
-        body{font-family:Arial,sans-serif;background:#0a0e1a;color:#ecf0f1;line-height:1.6}
-        .container{max-width:1200px;margin:0 auto;padding:0 20px}
-        .header{position:fixed;top:0;left:0;right:0;background:rgba(10,14,26,.95);backdrop-filter:blur(10px);z-index:1000;padding:40px 0;border-bottom:2px solid #3498db}
-        .nav{display:flex;justify-content:space-between;align-items:center}
-        .logo{display:flex;align-items:center;gap:10px;text-decoration:none}
-        .logo-text{display:none}
-        .nav-links{display:flex;gap:40px;list-style:none}
-        .nav-links a{color:#ecf0f1;text-decoration:none;font-weight:700;font-size:1.3rem;transition:all .3s;padding:10px 20px;border-radius:8px}
-        .nav-links a:hover{color:#f39c12;background:rgba(243,156,18,0.1);transform:translateY(-2px)}
-        
-        .hero{min-height:115vh;display:flex;align-items:center;justify-content:center;text-align:center;background:linear-gradient(135deg,#0a0e1a 0%,#1a2332 50%,#0a0e1a 100%);margin-top:140px}
-        .stop-text{font-size:clamp(3rem,8vw,6rem);font-weight:900;color:#e74c3c;margin-bottom:20px;animation:pulse 2s infinite}
-        @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
-        .overpaying-text{font-size:clamp(2rem,6vw,4rem);font-weight:700;color:#3498db;margin-bottom:40px}
-        @keyframes float{0%,100%{transform:translateY(0px)}50%{transform:translateY(-20px)}}
-        .promise-text{font-size:clamp(1.2rem,4vw,2.5rem);font-weight:600;margin:30px 0;background:linear-gradient(135deg,#3498db,#27ae60);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-        .manatee-tease{font-size:clamp(1rem,3vw,1.8rem);color:#f39c12;margin:20px 0}
-        
-        .calculator-section{padding:100px 0;background:linear-gradient(135deg,#1a2332,#0a0e1a,#1a2332)}
-        .calc-title{text-align:center;font-size:clamp(2rem,6vw,4rem);font-weight:800;margin-bottom:30px;color:#3498db}
-        .calc-subtitle{text-align:center;font-size:clamp(1rem,3vw,1.5rem);color:#95a5a6;margin-bottom:50px;max-width:800px;margin-left:auto;margin-right:auto}
-        .calculator{background:rgba(52,152,219,.1);border:2px solid #3498db;border-radius:25px;padding:50px;margin:0 auto;max-width:900px}
-        .calc-row{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin:30px 0}
-        .calc-input-group{display:flex;flex-direction:column}
-        .calc-label{color:#3498db;font-weight:bold;margin-bottom:10px;font-size:1.2rem}
-        .calc-select{background:#1a2332;border:2px solid #3498db;border-radius:15px;padding:20px;color:#fff;font-size:1.1rem;cursor:pointer}
-        .calc-select:focus{outline:none;border-color:#f39c12}
-        .calc-result{background:linear-gradient(135deg,#2c3e50,#1a2332);border-radius:20px;padding:40px;margin:40px 0;border:3px solid #3498db}
-        .result-row{display:flex;justify-content:space-between;align-items:center;margin:15px 0;padding:10px 0;border-bottom:1px solid rgba(52,152,219,.2)}
-        .result-row:last-child{border-bottom:none}
-        .traditional-cost{color:#e74c3c;font-size:1.4rem;font-weight:700}
-        .manatea-cost{color:#27ae60;font-size:1.4rem;font-weight:700}
-        .savings{color:#f39c12;font-size:1.8rem;font-weight:900}
-        .goals-section{margin-top:30px;padding:25px 0;border-top:2px solid rgba(52,152,219,.3)}
-        .goals-title{color:#f39c12;font-size:1.4rem;font-weight:bold;margin-bottom:20px;text-align:center}
-        .goal-item{display:flex;justify-content:space-between;align-items:center;margin:12px 0;padding:10px 0}
-        .goal-time{font-weight:bold;color:#f39c12}
-        
-        /* Team Slider Styles */
-        .slider-container{display:flex;flex-direction:column;gap:15px}
-        .team-slider{width:100%;height:8px;border-radius:15px;background:linear-gradient(to right,#3498db,#27ae60);outline:none;transition:all .3s;cursor:pointer}
-        .team-slider::-webkit-slider-thumb{appearance:none;width:25px;height:25px;border-radius:50%;background:linear-gradient(45deg,#f39c12,#e67e22);cursor:pointer;box-shadow:0 0 15px rgba(243,156,18,.5);transition:all .3s}
-        .team-slider::-webkit-slider-thumb:hover{transform:scale(1.2);box-shadow:0 0 25px rgba(243,156,18,.8)}
-        .team-slider::-moz-range-thumb{width:25px;height:25px;border-radius:50%;background:linear-gradient(45deg,#f39c12,#e67e22);cursor:pointer;border:none;box-shadow:0 0 15px rgba(243,156,18,.5)}
-        .slider-value{color:#3498db;font-size:1.2rem;font-weight:bold;text-align:center;margin-top:10px}
-        .manatees-display{text-align:center;font-size:1.5rem;margin-top:15px;min-height:50px;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px;max-width:100%;overflow:hidden}
-        .manatee{display:inline-block;animation:float-small 2s ease-in-out infinite;transition:all .3s;font-size:1.5rem}
-        .manatee:nth-child(2n){animation-delay:0.3s}
-        .manatee:nth-child(3n){animation-delay:0.6s}
-        .manatee:nth-child(4n){animation-delay:0.9s}
-        .manatee:nth-child(5n){animation-delay:1.2s}
-        .manatee.new{animation:pop-in .5s ease-out}
-        @keyframes pop-in{0%{transform:scale(0) rotate(180deg);opacity:0}50%{transform:scale(1.3) rotate(90deg)}100%{transform:scale(1) rotate(0deg);opacity:1}}
-        @keyframes float-small{0%,100%{transform:translateY(0px)}50%{transform:translateY(-10px)}}
-        
-        /* Game Modal Styles */
-        .game-trigger-btn{background:linear-gradient(45deg,#f39c12,#e67e22);color:#fff;border:none;padding:20px 40px;border-radius:15px;font-size:1.3rem;font-weight:bold;cursor:pointer;transition:all .3s;box-shadow:0 10px 25px rgba(243,156,18,.3);animation:pulse-glow 2s infinite}
-        @keyframes pulse-glow{0%,100%{transform:scale(1);box-shadow:0 10px 25px rgba(243,156,18,.3)}50%{transform:scale(1.05);box-shadow:0 15px 35px rgba(243,156,18,.5)}}
-        .game-trigger-btn:hover{transform:translateY(-5px)}
-        
-        .game-modal{display:none;position:fixed;z-index:10000;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,.8);backdrop-filter:blur(5px)}
-        .game-modal-content{background:#0a0e1a;margin:2% auto;padding:0;border:3px solid #00ff00;border-radius:20px;width:95%;max-width:900px;max-height:90vh;overflow-y:auto;box-shadow:0 0 50px #00ff00}
-        .game-close{color:#ff4444;float:right;font-size:3rem;font-weight:bold;cursor:pointer;padding:10px 20px;transition:all .3s}
-        .game-close:hover{color:#ff0000;transform:scale(1.2)}
-        
-        /* Game Styles */
-        .game-container{font-family:'Arial',sans-serif;color:#00ff00;padding:20px}
-        .game-title{color:#00ffff;font-size:2.5rem;margin-bottom:10px;text-shadow:0 0 10px #00ffff;text-align:center}
-        .game-subtitle{color:#f39c12;font-size:1.2rem;margin-bottom:30px;text-align:center}
-        .level-selection{display:flex;justify-content:center;gap:20px;margin-bottom:40px;flex-wrap:wrap}
-        .level-btn{background:linear-gradient(45deg,#2c3e50,#34495e);color:#ecf0f1;border:2px solid #3498db;padding:15px 25px;border-radius:15px;cursor:pointer;transition:all 0.3s;font-size:1.1rem;font-weight:bold;text-align:center}
-        .level-btn:hover{background:linear-gradient(45deg,#3498db,#2980b9);transform:translateY(-3px);box-shadow:0 10px 20px rgba(52,152,219,0.3)}
-        .level-btn.active{background:linear-gradient(45deg,#e74c3c,#c0392b);border-color:#e74c3c}
-        .quiz-area{display:none}
-        .progress{background:rgba(52,152,219,0.2);border-radius:10px;padding:10px;margin-bottom:30px}
-        .progress-bar{background:linear-gradient(90deg,#27ae60,#2ecc71);height:10px;border-radius:5px;transition:width 0.3s}
-        .progress-text{margin-top:10px;color:#3498db;font-weight:bold;text-align:center}
-        .company-card{background:linear-gradient(135deg,#2c3e50,#34495e);border:3px solid #3498db;border-radius:20px;padding:40px;margin-bottom:30px;text-align:center}
-        .company-logo{font-size:4rem;margin-bottom:20px;filter:drop-shadow(0 0 10px rgba(52,152,219,0.5))}
-        .company-name{font-size:2rem;color:#3498db;margin-bottom:20px;font-weight:bold}
-        .question{font-size:1.4rem;color:#f39c12;margin-bottom:30px}
-        .answers-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px;margin-bottom:30px}
-        .answer-btn{background:linear-gradient(135deg,#34495e,#2c3e50);border:2px solid #7f8c8d;border-radius:15px;padding:20px;cursor:pointer;transition:all 0.3s;display:flex;align-items:center;justify-content:center;gap:15px;font-size:1.1rem;font-weight:bold;color:#ecf0f1;position:relative}
-        .answer-btn:hover{border-color:#3498db;background:linear-gradient(135deg,#3498db,#2980b9);transform:translateY(-3px);box-shadow:0 8px 16px rgba(52,152,219,0.3)}
-        .answer-btn.correct{border-color:#27ae60;background:linear-gradient(135deg,#27ae60,#2ecc71);animation:correct-flash 0.6s}
-        .answer-btn.wrong{border-color:#e74c3c;background:linear-gradient(135deg,#e74c3c,#c0392b);animation:wrong-shake 0.6s}
-        .learn-more-btn{position:absolute;top:10px;right:10px;background:#f39c12;color:#2c3e50;border:none;border-radius:50%;width:35px;height:35px;cursor:pointer;font-size:1.1rem;font-weight:bold;transition:all 0.3s;opacity:0;z-index:10;display:none}
-        .answer-btn.correct .learn-more-btn{opacity:1;display:block}
-        .learn-more-btn:hover{background:#e67e22;transform:scale(1.2);box-shadow:0 4px 12px rgba(243,156,18,0.6)}
-        @keyframes correct-flash{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
-        @keyframes wrong-shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-10px)}75%{transform:translateX(10px)}}
-        .tech-icon{font-size:2rem}
-        .result-screen{display:none;text-align:center}
-        .result-title{font-size:3rem;margin-bottom:20px}
-        .success{color:#27ae60}
-        .failure{color:#e74c3c}
-        .promo-code{background:linear-gradient(45deg,#f39c12,#e67e22);color:#2c3e50;padding:20px;border-radius:15px;font-size:2rem;font-weight:bold;margin:20px 0;border:3px solid #f39c12;animation:glow 2s infinite}
-        @keyframes glow{0%,100%{box-shadow:0 0 10px rgba(243,156,18,0.5)}50%{box-shadow:0 0 30px rgba(243,156,18,0.8)}}
-        .play-again-btn{background:linear-gradient(45deg,#3498db,#2980b9);color:#fff;border:none;padding:15px 30px;border-radius:10px;font-size:1.2rem;font-weight:bold;cursor:pointer;transition:all 0.3s;margin-top:20px}
-        .play-again-btn:hover{transform:translateY(-3px);box-shadow:0 10px 20px rgba(52,152,219,0.3)}
-        
-        /* Benefit Modal Styles */
-        .benefit-modal{display:none;position:fixed;z-index:20000;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,0.8);backdrop-filter:blur(8px)}
-        .benefit-modal-content{background:#0a0e1a;margin:5% auto;padding:0;border:3px solid #f39c12;border-radius:20px;width:90%;max-width:600px;max-height:80vh;overflow-y:auto;box-shadow:0 0 50px rgba(243,156,18,0.5)}
-        .benefit-modal-header{background:linear-gradient(135deg,#f39c12,#e67e22);color:#2c3e50;padding:20px;border-radius:17px 17px 0 0;display:flex;justify-content:space-between;align-items:center}
-        .benefit-modal-close{background:none;border:none;color:#2c3e50;font-size:2rem;cursor:pointer;font-weight:bold}
-        .benefit-modal-body{padding:30px;color:#ecf0f1;text-align:center}
-        .benefit-modal-image{width:150px;height:150px;background-size:contain;background-repeat:no-repeat;background-position:center;margin:0 auto 20px;border-radius:15px}
-        .benefit-modal-title{color:#f39c12;font-size:2rem;font-weight:bold;margin-bottom:15px}
-        .benefit-modal-text{font-size:1.2rem;line-height:1.6;margin-bottom:20px}
-        .tech-info-modal{display:none;position:fixed;z-index:20000;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,0.9);backdrop-filter:blur(8px)}
-        .tech-info-content{background:#0a0e1a;margin:3% auto;padding:0;border:3px solid #f39c12;border-radius:20px;width:90%;max-width:800px;max-height:85vh;overflow-y:auto;box-shadow:0 0 50px rgba(243,156,18,0.5)}
-        .tech-info-header{background:linear-gradient(135deg,#f39c12,#e67e22);color:#2c3e50;padding:20px;border-radius:17px 17px 0 0;display:flex;justify-content:space-between;align-items:center}
-        .tech-info-close{background:none;border:none;color:#2c3e50;font-size:2rem;cursor:pointer;font-weight:bold}
-        .tech-info-body{padding:30px;color:#ecf0f1}
-        .tech-section{margin-bottom:25px}
-        .tech-section h3{color:#3498db;font-size:1.3rem;margin-bottom:10px;border-bottom:2px solid #3498db;padding-bottom:5px}
-        .tech-list{list-style:none;padding:0}
-        .tech-list li{margin:8px 0;padding:8px 15px;background:rgba(52,152,219,0.1);border-radius:8px;border-left:4px solid #3498db}
-        .fact-box{background:linear-gradient(135deg,#2c3e50,#34495e);border:2px solid #f39c12;border-radius:15px;padding:20px;margin:15px 0}
-        .fact-title{color:#f39c12;font-weight:bold;margin-bottom:10px;font-size:1.1rem}
-        
-        .benefits-section{padding:100px 0;background:#0a0e1a}
-        .benefits-title{text-align:center;font-size:clamp(2rem,6vw,3.5rem);font-weight:800;margin-bottom:80px;color:#f39c12}
-        .benefits-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:40px}
-        .benefit-card{background:linear-gradient(135deg,#1a2332,#2c3e50);border:2px solid #3498db;border-radius:20px;padding:40px;text-align:center;transition:all .3s}
-        .benefit-card:hover{transform:translateY(-10px);border-color:#f39c12}
-        .benefit-title{font-size:1.5rem;font-weight:700;color:#3498db;margin-bottom:15px}
-        .benefit-text{color:#95a5a6;line-height:1.6}
-        .benefit-price{font-size:1.2rem;color:#f39c12;font-weight:700;margin-top:15px}
-        
-        .tea-section{padding:100px 0;background:linear-gradient(135deg,#2c3e50,#1a2332);text-align:center}
-        .tea-title{font-size:clamp(2rem,6vw,3.5rem);font-weight:800;margin-bottom:40px;color:#27ae60}
-        .tea-content{max-width:800px;margin:0 auto;padding:50px;background:rgba(52,152,219,.1);border-radius:25px;border:2px solid #3498db}
-        .tea-manatee{font-size:6rem;margin:30px 0;animation:float 4s infinite}
-        .tea-text{font-size:clamp(1.1rem,3vw,1.6rem);color:#ecf0f1;line-height:1.8;text-align:left}
-        .tea-highlight{color:#f39c12;font-weight:700}
-        
-        .anti-corporate{padding:100px 0;background:linear-gradient(135deg,#e74c3c,#0a0e1a,#e74c3c);text-align:center}
-        .anti-title{font-size:clamp(2rem,6vw,4rem);font-weight:900;margin-bottom:50px;color:#fff}
-        .anti-text{font-size:clamp(1rem,3vw,1.5rem);max-width:900px;margin:0 auto;line-height:1.8;color:#fff}
-        .anti-list{margin:40px auto;font-size:clamp(1rem,3vw,1.3rem);line-height:2;text-align:left;max-width:700px}
-        .anti-list div{margin:15px 0}
-        .final-cta{margin:60px auto;padding:40px;background:rgba(0,0,0,.7);border-radius:20px;border:2px solid #f39c12;max-width:600px}
-        .cta-text{font-size:clamp(1.2rem,4vw,2rem);font-weight:700;color:#f39c12;margin-bottom:30px}
-        .cta-buttons{display:flex;gap:20px;justify-content:center;flex-wrap:wrap}
-        .cta-btn{background:linear-gradient(135deg,#3498db,#27ae60);color:#fff;padding:20px 40px;border:none;border-radius:50px;font-size:1.2rem;font-weight:700;cursor:pointer;transition:all .3s;text-decoration:none;display:inline-block}
-        .cta-btn:hover{transform:translateY(-5px)}
-        .guarantee-text{margin-top:30px;color:#3498db;font-weight:600}
-        .footer{background:#0a0e1a;padding:50px 0;text-align:center;border-top:2px solid #3498db}
-        .footer-logo{font-size:2rem;font-weight:900;color:#3498db;margin-bottom:20px}
-        .footer-text{color:#95a5a6}
-        
-        @media (max-width:768px){
-            .nav-links{display:none}
-            .calc-row{grid-template-columns:1fr}
-            .benefits-grid{grid-template-columns:1fr}
-            .cta-buttons{flex-direction:column;align-items:center}
-            .calculator{padding:30px 20px}
-            .result-row,.goal-item{flex-direction:column;align-items:flex-start;gap:5px}
-            .tea-text{text-align:center}
-            .answers-grid{grid-template-columns:1fr}
-            .level-selection{flex-direction:column;align-items:center}
-            .game-container{padding:20px}
-            .header{padding:20px 0}
-            .custom-logo{width:80px;height:80px}
-            .nav-links a{font-size:1.1rem;padding:8px 15px}
-        }
-    </style>
-</head>
-<body>
-    <header class="header">
-        <nav class="nav container">
-            <a href="#" class="logo">
-                <div class="custom-logo"></div>
-            </a>
-            <ul class="nav-links">
-                <li><a href="#calculator">Calculator</a></li>
-                <li><a href="#benefits">Benefits</a></li>
-                <li><a href="#tea">Why Us</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <section class="hero">
-        <div class="hero-content">
-            <div class="stop-text">STOP</div>
-            <div class="overpaying-text">overpaying for developers</div>
-            <div class="custom-hero-image"></div>
-            <div class="promise-text">See how much you can save with our model</div>
-            <div class="manatee-tease">🌊 We'll show you the exact numbers.</div>
-        </div>
-        
-        <!-- Benefit Details Modal -->
-        <div id="benefitModal" class="benefit-modal">
-            <div class="benefit-modal-content">
-                <div class="benefit-modal-header">
-                    <h2 id="benefit-modal-title">Benefit Details</h2>
-                    <button class="benefit-modal-close" onclick="closeBenefitModal()">&times;</button>
-                </div>
-                <div class="benefit-modal-body">
-                    <div id="benefit-modal-image" class="benefit-modal-image"></div>
-                    <div id="benefit-modal-text" class="benefit-modal-text"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="calculator" class="calculator-section">
-        <div class="container">
-            <h2 class="calc-title">🧮 Your Savings Calculator</h2>
-            <p class="calc-subtitle">See how much you can save if you work with our model.</p>
-            
-            <div class="calculator">
-                <div class="calc-row">
-                    <div class="calc-input-group">
-                        <label class="calc-label">Developer Level:</label>
-                        <select class="calc-select" id="devLevel">
-                            <option value="junior">Junior Developer</option>
-                            <option value="middle" selected>Middle Developer</option>
-                            <option value="senior">Senior Developer</option>
-                            <option value="techlead">Tech Lead</option>
-                        </select>
-                    </div>
-                    <div class="calc-input-group">
-                        <label class="calc-label">Team Size:</label>
-                        <div class="slider-container">
-                            <input type="range" class="team-slider" id="devCount" min="1" max="10" value="1">
-                            <div class="slider-value" id="sliderValue">1 developer</div>
-                            <div class="manatees-display" id="manateesDisplay"></div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="calc-result">
-                    <div class="result-row">
-                        <span>Traditional agencies:</span>
-                        <span class="traditional-cost" id="traditionalCost">$5,280/month</span>
-                    </div>
-                    <div class="result-row">
-                        <span>ManaTEA total:</span>
-                        <span class="manatea-cost" id="manateaCost">$2,900/month</span>
-                    </div>
-                    <div class="result-row">
-                        <span>💰 You save:</span>
-                        <span class="savings" id="savingsAmount">$2,380/month</span>
-                    </div>
-                    
-                    <div class="goals-section">
-                        <div class="goals-title">🎯 Working with us, you can afford:</div>
-                        <div class="goal-item">
-                            <span>🦭 Crystal River manatee tour</span>
-                            <span class="goal-time">in <span id="manateeTime">1.7 months</span></span>
-                        </div>
-                        <div class="goal-item">
-                            <span>🚁 Helicopter ride Miami</span>
-                            <span class="goal-time">in <span id="helicopterTime">1.3 months</span></span>
-                        </div>
-                        <div class="goal-item">
-                            <span>🚗 Tesla down payment</span>
-                            <span class="goal-time">in <span id="teslaTime">4.2 months</span></span>
-                        </div>
-                        <div class="goal-item">
-                            <span>🏖️ European vacation</span>
-                            <span class="goal-time">in <span id="vacationTime">2.1 months</span></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Game Button -->
-        <div class="container" style="text-align:center;margin-top:40px">
-            <button class="game-trigger-btn" id="gameBtn">
-                🎮 Tech Stack Quiz - Win Discount! 🦭
-            </button>
-            <p style="color:#95a5a6;margin-top:10px;font-size:0.9rem">Guess company tech stacks and win up to $100 off your first developer!</p>
-        </div>
-        
-        <!-- Game Modal -->
-        <div id="gameModal" class="game-modal">
-            <div class="game-modal-content">
-                <span class="game-close" id="gameClose">&times;</span>
-                
-                <div class="game-container">
-                    <!-- Start Screen -->
-                    <div id="start-screen">
-                        <div class="game-title">🦭 ManaTEA Tech Quiz</div>
-                        <div class="game-subtitle">Guess the main tech stack of famous companies!</div>
-                        <div class="custom-hero-image" style="width: 100px; height: 100px; margin: 20px auto;"></div>
-                        
-                        <div class="level-selection">
-                            <div class="level-btn" data-level="junior">
-                                <div>📚 Junior Level</div>
-                                <div style="font-size: 0.9rem; opacity: 0.8;">3 questions • $25 discount</div>
-                            </div>
-                            <div class="level-btn" data-level="middle">
-                                <div>💼 Middle Level</div>
-                                <div style="font-size: 0.9rem; opacity: 0.8;">5 questions • $50 discount</div>
-                            </div>
-                            <div class="level-btn" data-level="senior">
-                                <div>🚀 Senior Level</div>
-                                <div style="font-size: 0.9rem; opacity: 0.8;">7 questions • $100 discount</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Quiz Screen -->
-                    <div id="quiz-screen" class="quiz-area">
-                        <div class="progress">
-                            <div class="progress-bar" id="progress-bar"></div>
-                            <div class="progress-text" id="progress-text">Question 1 of 3</div>
-                        </div>
-                        
-                        <div class="company-card">
-                            <div class="company-logo" id="company-logo">🎵</div>
-                            <div class="company-name" id="company-name">Spotify</div>
-                            <div class="question">What's the main backend programming language?</div>
-                            
-                            <div class="answers-grid" id="answers-grid">
-                                <div class="answer-btn" data-answer="python">
-                                    <span class="tech-icon">🐍</span>
-                                    <span>Python</span>
-                                    <button class="learn-more-btn" onclick="showTechInfo('spotify')">ℹ️</button>
-                                </div>
-                                <div class="answer-btn" data-answer="java">
-                                    <span class="tech-icon">☕</span>
-                                    <span>Java</span>
-                                </div>
-                                <div class="answer-btn" data-answer="javascript">
-                                    <span class="tech-icon">🟨</span>
-                                    <span>JavaScript</span>
-                                </div>
-                                <div class="answer-btn" data-answer="csharp">
-                                    <span class="tech-icon">🔷</span>
-                                    <span>C#</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Result Screen -->
-                    <div id="result-screen" class="result-screen">
-                        <div class="result-title success" id="result-title">🎉 Congratulations!</div>
-                        <div class="custom-hero-image" style="width: 150px; height: 150px; margin: 20px auto;"></div>
-                        <div id="result-message">You completed the Junior level perfectly!</div>
-                        <div class="promo-code" id="promo-code">ILOVEMANATEA25</div>
-                        <div>📧 Email us at hello@manatea.team with your promo code!</div>
-                        <button class="play-again-btn" onclick="resetGame()">🔄 Play Again</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Tech Info Modal -->
-        <div id="techInfoModal" class="tech-info-modal">
-            <div class="tech-info-content">
-                <div class="tech-info-header">
-                    <h2 id="tech-info-title">Spotify Tech Stack</h2>
-                    <button class="tech-info-close" onclick="closeTechInfo()">&times;</button>
-                </div>
-                <div class="tech-info-body" id="tech-info-body">
-                    <!-- Content will be loaded dynamically -->
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="benefits" class="benefits-section">
-        <div class="container">
-            <h2 class="benefits-title">⚡ What We Actually Do</h2>
-            <div class="benefits-grid">
-                <div class="benefit-card">
-                    <div class="custom-benefit-icon icon1" onclick="showBenefitModal('pool')"></div>
-                    <div class="benefit-title">Massive Developer Pool</div>
-                    <div class="benefit-text">1000+ pre-vetted developers ready to work. We already found them.</div>
-                    <div class="benefit-price">Immediate access</div>
-                </div>
-                <div class="benefit-card">
-                    <div class="custom-benefit-icon icon2" onclick="showBenefitModal('speed')"></div>
-                    <div class="benefit-title">48 Hour Matching</div>
-                    <div class="benefit-text">We find your developer in 2 days, not 2 weeks.</div>
-                    <div class="benefit-price">Lightning fast</div>
-                </div>
-                <div class="benefit-card">
-                    <div class="custom-benefit-icon icon3" onclick="showBenefitModal('money')"></div>
-                    <div class="benefit-title">Pay Salary Directly</div>
-                    <div class="benefit-text">Pay their actual salary + small monthly fee to us.</div>
-                    <div class="benefit-price">No markup</div>
-                </div>
-                <div class="benefit-card">
-                    <div class="custom-benefit-icon icon4" onclick="showBenefitModal('hire')"></div>
-                    <div class="benefit-title">Hire Them Permanently</div>
-                    <div class="benefit-text">Pay one-time fee = developer is yours forever.</div>
-                    <div class="benefit-price">Own your team</div>
-                </div>
-                <div class="benefit-card">
-                    <div class="custom-benefit-icon icon5" onclick="showBenefitModal('quality')"></div>
-                    <div class="benefit-title">Senior-Level Quality</div>
-                    <div class="benefit-text">Every developer tested by senior engineers. No juniors pretending.</div>
-                    <div class="benefit-price">Actually good devs</div>
-                </div>
-                <div class="benefit-card">
-                    <div class="custom-benefit-icon icon6" onclick="showBenefitModal('simple')"></div>
-                    <div class="benefit-title">No Agency BS</div>
-                    <div class="benefit-text">No account managers, no project managers, no meeting overhead.</div>
-                    <div class="benefit-price">Just results</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="tea" class="tea-section">
-        <div class="container">
-            <h2 class="tea-title">☕ While You Sip Your Tea...</h2>
-            <div class="tea-content">
-                <div class="tea-manatee">🦭</div>
-                <div class="tea-text">
-                    Picture this: It's 9 AM. You're holding your favorite mug of tea.<br><br>
-                    While you're savoring that perfect first sip, <span class="tea-highlight">our developers are already coding for you.</span><br><br>
-                    No meetings about meetings. No project managers managing other project managers. No "syncing up to circle back."<br><br>
-                    Just clean, beautiful code being written while you enjoy your morning routine.<br>
-                    <strong class="tea-highlight">And soon... manatee vacation photos in your Instagram! 🌊</strong><br><br>
-                    <em>Because life's too short for bad tea and overpriced developers.</em>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="anti-corporate">
-        <div class="container">
-            <h2 class="anti-title">This Is NOT Your Average Website</h2>
-            <div class="anti-text">
-                <p>You won't find any bullsh*t here:</p>
-                <div class="anti-list">
-                    <div>❌ No fake success stories written by ChatGPT</div>
-                    <div>❌ No "we work in your timezone" obvious statements</div>
-                    <div>❌ No mysterious projects you can't actually see</div>
-                    <div>❌ No corporate buzzwords about "synergy"</div>
-                    <div>❌ No stock photos of people pointing at laptops</div>
-                </div>
-                <p>Our work speaks louder than our marketing copy.</p>
-            </div>
-            <div class="final-cta" id="contact">
-                <div class="cta-text">Ready to save money and build your dream team? 🦭</div>
-                <div class="cta-buttons">
-                    <a href="#" class="cta-btn">🚀 Start Saving Now</a>
-                    <a href="#" class="cta-btn">📞 Call Me Instead</a>
-                </div>
-                <div class="guarantee-text">
-                    💸 2-week money back guarantee.<br>🦭 Your savings start today!
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">🦭 ManaTEA</div>
-                <div class="footer-text">Stop overpaying for developers. Start swimming with manatees.<br>© 2025 ManaTEA. All rights reserved.</div>
-            </div>
-        </div>
-    </footer>
-
+    <title>GoalApp - Футбольний всесвіт</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        // Pricing data for calculator
-        const pricing = {
-            junior: { traditional: 4400, manatea: 2500 },
-            middle: { traditional: 5280, manatea: 2900 },
-            senior: { traditional: 6600, manatea: 3500 },
-            techlead: { traditional: 8800, manatea: 4200 }
-        };
-
-        // Goals pricing in USD
-        const goals = {
-            manatee: 400,    // Crystal River manatee tour
-            helicopter: 300, // Helicopter ride Miami  
-            tesla: 10000,    // Tesla down payment
-            vacation: 5000   // European vacation
-        };
-
-        // Game data with real tech stacks and detailed info
-        const companies = {
-            netflix: {
-                name: "Netflix",
-                logo: "📺",
-                mainTech: "java",
-                question: "What's the main backend programming language?",
-                info: {
-                    why: "Java provides excellent scalability, robustness, and performance for Netflix's microservices architecture serving 200+ million users globally.",
-                    fullStack: [
-                        "Backend: Java (Spring Boot), Python, Scala",
-                        "Frontend: React, JavaScript, TypeScript", 
-                        "Mobile: Swift (iOS), Kotlin (Android)",
-                        "Data: Apache Kafka, Cassandra, MySQL",
-                        "Infrastructure: AWS, Kubernetes, Docker"
-                    ],
-                    facts: [
-                        "Netflix has 1000+ microservices running on Java",
-                        "They process over 1 trillion events per day",
-                        "Open-sourced many tools like Eureka, Hystrix, Zuul",
-                        "Uses custom CDN with 15,000+ servers worldwide"
-                    ]
-                }
-            },
-            spotify: {
-                name: "Spotify",
-                logo: "🎵", 
-                mainTech: "python",
-                question: "What's the primary backend language (80% of services)?",
-                info: {
-                    why: "Python enables rapid development and shorter deployment cycles. 80% of Spotify's backend services are written in Python for its simplicity and rich ML libraries.",
-                    fullStack: [
-                        "Backend: Python (Django/Flask), Java, Scala",
-                        "Frontend: React, JavaScript, TypeScript",
-                        "Mobile: Swift (iOS), Kotlin (Android)",
-                        "Data: Apache Kafka, Cassandra, Redis",
-                        "Infrastructure: Google Cloud, Kubernetes"
-                    ],
-                    facts: [
-                        "90% of MapReduce jobs written in Python",
-                        "Uses custom Hermes protocol for microservices communication",
-                        "1000+ microservices in production",
-                        "Processes 40,000 requests per second"
-                    ]
-                }
-            },
-            whatsapp: {
-                name: "WhatsApp",
-                logo: "💬",
-                mainTech: "erlang",
-                question: "What language handles the messaging backend?",
-                info: {
-                    why: "Erlang was designed for concurrency and fault tolerance, perfect for real-time messaging. WhatsApp serves 2 billion users with just 50 engineers using Erlang.",
-                    fullStack: [
-                        "Backend: Erlang, FreeBSD, Ejabberd (XMPP)",
-                        "Frontend: JavaScript, HTML5, CSS",
-                        "Mobile: Java (Android), Objective-C/Swift (iOS)",
-                        "Data: SQLite (local), Cassandra",
-                        "Infrastructure: FreeBSD servers, Facebook infrastructure"
-                    ],
-                    facts: [
-                        "Handles 100 billion messages per day",
-                        "Built with only 50 engineers total",
-                        "Uses Actor model for lightweight processes",
-                        "Each user represented as an Erlang actor"
-                    ]
-                }
-            },
-            instagram: {
-                name: "Instagram",
-                logo: "📷",
-                mainTech: "python",
-                question: "What's the main backend language?",
-                info: {
-                    why: "Instagram started with Python/Django for rapid prototyping and never migrated due to Python's simplicity and Django's powerful features for handling massive scale.",
-                    fullStack: [
-                        "Backend: Python (Django), PHP (some services)",
-                        "Frontend: React, JavaScript",
-                        "Mobile: React Native, Swift, Kotlin",
-                        "Data: PostgreSQL, Cassandra, Redis",
-                        "Infrastructure: AWS, Facebook infrastructure"
-                    ],
-                    facts: [
-                        "Serves 2 billion users with Python/Django",
-                        "Processes 95 million photos/videos per day",
-                        "Uses extensive caching with Redis",
-                        "Migrated from AWS to Facebook infrastructure"
-                    ]
-                }
-            },
-            facebook: {
-                name: "Facebook/Meta",
-                logo: "📘",
-                mainTech: "php",
-                question: "What language was originally used for backend?",
-                info: {
-                    why: "Facebook was built in PHP for rapid development by Mark Zuckerberg. Despite the scale, they still use custom PHP (Hack language) for many core services.",
-                    fullStack: [
-                        "Backend: PHP (Hack), C++, Python, Java",
-                        "Frontend: React, JavaScript (they created React!)",
-                        "Mobile: React Native, Swift, Kotlin",
-                        "Data: MySQL, Cassandra, Memcached",
-                        "Infrastructure: Custom data centers, Open Compute"
-                    ],
-                    facts: [
-                        "Created React, React Native, and GraphQL",
-                        "Developed Hack language (improved PHP)",
-                        "Serves 3.8 billion users across all platforms",
-                        "Uses custom PHP-to-C++ compiler (HipHop)"
-                    ]
-                }
-            },
-            google: {
-                name: "Google",
-                logo: "🔍",
-                mainTech: "cpp",
-                question: "What's the main systems programming language?",
-                info: {
-                    why: "C++ provides the performance needed for Google's massive scale systems. Search, Chrome, and most core infrastructure run on C++ for maximum efficiency.",
-                    fullStack: [
-                        "Backend: C++, Java, Python, Go (they created Go!)",
-                        "Frontend: JavaScript, TypeScript, Dart",
-                        "Mobile: Kotlin (Android), Swift (iOS apps)",
-                        "Data: Bigtable, Spanner, MapReduce",
-                        "Infrastructure: Google Cloud, Kubernetes (they created it!)"
-                    ],
-                    facts: [
-                        "Created Go, Kubernetes, TensorFlow, and Android",
-                        "Processes 8.5 billion searches per day",
-                        "Chrome browser serves 2.6 billion users",
-                        "Uses custom Borg system (predecessor to Kubernetes)"
-                    ]
-                }
-            },
-            airbnb: {
-                name: "Airbnb",
-                logo: "🏠",
-                mainTech: "ruby",
-                question: "What's the main backend framework language?",
-                info: {
-                    why: "Airbnb chose Ruby on Rails for rapid development and startup agility. Rails' convention-over-configuration philosophy enabled quick feature development.",
-                    fullStack: [
-                        "Backend: Ruby (Rails), Java, Scala",
-                        "Frontend: React, JavaScript, TypeScript",
-                        "Mobile: React Native, Swift, Kotlin",
-                        "Data: MySQL, Redis, Elasticsearch",
-                        "Infrastructure: AWS, Kubernetes"
-                    ],
-                    facts: [
-                        "Started as a Rails monolith, now microservices",
-                        "Processes millions of bookings globally",
-                        "Uses machine learning for pricing optimization",
-                        "Open-sourced Airflow for workflow management"
-                    ]
-                }
-            },
-            twitter: {
-                name: "Twitter/X",
-                logo: "🐦",
-                mainTech: "scala",
-                question: "What language did they migrate to for scalability?",
-                info: {
-                    why: "Twitter migrated from Ruby to Scala for better performance and scalability. Scala's functional programming and JVM performance handle Twitter's massive real-time load.",
-                    fullStack: [
-                        "Backend: Scala, Java, C++",
-                        "Frontend: JavaScript, React",
-                        "Mobile: Swift (iOS), Kotlin (Android)",
-                        "Data: MySQL, Manhattan (custom), Redis",
-                        "Infrastructure: Custom data centers, Mesos"
-                    ],
-                    facts: [
-                        "Handles 500 million tweets per day",
-                        "Migrated from Ruby to Scala for performance",
-                        "Uses Finagle framework for microservices",
-                        "Real-time timeline processing with Storm"
-                    ]
-                }
-            },
-            amazon: {
-                name: "Amazon",
-                logo: "📦",
-                mainTech: "java",
-                question: "What's the primary language for AWS services?",
-                info: {
-                    why: "Java's enterprise reliability, vast ecosystem, and JVM performance make it ideal for Amazon's massive distributed systems and AWS cloud services.",
-                    fullStack: [
-                        "Backend: Java, C++, Python, JavaScript",
-                        "Frontend: JavaScript, React, Angular", 
-                        "Mobile: Java (Android), Swift (iOS)",
-                        "Data: DynamoDB, S3, RDS, Redshift",
-                        "Infrastructure: AWS (they created it!)"
-                    ],
-                    facts: [
-                        "AWS powers 30% of the internet",
-                        "Alexa processes billions of voice requests",
-                        "Amazon.com handles 2.5 billion unique visitors monthly",
-                        "Created many AWS services used by millions"
-                    ]
-                }
-            },
-            uber: {
-                name: "Uber",
-                logo: "🚗",
-                mainTech: "go",
-                question: "What language is used for high-performance microservices?",
-                info: {
-                    why: "Go provides excellent concurrency, fast compilation, and high performance for Uber's real-time location services and high-throughput microservices.",
-                    fullStack: [
-                        "Backend: Go, Java, Python, Node.js",
-                        "Frontend: React, JavaScript",
-                        "Mobile: Swift (iOS), Kotlin (Android)",
-                        "Data: MySQL, Cassandra, Redis, Kafka",
-                        "Infrastructure: AWS, Kubernetes"
-                    ],
-                    facts: [
-                        "Processes 15 million trips per day",
-                        "Real-time location tracking for millions of drivers",
-                        "Uses machine learning for route optimization",
-                        "Go handles high-concurrency location services"
-                    ]
-                }
-            },
-            dropbox: {
-                name: "Dropbox",
-                logo: "📁",
-                mainTech: "python",
-                question: "What language is the backend primarily written in?",
-                info: {
-                    why: "Dropbox chose Python for its simplicity and rapid development capabilities. Python's clean syntax enabled quick iteration for file storage and sync services.",
-                    fullStack: [
-                        "Backend: Python, Go, Rust",
-                        "Frontend: JavaScript, TypeScript, React",
-                        "Mobile: Swift (iOS), Kotlin (Android)",
-                        "Data: MySQL, Custom storage systems",
-                        "Infrastructure: Custom data centers, AWS"
-                    ],
-                    facts: [
-                        "Stores 600+ billion files",
-                        "Python handles file sync and storage logic",
-                        "Built custom storage infrastructure",
-                        "Migrated away from AWS to reduce costs"
-                    ]
-                }
-            },
-            pinterest: {
-                name: "Pinterest",
-                logo: "📌",
-                mainTech: "python",
-                question: "What's the main backend programming language?",
-                info: {
-                    why: "Pinterest uses Python/Django for rapid development and excellent performance at scale. Django's ORM and admin interface accelerated their growth phase.",
-                    fullStack: [
-                        "Backend: Python (Django), Java, Scala",
-                        "Frontend: JavaScript, React",
-                        "Mobile: Swift (iOS), Kotlin (Android)",
-                        "Data: MySQL, HBase, Redis, Kafka",
-                        "Infrastructure: AWS, Kubernetes"
-                    ],
-                    facts: [
-                        "Serves 450+ million monthly users",
-                        "Django handles billions of pin saves",
-                        "Uses machine learning for visual search",
-                        "Processes 100+ billion recommendations daily"
-                    ]
-                }
-            },
-            slack: {
-                name: "Slack",
-                logo: "💬",
-                mainTech: "php",
-                question: "What language powers the backend API?",
-                info: {
-                    why: "Slack's backend API is primarily built with PHP for rapid development and easy scaling. PHP's simplicity enabled quick feature iterations for team communication.",
-                    fullStack: [
-                        "Backend: PHP, Java, Go",
-                        "Frontend: JavaScript, React",
-                        "Mobile: Swift (iOS), Kotlin (Android)",
-                        "Data: MySQL, Redis, Elasticsearch",
-                        "Infrastructure: AWS"
-                    ],
-                    facts: [
-                        "Serves 12+ million daily active users",
-                        "Processes billions of messages",
-                        "Real-time messaging with WebSockets",
-                        "PHP backend handles API requests efficiently"
-                    ]
-                }
-            },
-            linkedin: {
-                name: "LinkedIn",
-                logo: "💼",
-                mainTech: "java",
-                question: "What's the primary backend language?",
-                info: {
-                    why: "LinkedIn chose Java for its enterprise reliability, scalability, and rich ecosystem. Java handles their massive social network operations and professional networking features.",
-                    fullStack: [
-                        "Backend: Java, Scala, Python",
-                        "Frontend: JavaScript, React",
-                        "Mobile: Swift (iOS), Kotlin (Android)",
-                        "Data: Kafka, Espresso, Voldemort",
-                        "Infrastructure: Custom data centers"
-                    ],
-                    facts: [
-                        "800+ million professional users",
-                        "Created Apache Kafka for data streaming",
-                        "Java microservices architecture",
-                        "Processes billions of professional connections"
-                    ]
-                }
-            },
-            tiktok: {
-                name: "TikTok",
-                logo: "🎬",
-                mainTech: "go",
-                question: "What language handles the video recommendation engine?",
-                info: {
-                    why: "TikTok uses Go for high-performance video processing and recommendation systems. Go's concurrency model efficiently handles massive real-time video streaming.",
-                    fullStack: [
-                        "Backend: Go, Python, C++",
-                        "Frontend: JavaScript, React",
-                        "Mobile: Swift (iOS), Kotlin (Android)",
-                        "Data: Custom storage, Redis, Kafka",
-                        "Infrastructure: Global CDN, ByteDance cloud"
-                    ],
-                    facts: [
-                        "1+ billion monthly active users",
-                        "Processes millions of videos daily",
-                        "AI-powered recommendation engine",
-                        "Go handles real-time video streaming"
-                    ]
-                }
-            }
-        };
-        
-        const techOptions = {
-            python: { icon: "🐍", name: "Python" },
-            java: { icon: "☕", name: "Java" },
-            javascript: { icon: "🟨", name: "JavaScript" },
-            php: { icon: "🐘", name: "PHP" },
-            cpp: { icon: "⚡", name: "C++" },
-            ruby: { icon: "💎", name: "Ruby" },
-            scala: { icon: "🔺", name: "Scala" },
-            go: { icon: "🐹", name: "Go" },
-            csharp: { icon: "🔷", name: "C#" },
-            rust: { icon: "🦀", name: "Rust" },
-            erlang: { icon: "📡", name: "Erlang" }
-        };
-        
-        let currentLevel = '';
-        let currentQuestions = [];
-        let currentQuestionIndex = 0;
-        let correctAnswers = 0;
-        let gameEnded = false;
-        let hasPlayedOnce = false;
-        
-        // Level configurations with more companies
-        const levels = {
-            junior: { 
-                questions: 3, 
-                discount: 25, 
-                companies: ['spotify', 'netflix', 'instagram', 'facebook', 'whatsapp']
-            },
-            middle: { 
-                questions: 5, 
-                discount: 50, 
-                companies: ['spotify', 'netflix', 'google', 'airbnb', 'twitter', 'amazon', 'instagram', 'whatsapp']
-            },
-            senior: { 
-                questions: 7, 
-                discount: 100, 
-                companies: ['netflix', 'google', 'twitter', 'amazon', 'uber', 'dropbox', 'pinterest', 'slack', 'linkedin', 'tiktok']
-            }
-        };
-
-        // Calculator functions
-        function updateCalculator() {
-            const level = document.getElementById('devLevel').value;
-            const count = parseInt(document.getElementById('devCount').value);
-            
-            const traditional = pricing[level].traditional * count;
-            const manatea = pricing[level].manatea * count;
-            const savings = traditional - manatea;
-            
-            document.getElementById('traditionalCost').textContent = `${traditional.toLocaleString()}/month`;
-            document.getElementById('manateaCost').textContent = `${manatea.toLocaleString()}/month`;
-            document.getElementById('savingsAmount').textContent = `${savings.toLocaleString()}/month`;
-            
-            // Update goals
-            document.getElementById('manateeTime').textContent = `${(goals.manatee / savings).toFixed(1)} months`;
-            document.getElementById('helicopterTime').textContent = `${(goals.helicopter / savings).toFixed(1)} months`;
-            document.getElementById('teslaTime').textContent = `${(goals.tesla / savings).toFixed(1)} months`;
-            document.getElementById('vacationTime').textContent = `${(goals.vacation / savings).toFixed(1)} months`;
-        }
-
-        function updateTeamDisplay() {
-            const count = parseInt(document.getElementById('devCount').value);
-            const sliderValue = document.getElementById('sliderValue');
-            const manateesDisplay = document.getElementById('manateesDisplay');
-            
-            sliderValue.textContent = count === 1 ? '1 developer' : `${count} developers`;
-            
-            // Update manatees display
-            const currentManatees = manateesDisplay.children.length;
-            
-            if (count > currentManatees) {
-                // Add manatees
-                for (let i = currentManatees; i < count; i++) {
-                    const manatee = document.createElement('span');
-                    manatee.className = 'manatee new';
-                    manatee.textContent = '🦭';
-                    manateesDisplay.appendChild(manatee);
-                    
-                    // Remove new class after animation
-                    setTimeout(() => manatee.classList.remove('new'), 500);
-                }
-            } else if (count < currentManatees) {
-                // Remove manatees
-                for (let i = currentManatees - 1; i >= count; i--) {
-                    manateesDisplay.removeChild(manateesDisplay.children[i]);
-                }
-            }
-            
-            updateCalculator();
-        }
-
-        // Benefit modal data with humor
-        const benefitDetails = {
-            pool: {
-                title: "🏊‍♂️ Our Developer Pool is MASSIVE",
-                image: "icon1",
-                text: `
-                    <p><strong>Think Olympic-sized pool, but filled with developers instead of water! 🏊‍♂️</strong></p>
-                    <br>
-                    <p>• <strong>1000+ developers</strong> who actually know what they're doing</p>
-                    <p>• Pre-tested so you don't get the "I'll learn React tomorrow" types</p>
-                    <p>• All swimming in different tech stacks (Python, React, Node.js, etc.)</p>
-                    <p>• No life guards needed - they're all professionals! 🦭</p>
-                    <br>
-                    <p><em>Pro tip: Our pool doesn't have a shallow end - all developers are deep-skilled!</em></p>
-                `
-            },
-            speed: {
-                title: "⚡ 48 Hours: Faster Than Your Pizza Delivery",
-                image: "icon2", 
-                text: `
-                    <p><strong>While other agencies are still "reviewing your requirements" for 2 weeks... 🐌</strong></p>
-                    <br>
-                    <p>• <strong>Monday:</strong> You tell us what you need</p>
-                    <p>• <strong>Tuesday:</strong> We find your perfect developer</p>
-                    <p>• <strong>Wednesday:</strong> They're already coding for you!</p>
-                    <br>
-                    <p>🏃‍♂️ <strong>Fun fact:</strong> Our matching process is so fast, it makes cheetahs jealous!</p>
-                    <br>
-                    <p><em>Warning: Side effects may include sudden productivity increases and uncontrollable smiling.</em></p>
-                `
-            },
-            money: {
-                title: "💰 Pay Salaries, Not Agency Markups",
-                image: "icon3",
-                text: `
-                    <p><strong>Traditional agencies be like: "That'll be $8000 for a $3000 developer" 🤡</strong></p>
-                    <br>
-                    <p>• You pay the developer's actual salary: <strong>$3000</strong></p>
-                    <p>• Plus our small fee: <strong>$400</strong></p>
-                    <p>• Agency markup you avoid: <strong>$4600</strong></p>
-                    <br>
-                    <p>🎯 <strong>Math made simple:</strong> More money in your pocket = more manatee tours! 🦭</p>
-                    <br>
-                    <p><em>Revolutionary concept: Paying fair prices for actual work!</em></p>
-                `
-            },
-            hire: {
-                title: "🔑 Own Your Developer Forever",
-                image: "icon4",
-                text: `
-                    <p><strong>Like adopting a pet, but they write code instead of chewing shoes! 🐕‍🦺</strong></p>
-                    <br>
-                    <p>• Work with them for 3 months</p>
-                    <p>• Pay one-time ownership fee</p>
-                    <p>• They become YOUR permanent team member</p>
-                    <p>• No more agencies in between</p>
-                    <br>
-                    <p>🏠 <strong>Benefits:</strong> They learn your business, your quirks, your coffee preferences!</p>
-                    <br>
-                    <p><em>Unlike pets, they don't need daily walks (but coffee breaks are appreciated).</em></p>
-                `
-            },
-            quality: {
-                title: "🎯 Senior-Level: No Fake It Till You Make It",
-                image: "icon5",
-                text: `
-                    <p><strong>Our testing process is more thorough than airport security! ✈️</strong></p>
-                    <br>
-                    <p>• <strong>Technical interview</strong> by actual senior engineers</p>
-                    <p>• <strong>Code review</strong> of real projects</p>
-                    <p>• <strong>Problem-solving test</strong> (not just "reverse a string")</p>
-                    <p>• <strong>English communication</strong> check</p>
-                    <br>
-                    <p>🚫 <strong>What we reject:</strong> Tutorial followers, copy-paste masters, "stack overflow warriors"</p>
-                    <br>
-                    <p><em>Result: Developers who actually know their stuff, not just how to Google it!</em></p>
-                `
-            },
-            simple: {
-                title: "🚫 Zero BS Policy Enforced",
-                image: "icon6",
-                text: `
-                    <p><strong>We killed all the middle managers. RIP to unnecessary meetings! 💀</strong></p>
-                    <br>
-                    <p>❌ No "account managers" managing other managers</p>
-                    <p>❌ No "let's circle back to sync up" meetings</p>
-                    <p>❌ No 47-slide presentations about synergy</p>
-                    <p>❌ No project managers managing the project of managing projects</p>
-                    <br>
-                    <p>✅ <strong>Just you + developer = magic happens</strong></p>
-                    <br>
-                    <p><em>Clean, simple, effective. Like a manatee's lifestyle! 🦭</em></p>
-                `
-            }
-        };
-
-        function showBenefitModal(benefitType) {
-            const modal = document.getElementById('benefitModal');
-            const benefit = benefitDetails[benefitType];
-            
-            document.getElementById('benefit-modal-title').textContent = benefit.title;
-            document.getElementById('benefit-modal-text').innerHTML = benefit.text;
-            
-            const imageEl = document.getElementById('benefit-modal-image');
-            imageEl.style.backgroundImage = `url('./images/${benefit.image}.png')`;
-            
-            modal.style.display = 'block';
-        }
-
-        function closeBenefitModal() {
-            document.getElementById('benefitModal').style.display = 'none';
-        }
-        function openGameModal() {
-            if (hasPlayedOnce) {
-                alert('🦭 You can only play once! Refresh the page to try again.');
-                return;
-            }
-            document.getElementById('gameModal').style.display = 'block';
-        }
-
-        function closeGameModal() {
-            document.getElementById('gameModal').style.display = 'none';
-        }
-
-        function startGame(level) {
-            currentLevel = level;
-            const levelConfig = levels[currentLevel];
-            currentQuestions = shuffleArray([...levelConfig.companies]).slice(0, levelConfig.questions);
-            currentQuestionIndex = 0;
-            correctAnswers = 0;
-            gameEnded = false;
-            
-            document.getElementById('start-screen').style.display = 'none';
-            document.getElementById('quiz-screen').style.display = 'block';
-            document.getElementById('result-screen').style.display = 'none';
-            
-            showQuestion();
-        }
-        
-        function showQuestion() {
-            const companyKey = currentQuestions[currentQuestionIndex];
-            const company = companies[companyKey];
-            const levelConfig = levels[currentLevel];
-            
-            // Update progress
-            const progress = ((currentQuestionIndex + 1) / levelConfig.questions) * 100;
-            document.getElementById('progress-bar').style.width = progress + '%';
-            document.getElementById('progress-text').textContent = 
-                `Question ${currentQuestionIndex + 1} of ${levelConfig.questions}`;
-            
-            // Update company info
-            document.getElementById('company-logo').textContent = company.logo;
-            document.getElementById('company-name').textContent = company.name;
-            document.querySelector('.question').textContent = company.question;
-            
-            // Generate answer options
-            const correctTech = company.mainTech;
-            const wrongTechs = getRandomWrongAnswers(correctTech, 3);
-            const allOptions = shuffleArray([correctTech, ...wrongTechs]);
-            
-            // Update answer buttons
-            const answersGrid = document.getElementById('answers-grid');
-            answersGrid.innerHTML = '';
-            
-            allOptions.forEach(tech => {
-                const btn = document.createElement('div');
-                btn.className = 'answer-btn';
-                btn.dataset.answer = tech;
-                btn.innerHTML = `
-                    <span class="tech-icon">${techOptions[tech].icon}</span>
-                    <span>${techOptions[tech].name}</span>
-                    <button class="learn-more-btn">ℹ️</button>
-                `;
-                
-                // Add main click handler for the answer
-                btn.addEventListener('click', (e) => {
-                    if (e.target.classList.contains('learn-more-btn')) {
-                        e.stopPropagation();
-                        return;
-                    }
-                    selectAnswer(tech, correctTech, companyKey);
-                });
-                
-                answersGrid.appendChild(btn);
-            });
-        }
-        
-        function selectAnswer(selectedTech, correctTech, companyKey) {
-            if (gameEnded) return;
-            
-            const buttons = document.querySelectorAll('.answer-btn');
-            buttons.forEach(btn => {
-                btn.style.pointerEvents = 'none';
-                
-                if (btn.dataset.answer === correctTech) {
-                    btn.classList.add('correct');
-                    // Show learn more button on correct answer with better visibility
-                    const learnBtn = btn.querySelector('.learn-more-btn');
-                    if (learnBtn) {
-                        learnBtn.style.display = 'block';
-                        learnBtn.style.opacity = '1';
-                        learnBtn.style.pointerEvents = 'auto';
-                        
-                        // Add click handler directly
-                        learnBtn.onclick = function(e) {
-                            e.stopPropagation();
-                            showTechInfo(companyKey);
-                        };
-                    }
-                } else if (btn.dataset.answer === selectedTech && selectedTech !== correctTech) {
-                    btn.classList.add('wrong');
-                    
-                    // For wrong answers, still show the correct answer's learn more button
-                    const correctBtn = document.querySelector(`[data-answer="${correctTech}"]`);
-                    if (correctBtn) {
-                        correctBtn.classList.add('correct');
-                        const correctLearnBtn = correctBtn.querySelector('.learn-more-btn');
-                        if (correctLearnBtn) {
-                            correctLearnBtn.style.display = 'block';
-                            correctLearnBtn.style.opacity = '1';
-                            correctLearnBtn.style.pointerEvents = 'auto';
-                            correctLearnBtn.onclick = function(e) {
-                                e.stopPropagation();
-                                showTechInfo(companyKey);
-                            };
+        tailwind.config = {
+            theme: {
+                extend: {
+                    animation: {
+                        'bounce-slow': 'bounce 2s infinite',
+                        'pulse-slow': 'pulse 3s infinite',
+                        'fade-in': 'fadeIn 0.5s ease-in',
+                        'slide-up': 'slideUp 0.3s ease-out'
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(100%)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
                         }
                     }
                 }
-            });
-            
-            if (selectedTech === correctTech) {
-                correctAnswers++;
-                
-                setTimeout(() => {
-                    currentQuestionIndex++;
-                    
-                    if (currentQuestionIndex >= levels[currentLevel].questions) {
-                        showResult(true);
-                    } else {
-                        showQuestion();
-                    }
-                }, 3000); // Increased time to see the learn more button
-            } else {
-                // Game over on wrong answer - show correct answer info for learning
-                setTimeout(() => {
-                    showResult(false);
-                }, 4000); // More time to explore the tech info
-                return;
             }
         }
-        
-        function showResult(success) {
-            gameEnded = true;
-            hasPlayedOnce = true;
-            document.getElementById('quiz-screen').style.display = 'none';
-            document.getElementById('result-screen').style.display = 'block';
-            
-            const resultTitle = document.getElementById('result-title');
-            const resultMessage = document.getElementById('result-message');
-            const promoCode = document.getElementById('promo-code');
-            
-            if (success) {
-                resultTitle.textContent = '🎉 Perfect Score!';
-                resultTitle.className = 'result-title success';
-                
-                const levelNames = { junior: 'Junior', middle: 'Middle', senior: 'Senior' };
-                const discount = levels[currentLevel].discount;
-                
-                resultMessage.textContent = `You completed the ${levelNames[currentLevel]} level with ${correctAnswers}/${levels[currentLevel].questions} correct answers!`;
-                
-                // Generate promo code
-                const promoCodes = {
-                    junior: 'ILOVEMANATEA25',
-                    middle: 'ILOVEMANATEA50', 
-                    senior: 'ILOVEMANATEA100'
-                };
-                
-                promoCode.textContent = promoCodes[currentLevel];
-                promoCode.style.display = 'block';
+    </script>
+    <style>
+        .gradient-text {
+            background: linear-gradient(45deg, #ffffff, #fbbf24);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .slider {
+            -webkit-appearance: none;
+            appearance: none;
+            height: 8px;
+            border-radius: 5px;
+            background: #e5e7eb;
+            outline: none;
+            transition: all 0.2s;
+        }
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #10b981, #059669);
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transition: all 0.2s;
+        }
+        .slider::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+        }
+        .slider::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #10b981, #059669);
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        .star-rating {
+            color: #fbbf24;
+        }
+        .star-empty {
+            color: #d1d5db;
+        }
+        .notification {
+            animation: slideUp 0.3s ease-out;
+        }
+        .modal-backdrop {
+            backdrop-filter: blur(4px);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div id="app" class="max-w-sm mx-auto bg-white min-h-screen relative overflow-hidden">
+        <!-- Content will be loaded here -->
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="notification" class="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 hidden">
+        <div class="bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg notification">
+            <span id="notificationText"></span>
+        </div>
+    </div>
+
+    <script>
+        // Global state management
+        let currentScreen = 'welcome';
+        let user = {
+            id: 1,
+            name: 'Олександр',
+            avatar: '👤',
+            coins: 250,
+            level: 5,
+            rating: 4.2,
+            matches: 23,
+            goals: 15,
+            assists: 8,
+            city: 'Львів'
+        };
+        let selectedMatch = null;
+        let selectedPlayer = null;
+        let selectedChallenge = null;
+        let selectedVideo = null;
+        let selectedTeam = null;
+        let matchInProgress = false;
+        let matchFinished = false;
+        let winningTeam = null;
+        let favorites = new Set();
+        let friends = new Set([1, 2]);
+        let videoComments = {};
+        let videoRatings = {};
+        let playerRatings = {};
+        let challengeInvites = {};
+        let matchCityFilter = 'Всі міста';
+        let playerCityFilter = 'Всі міста';
+        let challengeCategory = 'Всі';
+        let contentType = 'Всі';
+        let newComment = '';
+        let currentRatingValue = 5;
+
+        // Data
+        const cities = ['Всі міста', 'Львів', 'Київ', 'Харків', 'Одеса', 'Дніпро'];
+        const categories = ['Всі', 'Голи', 'Передачі', 'Фінти', 'Воротарство'];
+        const contentTypes = ['Всі', 'Відео', 'Челенджі'];
+
+        const badges = [
+            { id: 1, name: '⚽ Майстер м\'яча', price: 50, description: 'За техніку ведення', owned: false },
+            { id: 2, name: '🥅 Снайпер', price: 75, description: 'За точність ударів', owned: false },
+            { id: 3, name: '🏃‍♂️ Спідстер', price: 60, description: 'За швидкість', owned: true },
+            { id: 4, name: '🎯 Асистент', price: 65, description: 'За кращі передачі', owned: false },
+            { id: 5, name: '🛡️ Захисник', price: 70, description: 'За надійну гру в обороні', owned: false },
+        ];
+
+        const comingSoonItems = [
+            { id: 1, name: '🌟 Відгук від селебреті', description: 'Персональний відгук від зірки футболу', icon: '⭐' },
+            { id: 2, name: '🏪 Знижка на спорттовари', description: '20% знижка в партнерських магазинах', icon: '🏷️' },
+        ];
+
+        const videos = [
+            { 
+                id: 1, 
+                title: 'Техніка ведення м\'яча', 
+                author: 'Артем К.', 
+                rating: 4.5, 
+                views: 1250, 
+                duration: '3:45',
+                category: 'Фінти',
+                type: 'Відео',
+                thumbnail: '⚽',
+                description: 'Навчальне відео про базову техніку ведення м\'яча'
+            },
+            { 
+                id: 2, 
+                title: 'Удари по воротах', 
+                author: 'Максим Л.', 
+                rating: 4.8, 
+                views: 2100, 
+                duration: '5:20',
+                category: 'Голи',
+                type: 'Відео',
+                thumbnail: '🥅',
+                description: 'Як правильно бити по воротах з різних позицій'
+            },
+            { 
+                id: 3, 
+                title: 'Челендж: 10 голів підряд', 
+                author: 'Данило М.', 
+                rating: 4.2, 
+                views: 890, 
+                duration: '2:30',
+                category: 'Голи',
+                type: 'Челенджі',
+                thumbnail: '🎯',
+                description: 'Спробуй забити 10 голів підряд з різних точок'
+            },
+            { 
+                id: 4, 
+                title: 'Воротарські техніки', 
+                author: 'Іван С.', 
+                rating: 4.6, 
+                views: 1560, 
+                duration: '4:15',
+                category: 'Воротарство',
+                type: 'Відео',
+                thumbnail: '🧤',
+                description: 'Основи гри воротаря та техніки ловлі м\'яча'
+            },
+            { 
+                id: 5, 
+                title: 'Точні передачі', 
+                author: 'Богдан Р.', 
+                rating: 4.3, 
+                views: 1120, 
+                duration: '3:50',
+                category: 'Передачі',
+                type: 'Відео',
+                thumbnail: '🎯',
+                description: 'Як виконувати точні передачі на різні дистанції'
+            }
+        ];
+
+        const matches = [
+            {
+                id: 1,
+                title: 'Футбол у парку Стрийський',
+                location: 'Львів, парк Стрийський',
+                date: '2024-01-20',
+                time: '15:00',
+                players: '8/12',
+                level: 'Середній',
+                price: 'Безкоштовно',
+                organizer: 'Микола В.',
+                description: 'Дружній матч на свіжому повітрі'
+            },
+            {
+                id: 2,
+                title: 'Турнір на стадіоні',
+                location: 'Київ, НСК Олімпійський',
+                date: '2024-01-22',
+                time: '18:00',
+                players: '16/20',
+                level: 'Високий',
+                price: '50 грн',
+                organizer: 'Олександр К.',
+                description: 'Турнір серед аматорських команд'
+            },
+            {
+                id: 3,
+                title: 'Ранковий футбол',
+                location: 'Харків, стадіон Металіст',
+                date: '2024-01-21',
+                time: '09:00',
+                players: '10/14',
+                level: 'Початковий',
+                price: '30 грн',
+                organizer: 'Сергій М.',
+                description: 'Ранкова гра для початківців'
+            }
+        ];
+
+        const players = [
+            {
+                id: 1,
+                name: 'Артем Коваленко',
+                position: 'Нападник',
+                rating: 4.8,
+                matches: 45,
+                goals: 32,
+                assists: 12,
+                city: 'Львів',
+                avatar: '⚽',
+                level: 'Професіонал',
+                achievements: ['🥅 Снайпер', '⚽ Майстер м\'яча']
+            },
+            {
+                id: 2,
+                name: 'Максим Петренко',
+                position: 'Півзахисник',
+                rating: 4.5,
+                matches: 38,
+                goals: 15,
+                assists: 25,
+                city: 'Київ',
+                avatar: '🎯',
+                level: 'Досвідчений',
+                achievements: ['🎯 Асистент']
+            },
+            {
+                id: 3,
+                name: 'Данило Мельник',
+                position: 'Захисник',
+                rating: 4.3,
+                matches: 52,
+                goals: 8,
+                assists: 15,
+                city: 'Харків',
+                avatar: '🛡️',
+                level: 'Професіонал',
+                achievements: ['🛡️ Захисник']
+            },
+            {
+                id: 4,
+                name: 'Іван Сидоренко',
+                position: 'Воротар',
+                rating: 4.7,
+                matches: 41,
+                goals: 0,
+                assists: 5,
+                city: 'Одеса',
+                avatar: '🧤',
+                level: 'Досвідчений',
+                achievements: ['🧤 Надійні руки']
+            },
+            {
+                id: 5,
+                name: 'Богдан Романенко',
+                position: 'Півзахисник',
+                rating: 4.1,
+                matches: 29,
+                goals: 12,
+                assists: 18,
+                city: 'Дніпро',
+                avatar: '🏃‍♂️',
+                level: 'Середній',
+                achievements: ['🏃‍♂️ Спідстер']
+            }
+        ];
+
+        const friendSuggestions = [
+            { id: 3, name: 'Данило М.', avatar: '🛡️', mutualFriends: 5, city: 'Харків' },
+            { id: 4, name: 'Іван С.', avatar: '🧤', mutualFriends: 3, city: 'Одеса' },
+            { id: 5, name: 'Богдан Р.', avatar: '🏃‍♂️', mutualFriends: 7, city: 'Дніпро' },
+            { id: 6, name: 'Олег В.', avatar: '⚽', mutualFriends: 2, city: 'Львів' },
+            { id: 7, name: 'Микола К.', avatar: '🎯', mutualFriends: 4, city: 'Київ' }
+        ];
+
+        const currentFriends = [
+            { id: 1, name: 'Артем К.', avatar: '⚽', status: 'online', city: 'Львів' },
+            { id: 2, name: 'Максим П.', avatar: '🎯', status: 'offline', city: 'Київ' }
+        ];
+
+        // Utility functions
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            const notificationText = document.getElementById('notificationText');
+            notificationText.textContent = message;
+            notification.classList.remove('hidden');
+            setTimeout(() => {
+                notification.classList.add('hidden');
+            }, 3000);
+        }
+
+        function toggleFriend(friendId) {
+            if (friends.has(friendId)) {
+                friends.delete(friendId);
+                showNotification('Друга видалено');
             } else {
-                resultTitle.textContent = '😞 Almost There!';
-                resultTitle.className = 'result-title failure';
-                resultMessage.textContent = `You got ${correctAnswers} questions right. No mistakes allowed! Refresh the page to try again.`;
-                promoCode.style.display = 'none';
+                friends.add(friendId);
+                showNotification('Друга додано');
+            }
+            renderCurrentScreen();
+        }
+
+        function toggleFavorite(id) {
+            if (favorites.has(id)) {
+                favorites.delete(id);
+                showNotification('Видалено з обраного');
+            } else {
+                favorites.add(id);
+                showNotification('Додано до обраного');
+            }
+            renderCurrentScreen();
+        }
+
+        function purchaseBadge(badgeId) {
+            const badge = badges.find(b => b.id === badgeId);
+            if (badge && !badge.owned && user.coins >= badge.price) {
+                user.coins -= badge.price;
+                badge.owned = true;
+                showNotification(`Куплено: ${badge.name}`);
+                renderCurrentScreen();
+            } else if (badge && badge.owned) {
+                showNotification('Цей бейдж уже куплений');
+            } else {
+                showNotification('Недостатньо монет');
             }
         }
 
-        function showTechInfo(companyKey) {
-            const company = companies[companyKey];
-            const modal = document.getElementById('techInfoModal');
-            const title = document.getElementById('tech-info-title');
-            const body = document.getElementById('tech-info-body');
-            
-            title.textContent = `${company.name} Tech Stack`;
-            
-            body.innerHTML = `
-                <div class="tech-section">
-                    <h3>🎯 Why ${techOptions[company.mainTech].name}?</h3>
-                    <p>${company.info.why}</p>
-                </div>
+        function rateVideo(videoId, rating) {
+            videoRatings[videoId] = rating;
+            const video = videos.find(v => v.id === videoId);
+            if (video) {
+                video.rating = ((video.rating * video.views) + rating) / (video.views + 1);
+                video.views += 1;
+            }
+            showNotification(`Оцінено на ${rating} зірок`);
+            renderCurrentScreen();
+        }
+
+        function ratePlayer(playerId, rating) {
+            playerRatings[playerId] = rating;
+            const player = players.find(p => p.id === playerId);
+            if (player) {
+                player.rating = ((player.rating * player.matches) + rating) / (player.matches + 1);
+            }
+            showNotification(`Гравця оцінено на ${rating} зірок`);
+            renderCurrentScreen();
+        }
+
+        function addComment(videoId, comment) {
+            if (!videoComments[videoId]) {
+                videoComments[videoId] = [];
+            }
+            videoComments[videoId].push({
+                id: Date.now(),
+                author: user.name,
+                text: comment,
+                time: new Date().toLocaleTimeString('uk-UA', { hour: '2-digit', minute: '2-digit' }),
+                likes: 0
+            });
+            showNotification('Коментар додано');
+            renderCurrentScreen();
+        }
+
+        function inviteToChallenge(challengeId, friendId) {
+            if (!challengeInvites[challengeId]) {
+                challengeInvites[challengeId] = [];
+            }
+            challengeInvites[challengeId].push(friendId);
+            const friend = currentFriends.find(f => f.id === friendId);
+            showNotification(`Запрошення надіслано ${friend?.name || 'другу'}`);
+        }
+
+        function shuffleTeams() {
+            const availablePlayers = players.filter(p => Math.random() > 0.3);
+            const team1 = availablePlayers.slice(0, Math.ceil(availablePlayers.length / 2));
+            const team2 = availablePlayers.slice(Math.ceil(availablePlayers.length / 2));
+            return { team1, team2 };
+        }
+
+        function startMatch(matchId) {
+            selectedMatch = matches.find(m => m.id === matchId);
+            const teams = shuffleTeams();
+            selectedMatch.team1 = teams.team1;
+            selectedMatch.team2 = teams.team2;
+            matchInProgress = true;
+            matchFinished = false;
+            winningTeam = null;
+            showNotification('Матч розпочато!');
+            navigateTo('matchInProgress');
+        }
+
+        function finishMatch(winnerTeam) {
+            matchInProgress = false;
+            matchFinished = true;
+            winningTeam = winnerTeam;
+            showNotification(`Матч завершено! Перемогла команда ${winnerTeam}`);
+            navigateTo('matchFinished');
+        }
+
+        function renderStars(rating, interactive = false, onRate = null) {
+            let starsHtml = '';
+            for (let i = 1; i <= 5; i++) {
+                const filled = i <= Math.floor(rating);
+                const half = i === Math.ceil(rating) && rating % 1 !== 0;
+                const starClass = filled ? 'star-rating' : 'star-empty';
+                const clickHandler = interactive && onRate ? `onclick="${onRate}(${i})"` : '';
+                const cursor = interactive ? 'cursor-pointer' : '';
                 
-                <div class="tech-section">
-                    <h3>🛠️ Full Technology Stack</h3>
-                    <ul class="tech-list">
-                        ${company.info.fullStack.map(tech => `<li>${tech}</li>`).join('')}
-                    </ul>
-                </div>
-                
-                <div class="fact-box">
-                    <div class="fact-title">🔥 Interesting Facts</div>
-                    <ul style="margin: 10px 0; padding-left: 20px;">
-                        ${company.info.facts.map(fact => `<li style="margin: 8px 0; color: #ecf0f1;">${fact}</li>`).join('')}
-                    </ul>
-                </div>
-                
-                <div style="text-align: center; margin-top: 25px; padding: 20px; background: rgba(52, 152, 219, 0.1); border-radius: 15px;">
-                    <p style="color: #3498db; font-weight: bold; margin-bottom: 10px;">💡 Learning Opportunity</p>
-                    <p>Want to master these technologies? Our developers have expertise in all major tech stacks!</p>
+                starsHtml += `<span class="${starClass} ${cursor} text-lg" ${clickHandler}>
+                    ${filled ? '★' : (half ? '☆' : '☆')}
+                </span>`;
+            }
+            return starsHtml;
+        }
+
+        function navigateTo(screen, data = null) {
+            currentScreen = screen;
+            if (data) {
+                if (screen === 'playerProfile') selectedPlayer = data;
+                if (screen === 'videoDetail') selectedVideo = data;
+                if (screen === 'challengeDetail') selectedChallenge = data;
+                if (screen === 'matchDetail') selectedMatch = data;
+            }
+            renderCurrentScreen();
+        }
+
+        // Screen rendering functions
+        function renderWelcomeScreen() {
+            return `
+                <div class="gradient-bg min-h-screen flex flex-col items-center justify-center text-center p-6">
+                    <div class="animate-bounce-slow mb-8">
+                        <div class="text-8xl mb-4">⚽</div>
+                        <h1 class="text-4xl font-bold gradient-text mb-2">GoalApp</h1>
+                        <p class="text-white/80 text-lg">Футбольний всесвіт у твоїх руках</p>
+                    </div>
+                    
+                    <div class="space-y-4 w-full max-w-xs">
+                        <button onclick="navigateTo('home')" 
+                                class="w-full bg-white text-purple-600 py-4 px-6 rounded-2xl font-semibold text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
+                            🚀 Почати гру
+                        </button>
+                        
+                        <div class="flex space-x-4">
+                            <button class="flex-1 bg-white/20 backdrop-blur text-white py-3 px-4 rounded-xl font-medium hover:bg-white/30 transition-all">
+                                📱 Увійти
+                            </button>
+                            <button class="flex-1 bg-white/20 backdrop-blur text-white py-3 px-4 rounded-xl font-medium hover:bg-white/30 transition-all">
+                                ✨ Реєстрація
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-12 text-white/60 text-sm">
+                        <p>🏆 Більше 10,000 гравців</p>
+                        <p>⚽ 500+ матчів щодня</p>
+                        <p>🎯 Нескінченні челенджі</p>
+                    </div>
                 </div>
             `;
-            
-            modal.style.display = 'block';
         }
 
-        function closeTechInfo() {
-            document.getElementById('techInfoModal').style.display = 'none';
-        }
-        
-        function resetGame() {
-            // Refresh the page to reset the one-time play restriction
-            window.location.reload();
-        }
-        
-        function shuffleArray(array) {
-            const shuffled = [...array];
-            for (let i = shuffled.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-            }
-            return shuffled;
-        }
-        
-        function getRandomWrongAnswers(correctAnswer, count) {
-            const allTechs = Object.keys(techOptions);
-            const wrongTechs = allTechs.filter(tech => tech !== correctAnswer);
-            return shuffleArray(wrongTechs).slice(0, count);
-        }
-        
-        // Initialize when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('🦭 ManaTEA site loaded!');
-            
-            // Set up calculator event listeners
-            const devLevel = document.getElementById('devLevel');
-            const devCount = document.getElementById('devCount');
-            
-            if (devLevel) {
-                devLevel.addEventListener('change', updateCalculator);
-            }
-            
-            if (devCount) {
-                devCount.addEventListener('input', updateTeamDisplay);
-            }
-            
-            // Initialize display
-            updateTeamDisplay();
-            updateCalculator();
-            
-            // Game event listeners
-            const gameBtn = document.getElementById('gameBtn');
-            const gameClose = document.getElementById('gameClose');
-            
-            if (gameBtn) {
-                gameBtn.addEventListener('click', openGameModal);
-            }
-            
-            if (gameClose) {
-                gameClose.addEventListener('click', closeGameModal);
-            }
-            
-            // Level selection buttons
-            document.querySelectorAll('.level-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    if (gameEnded || hasPlayedOnce) return;
+        function renderHomeScreen() {
+            return `
+                <div class="animate-fade-in">
+                    <!-- Header -->
+                    <div class="gradient-bg p-4 text-white">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center text-2xl">
+                                    ${user.avatar}
+                                </div>
+                                <div>
+                                    <h2 class="font-bold text-lg">${user.name}</h2>
+                                    <p class="text-white/80 text-sm">Рівень ${user.level} • ${user.city}</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="bg-white/20 rounded-full px-3 py-1 text-sm font-medium">
+                                    💰 ${user.coins}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-3 gap-4 text-center">
+                            <div class="bg-white/20 rounded-lg p-3">
+                                <div class="text-2xl font-bold">${user.matches}</div>
+                                <div class="text-xs text-white/80">Матчі</div>
+                            </div>
+                            <div class="bg-white/20 rounded-lg p-3">
+                                <div class="text-2xl font-bold">${user.goals}</div>
+                                <div class="text-xs text-white/80">Голи</div>
+                            </div>
+                            <div class="bg-white/20 rounded-lg p-3">
+                                <div class="text-2xl font-bold">${user.assists}</div>
+                                <div class="text-xs text-white/80">Передачі</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-3">⚡ Швидкі дії</h3>
+                        <div class="grid grid-cols-2 gap-3">
+                            <button onclick="navigateTo('matches')" 
+                                    class="bg-green-500 text-white p-4 rounded-xl text-center card-hover">
+                                <div class="text-2xl mb-1">⚽</div>
+                                <div class="font-medium">Знайти матч</div>
+                            </button>
+                            <button onclick="navigateTo('videos')" 
+                                    class="bg-blue-500 text-white p-4 rounded-xl text-center card-hover">
+                                <div class="text-2xl mb-1">📱</div>
+                                <div class="font-medium">Відео</div>
+                            </button>
+                            <button onclick="navigateTo('players')" 
+                                    class="bg-purple-500 text-white p-4 rounded-xl text-center card-hover">
+                                <div class="text-2xl mb-1">👥</div>
+                                <div class="font-medium">Гравці</div>
+                            </button>
+                            <button onclick="navigateTo('friends')" 
+                                    class="bg-orange-500 text-white p-4 rounded-xl text-center card-hover">
+                                <div class="text-2xl mb-1">👫</div>
+                                <div class="font-medium">Друзі</div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activity -->
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-3">📈 Остання активність</h3>
+                        <div class="space-y-3">
+                            <div class="bg-gray-50 p-3 rounded-lg">
+                                <div class="flex items-center space-x-3">
+                                    <div class="text-2xl">🏆</div>
+                                    <div>
+                                        <p class="font-medium">Перемога в матчі</p>
+                                        <p class="text-sm text-gray-600">2 години тому</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-gray-50 p-3 rounded-lg">
+                                <div class="flex items-center space-x-3">
+                                    <div class="text-2xl">⭐</div>
+                                    <div>
+                                        <p class="font-medium">Новий бейдж отримано</p>
+                                        <p class="text-sm text-gray-600">Вчора</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Navigation -->
+                    ${renderBottomNav('home')}
                     
-                    document.querySelectorAll('.level-btn').forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    const level = this.dataset.level;
-                    
-                    setTimeout(() => {
-                        startGame(level);
-                    }, 500);
-                });
-            });
+                    <!-- Subscription at bottom -->
+                    <div class="p-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-center">
+                        <p class="text-sm font-medium">🌟 Преміум підписка</p>
+                        <p class="text-xs opacity-90">Розблокуй всі функції</p>
+                        <button onclick="navigateTo('subscription')" class="bg-white text-orange-500 px-4 py-1 rounded-full text-sm font-medium mt-2">
+                            Дізнатися більше
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderMatchesScreen() {
+            const filteredMatches = matchCityFilter === 'Всі міста' 
+                ? matches 
+                : matches.filter(m => m.location.includes(matchCityFilter));
+
+            return `
+                <div class="animate-fade-in">
+                    <!-- Header -->
+                    <div class="bg-green-500 text-white p-4">
+                        <div class="flex items-center justify-between mb-4">
+                            <button onclick="navigateTo('home')" class="text-2xl">←</button>
+                            <h1 class="text-xl font-bold">⚽ Матчі</h1>
+                            <button onclick="navigateTo('createMatch')" class="text-2xl">+</button>
+                        </div>
+                        
+                        <!-- Filter -->
+                        <select onchange="matchCityFilter = this.value; renderCurrentScreen()" 
+                                class="w-full p-2 rounded-lg text-gray-800">
+                            ${cities.map(city => 
+                                `<option value="${city}" ${city === matchCityFilter ? 'selected' : ''}>${city}</option>`
+                            ).join('')}
+                        </select>
+                    </div>
+
+                    <!-- Matches List -->
+                    <div class="p-4 space-y-4">
+                        ${filteredMatches.map(match => `
+                            <div class="bg-white border border-gray-200 rounded-xl p-4 card-hover">
+                                <div class="flex items-start justify-between mb-3">
+                                    <div class="flex-1">
+                                        <h3 class="font-bold text-lg">${match.title}</h3>
+                                        <p class="text-gray-600 text-sm">📍 ${match.location}</p>
+                                        <p class="text-gray-600 text-sm">🕐 ${match.date} о ${match.time}</p>
+                                    </div>
+                                    <button onclick="toggleFavorite(${match.id})" 
+                                            class="text-2xl ${favorites.has(match.id) ? 'text-red-500' : 'text-gray-300'}">
+                                        ${favorites.has(match.id) ? '❤️' : '🤍'}
+                                    </button>
+                                </div>
+                                
+                                <div class="flex items-center justify-between mb-3">
+                                    <div class="flex space-x-4 text-sm">
+                                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
+                                            👥 ${match.players}
+                                        </span>
+                                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full">
+                                            📊 ${match.level}
+                                        </span>
+                                        <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full">
+                                            💰 ${match.price}
+                                        </span>
+                                    </div>
+                                </div>
+                                
+                                <p class="text-gray-700 text-sm mb-3">${match.description}</p>
+                                <p class="text-gray-600 text-xs mb-3">Організатор: ${match.organizer}</p>
+                                
+                                <div class="flex space-x-2">
+                                    <button onclick="navigateTo('matchDetail', ${match.id})" 
+                                            class="flex-1 bg-green-500 text-white py-2 px-4 rounded-lg font-medium">
+                                        Детальніше
+                                    </button>
+                                    <button onclick="startMatch(${match.id})" 
+                                            class="flex-1 bg-blue-500 text-white py-2 px-4 rounded-lg font-medium">
+                                        Приєднатися
+                                    </button>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    ${renderBottomNav('matches')}
+                </div>
+            `;
+        }
+
+        function renderMatchDetail() {
+            if (!selectedMatch) return renderMatchesScreen();
             
-            // Close modals when clicking outside
-            window.addEventListener('click', function(event) {
-                const gameModal = document.getElementById('gameModal');
-                const techModal = document.getElementById('techInfoModal');
-                const benefitModal = document.getElementById('benefitModal');
-                
-                if (event.target === gameModal) {
-                    closeGameModal();
-                }
-                
-                if (event.target === techModal) {
-                    closeTechInfo();
-                }
-                
-                if (event.target === benefitModal) {
-                    closeBenefitModal();
-                }
-            });
+            return `
+                <div class="animate-fade-in">
+                    <!-- Header -->
+                    <div class="bg-green-500 text-white p-4">
+                        <div class="flex items-center justify-between mb-4">
+                            <button onclick="navigateTo('matches')" class="text-2xl">←</button>
+                            <h1 class="text-xl font-bold">Деталі матчу</h1>
+                            <button onclick="toggleFavorite(${selectedMatch.id})" class="text-2xl">
+                                ${favorites.has(selectedMatch.id) ? '❤️' : '🤍'}
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Match Info -->
+                    <div class="p-4">
+                        <div class="bg-white rounded-xl p-6 shadow-lg mb-4">
+                            <h2 class="text-2xl font-bold mb-4">${selectedMatch.title}</h2>
+                            
+                            <div class="space-y-3 mb-6">
+                                <div class="flex items-center space-x-3">
+                                    <span class="text-2xl">📍</span>
+                                    <span class="text-gray-700">${selectedMatch.location}</span>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <span class="text-2xl">🕐</span>
+                                    <span class="text-gray-700">${selectedMatch.date} о ${selectedMatch.time}</span>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <span class="text-2xl">👥</span>
+                                    <span class="text-gray-700">Гравці: ${selectedMatch.players}</span>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <span class="text-2xl">📊</span>
+                                    <span class="text-gray-700">Рівень: ${selectedMatch.level}</span>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <span class="text-2xl">💰</span>
+                                    <span class="text-gray-700">Вартість: ${selectedMatch.price}</span>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <span class="text-2xl">👤</span>
+                                    <span class="text-gray-700">Організатор: ${selectedMatch.organizer}</span>
+                                </div>
+                            </div>
+                            
+                            <p class="text-gray-700 mb-6">${selectedMatch.description}</p>
+                            
+                            <div class="flex space-x-3">
+                                <button onclick="startMatch(${selectedMatch.id})" 
+                                        class="flex-1 bg-green-500 text-white py-3 px-6 rounded-lg font-semibold">
+                                    🚀 Приєднатися до матчу
+                                </button>
+                                <button class="bg-blue-500 text-white py-3 px-6 rounded-lg font-semibold">
+                                    💬 Чат
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderMatchInProgress() {
+            if (!selectedMatch || !selectedMatch.team1 || !selectedMatch.team2) return renderMatchesScreen();
             
-            console.log('🎮 Game system ready!');
-        });
+            return `
+                <div class="animate-fade-in">
+                    <!-- Header -->
+                    <div class="bg-green-500 text-white p-4">
+                        <div class="flex items-center justify-between mb-4">
+                            <button onclick="navigateTo('matches')" class="text-2xl">←</button>
+                            <h1 class="text-xl font-bold">Матч у грі</h1>
+                            <div class="text-sm">⏱️ LIVE</div>
+                        </div>
+                    </div>
+
+                    <!-- Match Status -->
+                    <div class="p-4">
+                        <div class="bg-white rounded-xl p-6 shadow-lg mb-4">
+                            <h2 class="text-center text-xl font-bold mb-6">${selectedMatch.title}</h2>
+                            
+                            <!-- Teams -->
+                            <div class="grid grid-cols-2 gap-4 mb-6">
+                                <div class="text-center">
+                                    <h3 class="font-bold text-lg mb-3 text-blue-600">Команда 1</h3>
+                                    <div class="space-y-2">
+                                        ${selectedMatch.team1.map(player => `
+                                            <div class="bg-blue-50 p-2 rounded-lg">
+                                                <div class="font-medium">${player.name}</div>
+                                                <div class="text-sm text-gray-600">${player.position}</div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                                
+                                <div class="text-center">
+                                    <h3 class="font-bold text-lg mb-3 text-red-600">Команда 2</h3>
+                                    <div class="space-y-2">
+                                        ${selectedMatch.team2.map(player => `
+                                            <div class="bg-red-50 p-2 rounded-lg">
+                                                <div class="font-medium">${player.name}</div>
+                                                <div class="text-sm text-gray-600">${player.position}</div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Match Actions -->
+                            <div class="space-y-3">
+                                <button onclick="finishMatch('1')" 
+                                        class="w-full bg-blue-500 text-white py-3 px-6 rounded-lg font-semibold">
+                                    🏆 Команда 1 перемогла
+                                </button>
+                                <button onclick="finishMatch('2')" 
+                                        class="w-full bg-red-500 text-white py-3 px-6 rounded-lg font-semibold">
+                                    🏆 Команда 2 перемогла
+                                </button>
+                                <button onclick="finishMatch('draw')" 
+                                        class="w-full bg-gray-500 text-white py-3 px-6 rounded-lg font-semibold">
+                                    🤝 Нічия
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderMatchFinished() {
+            if (!selectedMatch || !matchFinished) return renderMatchesScreen();
+            
+            const allPlayers = [...(selectedMatch.team1 || []), ...(selectedMatch.team2 || [])];
+            
+            return `
+                <div class="animate-fade-in">
+                    <!-- Header -->
+                    <div class="bg-green-500 text-white p-4">
+                        <div class="flex items-center justify-between mb-4">
+                            <button onclick="navigateTo('matches')" class="text-2xl">←</button>
+                            <h1 class="text-xl font-bold">Матч завершено</h1>
+                            <div class="text-sm">✅ ФІНІШ</div>
+                        </div>
+                    </div>
+
+                    <!-- Match Result -->
+                    <div class="p-4">
+                        <div class="bg-white rounded-xl p-6 shadow-lg mb-4">
+                            <div class="text-center mb-6">
+                                <h2 class="text-2xl font-bold mb-2">🏆 Результат матчу</h2>
+                                <p class="text-lg">
+                                    ${winningTeam === '1' ? 'Команда 1 перемогла!' : 
+                                      winningTeam === '2' ? 'Команда 2 перемогла!' : 
+                                      'Нічия!'}
+                                </p>
+                            </div>
+                            
+                            <!-- Player Ratings -->
+                            <h3 class="font-bold text-lg mb-4">⭐ Оцініть гравців</h3>
+                            <div class="space-y-4">
+                                ${allPlayers.map(player => `
+                                    <div class="bg-gray-50 p-4 rounded-lg">
+                                        <div class="flex items-center justify-between mb-3">
+                                            <div>
+                                                <div class="font-medium">${player.name}</div>
+                                                <div class="text-sm text-gray-600">${player.position}</div>
+                                            </div>
+                                            <div class="text-2xl">${player.avatar}</div>
+                                        </div>
+                                        
+                                        <div class="flex items-center space-x-2">
+                                            <span class="text-sm">Оцінка:</span>
+                                            <input type="range" min="1" max="5" value="3" 
+                                                   class="slider flex-1" 
+                                                   onchange="ratePlayer(${player.id}, this.value)">
+                                            <span class="text-sm font-medium w-8" id="rating-${player.id}">3</span>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            
+                            <div class="mt-6 space-y-3">
+                                <button onclick="navigateTo('matches')" 
+                                        class="w-full bg-green-500 text-white py-3 px-6 rounded-lg font-semibold">
+                                    ✅ Завершити оцінювання
+                                </button>
+                                <button onclick="navigateTo('home')" 
+                                        class="w-full bg-blue-500 text-white py-3 px-6 rounded-lg font-semibold">
+                                    🏠 На головну
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderPlayersScreen() {
+            const filteredPlayers = playerCityFilter === 'Всі міста' 
+                ? players 
+                : players.filter(p => p.city === playerCityFilter);
+
+            return `
+                <div class="animate-fade-in">
+                    <!-- Header -->
+                    <div class="bg-purple-500 text-white p-4">
+                        <div class="flex items-center justify-between mb-4">
+                            <button onclick="navigateTo('home')" class="text-2xl">←</button>
+                            <h1 class="text-xl font-bold">👥 Гравці</h1>
+                            <button onclick="navigateTo('ratings')" class="text-2xl">📊</button>
+                        </div>
+                        
+                        <!-- Filter -->
+                        <select onchange="playerCityFilter = this.value; renderCurrentScreen()" 
+                                class="w-full p-2 rounded-lg text-gray-800">
+                            ${cities.map(city => 
+                                `<option value="${city}" ${city === playerCityFilter ? 'selected' : ''}>${city}</option>`
+                            ).join('')}
+                        </select>
+                    </div>
+
+                    <!-- Players List -->
+                    <div class="p-4 space-y-4">
+                        ${filteredPlayers.map(player => `
+                            <div class="bg-white border border-gray-200 rounded-xl p-4 card-hover">
+                                <div class="flex items-center space-x-4">
+                                    <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center text-3xl">
+                                        ${player.avatar}
+                                    </div>
+                                    <div class="flex-1">
+                                        <h3 class="font-bold text-lg">${player.name}</h3>
+                                        <p class="text-gray-600">${player.position} • ${player.city}</p>
+                                        <div class="flex items-center space-x-1 mt-1">
+                                            ${renderStars(player.rating)}
+                                            <span class="text-sm text-gray-600 ml-2">${player.rating}</span>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="text-sm text-gray-600">${player.matches} матчів</div>
+                                        <div class="text-sm text-gray-600">${player.goals} голів</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex flex-wrap gap-1 mt-3">
+                                    ${player.achievements.map(achievement => 
+                                        `<span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">${achievement}</span>`
+                                    ).join('')}
+                                </div>
+                                
+                                <div class="flex space-x-2 mt-4">
+                                    <button onclick="navigateTo('playerProfile', ${player.id})" 
+                                            class="flex-1 bg-purple-500 text-white py-2 px-4 rounded-lg font-medium">
+                                        Профіль
+                                    </button>
+                                    <button onclick="toggleFriend(${player.id})" 
+                                            class="bg-blue-500 text-white py-2 px-4 rounded-lg font-medium">
+                                        ${friends.has(player.id) ? '✓ Друг' : '+ Додати'}
+                                    </button>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    ${renderBottomNav('players')}
+                </div>
+            `;
+        }
+
+        function renderPlayerProfile() {
+            if (!selectedPlayer) return renderPlayersScreen();
+            const player = players.find(p => p.id === selectedPlayer);
+            if (!player) return renderPlayersScreen();
+
+            return `
+                <div class="animate-fade-in">
+                    <!-- Header -->
+                    <div class="bg-purple-500 text-white p-4">
+                        <div class="flex items-center justify-between mb-4">
+                            <button onclick="navigateTo('players')" class="text-2xl">←</button>
+                            <h1 class="text-xl font-bold">Профіль гравця</h1>
+                            <button onclick="toggleFriend(${player.id})" class="text-2xl">
+                                ${friends.has(player.id) ? '✓' : '+'}
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Player Info -->
+                    <div class="p-4">
+                        <div class="bg-white rounded-xl p-6 shadow-lg mb-4">
+                            <div class="text-center mb-6">
+                                <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center text-5xl mx-auto mb-4">
+                                    ${player.avatar}
+                                </div>
+                                <h2 class="text-2xl font-bold">${player.name}</h2>
+                                <p class="text-gray-600">${player.position} • ${player.city}</p>
+                                <div class="flex items-center justify-center space-x-1 mt-2">
+                                    ${renderStars(player.rating)}
+                                    <span class="text-lg font-medium ml-2">${player.rating}</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Stats -->
+                            <div class="grid grid-cols-3 gap-4 mb-6">
+                                <div class="text-center bg-gray-50 p-4 rounded-lg">
+                                    <div class="text-2xl font-bold text-blue-600">${player.matches}</div>
+                                    <div class="text-sm text-gray-600">Матчі</div>
+                                </div>
+                                <div class="text-center bg-gray-50 p-4 rounded-lg">
+                                    <div class="text-2xl font-bold text-green-600">${player.goals}</div>
+                                    <div class="text-sm text-gray-600">Голи</div>
+                                </div>
+                                <div class="text-center bg-gray-50 p-4 rounded-lg">
+                                    <div class="text-2xl font-bold text-purple-600">${player.assists}</div>
+                                    <div class="text-sm text-gray-600">Передачі</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Achievements -->
+                            <div class="mb-6">
+                                <h3 class="font-bold text-lg mb-3">🏆 Досягнення</h3>
+                                <div class="flex flex-wrap gap-2">
+                                    ${player.achievements.map(achievement => 
+                                        `<span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full font-medium">${achievement}</span>`
+                                    ).join('')}
+                                </div>
+                            </div>
+                            
+                            <!-- Rating -->
+                            <div class="mb-6">
+                                <h3 class="font-bold text-lg mb-3">⭐ Оцініть гравця</h3>
+                                <div class="flex items-center space-x-4">
+                                    <input type="range" min="1" max="5" value="${currentRatingValue}" 
+                                           class="slider flex-1" 
+                                           onchange="currentRatingValue = this.value; document.getElementById('currentRating').textContent = this.value">
+                                    <span class="text-lg font-medium w-8" id="currentRating">${currentRatingValue}</span>
+                                    <button onclick="ratePlayer(${player.id}, currentRatingValue)" 
+                                            class="bg-green-500 text-white px-4 py-2 rounded-lg font-medium">
+                                        Оцінити
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Actions -->
+                            <div class="space-y-3">
+                                <button class="w-full bg-blue-500 text-white py-3 px-6 rounded-lg font-semibold">
+                                    💬 Написати повідомлення
+                                </button>
+                                <button class="w-full bg-green-500 text-white py-3 px-6 rounded-lg font-semibold">
+                                    ⚽ Запросити в матч
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderRatingsScreen() {
+            const sortedPlayers = [...players].sort((a, b) => b.rating - a.rating);
+            
+            return `
+                <div class="animate-fade-in">
+                    <!-- Header -->
+                    <div class="bg-yellow-500 text-white p-4">
+                        <div class="flex items-center justify-between mb-4">
+                            <button onclick="navigateTo('players')" class="text-2xl">←</button>
+                            <h1 class="text-xl font-bold">📊 Рейтинги</h1>
+                            <div class="text-2xl">🏆</div>
+                        </div>
+                    </div>
+
+                    <!-- Rankings -->
+                    <div class="p-4">
+                        <h2 class="font-bold text-xl mb-4">🏆 Топ гравців</h2>
+                        <div class="space-y-3">
+                            ${sortedPlayers.map((player, index) => `
+                                <div class="bg-white border border-gray-200 rounded-xl p-4 card-hover">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg
+                                                    ${index === 0 ? 'bg-yellow-100 text-yellow-800' : 
+                                                      index === 1 ? 'bg-gray-100 text-gray-800' : 
+                                                      index === 2 ? 'bg-orange-100 text-orange-800' : 
+                                                      'bg-blue-100 text-blue-800'}">
+                                            ${index + 1}
+                                        </div>
+                                        <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-xl">
+                                            ${player.avatar}
+                                        </div>
+                                        <div class="flex-1">
+                                            <h3 class="font-bold">${player.name}</h3>
+                                            <p class="text-gray-600 text-sm">${player.position} • ${player.city}</p>
+                                        </div>
+                                        <div class="text-right">
+                                            <div class="flex items-center space-x-1">
+                                                ${renderStars(player.rating)}
+                                            </div>
+                                            <div class="text-lg font-bold text-yellow-600">${player.rating}</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="grid grid-cols-3 gap-2 mt-3 text-center text-sm">
+                                        <div>
+                                            <div class="font-medium">${player.matches}</div>
+                                            <div class="text-gray-600">Матчі</div>
+                                        </div>
+                                        <div>
+                                            <div class="font-medium">${player.goals}</div>
+                                            <div class="text-gray-600">Голи</div>
+                                        </div>
+                                        <div>
+                                            <div class="font-medium">${player.assists}</div>
+                                            <div class="text-gray-600">Передачі</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <button onclick="navigateTo('playerProfile', ${player.id})" 
+                                            class="w-full mt-3 bg-purple-500 text-white py-2 rounded-lg font-medium">
+                                        Переглянути профіль
+                                    </button>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    ${renderBottomNav('players')}
+                </div>
+            `;
+        }
+
+        function renderVideosScreen() {
+            const filteredVideos = videos.filter(video => {
+                const categoryMatch = challengeCategory === 'Всі' || video.category === challengeCategory;
+                const typeMatch = contentType === 'Всі' || video.type === contentType;
+                return categoryMatch && typeMatch;
+            });
+
+            return `
+                <div class="animate-fade-in">
+                    <!-- Header -->
+                    <div class="bg-blue-500 text-white p-4">
+                        <div class="flex items-center justify-between mb-4">
+                            <button onclick="navigateTo('home')" class="text-2xl">←</button>
+                            <h1 class="text-xl font-bold">📱 Відео та Челенджі</h1>
+                            <button onclick="navigateTo('uploadVideo')" class="text-2xl">+</button>
+                        </div>
+                        
+                        <!-- Filters -->
+                        <div class="space-y-2">
+                            <select onchange="challengeCategory = this.value; renderCurrentScreen()" 
+                                    class="w-full p-2 rounded-lg text-gray-800">
+                                ${categories.map(category => 
+                                    `<option value="${category}" ${category === challengeCategory ? 'selected' : ''}>${category}</option>`
+                                ).join('')}
+                            </select>
+                            <select onchange="contentType = this.value; renderCurrentScreen()" 
+                                    class="w-full p-2 rounded-lg text-gray-800">
+                                ${contentTypes.map(type => 
+                                    `<option value="${type}" ${type === contentType ? 'selected' : ''}>${type}</option>`
+                                ).join('')}
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Videos List -->
+                    <div class="p-4 space-y-4">
+                        ${filteredVideos.map(video => `
+                            <div class="bg-white border border-gray-200 rounded-xl overflow-hidden card-hover">
+                                <div class="bg-gray-100 h-48 flex items-center justify-center text-6xl">
+                                    ${video.thumbnail}
+                                </div>
+                                <div class="p-4">
+                                    <div class="flex items-start justify-between mb-2">
+                                        <div class="flex-1">
+                                            <h3 class="font-bold text-lg">${video.title}</h3>
+                                            <p class="text-gray-600 text-sm">👤 ${video.author}</p>
+                                        </div>
+                                        <button onclick="toggleFavorite(${video.id})" 
+                                                class="text-2xl ${favorites.has(video.id) ? 'text-red-500' : 'text-gray-300'}">
+                                            ${favorites.has(video.id) ? '❤️' : '🤍'}
+                                        </button>
+                                    </div>
+                                    
+                                    <div class="flex items-center space-x-4 mb-3">
+                                        <div class="flex items-center space-x-1">
+                                            ${renderStars(video.rating)}
+                                            <span class="text-sm text-gray-600 ml-1">${video.rating}</span>
+                                        </div>
+                                        <span class="text-sm text-gray-600">👀 ${video.views}</span>
+                                        <span class="text-sm text-gray-600">⏱️ ${video.duration}</span>
+                                    </div>
+                                    
+                                    <div class="flex space-x-2 mb-3">
+                                        <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">
+                                            ${video.category}
+                                        </span>
+                                        <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">
+                                            ${video.type}
+                                        </span>
+                                    </div>
+                                    
+                                    <p class="text-gray-700 text-sm mb-4">${video.description}</p>
+                                    
+                                    <div class="flex space-x-2">
+                                        <button onclick="navigateTo('videoDetail', ${video.id})" 
+                                                class="flex-1 bg-blue-500 text-white py-2 px-4 rounded-lg font-medium">
+                                            📱 Переглянути
+                                        </button>
+                                        ${video.type === 'Челенджі' ? `
+                                            <button onclick="navigateTo('challengeInvite', ${video.id})" 
+                                                    class="bg-green-500 text-white py-2 px-4 rounded-lg font-medium">
+                                                🎯 Виклик
+                                            </button>
+                                        ` : ''}
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    ${renderBottomNav('videos')}
+                </div>
+            `;
+        }
+
+        function renderVideoDetail() {
+            if (!selectedVideo) return renderVideosScreen();
+            const video = videos.find(v => v.id === selectedVideo);
+            if (!video) return renderVideosScreen();
+            
+            const comments = videoComments[video.id] || [];
+
+            return `
+                <div class="animate-fade-in">
+                    <!-- Header -->
+                    <div class="bg-blue-500 text-white p-4">
+                        <div class="flex items-center justify-between mb-4">
+                            <button onclick="navigateTo('videos')" class="text-2xl">←</button>
+                            <h1 class="text-xl font-bold">Відео</h1>
+                            <button onclick="toggleFavorite(${video.id})" class="text-2xl">
+                                ${favorites.has(video.id) ? '❤️' : '🤍'}
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Video Player -->
+                    <div class="bg-gray-100 h-64 flex items-center justify-center text-8xl">
+                        ${video.thumbnail}
+                    </div>
+
+                    <!-- Video Info -->
+                    <div class="p-4">
+                        <div class="mb-4">
+                            <h2 class="text-2xl font-bold mb-2">${video.title}</h2>
+                            <div class="flex items-center space-x-4 mb-3">
+                                <span class="text-gray-600">👤 ${video.author}</span>
+                                <span class="text-gray-600">👀 ${video.views}</span>
+                                <span class="text-gray-600">⏱️ ${video.duration}</span>
+                            </div>
+                            
+                            <div class="flex items-center space-x-4 mb-4">
+                                <div class="flex items-center space-x-1">
+                                    ${renderStars(video.rating)}
+                                    <span class="text-sm text-gray-600 ml-1">${video.rating}</span>
+                                </div>
+                                <div class="flex space-x-2">
+                                    <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">
+                                        ${video.category}
+                                    </span>
+                                    <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">
+                                        ${video.type}
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <p class="text-gray-700 mb-4">${video.description}</p>
+                        </div>
+
+                        <!-- Rating -->
+                        <div class="bg-white border border-gray-200 rounded-xl p-4 mb-4">
+                            <h3 class="font-bold text-lg mb-3">⭐ Оцініть відео</h3>
+                            <div class="flex items-center space-x-4">
+                                <input type="range" min="1" max="5" value="${currentRatingValue}" 
+                                       class="slider flex-1" 
+                                       onchange="currentRatingValue = this.value; document.getElementById('videoRating').textContent = this.value">
+                                <span class="text-lg font-medium w-8" id="videoRating">${currentRatingValue}</span>
+                                <button onclick="rateVideo(${video.id}, currentRatingValue)" 
+                                        class="bg-green-500 text-white px-4 py-2 rounded-lg font-medium">
+                                    Оцінити
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Comments -->
+                        <div class="bg-white border border-gray-200 rounded-xl p-4">
+                            <h3 class="font-bold text-lg mb-3">💬 Коментарі (${comments.length})</h3>
+                            
+                            <!-- Add Comment -->
+                            <div class="mb-4">
+                                <textarea placeholder="Напишіть коментар..." 
+                                          class="w-full p-3 border border-gray-300 rounded-lg resize-none"
+                                          rows="3" onchange="newComment = this.value"></textarea>
+                                <button onclick="if(newComment.trim()) { addComment(${video.id}, newComment); newComment = ''; this.previousElementSibling.value = ''; }" 
+                                        class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-lg font-medium">
+                                    Додати коментар
+                                </button>
+                            </div>
+                            
+                            <!-- Comments List -->
+                            <div class="space-y-3">
+                                ${comments.map(comment => `
+                                    <div class="bg-gray-50 p-3 rounded-lg">
+                                        <div class="flex items-center justify-between mb-2">
+                                            <span class="font-medium">${comment.author}</span>
+                                            <span class="text-sm text-gray-600">${comment.time}</span>
+                                        </div>
+                                        <p class="text-gray-700">${comment.text}</p>
+                                        <div class="flex items-center space-x-4 mt-2">
+                                            <button class="text-sm text-blue-600">👍 ${comment.likes}</button>
+                                            <button class="text-sm text-gray-600">Відповісти</button>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                                
+                                ${comments.length === 0 ? `
+                                    <div class="text-center text-gray-500 py-8">
+                                        <div class="text-4xl mb-2">💬</div>
+                                        <p>Поки немає коментарів</p>
+                                        <p class="text-sm">Будьте першим!</p>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderChallengeInvite() {
+            if (!selectedChallenge) return renderVideosScreen();
+            const challenge = videos.find(v => v.id === selectedChallenge);
+            if (!challenge) return renderVideosScreen();
+
+            return `
+                <div class="animate-fade-in">
+                    <!-- Header -->
+                    <div class="bg-green-500 text-white p-4">
+                        <div class="flex items-center justify-between mb-4">
+                            <button onclick="navigateTo('videoDetail', ${challenge.id})" class="text-2xl">←</button>
+                            <h1 class="text-xl font-bold">Запросити до челенджу</h1>
+                            <div class="text-2xl">🎯</div>
+                        </div>
+                    </div>
+
+                    <!-- Challenge Info -->
+                    <div class="p-4">
+                        <div class="bg-white rounded-xl p-6 shadow-lg mb-4">
+                            <div class="text-center mb-4">
+                                <div class="text-6xl mb-2">${challenge.thumbnail}</div>
+                                <h2 class="text-xl font-bold">${challenge.title}</h2>
+                                <p class="text-gray-600">від ${challenge.author}</p>
+                            </div>
+                            
+                            <p class="text-gray-700 text-center mb-6">${challenge.description}</p>
+                        </div>
+
+                        <!-- Friends List -->
+                        <div class="bg-white rounded-xl p-4 shadow-lg">
+                            <h3 class="font-bold text-lg mb-4">👫 Запросити друзів</h3>
+                            <div class="space-y-3">
+                                ${currentFriends.map(friend => `
+                                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                        <div class="flex items-center space-x-3">
+                                            <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center text-xl">
+                                                ${friend.avatar}
+                                            </div>
+                                            <div>
+                                                <div class="font-medium">${friend.name}</div>
+                                                <div class="text-sm text-gray-600">
+                                                    <span class="w-2 h-2 rounded-full inline-block mr-1 ${friend.status === 'online' ? 'bg-green-500' : 'bg-gray-400'}"></span>
+                                                    ${friend.status === 'online' ? 'Онлайн' : 'Офлайн'}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button onclick="inviteToChallenge(${challenge.id}, ${friend.id})" 
+                                                class="bg-green-500 text-white px-4 py-2 rounded-lg font-medium">
+                                            Запросити
+                                        </button>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            
+                            <div class="mt-6 space-y-3">
+                                <button onclick="navigateTo('videoDetail', ${challenge.id})" 
+                                        class="w-full bg-blue-500 text-white py-3 px-6 rounded-lg font-semibold">
+                                    Назад до відео
+                                </button>
+                                <button onclick="showNotification('Челендж розпочато!'); navigateTo('videos')" 
+                                        class="w-full bg-green-500 text-white py-3 px-6 rounded-lg font-semibold">
+                                    🎯 Розпочати челендж
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderFriendsScreen() {
+            return `
+                <div class="animate-fade-in">
+                    <!-- Header -->
+                    <div class="bg-orange-500 text-white p-4">
+                        <div class="flex items-center justify-between mb-4">
+                            <button onclick="navigateTo('home')" class="text-2xl">←</button>
+                            <h1 class="text-xl font-bold">👫 Друзі</h1>
+                            <button onclick="navigateTo('findFriends')" class="text-2xl">+</button>
+                        </div>
+                    </div>
+
+                    <!-- Current Friends -->
+                    <div class="p-4">
+                        <h2 class="font-bold text-xl mb-4">Мої друзі (${currentFriends.length})</h2>
+                        <div class="space-y-3 mb-6">
+                            ${currentFriends.map(friend => `
+                                <div class="bg-white border border-gray-200 rounded-xl p-4 card-hover">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-2xl">
+                                            ${friend.avatar}
+                                        </div>
+                                        <div class="flex-1">
+                                            <h3 class="font-bold">${friend.name}</h3>
+                                            <p class="text-gray-600 text-sm">${friend.city}</p>
+                                            <div class="flex items-center space-x-1 mt-1">
+                                                <span class="w-2 h-2 rounded-full ${friend.status === 'online' ? 'bg-green-500' : 'bg-gray-400'}"></span>
+                                                <span class="text-sm text-gray-600">${friend.status === 'online' ? 'Онлайн' : 'Офлайн'}</span>
+                                            </div>
+                                        </div>
+                                        <div class="flex space-x-2">
+                                            <button class="bg-blue-500 text-white p-2 rounded-lg">💬</button>
+                                            <button onclick="toggleFriend(${friend.id})" class="bg-red-500 text-white p-2 rounded-lg">🗑️</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+
+                        <!-- Friend Suggestions -->
+                        <h2 class="font-bold text-xl mb-4">💡 Рекомендації</h2>
+                        <div class="space-y-3">
+                            ${friendSuggestions.slice(0, 3).map(suggestion => `
+                                <div class="bg-white border border-gray-200 rounded-xl p-4 card-hover">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-2xl">
+                                            ${suggestion.avatar}
+                                        </div>
+                                        <div class="flex-1">
+                                            <h3 class="font-bold">${suggestion.name}</h3>
+                                            <p class="text-gray-600 text-sm">${suggestion.city}</p>
+                                            <p class="text-gray-600 text-xs">${suggestion.mutualFriends} спільних друзів</p>
+                                        </div>
+                                        <button onclick="toggleFriend(${suggestion.id})" 
+                                                class="bg-orange-500 text-white px-4 py-2 rounded-lg font-medium">
+                                            + Додати
+                                        </button>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        
+                        <button onclick="navigateTo('findFriends')" 
+                                class="w-full mt-4 bg-orange-500 text-white py-3 px-6 rounded-lg font-semibold">
+                            🔍 Знайти більше друзів
+                        </button>
+                    </div>
+
+                    ${renderBottomNav('friends')}
+                </div>
+            `;
+        }
+
+        function renderFindFriendsScreen() {
+            return `
+                <div class="animate-fade-in">
+                    <!-- Header -->
+                    <div class="bg-orange-500 text-white p-4">
+                        <div class="flex items-center justify-between mb-4">
+                            <button onclick="navigateTo('friends')" class="text-2xl">←</button>
+                            <h1 class="text-xl font-bold">🔍 Знайти друзів</h1>
+                            <div class="text-2xl">👥</div>
+                        </div>
+                    </div>
+
+                    <!-- Search -->
+                    <div class="p-4">
+                        <div class="mb-6">
+                            <input type="text" placeholder="Пошук за ім'ям або містом..." 
+                                   class="w-full p-3 border border-gray-300 rounded-lg">
+                        </div>
+
+                        <!-- All Suggestions -->
+                        <h2 class="font-bold text-xl mb-4">💡 Рекомендовані друзі</h2>
+                        <div class="space-y-3">
+                            ${friendSuggestions.map(suggestion => `
+                                <div class="bg-white border border-gray-200 rounded-xl p-4 card-hover">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-2xl">
+                                            ${suggestion.avatar}
+                                        </div>
+                                        <div class="flex-1">
+                                            <h3 class="font-bold">${suggestion.name}</h3>
+                                            <p class="text-gray-600 text-sm">${suggestion.city}</p>
+                                            <p class="text-gray-600 text-xs">${suggestion.mutualFriends} спільних друзів</p>
+                                        </div>
+                                        <button onclick="toggleFriend(${suggestion.id})" 
+                                                class="bg-orange-500 text-white px-4 py-2 rounded-lg font-medium">
+                                            ${friends.has(suggestion.id) ? '✓ Друг' : '+ Додати'}
+                                        </button>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderShopScreen() {
+            return `
+                <div class="animate-fade-in">
+                    <!-- Header -->
+                    <div class="bg-yellow-500 text-white p-4">
+                        <div class="flex items-center justify-between mb-4">
+                            <button onclick="navigateTo('home')" class="text-2xl">←</button>
+                            <h1 class="text-xl font-bold">🏪 Магазин</h1>
+                            <div class="bg-white/20 rounded-full px-3 py-1 text-sm font-medium">
+                                💰 ${user.coins}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Shop Items -->
+                    <div class="p-4">
+                        <!-- Badges -->
+                        <h2 class="font-bold text-xl mb-4">🏆 Бейджі</h2>
+                        <div class="space-y-3 mb-6">
+                            ${badges.map(badge => `
+                                <div class="bg-white border border-gray-200 rounded-xl p-4 card-hover">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="text-3xl">${badge.name.split(' ')[0]}</div>
+                                        <div class="flex-1">
+                                            <h3 class="font-bold">${badge.name}</h3>
+                                            <p class="text-gray-600 text-sm">${badge.description}</p>
+                                            <p class="text-yellow-600 font-medium">💰 ${badge.price} монет</p>
+                                        </div>
+                                        <button onclick="purchaseBadge(${badge.id})" 
+                                                class="px-4 py-2 rounded-lg font-medium ${badge.owned ? 'bg-green-100 text-green-800' : user.coins >= badge.price ? 'bg-yellow-500 text-white' : 'bg-gray-300 text-gray-600'}"
+                                                ${badge.owned ? 'disabled' : ''}>
+                                            ${badge.owned ? '✓ Куплено' : user.coins >= badge.price ? 'Купити' : 'Недостатньо'}
+                                        </button>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+
+                        <!-- Coming Soon -->
+                        <h2 class="font-bold text-xl mb-4">🔮 Незабаром</h2>
+                        <div class="space-y-3">
+                            ${comingSoonItems.map(item => `
+                                <div class="bg-gray-50 border border-gray-200 rounded-xl p-4 opacity-75">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="text-3xl">${item.icon}</div>
+                                        <div class="flex-1">
+                                            <h3 class="font-bold">${item.name}</h3>
+                                            <p class="text-gray-600 text-sm">${item.description}</p>
+                                        </div>
+                                        <div class="bg-gray-300 text-gray-600 px-4 py-2 rounded-lg font-medium">
+                                            Незабаром
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    ${renderBottomNav('shop')}
+                </div>
+            `;
+        }
+
+        function renderSubscriptionScreen() {
+            return `
+                <div class="animate-fade-in">
+                    <!-- Header -->
+                    <div class="bg-gradient-to-r from-yellow-400 to-orange-500 text-white p-4">
+                        <div class="flex items-center justify-between mb-4">
+                            <button onclick="navigateTo('home')" class="text-2xl">←</button>
+                            <h1 class="text-xl font-bold">🌟 Преміум</h1>
+                            <div class="text-2xl">👑</div>
+                        </div>
+                    </div>
+
+                    <!-- Premium Features -->
+                    <div class="p-4">
+                        <div class="text-center mb-6">
+                            <div class="text-6xl mb-4">👑</div>
+                            <h2 class="text-2xl font-bold mb-2">GoalApp Premium</h2>
+                            <p class="text-gray-600">Розблокуй всі можливості</p>
+                        </div>
+
+                        <!-- Features -->
+                        <div class="space-y-4 mb-6">
+                            <div class="bg-white rounded-xl p-4 shadow-lg">
+                                <h3 class="font-bold text-lg mb-3">✨ Преміум функції</h3>
+                                <div class="space-y-3">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="text-green-500">✓</div>
+                                        <span>Безлімітні матчі та челенджі</span>
+                                    </div>
+                                    <div class="flex items-center space-x-3">
+                                        <div class="text-green-500">✓</div>
+                                        <span>Ексклюзивні бейджі та нагороди</span>
+                                    </div>
+                                    <div class="flex items-center space-x-3">
+                                        <div class="text-green-500">✓</div>
+                                        <span>Пріоритетна підтримка</span>
+                                    </div>
+                                    <div class="flex items-center space-x-3">
+                                        <div class="text-green-500">✓</div>
+                                        <span>Розширена статистика</span>
+                                    </div>
+                                    <div class="flex items-center space-x-3">
+                                        <div class="text-green-500">✓</div>
+                                        <span>Без реклами</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pricing -->
+                        <div class="space-y-3 mb-6">
+                            <div class="bg-gradient-to-r from-yellow-400 to-orange-500 text-white rounded-xl p-4">
+                                <div class="text-center">
+                                    <div class="text-3xl font-bold">99 грн</div>
+                                    <div class="text-sm opacity-90">на місяць</div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl p-4">
+                                <div class="text-center">
+                                    <div class="text-3xl font-bold">999 грн</div>
+                                    <div class="text-sm opacity-90">на рік (2 місяці безкоштовно!)</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CTA -->
+                        <div class="space-y-3">
+                            <button class="w-full bg-gradient-to-r from-yellow-400 to-orange-500 text-white py-4 px-6 rounded-xl font-bold text-lg">
+                                🚀 Оформити підписку
+                            </button>
+                            <button onclick="navigateTo('home')" 
+                                    class="w-full bg-gray-200 text-gray-700 py-3 px-6 rounded-xl font-medium">
+                                Поки що ні, дякую
+                            </button>
+                        </div>
+
+                        <p class="text-center text-xs text-gray-500 mt-4">
+                            Підписку можна скасувати в будь-який час
+                        </p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderBottomNav(activeTab) {
+            const tabs = [
+                { id: 'home', icon: '🏠', label: 'Головна' },
+                { id: 'matches', icon: '⚽', label: 'Матчі' },
+                { id: 'videos', icon: '📱', label: 'Відео' },
+                { id: 'friends', icon: '👫', label: 'Друзі' },
+                { id: 'shop', icon: '🏪', label: 'Магазин' }
+            ];
+
+            return `
+                <div class="fixed bottom-0 left-1/2 transform -translate-x-1/2 w-full max-w-sm bg-white border-t border-gray-200">
+                    <div class="grid grid-cols-5 py-2">
+                        ${tabs.map(tab => `
+                            <button onclick="navigateTo('${tab.id}')" 
+                                    class="flex flex-col items-center py-2 px-1 ${activeTab === tab.id ? 'text-blue-500' : 'text-gray-600'}">
+                                <div class="text-xl mb-1">${tab.icon}</div>
+                                <div class="text-xs font-medium">${tab.label}</div>
+                            </button>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Main render function
+        function renderCurrentScreen() {
+            const app = document.getElementById('app');
+            
+            switch (currentScreen) {
+                case 'welcome':
+                    app.innerHTML = renderWelcomeScreen();
+                    break;
+                case 'home':
+                    app.innerHTML = renderHomeScreen();
+                    break;
+                case 'matches':
+                    app.innerHTML = renderMatchesScreen();
+                    break;
+                case 'matchDetail':
+                    app.innerHTML = renderMatchDetail();
+                    break;
+                case 'matchInProgress':
+                    app.innerHTML = renderMatchInProgress();
+                    break;
+                case 'matchFinished':
+                    app.innerHTML = renderMatchFinished();
+                    break;
+                case 'players':
+                    app.innerHTML = renderPlayersScreen();
+                    break;
+                case 'playerProfile':
+                    app.innerHTML = renderPlayerProfile();
+                    break;
+                case 'ratings':
+                    app.innerHTML = renderRatingsScreen();
+                    break;
+                case 'videos':
+                    app.innerHTML = renderVideosScreen();
+                    break;
+                case 'videoDetail':
+                    app.innerHTML = renderVideoDetail();
+                    break;
+                case 'challengeInvite':
+                    app.innerHTML = renderChallengeInvite();
+                    break;
+                case 'friends':
+                    app.innerHTML = renderFriendsScreen();
+                    break;
+                case 'findFriends':
+                    app.innerHTML = renderFindFriendsScreen();
+                    break;
+                case 'shop':
+                    app.innerHTML = renderShopScreen();
+                    break;
+                case 'subscription':
+                    app.innerHTML = renderSubscriptionScreen();
+                    break;
+                default:
+                    app.innerHTML = renderWelcomeScreen();
+            }
+        }
+
+        // Initialize app
+        renderCurrentScreen();
     </script>
 </body>
 </html>

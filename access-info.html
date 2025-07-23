@@ -59,6 +59,10 @@
         
 
         
+        <div class="url">
+            http://172.30.0.2:8000
+        </div>
+        
         <div class="instructions">
             <h2>📱 Як відкрити на смартфоні:</h2>
             
@@ -71,7 +75,7 @@
             </div>
             
             <div class="step">
-                <strong>3.</strong> Скопіюйте і вставте адресу вище в адресний рядок
+                <strong>3.</strong> Введіть просту адресу: <strong>http://172.30.0.2:8000</strong>
             </div>
             
             <div class="step">
@@ -92,9 +96,12 @@
     </div>
     
     <script>
-        // QR-код видалено
+        // Генеруємо QR-код з новою простою адресою
+        const url = encodeURIComponent('http://172.30.0.2:8000');
+        const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${url}`;
+        
         const qrPlaceholder = document.querySelector('.qr-placeholder');
-        qrPlaceholder.innerHTML = `<div style="color: rgba(255,255,255,0.7);">QR-код<br>(адреса видалена)</div>`;
+        qrPlaceholder.innerHTML = `<img src="${qrUrl}" alt="QR код для GoalApp" style="max-width: 100%; border-radius: 10px;">`;
     </script>
 </body>
 </html>
