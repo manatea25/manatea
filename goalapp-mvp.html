@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoalApp - Футбольний всесвіт</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    animation: {
+                        'bounce-slow': 'bounce 2s infinite',
+                        'pulse-slow': 'pulse 3s infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-text {
+            background: linear-gradient(45deg, #ffffff, #fbbf24);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .slider {
+            -webkit-appearance: none;
+            appearance: none;
+            height: 6px;
+            border-radius: 5px;
+            background: #d3d3d3;
+            outline: none;
+        }
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #10b981;
+            cursor: pointer;
+        }
+        .slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #10b981;
+            cursor: pointer;
+            border: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div id="app" class="max-w-sm mx-auto bg-white min-h-screen relative">
+        <!-- Content will be loaded here -->
+    </div>
+
+    <script>
+        // Global state management
+        let currentScreen = 'welcome';
+        let user = null;
+        let selectedMatch = null;
+        let selectedPlayer = null;
+        let selectedChallenge = null;
+        let selectedVideo = null;
+        let favorites = new Set();
+        let friends = new Set([1, 2]);
+        let videoComments = {};
+        let videoRatings = {};
+        let playerRatings = {};
+        let matchCityFilter = 'Всі міста';
+        let playerCityFilter = 'Всі міста';
+
+        // Data
+        const cities = ['Всі міста', 'Львів', 'Київ', 'Харків', 'Одеса', 'Дніпро'];
+
+        const badges = [
+            { id: 1, name: '⚽ Майстер м\'яча', price: 50, description: 'За техніку ведення', owned: false },
+            { id: 2, name: '🥅 Снайпер', price: 75, description: 'За точність ударів', owned: false },
+            { id: 3, name: '🏃‍♂️ Спідстер', price: 60, description: 'За швидкість', owned: true },
+            { id: 4, name: '🎯 Асистент', price: 65, description: 'За кращі передачі', owned: false },
+            { id: 5, name: '🛡️ Захисник', price: 70, description: 'За надійну гру в обороні', owned: false },
+        ];
+
+        const comingSoonItems = [
+            { id: 1, name: '🌟 Відгук від селебреті', description: 'Персональний відгук від зірки футболу', icon: '⭐' },
+            { id: 2, name: '🏪 Знижка на спорттовари', description: '20% знижка в партнерських магазинах', icon: '🏷️' },
+        ];
+
+        const videos = [
+            { 
+                id: 1, 
+                title: 'Техніка ведення м\'яча', 
+                author: 'Артем К.', 
+                authorId: 1,
+                votes: 45, 
+                views: 234,
+                category: 'Фінти', 
+                city: 'Львів', 
+                isVideo: true,
+                likes: 89,
+                dislikes: 12,
+                avgRating: 4.2,
+                comments: [
+                    { id: 1, author: 'Максим П.', text: 'Супер техніка! Спробую повторити', time: '2 год тому' },
+                    { id: 2, author: 'Олег М.', text: 'Дуже корисно, дякую!', time: '1 год тому' }
+                ]
+            }
+        ];
+
+        const challenges = [
+            { 
+                id: 1, 
+                title: 'Супер класний фінт Неймара', 
+                author: 'Артем К.', 
+                authorId: 1,
+                votes: 23, 
+                likes: 87,
+                rating: 4.5, 
+                category: 'Фінти', 
+                city: 'Львів', 
+                coins: 50,
+                prizePool: 450,
+                entryFee: 25,
+                participants: 18,
+                maxParticipants: 50,
+                status: "voting",
+                description: "Спробуйте повторити цей фінт!",
+                isVideo: false,
+                submissions: [
+                    { 
+                        id: 1, 
+                        author: "Максим П.", 
+                        authorId: 2,
+                        rating: 4.2, 
+                        city: "Львів",
+                        avgScore: 4.3,
+                        totalVotes: 15,
+                        submittedAt: "1 година тому"
+                    }
+                ]
+            }
+        ];
+
+        const matches = [
+            { 
+                id: 1, 
+                title: 'Футбол у парку Шевченка', 
+                date: '23.07.2025', 
+                time: '18:00', 
+                location: 'Львів, парк Шевченка', 
+                city: 'Львів',
+                players: '8/10', 
+                isMyMatch: true, 
+                applications: 8,
+                organizer: 'Олександр Петренко',
+                description: 'Товариський матч 5 на 5.',
+                participants: [
+                    { id: 1, name: 'Артем К.', position: 'Нападник', rating: 4.2 },
+                    { id: 2, name: 'Максим П.', position: 'Захисник', rating: 3.8 },
+                    { id: 3, name: 'Олег М.', position: 'Воротар', rating: 4.5 },
+                    { id: 4, name: 'Іван С.', position: 'Півзахисник', rating: 4.0 },
+                    { id: 5, name: 'Петро Д.', position: 'Нападник', rating: 3.9 },
+                    { id: 6, name: 'Сергій Л.', position: 'Захисник', rating: 4.1 },
+                    { id: 7, name: 'Андрій К.', position: 'Воротар', rating: 3.7 },
+                    { id: 8, name: 'Роман Т.', position: 'Півзахисник', rating: 4.3 }
+                ],
+                teams: null,
+                gameStarted: false,
+                gameFinished: false,
+                winnerTeam: null
+            }
+        ];
+
+        const players = [
+            { 
+                id: 1, 
+                name: 'Артем К.', 
+                fullName: 'Артем Ковальчук',
+                position: 'Нападник', 
+                rating: 4.8, 
+                city: 'Львів', 
+                games: 24, 
+                wins: 18, 
+                winRate: 75,
+                age: 23,
+                phone: '+380 67 123 45 67',
+                telegram: '@artem_football',
+                bio: 'Грою з дитинства. Люблю швидкі атаки.',
+                achievements: ['🥇 Чемпіон міста 2024'],
+                lastGames: ['W', 'W', 'L', 'W', 'W']
+            },
+            { 
+                id: 2, 
+                name: 'Максим П.', 
+                fullName: 'Максим Петренко',
+                position: 'Захисник', 
+                rating: 4.5, 
+                city: 'Львів', 
+                games: 31, 
+                wins: 20, 
+                winRate: 65,
+                age: 26,
+                phone: '+380 67 234 56 78',
+                telegram: '@maxim_defense',
+                bio: 'Надійний захисник команди.',
+                lastGames: ['W', 'L', 'W', 'W', 'L']
+            },
+            { 
+                id: 3, 
+                name: 'Олег М.', 
+                fullName: 'Олег Мельник',
+                position: 'Воротар', 
+                rating: 4.3, 
+                city: 'Київ', 
+                games: 19, 
+                wins: 14, 
+                winRate: 74,
+                age: 28,
+                bio: 'Досвідчений воротар.',
+                lastGames: ['W', 'W', 'W', 'L', 'W']
+            }
+        ];
+
+        const subscriptionPlans = [
+            {
+                id: 'europa',
+                name: 'Ліга Європи',
+                price: 99,
+                color: 'from-blue-400 to-purple-500',
+                features: [
+                    'Рейтинг видимий 999 місяців',
+                    '1 челендж на місяць',
+                    'Базова статистика',
+                    'Участь у всіх матчах'
+                ]
+            },
+            {
+                id: 'champions',
+                name: 'Ліга Чемпіонів',
+                price: 159,
+                color: 'from-yellow-400 to-orange-500',
+                features: [
+                    'Постійно видимий рейтинг',
+                    'Необмежена кількість челенджів',
+                    'Розширена статистика',
+                    'Пріоритет у матчах',
+                    'Ексклюзивні функції',
+                    'Значок Premium'
+                ],
+                isPopular: true
+            }
+        ];
+
+        // Utility functions
+        function toggleFavorite(playerId) {
+            if (favorites.has(playerId)) {
+                favorites.delete(playerId);
+            } else {
+                favorites.add(playerId);
+            }
+            render();
+        }
+
+        function toggleFriend(playerId) {
+            if (friends.has(playerId)) {
+                friends.delete(playerId);
+            } else {
+                friends.add(playerId);
+            }
+            render();
+        }
+
+        function shuffleTeams(participants) {
+            const goalkeepers = participants.filter(p => p.position === 'Воротар');
+            const defenders = participants.filter(p => p.position === 'Захисник');
+            const midfielders = participants.filter(p => p.position === 'Півзахисник');
+            const forwards = participants.filter(p => p.position === 'Нападник');
+            
+            const team1 = [];
+            const team2 = [];
+            
+            if (goalkeepers.length >= 2) {
+                team1.push(goalkeepers[0]);
+                team2.push(goalkeepers[1]);
+            } else if (goalkeepers.length === 1) {
+                team1.push(goalkeepers[0]);
+            }
+            
+            const otherPlayers = [...defenders, ...midfielders, ...forwards];
+            const shuffled = otherPlayers.sort(() => Math.random() - 0.5);
+            
+            shuffled.forEach((player, index) => {
+                if (team1.length <= team2.length) {
+                    team1.push(player);
+                } else {
+                    team2.push(player);
+                }
+            });
+            
+            return { team1, team2 };
+        }
+
+        function addComment(videoId, comment) {
+            if (!videoComments[videoId]) {
+                videoComments[videoId] = [];
+            }
+            videoComments[videoId].push({
+                id: Date.now(),
+                author: user?.nickname || 'Анонім',
+                text: comment,
+                time: 'щойно'
+            });
+        }
+
+        function rateVideo(videoId, rating) {
+            videoRatings[videoId] = rating;
+            showNotification(`Відео оцінено на ${rating} зірок!`);
+        }
+
+        function ratePlayer(playerId, rating) {
+            playerRatings[playerId] = rating;
+            showNotification(`Гравець оцінений на ${rating} зірок!`);
+        }
+
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg z-50 transform transition-all duration-300';
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        function navigateTo(screen, data = null) {
+            currentScreen = screen;
+            if (data) {
+                if (screen === 'player-profile') selectedPlayer = data;
+                if (screen === 'match-details') selectedMatch = data;
+                if (screen === 'challenge-details') selectedChallenge = data;
+                if (screen === 'video-details') selectedVideo = data;
+            }
+            render();
+        }
+
+        // Screen components
+        function WelcomeScreen() {
+            return `
+                <div class="min-h-screen bg-gradient-to-br from-green-400 via-blue-500 to-purple-600 flex flex-col items-center justify-center p-6 text-white relative overflow-hidden">
+                    <!-- Background Animation -->
+                    <div class="absolute inset-0 opacity-20">
+                        <div class="absolute top-10 left-10 w-20 h-20 bg-white rounded-full animate-bounce"></div>
+                        <div class="absolute top-32 right-16 w-16 h-16 bg-yellow-300 rounded-full animate-pulse"></div>
+                        <div class="absolute bottom-20 left-20 w-12 h-12 bg-orange-300 rounded-full animate-bounce-slow"></div>
+                        <div class="absolute bottom-40 right-12 w-14 h-14 bg-pink-300 rounded-full animate-pulse-slow"></div>
+                    </div>
+                    
+                    <div class="text-center mb-12 z-10">
+                        <div class="relative mb-8">
+                            <div class="w-32 h-32 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto mb-6 border-4 border-white/30">
+                                <div class="w-20 h-20 bg-gradient-to-br from-green-400 to-blue-500 rounded-full flex items-center justify-center text-3xl animate-pulse">
+                                    ⚽
+                                </div>
+                            </div>
+                            <div class="absolute -top-2 -right-2 w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center animate-spin">
+                                ⭐
+                            </div>
+                        </div>
+                        
+                        <h1 class="text-4xl font-bold mb-4 gradient-text">
+                            GoalApp
+                        </h1>
+                        <p class="text-xl opacity-90 mb-2">Твій футбольний всесвіт</p>
+                        <p class="text-base opacity-75 mb-6">Челенджі • Матчі • Рейтинги • Друзі</p>
+                        
+                        <div class="flex items-center justify-center space-x-6 text-sm opacity-80">
+                            <div class="flex items-center space-x-1">
+                                <span>🏆</span>
+                                <span>Змагайся</span>
+                            </div>
+                            <div class="flex items-center space-x-1">
+                                <span>👥</span>
+                                <span>Знаходь друзів</span>
+                            </div>
+                            <div class="flex items-center space-x-1">
+                                <span>🎯</span>
+                                <span>Розвивайся</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button 
+                        onclick="navigateTo('auth')"
+                        class="bg-white text-gray-800 font-bold py-4 px-12 rounded-full text-lg w-full max-w-xs hover:bg-gray-50 transition-all duration-300 transform hover:scale-105 shadow-2xl z-10"
+                    >
+                        🚀 Почати пригоду
+                    </button>
+                    
+                    <p class="text-xs opacity-60 mt-6 text-center z-10">
+                        Приєднуйся до спільноти футбольних ентузіастів
+                    </p>
+                </div>
+            `;
+        }
+
+        function AuthScreen() {
+            return `
+                <div class="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 p-6">
+                    <button onclick="navigateTo('welcome')" class="mb-6 p-2 hover:bg-white/50 rounded-full transition-colors">
+                        ← Назад
+                    </button>
+                    
+                    <div class="max-w-sm mx-auto">
+                        <div class="text-center mb-8">
+                            <div class="w-16 h-16 bg-gradient-to-br from-green-400 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <span class="text-2xl">⚽</span>
+                            </div>
+                            <h2 class="text-3xl font-bold text-gray-800 mb-2">З поверненням!</h2>
+                            <p class="text-gray-600">Увійди в свій акаунт</p>
+                        </div>
+                        
+                        <div class="space-y-4 mb-6">
+                            <input
+                                type="email"
+                                placeholder="📧 Email"
+                                class="w-full p-4 border-2 border-gray-200 rounded-2xl focus:outline-none focus:border-green-500 transition-colors bg-white/80 backdrop-blur-sm"
+                            />
+                            <input
+                                type="password"
+                                placeholder="🔒 Пароль"
+                                class="w-full p-4 border-2 border-gray-200 rounded-2xl focus:outline-none focus:border-green-500 transition-colors bg-white/80 backdrop-blur-sm"
+                            />
+                        </div>
+                        
+                        <button
+                            onclick="login()"
+                            class="w-full bg-gradient-to-r from-green-500 to-blue-500 text-white font-bold py-4 rounded-2xl mb-4 hover:from-green-600 hover:to-blue-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
+                        >
+                            🚀 Увійти
+                        </button>
+                        
+                        <button
+                            onclick="showRegister()"
+                            class="w-full text-gray-600 font-medium hover:text-green-600 transition-colors"
+                        >
+                            Немає акаунту? 📝 Зареєструватися
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function login() {
+            user = {
+                id: 999,
+                nickname: 'Олександр Петренко',
+                fullName: 'Олександр Петренко',
+                city: 'Львів',
+                position: 'Півзахисник',
+                phone: '+380 67 890 12 34',
+                telegram: '@alex_football',
+                age: 25,
+                bio: 'Люблю футбол!',
+                rating: 4.2,
+                subscription: null,
+                coins: 350,
+                totalGames: 18,
+                wins: 12,
+                winRate: 67,
+                lastGames: ['W', 'L', 'W', 'W', 'L']
+            };
+            showNotification('Вітаємо в GoalApp! 🎉');
+            navigateTo('home');
+        }
+
+        function HomeScreen() {
+            return `
+                <div class="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
+                    <!-- Header -->
+                    <div class="bg-white/80 backdrop-blur-sm px-6 py-4 shadow-sm border-b border-gray-100">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-gradient-to-br from-green-400 to-blue-500 rounded-full flex items-center justify-center">
+                                    <span class="text-lg">⚽</span>
+                                </div>
+                                <div>
+                                    <h1 class="text-xl font-bold text-gray-800">GoalApp</h1>
+                                    <p class="text-xs text-gray-500">Привіт, ${user?.nickname}! 👋</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <button 
+                                    onclick="navigateTo('friends')"
+                                    class="relative p-2 hover:bg-gray-100 rounded-full transition-colors"
+                                >
+                                    <span class="text-xl">👥</span>
+                                    ${friends.size > 0 ? `<div class="absolute -top-1 -right-1 w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
+                                        <span class="text-xs text-white font-bold">${friends.size}</span>
+                                    </div>` : ''}
+                                </button>
+                                <button 
+                                    onclick="navigateTo('favorites')"
+                                    class="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                                >
+                                    <span class="text-xl">❤️</span>
+                                </button>
+                                <button 
+                                    onclick="navigateTo('profile')"
+                                    class="w-8 h-8 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full flex items-center justify-center"
+                                >
+                                    <span class="text-white text-sm">👤</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="p-6">
+                        <!-- Quick Stats -->
+                        <div class="grid grid-cols-3 gap-3 mb-6">
+                            <div class="bg-gradient-to-br from-yellow-400 to-orange-500 p-4 rounded-2xl text-white text-center">
+                                <div class="text-2xl font-bold">${user?.coins || 350}</div>
+                                <div class="text-xs opacity-90">💰 Монети</div>
+                            </div>
+                            <div class="bg-gradient-to-br from-green-400 to-teal-500 p-4 rounded-2xl text-white text-center">
+                                <div class="text-2xl font-bold">${user?.totalGames || 18}</div>
+                                <div class="text-xs opacity-90">⚽ Матчі</div>
+                            </div>
+                            <div class="bg-gradient-to-br from-blue-400 to-purple-500 p-4 rounded-2xl text-white text-center">
+                                <div class="text-2xl font-bold">${user?.winRate || 67}%</div>
+                                <div class="text-xs opacity-90">🏆 Перемоги</div>
+                            </div>
+                        </div>
+
+                        <!-- Main Actions -->
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <button
+                                onclick="navigateTo('challenges')"
+                                class="bg-gradient-to-br from-orange-400 to-red-500 p-6 rounded-2xl text-white text-left relative overflow-hidden group hover:scale-105 transition-all duration-300 shadow-lg"
+                            >
+                                <div class="relative z-10">
+                                    <div class="flex items-center space-x-2 mb-2">
+                                        <span class="text-2xl">📹</span>
+                                        <span class="text-lg">🔥</span>
+                                    </div>
+                                    <h3 class="text-lg font-bold mb-1">Відео</h3>
+                                    <h3 class="text-lg font-bold mb-2">& Челенджі</h3>
+                                    <p class="text-xs opacity-90">Створюй та заробляй</p>
+                                </div>
+                                <div class="absolute -right-4 -bottom-4 w-16 h-16 bg-white/10 rounded-full group-hover:scale-110 transition-transform duration-300"></div>
+                            </button>
+                            
+                            <button
+                                onclick="navigateTo('matches')"
+                                class="bg-gradient-to-br from-blue-400 to-purple-500 p-6 rounded-2xl text-white text-left relative overflow-hidden group hover:scale-105 transition-all duration-300 shadow-lg"
+                            >
+                                <div class="relative z-10">
+                                    <div class="flex items-center space-x-2 mb-2">
+                                        <span class="text-2xl">🔍</span>
+                                        <span class="text-lg">⚡</span>
+                                    </div>
+                                    <h3 class="text-lg font-bold mb-1">Пошук</h3>
+                                    <h3 class="text-lg font-bold mb-2">матчів</h3>
+                                    <p class="text-xs opacity-90">Грай поруч з домом</p>
+                                </div>
+                                <div class="absolute -right-4 -bottom-4 w-16 h-16 bg-white/10 rounded-full group-hover:scale-110 transition-transform duration-300"></div>
+                            </button>
+                        </div>
+
+                        <div class="grid grid-cols-1 gap-4 mb-6">
+                            <button
+                                onclick="navigateTo('ratings')"
+                                class="bg-gradient-to-r from-green-400 via-teal-400 to-blue-500 p-6 rounded-2xl text-white text-left relative overflow-hidden group hover:scale-105 transition-all duration-300 shadow-lg"
+                            >
+                                <div class="flex items-center justify-between">
+                                    <div class="relative z-10">
+                                        <div class="flex items-center space-x-2 mb-2">
+                                            <span class="text-2xl">🏆</span>
+                                            <span class="text-lg">📈</span>
+                                        </div>
+                                        <h3 class="text-xl font-bold mb-2">Рейтинг гравців</h3>
+                                        <p class="text-sm opacity-90">Дивись топ футболістів твого міста</p>
+                                    </div>
+                                    <div class="relative z-10">
+                                        <span class="text-5xl opacity-60">🥇</span>
+                                    </div>
+                                </div>
+                                <div class="absolute -right-8 -bottom-8 w-24 h-24 bg-white/10 rounded-full group-hover:scale-110 transition-transform duration-300"></div>
+                            </button>
+                        </div>
+
+                        <!-- Secondary Actions -->
+                        <div class="grid grid-cols-2 gap-3 mb-6">
+                            <button
+                                onclick="navigateTo('shop')"
+                                class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 text-left hover:shadow-md transition-all duration-300 group"
+                            >
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 bg-gradient-to-br from-purple-400 to-pink-500 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                                        <span class="text-white">🛍️</span>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-gray-800">Магазин</h4>
+                                        <p class="text-xs text-gray-500">Бейджі та бонуси</p>
+                                    </div>
+                                </div>
+                            </button>
+
+                            <button
+                                onclick="navigateTo('achievements')"
+                                class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 text-left hover:shadow-md transition-all duration-300 group"
+                            >
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                                        <span class="text-white">🏅</span>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-gray-800">Досягнення</h4>
+                                        <p class="text-xs text-gray-500">Твої нагороди</p>
+                                    </div>
+                                </div>
+                            </button>
+                        </div>
+
+                        <!-- Activity Feed -->
+                        <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 mb-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="font-bold text-gray-800">🔥 Активність</h3>
+                                <button class="text-green-500 text-sm font-medium">Більше</button>
+                            </div>
+                            <div class="space-y-3">
+                                <div class="flex items-center space-x-3 p-2 bg-green-50 rounded-lg">
+                                    <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+                                        <span class="text-white text-sm">🏆</span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-medium">Новий челендж доступний!</p>
+                                        <p class="text-xs text-gray-500">2 хвилини тому</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-3 p-2 bg-blue-50 rounded-lg">
+                                    <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                                        <span class="text-white text-sm">👥</span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-medium">Матч завтра о 18:00</p>
+                                        <p class="text-xs text-gray-500">Парк Шевченка</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Subscription moved to bottom -->
+                        <div class="text-center">
+                            <button 
+                                onclick="navigateTo('subscription')"
+                                class="text-sm text-gray-500 hover:text-green-600 transition-colors"
+                            >
+                                ⭐ Підписка та преміум функції
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Floating Action Button -->
+                    <button
+                        onclick="navigateTo('create-content')"
+                        class="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-br from-green-500 to-teal-500 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-all duration-300 z-50"
+                    >
+                        <span class="text-white text-2xl">+</span>
+                    </button>
+                </div>
+            `;
+        }
+
+        // Initial render
+        function render() {
+            const app = document.getElementById('app');
+            
+            switch (currentScreen) {
+                case 'welcome':
+                    app.innerHTML = WelcomeScreen();
+                    break;
+                case 'auth':
+                    app.innerHTML = AuthScreen();
+                    break;
+                case 'home':
+                    app.innerHTML = HomeScreen();
+                    break;
+                default:
+                    app.innerHTML = WelcomeScreen();
+            }
+        }
+
+        // Initialize app
+        render();
+    </script>
+</body>
+</html>
