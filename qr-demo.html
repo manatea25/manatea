@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoalApp QR Demo</title>
+    <style>
+        body {
+            font-family: -apple-system, sans-serif;
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+        .qr-code {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            display: inline-block;
+        }
+        h1 { font-size: 2.5rem; margin-bottom: 20px; }
+        p { font-size: 1.1rem; margin-bottom: 15px; opacity: 0.9; }
+        .btn {
+            background: white;
+            color: #059669;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 10px;
+            text-decoration: none;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⚽ GoalApp</h1>
+        <p>Відскануйте QR-код телефоном:</p>
+        
+        <div class="qr-code">
+            <div id="qrcode" style="width: 200px; height: 200px; margin: 0 auto;"></div>
+        </div>
+        
+        <p>Або натисніть кнопку:</p>
+        <a href="./GoalApp-Mobile.html" class="btn">📱 Відкрити додаток</a>
+        
+        <p style="margin-top: 30px; font-size: 0.9rem;">
+            💡 <strong>Порада:</strong> Після відкриття додайте його на головний екран телефону!
+        </p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <script>
+        // Generate QR code with the current URL + GoalApp-Mobile.html
+        const url = window.location.origin + window.location.pathname.replace('qr-demo.html', 'GoalApp-Mobile.html');
+        
+        QRCode.toCanvas(document.getElementById('qrcode'), url, {
+            width: 200,
+            height: 200,
+            colorDark: '#059669',
+            colorLight: '#ffffff',
+            margin: 2
+        }, function (error) {
+            if (error) {
+                console.error(error);
+                document.getElementById('qrcode').innerHTML = 'QR код недоступний';
+            }
+        });
+    </script>
+</body>
+</html>
