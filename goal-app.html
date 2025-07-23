@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoalApp - Достигай целей</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+            background: rgba(79, 172, 254, 0.1);
+        }
+
+        .stat {
+            text-align: center;
+            color: #333;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #4facfe;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .add-goal-section {
+            padding: 30px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .input-field {
+            flex: 1;
+            min-width: 200px;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #4facfe;
+            box-shadow: 0 0 10px rgba(79, 172, 254, 0.3);
+        }
+
+        .priority-select {
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            background: white;
+            cursor: pointer;
+        }
+
+        .add-btn {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .add-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(79, 172, 254, 0.4);
+        }
+
+        .goals-section {
+            padding: 30px;
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .filter-tab {
+            padding: 10px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .filter-tab.active {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            border-color: #4facfe;
+        }
+
+        .goals-grid {
+            display: grid;
+            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        }
+
+        .goal-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid #4facfe;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .goal-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .goal-card.completed {
+            border-left-color: #00d4aa;
+            opacity: 0.8;
+        }
+
+        .goal-card.high-priority {
+            border-left-color: #ff6b6b;
+        }
+
+        .goal-card.medium-priority {
+            border-left-color: #feca57;
+        }
+
+        .goal-card.low-priority {
+            border-left-color: #48dbfb;
+        }
+
+        .goal-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .goal-description {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .goal-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        .goal-priority {
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .priority-high {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .priority-medium {
+            background: #feca57;
+            color: white;
+        }
+
+        .priority-low {
+            background: #48dbfb;
+            color: white;
+        }
+
+        .goal-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .complete-btn {
+            background: #00d4aa;
+            color: white;
+        }
+
+        .complete-btn:hover {
+            background: #00b894;
+        }
+
+        .delete-btn {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .delete-btn:hover {
+            background: #e55656;
+        }
+
+        .edit-btn {
+            background: #74b9ff;
+            color: white;
+        }
+
+        .edit-btn:hover {
+            background: #0984e3;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #888;
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            transition: width 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 15px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .input-group {
+                flex-direction: column;
+            }
+
+            .stats {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .goals-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #888;
+        }
+
+        .close-btn:hover {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 GoalApp</h1>
+            <p>Превращай мечты в достижения</p>
+        </div>
+
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-number" id="totalGoals">0</div>
+                <div class="stat-label">Всего целей</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number" id="completedGoals">0</div>
+                <div class="stat-label">Выполнено</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number" id="completionRate">0%</div>
+                <div class="stat-label">Процент выполнения</div>
+            </div>
+        </div>
+
+        <div class="add-goal-section">
+            <div class="input-group">
+                <input type="text" id="goalTitle" class="input-field" placeholder="Название цели" required>
+                <input type="text" id="goalDescription" class="input-field" placeholder="Описание цели">
+                <select id="goalPriority" class="priority-select">
+                    <option value="low">Низкий приоритет</option>
+                    <option value="medium" selected>Средний приоритет</option>
+                    <option value="high">Высокий приоритет</option>
+                </select>
+                <button class="add-btn" onclick="addGoal()">Добавить цель</button>
+            </div>
+        </div>
+
+        <div class="goals-section">
+            <div class="filter-tabs">
+                <div class="filter-tab active" onclick="filterGoals('all')">Все цели</div>
+                <div class="filter-tab" onclick="filterGoals('active')">Активные</div>
+                <div class="filter-tab" onclick="filterGoals('completed')">Выполненные</div>
+                <div class="filter-tab" onclick="filterGoals('high')">Высокий приоритет</div>
+            </div>
+
+            <div class="goals-grid" id="goalsGrid">
+                <div class="empty-state">
+                    <div class="empty-state-icon">🎯</div>
+                    <h3>Пока нет целей</h3>
+                    <p>Добавьте свою первую цель, чтобы начать путь к успеху!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for editing goals -->
+    <div class="modal" id="editModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Редактировать цель</h2>
+                <button class="close-btn" onclick="closeEditModal()">&times;</button>
+            </div>
+            <div class="input-group">
+                <input type="text" id="editGoalTitle" class="input-field" placeholder="Название цели">
+                <input type="text" id="editGoalDescription" class="input-field" placeholder="Описание цели">
+                <select id="editGoalPriority" class="priority-select">
+                    <option value="low">Низкий приоритет</option>
+                    <option value="medium">Средний приоритет</option>
+                    <option value="high">Высокий приоритет</option>
+                </select>
+                <button class="add-btn" onclick="saveGoalEdit()">Сохранить изменения</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let goals = JSON.parse(localStorage.getItem('goals')) || [];
+        let currentFilter = 'all';
+        let editingGoalId = null;
+
+        function addGoal() {
+            const title = document.getElementById('goalTitle').value.trim();
+            const description = document.getElementById('goalDescription').value.trim();
+            const priority = document.getElementById('goalPriority').value;
+
+            if (!title) {
+                alert('Пожалуйста, введите название цели');
+                return;
+            }
+
+            const goal = {
+                id: Date.now(),
+                title,
+                description,
+                priority,
+                completed: false,
+                createdAt: new Date().toLocaleDateString('ru-RU')
+            };
+
+            goals.push(goal);
+            saveGoals();
+            clearInputs();
+            renderGoals();
+            updateStats();
+        }
+
+        function toggleGoal(id) {
+            const goal = goals.find(g => g.id === id);
+            if (goal) {
+                goal.completed = !goal.completed;
+                goal.completedAt = goal.completed ? new Date().toLocaleDateString('ru-RU') : null;
+                saveGoals();
+                renderGoals();
+                updateStats();
+            }
+        }
+
+        function deleteGoal(id) {
+            if (confirm('Вы уверены, что хотите удалить эту цель?')) {
+                goals = goals.filter(g => g.id !== id);
+                saveGoals();
+                renderGoals();
+                updateStats();
+            }
+        }
+
+        function editGoal(id) {
+            const goal = goals.find(g => g.id === id);
+            if (goal) {
+                editingGoalId = id;
+                document.getElementById('editGoalTitle').value = goal.title;
+                document.getElementById('editGoalDescription').value = goal.description;
+                document.getElementById('editGoalPriority').value = goal.priority;
+                document.getElementById('editModal').classList.add('active');
+            }
+        }
+
+        function saveGoalEdit() {
+            const title = document.getElementById('editGoalTitle').value.trim();
+            const description = document.getElementById('editGoalDescription').value.trim();
+            const priority = document.getElementById('editGoalPriority').value;
+
+            if (!title) {
+                alert('Пожалуйста, введите название цели');
+                return;
+            }
+
+            const goal = goals.find(g => g.id === editingGoalId);
+            if (goal) {
+                goal.title = title;
+                goal.description = description;
+                goal.priority = priority;
+                saveGoals();
+                renderGoals();
+                updateStats();
+                closeEditModal();
+            }
+        }
+
+        function closeEditModal() {
+            document.getElementById('editModal').classList.remove('active');
+            editingGoalId = null;
+        }
+
+        function filterGoals(filter) {
+            currentFilter = filter;
+            document.querySelectorAll('.filter-tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            renderGoals();
+        }
+
+        function getFilteredGoals() {
+            switch (currentFilter) {
+                case 'active':
+                    return goals.filter(g => !g.completed);
+                case 'completed':
+                    return goals.filter(g => g.completed);
+                case 'high':
+                    return goals.filter(g => g.priority === 'high');
+                default:
+                    return goals;
+            }
+        }
+
+        function renderGoals() {
+            const goalsGrid = document.getElementById('goalsGrid');
+            const filteredGoals = getFilteredGoals();
+
+            if (filteredGoals.length === 0) {
+                goalsGrid.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🎯</div>
+                        <h3>${currentFilter === 'all' ? 'Пока нет целей' : 'Нет целей в этой категории'}</h3>
+                        <p>${currentFilter === 'all' ? 'Добавьте свою первую цель, чтобы начать путь к успеху!' : 'Попробуйте изменить фильтр или добавить новые цели'}</p>
+                    </div>
+                `;
+                return;
+            }
+
+            goalsGrid.innerHTML = filteredGoals.map(goal => `
+                <div class="goal-card ${goal.completed ? 'completed' : ''} ${goal.priority}-priority">
+                    <div class="goal-title">${goal.title}</div>
+                    ${goal.description ? `<div class="goal-description">${goal.description}</div>` : ''}
+                    <div class="goal-meta">
+                        <span>Создано: ${goal.createdAt}</span>
+                        <span class="goal-priority priority-${goal.priority}">
+                            ${goal.priority === 'high' ? 'Высокий' : goal.priority === 'medium' ? 'Средний' : 'Низкий'}
+                        </span>
+                    </div>
+                    ${goal.completed ? `<div class="goal-meta"><span>Выполнено: ${goal.completedAt}</span></div>` : ''}
+                    <div class="goal-actions">
+                        <button class="action-btn complete-btn" onclick="toggleGoal(${goal.id})">
+                            ${goal.completed ? '↩️ Отменить' : '✅ Выполнить'}
+                        </button>
+                        <button class="action-btn edit-btn" onclick="editGoal(${goal.id})">✏️ Изменить</button>
+                        <button class="action-btn delete-btn" onclick="deleteGoal(${goal.id})">🗑️ Удалить</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function updateStats() {
+            const total = goals.length;
+            const completed = goals.filter(g => g.completed).length;
+            const completionRate = total > 0 ? Math.round((completed / total) * 100) : 0;
+
+            document.getElementById('totalGoals').textContent = total;
+            document.getElementById('completedGoals').textContent = completed;
+            document.getElementById('completionRate').textContent = completionRate + '%';
+        }
+
+        function saveGoals() {
+            localStorage.setItem('goals', JSON.stringify(goals));
+        }
+
+        function clearInputs() {
+            document.getElementById('goalTitle').value = '';
+            document.getElementById('goalDescription').value = '';
+            document.getElementById('goalPriority').value = 'medium';
+        }
+
+        // Event listeners
+        document.getElementById('goalTitle').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                addGoal();
+            }
+        });
+
+        document.getElementById('goalDescription').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                addGoal();
+            }
+        });
+
+        // Close modal when clicking outside
+        document.getElementById('editModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeEditModal();
+            }
+        });
+
+        // Initialize app
+        renderGoals();
+        updateStats();
+    </script>
+</body>
+</html>
