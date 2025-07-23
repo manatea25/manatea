@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Доступ до GoalApp</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        .container {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+        }
+        .url {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            margin: 20px 0;
+            word-break: break-all;
+        }
+        .instructions {
+            text-align: left;
+            margin: 20px 0;
+        }
+        .step {
+            margin: 15px 0;
+            padding: 10px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+        }
+        .qr-placeholder {
+            width: 200px;
+            height: 200px;
+            border: 2px dashed rgba(255,255,255,0.5);
+            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 GoalApp готовий!</h1>
+        
+        <div class="url">
+            http://172.30.0.2:8000/goalapp-complete.html
+        </div>
+        
+        <div class="instructions">
+            <h2>📱 Як відкрити на смартфоні:</h2>
+            
+            <div class="step">
+                <strong>1.</strong> Переконайтеся, що ваш телефон підключений до тієї ж Wi-Fi мережі
+            </div>
+            
+            <div class="step">
+                <strong>2.</strong> Відкрийте браузер на телефоні (Chrome, Safari, Firefox)
+            </div>
+            
+            <div class="step">
+                <strong>3.</strong> Скопіюйте і вставте адресу вище в адресний рядок
+            </div>
+            
+            <div class="step">
+                <strong>4.</strong> Натисніть Enter і насолоджуйтеся GoalApp! ⚽
+            </div>
+        </div>
+        
+        <div class="qr-placeholder">
+            QR-код<br>
+            (відскануйте камерою телефону)
+        </div>
+        
+        <h3>🎯 Альтернативні адреси:</h3>
+        <div style="font-size: 14px;">
+            <div>http://localhost:8000/goalapp-complete.html</div>
+            <div>http://127.0.0.1:8000/goalapp-complete.html</div>
+        </div>
+        
+        <div style="margin-top: 30px; font-size: 14px; opacity: 0.8;">
+            💡 Якщо не працює, перевірте, чи ввімкнено Wi-Fi на обох пристроях
+        </div>
+    </div>
+    
+    <script>
+        // Генеруємо простий QR-код за допомогою онлайн сервісу
+        const url = encodeURIComponent('http://172.30.0.2:8000/goalapp-complete.html');
+        const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${url}`;
+        
+        const qrPlaceholder = document.querySelector('.qr-placeholder');
+        qrPlaceholder.innerHTML = `<img src="${qrUrl}" alt="QR код для GoalApp" style="max-width: 100%; border-radius: 10px;">`;
+    </script>
+</body>
+</html>
