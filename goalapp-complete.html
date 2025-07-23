@@ -1,0 +1,1769 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoalApp - Футбольний всесвіт</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    animation: {
+                        'bounce-slow': 'bounce 2s infinite',
+                        'pulse-slow': 'pulse 3s infinite',
+                        'fade-in': 'fadeIn 0.5s ease-in',
+                        'slide-up': 'slideUp 0.3s ease-out'
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(100%)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-text {
+            background: linear-gradient(45deg, #ffffff, #fbbf24);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .slider {
+            -webkit-appearance: none;
+            appearance: none;
+            height: 8px;
+            border-radius: 5px;
+            background: #e5e7eb;
+            outline: none;
+            transition: all 0.2s;
+        }
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #10b981, #059669);
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transition: all 0.2s;
+        }
+        .slider::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+        }
+        .slider::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #10b981, #059669);
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        .star-rating {
+            color: #fbbf24;
+        }
+        .star-empty {
+            color: #d1d5db;
+        }
+        .notification {
+            animation: slideUp 0.3s ease-out;
+        }
+        .modal-backdrop {
+            backdrop-filter: blur(4px);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div id="app" class="max-w-sm mx-auto bg-white min-h-screen relative overflow-hidden">
+        <!-- Content will be loaded here -->
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="notification" class="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 hidden">
+        <div class="bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg notification">
+            <span id="notificationText"></span>
+        </div>
+    </div>
+
+    <script>
+        // Global state management
+        let currentScreen = 'welcome';
+        let user = {
+            id: 1,
+            name: 'Олександр',
+            avatar: '👤',
+            coins: 250,
+            level: 5,
+            rating: 4.2,
+            matches: 23,
+            goals: 15,
+            assists: 8,
+            city: 'Львів'
+        };
+        let selectedMatch = null;
+        let selectedPlayer = null;
+        let selectedChallenge = null;
+        let selectedVideo = null;
+        let selectedTeam = null;
+        let matchInProgress = false;
+        let matchFinished = false;
+        let winningTeam = null;
+        let favorites = new Set();
+        let friends = new Set([1, 2]);
+        let videoComments = {};
+        let videoRatings = {};
+        let playerRatings = {};
+        let challengeInvites = {};
+        let matchCityFilter = 'Всі міста';
+        let playerCityFilter = 'Всі міста';
+        let challengeCategory = 'Всі';
+        let contentType = 'Всі';
+        let newComment = '';
+        let currentRatingValue = 5;
+
+        // Data
+        const cities = ['Всі міста', 'Львів', 'Київ', 'Харків', 'Одеса', 'Дніпро'];
+        const categories = ['Всі', 'Голи', 'Передачі', 'Фінти', 'Воротарство'];
+        const contentTypes = ['Всі', 'Відео', 'Челенджі'];
+
+        const badges = [
+            { id: 1, name: '⚽ Майстер м\'яча', price: 50, description: 'За техніку ведення', owned: false },
+            { id: 2, name: '🥅 Снайпер', price: 75, description: 'За точність ударів', owned: false },
+            { id: 3, name: '🏃‍♂️ Спідстер', price: 60, description: 'За швидкість', owned: true },
+            { id: 4, name: '🎯 Асистент', price: 65, description: 'За кращі передачі', owned: false },
+            { id: 5, name: '🛡️ Захисник', price: 70, description: 'За надійну гру в обороні', owned: false },
+        ];
+
+        const comingSoonItems = [
+            { id: 1, name: '🌟 Відгук від селебреті', description: 'Персональний відгук від зірки футболу', icon: '⭐' },
+            { id: 2, name: '🏪 Знижка на спорттовари', description: '20% знижка в партнерських магазинах', icon: '🏷️' },
+        ];
+
+        const videos = [
+            { 
+                id: 1, 
+                title: 'Техніка ведення м\'яча', 
+                author: 'Артем К.', 
+                rating: 4.5, 
+                views: 1250, 
+                duration: '3:45',
+                category: 'Фінти',
+                type: 'Відео',
+                thumbnail: '⚽',
+                description: 'Навчальне відео про базову техніку ведення м\'яча'
+            },
+            { 
+                id: 2, 
+                title: 'Удари по воротах', 
+                author: 'Максим Л.', 
+                rating: 4.8, 
+                views: 2100, 
+                duration: '5:20',
+                category: 'Голи',
+                type: 'Відео',
+                thumbnail: '🥅',
+                description: 'Як правильно бити по воротах з різних позицій'
+            },
+            { 
+                id: 3, 
+                title: 'Челендж: 10 голів підряд', 
+                author: 'Данило М.', 
+                rating: 4.2, 
+                views: 890, 
+                duration: '2:30',
+                category: 'Голи',
+                type: 'Челенджі',
+                thumbnail: '🎯',
+                description: 'Спробуй забити 10 голів підряд з різних точок'
+            },
+            { 
+                id: 4, 
+                title: 'Воротарські техніки', 
+                author: 'Іван С.', 
+                rating: 4.6, 
+                views: 1560, 
+                duration: '4:15',
+                category: 'Воротарство',
+                type: 'Відео',
+                thumbnail: '🧤',
+                description: 'Основи гри воротаря та техніки ловлі м\'яча'
+            },
+            { 
+                id: 5, 
+                title: 'Точні передачі', 
+                author: 'Богдан Р.', 
+                rating: 4.3, 
+                views: 1120, 
+                duration: '3:50',
+                category: 'Передачі',
+                type: 'Відео',
+                thumbnail: '🎯',
+                description: 'Як виконувати точні передачі на різні дистанції'
+            }
+        ];
+
+        const matches = [
+            {
+                id: 1,
+                title: 'Футбол у парку Стрийський',
+                location: 'Львів, парк Стрийський',
+                date: '2024-01-20',
+                time: '15:00',
+                players: '8/12',
+                level: 'Середній',
+                price: 'Безкоштовно',
+                organizer: 'Микола В.',
+                description: 'Дружній матч на свіжому повітрі'
+            },
+            {
+                id: 2,
+                title: 'Турнір на стадіоні',
+                location: 'Київ, НСК Олімпійський',
+                date: '2024-01-22',
+                time: '18:00',
+                players: '16/20',
+                level: 'Високий',
+                price: '50 грн',
+                organizer: 'Олександр К.',
+                description: 'Турнір серед аматорських команд'
+            },
+            {
+                id: 3,
+                title: 'Ранковий футбол',
+                location: 'Харків, стадіон Металіст',
+                date: '2024-01-21',
+                time: '09:00',
+                players: '10/14',
+                level: 'Початковий',
+                price: '30 грн',
+                organizer: 'Сергій М.',
+                description: 'Ранкова гра для початківців'
+            }
+        ];
+
+        const players = [
+            {
+                id: 1,
+                name: 'Артем Коваленко',
+                position: 'Нападник',
+                rating: 4.8,
+                matches: 45,
+                goals: 32,
+                assists: 12,
+                city: 'Львів',
+                avatar: '⚽',
+                level: 'Професіонал',
+                achievements: ['🥅 Снайпер', '⚽ Майстер м\'яча']
+            },
+            {
+                id: 2,
+                name: 'Максим Петренко',
+                position: 'Півзахисник',
+                rating: 4.5,
+                matches: 38,
+                goals: 15,
+                assists: 25,
+                city: 'Київ',
+                avatar: '🎯',
+                level: 'Досвідчений',
+                achievements: ['🎯 Асистент']
+            },
+            {
+                id: 3,
+                name: 'Данило Мельник',
+                position: 'Захисник',
+                rating: 4.3,
+                matches: 52,
+                goals: 8,
+                assists: 15,
+                city: 'Харків',
+                avatar: '🛡️',
+                level: 'Професіонал',
+                achievements: ['🛡️ Захисник']
+            },
+            {
+                id: 4,
+                name: 'Іван Сидоренко',
+                position: 'Воротар',
+                rating: 4.7,
+                matches: 41,
+                goals: 0,
+                assists: 5,
+                city: 'Одеса',
+                avatar: '🧤',
+                level: 'Досвідчений',
+                achievements: ['🧤 Надійні руки']
+            },
+            {
+                id: 5,
+                name: 'Богдан Романенко',
+                position: 'Півзахисник',
+                rating: 4.1,
+                matches: 29,
+                goals: 12,
+                assists: 18,
+                city: 'Дніпро',
+                avatar: '🏃‍♂️',
+                level: 'Середній',
+                achievements: ['🏃‍♂️ Спідстер']
+            }
+        ];
+
+        const friendSuggestions = [
+            { id: 3, name: 'Данило М.', avatar: '🛡️', mutualFriends: 5, city: 'Харків' },
+            { id: 4, name: 'Іван С.', avatar: '🧤', mutualFriends: 3, city: 'Одеса' },
+            { id: 5, name: 'Богдан Р.', avatar: '🏃‍♂️', mutualFriends: 7, city: 'Дніпро' },
+            { id: 6, name: 'Олег В.', avatar: '⚽', mutualFriends: 2, city: 'Львів' },
+            { id: 7, name: 'Микола К.', avatar: '🎯', mutualFriends: 4, city: 'Київ' }
+        ];
+
+        const currentFriends = [
+            { id: 1, name: 'Артем К.', avatar: '⚽', status: 'online', city: 'Львів' },
+            { id: 2, name: 'Максим П.', avatar: '🎯', status: 'offline', city: 'Київ' }
+        ];
+
+        // Utility functions
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            const notificationText = document.getElementById('notificationText');
+            notificationText.textContent = message;
+            notification.classList.remove('hidden');
+            setTimeout(() => {
+                notification.classList.add('hidden');
+            }, 3000);
+        }
+
+        function toggleFriend(friendId) {
+            if (friends.has(friendId)) {
+                friends.delete(friendId);
+                showNotification('Друга видалено');
+            } else {
+                friends.add(friendId);
+                showNotification('Друга додано');
+            }
+            renderCurrentScreen();
+        }
+
+        function toggleFavorite(id) {
+            if (favorites.has(id)) {
+                favorites.delete(id);
+                showNotification('Видалено з обраного');
+            } else {
+                favorites.add(id);
+                showNotification('Додано до обраного');
+            }
+            renderCurrentScreen();
+        }
+
+        function purchaseBadge(badgeId) {
+            const badge = badges.find(b => b.id === badgeId);
+            if (badge && !badge.owned && user.coins >= badge.price) {
+                user.coins -= badge.price;
+                badge.owned = true;
+                showNotification(`Куплено: ${badge.name}`);
+                renderCurrentScreen();
+            } else if (badge && badge.owned) {
+                showNotification('Цей бейдж уже куплений');
+            } else {
+                showNotification('Недостатньо монет');
+            }
+        }
+
+        function rateVideo(videoId, rating) {
+            videoRatings[videoId] = rating;
+            const video = videos.find(v => v.id === videoId);
+            if (video) {
+                video.rating = ((video.rating * video.views) + rating) / (video.views + 1);
+                video.views += 1;
+            }
+            showNotification(`Оцінено на ${rating} зірок`);
+            renderCurrentScreen();
+        }
+
+        function ratePlayer(playerId, rating) {
+            playerRatings[playerId] = rating;
+            const player = players.find(p => p.id === playerId);
+            if (player) {
+                player.rating = ((player.rating * player.matches) + rating) / (player.matches + 1);
+            }
+            showNotification(`Гравця оцінено на ${rating} зірок`);
+            renderCurrentScreen();
+        }
+
+        function addComment(videoId, comment) {
+            if (!videoComments[videoId]) {
+                videoComments[videoId] = [];
+            }
+            videoComments[videoId].push({
+                id: Date.now(),
+                author: user.name,
+                text: comment,
+                time: new Date().toLocaleTimeString('uk-UA', { hour: '2-digit', minute: '2-digit' }),
+                likes: 0
+            });
+            showNotification('Коментар додано');
+            renderCurrentScreen();
+        }
+
+        function inviteToChallenge(challengeId, friendId) {
+            if (!challengeInvites[challengeId]) {
+                challengeInvites[challengeId] = [];
+            }
+            challengeInvites[challengeId].push(friendId);
+            const friend = currentFriends.find(f => f.id === friendId);
+            showNotification(`Запрошення надіслано ${friend?.name || 'другу'}`);
+        }
+
+        function shuffleTeams() {
+            const availablePlayers = players.filter(p => Math.random() > 0.3);
+            const team1 = availablePlayers.slice(0, Math.ceil(availablePlayers.length / 2));
+            const team2 = availablePlayers.slice(Math.ceil(availablePlayers.length / 2));
+            return { team1, team2 };
+        }
+
+        function startMatch(matchId) {
+            selectedMatch = matches.find(m => m.id === matchId);
+            const teams = shuffleTeams();
+            selectedMatch.team1 = teams.team1;
+            selectedMatch.team2 = teams.team2;
+            matchInProgress = true;
+            matchFinished = false;
+            winningTeam = null;
+            showNotification('Матч розпочато!');
+            navigateTo('matchInProgress');
+        }
+
+        function finishMatch(winnerTeam) {
+            matchInProgress = false;
+            matchFinished = true;
+            winningTeam = winnerTeam;
+            showNotification(`Матч завершено! Перемогла команда ${winnerTeam}`);
+            navigateTo('matchFinished');
+        }
+
+        function renderStars(rating, interactive = false, onRate = null) {
+            let starsHtml = '';
+            for (let i = 1; i <= 5; i++) {
+                const filled = i <= Math.floor(rating);
+                const half = i === Math.ceil(rating) && rating % 1 !== 0;
+                const starClass = filled ? 'star-rating' : 'star-empty';
+                const clickHandler = interactive && onRate ? `onclick="${onRate}(${i})"` : '';
+                const cursor = interactive ? 'cursor-pointer' : '';
+                
+                starsHtml += `<span class="${starClass} ${cursor} text-lg" ${clickHandler}>
+                    ${filled ? '★' : (half ? '☆' : '☆')}
+                </span>`;
+            }
+            return starsHtml;
+        }
+
+        function navigateTo(screen, data = null) {
+            currentScreen = screen;
+            if (data) {
+                if (screen === 'playerProfile') selectedPlayer = data;
+                if (screen === 'videoDetail') selectedVideo = data;
+                if (screen === 'challengeDetail') selectedChallenge = data;
+                if (screen === 'matchDetail') selectedMatch = data;
+            }
+            renderCurrentScreen();
+        }
+
+        // Screen rendering functions
+        function renderWelcomeScreen() {
+            return `
+                <div class="gradient-bg min-h-screen flex flex-col items-center justify-center text-center p-6">
+                    <div class="animate-bounce-slow mb-8">
+                        <div class="text-8xl mb-4">⚽</div>
+                        <h1 class="text-4xl font-bold gradient-text mb-2">GoalApp</h1>
+                        <p class="text-white/80 text-lg">Футбольний всесвіт у твоїх руках</p>
+                    </div>
+                    
+                    <div class="space-y-4 w-full max-w-xs">
+                        <button onclick="navigateTo('home')" 
+                                class="w-full bg-white text-purple-600 py-4 px-6 rounded-2xl font-semibold text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
+                            🚀 Почати гру
+                        </button>
+                        
+                        <div class="flex space-x-4">
+                            <button class="flex-1 bg-white/20 backdrop-blur text-white py-3 px-4 rounded-xl font-medium hover:bg-white/30 transition-all">
+                                📱 Увійти
+                            </button>
+                            <button class="flex-1 bg-white/20 backdrop-blur text-white py-3 px-4 rounded-xl font-medium hover:bg-white/30 transition-all">
+                                ✨ Реєстрація
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-12 text-white/60 text-sm">
+                        <p>🏆 Більше 10,000 гравців</p>
+                        <p>⚽ 500+ матчів щодня</p>
+                        <p>🎯 Нескінченні челенджі</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderHomeScreen() {
+            return `
+                <div class="animate-fade-in">
+                    <!-- Header -->
+                    <div class="gradient-bg p-4 text-white">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center text-2xl">
+                                    ${user.avatar}
+                                </div>
+                                <div>
+                                    <h2 class="font-bold text-lg">${user.name}</h2>
+                                    <p class="text-white/80 text-sm">Рівень ${user.level} • ${user.city}</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="bg-white/20 rounded-full px-3 py-1 text-sm font-medium">
+                                    💰 ${user.coins}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-3 gap-4 text-center">
+                            <div class="bg-white/20 rounded-lg p-3">
+                                <div class="text-2xl font-bold">${user.matches}</div>
+                                <div class="text-xs text-white/80">Матчі</div>
+                            </div>
+                            <div class="bg-white/20 rounded-lg p-3">
+                                <div class="text-2xl font-bold">${user.goals}</div>
+                                <div class="text-xs text-white/80">Голи</div>
+                            </div>
+                            <div class="bg-white/20 rounded-lg p-3">
+                                <div class="text-2xl font-bold">${user.assists}</div>
+                                <div class="text-xs text-white/80">Передачі</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-3">⚡ Швидкі дії</h3>
+                        <div class="grid grid-cols-2 gap-3">
+                            <button onclick="navigateTo('matches')" 
+                                    class="bg-green-500 text-white p-4 rounded-xl text-center card-hover">
+                                <div class="text-2xl mb-1">⚽</div>
+                                <div class="font-medium">Знайти матч</div>
+                            </button>
+                            <button onclick="navigateTo('videos')" 
+                                    class="bg-blue-500 text-white p-4 rounded-xl text-center card-hover">
+                                <div class="text-2xl mb-1">📱</div>
+                                <div class="font-medium">Відео</div>
+                            </button>
+                            <button onclick="navigateTo('players')" 
+                                    class="bg-purple-500 text-white p-4 rounded-xl text-center card-hover">
+                                <div class="text-2xl mb-1">👥</div>
+                                <div class="font-medium">Гравці</div>
+                            </button>
+                            <button onclick="navigateTo('friends')" 
+                                    class="bg-orange-500 text-white p-4 rounded-xl text-center card-hover">
+                                <div class="text-2xl mb-1">👫</div>
+                                <div class="font-medium">Друзі</div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activity -->
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-3">📈 Остання активність</h3>
+                        <div class="space-y-3">
+                            <div class="bg-gray-50 p-3 rounded-lg">
+                                <div class="flex items-center space-x-3">
+                                    <div class="text-2xl">🏆</div>
+                                    <div>
+                                        <p class="font-medium">Перемога в матчі</p>
+                                        <p class="text-sm text-gray-600">2 години тому</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-gray-50 p-3 rounded-lg">
+                                <div class="flex items-center space-x-3">
+                                    <div class="text-2xl">⭐</div>
+                                    <div>
+                                        <p class="font-medium">Новий бейдж отримано</p>
+                                        <p class="text-sm text-gray-600">Вчора</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Navigation -->
+                    ${renderBottomNav('home')}
+                    
+                    <!-- Subscription at bottom -->
+                    <div class="p-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-center">
+                        <p class="text-sm font-medium">🌟 Преміум підписка</p>
+                        <p class="text-xs opacity-90">Розблокуй всі функції</p>
+                        <button onclick="navigateTo('subscription')" class="bg-white text-orange-500 px-4 py-1 rounded-full text-sm font-medium mt-2">
+                            Дізнатися більше
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderMatchesScreen() {
+            const filteredMatches = matchCityFilter === 'Всі міста' 
+                ? matches 
+                : matches.filter(m => m.location.includes(matchCityFilter));
+
+            return `
+                <div class="animate-fade-in">
+                    <!-- Header -->
+                    <div class="bg-green-500 text-white p-4">
+                        <div class="flex items-center justify-between mb-4">
+                            <button onclick="navigateTo('home')" class="text-2xl">←</button>
+                            <h1 class="text-xl font-bold">⚽ Матчі</h1>
+                            <button onclick="navigateTo('createMatch')" class="text-2xl">+</button>
+                        </div>
+                        
+                        <!-- Filter -->
+                        <select onchange="matchCityFilter = this.value; renderCurrentScreen()" 
+                                class="w-full p-2 rounded-lg text-gray-800">
+                            ${cities.map(city => 
+                                `<option value="${city}" ${city === matchCityFilter ? 'selected' : ''}>${city}</option>`
+                            ).join('')}
+                        </select>
+                    </div>
+
+                    <!-- Matches List -->
+                    <div class="p-4 space-y-4">
+                        ${filteredMatches.map(match => `
+                            <div class="bg-white border border-gray-200 rounded-xl p-4 card-hover">
+                                <div class="flex items-start justify-between mb-3">
+                                    <div class="flex-1">
+                                        <h3 class="font-bold text-lg">${match.title}</h3>
+                                        <p class="text-gray-600 text-sm">📍 ${match.location}</p>
+                                        <p class="text-gray-600 text-sm">🕐 ${match.date} о ${match.time}</p>
+                                    </div>
+                                    <button onclick="toggleFavorite(${match.id})" 
+                                            class="text-2xl ${favorites.has(match.id) ? 'text-red-500' : 'text-gray-300'}">
+                                        ${favorites.has(match.id) ? '❤️' : '🤍'}
+                                    </button>
+                                </div>
+                                
+                                <div class="flex items-center justify-between mb-3">
+                                    <div class="flex space-x-4 text-sm">
+                                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
+                                            👥 ${match.players}
+                                        </span>
+                                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full">
+                                            📊 ${match.level}
+                                        </span>
+                                        <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full">
+                                            💰 ${match.price}
+                                        </span>
+                                    </div>
+                                </div>
+                                
+                                <p class="text-gray-700 text-sm mb-3">${match.description}</p>
+                                <p class="text-gray-600 text-xs mb-3">Організатор: ${match.organizer}</p>
+                                
+                                <div class="flex space-x-2">
+                                    <button onclick="navigateTo('matchDetail', ${match.id})" 
+                                            class="flex-1 bg-green-500 text-white py-2 px-4 rounded-lg font-medium">
+                                        Детальніше
+                                    </button>
+                                    <button onclick="startMatch(${match.id})" 
+                                            class="flex-1 bg-blue-500 text-white py-2 px-4 rounded-lg font-medium">
+                                        Приєднатися
+                                    </button>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    ${renderBottomNav('matches')}
+                </div>
+            `;
+        }
+
+        function renderMatchDetail() {
+            if (!selectedMatch) return renderMatchesScreen();
+            
+            return `
+                <div class="animate-fade-in">
+                    <!-- Header -->
+                    <div class="bg-green-500 text-white p-4">
+                        <div class="flex items-center justify-between mb-4">
+                            <button onclick="navigateTo('matches')" class="text-2xl">←</button>
+                            <h1 class="text-xl font-bold">Деталі матчу</h1>
+                            <button onclick="toggleFavorite(${selectedMatch.id})" class="text-2xl">
+                                ${favorites.has(selectedMatch.id) ? '❤️' : '🤍'}
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Match Info -->
+                    <div class="p-4">
+                        <div class="bg-white rounded-xl p-6 shadow-lg mb-4">
+                            <h2 class="text-2xl font-bold mb-4">${selectedMatch.title}</h2>
+                            
+                            <div class="space-y-3 mb-6">
+                                <div class="flex items-center space-x-3">
+                                    <span class="text-2xl">📍</span>
+                                    <span class="text-gray-700">${selectedMatch.location}</span>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <span class="text-2xl">🕐</span>
+                                    <span class="text-gray-700">${selectedMatch.date} о ${selectedMatch.time}</span>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <span class="text-2xl">👥</span>
+                                    <span class="text-gray-700">Гравці: ${selectedMatch.players}</span>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <span class="text-2xl">📊</span>
+                                    <span class="text-gray-700">Рівень: ${selectedMatch.level}</span>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <span class="text-2xl">💰</span>
+                                    <span class="text-gray-700">Вартість: ${selectedMatch.price}</span>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <span class="text-2xl">👤</span>
+                                    <span class="text-gray-700">Організатор: ${selectedMatch.organizer}</span>
+                                </div>
+                            </div>
+                            
+                            <p class="text-gray-700 mb-6">${selectedMatch.description}</p>
+                            
+                            <div class="flex space-x-3">
+                                <button onclick="startMatch(${selectedMatch.id})" 
+                                        class="flex-1 bg-green-500 text-white py-3 px-6 rounded-lg font-semibold">
+                                    🚀 Приєднатися до матчу
+                                </button>
+                                <button class="bg-blue-500 text-white py-3 px-6 rounded-lg font-semibold">
+                                    💬 Чат
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderMatchInProgress() {
+            if (!selectedMatch || !selectedMatch.team1 || !selectedMatch.team2) return renderMatchesScreen();
+            
+            return `
+                <div class="animate-fade-in">
+                    <!-- Header -->
+                    <div class="bg-green-500 text-white p-4">
+                        <div class="flex items-center justify-between mb-4">
+                            <button onclick="navigateTo('matches')" class="text-2xl">←</button>
+                            <h1 class="text-xl font-bold">Матч у грі</h1>
+                            <div class="text-sm">⏱️ LIVE</div>
+                        </div>
+                    </div>
+
+                    <!-- Match Status -->
+                    <div class="p-4">
+                        <div class="bg-white rounded-xl p-6 shadow-lg mb-4">
+                            <h2 class="text-center text-xl font-bold mb-6">${selectedMatch.title}</h2>
+                            
+                            <!-- Teams -->
+                            <div class="grid grid-cols-2 gap-4 mb-6">
+                                <div class="text-center">
+                                    <h3 class="font-bold text-lg mb-3 text-blue-600">Команда 1</h3>
+                                    <div class="space-y-2">
+                                        ${selectedMatch.team1.map(player => `
+                                            <div class="bg-blue-50 p-2 rounded-lg">
+                                                <div class="font-medium">${player.name}</div>
+                                                <div class="text-sm text-gray-600">${player.position}</div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                                
+                                <div class="text-center">
+                                    <h3 class="font-bold text-lg mb-3 text-red-600">Команда 2</h3>
+                                    <div class="space-y-2">
+                                        ${selectedMatch.team2.map(player => `
+                                            <div class="bg-red-50 p-2 rounded-lg">
+                                                <div class="font-medium">${player.name}</div>
+                                                <div class="text-sm text-gray-600">${player.position}</div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Match Actions -->
+                            <div class="space-y-3">
+                                <button onclick="finishMatch('1')" 
+                                        class="w-full bg-blue-500 text-white py-3 px-6 rounded-lg font-semibold">
+                                    🏆 Команда 1 перемогла
+                                </button>
+                                <button onclick="finishMatch('2')" 
+                                        class="w-full bg-red-500 text-white py-3 px-6 rounded-lg font-semibold">
+                                    🏆 Команда 2 перемогла
+                                </button>
+                                <button onclick="finishMatch('draw')" 
+                                        class="w-full bg-gray-500 text-white py-3 px-6 rounded-lg font-semibold">
+                                    🤝 Нічия
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderMatchFinished() {
+            if (!selectedMatch || !matchFinished) return renderMatchesScreen();
+            
+            const allPlayers = [...(selectedMatch.team1 || []), ...(selectedMatch.team2 || [])];
+            
+            return `
+                <div class="animate-fade-in">
+                    <!-- Header -->
+                    <div class="bg-green-500 text-white p-4">
+                        <div class="flex items-center justify-between mb-4">
+                            <button onclick="navigateTo('matches')" class="text-2xl">←</button>
+                            <h1 class="text-xl font-bold">Матч завершено</h1>
+                            <div class="text-sm">✅ ФІНІШ</div>
+                        </div>
+                    </div>
+
+                    <!-- Match Result -->
+                    <div class="p-4">
+                        <div class="bg-white rounded-xl p-6 shadow-lg mb-4">
+                            <div class="text-center mb-6">
+                                <h2 class="text-2xl font-bold mb-2">🏆 Результат матчу</h2>
+                                <p class="text-lg">
+                                    ${winningTeam === '1' ? 'Команда 1 перемогла!' : 
+                                      winningTeam === '2' ? 'Команда 2 перемогла!' : 
+                                      'Нічия!'}
+                                </p>
+                            </div>
+                            
+                            <!-- Player Ratings -->
+                            <h3 class="font-bold text-lg mb-4">⭐ Оцініть гравців</h3>
+                            <div class="space-y-4">
+                                ${allPlayers.map(player => `
+                                    <div class="bg-gray-50 p-4 rounded-lg">
+                                        <div class="flex items-center justify-between mb-3">
+                                            <div>
+                                                <div class="font-medium">${player.name}</div>
+                                                <div class="text-sm text-gray-600">${player.position}</div>
+                                            </div>
+                                            <div class="text-2xl">${player.avatar}</div>
+                                        </div>
+                                        
+                                        <div class="flex items-center space-x-2">
+                                            <span class="text-sm">Оцінка:</span>
+                                            <input type="range" min="1" max="5" value="3" 
+                                                   class="slider flex-1" 
+                                                   onchange="ratePlayer(${player.id}, this.value)">
+                                            <span class="text-sm font-medium w-8" id="rating-${player.id}">3</span>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            
+                            <div class="mt-6 space-y-3">
+                                <button onclick="navigateTo('matches')" 
+                                        class="w-full bg-green-500 text-white py-3 px-6 rounded-lg font-semibold">
+                                    ✅ Завершити оцінювання
+                                </button>
+                                <button onclick="navigateTo('home')" 
+                                        class="w-full bg-blue-500 text-white py-3 px-6 rounded-lg font-semibold">
+                                    🏠 На головну
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderPlayersScreen() {
+            const filteredPlayers = playerCityFilter === 'Всі міста' 
+                ? players 
+                : players.filter(p => p.city === playerCityFilter);
+
+            return `
+                <div class="animate-fade-in">
+                    <!-- Header -->
+                    <div class="bg-purple-500 text-white p-4">
+                        <div class="flex items-center justify-between mb-4">
+                            <button onclick="navigateTo('home')" class="text-2xl">←</button>
+                            <h1 class="text-xl font-bold">👥 Гравці</h1>
+                            <button onclick="navigateTo('ratings')" class="text-2xl">📊</button>
+                        </div>
+                        
+                        <!-- Filter -->
+                        <select onchange="playerCityFilter = this.value; renderCurrentScreen()" 
+                                class="w-full p-2 rounded-lg text-gray-800">
+                            ${cities.map(city => 
+                                `<option value="${city}" ${city === playerCityFilter ? 'selected' : ''}>${city}</option>`
+                            ).join('')}
+                        </select>
+                    </div>
+
+                    <!-- Players List -->
+                    <div class="p-4 space-y-4">
+                        ${filteredPlayers.map(player => `
+                            <div class="bg-white border border-gray-200 rounded-xl p-4 card-hover">
+                                <div class="flex items-center space-x-4">
+                                    <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center text-3xl">
+                                        ${player.avatar}
+                                    </div>
+                                    <div class="flex-1">
+                                        <h3 class="font-bold text-lg">${player.name}</h3>
+                                        <p class="text-gray-600">${player.position} • ${player.city}</p>
+                                        <div class="flex items-center space-x-1 mt-1">
+                                            ${renderStars(player.rating)}
+                                            <span class="text-sm text-gray-600 ml-2">${player.rating}</span>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="text-sm text-gray-600">${player.matches} матчів</div>
+                                        <div class="text-sm text-gray-600">${player.goals} голів</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex flex-wrap gap-1 mt-3">
+                                    ${player.achievements.map(achievement => 
+                                        `<span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">${achievement}</span>`
+                                    ).join('')}
+                                </div>
+                                
+                                <div class="flex space-x-2 mt-4">
+                                    <button onclick="navigateTo('playerProfile', ${player.id})" 
+                                            class="flex-1 bg-purple-500 text-white py-2 px-4 rounded-lg font-medium">
+                                        Профіль
+                                    </button>
+                                    <button onclick="toggleFriend(${player.id})" 
+                                            class="bg-blue-500 text-white py-2 px-4 rounded-lg font-medium">
+                                        ${friends.has(player.id) ? '✓ Друг' : '+ Додати'}
+                                    </button>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    ${renderBottomNav('players')}
+                </div>
+            `;
+        }
+
+        function renderPlayerProfile() {
+            if (!selectedPlayer) return renderPlayersScreen();
+            const player = players.find(p => p.id === selectedPlayer);
+            if (!player) return renderPlayersScreen();
+
+            return `
+                <div class="animate-fade-in">
+                    <!-- Header -->
+                    <div class="bg-purple-500 text-white p-4">
+                        <div class="flex items-center justify-between mb-4">
+                            <button onclick="navigateTo('players')" class="text-2xl">←</button>
+                            <h1 class="text-xl font-bold">Профіль гравця</h1>
+                            <button onclick="toggleFriend(${player.id})" class="text-2xl">
+                                ${friends.has(player.id) ? '✓' : '+'}
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Player Info -->
+                    <div class="p-4">
+                        <div class="bg-white rounded-xl p-6 shadow-lg mb-4">
+                            <div class="text-center mb-6">
+                                <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center text-5xl mx-auto mb-4">
+                                    ${player.avatar}
+                                </div>
+                                <h2 class="text-2xl font-bold">${player.name}</h2>
+                                <p class="text-gray-600">${player.position} • ${player.city}</p>
+                                <div class="flex items-center justify-center space-x-1 mt-2">
+                                    ${renderStars(player.rating)}
+                                    <span class="text-lg font-medium ml-2">${player.rating}</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Stats -->
+                            <div class="grid grid-cols-3 gap-4 mb-6">
+                                <div class="text-center bg-gray-50 p-4 rounded-lg">
+                                    <div class="text-2xl font-bold text-blue-600">${player.matches}</div>
+                                    <div class="text-sm text-gray-600">Матчі</div>
+                                </div>
+                                <div class="text-center bg-gray-50 p-4 rounded-lg">
+                                    <div class="text-2xl font-bold text-green-600">${player.goals}</div>
+                                    <div class="text-sm text-gray-600">Голи</div>
+                                </div>
+                                <div class="text-center bg-gray-50 p-4 rounded-lg">
+                                    <div class="text-2xl font-bold text-purple-600">${player.assists}</div>
+                                    <div class="text-sm text-gray-600">Передачі</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Achievements -->
+                            <div class="mb-6">
+                                <h3 class="font-bold text-lg mb-3">🏆 Досягнення</h3>
+                                <div class="flex flex-wrap gap-2">
+                                    ${player.achievements.map(achievement => 
+                                        `<span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full font-medium">${achievement}</span>`
+                                    ).join('')}
+                                </div>
+                            </div>
+                            
+                            <!-- Rating -->
+                            <div class="mb-6">
+                                <h3 class="font-bold text-lg mb-3">⭐ Оцініть гравця</h3>
+                                <div class="flex items-center space-x-4">
+                                    <input type="range" min="1" max="5" value="${currentRatingValue}" 
+                                           class="slider flex-1" 
+                                           onchange="currentRatingValue = this.value; document.getElementById('currentRating').textContent = this.value">
+                                    <span class="text-lg font-medium w-8" id="currentRating">${currentRatingValue}</span>
+                                    <button onclick="ratePlayer(${player.id}, currentRatingValue)" 
+                                            class="bg-green-500 text-white px-4 py-2 rounded-lg font-medium">
+                                        Оцінити
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Actions -->
+                            <div class="space-y-3">
+                                <button class="w-full bg-blue-500 text-white py-3 px-6 rounded-lg font-semibold">
+                                    💬 Написати повідомлення
+                                </button>
+                                <button class="w-full bg-green-500 text-white py-3 px-6 rounded-lg font-semibold">
+                                    ⚽ Запросити в матч
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderRatingsScreen() {
+            const sortedPlayers = [...players].sort((a, b) => b.rating - a.rating);
+            
+            return `
+                <div class="animate-fade-in">
+                    <!-- Header -->
+                    <div class="bg-yellow-500 text-white p-4">
+                        <div class="flex items-center justify-between mb-4">
+                            <button onclick="navigateTo('players')" class="text-2xl">←</button>
+                            <h1 class="text-xl font-bold">📊 Рейтинги</h1>
+                            <div class="text-2xl">🏆</div>
+                        </div>
+                    </div>
+
+                    <!-- Rankings -->
+                    <div class="p-4">
+                        <h2 class="font-bold text-xl mb-4">🏆 Топ гравців</h2>
+                        <div class="space-y-3">
+                            ${sortedPlayers.map((player, index) => `
+                                <div class="bg-white border border-gray-200 rounded-xl p-4 card-hover">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg
+                                                    ${index === 0 ? 'bg-yellow-100 text-yellow-800' : 
+                                                      index === 1 ? 'bg-gray-100 text-gray-800' : 
+                                                      index === 2 ? 'bg-orange-100 text-orange-800' : 
+                                                      'bg-blue-100 text-blue-800'}">
+                                            ${index + 1}
+                                        </div>
+                                        <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-xl">
+                                            ${player.avatar}
+                                        </div>
+                                        <div class="flex-1">
+                                            <h3 class="font-bold">${player.name}</h3>
+                                            <p class="text-gray-600 text-sm">${player.position} • ${player.city}</p>
+                                        </div>
+                                        <div class="text-right">
+                                            <div class="flex items-center space-x-1">
+                                                ${renderStars(player.rating)}
+                                            </div>
+                                            <div class="text-lg font-bold text-yellow-600">${player.rating}</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="grid grid-cols-3 gap-2 mt-3 text-center text-sm">
+                                        <div>
+                                            <div class="font-medium">${player.matches}</div>
+                                            <div class="text-gray-600">Матчі</div>
+                                        </div>
+                                        <div>
+                                            <div class="font-medium">${player.goals}</div>
+                                            <div class="text-gray-600">Голи</div>
+                                        </div>
+                                        <div>
+                                            <div class="font-medium">${player.assists}</div>
+                                            <div class="text-gray-600">Передачі</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <button onclick="navigateTo('playerProfile', ${player.id})" 
+                                            class="w-full mt-3 bg-purple-500 text-white py-2 rounded-lg font-medium">
+                                        Переглянути профіль
+                                    </button>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    ${renderBottomNav('players')}
+                </div>
+            `;
+        }
+
+        function renderVideosScreen() {
+            const filteredVideos = videos.filter(video => {
+                const categoryMatch = challengeCategory === 'Всі' || video.category === challengeCategory;
+                const typeMatch = contentType === 'Всі' || video.type === contentType;
+                return categoryMatch && typeMatch;
+            });
+
+            return `
+                <div class="animate-fade-in">
+                    <!-- Header -->
+                    <div class="bg-blue-500 text-white p-4">
+                        <div class="flex items-center justify-between mb-4">
+                            <button onclick="navigateTo('home')" class="text-2xl">←</button>
+                            <h1 class="text-xl font-bold">📱 Відео та Челенджі</h1>
+                            <button onclick="navigateTo('uploadVideo')" class="text-2xl">+</button>
+                        </div>
+                        
+                        <!-- Filters -->
+                        <div class="space-y-2">
+                            <select onchange="challengeCategory = this.value; renderCurrentScreen()" 
+                                    class="w-full p-2 rounded-lg text-gray-800">
+                                ${categories.map(category => 
+                                    `<option value="${category}" ${category === challengeCategory ? 'selected' : ''}>${category}</option>`
+                                ).join('')}
+                            </select>
+                            <select onchange="contentType = this.value; renderCurrentScreen()" 
+                                    class="w-full p-2 rounded-lg text-gray-800">
+                                ${contentTypes.map(type => 
+                                    `<option value="${type}" ${type === contentType ? 'selected' : ''}>${type}</option>`
+                                ).join('')}
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Videos List -->
+                    <div class="p-4 space-y-4">
+                        ${filteredVideos.map(video => `
+                            <div class="bg-white border border-gray-200 rounded-xl overflow-hidden card-hover">
+                                <div class="bg-gray-100 h-48 flex items-center justify-center text-6xl">
+                                    ${video.thumbnail}
+                                </div>
+                                <div class="p-4">
+                                    <div class="flex items-start justify-between mb-2">
+                                        <div class="flex-1">
+                                            <h3 class="font-bold text-lg">${video.title}</h3>
+                                            <p class="text-gray-600 text-sm">👤 ${video.author}</p>
+                                        </div>
+                                        <button onclick="toggleFavorite(${video.id})" 
+                                                class="text-2xl ${favorites.has(video.id) ? 'text-red-500' : 'text-gray-300'}">
+                                            ${favorites.has(video.id) ? '❤️' : '🤍'}
+                                        </button>
+                                    </div>
+                                    
+                                    <div class="flex items-center space-x-4 mb-3">
+                                        <div class="flex items-center space-x-1">
+                                            ${renderStars(video.rating)}
+                                            <span class="text-sm text-gray-600 ml-1">${video.rating}</span>
+                                        </div>
+                                        <span class="text-sm text-gray-600">👀 ${video.views}</span>
+                                        <span class="text-sm text-gray-600">⏱️ ${video.duration}</span>
+                                    </div>
+                                    
+                                    <div class="flex space-x-2 mb-3">
+                                        <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">
+                                            ${video.category}
+                                        </span>
+                                        <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">
+                                            ${video.type}
+                                        </span>
+                                    </div>
+                                    
+                                    <p class="text-gray-700 text-sm mb-4">${video.description}</p>
+                                    
+                                    <div class="flex space-x-2">
+                                        <button onclick="navigateTo('videoDetail', ${video.id})" 
+                                                class="flex-1 bg-blue-500 text-white py-2 px-4 rounded-lg font-medium">
+                                            📱 Переглянути
+                                        </button>
+                                        ${video.type === 'Челенджі' ? `
+                                            <button onclick="navigateTo('challengeInvite', ${video.id})" 
+                                                    class="bg-green-500 text-white py-2 px-4 rounded-lg font-medium">
+                                                🎯 Виклик
+                                            </button>
+                                        ` : ''}
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    ${renderBottomNav('videos')}
+                </div>
+            `;
+        }
+
+        function renderVideoDetail() {
+            if (!selectedVideo) return renderVideosScreen();
+            const video = videos.find(v => v.id === selectedVideo);
+            if (!video) return renderVideosScreen();
+            
+            const comments = videoComments[video.id] || [];
+
+            return `
+                <div class="animate-fade-in">
+                    <!-- Header -->
+                    <div class="bg-blue-500 text-white p-4">
+                        <div class="flex items-center justify-between mb-4">
+                            <button onclick="navigateTo('videos')" class="text-2xl">←</button>
+                            <h1 class="text-xl font-bold">Відео</h1>
+                            <button onclick="toggleFavorite(${video.id})" class="text-2xl">
+                                ${favorites.has(video.id) ? '❤️' : '🤍'}
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Video Player -->
+                    <div class="bg-gray-100 h-64 flex items-center justify-center text-8xl">
+                        ${video.thumbnail}
+                    </div>
+
+                    <!-- Video Info -->
+                    <div class="p-4">
+                        <div class="mb-4">
+                            <h2 class="text-2xl font-bold mb-2">${video.title}</h2>
+                            <div class="flex items-center space-x-4 mb-3">
+                                <span class="text-gray-600">👤 ${video.author}</span>
+                                <span class="text-gray-600">👀 ${video.views}</span>
+                                <span class="text-gray-600">⏱️ ${video.duration}</span>
+                            </div>
+                            
+                            <div class="flex items-center space-x-4 mb-4">
+                                <div class="flex items-center space-x-1">
+                                    ${renderStars(video.rating)}
+                                    <span class="text-sm text-gray-600 ml-1">${video.rating}</span>
+                                </div>
+                                <div class="flex space-x-2">
+                                    <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">
+                                        ${video.category}
+                                    </span>
+                                    <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">
+                                        ${video.type}
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <p class="text-gray-700 mb-4">${video.description}</p>
+                        </div>
+
+                        <!-- Rating -->
+                        <div class="bg-white border border-gray-200 rounded-xl p-4 mb-4">
+                            <h3 class="font-bold text-lg mb-3">⭐ Оцініть відео</h3>
+                            <div class="flex items-center space-x-4">
+                                <input type="range" min="1" max="5" value="${currentRatingValue}" 
+                                       class="slider flex-1" 
+                                       onchange="currentRatingValue = this.value; document.getElementById('videoRating').textContent = this.value">
+                                <span class="text-lg font-medium w-8" id="videoRating">${currentRatingValue}</span>
+                                <button onclick="rateVideo(${video.id}, currentRatingValue)" 
+                                        class="bg-green-500 text-white px-4 py-2 rounded-lg font-medium">
+                                    Оцінити
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Comments -->
+                        <div class="bg-white border border-gray-200 rounded-xl p-4">
+                            <h3 class="font-bold text-lg mb-3">💬 Коментарі (${comments.length})</h3>
+                            
+                            <!-- Add Comment -->
+                            <div class="mb-4">
+                                <textarea placeholder="Напишіть коментар..." 
+                                          class="w-full p-3 border border-gray-300 rounded-lg resize-none"
+                                          rows="3" onchange="newComment = this.value"></textarea>
+                                <button onclick="if(newComment.trim()) { addComment(${video.id}, newComment); newComment = ''; this.previousElementSibling.value = ''; }" 
+                                        class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-lg font-medium">
+                                    Додати коментар
+                                </button>
+                            </div>
+                            
+                            <!-- Comments List -->
+                            <div class="space-y-3">
+                                ${comments.map(comment => `
+                                    <div class="bg-gray-50 p-3 rounded-lg">
+                                        <div class="flex items-center justify-between mb-2">
+                                            <span class="font-medium">${comment.author}</span>
+                                            <span class="text-sm text-gray-600">${comment.time}</span>
+                                        </div>
+                                        <p class="text-gray-700">${comment.text}</p>
+                                        <div class="flex items-center space-x-4 mt-2">
+                                            <button class="text-sm text-blue-600">👍 ${comment.likes}</button>
+                                            <button class="text-sm text-gray-600">Відповісти</button>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                                
+                                ${comments.length === 0 ? `
+                                    <div class="text-center text-gray-500 py-8">
+                                        <div class="text-4xl mb-2">💬</div>
+                                        <p>Поки немає коментарів</p>
+                                        <p class="text-sm">Будьте першим!</p>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderChallengeInvite() {
+            if (!selectedChallenge) return renderVideosScreen();
+            const challenge = videos.find(v => v.id === selectedChallenge);
+            if (!challenge) return renderVideosScreen();
+
+            return `
+                <div class="animate-fade-in">
+                    <!-- Header -->
+                    <div class="bg-green-500 text-white p-4">
+                        <div class="flex items-center justify-between mb-4">
+                            <button onclick="navigateTo('videoDetail', ${challenge.id})" class="text-2xl">←</button>
+                            <h1 class="text-xl font-bold">Запросити до челенджу</h1>
+                            <div class="text-2xl">🎯</div>
+                        </div>
+                    </div>
+
+                    <!-- Challenge Info -->
+                    <div class="p-4">
+                        <div class="bg-white rounded-xl p-6 shadow-lg mb-4">
+                            <div class="text-center mb-4">
+                                <div class="text-6xl mb-2">${challenge.thumbnail}</div>
+                                <h2 class="text-xl font-bold">${challenge.title}</h2>
+                                <p class="text-gray-600">від ${challenge.author}</p>
+                            </div>
+                            
+                            <p class="text-gray-700 text-center mb-6">${challenge.description}</p>
+                        </div>
+
+                        <!-- Friends List -->
+                        <div class="bg-white rounded-xl p-4 shadow-lg">
+                            <h3 class="font-bold text-lg mb-4">👫 Запросити друзів</h3>
+                            <div class="space-y-3">
+                                ${currentFriends.map(friend => `
+                                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                        <div class="flex items-center space-x-3">
+                                            <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center text-xl">
+                                                ${friend.avatar}
+                                            </div>
+                                            <div>
+                                                <div class="font-medium">${friend.name}</div>
+                                                <div class="text-sm text-gray-600">
+                                                    <span class="w-2 h-2 rounded-full inline-block mr-1 ${friend.status === 'online' ? 'bg-green-500' : 'bg-gray-400'}"></span>
+                                                    ${friend.status === 'online' ? 'Онлайн' : 'Офлайн'}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button onclick="inviteToChallenge(${challenge.id}, ${friend.id})" 
+                                                class="bg-green-500 text-white px-4 py-2 rounded-lg font-medium">
+                                            Запросити
+                                        </button>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            
+                            <div class="mt-6 space-y-3">
+                                <button onclick="navigateTo('videoDetail', ${challenge.id})" 
+                                        class="w-full bg-blue-500 text-white py-3 px-6 rounded-lg font-semibold">
+                                    Назад до відео
+                                </button>
+                                <button onclick="showNotification('Челендж розпочато!'); navigateTo('videos')" 
+                                        class="w-full bg-green-500 text-white py-3 px-6 rounded-lg font-semibold">
+                                    🎯 Розпочати челендж
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderFriendsScreen() {
+            return `
+                <div class="animate-fade-in">
+                    <!-- Header -->
+                    <div class="bg-orange-500 text-white p-4">
+                        <div class="flex items-center justify-between mb-4">
+                            <button onclick="navigateTo('home')" class="text-2xl">←</button>
+                            <h1 class="text-xl font-bold">👫 Друзі</h1>
+                            <button onclick="navigateTo('findFriends')" class="text-2xl">+</button>
+                        </div>
+                    </div>
+
+                    <!-- Current Friends -->
+                    <div class="p-4">
+                        <h2 class="font-bold text-xl mb-4">Мої друзі (${currentFriends.length})</h2>
+                        <div class="space-y-3 mb-6">
+                            ${currentFriends.map(friend => `
+                                <div class="bg-white border border-gray-200 rounded-xl p-4 card-hover">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-2xl">
+                                            ${friend.avatar}
+                                        </div>
+                                        <div class="flex-1">
+                                            <h3 class="font-bold">${friend.name}</h3>
+                                            <p class="text-gray-600 text-sm">${friend.city}</p>
+                                            <div class="flex items-center space-x-1 mt-1">
+                                                <span class="w-2 h-2 rounded-full ${friend.status === 'online' ? 'bg-green-500' : 'bg-gray-400'}"></span>
+                                                <span class="text-sm text-gray-600">${friend.status === 'online' ? 'Онлайн' : 'Офлайн'}</span>
+                                            </div>
+                                        </div>
+                                        <div class="flex space-x-2">
+                                            <button class="bg-blue-500 text-white p-2 rounded-lg">💬</button>
+                                            <button onclick="toggleFriend(${friend.id})" class="bg-red-500 text-white p-2 rounded-lg">🗑️</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+
+                        <!-- Friend Suggestions -->
+                        <h2 class="font-bold text-xl mb-4">💡 Рекомендації</h2>
+                        <div class="space-y-3">
+                            ${friendSuggestions.slice(0, 3).map(suggestion => `
+                                <div class="bg-white border border-gray-200 rounded-xl p-4 card-hover">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-2xl">
+                                            ${suggestion.avatar}
+                                        </div>
+                                        <div class="flex-1">
+                                            <h3 class="font-bold">${suggestion.name}</h3>
+                                            <p class="text-gray-600 text-sm">${suggestion.city}</p>
+                                            <p class="text-gray-600 text-xs">${suggestion.mutualFriends} спільних друзів</p>
+                                        </div>
+                                        <button onclick="toggleFriend(${suggestion.id})" 
+                                                class="bg-orange-500 text-white px-4 py-2 rounded-lg font-medium">
+                                            + Додати
+                                        </button>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        
+                        <button onclick="navigateTo('findFriends')" 
+                                class="w-full mt-4 bg-orange-500 text-white py-3 px-6 rounded-lg font-semibold">
+                            🔍 Знайти більше друзів
+                        </button>
+                    </div>
+
+                    ${renderBottomNav('friends')}
+                </div>
+            `;
+        }
+
+        function renderFindFriendsScreen() {
+            return `
+                <div class="animate-fade-in">
+                    <!-- Header -->
+                    <div class="bg-orange-500 text-white p-4">
+                        <div class="flex items-center justify-between mb-4">
+                            <button onclick="navigateTo('friends')" class="text-2xl">←</button>
+                            <h1 class="text-xl font-bold">🔍 Знайти друзів</h1>
+                            <div class="text-2xl">👥</div>
+                        </div>
+                    </div>
+
+                    <!-- Search -->
+                    <div class="p-4">
+                        <div class="mb-6">
+                            <input type="text" placeholder="Пошук за ім'ям або містом..." 
+                                   class="w-full p-3 border border-gray-300 rounded-lg">
+                        </div>
+
+                        <!-- All Suggestions -->
+                        <h2 class="font-bold text-xl mb-4">💡 Рекомендовані друзі</h2>
+                        <div class="space-y-3">
+                            ${friendSuggestions.map(suggestion => `
+                                <div class="bg-white border border-gray-200 rounded-xl p-4 card-hover">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-2xl">
+                                            ${suggestion.avatar}
+                                        </div>
+                                        <div class="flex-1">
+                                            <h3 class="font-bold">${suggestion.name}</h3>
+                                            <p class="text-gray-600 text-sm">${suggestion.city}</p>
+                                            <p class="text-gray-600 text-xs">${suggestion.mutualFriends} спільних друзів</p>
+                                        </div>
+                                        <button onclick="toggleFriend(${suggestion.id})" 
+                                                class="bg-orange-500 text-white px-4 py-2 rounded-lg font-medium">
+                                            ${friends.has(suggestion.id) ? '✓ Друг' : '+ Додати'}
+                                        </button>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderShopScreen() {
+            return `
+                <div class="animate-fade-in">
+                    <!-- Header -->
+                    <div class="bg-yellow-500 text-white p-4">
+                        <div class="flex items-center justify-between mb-4">
+                            <button onclick="navigateTo('home')" class="text-2xl">←</button>
+                            <h1 class="text-xl font-bold">🏪 Магазин</h1>
+                            <div class="bg-white/20 rounded-full px-3 py-1 text-sm font-medium">
+                                💰 ${user.coins}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Shop Items -->
+                    <div class="p-4">
+                        <!-- Badges -->
+                        <h2 class="font-bold text-xl mb-4">🏆 Бейджі</h2>
+                        <div class="space-y-3 mb-6">
+                            ${badges.map(badge => `
+                                <div class="bg-white border border-gray-200 rounded-xl p-4 card-hover">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="text-3xl">${badge.name.split(' ')[0]}</div>
+                                        <div class="flex-1">
+                                            <h3 class="font-bold">${badge.name}</h3>
+                                            <p class="text-gray-600 text-sm">${badge.description}</p>
+                                            <p class="text-yellow-600 font-medium">💰 ${badge.price} монет</p>
+                                        </div>
+                                        <button onclick="purchaseBadge(${badge.id})" 
+                                                class="px-4 py-2 rounded-lg font-medium ${badge.owned ? 'bg-green-100 text-green-800' : user.coins >= badge.price ? 'bg-yellow-500 text-white' : 'bg-gray-300 text-gray-600'}"
+                                                ${badge.owned ? 'disabled' : ''}>
+                                            ${badge.owned ? '✓ Куплено' : user.coins >= badge.price ? 'Купити' : 'Недостатньо'}
+                                        </button>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+
+                        <!-- Coming Soon -->
+                        <h2 class="font-bold text-xl mb-4">🔮 Незабаром</h2>
+                        <div class="space-y-3">
+                            ${comingSoonItems.map(item => `
+                                <div class="bg-gray-50 border border-gray-200 rounded-xl p-4 opacity-75">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="text-3xl">${item.icon}</div>
+                                        <div class="flex-1">
+                                            <h3 class="font-bold">${item.name}</h3>
+                                            <p class="text-gray-600 text-sm">${item.description}</p>
+                                        </div>
+                                        <div class="bg-gray-300 text-gray-600 px-4 py-2 rounded-lg font-medium">
+                                            Незабаром
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    ${renderBottomNav('shop')}
+                </div>
+            `;
+        }
+
+        function renderSubscriptionScreen() {
+            return `
+                <div class="animate-fade-in">
+                    <!-- Header -->
+                    <div class="bg-gradient-to-r from-yellow-400 to-orange-500 text-white p-4">
+                        <div class="flex items-center justify-between mb-4">
+                            <button onclick="navigateTo('home')" class="text-2xl">←</button>
+                            <h1 class="text-xl font-bold">🌟 Преміум</h1>
+                            <div class="text-2xl">👑</div>
+                        </div>
+                    </div>
+
+                    <!-- Premium Features -->
+                    <div class="p-4">
+                        <div class="text-center mb-6">
+                            <div class="text-6xl mb-4">👑</div>
+                            <h2 class="text-2xl font-bold mb-2">GoalApp Premium</h2>
+                            <p class="text-gray-600">Розблокуй всі можливості</p>
+                        </div>
+
+                        <!-- Features -->
+                        <div class="space-y-4 mb-6">
+                            <div class="bg-white rounded-xl p-4 shadow-lg">
+                                <h3 class="font-bold text-lg mb-3">✨ Преміум функції</h3>
+                                <div class="space-y-3">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="text-green-500">✓</div>
+                                        <span>Безлімітні матчі та челенджі</span>
+                                    </div>
+                                    <div class="flex items-center space-x-3">
+                                        <div class="text-green-500">✓</div>
+                                        <span>Ексклюзивні бейджі та нагороди</span>
+                                    </div>
+                                    <div class="flex items-center space-x-3">
+                                        <div class="text-green-500">✓</div>
+                                        <span>Пріоритетна підтримка</span>
+                                    </div>
+                                    <div class="flex items-center space-x-3">
+                                        <div class="text-green-500">✓</div>
+                                        <span>Розширена статистика</span>
+                                    </div>
+                                    <div class="flex items-center space-x-3">
+                                        <div class="text-green-500">✓</div>
+                                        <span>Без реклами</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pricing -->
+                        <div class="space-y-3 mb-6">
+                            <div class="bg-gradient-to-r from-yellow-400 to-orange-500 text-white rounded-xl p-4">
+                                <div class="text-center">
+                                    <div class="text-3xl font-bold">99 грн</div>
+                                    <div class="text-sm opacity-90">на місяць</div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl p-4">
+                                <div class="text-center">
+                                    <div class="text-3xl font-bold">999 грн</div>
+                                    <div class="text-sm opacity-90">на рік (2 місяці безкоштовно!)</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CTA -->
+                        <div class="space-y-3">
+                            <button class="w-full bg-gradient-to-r from-yellow-400 to-orange-500 text-white py-4 px-6 rounded-xl font-bold text-lg">
+                                🚀 Оформити підписку
+                            </button>
+                            <button onclick="navigateTo('home')" 
+                                    class="w-full bg-gray-200 text-gray-700 py-3 px-6 rounded-xl font-medium">
+                                Поки що ні, дякую
+                            </button>
+                        </div>
+
+                        <p class="text-center text-xs text-gray-500 mt-4">
+                            Підписку можна скасувати в будь-який час
+                        </p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderBottomNav(activeTab) {
+            const tabs = [
+                { id: 'home', icon: '🏠', label: 'Головна' },
+                { id: 'matches', icon: '⚽', label: 'Матчі' },
+                { id: 'videos', icon: '📱', label: 'Відео' },
+                { id: 'friends', icon: '👫', label: 'Друзі' },
+                { id: 'shop', icon: '🏪', label: 'Магазин' }
+            ];
+
+            return `
+                <div class="fixed bottom-0 left-1/2 transform -translate-x-1/2 w-full max-w-sm bg-white border-t border-gray-200">
+                    <div class="grid grid-cols-5 py-2">
+                        ${tabs.map(tab => `
+                            <button onclick="navigateTo('${tab.id}')" 
+                                    class="flex flex-col items-center py-2 px-1 ${activeTab === tab.id ? 'text-blue-500' : 'text-gray-600'}">
+                                <div class="text-xl mb-1">${tab.icon}</div>
+                                <div class="text-xs font-medium">${tab.label}</div>
+                            </button>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Main render function
+        function renderCurrentScreen() {
+            const app = document.getElementById('app');
+            
+            switch (currentScreen) {
+                case 'welcome':
+                    app.innerHTML = renderWelcomeScreen();
+                    break;
+                case 'home':
+                    app.innerHTML = renderHomeScreen();
+                    break;
+                case 'matches':
+                    app.innerHTML = renderMatchesScreen();
+                    break;
+                case 'matchDetail':
+                    app.innerHTML = renderMatchDetail();
+                    break;
+                case 'matchInProgress':
+                    app.innerHTML = renderMatchInProgress();
+                    break;
+                case 'matchFinished':
+                    app.innerHTML = renderMatchFinished();
+                    break;
+                case 'players':
+                    app.innerHTML = renderPlayersScreen();
+                    break;
+                case 'playerProfile':
+                    app.innerHTML = renderPlayerProfile();
+                    break;
+                case 'ratings':
+                    app.innerHTML = renderRatingsScreen();
+                    break;
+                case 'videos':
+                    app.innerHTML = renderVideosScreen();
+                    break;
+                case 'videoDetail':
+                    app.innerHTML = renderVideoDetail();
+                    break;
+                case 'challengeInvite':
+                    app.innerHTML = renderChallengeInvite();
+                    break;
+                case 'friends':
+                    app.innerHTML = renderFriendsScreen();
+                    break;
+                case 'findFriends':
+                    app.innerHTML = renderFindFriendsScreen();
+                    break;
+                case 'shop':
+                    app.innerHTML = renderShopScreen();
+                    break;
+                case 'subscription':
+                    app.innerHTML = renderSubscriptionScreen();
+                    break;
+                default:
+                    app.innerHTML = renderWelcomeScreen();
+            }
+        }
+
+        // Initialize app
+        renderCurrentScreen();
+    </script>
+</body>
+</html>
