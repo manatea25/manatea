@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>GoalApp - Футбольний додаток</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            background-color: #f3f4f6;
+            overflow-x: hidden;
+            touch-action: manipulation;
+        }
+        
+        .app {
+            max-width: 414px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        
+        .screen {
+            display: none;
+            min-height: 100vh;
+            animation: fadeIn 0.3s ease-in;
+        }
+        
+        .screen.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* Welcome Screen */
+        .welcome-screen {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 30px;
+            text-align: center;
+        }
+        
+        .logo {
+            width: 120px;
+            height: 120px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+        
+        .welcome-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .welcome-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        
+        .welcome-description {
+            opacity: 0.85;
+            margin-bottom: 50px;
+            font-size: 1.1rem;
+        }
+        
+        .btn-primary {
+            background: white;
+            color: #059669;
+            font-weight: 700;
+            padding: 18px 40px;
+            border-radius: 50px;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            max-width: 320px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .btn-primary:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        
+        /* Auth Screen */
+        .auth-screen {
+            padding: 30px;
+            background: #f9fafb;
+        }
+        
+        .back-btn {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            margin-bottom: 30px;
+            color: #374151;
+            padding: 10px;
+        }
+        
+        .auth-container {
+            max-width: 350px;
+            margin: 0 auto;
+            padding-top: 60px;
+        }
+        
+        .auth-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 50px;
+            color: #1f2937;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 18px;
+            border: 2px solid #e5e7eb;
+            border-radius: 16px;
+            font-size: 1.1rem;
+            outline: none;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        
+        .form-input:focus {
+            border-color: #10b981;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+        }
+        
+        .btn-auth {
+            width: 100%;
+            background: #10b981;
+            color: white;
+            font-weight: 700;
+            padding: 18px;
+            border-radius: 16px;
+            border: none;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-auth:active {
+            background: #059669;
+            transform: translateY(1px);
+        }
+        
+        .link-btn {
+            width: 100%;
+            background: none;
+            border: none;
+            color: #10b981;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 15px;
+            font-size: 1rem;
+        }
+        
+        /* Home Screen */
+        .home-screen {
+            background: #f9fafb;
+        }
+        
+        .header {
+            background: white;
+            padding: 20px 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex: 1;
+        }
+        
+        .header-logo {
+            width: 45px;
+            height: 45px;
+            background: #d1fae5;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+        
+        .header-text h1 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin: 0;
+        }
+        
+        .header-text p {
+            font-size: 0.9rem;
+            color: #6b7280;
+            margin: 0;
+        }
+        
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .header-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.2s ease;
+        }
+        
+        .header-btn:active {
+            transform: scale(0.95);
+        }
+        
+        .shop-btn {
+            background: #fef3c7;
+            color: #d97706;
+        }
+        
+        .profile-btn {
+            background: #e5e7eb;
+            color: #6b7280;
+        }
+        
+        .content {
+            padding: 25px;
+        }
+        
+        .stats-card {
+            background: linear-gradient(135deg, #10b981, #3b82f6);
+            border-radius: 24px;
+            padding: 30px;
+            color: white;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+        }
+        
+        .stats-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .stats-title h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin: 0;
+        }
+        
+        .stats-title p {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin: 0;
+        }
+        
+        .coins {
+            text-align: right;
+        }
+        
+        .coins-amount {
+            font-size: 2rem;
+            font-weight: 800;
+            margin: 0;
+        }
+        
+        .coins-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin: 0;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            text-align: center;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 2px;
+        }
+        
+        .stat-label {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+        
+        .features {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            margin-bottom: 30px;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 24px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border-left: 5px solid;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+        }
+        
+        .feature-card.challenges {
+            border-left-color: #f97316;
+        }
+        
+        .feature-card.matches {
+            border-left-color: #3b82f6;
+        }
+        
+        .feature-content {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+        
+        .feature-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            flex-shrink: 0;
+        }
+        
+        .feature-icon.challenges {
+            background: #fed7aa;
+            color: #ea580c;
+        }
+        
+        .feature-icon.matches {
+            background: #dbeafe;
+            color: #2563eb;
+        }
+        
+        .feature-info h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 0 0 8px 0;
+            color: #1f2937;
+        }
+        
+        .feature-info p {
+            font-size: 1rem;
+            color: #6b7280;
+            margin: 0 0 12px 0;
+            line-height: 1.4;
+        }
+        
+        .feature-tags {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .tag {
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 16px;
+            font-weight: 600;
+        }
+        
+        .tag.orange {
+            background: #fed7aa;
+            color: #ea580c;
+        }
+        
+        .tag.green {
+            background: #d1fae5;
+            color: #059669;
+        }
+        
+        .tag.blue {
+            background: #dbeafe;
+            color: #2563eb;
+        }
+        
+        .small-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-bottom: 30px;
+        }
+        
+        .small-feature {
+            background: white;
+            border-radius: 24px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border-left: 5px solid;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .small-feature:active {
+            transform: translateY(2px);
+        }
+        
+        .small-feature.ratings {
+            border-left-color: #10b981;
+        }
+        
+        .small-feature.friends {
+            border-left-color: #8b5cf6;
+        }
+        
+        .small-feature-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            margin-bottom: 12px;
+        }
+        
+        .small-feature-icon.ratings {
+            background: #d1fae5;
+            color: #059669;
+        }
+        
+        .small-feature-icon.friends {
+            background: #ede9fe;
+            color: #7c3aed;
+        }
+        
+        .small-feature h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin: 0 0 4px 0;
+            color: #1f2937;
+        }
+        
+        .small-feature p {
+            font-size: 0.9rem;
+            color: #6b7280;
+            margin: 0;
+        }
+        
+        .upgrade-card {
+            background: linear-gradient(135deg, #a855f7, #3b82f6);
+            border-radius: 20px;
+            padding: 25px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(168, 85, 247, 0.3);
+        }
+        
+        .upgrade-title {
+            font-weight: 700;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+        
+        .upgrade-description {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 18px;
+            line-height: 1.4;
+        }
+        
+        .upgrade-btn {
+            background: white;
+            color: #7c3aed;
+            font-weight: 600;
+            padding: 12px 20px;
+            border-radius: 12px;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .upgrade-btn:active {
+            transform: scale(0.98);
+        }
+        
+        /* Demo Message */
+        .demo-message {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin: 25px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(251, 191, 36, 0.3);
+        }
+        
+        .demo-message h3 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+        
+        .demo-message p {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+        
+        .demo-message .highlight {
+            font-weight: 700;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 375px) {
+            .welcome-title { font-size: 2.5rem; }
+            .logo { width: 100px; height: 100px; font-size: 50px; }
+            .content { padding: 20px; }
+            .stats-card { padding: 25px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <!-- Welcome Screen -->
+        <div class="screen welcome-screen active" id="welcome">
+            <div class="logo">⚽</div>
+            <h1 class="welcome-title">GoalApp</h1>
+            <p class="welcome-subtitle">Привіт! Вітаю на нашому проекті</p>
+            <p class="welcome-description">Футбольні челенджі та матчі</p>
+            <button class="btn-primary" onclick="showScreen('auth')">Почати</button>
+        </div>
+
+        <!-- Auth Screen -->
+        <div class="screen auth-screen" id="auth">
+            <button class="back-btn" onclick="showScreen('welcome')">←</button>
+            <div class="auth-container">
+                <h2 class="auth-title" id="authTitle">Вхід</h2>
+                <div class="form-group">
+                    <input type="email" class="form-input" placeholder="Email" value="user@goalapp.com">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-input" placeholder="Пароль" value="password">
+                </div>
+                <button class="btn-auth" onclick="login()">Увійти</button>
+                <button class="link-btn" onclick="toggleAuth()">Немає акаунту? Зареєструватися</button>
+            </div>
+        </div>
+
+        <!-- Home Screen -->
+        <div class="screen home-screen" id="home">
+            <div class="header">
+                <div class="header-left">
+                    <div class="header-logo">⚽</div>
+                    <div class="header-text">
+                        <h1>GoalApp</h1>
+                        <p>Привіт, Олександр Петренко!</p>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <button class="header-btn shop-btn" onclick="showAlert('🛒 Магазин', 'Тут ви зможете купувати беджі та спеціальні пропозиції!')">🛒</button>
+                    <button class="header-btn profile-btn" onclick="showScreen('welcome')">👤</button>
+                </div>
+            </div>
+
+            <div class="content">
+                <div class="stats-card">
+                    <div class="stats-header">
+                        <div class="stats-title">
+                            <h2>Твоя статистика</h2>
+                            <p>Продовжуй грати!</p>
+                        </div>
+                        <div class="coins">
+                            <div class="coins-amount">💰 350</div>
+                            <div class="coins-label">монет</div>
+                        </div>
+                    </div>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-number">18</div>
+                            <div class="stat-label">матчів</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">12</div>
+                            <div class="stat-label">перемог</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">67%</div>
+                            <div class="stat-label">win rate</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="features">
+                    <div class="feature-card challenges" onclick="showAlert('📹 Відео та Челенджі', 'Дивіться відео інших гравців, створюйте власні челенджі та заробляйте монети! У повній версії доступно:\\n\\n• Перегляд відео\\n• Створення челенджів\\n• Система рейтингів\\n• Коментарі та лайки')">
+                        <div class="feature-content">
+                            <div class="feature-icon challenges">📹</div>
+                            <div class="feature-info">
+                                <h3>Відео та Челенджі</h3>
+                                <p>Дивись, створюй та заробляй монети</p>
+                                <div class="feature-tags">
+                                    <span class="tag orange">+10 за відео</span>
+                                    <span class="tag green">Призи до 500₴</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="feature-card matches" onclick="showAlert('⚽ Матчі та Ігри', 'Знаходьте команду, організовуйте матчі та грайте поруч! У повній версії доступно:\\n\\n• Пошук матчів поблизу\\n• Створення власних ігор\\n• Система команд\\n• Статистика матчів')">
+                        <div class="feature-content">
+                            <div class="feature-icon matches">👥</div>
+                            <div class="feature-info">
+                                <h3>Матчі та Ігри</h3>
+                                <p>Знайди команду та грай поруч</p>
+                                <div class="feature-tags">
+                                    <span class="tag blue">4 матча сьогодні</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="small-features">
+                    <div class="small-feature ratings" onclick="showAlert('🏆 Рейтинг', 'Переглядайте топ гравців та покращуйте свої позиції! У повній версії:\\n\\n• Глобальний рейтинг\\n• Локальні турніри\\n• Детальна статистика\\n• Досягнення')">
+                        <div class="small-feature-icon ratings">🏆</div>
+                        <h3>Рейтинг</h3>
+                        <p>Топ гравці</p>
+                    </div>
+                    <div class="small-feature friends" onclick="showAlert('👥 Друзі', 'Додавайте друзів, запрошуйте на матчі та спілкуйтесь! У повній версії:\\n\\n• Система друзів\\n• Чат та повідомлення\\n• Спільні матчі\\n• Командна статистика')">
+                        <div class="small-feature-icon friends">👥</div>
+                        <h3>Друзі</h3>
+                        <p>2 друзів</p>
+                    </div>
+                </div>
+
+                <div class="upgrade-card">
+                    <div class="upgrade-title">🆓 Безкоштовна версія</div>
+                    <div class="upgrade-description">Рейтинг прихований • Обмежена функціональність</div>
+                    <button class="upgrade-btn" onclick="showAlert('💎 Підписка', 'Підвищіть свій акаунт до Pro і отримайте:\\n\\n✅ Постійно видимий рейтинг\\n✅ Необмежені челенджі\\n✅ Пріоритетну підтримку\\n✅ Ексклюзивні функції\\n\\nВартість: 159₴/міс')">Підвищити до Pro</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Demo Message -->
+    <div class="demo-message">
+        <h3>📱 GoalApp - Мобільна демо версія</h3>
+        <p>Це <span class="highlight">повнофункціональна демо версія</span> футбольного додатку</p>
+        <p>🎮 <span class="highlight">Всі екрани та функції працюють</span></p>
+        <p>📲 Оптимізовано для мобільних пристроїв</p>
+        <p>⚽ Створено за вашим React кодом</p>
+        <p style="margin-top: 15px; font-size: 0.9rem; opacity: 0.9;">
+            💡 <strong>Порада:</strong> Збережіть цю сторінку на головний екран телефону для швидкого доступу!
+        </p>
+    </div>
+
+    <script>
+        let isLogin = true;
+
+        function showScreen(screenId) {
+            // Hide all screens
+            const screens = document.querySelectorAll('.screen');
+            screens.forEach(screen => screen.classList.remove('active'));
+            
+            // Show selected screen
+            document.getElementById(screenId).classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        function toggleAuth() {
+            isLogin = !isLogin;
+            const title = document.getElementById('authTitle');
+            const btn = document.querySelector('.btn-auth');
+            const link = document.querySelector('.link-btn');
+            
+            if (isLogin) {
+                title.textContent = 'Вхід';
+                btn.textContent = 'Увійти';
+                link.textContent = 'Немає акаунту? Зареєструватися';
+            } else {
+                title.textContent = 'Реєстрація';
+                btn.textContent = 'Зареєструватися';
+                link.textContent = 'Вже є акаунт? Увійти';
+            }
+        }
+
+        function login() {
+            // Simulate login with animation
+            const btn = document.querySelector('.btn-auth');
+            btn.textContent = 'Входимо...';
+            btn.style.background = '#059669';
+            
+            setTimeout(() => {
+                showScreen('home');
+                btn.textContent = 'Увійти';
+                btn.style.background = '#10b981';
+            }, 1000);
+        }
+
+        function showAlert(title, message) {
+            alert(`${title}\n\n${message}`);
+        }
+
+        // Add vibration feedback on touch (if supported)
+        function addVibration() {
+            if ('vibrate' in navigator) {
+                navigator.vibrate(50);
+            }
+        }
+
+        // Add touch feedback to all clickable elements
+        document.addEventListener('DOMContentLoaded', function() {
+            const clickableElements = document.querySelectorAll('button, .feature-card, .small-feature');
+            
+            clickableElements.forEach(element => {
+                element.addEventListener('touchstart', function() {
+                    addVibration();
+                    this.style.transform = 'scale(0.98)';
+                });
+                
+                element.addEventListener('touchend', function() {
+                    this.style.transform = '';
+                });
+            });
+        });
+
+        // Prevent zoom on double tap
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function (event) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+
+        // Add install prompt for PWA-like experience
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                if (confirm('💡 Хочете додати GoalApp на головний екран для швидкого доступу?')) {
+                    alert('📱 Натисніть кнопку "Поділитися" у браузері та оберіть "Додати на головний екран"');
+                }
+            }, 3000);
+        });
+    </script>
+</body>
+</html>
