@@ -632,6 +632,9 @@
                              🔔
                              <div style="position: absolute; top: -2px; right: -2px; background: #dc2626; color: white; width: 18px; height: 18px; border-radius: 50%; font-size: 10px; display: flex; align-items: center; justify-content: center;" id="notificationBadge">3</div>
                          </button>
+                         <button style="background: rgba(255,255,255,0.2); border: none; width: 40px; height: 40px; border-radius: 50%; color: white; font-size: 18px; cursor: pointer;" onclick="showSettings()">
+                             ⚙️
+                         </button>
                          <div>
                              <div style="font-size: 24px; font-weight: 700;" id="coinBalance">247 🪙</div>
                              <div style="font-size: 12px; opacity: 0.8;">монет</div>
@@ -791,7 +794,8 @@
                     <span style="background: #dcfce7; color: #166534; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;">🟢 Відкрито</span>
                     <div style="font-size: 12px; color: #6b7280; margin-top: 4px;">Потрібно: 4 гравці</div>
                 </div>
-                <button style="background: linear-gradient(45deg, #10b981, #06b6d4); color: white; padding: 8px 16px; border: none; border-radius: 12px; font-size: 14px; cursor: pointer;" onclick="alert('Заявка подана!')">Подати заявку</button>
+                                     <button style="background: linear-gradient(45deg, #10b981, #06b6d4); color: white; padding: 8px 16px; border: none; border-radius: 12px; font-size: 14px; cursor: pointer; margin-right: 8px;" onclick="alert('Заявка подана!')">Подати заявку</button>
+                     <button style="background: linear-gradient(45deg, #fbbf24, #f97316); color: white; padding: 8px 16px; border: none; border-radius: 12px; font-size: 14px; cursor: pointer;" onclick="showMatchRating()">⭐ Оцінити</button>
             </div>
         </div>
     </div>
@@ -1426,6 +1430,165 @@
                  <div style="display: flex; gap: 10px;">
                      <input type="text" value="https://flap.app/video/12345" readonly style="flex: 1; padding: 8px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 14px; background: white;">
                      <button style="background: #3b82f6; color: white; border: none; padding: 8px 16px; border-radius: 8px; font-size: 12px; cursor: pointer;" onclick="copyLink()">Копіювати</button>
+                 </div>
+             </div>
+         </div>
+     </div>
+
+     <!-- Match Rating Modal -->
+     <div class="modal" id="matchRatingModal">
+         <div class="modal-content">
+             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+                 <div style="font-size: 20px; font-weight: 700; flex: 1; text-align: center;">⭐ Оцінити гравців</div>
+                 <button class="close-btn" onclick="closeModal('matchRatingModal')">✕</button>
+             </div>
+             
+             <div style="background: linear-gradient(135deg, #f8fafc, #e2e8f0); padding: 20px; border-radius: 16px; margin-bottom: 20px; text-align: center;">
+                 <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 8px;">Матч завершено! 🎉</h3>
+                 <div style="font-size: 14px; color: #6b7280;">Футбол в центрі • 25.01.2025</div>
+             </div>
+             
+             <div style="margin-bottom: 20px;">
+                 <h4 style="font-size: 16px; font-weight: 600; margin-bottom: 15px;">Оцініть гравців (1-5 ⭐):</h4>
+                 
+                 <div style="background: #f9fafb; padding: 15px; border-radius: 12px; margin-bottom: 15px;">
+                     <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+                         <div style="display: flex; align-items: center; gap: 10px;">
+                             <div style="width: 40px; height: 40px; background: #3b82f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 16px;">👤</div>
+                             <div>
+                                 <div style="font-weight: 600;">Максим П.</div>
+                                 <div style="font-size: 12px; color: #6b7280;">Півзахисник</div>
+                             </div>
+                         </div>
+                         <div style="display: flex; gap: 5px;" id="rating-Максим">
+                             <span style="font-size: 20px; cursor: pointer; color: #d1d5db;" onclick="setRating('Максим', 1)">⭐</span>
+                             <span style="font-size: 20px; cursor: pointer; color: #d1d5db;" onclick="setRating('Максим', 2)">⭐</span>
+                             <span style="font-size: 20px; cursor: pointer; color: #d1d5db;" onclick="setRating('Максим', 3)">⭐</span>
+                             <span style="font-size: 20px; cursor: pointer; color: #d1d5db;" onclick="setRating('Максим', 4)">⭐</span>
+                             <span style="font-size: 20px; cursor: pointer; color: #d1d5db;" onclick="setRating('Максим', 5)">⭐</span>
+                         </div>
+                     </div>
+                 </div>
+                 
+                 <div style="background: #f9fafb; padding: 15px; border-radius: 12px; margin-bottom: 15px;">
+                     <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+                         <div style="display: flex; align-items: center; gap: 10px;">
+                             <div style="width: 40px; height: 40px; background: #10b981; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 16px;">👤</div>
+                             <div>
+                                 <div style="font-weight: 600;">Андрій К.</div>
+                                 <div style="font-size: 12px; color: #6b7280;">Нападник</div>
+                             </div>
+                         </div>
+                         <div style="display: flex; gap: 5px;" id="rating-Андрій">
+                             <span style="font-size: 20px; cursor: pointer; color: #d1d5db;" onclick="setRating('Андрій', 1)">⭐</span>
+                             <span style="font-size: 20px; cursor: pointer; color: #d1d5db;" onclick="setRating('Андрій', 2)">⭐</span>
+                             <span style="font-size: 20px; cursor: pointer; color: #d1d5db;" onclick="setRating('Андрій', 3)">⭐</span>
+                             <span style="font-size: 20px; cursor: pointer; color: #d1d5db;" onclick="setRating('Андрій', 4)">⭐</span>
+                             <span style="font-size: 20px; cursor: pointer; color: #d1d5db;" onclick="setRating('Андрій', 5)">⭐</span>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+             
+             <button style="background: linear-gradient(45deg, #fbbf24, #f97316); color: white; border: none; padding: 12px 24px; border-radius: 12px; font-size: 14px; cursor: pointer; width: 100%;" onclick="submitRatings()">Відправити оцінки</button>
+         </div>
+     </div>
+
+     <!-- Settings Modal -->
+     <div class="modal" id="settingsModal">
+         <div class="modal-content">
+             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+                 <div style="font-size: 20px; font-weight: 700; flex: 1; text-align: center;">⚙️ Налаштування</div>
+                 <button class="close-btn" onclick="closeModal('settingsModal')">✕</button>
+             </div>
+             
+             <div style="margin-bottom: 20px;">
+                 <h4 style="font-size: 16px; font-weight: 600; margin-bottom: 15px;">👤 Профіль</h4>
+                 <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; background: #f9fafb; border-radius: 12px; margin-bottom: 10px; cursor: pointer;" onclick="alert('Редагування профілю')">
+                     <span>Редагувати профіль</span>
+                     <span>📝</span>
+                 </div>
+                 <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; background: #f9fafb; border-radius: 12px; margin-bottom: 10px; cursor: pointer;" onclick="alert('Зміна паролю')">
+                     <span>Змінити пароль</span>
+                     <span>🔒</span>
+                 </div>
+             </div>
+             
+             <div style="margin-bottom: 20px;">
+                 <h4 style="font-size: 16px; font-weight: 600; margin-bottom: 15px;">🔔 Сповіщення</h4>
+                 <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; background: #f9fafb; border-radius: 12px; margin-bottom: 10px;">
+                     <span>Push-сповіщення</span>
+                     <label style="position: relative; display: inline-block; width: 50px; height: 24px;">
+                         <input type="checkbox" checked style="opacity: 0; width: 0; height: 0;">
+                         <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #3b82f6; transition: .4s; border-radius: 24px; box-shadow: inset 0 0 0 2px #3b82f6;"></span>
+                     </label>
+                 </div>
+                 <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; background: #f9fafb; border-radius: 12px; margin-bottom: 10px;">
+                     <span>Email сповіщення</span>
+                     <label style="position: relative; display: inline-block; width: 50px; height: 24px;">
+                         <input type="checkbox" style="opacity: 0; width: 0; height: 0;">
+                         <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #9ca3af; transition: .4s; border-radius: 24px;"></span>
+                     </label>
+                 </div>
+             </div>
+             
+             <div style="margin-bottom: 20px;">
+                 <h4 style="font-size: 16px; font-weight: 600; margin-bottom: 15px;">💰 Платежі</h4>
+                 <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; background: #f9fafb; border-radius: 12px; margin-bottom: 10px; cursor: pointer;" onclick="showTransactionHistory()">
+                     <span>Історія транзакцій</span>
+                     <span>💳</span>
+                 </div>
+             </div>
+             
+             <button style="background: #dc2626; color: white; border: none; padding: 12px 24px; border-radius: 12px; font-size: 14px; cursor: pointer; width: 100%;" onclick="logout()">Вийти з акаунту</button>
+         </div>
+     </div>
+
+     <!-- Transaction History Modal -->
+     <div class="modal" id="transactionModal">
+         <div class="modal-content">
+             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+                 <div style="font-size: 20px; font-weight: 700; flex: 1; text-align: center;">💳 Історія транзакцій</div>
+                 <button class="close-btn" onclick="closeModal('transactionModal')">✕</button>
+             </div>
+             
+             <div style="background: linear-gradient(45deg, #fbbf24, #f97316); color: white; padding: 15px; border-radius: 12px; margin-bottom: 20px; text-align: center;">
+                 <div style="font-size: 18px; font-weight: 700;">Поточний баланс: 247 🪙</div>
+             </div>
+             
+             <div style="margin-bottom: 15px;">
+                 <div style="display: flex; align-items: center; padding: 15px; background: #dcfce7; border-radius: 12px; border-left: 4px solid #10b981;">
+                     <div style="width: 40px; height: 40px; background: #10b981; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; margin-right: 12px; color: white;">+</div>
+                     <div style="flex: 1;">
+                         <div style="font-weight: 600; font-size: 14px; margin-bottom: 4px;">Покупка FlapCoins</div>
+                         <div style="font-size: 12px; color: #6b7280;">100 FC за 100₴</div>
+                         <div style="font-size: 10px; color: #6b7280; margin-top: 4px;">24.01.2025 14:30</div>
+                     </div>
+                     <div style="font-size: 16px; font-weight: 700; color: #10b981;">+100 🪙</div>
+                 </div>
+             </div>
+             
+             <div style="margin-bottom: 15px;">
+                 <div style="display: flex; align-items: center; padding: 15px; background: #fef3c7; border-radius: 12px; border-left: 4px solid #fbbf24;">
+                     <div style="width: 40px; height: 40px; background: #fbbf24; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; margin-right: 12px; color: white;">🛍️</div>
+                     <div style="flex: 1;">
+                         <div style="font-weight: 600; font-size: 14px; margin-bottom: 4px;">Покупка бейджа</div>
+                         <div style="font-size: 12px; color: #6b7280;">🎭 Король фінтів</div>
+                         <div style="font-size: 10px; color: #6b7280; margin-top: 4px;">23.01.2025 19:15</div>
+                     </div>
+                     <div style="font-size: 16px; font-weight: 700; color: #f59e0b;">-100 🪙</div>
+                 </div>
+             </div>
+             
+             <div style="margin-bottom: 15px;">
+                 <div style="display: flex; align-items: center; padding: 15px; background: #dbeafe; border-radius: 12px; border-left: 4px solid #3b82f6;">
+                     <div style="width: 40px; height: 40px; background: #3b82f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; margin-right: 12px; color: white;">🏆</div>
+                     <div style="flex: 1;">
+                         <div style="font-weight: 600; font-size: 14px; margin-bottom: 4px;">Нагорода за челендж</div>
+                         <div style="font-size: 12px; color: #6b7280;">1 місце в "Найкращий фінт"</div>
+                         <div style="font-size: 10px; color: #6b7280; margin-top: 4px;">22.01.2025 16:45</div>
+                     </div>
+                     <div style="font-size: 16px; font-weight: 700; color: #10b981;">+200 🪙</div>
                  </div>
              </div>
          </div>
@@ -2077,8 +2240,49 @@
 
          function clearNotifications() {
              document.getElementById('notificationBadge').style.display = 'none';
-             alert('Всі сповіщення очищено');
+             showToast('Всі сповіщення очищено', 'success');
              closeModal('notificationsModal');
+         }
+
+         // Settings Functions
+         function showSettings() {
+             document.getElementById('settingsModal').classList.add('active');
+         }
+
+         function showTransactionHistory() {
+             closeModal('settingsModal');
+             document.getElementById('transactionModal').classList.add('active');
+         }
+
+         function logout() {
+             showToast('Вихід з акаунту...', 'info');
+             setTimeout(() => {
+                 showScreen('welcomeScreen');
+                 closeModal('settingsModal');
+             }, 1500);
+         }
+
+         // Match Rating Functions
+         function showMatchRating() {
+             document.getElementById('matchRatingModal').classList.add('active');
+         }
+
+         function setRating(playerName, rating) {
+             const ratingContainer = document.getElementById(`rating-${playerName}`);
+             const stars = ratingContainer.querySelectorAll('span');
+             
+             stars.forEach((star, index) => {
+                 if (index < rating) {
+                     star.style.color = '#fbbf24';
+                 } else {
+                     star.style.color = '#d1d5db';
+                 }
+             });
+         }
+
+         function submitRatings() {
+             showToast('Оцінки відправлено! Дякуємо за відгук 🌟', 'success');
+             closeModal('matchRatingModal');
          }
 
          window.onclick = function(event) {
