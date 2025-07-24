@@ -149,10 +149,16 @@
                                                        <div style="background: #fbbf24; color: #1f2937; padding: 4px 12px; border-radius: 12px; font-size: 12px; margin-top: 5px; display: inline-block;" id="subscriptionBadge">ЧЕМПІОНИ</div>
                     </div>
                 </div>
-                <div style="text-align: right;">
-                    <div style="font-size: 24px; font-weight: 700;" id="coinBalance">247 🪙</div>
-                    <div style="font-size: 12px; opacity: 0.8;">монет</div>
-                </div>
+                                     <div style="text-align: right; display: flex; align-items: center; gap: 15px;">
+                         <button style="background: rgba(255,255,255,0.2); border: none; width: 40px; height: 40px; border-radius: 50%; color: white; font-size: 18px; cursor: pointer; position: relative;" onclick="showNotifications()">
+                             🔔
+                             <div style="position: absolute; top: -2px; right: -2px; background: #dc2626; color: white; width: 18px; height: 18px; border-radius: 50%; font-size: 10px; display: flex; align-items: center; justify-content: center;" id="notificationBadge">3</div>
+                         </button>
+                         <div>
+                             <div style="font-size: 24px; font-weight: 700;" id="coinBalance">247 🪙</div>
+                             <div style="font-size: 12px; opacity: 0.8;">монет</div>
+                         </div>
+                     </div>
             </div>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
                 <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 12px; text-align: center;">
@@ -256,10 +262,14 @@
                                 <button style="width: 50px; height: 50px; background: rgba(255,255,255,0.3); border: none; border-radius: 50%; color: white; font-size: 20px; cursor: pointer;" onclick="likeVideo(this)">❤️</button>
                                 <div style="font-size: 12px; color: white; margin-top: 5px; text-align: center;">142</div>
                             </div>
-                            <div>
-                                <button style="width: 50px; height: 50px; background: rgba(255,255,255,0.3); border: none; border-radius: 50%; color: white; font-size: 20px; cursor: pointer;" onclick="alert('Коментарі...')">💬</button>
-                                <div style="font-size: 12px; color: white; margin-top: 5px; text-align: center;">23</div>
-                            </div>
+                                                           <div>
+                                   <button style="width: 50px; height: 50px; background: rgba(255,255,255,0.3); border: none; border-radius: 50%; color: white; font-size: 20px; cursor: pointer;" onclick="showComments()">💬</button>
+                                   <div style="font-size: 12px; color: white; margin-top: 5px; text-align: center;">23</div>
+                               </div>
+                               <div>
+                                   <button style="width: 50px; height: 50px; background: rgba(255,255,255,0.3); border: none; border-radius: 50%; color: white; font-size: 20px; cursor: pointer;" onclick="shareVideo()">📤</button>
+                                   <div style="font-size: 12px; color: white; margin-top: 5px; text-align: center;">Поділитися</div>
+                               </div>
                         </div>
                     </div>
                 </div>
@@ -316,11 +326,15 @@
             <div></div>
         </div>
 
-        <div style="padding: 15px 20px; background: white; border-bottom: 1px solid #e5e7eb;">
-            <button class="filter-btn active">🌟 Загальний</button>
-            <button class="filter-btn">🏙️ Мої міста</button>
-            <button class="filter-btn">👥 Друзі</button>
-        </div>
+                 <div style="padding: 15px 20px; background: white; border-bottom: 1px solid #e5e7eb;">
+             <div style="margin-bottom: 15px;">
+                 <input type="text" style="width: 100%; padding: 12px; border: 2px solid #e5e7eb; border-radius: 12px; font-size: 14px;" placeholder="🔍 Пошук гравців..." id="playerSearchInput" oninput="searchPlayers()">
+             </div>
+             <button class="filter-btn active" onclick="filterRating('all')">🌟 Загальний</button>
+             <button class="filter-btn" onclick="filterRating('city')">🏙️ Мої міста</button>
+             <button class="filter-btn" onclick="filterRating('friends')">👥 Друзі</button>
+             <button class="filter-btn" onclick="filterRating('position')">⚽ Позиція</button>
+         </div>
 
         <div class="podium">
             <h3 style="text-align: center; margin-bottom: 20px; font-size: 18px; font-weight: 700;">Топ-3 гравці</h3>
@@ -700,6 +714,88 @@
          </div>
      </div>
 
+     <!-- Player Profile Screen -->
+     <div class="screen" id="playerProfileScreen" style="background: #f9fafb; min-height: 100vh; padding-bottom: 80px;">
+         <div style="background: linear-gradient(135deg, #4f46e5, #7c3aed, #ec4899); padding: 15px 20px; display: flex; align-items: center; justify-content: space-between;">
+             <button class="back-btn" style="color: white;" onclick="showMain()">← Назад</button>
+             <div style="font-size: 18px; font-weight: 700; color: white;">👤 Профіль гравця</div>
+             <button style="background: rgba(255,255,255,0.3); color: white; border: none; width: 32px; height: 32px; border-radius: 50%; font-size: 18px; cursor: pointer;" onclick="alert('Поділитися профілем')">📤</button>
+         </div>
+
+         <div style="background: white; padding: 30px 20px; text-align: center; border-bottom: 1px solid #e5e7eb;">
+             <div style="width: 100px; height: 100px; background: #f3f4f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 40px; margin: 0 auto 20px;" id="playerProfileAvatar">👤</div>
+             <h2 style="font-size: 24px; font-weight: 700; margin-bottom: 8px;" id="playerProfileName">Максим Петренко</h2>
+             <div style="font-size: 16px; color: #6b7280; margin-bottom: 8px;">⚽ Півзахисник • 📍 Київ</div>
+             <div style="font-size: 18px; font-weight: 700; color: #fbbf24; margin-bottom: 15px;">⭐ 4.5 (28 відгуків)</div>
+             <div style="background: #3b82f6; color: white; padding: 4px 12px; border-radius: 12px; font-size: 12px; display: inline-block; margin-bottom: 20px;">🏆 ЧЕМПІОНИ</div>
+             
+             <div style="display: flex; justify-content: center; gap: 10px;">
+                 <button style="background: linear-gradient(45deg, #3b82f6, #7c3aed); color: white; border: none; padding: 12px 24px; border-radius: 12px; font-size: 14px; cursor: pointer;" onclick="addFriendFromProfile()">➕ Додати в друзі</button>
+                 <button style="background: #f3f4f6; color: #1f2937; border: none; padding: 12px 24px; border-radius: 12px; font-size: 14px; cursor: pointer;" onclick="alert('Повідомлення надіслано')">💬 Написати</button>
+             </div>
+         </div>
+
+         <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px; background: #e5e7eb; margin-bottom: 20px;">
+             <div style="background: white; padding: 20px; text-align: center;">
+                 <div style="font-size: 24px; font-weight: 700; color: #1f2937;">28</div>
+                 <div style="font-size: 12px; color: #6b7280;">Ігор зіграно</div>
+             </div>
+             <div style="background: white; padding: 20px; text-align: center;">
+                 <div style="font-size: 24px; font-weight: 700; color: #10b981;">82%</div>
+                 <div style="font-size: 12px; color: #6b7280;">Win Rate</div>
+             </div>
+             <div style="background: white; padding: 20px; text-align: center;">
+                 <div style="font-size: 24px; font-weight: 700; color: #3b82f6;">15</div>
+                 <div style="font-size: 12px; color: #6b7280;">Голи</div>
+             </div>
+         </div>
+
+         <div style="background: white; padding: 20px; margin-bottom: 20px;">
+             <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 15px;">📊 Детальна статистика</h3>
+             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                 <div>
+                     <div style="display: flex; justify-content: space-between; margin-bottom: 8px;"><span>Передачі:</span><span style="font-weight: 600;">234</span></div>
+                     <div style="display: flex; justify-content: space-between; margin-bottom: 8px;"><span>Точність передач:</span><span style="font-weight: 600;">87%</span></div>
+                     <div style="display: flex; justify-content: space-between; margin-bottom: 8px;"><span>Перехоплення:</span><span style="font-weight: 600;">42</span></div>
+                 </div>
+                 <div>
+                     <div style="display: flex; justify-content: space-between; margin-bottom: 8px;"><span>Удари:</span><span style="font-weight: 600;">67</span></div>
+                     <div style="display: flex; justify-content: space-between; margin-bottom: 8px;"><span>Удари в створ:</span><span style="font-weight: 600;">34</span></div>
+                     <div style="display: flex; justify-content: space-between; margin-bottom: 8px;"><span>Асисти:</span><span style="font-weight: 600;">8</span></div>
+                 </div>
+             </div>
+         </div>
+
+         <div style="background: white; padding: 20px; margin-bottom: 20px;">
+             <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 15px;">🎥 Останні відео</h3>
+             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                 <div style="position: relative; height: 120px; background: #d1d5db; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer;" onclick="alert('Перегляд відео...')">
+                     <div style="font-size: 30px; color: #6b7280;">▶️</div>
+                     <div style="position: absolute; bottom: 5px; left: 5px; background: rgba(0,0,0,0.7); color: white; padding: 2px 6px; border-radius: 4px; font-size: 10px;">0:45</div>
+                 </div>
+                 <div style="position: relative; height: 120px; background: #d1d5db; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer;" onclick="alert('Перегляд відео...')">
+                     <div style="font-size: 30px; color: #6b7280;">▶️</div>
+                     <div style="position: absolute; bottom: 5px; left: 5px; background: rgba(0,0,0,0.7); color: white; padding: 2px 6px; border-radius: 4px; font-size: 10px;">1:23</div>
+                 </div>
+             </div>
+         </div>
+
+         <div style="background: white; padding: 20px;">
+             <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 15px;">⭐ Відгуки (3)</h3>
+             <div style="border-bottom: 1px solid #f3f4f6; padding-bottom: 15px; margin-bottom: 15px;">
+                 <div style="display: flex; align-items: center; margin-bottom: 8px;">
+                     <div style="width: 30px; height: 30px; background: #f3f4f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; margin-right: 10px;">👤</div>
+                     <div>
+                         <div style="font-weight: 600; font-size: 14px;">Андрій К.</div>
+                         <div style="font-size: 12px; color: #fbbf24;">⭐⭐⭐⭐⭐</div>
+                     </div>
+                 </div>
+                 <div style="font-size: 14px; color: #6b7280;">"Відмінний гравець, завжди вчасно і готовий до гри!"</div>
+             </div>
+             <button style="background: #f3f4f6; color: #1f2937; border: none; padding: 8px 16px; border-radius: 8px; font-size: 12px; cursor: pointer; width: 100%;" onclick="alert('Всі відгуки...')">Переглянути всі відгуки</button>
+         </div>
+     </div>
+
      <!-- Subscriptions Modal -->
      <div class="modal" id="subscriptionsModal">
          <div class="modal-content">
@@ -774,6 +870,134 @@
          </div>
      </div>
 
+     <!-- Comments Modal -->
+     <div class="modal" id="commentsModal">
+         <div class="modal-content" style="max-height: 80vh; display: flex; flex-direction: column;">
+             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-shrink: 0;">
+                 <div style="font-size: 20px; font-weight: 700; flex: 1; text-align: center;">💬 Коментарі (23)</div>
+                 <button class="close-btn" onclick="closeModal('commentsModal')">✕</button>
+             </div>
+             
+             <div style="flex: 1; overflow-y: auto; margin-bottom: 20px;" id="commentsList">
+                 <div style="display: flex; margin-bottom: 15px;">
+                     <div style="width: 40px; height: 40px; background: #f3f4f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; margin-right: 12px; flex-shrink: 0;">👤</div>
+                     <div style="flex: 1;">
+                         <div style="background: #f9fafb; padding: 12px; border-radius: 16px;">
+                             <div style="font-weight: 600; font-size: 14px; margin-bottom: 4px;">Андрій К.</div>
+                             <div style="font-size: 14px; color: #1f2937;">Неймовірний фінт! 🔥 Треба навчитися</div>
+                         </div>
+                         <div style="font-size: 12px; color: #6b7280; margin-top: 4px; margin-left: 12px;">2 хв тому</div>
+                     </div>
+                 </div>
+                 
+                 <div style="display: flex; margin-bottom: 15px;">
+                     <div style="width: 40px; height: 40px; background: #f3f4f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; margin-right: 12px; flex-shrink: 0;">👤</div>
+                     <div style="flex: 1;">
+                         <div style="background: #f9fafb; padding: 12px; border-radius: 16px;">
+                             <div style="font-weight: 600; font-size: 14px; margin-bottom: 4px;">Олег М.</div>
+                             <div style="font-size: 14px; color: #1f2937;">Це ж класика Роналдіньо! Респект 👏</div>
+                         </div>
+                         <div style="font-size: 12px; color: #6b7280; margin-top: 4px; margin-left: 12px;">5 хв тому</div>
+                     </div>
+                 </div>
+                 
+                 <div style="display: flex; margin-bottom: 15px;">
+                     <div style="width: 40px; height: 40px; background: #f3f4f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; margin-right: 12px; flex-shrink: 0;">👤</div>
+                     <div style="flex: 1;">
+                         <div style="background: #f9fafb; padding: 12px; border-radius: 16px;">
+                             <div style="font-weight: 600; font-size: 14px; margin-bottom: 4px;">Максим П.</div>
+                             <div style="font-size: 14px; color: #1f2937;">Дякую всім! 😊 Скоро ще буде контент</div>
+                         </div>
+                         <div style="font-size: 12px; color: #6b7280; margin-top: 4px; margin-left: 12px;">8 хв тому • Автор</div>
+                     </div>
+                 </div>
+             </div>
+             
+             <div style="display: flex; gap: 10px; flex-shrink: 0;">
+                 <input type="text" style="flex: 1; padding: 12px; border: 2px solid #e5e7eb; border-radius: 20px; font-size: 14px;" placeholder="Додайте коментар..." id="commentInput">
+                 <button style="background: linear-gradient(45deg, #3b82f6, #7c3aed); color: white; border: none; padding: 12px 20px; border-radius: 20px; font-size: 14px; cursor: pointer;" onclick="addComment()">Надіслати</button>
+             </div>
+         </div>
+     </div>
+
+     <!-- Share Modal -->
+     <div class="modal" id="shareModal">
+         <div class="modal-content">
+             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+                 <div style="font-size: 20px; font-weight: 700; flex: 1; text-align: center;">📤 Поділитися відео</div>
+                 <button class="close-btn" onclick="closeModal('shareModal')">✕</button>
+             </div>
+             
+             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+                 <button style="background: #1877f2; color: white; border: none; padding: 15px; border-radius: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;" onclick="shareToSocial('facebook')">
+                     <span style="font-size: 20px;">📘</span><span>Facebook</span>
+                 </button>
+                 <button style="background: #1da1f2; color: white; border: none; padding: 15px; border-radius: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;" onclick="shareToSocial('twitter')">
+                     <span style="font-size: 20px;">🐦</span><span>Twitter</span>
+                 </button>
+                 <button style="background: #25d366; color: white; border: none; padding: 15px; border-radius: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;" onclick="shareToSocial('whatsapp')">
+                     <span style="font-size: 20px;">💬</span><span>WhatsApp</span>
+                 </button>
+                 <button style="background: #0088cc; color: white; border: none; padding: 15px; border-radius: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;" onclick="shareToSocial('telegram')">
+                     <span style="font-size: 20px;">✈️</span><span>Telegram</span>
+                 </button>
+             </div>
+             
+             <div style="background: #f9fafb; padding: 15px; border-radius: 12px; margin-bottom: 15px;">
+                 <div style="font-weight: 600; margin-bottom: 8px;">Посилання на відео:</div>
+                 <div style="display: flex; gap: 10px;">
+                     <input type="text" value="https://flap.app/video/12345" readonly style="flex: 1; padding: 8px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 14px; background: white;">
+                     <button style="background: #3b82f6; color: white; border: none; padding: 8px 16px; border-radius: 8px; font-size: 12px; cursor: pointer;" onclick="copyLink()">Копіювати</button>
+                 </div>
+             </div>
+         </div>
+     </div>
+
+     <!-- Notifications Modal -->
+     <div class="modal" id="notificationsModal">
+         <div class="modal-content">
+             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+                 <div style="font-size: 20px; font-weight: 700; flex: 1; text-align: center;">🔔 Сповіщення</div>
+                 <button class="close-btn" onclick="closeModal('notificationsModal')">✕</button>
+             </div>
+             
+             <div style="margin-bottom: 15px;">
+                 <div style="display: flex; align-items: center; padding: 15px; background: #dbeafe; border-radius: 12px; border-left: 4px solid #3b82f6;">
+                     <div style="width: 40px; height: 40px; background: #3b82f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; margin-right: 12px; color: white;">🏆</div>
+                     <div style="flex: 1;">
+                         <div style="font-weight: 600; font-size: 14px; margin-bottom: 4px;">Новий челендж!</div>
+                         <div style="font-size: 12px; color: #6b7280;">Максим П. запросив вас до челенджу "Найкращий фінт 2025"</div>
+                         <div style="font-size: 10px; color: #6b7280; margin-top: 4px;">5 хв тому</div>
+                     </div>
+                 </div>
+             </div>
+             
+             <div style="margin-bottom: 15px;">
+                 <div style="display: flex; align-items: center; padding: 15px; background: #dcfce7; border-radius: 12px; border-left: 4px solid #10b981;">
+                     <div style="width: 40px; height: 40px; background: #10b981; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; margin-right: 12px; color: white;">⚽</div>
+                     <div style="flex: 1;">
+                         <div style="font-weight: 600; font-size: 14px; margin-bottom: 4px;">Матч підтверджено</div>
+                         <div style="font-size: 12px; color: #6b7280;">Ваша заявка на матч "Футбол в центрі" прийнята</div>
+                         <div style="font-size: 10px; color: #6b7280; margin-top: 4px;">15 хв тому</div>
+                     </div>
+                 </div>
+             </div>
+             
+             <div style="margin-bottom: 15px;">
+                 <div style="display: flex; align-items: center; padding: 15px; background: #fef3c7; border-radius: 12px; border-left: 4px solid #fbbf24;">
+                     <div style="width: 40px; height: 40px; background: #fbbf24; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; margin-right: 12px; color: white;">👥</div>
+                     <div style="flex: 1;">
+                         <div style="font-weight: 600; font-size: 14px; margin-bottom: 4px;">Новий друг</div>
+                         <div style="font-size: 12px; color: #6b7280;">Андрій К. прийняв вашу заявку в друзі</div>
+                         <div style="font-size: 10px; color: #6b7280; margin-top: 4px;">1 год тому</div>
+                     </div>
+                 </div>
+             </div>
+             
+             <button style="background: #f3f4f6; color: #1f2937; border: none; padding: 8px 16px; border-radius: 8px; font-size: 12px; cursor: pointer; width: 100%;" onclick="clearNotifications()">Очистити всі сповіщення</button>
+         </div>
+     </div>
+
      <script>
                  let currentUser = { name: 'Олексій', coins: 247, friends: [], subscription: 'champions', subscriptionExpiry: '2025-02-08' };
         let currentProfile = null;
@@ -824,11 +1048,29 @@
             }
         }
 
-        function showProfile(name) {
-            currentProfile = name;
-            document.getElementById('profilePlayerName').textContent = name === 'own' ? currentUser.name : name + ' П.';
-            document.getElementById('profileModal').classList.add('active');
-        }
+                 function showProfile(name) {
+             if (name === 'own') {
+                 // Show own profile in modal
+                 currentProfile = name;
+                 document.getElementById('profilePlayerName').textContent = currentUser.name;
+                 document.getElementById('profileModal').classList.add('active');
+             } else {
+                 // Show other player's profile in full screen
+                 currentProfile = name;
+                 document.getElementById('playerProfileName').textContent = name + ' П.';
+                 showScreen('playerProfileScreen');
+                 updateNav(-1); // No nav highlight for profile screen
+             }
+         }
+
+         function addFriendFromProfile() {
+             if (currentProfile && !currentUser.friends.includes(currentProfile)) {
+                 currentUser.friends.push(currentProfile);
+                 alert(`${currentProfile} додано в друзі!`);
+             } else {
+                 alert('Вже у друзях!');
+             }
+         }
 
         function toggleFriend() {
             if (currentProfile && currentProfile !== 'own') {
@@ -1143,6 +1385,91 @@
                  alert(`Вітаємо! Підписка ${planNames[plan]} активована!`);
                  closeModal('subscriptionsModal');
              }, 2000);
+         }
+
+         // Comments and Sharing Functions
+         function showComments() {
+             document.getElementById('commentsModal').classList.add('active');
+         }
+
+         function addComment() {
+             const commentInput = document.getElementById('commentInput');
+             const commentText = commentInput.value.trim();
+             
+             if (commentText) {
+                 const commentsList = document.getElementById('commentsList');
+                 const newComment = `
+                     <div style="display: flex; margin-bottom: 15px;">
+                         <div style="width: 40px; height: 40px; background: #3b82f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; margin-right: 12px; flex-shrink: 0; color: white;">👤</div>
+                         <div style="flex: 1;">
+                             <div style="background: #dbeafe; padding: 12px; border-radius: 16px;">
+                                 <div style="font-weight: 600; font-size: 14px; margin-bottom: 4px;">${currentUser.name}</div>
+                                 <div style="font-size: 14px; color: #1f2937;">${commentText}</div>
+                             </div>
+                             <div style="font-size: 12px; color: #6b7280; margin-top: 4px; margin-left: 12px;">щойно</div>
+                         </div>
+                     </div>
+                 `;
+                 commentsList.insertAdjacentHTML('afterbegin', newComment);
+                 commentInput.value = '';
+                 alert('Коментар додано! 💬');
+             }
+         }
+
+         function shareVideo() {
+             document.getElementById('shareModal').classList.add('active');
+         }
+
+         function shareToSocial(platform) {
+             const messages = {
+                 facebook: 'Поділитися у Facebook',
+                 twitter: 'Поділитися у Twitter', 
+                 whatsapp: 'Поділитися у WhatsApp',
+                 telegram: 'Поділитися у Telegram'
+             };
+             alert(`${messages[platform]} - відкриття зовнішнього додатку...`);
+             closeModal('shareModal');
+         }
+
+         function copyLink() {
+             navigator.clipboard.writeText('https://flap.app/video/12345').then(() => {
+                 alert('Посилання скопійовано! 📋');
+             }).catch(() => {
+                 alert('Посилання скопійовано! 📋');
+             });
+         }
+
+         // Search and Filter Functions
+         function searchPlayers() {
+             const searchTerm = document.getElementById('playerSearchInput').value.toLowerCase();
+             if (searchTerm.length > 0) {
+                 alert(`Пошук гравців: "${searchTerm}"\nЗнайдено: 3 результати`);
+             }
+         }
+
+         function filterRating(type) {
+             // Update filter buttons
+             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+             event.target.classList.add('active');
+             
+             const messages = {
+                 'all': 'Показано всіх гравців',
+                 'city': 'Показано гравців з вашого міста',
+                 'friends': 'Показано лише друзів',
+                 'position': 'Показано гравців вашої позиції'
+             };
+             alert(messages[type]);
+         }
+
+         // Notifications Functions
+         function showNotifications() {
+             document.getElementById('notificationsModal').classList.add('active');
+         }
+
+         function clearNotifications() {
+             document.getElementById('notificationBadge').style.display = 'none';
+             alert('Всі сповіщення очищено');
+             closeModal('notificationsModal');
          }
 
          window.onclick = function(event) {
