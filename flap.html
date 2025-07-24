@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLAP - Fill Like A Pro</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; }
+        .screen { display: none; min-height: 100vh; }
+        .screen.active { display: block; }
+        
+        /* Splash Screen */
+        .splash { 
+            background: linear-gradient(135deg, #4f46e5, #7c3aed, #ec4899); 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; 
+            color: white; text-align: center; min-height: 100vh; 
+        }
+        .splash-logo { 
+            width: 120px; height: 120px; background: white; border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center; font-size: 60px; 
+            margin-bottom: 30px; animation: bounce 2s infinite; 
+        }
+        @keyframes bounce { 
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 
+            40% { transform: translateY(-10px); } 
+        }
+        
+        /* Main App */
+        .main-app { background: #f9fafb; min-height: 100vh; padding-bottom: 80px; }
+        .header { 
+            background: linear-gradient(135deg, #4f46e5, #7c3aed, #ec4899); 
+            padding: 20px; color: white; 
+        }
+        .profile-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+        .avatar { 
+            width: 50px; height: 50px; background: white; border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center; font-size: 20px; cursor: pointer; 
+        }
+        .quick-actions { padding: 20px; display: grid; gap: 15px; }
+        .action-btn { 
+            padding: 20px; border: none; border-radius: 16px; font-size: 16px; font-weight: 600; 
+            cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; 
+        }
+        .video-btn { background: linear-gradient(45deg, #7c3aed, #ec4899); color: white; }
+        .match-btn { background: linear-gradient(45deg, #10b981, #06b6d4); color: white; }
+        .shop-btn { background: linear-gradient(45deg, #fbbf24, #f97316); color: white; }
+        .rating-btn { background: linear-gradient(45deg, #3b82f6, #4f46e5); color: white; }
+        
+        /* Videos Page */
+        .videos-page { background: #f5f5f5; min-height: 100vh; padding-bottom: 80px; }
+        .page-header { 
+            background: white; padding: 15px 20px; display: flex; align-items: center; 
+            justify-content: space-between; border-bottom: 1px solid #e5e7eb; 
+        }
+        .challenge-card { 
+            background: #f9fafb; border-radius: 16px; padding: 20px; 
+            margin-bottom: 15px; border: 1px solid #e5e7eb; 
+        }
+        .video-item { 
+            position: relative; height: 100vh; background: linear-gradient(45deg, #1f2937, #374151); 
+            display: flex; align-items: center; justify-content: center; 
+        }
+        .play-btn { 
+            width: 80px; height: 80px; background: rgba(255,255,255,0.3); 
+            border: none; border-radius: 50%; color: white; font-size: 30px; cursor: pointer; 
+        }
+        
+        /* Bottom Navigation */
+        .bottom-nav { 
+            position: fixed; bottom: 0; left: 0; right: 0; background: white; 
+            border-top: 1px solid #e5e7eb; display: flex; padding: 10px 0; z-index: 1000; 
+        }
+        .nav-item { 
+            flex: 1; text-align: center; padding: 10px; cursor: pointer; color: #6b7280; 
+        }
+        .nav-item.active { color: #3b82f6; }
+        
+        /* Modals */
+        .modal { 
+            display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; 
+            background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; 
+            justify-content: center; padding: 20px; 
+        }
+        .modal.active { display: flex; }
+        .modal-content { 
+            background: white; border-radius: 20px; padding: 30px; 
+            max-width: 500px; width: 100%; max-height: 80vh; overflow-y: auto; 
+        }
+    </style>
+</head>
+<body>
+    <!-- Splash Screen -->
+    <div class="screen active splash" id="splash">
+        <div class="splash-logo">⚽</div>
+        <h1 style="font-size: 48px; font-weight: 900; margin-bottom: 20px; background: linear-gradient(45deg, #fbbf24, #f97316); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">FLAP</h1>
+        <p style="font-size: 18px; opacity: 0.9;">Fill • Like • A Pro</p>
+    </div>
+
+    <!-- Main App -->
+    <div class="screen main-app" id="mainApp">
+        <div class="header">
+            <div class="profile-header">
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <div class="avatar">👤</div>
+                    <div>
+                        <h2 style="font-size: 18px; margin-bottom: 5px;">Олексій</h2>
+                        <div style="font-size: 14px; opacity: 0.9;">⭐ 4.2</div>
+                        <div style="background: #fbbf24; color: #1f2937; padding: 4px 12px; border-radius: 12px; font-size: 12px; margin-top: 5px; display: inline-block;">ЧЕМПІОНИ</div>
+                    </div>
+                </div>
+                <div style="text-align: right;">
+                    <div style="font-size: 24px; font-weight: 700;" id="coinBalance">247 🪙</div>
+                    <div style="font-size: 12px; opacity: 0.8;">монет</div>
+                </div>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 12px; text-align: center;">
+                    <div style="font-size: 20px; font-weight: 700; margin-bottom: 5px;">23</div>
+                    <div style="font-size: 12px; opacity: 0.8;">Ігор зіграно</div>
+                </div>
+                <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 12px; text-align: center;">
+                    <div style="font-size: 20px; font-weight: 700; margin-bottom: 5px;">78%</div>
+                    <div style="font-size: 12px; opacity: 0.8;">Win Rate</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="quick-actions">
+            <button class="action-btn video-btn" onclick="showVideos()">
+                <span>🎥</span><span>Переглянути відео</span>
+            </button>
+            <button class="action-btn match-btn" onclick="alert('Переходимо на сторінку матчів...')">
+                <span>⚽</span><span>Пошук гри</span>
+            </button>
+            <button class="action-btn shop-btn" onclick="showShop()">
+                <span>🛍️</span><span>Магазин</span>
+            </button>
+            <button class="action-btn rating-btn" onclick="alert('Переходимо на сторінку рейтингу...')">
+                <span>🏆</span><span>Рейтинг гравців</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Videos Page -->
+    <div class="screen videos-page" id="videosPage">
+        <div class="page-header">
+            <button style="background: none; border: none; font-size: 16px; cursor: pointer; color: #3b82f6;" onclick="showMain()">← Назад</button>
+            <div style="font-size: 18px; font-weight: 700;">🎥 Відео</div>
+            <button style="background: linear-gradient(45deg, #dc2626, #ec4899); color: white; border: none; width: 32px; height: 32px; border-radius: 50%; font-size: 18px; cursor: pointer;" onclick="alert('Створення челенджу...')">+</button>
+        </div>
+
+        <div style="padding: 15px 20px; background: white; border-bottom: 1px solid #e5e7eb;">
+            <button style="background: linear-gradient(45deg, #dc2626, #ec4899); color: white; border: none; padding: 8px 16px; border-radius: 20px; font-size: 14px; margin-right: 10px;">🔥 Всі</button>
+            <button style="background: #f3f4f6; border: none; padding: 8px 16px; border-radius: 20px; font-size: 14px; margin-right: 10px;">🏆 Челенджі</button>
+        </div>
+
+        <div style="padding: 20px; background: white; margin-bottom: 10px;">
+            <h2 style="font-size: 18px; font-weight: 700; margin-bottom: 15px;">🔥 Гарячі челенджі</h2>
+            
+            <div class="challenge-card">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                    <div>
+                        <div style="font-size: 16px; font-weight: 700; margin-bottom: 8px;">Найкращий фінт 2025</div>
+                        <div style="font-size: 14px; color: #6b7280; margin-bottom: 8px;">Покажи свій найкращий фінт! Награди чекають на переможців 🏆</div>
+                        <div style="font-size: 12px; color: #6b7280;">від <span style="color: #3b82f6; cursor: pointer;">Максим П.</span> ⭐ 4.5</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 20px; font-weight: 700; color: #fbbf24;">500 🪙</div>
+                        <div style="font-size: 12px; color: #6b7280;">23 учасники</div>
+                    </div>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <span style="background: #f3f4f6; padding: 4px 8px; border-radius: 8px; font-size: 12px; color: #6b7280; margin-right: 10px;">⏰ 2 дні</span>
+                        <span style="background: #7c3aed; color: white; padding: 4px 8px; border-radius: 8px; font-size: 12px;">#фінти</span>
+                    </div>
+                    <button style="background: linear-gradient(45deg, #10b981, #059669); color: white; padding: 8px 16px; border: none; border-radius: 12px; font-size: 12px; cursor: pointer;" onclick="alert('Прийняти виклик...')">🚀 Прийняти виклик</button>
+                </div>
+            </div>
+
+            <div class="challenge-card">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                    <div>
+                        <div style="font-size: 16px; font-weight: 700; margin-bottom: 8px;">Король воротарів</div>
+                        <div style="font-size: 14px; color: #6b7280; margin-bottom: 8px;">Найкращі сейви від воротарів! Покажи свою реакцію 🥅</div>
+                        <div style="font-size: 12px; color: #6b7280;">від <span style="color: #3b82f6; cursor: pointer;">Андрій К.</span> ⭐ 4.1</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 20px; font-weight: 700; color: #fbbf24;">300 🪙</div>
+                        <div style="font-size: 12px; color: #6b7280;">15 учасників</div>
+                    </div>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <span style="background: #f3f4f6; padding: 4px 8px; border-radius: 8px; font-size: 12px; color: #6b7280; margin-right: 10px;">⏰ 5 днів</span>
+                        <span style="background: #7c3aed; color: white; padding: 4px 8px; border-radius: 8px; font-size: 12px;">#сейви</span>
+                    </div>
+                    <button style="background: linear-gradient(45deg, #3b82f6, #7c3aed); color: white; padding: 8px 16px; border: none; border-radius: 12px; font-size: 12px; cursor: pointer;" onclick="openVoting()">🗳️ Голосувати</button>
+                </div>
+            </div>
+        </div>
+
+        <div style="background: #000;">
+            <div class="video-item">
+                <button class="play-btn" onclick="alert('Відтворення відео...')">▶️</button>
+                <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+                    <div style="display: flex; justify-content: space-between;">
+                        <div style="background: linear-gradient(45deg, #dc2626, #ec4899); color: white; padding: 6px 12px; border-radius: 12px; font-size: 12px; font-weight: 600;">🏆 ЧЕЛЕНДЖ</div>
+                        <div style="background: rgba(0,0,0,0.5); color: white; padding: 6px 12px; border-radius: 12px; font-size: 12px;">#фінти</div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+                        <div>
+                            <div style="font-size: 18px; font-weight: 700; color: white; margin-bottom: 8px;">Неймовірний фінт Роналдіньо</div>
+                            <div style="font-size: 14px; color: #3b82f6; cursor: pointer;">@Максим П. ⭐ 4.5</div>
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 20px; align-items: center;">
+                            <div>
+                                <button style="width: 50px; height: 50px; background: rgba(255,255,255,0.3); border: none; border-radius: 50%; color: white; font-size: 20px; cursor: pointer;" onclick="likeVideo(this)">❤️</button>
+                                <div style="font-size: 12px; color: white; margin-top: 5px; text-align: center;">142</div>
+                            </div>
+                            <div>
+                                <button style="width: 50px; height: 50px; background: rgba(255,255,255,0.3); border: none; border-radius: 50%; color: white; font-size: 20px; cursor: pointer;" onclick="alert('Коментарі...')">💬</button>
+                                <div style="font-size: 12px; color: white; margin-top: 5px; text-align: center;">23</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav" id="bottomNav" style="display: none;">
+        <div class="nav-item active" onclick="updateNav(0); showMain();">
+            <div style="font-size: 20px; margin-bottom: 5px;">🏠</div>
+            <div style="font-size: 12px;">Головна</div>
+        </div>
+        <div class="nav-item" onclick="updateNav(1); showVideos();">
+            <div style="font-size: 20px; margin-bottom: 5px;">🎥</div>
+            <div style="font-size: 12px;">Відео</div>
+        </div>
+        <div class="nav-item" onclick="updateNav(2);">
+            <div style="font-size: 20px; margin-bottom: 5px;">⚽</div>
+            <div style="font-size: 12px;">Матчі</div>
+        </div>
+        <div class="nav-item" onclick="updateNav(3);">
+            <div style="font-size: 20px; margin-bottom: 5px;">👥</div>
+            <div style="font-size: 12px;">Рейтинг</div>
+        </div>
+    </div>
+
+    <!-- Shop Modal -->
+    <div class="modal" id="shopModal">
+        <div class="modal-content">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+                <div style="font-size: 20px; font-weight: 700; flex: 1; text-align: center;">🛍️ Магазин</div>
+                <button style="background: none; border: none; font-size: 24px; cursor: pointer; color: #6b7280;" onclick="closeModal('shopModal')">✕</button>
+            </div>
+            
+            <div style="background: linear-gradient(45deg, #fbbf24, #f97316); color: white; padding: 15px; border-radius: 12px; margin-bottom: 20px; text-align: center;">
+                <div style="font-size: 18px; font-weight: 700;">Ваш баланс: <span id="modalBalance">247 🪙</span></div>
+            </div>
+            
+            <div style="background: #f9fafb; border-radius: 12px; padding: 15px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 5px;">🎭 Король фінтів</h3>
+                    <div style="font-size: 14px; color: #6b7280;">Показує майстерність у фінтах</div>
+                </div>
+                <div>
+                    <div style="font-size: 18px; font-weight: 700; color: #fbbf24; margin-bottom: 5px;">100 🪙</div>
+                    <button style="background: linear-gradient(45deg, #3b82f6, #7c3aed); color: white; border: none; padding: 8px 16px; border-radius: 8px; font-size: 14px; cursor: pointer;" onclick="buyItem('🎭 Король фінтів', 100)">Купити</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Voting Modal -->
+    <div class="modal" id="votingModal">
+        <div class="modal-content">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+                <div style="font-size: 20px; font-weight: 700; flex: 1; text-align: center;">🏆 Челендж: Голосування</div>
+                <button style="background: none; border: none; font-size: 24px; cursor: pointer; color: #6b7280;" onclick="closeModal('votingModal')">✕</button>
+            </div>
+            
+            <div style="background: #f9fafb; border-radius: 12px; padding: 15px; margin-bottom: 15px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <div style="font-weight: 700;">Відео #1</div>
+                    <div style="color: #fbbf24; font-weight: 700;">4.23 ⭐ (15 голосів)</div>
+                </div>
+                <div style="margin-bottom: 10px;">від <span style="color: #3b82f6; cursor: pointer;">Іван С.</span> ⭐ 4.0</div>
+                
+                <div style="width: 100%; height: 120px; background: #d1d5db; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin: 10px 0; cursor: pointer; font-size: 30px; color: #6b7280;" onclick="alert('Перегляд відео...')">▶️</div>
+                
+                <div style="text-align: center; font-size: 24px; font-weight: 700; color: #1f2937; margin: 10px 0;" id="sliderValue1">3.47</div>
+                <input type="range" min="0" max="5" step="0.01" value="3.47" style="width: 100%; height: 8px; border-radius: 4px; background: linear-gradient(to right, #dc2626 0%, #fbbf24 50%, #10b981 100%); outline: none; -webkit-appearance: none;" oninput="updateSliderValue(1, this.value)">
+                
+                <button style="background: linear-gradient(45deg, #3b82f6, #7c3aed); color: white; border: none; padding: 12px 24px; border-radius: 12px; font-size: 14px; cursor: pointer; width: 100%; margin-top: 15px;" onclick="submitVote(1)">Проголосувати за <span id="voteValue1">3.47</span> ⭐</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentUser = { coins: 247 };
+
+        window.onload = function() {
+            setTimeout(() => showScreen('mainApp'), 3000);
+        };
+
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+            
+            const bottomNav = document.getElementById('bottomNav');
+            if (screenId === 'mainApp' || screenId === 'videosPage') {
+                bottomNav.style.display = 'flex';
+            } else {
+                bottomNav.style.display = 'none';
+            }
+        }
+
+        function showMain() { showScreen('mainApp'); updateNav(0); }
+        function showVideos() { showScreen('videosPage'); updateNav(1); }
+
+        function updateNav(activeIndex) {
+            document.querySelectorAll('.nav-item').forEach((item, index) => {
+                if (index === activeIndex) item.classList.add('active');
+                else item.classList.remove('active');
+            });
+        }
+
+        function showShop() {
+            document.getElementById('modalBalance').textContent = currentUser.coins + ' 🪙';
+            document.getElementById('shopModal').classList.add('active');
+        }
+
+        function openVoting() { 
+            document.getElementById('votingModal').classList.add('active'); 
+        }
+
+        function closeModal(modalId) { 
+            document.getElementById(modalId).classList.remove('active'); 
+        }
+
+        function likeVideo(button) {
+            const countElement = button.parentElement.querySelector('div:last-child');
+            let count = parseInt(countElement.textContent);
+            count++;
+            countElement.textContent = count;
+            
+            button.style.transform = 'scale(1.2)';
+            button.style.color = '#dc2626';
+            setTimeout(() => {
+                button.style.transform = 'scale(1)';
+                button.style.color = 'white';
+            }, 200);
+            
+            alert('Лайк додано! ❤️');
+        }
+
+        function updateSliderValue(videoNum, value) {
+            document.getElementById(`sliderValue${videoNum}`).textContent = parseFloat(value).toFixed(2);
+            document.getElementById(`voteValue${videoNum}`).textContent = parseFloat(value).toFixed(2);
+        }
+
+        function submitVote(videoNum) {
+            const rating = document.getElementById(`sliderValue${videoNum}`).textContent;
+            alert(`Ваш голос за відео #${videoNum}: ${rating} ⭐ збережено!`);
+            closeModal('votingModal');
+        }
+
+        function buyItem(itemName, price) {
+            if (currentUser.coins >= price) {
+                currentUser.coins -= price;
+                document.getElementById('coinBalance').textContent = currentUser.coins + ' 🪙';
+                document.getElementById('modalBalance').textContent = currentUser.coins + ' 🪙';
+                alert(`Придбано: ${itemName}!`);
+            } else {
+                alert('Недостатньо монет!');
+            }
+        }
+    </script>
+</body>
+</html>
