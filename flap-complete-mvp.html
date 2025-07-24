@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLAP - Fill Like A Pro</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; }
+        .screen { display: none; min-height: 100vh; }
+        .screen.active { display: block; }
+        
+        .splash { background: linear-gradient(135deg, #4f46e5, #7c3aed, #ec4899); display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center; min-height: 100vh; }
+        .splash-logo { width: 120px; height: 120px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 60px; margin-bottom: 30px; animation: bounce 2s infinite; }
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-10px); } }
+        
+        .welcome { background: linear-gradient(135deg, #667eea, #764ba2); display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center; padding: 40px 20px; min-height: 100vh; }
+        .btn-primary { background: linear-gradient(45deg, #f97316, #ea580c); color: white; border: none; padding: 16px 32px; border-radius: 25px; font-size: 16px; font-weight: 600; cursor: pointer; }
+        
+        .auth { background: linear-gradient(135deg, #667eea, #764ba2); padding: 40px 20px; min-height: 100vh; display: flex; justify-content: center; align-items: center; }
+        .auth-container { background: white; border-radius: 20px; padding: 40px 30px; max-width: 400px; width: 100%; }
+        .auth-btn { width: 100%; padding: 16px; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; margin-bottom: 15px; cursor: pointer; }
+        .google-btn { background: #dc2626; color: white; }
+        .facebook-btn { background: #1877f2; color: white; }
+        .input-field { width: 100%; padding: 16px; border: 2px solid #e5e7eb; border-radius: 12px; font-size: 16px; margin-bottom: 15px; }
+        
+        .main-app { background: #f9fafb; min-height: 100vh; padding-bottom: 80px; }
+        .header { background: linear-gradient(135deg, #4f46e5, #7c3aed, #ec4899); padding: 20px; color: white; }
+        .profile-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+        .avatar { width: 50px; height: 50px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; cursor: pointer; }
+        .quick-actions { padding: 20px; display: grid; gap: 15px; }
+        .action-btn { padding: 20px; border: none; border-radius: 16px; font-size: 16px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .video-btn { background: linear-gradient(45deg, #7c3aed, #ec4899); color: white; }
+        .match-btn { background: linear-gradient(45deg, #10b981, #06b6d4); color: white; }
+        .shop-btn { background: linear-gradient(45deg, #fbbf24, #f97316); color: white; }
+        .rating-btn { background: linear-gradient(45deg, #3b82f6, #4f46e5); color: white; }
+        
+        .page-header { background: white; padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e5e7eb; }
+        .back-btn { background: none; border: none; font-size: 16px; cursor: pointer; color: #3b82f6; }
+        .videos-page, .matches-page, .rating-page { background: #f5f5f5; min-height: 100vh; padding-bottom: 80px; }
+        
+        .filters { padding: 15px 20px; background: white; border-bottom: 1px solid #e5e7eb; }
+        .filter-btn { background: #f3f4f6; border: none; padding: 8px 16px; border-radius: 20px; font-size: 14px; margin-right: 10px; cursor: pointer; }
+        .filter-btn.active { background: linear-gradient(45deg, #dc2626, #ec4899); color: white; }
+        .challenge-card { background: #f9fafb; border-radius: 16px; padding: 20px; margin-bottom: 15px; border: 1px solid #e5e7eb; }
+        .video-item { position: relative; height: 100vh; background: linear-gradient(45deg, #1f2937, #374151); display: flex; align-items: center; justify-content: center; }
+        .play-btn { width: 80px; height: 80px; background: rgba(255,255,255,0.3); border: none; border-radius: 50%; color: white; font-size: 30px; cursor: pointer; }
+        
+        .match-card { background: white; border-radius: 16px; padding: 20px; margin: 15px 20px; border: 1px solid #e5e7eb; }
+        
+        .podium { padding: 30px 20px; background: white; margin-bottom: 10px; }
+        .podium-container { display: flex; align-items: end; justify-content: center; gap: 20px; }
+        .podium-avatar { width: 60px; height: 60px; background: #f3f4f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; margin: 0 auto 10px; position: relative; }
+        .podium-1 .podium-avatar { background: linear-gradient(45deg, #fbbf24, #f59e0b); width: 80px; height: 80px; }
+        .podium-2 .podium-avatar { background: linear-gradient(45deg, #9ca3af, #6b7280); width: 70px; height: 70px; }
+        .podium-3 .podium-avatar { background: linear-gradient(45deg, #cd7c2f, #92400e); width: 60px; height: 60px; }
+        .rating-list { background: white; }
+        .rating-item { display: flex; align-items: center; padding: 15px 20px; border-bottom: 1px solid #f3f4f6; }
+        
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 1px solid #e5e7eb; display: flex; padding: 10px 0; z-index: 1000; }
+        .nav-item { flex: 1; text-align: center; padding: 10px; cursor: pointer; color: #6b7280; }
+        .nav-item.active { color: #3b82f6; }
+        
+        .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
+        .modal.active { display: flex; }
+        .modal-content { background: white; border-radius: 20px; padding: 30px; max-width: 500px; width: 100%; max-height: 80vh; overflow-y: auto; }
+        .close-btn { background: none; border: none; font-size: 24px; cursor: pointer; color: #6b7280; }
+        .shop-item { background: #f9fafb; border-radius: 12px; padding: 15px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }
+        .buy-btn { background: linear-gradient(45deg, #3b82f6, #7c3aed); color: white; border: none; padding: 8px 16px; border-radius: 8px; font-size: 14px; cursor: pointer; }
+        .slider { width: 100%; height: 8px; border-radius: 4px; background: linear-gradient(to right, #dc2626 0%, #fbbf24 50%, #10b981 100%); outline: none; -webkit-appearance: none; }
+        .slider-value { text-align: center; font-size: 24px; font-weight: 700; color: #1f2937; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <!-- Splash Screen -->
+    <div class="screen active splash" id="splashScreen">
+        <div class="splash-logo">⚽</div>
+        <h1 style="font-size: 48px; font-weight: 900; background: linear-gradient(45deg, #fbbf24, #f97316); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 20px;">FLAP</h1>
+        <p style="font-size: 18px; opacity: 0.9;">Fill • Like • A Pro</p>
+    </div>
+
+    <!-- Welcome Screen -->
+    <div class="screen welcome" id="welcomeScreen">
+        <div style="width: 80px; height: 80px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 40px; margin-bottom: 30px;">⚽</div>
+        <h1 style="font-size: 42px; font-weight: 900; background: linear-gradient(45deg, #fbbf24, #f97316); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 15px;">FLAP</h1>
+        <p style="font-size: 16px; opacity: 0.9; margin-bottom: 40px;">Футбольна соціальна мережа для справжніх гравців</p>
+        <button class="btn-primary" onclick="showAuth()">Стати профі ⚡</button>
+        <div style="display: flex; gap: 30px; margin-top: 20px;">
+            <div style="text-align: center; opacity: 0.8;"><div style="font-size: 24px; margin-bottom: 8px;">🎥</div><div style="font-size: 12px;">Відео</div></div>
+            <div style="text-align: center; opacity: 0.8;"><div style="font-size: 24px; margin-bottom: 8px;">🏆</div><div style="font-size: 12px;">Челенджі</div></div>
+            <div style="text-align: center; opacity: 0.8;"><div style="font-size: 24px; margin-bottom: 8px;">⚽</div><div style="font-size: 12px;">Матчі</div></div>
+        </div>
+    </div>
+
+    <!-- Auth Screen -->
+    <div class="screen auth" id="authScreen">
+        <div class="auth-container">
+            <h2 style="text-align: center; font-size: 28px; font-weight: 700; margin-bottom: 30px; color: #1f2937;">Вхід до FLAP</h2>
+            <button class="auth-btn google-btn" onclick="loginDemo()">🔴 Увійти через Google</button>
+            <button class="auth-btn facebook-btn" onclick="loginDemo()">📘 Увійти через Facebook</button>
+            <div style="text-align: center; margin: 20px 0; color: #6b7280;">або</div>
+            <input type="email" class="input-field" placeholder="Email">
+            <input type="password" class="input-field" placeholder="Пароль">
+            <button class="auth-btn" style="background: #1f2937; color: white;" onclick="loginDemo()">Увійти</button>
+            <div style="text-align: center; margin-top: 20px; color: #6b7280;">
+                Немає акаунту? <button style="background: none; border: none; color: #3b82f6; font-weight: 600; cursor: pointer;" onclick="alert('Створення профілю...')">Створити акаунт ✨</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div class="screen main-app" id="mainApp">
+        <div class="header">
+            <div class="profile-header">
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <div class="avatar" onclick="showProfile('own')">👤</div>
+                    <div>
+                        <h2 style="font-size: 18px; margin-bottom: 5px;" id="userName">Олексій</h2>
+                        <div style="font-size: 14px; opacity: 0.9;">⭐ 4.2</div>
+                        <div style="background: #fbbf24; color: #1f2937; padding: 4px 12px; border-radius: 12px; font-size: 12px; margin-top: 5px; display: inline-block;">ЧЕМПІОНИ</div>
+                    </div>
+                </div>
+                <div style="text-align: right;">
+                    <div style="font-size: 24px; font-weight: 700;" id="coinBalance">247 🪙</div>
+                    <div style="font-size: 12px; opacity: 0.8;">монет</div>
+                </div>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 12px; text-align: center;">
+                    <div style="font-size: 20px; font-weight: 700; margin-bottom: 5px;">23</div>
+                    <div style="font-size: 12px; opacity: 0.8;">Ігор зіграно</div>
+                </div>
+                <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 12px; text-align: center;">
+                    <div style="font-size: 20px; font-weight: 700; margin-bottom: 5px;">78%</div>
+                    <div style="font-size: 12px; opacity: 0.8;">Win Rate</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="quick-actions">
+            <button class="action-btn video-btn" onclick="showVideos()"><span>🎥</span><span>Переглянути відео</span></button>
+            <button class="action-btn match-btn" onclick="showMatches()"><span>⚽</span><span>Пошук гри</span></button>
+            <button class="action-btn shop-btn" onclick="showShop()"><span>🛍️</span><span>Магазин</span></button>
+            <button class="action-btn rating-btn" onclick="showRating()"><span>🏆</span><span>Рейтинг гравців</span></button>
+        </div>
+    </div>
+
+    <!-- Videos Page -->
+    <div class="screen videos-page" id="videosPage">
+        <div class="page-header">
+            <button class="back-btn" onclick="showMain()">← Назад</button>
+            <div style="font-size: 18px; font-weight: 700;">🎥 Відео</div>
+            <button style="background: linear-gradient(45deg, #dc2626, #ec4899); color: white; border: none; width: 32px; height: 32px; border-radius: 50%; font-size: 18px; cursor: pointer;" onclick="alert('Створення челенджу...')">+</button>
+        </div>
+
+        <div class="filters">
+            <button class="filter-btn active">🔥 Всі</button>
+            <button class="filter-btn">🏆 Челенджі</button>
+            <button class="filter-btn">⚽ фінти</button>
+            <button class="filter-btn">⚽ голи</button>
+            <button class="filter-btn">⚽ сейви</button>
+        </div>
+
+        <div style="padding: 20px; background: white; margin-bottom: 10px;">
+            <h2 style="font-size: 18px; font-weight: 700; margin-bottom: 15px;">🔥 Гарячі челенджі</h2>
+            
+            <div class="challenge-card">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                    <div>
+                        <div style="font-size: 16px; font-weight: 700; margin-bottom: 8px;">Найкращий фінт 2025</div>
+                        <div style="font-size: 14px; color: #6b7280; margin-bottom: 8px;">Покажи свій найкращий фінт! Награди чекають на переможців 🏆</div>
+                        <div style="font-size: 12px; color: #6b7280;">від <span style="color: #3b82f6; cursor: pointer;" onclick="showProfile('Максим')">Максим П.</span> ⭐ 4.5</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 20px; font-weight: 700; color: #fbbf24;">500 🪙</div>
+                        <div style="font-size: 12px; color: #6b7280;">23 учасники</div>
+                    </div>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <span style="background: #f3f4f6; padding: 4px 8px; border-radius: 8px; font-size: 12px; color: #6b7280; margin-right: 10px;">⏰ 2 дні</span>
+                        <span style="background: #7c3aed; color: white; padding: 4px 8px; border-radius: 8px; font-size: 12px;">#фінти</span>
+                    </div>
+                    <button style="background: linear-gradient(45deg, #10b981, #059669); color: white; padding: 8px 16px; border: none; border-radius: 12px; font-size: 12px; cursor: pointer;" onclick="alert('Прийняття виклику...')">🚀 Прийняти виклик</button>
+                </div>
+            </div>
+
+            <div class="challenge-card">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                    <div>
+                        <div style="font-size: 16px; font-weight: 700; margin-bottom: 8px;">Король воротарів</div>
+                        <div style="font-size: 14px; color: #6b7280; margin-bottom: 8px;">Найкращі сейви від воротарів! Покажи свою реакцію 🥅</div>
+                        <div style="font-size: 12px; color: #6b7280;">від <span style="color: #3b82f6; cursor: pointer;" onclick="showProfile('Андрій')">Андрій К.</span> ⭐ 4.1</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 20px; font-weight: 700; color: #fbbf24;">300 🪙</div>
+                        <div style="font-size: 12px; color: #6b7280;">15 учасників</div>
+                    </div>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <span style="background: #f3f4f6; padding: 4px 8px; border-radius: 8px; font-size: 12px; color: #6b7280; margin-right: 10px;">⏰ 5 днів</span>
+                        <span style="background: #7c3aed; color: white; padding: 4px 8px; border-radius: 8px; font-size: 12px;">#сейви</span>
+                    </div>
+                    <button style="background: linear-gradient(45deg, #3b82f6, #7c3aed); color: white; padding: 8px 16px; border: none; border-radius: 12px; font-size: 12px; cursor: pointer;" onclick="openVoting()">🗳️ Голосувати</button>
+                </div>
+            </div>
+        </div>
+
+        <div style="background: #000;">
+            <div class="video-item">
+                <button class="play-btn" onclick="alert('Відтворення відео...')">▶️</button>
+                <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+                    <div style="display: flex; justify-content: space-between;">
+                        <div style="background: linear-gradient(45deg, #dc2626, #ec4899); color: white; padding: 6px 12px; border-radius: 12px; font-size: 12px; font-weight: 600;">🏆 ЧЕЛЕНДЖ</div>
+                        <div style="background: rgba(0,0,0,0.5); color: white; padding: 6px 12px; border-radius: 12px; font-size: 12px;">#фінти</div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+                        <div>
+                            <div style="font-size: 18px; font-weight: 700; color: white; margin-bottom: 8px;">Неймовірний фінт Роналдіньо</div>
+                            <div style="font-size: 14px; color: #3b82f6; cursor: pointer;" onclick="showProfile('Максим')">@Максим П. ⭐ 4.5</div>
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 20px; align-items: center;">
+                            <div>
+                                <button style="width: 50px; height: 50px; background: rgba(255,255,255,0.3); border: none; border-radius: 50%; color: white; font-size: 20px; cursor: pointer;" onclick="likeVideo(this)">❤️</button>
+                                <div style="font-size: 12px; color: white; margin-top: 5px; text-align: center;">142</div>
+                            </div>
+                            <div>
+                                <button style="width: 50px; height: 50px; background: rgba(255,255,255,0.3); border: none; border-radius: 50%; color: white; font-size: 20px; cursor: pointer;" onclick="alert('Коментарі...')">💬</button>
+                                <div style="font-size: 12px; color: white; margin-top: 5px; text-align: center;">23</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Matches Page -->
+    <div class="screen matches-page" id="matchesPage">
+        <div style="background: linear-gradient(135deg, #10b981, #06b6d4, #3b82f6); padding: 15px 20px; display: flex; align-items: center; justify-content: space-between;">
+            <button class="back-btn" style="color: white;" onclick="showMain()">← Назад</button>
+            <div style="font-size: 18px; font-weight: 700; color: white;">⚽ Пошук матчів</div>
+            <button style="background: rgba(255,255,255,0.3); color: white; border: none; width: 32px; height: 32px; border-radius: 50%; font-size: 18px; cursor: pointer;" onclick="alert('Створення матчу...')">+</button>
+        </div>
+
+        <div style="padding: 15px 20px; background: white; border-bottom: 1px solid #e5e7eb;">
+            <button class="filter-btn active">📅 Сьогодні</button>
+            <button class="filter-btn">🗓️ Завтра</button>
+            <button class="filter-btn">📍 Поруч</button>
+        </div>
+
+        <div class="match-card">
+            <div style="font-size: 16px; font-weight: 700; margin-bottom: 8px;">Футбол в центрі</div>
+            <div style="font-size: 14px; color: #6b7280; margin-bottom: 15px;">Дружня гра 5х5, всі рівні вітаються</div>
+            <div style="font-size: 12px; color: #6b7280; margin-bottom: 15px;">Організатор: <span style="font-weight: 600;">Максим П.</span></div>
+            
+            <div style="margin: 15px 0;">
+                <div style="display: flex; align-items: center; gap: 10px; margin: 8px 0; font-size: 14px;">
+                    <span style="color: #10b981;">📍</span><span>Стадіон Динамо</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px; margin: 8px 0; font-size: 14px;">
+                    <span style="color: #3b82f6;">📅</span><span>2025-01-25 о 18:00</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px; margin: 8px 0; font-size: 14px;">
+                    <span style="color: #7c3aed;">👥</span><span>6/10 гравців</span>
+                </div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
+                <div>
+                    <span style="background: #dcfce7; color: #166534; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;">🟢 Відкрито</span>
+                    <div style="font-size: 12px; color: #6b7280; margin-top: 4px;">Потрібно: 4 гравці</div>
+                </div>
+                <button style="background: linear-gradient(45deg, #10b981, #06b6d4); color: white; padding: 8px 16px; border: none; border-radius: 12px; font-size: 14px; cursor: pointer;" onclick="alert('Заявка подана!')">Подати заявку</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rating Page -->
+    <div class="screen rating-page" id="ratingPage">
+        <div style="background: linear-gradient(135deg, #fbbf24, #f97316, #dc2626); padding: 15px 20px; display: flex; align-items: center; justify-content: space-between;">
+            <button class="back-btn" style="color: white;" onclick="showMain()">← Назад</button>
+            <div style="font-size: 18px; font-weight: 700; color: white;">🏆 Рейтинг гравців</div>
+            <div></div>
+        </div>
+
+        <div style="padding: 15px 20px; background: white; border-bottom: 1px solid #e5e7eb;">
+            <button class="filter-btn active">🌟 Загальний</button>
+            <button class="filter-btn">🏙️ Мої міста</button>
+            <button class="filter-btn">👥 Друзі</button>
+        </div>
+
+        <div class="podium">
+            <h3 style="text-align: center; margin-bottom: 20px; font-size: 18px; font-weight: 700;">Топ-3 гравці</h3>
+            <div class="podium-container">
+                <div style="text-align: center; order: 1;" class="podium-2">
+                    <div class="podium-avatar">👤<div style="position: absolute; top: -5px; right: -5px; background: white; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700;">2</div></div>
+                    <div style="font-weight: 700; margin-bottom: 4px;">Андрій</div>
+                    <div style="font-size: 14px; color: #6b7280;">⭐ 4.7</div>
+                </div>
+                <div style="text-align: center; order: 2;" class="podium-1">
+                    <div class="podium-avatar">👤<div style="position: absolute; top: -5px; right: -5px; background: white; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700;">1</div></div>
+                    <div style="font-weight: 700; margin-bottom: 4px;">Максим</div>
+                    <div style="font-size: 14px; color: #6b7280;">⭐ 4.9</div>
+                </div>
+                <div style="text-align: center; order: 3;" class="podium-3">
+                    <div class="podium-avatar">👤<div style="position: absolute; top: -5px; right: -5px; background: white; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700;">3</div></div>
+                    <div style="font-weight: 700; margin-bottom: 4px;">Олег</div>
+                    <div style="font-size: 14px; color: #6b7280;">⭐ 4.5</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="rating-list">
+            <div class="rating-item" style="background: linear-gradient(45deg, rgba(59, 130, 246, 0.1), rgba(79, 70, 229, 0.1));">
+                <div style="width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; margin-right: 15px; background: #3b82f6; color: white;">4</div>
+                <div style="width: 40px; height: 40px; background: #f3f4f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; margin-right: 15px;">👤</div>
+                <div style="flex: 1;">
+                    <div style="font-size: 16px; font-weight: 700; margin-bottom: 4px;">Олексій (Ви)</div>
+                    <div style="font-size: 12px; color: #6b7280;">Півзахисник • Київ • 23 ігри</div>
+                </div>
+                <div style="text-align: right;">
+                    <div style="font-size: 18px; font-weight: 700;">⭐ 4.2</div>
+                    <div style="font-size: 12px; color: #6b7280;">78%</div>
+                </div>
+            </div>
+
+            <div class="rating-item">
+                <div style="width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; margin-right: 15px; background: #6b7280; color: white;">5</div>
+                <div style="width: 40px; height: 40px; background: #f3f4f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; margin-right: 15px;">👤</div>
+                <div style="flex: 1;">
+                    <div style="font-size: 16px; font-weight: 700; margin-bottom: 4px;">Дмитро</div>
+                    <div style="font-size: 12px; color: #6b7280;">Нападник • Київ • 18 ігор</div>
+                </div>
+                <div style="text-align: right;">
+                    <div style="font-size: 18px; font-weight: 700;">⭐ 4.1</div>
+                    <div style="font-size: 12px; color: #6b7280;">72%</div>
+                </div>
+                <button style="background: #3b82f6; color: white; border: none; padding: 4px 8px; border-radius: 6px; font-size: 12px; cursor: pointer; margin-left: 10px;" onclick="addFriend(this, 'Дмитро')">➕</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav" id="bottomNav" style="display: none;">
+        <div class="nav-item active" onclick="updateNav(0); showMain();">
+            <div style="font-size: 20px; margin-bottom: 5px;">🏠</div>
+            <div style="font-size: 12px;">Головна</div>
+        </div>
+        <div class="nav-item" onclick="updateNav(1); showVideos();">
+            <div style="font-size: 20px; margin-bottom: 5px;">🎥</div>
+            <div style="font-size: 12px;">Відео</div>
+        </div>
+        <div class="nav-item" onclick="updateNav(2); showMatches();">
+            <div style="font-size: 20px; margin-bottom: 5px;">⚽</div>
+            <div style="font-size: 12px;">Матчі</div>
+        </div>
+        <div class="nav-item" onclick="updateNav(3); showRating();">
+            <div style="font-size: 20px; margin-bottom: 5px;">👥</div>
+            <div style="font-size: 12px;">Рейтинг</div>
+        </div>
+    </div>
+
+    <!-- Shop Modal -->
+    <div class="modal" id="shopModal">
+        <div class="modal-content">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+                <div style="font-size: 20px; font-weight: 700; flex: 1; text-align: center;">🛍️ Магазин</div>
+                <button class="close-btn" onclick="closeModal('shopModal')">✕</button>
+            </div>
+            
+            <div style="background: linear-gradient(45deg, #fbbf24, #f97316); color: white; padding: 15px; border-radius: 12px; margin-bottom: 20px; text-align: center;">
+                <div style="font-size: 18px; font-weight: 700;">Ваш баланс: <span id="modalBalance">247 🪙</span></div>
+            </div>
+            
+            <div class="shop-item">
+                <div>
+                    <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 5px;">🎭 Король фінтів</h3>
+                    <div style="font-size: 14px; color: #6b7280;">Показує майстерність у фінтах</div>
+                </div>
+                <div>
+                    <div style="font-size: 18px; font-weight: 700; color: #fbbf24; margin-bottom: 5px;">100 🪙</div>
+                    <button class="buy-btn" onclick="buyItem('🎭 Король фінтів', 100)">Купити</button>
+                </div>
+            </div>
+
+            <div class="shop-item">
+                <div>
+                    <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 5px;">🎯 Снайпер</h3>
+                    <div style="font-size: 14px; color: #6b7280;">За точні удари з дистанції</div>
+                </div>
+                <div>
+                    <div style="font-size: 18px; font-weight: 700; color: #fbbf24; margin-bottom: 5px;">150 🪙</div>
+                    <button class="buy-btn" onclick="buyItem('🎯 Снайпер', 150)">Купити</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Voting Modal -->
+    <div class="modal" id="votingModal">
+        <div class="modal-content">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+                <div style="font-size: 20px; font-weight: 700; flex: 1; text-align: center;">🏆 Челендж: Голосування</div>
+                <button class="close-btn" onclick="closeModal('votingModal')">✕</button>
+            </div>
+            
+            <div style="background: #f9fafb; border-radius: 12px; padding: 15px; margin-bottom: 15px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <div style="font-weight: 700;">Відео #1</div>
+                    <div style="color: #fbbf24; font-weight: 700;">4.23 ⭐ (15 голосів)</div>
+                </div>
+                <div style="margin-bottom: 10px;">від <span style="color: #3b82f6; cursor: pointer;" onclick="showProfile('Іван')">Іван С.</span> ⭐ 4.0</div>
+                
+                <div style="width: 100%; height: 120px; background: #d1d5db; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin: 10px 0; cursor: pointer; font-size: 30px; color: #6b7280;" onclick="alert('Перегляд відео...')">▶️</div>
+                
+                <div class="slider-value" id="sliderValue1">3.47</div>
+                <input type="range" min="0" max="5" step="0.01" value="3.47" class="slider" oninput="updateSliderValue(1, this.value)">
+                
+                <button style="background: linear-gradient(45deg, #3b82f6, #7c3aed); color: white; border: none; padding: 12px 24px; border-radius: 12px; font-size: 14px; cursor: pointer; width: 100%; margin-top: 15px;" onclick="submitVote(1)">Проголосувати за <span id="voteValue1">3.47</span> ⭐</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Modal -->
+    <div class="modal" id="profileModal">
+        <div class="modal-content">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+                <div style="font-size: 20px; font-weight: 700; flex: 1; text-align: center;" id="profileName">Профіль гравця</div>
+                <button class="close-btn" onclick="closeModal('profileModal')">✕</button>
+            </div>
+            
+            <div style="text-align: center; margin-bottom: 20px;">
+                <div style="width: 80px; height: 80px; background: #f3f4f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; margin: 0 auto 15px;">👤</div>
+                <h3 style="font-size: 24px; font-weight: 700; margin-bottom: 8px;" id="profilePlayerName">Максим П.</h3>
+                <div style="font-size: 16px; color: #6b7280; margin-bottom: 8px;">⭐ 4.5 • Півзахисник</div>
+                <div style="font-size: 14px; color: #6b7280;">📍 Київ • 2 хв тому</div>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin: 20px 0;">
+                <div style="background: #f9fafb; padding: 15px; border-radius: 12px; text-align: center;">
+                    <div style="font-size: 20px; font-weight: 700; color: #1f2937;">28</div>
+                    <div style="font-size: 12px; color: #6b7280;">Ігор зіграно</div>
+                </div>
+                <div style="background: #f9fafb; padding: 15px; border-radius: 12px; text-align: center;">
+                    <div style="font-size: 20px; font-weight: 700; color: #10b981;">82%</div>
+                    <div style="font-size: 12px; color: #6b7280;">Win Rate</div>
+                </div>
+                <div style="background: #f9fafb; padding: 15px; border-radius: 12px; text-align: center;">
+                    <div style="font-size: 20px; font-weight: 700; color: #3b82f6;">4.5</div>
+                    <div style="font-size: 12px; color: #6b7280;">Рейтинг</div>
+                </div>
+            </div>
+            
+            <button style="background: linear-gradient(45deg, #3b82f6, #7c3aed); color: white; border: none; padding: 12px 24px; border-radius: 12px; font-size: 14px; cursor: pointer; width: 100%;" id="friendActionBtn" onclick="toggleFriend()">➕ Додати в друзі</button>
+        </div>
+    </div>
+
+    <script>
+        let currentUser = { name: 'Олексій', coins: 247, friends: [] };
+        let currentProfile = null;
+
+        window.onload = function() {
+            setTimeout(() => showScreen('welcomeScreen'), 3000);
+        };
+
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+            
+            const bottomNav = document.getElementById('bottomNav');
+            bottomNav.style.display = (screenId === 'mainApp' || screenId.includes('Page')) ? 'flex' : 'none';
+        }
+
+        function showAuth() { showScreen('authScreen'); }
+        function loginDemo() { showScreen('mainApp'); updateNav(0); }
+
+        function updateNav(activeIndex) {
+            document.querySelectorAll('.nav-item').forEach((item, index) => {
+                if (index === activeIndex) item.classList.add('active');
+                else item.classList.remove('active');
+            });
+        }
+
+        function showMain() { showScreen('mainApp'); updateNav(0); }
+        function showVideos() { showScreen('videosPage'); updateNav(1); }
+        function showMatches() { showScreen('matchesPage'); updateNav(2); }
+        function showRating() { showScreen('ratingPage'); updateNav(3); }
+
+        function likeVideo(button) {
+            const countElement = button.parentElement.querySelector('div:last-child');
+            let count = parseInt(countElement.textContent);
+            countElement.textContent = count + 1;
+            button.style.transform = 'scale(1.2)';
+            setTimeout(() => button.style.transform = 'scale(1)', 200);
+            alert('Лайк додано! ❤️');
+        }
+
+        function addFriend(button, name) {
+            if (!currentUser.friends.includes(name)) {
+                currentUser.friends.push(name);
+                button.textContent = '✓';
+                alert(`${name} додано в друзі!`);
+            }
+        }
+
+        function showProfile(name) {
+            currentProfile = name;
+            document.getElementById('profilePlayerName').textContent = name === 'own' ? currentUser.name : name + ' П.';
+            document.getElementById('profileModal').classList.add('active');
+        }
+
+        function toggleFriend() {
+            if (currentProfile && currentProfile !== 'own') {
+                const friendBtn = document.getElementById('friendActionBtn');
+                if (currentUser.friends.includes(currentProfile)) {
+                    const index = currentUser.friends.indexOf(currentProfile);
+                    currentUser.friends.splice(index, 1);
+                    friendBtn.textContent = '➕ Додати в друзі';
+                } else {
+                    currentUser.friends.push(currentProfile);
+                    friendBtn.textContent = '✓ У друзях';
+                }
+            }
+        }
+
+        function showShop() {
+            document.getElementById('modalBalance').textContent = currentUser.coins + ' 🪙';
+            document.getElementById('shopModal').classList.add('active');
+        }
+
+        function buyItem(itemName, price) {
+            if (currentUser.coins >= price) {
+                currentUser.coins -= price;
+                document.getElementById('coinBalance').textContent = currentUser.coins + ' 🪙';
+                document.getElementById('modalBalance').textContent = currentUser.coins + ' 🪙';
+                alert(`Придбано: ${itemName}!`);
+            } else {
+                alert('Недостатньо монет!');
+            }
+        }
+
+        function openVoting() { document.getElementById('votingModal').classList.add('active'); }
+
+        function updateSliderValue(videoNum, value) {
+            document.getElementById(`sliderValue${videoNum}`).textContent = parseFloat(value).toFixed(2);
+            document.getElementById(`voteValue${videoNum}`).textContent = parseFloat(value).toFixed(2);
+        }
+
+        function submitVote(videoNum) {
+            const rating = document.getElementById(`sliderValue${videoNum}`).textContent;
+            alert(`Ваш голос за відео #${videoNum}: ${rating} ⭐ збережено!`);
+            closeModal('votingModal');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.classList.remove('active');
+            }
+        }
+    </script>
+</body>
+</html>
