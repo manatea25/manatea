@@ -103,8 +103,37 @@
             <input type="password" class="input-field" placeholder="Пароль">
             <button class="auth-btn" style="background: #1f2937; color: white;" onclick="loginDemo()">Увійти</button>
             <div style="text-align: center; margin-top: 20px; color: #6b7280;">
-                Немає акаунту? <button style="background: none; border: none; color: #3b82f6; font-weight: 600; cursor: pointer;" onclick="alert('Створення профілю...')">Створити акаунт ✨</button>
+                Немає акаунту? <button style="background: none; border: none; color: #3b82f6; font-weight: 600; cursor: pointer;" onclick="showProfileCreation()">Створити акаунт ✨</button>
             </div>
+        </div>
+    </div>
+
+    <!-- Profile Creation Screen -->
+    <div class="screen" id="profileCreationScreen" style="background: #f9fafb; min-height: 100vh; padding: 20px;">
+        <div style="max-width: 500px; margin: 0 auto; background: white; border-radius: 20px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+            <h2 style="text-align: center; font-size: 24px; font-weight: 700; margin-bottom: 30px; color: #1f2937;">Створення профілю</h2>
+            
+            <div style="text-align: center; margin-bottom: 30px;">
+                <div style="width: 100px; height: 100px; border: 3px dashed #d1d5db; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; cursor: pointer; transition: border-color 0.2s; font-size: 30px; color: #6b7280;" onclick="selectPhoto()" id="photoUpload">📷</div>
+                <p style="color: #6b7280; font-size: 14px;">Додати фото</p>
+            </div>
+            
+            <input type="text" class="input-field" placeholder="Ваше ім'я" id="profileNameInput">
+            <input type="tel" class="input-field" placeholder="Номер телефону" id="profilePhoneInput">
+            
+            <select class="input-field" style="background: white;" id="profilePositionSelect">
+                <option value="">Оберіть позицію</option>
+                <option value="goalkeeper">🥅 Воротар</option>
+                <option value="defender">🛡️ Захисник</option>
+                <option value="midfielder">⚽ Півзахисник</option>
+                <option value="forward">🎯 Нападник</option>
+            </select>
+            
+            <textarea class="input-field" placeholder="Розкажіть про себе..." style="resize: vertical; min-height: 100px;" id="profileDescriptionInput"></textarea>
+            
+            <input type="text" class="input-field" placeholder="Ваше місто" id="profileCityInput">
+            
+            <button style="background: linear-gradient(45deg, #f97316, #ea580c); color: white; border: none; padding: 16px 32px; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; width: 100%; margin-top: 20px;" onclick="createProfile()">Створити профіль 🚀</button>
         </div>
     </div>
 
@@ -117,7 +146,7 @@
                     <div>
                         <h2 style="font-size: 18px; margin-bottom: 5px;" id="userName">Олексій</h2>
                         <div style="font-size: 14px; opacity: 0.9;">⭐ 4.2</div>
-                        <div style="background: #fbbf24; color: #1f2937; padding: 4px 12px; border-radius: 12px; font-size: 12px; margin-top: 5px; display: inline-block;">ЧЕМПІОНИ</div>
+                                                       <div style="background: #fbbf24; color: #1f2937; padding: 4px 12px; border-radius: 12px; font-size: 12px; margin-top: 5px; display: inline-block;" id="subscriptionBadge">ЧЕМПІОНИ</div>
                     </div>
                 </div>
                 <div style="text-align: right;">
@@ -140,8 +169,10 @@
         <div class="quick-actions">
             <button class="action-btn video-btn" onclick="showVideos()"><span>🎥</span><span>Переглянути відео</span></button>
             <button class="action-btn match-btn" onclick="showMatches()"><span>⚽</span><span>Пошук гри</span></button>
-            <button class="action-btn shop-btn" onclick="showShop()"><span>🛍️</span><span>Магазин</span></button>
-            <button class="action-btn rating-btn" onclick="showRating()"><span>🏆</span><span>Рейтинг гравців</span></button>
+                             <button class="action-btn shop-btn" onclick="showShop()"><span>🛍️</span><span>Магазин</span></button>
+                 <button class="action-btn rating-btn" onclick="showRating()"><span>🏆</span><span>Рейтинг гравців</span></button>
+                 <button class="action-btn" style="background: linear-gradient(45deg, #ec4899, #be185d); color: white;" onclick="showFriendsModal()"><span>👥</span><span>Мої друзі</span></button>
+                 <button class="action-btn" style="background: linear-gradient(45deg, #8b5cf6, #7c3aed); color: white;" onclick="showSubscriptions()"><span>👑</span><span>Підписки</span></button>
         </div>
     </div>
 
@@ -150,7 +181,7 @@
         <div class="page-header">
             <button class="back-btn" onclick="showMain()">← Назад</button>
             <div style="font-size: 18px; font-weight: 700;">🎥 Відео</div>
-            <button style="background: linear-gradient(45deg, #dc2626, #ec4899); color: white; border: none; width: 32px; height: 32px; border-radius: 50%; font-size: 18px; cursor: pointer;" onclick="alert('Створення челенджу...')">+</button>
+                         <button style="background: linear-gradient(45deg, #dc2626, #ec4899); color: white; border: none; width: 32px; height: 32px; border-radius: 50%; font-size: 18px; cursor: pointer;" onclick="showCreateChallenge()">+</button>
         </div>
 
         <div class="filters">
@@ -181,7 +212,7 @@
                         <span style="background: #f3f4f6; padding: 4px 8px; border-radius: 8px; font-size: 12px; color: #6b7280; margin-right: 10px;">⏰ 2 дні</span>
                         <span style="background: #7c3aed; color: white; padding: 4px 8px; border-radius: 8px; font-size: 12px;">#фінти</span>
                     </div>
-                    <button style="background: linear-gradient(45deg, #10b981, #059669); color: white; padding: 8px 16px; border: none; border-radius: 12px; font-size: 12px; cursor: pointer;" onclick="alert('Прийняття виклику...')">🚀 Прийняти виклик</button>
+                                               <button style="background: linear-gradient(45deg, #10b981, #059669); color: white; padding: 8px 16px; border: none; border-radius: 12px; font-size: 12px; cursor: pointer;" onclick="acceptChallenge()">🚀 Прийняти виклик</button>
                 </div>
             </div>
 
@@ -241,7 +272,7 @@
         <div style="background: linear-gradient(135deg, #10b981, #06b6d4, #3b82f6); padding: 15px 20px; display: flex; align-items: center; justify-content: space-between;">
             <button class="back-btn" style="color: white;" onclick="showMain()">← Назад</button>
             <div style="font-size: 18px; font-weight: 700; color: white;">⚽ Пошук матчів</div>
-            <button style="background: rgba(255,255,255,0.3); color: white; border: none; width: 32px; height: 32px; border-radius: 50%; font-size: 18px; cursor: pointer;" onclick="alert('Створення матчу...')">+</button>
+                             <button style="background: rgba(255,255,255,0.3); color: white; border: none; width: 32px; height: 32px; border-radius: 50%; font-size: 18px; cursor: pointer;" onclick="showCreateMatch()">+</button>
         </div>
 
         <div style="padding: 15px 20px; background: white; border-bottom: 1px solid #e5e7eb;">
@@ -364,38 +395,70 @@
 
     <!-- Shop Modal -->
     <div class="modal" id="shopModal">
-        <div class="modal-content">
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
-                <div style="font-size: 20px; font-weight: 700; flex: 1; text-align: center;">🛍️ Магазин</div>
-                <button class="close-btn" onclick="closeModal('shopModal')">✕</button>
-            </div>
-            
-            <div style="background: linear-gradient(45deg, #fbbf24, #f97316); color: white; padding: 15px; border-radius: 12px; margin-bottom: 20px; text-align: center;">
-                <div style="font-size: 18px; font-weight: 700;">Ваш баланс: <span id="modalBalance">247 🪙</span></div>
-            </div>
-            
-            <div class="shop-item">
-                <div>
-                    <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 5px;">🎭 Король фінтів</h3>
-                    <div style="font-size: 14px; color: #6b7280;">Показує майстерність у фінтах</div>
-                </div>
-                <div>
-                    <div style="font-size: 18px; font-weight: 700; color: #fbbf24; margin-bottom: 5px;">100 🪙</div>
-                    <button class="buy-btn" onclick="buyItem('🎭 Король фінтів', 100)">Купити</button>
-                </div>
-            </div>
+                 <div class="modal-content">
+             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+                 <div style="font-size: 20px; font-weight: 700; flex: 1; text-align: center;">🛍️ Магазин</div>
+                 <button class="close-btn" onclick="closeModal('shopModal')">✕</button>
+             </div>
+             
+             <div style="background: linear-gradient(45deg, #fbbf24, #f97316); color: white; padding: 15px; border-radius: 12px; margin-bottom: 20px; text-align: center;">
+                 <div style="font-size: 18px; font-weight: 700;">Ваш баланс: <span id="modalBalance">247 🪙</span></div>
+             </div>
+             
+             <h3 style="margin-bottom: 15px;">💰 Купити FlapCoins</h3>
+             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px;">
+                 <button class="buy-btn" onclick="buyCoins(50, 50)">50 FC - 50₴</button>
+                 <button class="buy-btn" onclick="buyCoins(100, 100)">100 FC - 100₴</button>
+                 <button class="buy-btn" onclick="buyCoins(500, 450)">500 FC - 450₴</button>
+                 <button class="buy-btn" onclick="buyCoins(1000, 850)">1000 FC - 850₴</button>
+             </div>
+             
+             <h3 style="margin-bottom: 15px;">🎖️ Бейджі</h3>
+             
+             <div class="shop-item">
+                 <div>
+                     <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 5px;">🎭 Король фінтів</h3>
+                     <div style="font-size: 14px; color: #6b7280;">Показує майстерність у фінтах</div>
+                 </div>
+                 <div>
+                     <div style="font-size: 18px; font-weight: 700; color: #fbbf24; margin-bottom: 5px;">100 🪙</div>
+                     <button class="buy-btn" onclick="buyItem('🎭 Король фінтів', 100)">Купити</button>
+                 </div>
+             </div>
 
-            <div class="shop-item">
-                <div>
-                    <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 5px;">🎯 Снайпер</h3>
-                    <div style="font-size: 14px; color: #6b7280;">За точні удари з дистанції</div>
-                </div>
-                <div>
-                    <div style="font-size: 18px; font-weight: 700; color: #fbbf24; margin-bottom: 5px;">150 🪙</div>
-                    <button class="buy-btn" onclick="buyItem('🎯 Снайпер', 150)">Купити</button>
-                </div>
-            </div>
-        </div>
+             <div class="shop-item">
+                 <div>
+                     <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 5px;">🎯 Снайпер</h3>
+                     <div style="font-size: 14px; color: #6b7280;">За точні удари з дистанції</div>
+                 </div>
+                 <div>
+                     <div style="font-size: 18px; font-weight: 700; color: #fbbf24; margin-bottom: 5px;">150 🪙</div>
+                     <button class="buy-btn" onclick="buyItem('🎯 Снайпер', 150)">Купити</button>
+                 </div>
+             </div>
+
+             <div class="shop-item">
+                 <div>
+                     <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 5px;">👑 Капітан команди</h3>
+                     <div style="font-size: 14px; color: #6b7280;">Лідерські якості на полі</div>
+                 </div>
+                 <div>
+                     <div style="font-size: 18px; font-weight: 700; color: #fbbf24; margin-bottom: 5px;">200 🪙</div>
+                     <button class="buy-btn" onclick="buyItem('👑 Капітан команди', 200)">Купити</button>
+                 </div>
+             </div>
+
+             <div class="shop-item" style="opacity: 0.5;">
+                 <div>
+                     <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 5px;">⭐ Відгук від Андрія Ярмоленка</h3>
+                     <div style="font-size: 14px; color: #6b7280;">Coming Soon - персональний відгук</div>
+                 </div>
+                 <div>
+                     <div style="font-size: 18px; font-weight: 700; color: #fbbf24; margin-bottom: 5px;">500 🪙</div>
+                     <button class="buy-btn" disabled style="background: #9ca3af;">Coming Soon</button>
+                 </div>
+             </div>
+         </div>
     </div>
 
     <!-- Voting Modal -->
@@ -454,16 +517,271 @@
             </div>
             
             <button style="background: linear-gradient(45deg, #3b82f6, #7c3aed); color: white; border: none; padding: 12px 24px; border-radius: 12px; font-size: 14px; cursor: pointer; width: 100%;" id="friendActionBtn" onclick="toggleFriend()">➕ Додати в друзі</button>
-        </div>
-    </div>
+                 </div>
+     </div>
 
-    <script>
-        let currentUser = { name: 'Олексій', coins: 247, friends: [] };
+     <!-- Create Challenge Modal - Step 1 -->
+     <div class="modal" id="createChallengeStep1">
+         <div class="modal-content">
+             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+                 <div style="font-size: 20px; font-weight: 700; flex: 1; text-align: center;">🏆 Створити челендж</div>
+                 <button class="close-btn" onclick="closeModal('createChallengeStep1')">✕</button>
+             </div>
+             
+             <input type="text" class="input-field" placeholder="Назва челенджу" id="challengeNameInput">
+             <textarea class="input-field" placeholder="Опис челенджу..." style="resize: vertical; min-height: 80px;" id="challengeDescriptionInput"></textarea>
+             
+             <select class="input-field" style="background: white;" id="challengeCategorySelect">
+                 <option value="">🎭 Оберіть категорію</option>
+                 <option value="tricks">🤹 Фінти</option>
+                 <option value="goals">⚽ Голи</option>
+                 <option value="saves">🥅 Сейви</option>
+                 <option value="technique">🦶 Техніка</option>
+             </select>
+             
+             <input type="number" class="input-field" placeholder="Призовий фонд (монети)" id="challengePrizeInput">
+             
+             <select class="input-field" style="background: white;" id="challengeTermSelect">
+                 <option value="">⏰ Термін</option>
+                 <option value="1">1 день</option>
+                 <option value="3">3 дні</option>
+                 <option value="7">7 днів</option>
+                 <option value="14">14 днів</option>
+             </select>
+             
+             <button style="background: linear-gradient(45deg, #3b82f6, #7c3aed); color: white; border: none; padding: 12px 24px; border-radius: 12px; font-size: 14px; cursor: pointer; width: 100%; margin-top: 15px;" onclick="goToChallengeStep2()">Далі: Завантажити відео 📹</button>
+         </div>
+     </div>
+
+     <!-- Create Challenge Modal - Step 2 -->
+     <div class="modal" id="createChallengeStep2">
+         <div class="modal-content">
+             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+                 <button style="background: none; border: none; font-size: 16px; cursor: pointer; color: #3b82f6;" onclick="backToChallengeStep1()">← Назад</button>
+                 <div style="font-size: 20px; font-weight: 700; flex: 1; text-align: center;">📹 Завантажити відео</div>
+                 <button class="close-btn" onclick="closeModal('createChallengeStep2')">✕</button>
+             </div>
+             
+             <div style="border: 3px dashed #d1d5db; border-radius: 12px; padding: 40px; text-align: center; margin-bottom: 20px; cursor: pointer; transition: border-color 0.2s;" onclick="selectVideo()" id="videoUploadZone">
+                 <div style="font-size: 48px; margin-bottom: 15px;">📤</div>
+                 <div style="font-size: 18px; font-weight: 600; margin-bottom: 8px;">Завантажте ваше відео</div>
+                 <div style="font-size: 14px; color: #6b7280;">MP4, MOV до 100MB</div>
+             </div>
+             
+             <button style="background: linear-gradient(45deg, #10b981, #06b6d4); color: white; border: none; padding: 12px 24px; border-radius: 12px; font-size: 14px; cursor: pointer; width: 100%;" onclick="goToChallengeStep3()">Далі: Запросити друзів 👥</button>
+         </div>
+     </div>
+
+     <!-- Create Challenge Modal - Step 3 -->
+     <div class="modal" id="createChallengeStep3">
+         <div class="modal-content">
+             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+                 <button style="background: none; border: none; font-size: 16px; cursor: pointer; color: #3b82f6;" onclick="backToChallengeStep2()">← Назад</button>
+                 <div style="font-size: 20px; font-weight: 700; flex: 1; text-align: center;">👥 Запросити учасників</div>
+                 <button class="close-btn" onclick="closeModal('createChallengeStep3')">✕</button>
+             </div>
+             
+             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+                 <button style="background: #f3f4f6; border: none; padding: 15px; border-radius: 12px; cursor: pointer; transition: background-color 0.2s;" onclick="selectInviteOption('friends')" id="inviteFriends">
+                     <div style="font-size: 24px; margin-bottom: 8px;">👥</div>
+                     <div style="font-size: 14px; font-weight: 600;">Мої друзі</div>
+                 </button>
+                 <button style="background: #f3f4f6; border: none; padding: 15px; border-radius: 12px; cursor: pointer; transition: background-color 0.2s;" onclick="selectInviteOption('cities')" id="inviteCities">
+                     <div style="font-size: 24px; margin-bottom: 8px;">🏙️</div>
+                     <div style="font-size: 14px; font-weight: 600;">По містах</div>
+                 </button>
+                 <button style="background: #f3f4f6; border: none; padding: 15px; border-radius: 12px; cursor: pointer; transition: background-color 0.2s;" onclick="selectInviteOption('positions')" id="invitePositions">
+                     <div style="font-size: 24px; margin-bottom: 8px;">⚽</div>
+                     <div style="font-size: 14px; font-weight: 600;">По позиціях</div>
+                 </button>
+                 <button style="background: #f3f4f6; border: none; padding: 15px; border-radius: 12px; cursor: pointer; transition: background-color 0.2s;" onclick="selectInviteOption('everyone')" id="inviteEveryone">
+                     <div style="font-size: 24px; margin-bottom: 8px;">🌍</div>
+                     <div style="font-size: 14px; font-weight: 600;">Всім</div>
+                 </button>
+             </div>
+             
+             <div style="background: #f9fafb; padding: 15px; border-radius: 12px; margin-bottom: 20px;">
+                 <div style="font-weight: 600; margin-bottom: 10px;">Обрані учасники:</div>
+                 <div id="selectedParticipants" style="font-size: 14px; color: #6b7280;">Оберіть варіант запрошення</div>
+             </div>
+             
+             <button style="background: linear-gradient(45deg, #dc2626, #ec4899); color: white; border: none; padding: 12px 24px; border-radius: 12px; font-size: 14px; cursor: pointer; width: 100%;" onclick="createChallengeComplete()">🚀 Створити челендж</button>
+         </div>
+     </div>
+
+     <!-- Friends Modal -->
+     <div class="modal" id="friendsModal">
+         <div class="modal-content">
+             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+                 <div style="font-size: 20px; font-weight: 700; flex: 1; text-align: center;">👥 Мої друзі</div>
+                 <button class="close-btn" onclick="closeModal('friendsModal')">✕</button>
+             </div>
+             
+             <div id="friendsList">
+                 <div style="text-align: center; padding: 40px;">
+                     <div style="font-size: 48px; opacity: 0.3; margin-bottom: 15px;">👥</div>
+                     <div style="font-size: 18px; font-weight: 600; margin-bottom: 8px;">У вас поки немає друзів</div>
+                     <div style="font-size: 14px; color: #6b7280;">Додайте друзів через рейтинг гравців</div>
+                 </div>
+             </div>
+         </div>
+     </div>
+
+     <!-- Video Upload Modal -->
+     <div class="modal" id="videoUploadModal">
+         <div class="modal-content">
+             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+                 <div style="font-size: 20px; font-weight: 700; flex: 1; text-align: center;">📹 Завантажити відео</div>
+                 <button class="close-btn" onclick="closeModal('videoUploadModal')">✕</button>
+             </div>
+             
+             <div style="border: 3px dashed #d1d5db; border-radius: 12px; padding: 40px; text-align: center; margin-bottom: 20px; cursor: pointer;" onclick="selectChallengeVideo()">
+                 <div style="font-size: 48px; margin-bottom: 15px;">📷</div>
+                 <div style="font-size: 18px; font-weight: 600; margin-bottom: 8px;">Завантажте ваше відео для челенджу</div>
+                 <div style="font-size: 14px; color: #6b7280;">MP4, MOV до 100MB</div>
+             </div>
+             
+             <button style="background: linear-gradient(45deg, #10b981, #06b6d4); color: white; border: none; padding: 12px 24px; border-radius: 12px; font-size: 14px; cursor: pointer; width: 100%;" onclick="uploadChallengeVideo()">🚀 Завантажити відео</button>
+         </div>
+     </div>
+
+     <!-- Create Match Modal -->
+     <div class="modal" id="createMatchModal">
+         <div class="modal-content">
+             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+                 <div style="font-size: 20px; font-weight: 700; flex: 1; text-align: center;">⚽ Створити матч</div>
+                 <button class="close-btn" onclick="closeModal('createMatchModal')">✕</button>
+             </div>
+             
+             <input type="text" class="input-field" placeholder="Назва матчу" id="matchNameInput">
+             <textarea class="input-field" placeholder="Опис матчу..." style="resize: vertical; min-height: 60px;" id="matchDescriptionInput"></textarea>
+             
+             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                 <select class="input-field" style="background: white;" id="matchTypeSelect">
+                     <option value="">⚽ Тип гри</option>
+                     <option value="5v5">5 на 5</option>
+                     <option value="7v7">7 на 7</option>
+                     <option value="11v11">11 на 11</option>
+                 </select>
+                 <select class="input-field" style="background: white;" id="matchLevelSelect">
+                     <option value="">📈 Рівень</option>
+                     <option value="beginner">Початківці</option>
+                     <option value="amateur">Аматори</option>
+                     <option value="advanced">Просунуті</option>
+                 </select>
+             </div>
+             
+             <input type="text" class="input-field" placeholder="📍 Локація (стадіон/адреса)" id="matchLocationInput">
+             
+             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                 <input type="date" class="input-field" id="matchDateInput">
+                 <input type="time" class="input-field" id="matchTimeInput">
+             </div>
+             
+             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                 <input type="number" class="input-field" placeholder="Макс. гравців" id="matchMaxPlayersInput">
+                 <input type="number" class="input-field" placeholder="Ціна участі (₴)" id="matchPriceInput">
+             </div>
+             
+             <div style="background: #f9fafb; padding: 15px; border-radius: 12px; margin-bottom: 15px;">
+                 <div style="font-weight: 600; margin-bottom: 10px;">🎯 Додаткові опції:</div>
+                 <label style="display: flex; align-items: center; margin-bottom: 8px; font-size: 14px;">
+                     <input type="checkbox" style="margin-right: 10px;" id="matchPhotoCheck"> 📸 Фотограф
+                 </label>
+                 <label style="display: flex; align-items: center; margin-bottom: 8px; font-size: 14px;">
+                     <input type="checkbox" style="margin-right: 10px;" id="matchVideoCheck"> 🎥 Відеозйомка
+                 </label>
+                 <label style="display: flex; align-items: center; font-size: 14px;">
+                     <input type="checkbox" style="margin-right: 10px;" id="matchRatingCheck"> ⭐ Рейтинг гравців
+                 </label>
+             </div>
+             
+             <button style="background: linear-gradient(45deg, #10b981, #06b6d4); color: white; border: none; padding: 12px 24px; border-radius: 12px; font-size: 14px; cursor: pointer; width: 100%;" onclick="createMatchComplete()">🚀 Створити матч</button>
+         </div>
+     </div>
+
+     <!-- Subscriptions Modal -->
+     <div class="modal" id="subscriptionsModal">
+         <div class="modal-content">
+             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+                 <div style="font-size: 20px; font-weight: 700; flex: 1; text-align: center;">👑 Підписки FLAP</div>
+                 <button class="close-btn" onclick="closeModal('subscriptionsModal')">✕</button>
+             </div>
+             
+             <div style="background: linear-gradient(45deg, #fbbf24, #f97316); color: white; padding: 15px; border-radius: 12px; margin-bottom: 20px; text-align: center;">
+                 <div style="font-size: 16px; font-weight: 700;">Поточна підписка: <span id="currentSubscription">ЧЕМПІОНИ</span></div>
+                 <div style="font-size: 12px; opacity: 0.9;" id="subscriptionExpiry">Діє до: 08.02.2025</div>
+             </div>
+             
+             <!-- Free Plan -->
+             <div style="border: 2px solid #e5e7eb; border-radius: 16px; padding: 20px; margin-bottom: 15px;">
+                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                     <h3 style="font-size: 18px; font-weight: 700;">⚽ СТАРТ</h3>
+                     <div style="font-size: 24px; font-weight: 900; color: #10b981;">БЕЗКОШТОВНО</div>
+                 </div>
+                 <div style="font-size: 14px; color: #6b7280; margin-bottom: 15px;">
+                     ✅ Перегляд відео<br>
+                     ✅ Участь у матчах<br>
+                     ✅ Базовий рейтинг<br>
+                     ❌ Створення челенджів<br>
+                     ❌ Просунута аналітика
+                 </div>
+                 <button style="background: #9ca3af; color: white; border: none; padding: 8px 16px; border-radius: 8px; font-size: 12px; cursor: not-allowed;" disabled>Поточний план</button>
+             </div>
+             
+             <!-- Premium Plan -->
+             <div style="border: 2px solid #3b82f6; border-radius: 16px; padding: 20px; margin-bottom: 15px; position: relative;">
+                 <div style="position: absolute; top: -10px; left: 20px; background: #3b82f6; color: white; padding: 4px 12px; border-radius: 12px; font-size: 10px; font-weight: 700;">ПОПУЛЯРНИЙ</div>
+                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                     <h3 style="font-size: 18px; font-weight: 700; color: #3b82f6;">🏆 ЧЕМПІОНИ</h3>
+                     <div>
+                         <div style="font-size: 24px; font-weight: 900; color: #3b82f6;">199₴</div>
+                         <div style="font-size: 12px; color: #6b7280;">/місяць</div>
+                     </div>
+                 </div>
+                 <div style="font-size: 14px; color: #6b7280; margin-bottom: 15px;">
+                     ✅ Все з СТАРТ<br>
+                     ✅ Створення челенджів<br>
+                     ✅ Просунута аналітика<br>
+                     ✅ Пріоритет у матчах<br>
+                     ✅ Безлімітні FlapCoins
+                 </div>
+                 <button style="background: linear-gradient(45deg, #3b82f6, #7c3aed); color: white; border: none; padding: 8px 16px; border-radius: 8px; font-size: 12px; cursor: pointer;" onclick="subscribeToPlan('champions', 199)">Поточна підписка ✓</button>
+             </div>
+             
+             <!-- Pro Plan -->
+             <div style="border: 2px solid #fbbf24; border-radius: 16px; padding: 20px; margin-bottom: 15px;">
+                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                     <h3 style="font-size: 18px; font-weight: 700; color: #fbbf24;">👑 ЛЕГЕНДИ</h3>
+                     <div>
+                         <div style="font-size: 24px; font-weight: 900; color: #fbbf24;">399₴</div>
+                         <div style="font-size: 12px; color: #6b7280;">/місяць</div>
+                     </div>
+                 </div>
+                 <div style="font-size: 14px; color: #6b7280; margin-bottom: 15px;">
+                     ✅ Все з ЧЕМПІОНИ<br>
+                     ✅ Персональний тренер<br>
+                     ✅ Відгуки від професіоналів<br>
+                     ✅ Ексклюзивні турніри<br>
+                     ✅ Золотий бейдж
+                 </div>
+                 <button style="background: linear-gradient(45deg, #fbbf24, #f97316); color: white; border: none; padding: 8px 16px; border-radius: 8px; font-size: 12px; cursor: pointer;" onclick="subscribeToPlan('legends', 399)">Оновити до ЛЕГЕНДИ</button>
+             </div>
+             
+             <div style="text-align: center; margin-top: 20px; font-size: 12px; color: #6b7280;">
+                 💡 Всі підписки автоматично поновлюються. Скасувати можна в будь-який час.
+             </div>
+         </div>
+     </div>
+
+     <script>
+                 let currentUser = { name: 'Олексій', coins: 247, friends: [], subscription: 'champions', subscriptionExpiry: '2025-02-08' };
         let currentProfile = null;
 
-        window.onload = function() {
-            setTimeout(() => showScreen('welcomeScreen'), 3000);
-        };
+                 window.onload = function() {
+             setTimeout(() => showScreen('welcomeScreen'), 3000);
+             updateSubscriptionDisplay();
+         };
 
         function showScreen(screenId) {
             document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active'));
@@ -473,8 +791,9 @@
             bottomNav.style.display = (screenId === 'mainApp' || screenId.includes('Page')) ? 'flex' : 'none';
         }
 
-        function showAuth() { showScreen('authScreen'); }
-        function loginDemo() { showScreen('mainApp'); updateNav(0); }
+                 function showAuth() { showScreen('authScreen'); }
+         function showProfileCreation() { showScreen('profileCreationScreen'); }
+         function loginDemo() { showScreen('mainApp'); updateNav(0); }
 
         function updateNav(activeIndex) {
             document.querySelectorAll('.nav-item').forEach((item, index) => {
@@ -530,16 +849,26 @@
             document.getElementById('shopModal').classList.add('active');
         }
 
-        function buyItem(itemName, price) {
-            if (currentUser.coins >= price) {
-                currentUser.coins -= price;
-                document.getElementById('coinBalance').textContent = currentUser.coins + ' 🪙';
-                document.getElementById('modalBalance').textContent = currentUser.coins + ' 🪙';
-                alert(`Придбано: ${itemName}!`);
-            } else {
-                alert('Недостатньо монет!');
-            }
-        }
+                 function buyItem(itemName, price) {
+             if (currentUser.coins >= price) {
+                 currentUser.coins -= price;
+                 document.getElementById('coinBalance').textContent = currentUser.coins + ' 🪙';
+                 document.getElementById('modalBalance').textContent = currentUser.coins + ' 🪙';
+                 alert(`Придбано: ${itemName}!`);
+             } else {
+                 alert('Недостатньо монет!');
+             }
+         }
+
+         function buyCoins(amount, priceUAH) {
+             alert(`Покупка ${amount} FlapCoins за ${priceUAH}₴\nПеренаправлення на оплату...`);
+             setTimeout(() => {
+                 currentUser.coins += amount;
+                 document.getElementById('coinBalance').textContent = currentUser.coins + ' 🪙';
+                 document.getElementById('modalBalance').textContent = currentUser.coins + ' 🪙';
+                 alert(`Успішно! +${amount} FlapCoins додано до балансу`);
+             }, 2000);
+         }
 
         function openVoting() { document.getElementById('votingModal').classList.add('active'); }
 
@@ -554,15 +883,273 @@
             closeModal('votingModal');
         }
 
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('active');
-        }
+                 function closeModal(modalId) {
+             document.getElementById(modalId).classList.remove('active');
+         }
 
-        window.onclick = function(event) {
-            if (event.target.classList.contains('modal')) {
-                event.target.classList.remove('active');
-            }
-        }
+         // Profile Creation Functions
+         function selectPhoto() {
+             const photoUpload = document.getElementById('photoUpload');
+             photoUpload.style.borderColor = '#3b82f6';
+             photoUpload.innerHTML = '👤';
+             alert('Імітація завантаження фото');
+         }
+
+         function createProfile() {
+             const name = document.getElementById('profileNameInput').value;
+             const city = document.getElementById('profileCityInput').value;
+             const position = document.getElementById('profilePositionSelect').value;
+             
+             if (name) {
+                 currentUser.name = name;
+                 document.getElementById('userName').textContent = name;
+             }
+             if (city) currentUser.city = city;
+             if (position) currentUser.position = position;
+             
+             alert('Профіль створено! Вам надано 2 тижні підписки "Ліга Чемпіонів"');
+             showScreen('mainApp');
+             updateNav(0);
+         }
+
+         // Challenge Creation Functions
+         function showCreateChallenge() {
+             document.getElementById('createChallengeStep1').classList.add('active');
+         }
+
+         function goToChallengeStep2() {
+             const name = document.getElementById('challengeNameInput').value;
+             const category = document.getElementById('challengeCategorySelect').value;
+             const prize = document.getElementById('challengePrizeInput').value;
+             
+             if (!name || !category || !prize) {
+                 alert('Заповніть всі поля');
+                 return;
+             }
+             
+             closeModal('createChallengeStep1');
+             document.getElementById('createChallengeStep2').classList.add('active');
+         }
+
+         function backToChallengeStep1() {
+             closeModal('createChallengeStep2');
+             document.getElementById('createChallengeStep1').classList.add('active');
+         }
+
+         function selectVideo() {
+             const uploadZone = document.getElementById('videoUploadZone');
+             uploadZone.style.borderColor = '#3b82f6';
+             uploadZone.innerHTML = '<div style="font-size: 48px; margin-bottom: 15px;">✅</div><div style="font-size: 18px; font-weight: 600; margin-bottom: 8px;">Відео обрано</div><div style="font-size: 14px; color: #6b7280;">football_trick.mp4</div>';
+             alert('Імітація вибору відео файлу');
+         }
+
+         function goToChallengeStep3() {
+             closeModal('createChallengeStep2');
+             document.getElementById('createChallengeStep3').classList.add('active');
+         }
+
+         function backToChallengeStep2() {
+             closeModal('createChallengeStep3');
+             document.getElementById('createChallengeStep2').classList.add('active');
+         }
+
+         function selectInviteOption(option) {
+             // Reset all buttons
+             document.querySelectorAll('#createChallengeStep3 button[id^="invite"]').forEach(btn => {
+                 btn.style.background = '#f3f4f6';
+             });
+             
+             // Highlight selected option
+             const selectedBtn = document.getElementById('invite' + option.charAt(0).toUpperCase() + option.slice(1));
+             selectedBtn.style.background = 'linear-gradient(45deg, #3b82f6, #7c3aed)';
+             selectedBtn.style.color = 'white';
+             
+             // Update participants text
+             const participantsDiv = document.getElementById('selectedParticipants');
+             switch(option) {
+                 case 'friends':
+                     participantsDiv.innerHTML = currentUser.friends.length > 0 ? 
+                         currentUser.friends.map(f => `@${f}`).join(', ') : 
+                         'У вас поки немає друзів';
+                     break;
+                 case 'cities':
+                     participantsDiv.textContent = `Гравці з міста: ${currentUser.city || 'Київ'}`;
+                     break;
+                 case 'positions':
+                     participantsDiv.textContent = 'Гравці тієї ж позиції';
+                     break;
+                 case 'everyone':
+                     participantsDiv.textContent = 'Публічний челендж для всіх гравців';
+                     break;
+             }
+         }
+
+         function createChallengeComplete() {
+             const name = document.getElementById('challengeNameInput').value;
+             const prize = parseInt(document.getElementById('challengePrizeInput').value);
+             
+             if (currentUser.coins >= prize) {
+                 currentUser.coins -= prize;
+                 document.getElementById('coinBalance').textContent = currentUser.coins + ' 🪙';
+                 alert('Челендж створено! Очікуйте учасників.');
+                 closeModal('createChallengeStep3');
+             } else {
+                 alert('Недостатньо монет для створення челенджу');
+             }
+         }
+
+         // Video Upload Functions
+         function selectChallengeVideo() {
+             alert('Імітація вибору відео для челенджу');
+         }
+
+         function uploadChallengeVideo() {
+             alert('Відео завантажено! Ви приєдналися до челенджу');
+             closeModal('videoUploadModal');
+         }
+
+         // Updated challenge buttons
+         function acceptChallenge() {
+             document.getElementById('videoUploadModal').classList.add('active');
+         }
+
+         function showFriendsModal() {
+             updateFriendsList();
+             document.getElementById('friendsModal').classList.add('active');
+         }
+
+         function updateFriendsList() {
+             const friendsList = document.getElementById('friendsList');
+             if (currentUser.friends.length === 0) {
+                 friendsList.innerHTML = `
+                     <div style="text-align: center; padding: 40px;">
+                         <div style="font-size: 48px; opacity: 0.3; margin-bottom: 15px;">👥</div>
+                         <div style="font-size: 18px; font-weight: 600; margin-bottom: 8px;">У вас поки немає друзів</div>
+                         <div style="font-size: 14px; color: #6b7280;">Додайте друзів через рейтинг гравців</div>
+                     </div>
+                 `;
+             } else {
+                 friendsList.innerHTML = currentUser.friends.map(friend => `
+                     <div style="display: flex; align-items: center; padding: 15px; border-bottom: 1px solid #f3f4f6;">
+                         <div style="width: 50px; height: 50px; background: #f3f4f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; margin-right: 15px;">👤</div>
+                         <div style="flex: 1;">
+                             <div style="font-size: 16px; font-weight: 700; margin-bottom: 4px;">${friend}</div>
+                             <div style="font-size: 12px; color: #6b7280;">⭐ 4.${Math.floor(Math.random() * 9)} • В мережі</div>
+                         </div>
+                         <button style="background: #3b82f6; color: white; border: none; padding: 8px 12px; border-radius: 8px; font-size: 12px; cursor: pointer;" onclick="showProfile('${friend}')">Профіль</button>
+                     </div>
+                 `).join('');
+             }
+         }
+
+         // Match Creation Functions
+         function showCreateMatch() {
+             // Set default date to today
+             const today = new Date();
+             const dateStr = today.toISOString().split('T')[0];
+             document.getElementById('matchDateInput').value = dateStr;
+             
+             // Set default time to current hour + 2
+             const currentHour = today.getHours() + 2;
+             const timeStr = `${currentHour.toString().padStart(2, '0')}:00`;
+             document.getElementById('matchTimeInput').value = timeStr;
+             
+             document.getElementById('createMatchModal').classList.add('active');
+         }
+
+         function createMatchComplete() {
+             const name = document.getElementById('matchNameInput').value;
+             const type = document.getElementById('matchTypeSelect').value;
+             const location = document.getElementById('matchLocationInput').value;
+             const date = document.getElementById('matchDateInput').value;
+             const time = document.getElementById('matchTimeInput').value;
+             const maxPlayers = document.getElementById('matchMaxPlayersInput').value;
+             
+             if (!name || !type || !location || !date || !time || !maxPlayers) {
+                 alert('Заповніть всі обов\'язкові поля');
+                 return;
+             }
+             
+             alert(`Матч "${name}" створено!\n📅 ${date} о ${time}\n📍 ${location}\n👥 ${type}, до ${maxPlayers} гравців`);
+             closeModal('createMatchModal');
+             
+             // Clear form
+             document.getElementById('matchNameInput').value = '';
+             document.getElementById('matchDescriptionInput').value = '';
+             document.getElementById('matchLocationInput').value = '';
+             document.getElementById('matchMaxPlayersInput').value = '';
+             document.getElementById('matchPriceInput').value = '';
+         }
+
+         // Subscription Functions
+         function showSubscriptions() {
+             updateSubscriptionDisplay();
+             document.getElementById('subscriptionsModal').classList.add('active');
+         }
+
+         function updateSubscriptionDisplay() {
+             const subscriptionNames = {
+                 'start': '⚽ СТАРТ',
+                 'champions': '🏆 ЧЕМПІОНИ', 
+                 'legends': '👑 ЛЕГЕНДИ'
+             };
+             
+             document.getElementById('currentSubscription').textContent = subscriptionNames[currentUser.subscription];
+             document.getElementById('subscriptionExpiry').textContent = `Діє до: ${formatDate(currentUser.subscriptionExpiry)}`;
+             
+             // Update badge in header
+             const badge = document.getElementById('subscriptionBadge');
+             if (currentUser.subscription === 'legends') {
+                 badge.textContent = 'ЛЕГЕНДИ';
+                 badge.style.background = 'linear-gradient(45deg, #fbbf24, #f97316)';
+                 badge.style.color = 'white';
+             } else if (currentUser.subscription === 'champions') {
+                 badge.textContent = 'ЧЕМПІОНИ';
+                 badge.style.background = '#fbbf24';
+                 badge.style.color = '#1f2937';
+             } else {
+                 badge.textContent = 'СТАРТ';
+                 badge.style.background = '#9ca3af';
+                 badge.style.color = 'white';
+             }
+         }
+
+         function formatDate(dateStr) {
+             const date = new Date(dateStr);
+             return date.toLocaleDateString('uk-UA');
+         }
+
+         function subscribeToPlan(plan, price) {
+             if (currentUser.subscription === plan) {
+                 alert('У вас вже активна ця підписка!');
+                 return;
+             }
+             
+             const planNames = {
+                 'start': '⚽ СТАРТ',
+                 'champions': '🏆 ЧЕМПІОНИ',
+                 'legends': '👑 ЛЕГЕНДИ'
+             };
+             
+             alert(`Оформлення підписки ${planNames[plan]} за ${price}₴/місяць\nПеренаправлення на оплату...`);
+             
+             setTimeout(() => {
+                 currentUser.subscription = plan;
+                 const newExpiry = new Date();
+                 newExpiry.setMonth(newExpiry.getMonth() + 1);
+                 currentUser.subscriptionExpiry = newExpiry.toISOString().split('T')[0];
+                 
+                 updateSubscriptionDisplay();
+                 alert(`Вітаємо! Підписка ${planNames[plan]} активована!`);
+                 closeModal('subscriptionsModal');
+             }, 2000);
+         }
+
+         window.onclick = function(event) {
+             if (event.target.classList.contains('modal')) {
+                 event.target.classList.remove('active');
+             }
+         }
     </script>
 </body>
 </html>
