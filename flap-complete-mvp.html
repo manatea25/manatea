@@ -6,30 +6,222 @@
     <title>FLAP - Fill Like A Pro</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; }
-        .screen { display: none; min-height: 100vh; }
-        .screen.active { display: block; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', sans-serif; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow-x: hidden;
+        }
+        .screen { 
+            display: none; 
+            min-height: 100vh; 
+            opacity: 0;
+            transform: translateX(100px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .screen.active { 
+            display: block; 
+            opacity: 1;
+            transform: translateX(0);
+        }
         
-        .splash { background: linear-gradient(135deg, #4f46e5, #7c3aed, #ec4899); display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center; min-height: 100vh; }
-        .splash-logo { width: 120px; height: 120px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 60px; margin-bottom: 30px; animation: bounce 2s infinite; }
-        @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-10px); } }
+        .splash { 
+            background: linear-gradient(135deg, #4f46e5, #7c3aed, #ec4899); 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            color: white; 
+            text-align: center; 
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+        .splash::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: sparkle 8s linear infinite;
+        }
+        @keyframes sparkle {
+            0% { transform: rotate(0deg) translate(-50%, -50%); }
+            100% { transform: rotate(360deg) translate(-50%, -50%); }
+        }
+        .splash-logo { 
+            width: 130px; 
+            height: 130px; 
+            background: rgba(255, 255, 255, 0.95); 
+            backdrop-filter: blur(10px);
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 65px; 
+            margin-bottom: 35px; 
+            animation: bounce 2s infinite, pulse 3s ease-in-out infinite;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+        @keyframes bounce { 
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0) scale(1); } 
+            40% { transform: translateY(-12px) scale(1.02); } 
+        }
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2), 0 0 0 0 rgba(255, 255, 255, 0.4); }
+            50% { box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3), 0 0 0 15px rgba(255, 255, 255, 0); }
+        }
         
         .welcome { background: linear-gradient(135deg, #667eea, #764ba2); display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center; padding: 40px 20px; min-height: 100vh; }
-        .btn-primary { background: linear-gradient(45deg, #f97316, #ea580c); color: white; border: none; padding: 16px 32px; border-radius: 25px; font-size: 16px; font-weight: 600; cursor: pointer; }
+        .btn-primary { 
+            background: linear-gradient(45deg, #f97316, #ea580c); 
+            color: white; 
+            border: none; 
+            padding: 16px 32px; 
+            border-radius: 25px; 
+            font-size: 16px; 
+            font-weight: 600; 
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(249, 115, 22, 0.3);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(249, 115, 22, 0.4);
+        }
+        .btn-primary:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
+        }
         
         .auth { background: linear-gradient(135deg, #667eea, #764ba2); padding: 40px 20px; min-height: 100vh; display: flex; justify-content: center; align-items: center; }
-        .auth-container { background: white; border-radius: 20px; padding: 40px 30px; max-width: 400px; width: 100%; }
-        .auth-btn { width: 100%; padding: 16px; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; margin-bottom: 15px; cursor: pointer; }
-        .google-btn { background: #dc2626; color: white; }
-        .facebook-btn { background: #1877f2; color: white; }
-        .input-field { width: 100%; padding: 16px; border: 2px solid #e5e7eb; border-radius: 12px; font-size: 16px; margin-bottom: 15px; }
+        .auth-container { 
+            background: rgba(255, 255, 255, 0.95); 
+            backdrop-filter: blur(20px);
+            border-radius: 24px; 
+            padding: 40px 30px; 
+            max-width: 400px; 
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .auth-btn { 
+            width: 100%; 
+            padding: 16px; 
+            border: none; 
+            border-radius: 16px; 
+            font-size: 16px; 
+            font-weight: 600; 
+            margin-bottom: 15px; 
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .auth-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        .google-btn { 
+            background: linear-gradient(45deg, #dc2626, #b91c1c); 
+            color: white;
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+        }
+        .facebook-btn { 
+            background: linear-gradient(45deg, #1877f2, #1565c0); 
+            color: white;
+            box-shadow: 0 4px 15px rgba(24, 119, 242, 0.3);
+        }
+        .input-field { 
+            width: 100%; 
+            padding: 18px; 
+            border: 2px solid #e5e7eb; 
+            border-radius: 16px; 
+            font-size: 16px; 
+            margin-bottom: 15px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(255, 255, 255, 0.8);
+        }
+        .input-field:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+            background: white;
+        }
         
-        .main-app { background: #f9fafb; min-height: 100vh; padding-bottom: 80px; }
-        .header { background: linear-gradient(135deg, #4f46e5, #7c3aed, #ec4899); padding: 20px; color: white; }
-        .profile-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
-        .avatar { width: 50px; height: 50px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; cursor: pointer; }
-        .quick-actions { padding: 20px; display: grid; gap: 15px; }
-        .action-btn { padding: 20px; border: none; border-radius: 16px; font-size: 16px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .main-app { 
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); 
+            min-height: 100vh; 
+            padding-bottom: 80px; 
+        }
+        .header { 
+            background: linear-gradient(135deg, #4f46e5, #7c3aed, #ec4899); 
+            padding: 25px 20px; 
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="80" r="1.5" fill="rgba(255,255,255,0.1)"/></svg>');
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+        .profile-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 25px; position: relative; z-index: 1; }
+        .avatar { 
+            width: 55px; 
+            height: 55px; 
+            background: rgba(255, 255, 255, 0.95); 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 22px; 
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 3px solid rgba(255, 255, 255, 0.3);
+        }
+        .avatar:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+        }
+        .quick-actions { padding: 25px 20px; display: grid; gap: 18px; }
+        .action-btn { 
+            padding: 24px 20px; 
+            border: none; 
+            border-radius: 20px; 
+            font-size: 16px; 
+            font-weight: 600; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+        .action-btn:active {
+            transform: translateY(-1px);
+        }
         .video-btn { background: linear-gradient(45deg, #7c3aed, #ec4899); color: white; }
         .match-btn { background: linear-gradient(45deg, #10b981, #06b6d4); color: white; }
         .shop-btn { background: linear-gradient(45deg, #fbbf24, #f97316); color: white; }
@@ -40,13 +232,109 @@
         .videos-page, .matches-page, .rating-page { background: #f5f5f5; min-height: 100vh; padding-bottom: 80px; }
         
         .filters { padding: 15px 20px; background: white; border-bottom: 1px solid #e5e7eb; }
-        .filter-btn { background: #f3f4f6; border: none; padding: 8px 16px; border-radius: 20px; font-size: 14px; margin-right: 10px; cursor: pointer; }
-        .filter-btn.active { background: linear-gradient(45deg, #dc2626, #ec4899); color: white; }
-        .challenge-card { background: #f9fafb; border-radius: 16px; padding: 20px; margin-bottom: 15px; border: 1px solid #e5e7eb; }
-        .video-item { position: relative; height: 100vh; background: linear-gradient(45deg, #1f2937, #374151); display: flex; align-items: center; justify-content: center; }
-        .play-btn { width: 80px; height: 80px; background: rgba(255,255,255,0.3); border: none; border-radius: 50%; color: white; font-size: 30px; cursor: pointer; }
+        .filter-btn { 
+            background: rgba(243, 244, 246, 0.8); 
+            backdrop-filter: blur(10px);
+            border: none; 
+            padding: 10px 18px; 
+            border-radius: 25px; 
+            font-size: 14px; 
+            font-weight: 500;
+            margin-right: 12px; 
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(229, 231, 235, 0.6);
+        }
+        .filter-btn:hover {
+            background: rgba(59, 130, 246, 0.1);
+            border-color: rgba(59, 130, 246, 0.3);
+            transform: translateY(-1px);
+        }
+        .filter-btn.active { 
+            background: linear-gradient(45deg, #dc2626, #ec4899); 
+            color: white;
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+            border-color: transparent;
+            transform: translateY(-1px);
+        }
+        .challenge-card { 
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 252, 0.9)); 
+            backdrop-filter: blur(10px);
+            border-radius: 20px; 
+            padding: 24px; 
+            margin-bottom: 18px; 
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .challenge-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+        }
+        .challenge-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(45deg, #7c3aed, #ec4899);
+        }
+        .video-item { 
+            position: relative; 
+            height: 100vh; 
+            background: linear-gradient(45deg, #1f2937, #374151); 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            overflow: hidden;
+        }
+        .video-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(124, 58, 237, 0.3), rgba(236, 72, 153, 0.3));
+            z-index: 1;
+        }
+        .play-btn { 
+            width: 90px; 
+            height: 90px; 
+            background: rgba(255,255,255,0.25); 
+            backdrop-filter: blur(10px);
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%; 
+            color: white; 
+            font-size: 32px; 
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 2;
+            position: relative;
+        }
+        .play-btn:hover {
+            transform: scale(1.1);
+            background: rgba(255,255,255,0.35);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
         
-        .match-card { background: white; border-radius: 16px; padding: 20px; margin: 15px 20px; border: 1px solid #e5e7eb; }
+        .match-card { 
+            background: rgba(255, 255, 255, 0.95); 
+            backdrop-filter: blur(10px);
+            border-radius: 20px; 
+            padding: 24px; 
+            margin: 18px 20px; 
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .match-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+        }
         
         .podium { padding: 30px 20px; background: white; margin-bottom: 10px; }
         .podium-container { display: flex; align-items: end; justify-content: center; gap: 20px; }
@@ -57,18 +345,208 @@
         .rating-list { background: white; }
         .rating-item { display: flex; align-items: center; padding: 15px 20px; border-bottom: 1px solid #f3f4f6; }
         
-        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 1px solid #e5e7eb; display: flex; padding: 10px 0; z-index: 1000; }
-        .nav-item { flex: 1; text-align: center; padding: 10px; cursor: pointer; color: #6b7280; }
-        .nav-item.active { color: #3b82f6; }
+        .bottom-nav { 
+            position: fixed; 
+            bottom: 0; 
+            left: 0; 
+            right: 0; 
+            background: rgba(255, 255, 255, 0.95); 
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(229, 231, 235, 0.8); 
+            display: flex; 
+            padding: 12px 0; 
+            z-index: 1000;
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.1);
+        }
+        .nav-item { 
+            flex: 1; 
+            text-align: center; 
+            padding: 12px 10px; 
+            cursor: pointer; 
+            color: #6b7280;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 16px;
+            margin: 0 4px;
+            position: relative;
+        }
+        .nav-item:hover {
+            background: rgba(59, 130, 246, 0.1);
+            transform: translateY(-1px);
+        }
+        .nav-item.active { 
+            color: #3b82f6;
+            background: rgba(59, 130, 246, 0.15);
+            transform: translateY(-2px);
+        }
+        .nav-item.active::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 3px;
+            background: linear-gradient(45deg, #3b82f6, #7c3aed);
+            border-radius: 2px;
+        }
         
-        .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
-        .modal.active { display: flex; }
-        .modal-content { background: white; border-radius: 20px; padding: 30px; max-width: 500px; width: 100%; max-height: 80vh; overflow-y: auto; }
-        .close-btn { background: none; border: none; font-size: 24px; cursor: pointer; color: #6b7280; }
-        .shop-item { background: #f9fafb; border-radius: 12px; padding: 15px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }
-        .buy-btn { background: linear-gradient(45deg, #3b82f6, #7c3aed); color: white; border: none; padding: 8px 16px; border-radius: 8px; font-size: 14px; cursor: pointer; }
-        .slider { width: 100%; height: 8px; border-radius: 4px; background: linear-gradient(to right, #dc2626 0%, #fbbf24 50%, #10b981 100%); outline: none; -webkit-appearance: none; }
-        .slider-value { text-align: center; font-size: 24px; font-weight: 700; color: #1f2937; margin: 10px 0; }
+        .modal { 
+            display: none; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            right: 0; 
+            bottom: 0; 
+            background: rgba(0,0,0,0.6); 
+            backdrop-filter: blur(8px);
+            z-index: 2000; 
+            align-items: center; 
+            justify-content: center; 
+            padding: 20px;
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .modal.active { 
+            display: flex; 
+            opacity: 1;
+        }
+        .modal-content { 
+            background: rgba(255, 255, 255, 0.98); 
+            backdrop-filter: blur(20px);
+            border-radius: 24px; 
+            padding: 35px; 
+            max-width: 500px; 
+            width: 100%; 
+            max-height: 85vh; 
+            overflow-y: auto;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transform: scale(0.9);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .modal.active .modal-content {
+            transform: scale(1);
+        }
+        .close-btn { 
+            background: rgba(107, 114, 128, 0.1); 
+            border: none; 
+            font-size: 24px; 
+            cursor: pointer; 
+            color: #6b7280;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .close-btn:hover {
+            background: rgba(107, 114, 128, 0.2);
+            transform: scale(1.1);
+        }
+        .shop-item { 
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0); 
+            border-radius: 16px; 
+            padding: 20px; 
+            margin-bottom: 18px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .shop-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+        .buy-btn { 
+            background: linear-gradient(45deg, #3b82f6, #7c3aed); 
+            color: white; 
+            border: none; 
+            padding: 12px 20px; 
+            border-radius: 12px; 
+            font-size: 14px; 
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+        .buy-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+        }
+                 .slider { 
+             width: 100%; 
+             height: 10px; 
+             border-radius: 8px; 
+             background: linear-gradient(to right, #dc2626 0%, #fbbf24 50%, #10b981 100%); 
+             outline: none; 
+             -webkit-appearance: none;
+             cursor: pointer;
+             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+         }
+         .slider::-webkit-slider-thumb {
+             appearance: none;
+             width: 24px;
+             height: 24px;
+             border-radius: 50%;
+             background: white;
+             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+             cursor: pointer;
+             border: 3px solid #3b82f6;
+             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+         }
+         .slider::-webkit-slider-thumb:hover {
+             transform: scale(1.2);
+             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+         }
+         .slider-value { 
+             text-align: center; 
+             font-size: 28px; 
+             font-weight: 800; 
+             color: #1f2937; 
+             margin: 15px 0;
+             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+         }
+
+         /* Loading Animation */
+         .loading {
+             display: inline-block;
+             width: 20px;
+             height: 20px;
+             border: 3px solid rgba(255, 255, 255, 0.3);
+             border-radius: 50%;
+             border-top-color: white;
+             animation: spin 1s ease-in-out infinite;
+         }
+         @keyframes spin {
+             to { transform: rotate(360deg); }
+         }
+
+         /* Ripple Effect */
+         .ripple {
+             position: relative;
+             overflow: hidden;
+         }
+         .ripple::before {
+             content: '';
+             position: absolute;
+             top: 50%;
+             left: 50%;
+             width: 0;
+             height: 0;
+             border-radius: 50%;
+             background: rgba(255, 255, 255, 0.4);
+             transform: translate(-50%, -50%);
+             transition: width 0.6s, height 0.6s;
+         }
+         .ripple:active::before {
+             width: 300px;
+             height: 300px;
+         }
     </style>
 </head>
 <body>
@@ -84,7 +562,7 @@
         <div style="width: 80px; height: 80px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 40px; margin-bottom: 30px;">⚽</div>
         <h1 style="font-size: 42px; font-weight: 900; background: linear-gradient(45deg, #fbbf24, #f97316); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 15px;">FLAP</h1>
         <p style="font-size: 16px; opacity: 0.9; margin-bottom: 40px;">Футбольна соціальна мережа для справжніх гравців</p>
-        <button class="btn-primary" onclick="showAuth()">Стати профі ⚡</button>
+                     <button class="btn-primary ripple" onclick="showAuth()">Стати профі ⚡</button>
         <div style="display: flex; gap: 30px; margin-top: 20px;">
             <div style="text-align: center; opacity: 0.8;"><div style="font-size: 24px; margin-bottom: 8px;">🎥</div><div style="font-size: 12px;">Відео</div></div>
             <div style="text-align: center; opacity: 0.8;"><div style="font-size: 24px; margin-bottom: 8px;">🏆</div><div style="font-size: 12px;">Челенджі</div></div>
@@ -1007,13 +1485,41 @@
              updateSubscriptionDisplay();
          };
 
-        function showScreen(screenId) {
-            document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active'));
-            document.getElementById(screenId).classList.add('active');
-            
-            const bottomNav = document.getElementById('bottomNav');
-            bottomNav.style.display = (screenId === 'mainApp' || screenId.includes('Page')) ? 'flex' : 'none';
-        }
+                 function showScreen(screenId) {
+             // Add loading effect
+             document.body.style.overflow = 'hidden';
+             
+             // Fade out current screen
+             const currentScreen = document.querySelector('.screen.active');
+             if (currentScreen) {
+                 currentScreen.style.opacity = '0';
+                 currentScreen.style.transform = 'translateX(-100px)';
+             }
+             
+             setTimeout(() => {
+                 document.querySelectorAll('.screen').forEach(screen => {
+                     screen.classList.remove('active');
+                     screen.style.opacity = '0';
+                     screen.style.transform = 'translateX(100px)';
+                 });
+                 
+                 const newScreen = document.getElementById(screenId);
+                 newScreen.classList.add('active');
+                 
+                 // Trigger reflow
+                 newScreen.offsetHeight;
+                 
+                 // Animate in
+                 setTimeout(() => {
+                     newScreen.style.opacity = '1';
+                     newScreen.style.transform = 'translateX(0)';
+                     document.body.style.overflow = 'auto';
+                 }, 50);
+                 
+                 const bottomNav = document.getElementById('bottomNav');
+                 bottomNav.style.display = (screenId === 'mainApp' || screenId.includes('Page')) ? 'flex' : 'none';
+             }, 200);
+         }
 
                  function showAuth() { showScreen('authScreen'); }
          function showProfileCreation() { showScreen('profileCreationScreen'); }
@@ -1031,22 +1537,107 @@
         function showMatches() { showScreen('matchesPage'); updateNav(2); }
         function showRating() { showScreen('ratingPage'); updateNav(3); }
 
-        function likeVideo(button) {
-            const countElement = button.parentElement.querySelector('div:last-child');
-            let count = parseInt(countElement.textContent);
-            countElement.textContent = count + 1;
-            button.style.transform = 'scale(1.2)';
-            setTimeout(() => button.style.transform = 'scale(1)', 200);
-            alert('Лайк додано! ❤️');
-        }
+                 function likeVideo(button) {
+             const countElement = button.parentElement.querySelector('div:last-child');
+             let count = parseInt(countElement.textContent);
+             countElement.textContent = count + 1;
+             
+             // Heart animation
+             button.style.transform = 'scale(1.3)';
+             button.style.color = '#ff1744';
+             
+             // Create floating hearts
+             for (let i = 0; i < 3; i++) {
+                 setTimeout(() => {
+                     const heart = document.createElement('div');
+                     heart.innerHTML = '❤️';
+                     heart.style.position = 'absolute';
+                     heart.style.fontSize = '20px';
+                     heart.style.pointerEvents = 'none';
+                     heart.style.zIndex = '9999';
+                     heart.style.left = (button.offsetLeft + Math.random() * 30) + 'px';
+                     heart.style.top = (button.offsetTop - 20) + 'px';
+                     heart.style.animation = 'floatHeart 2s ease-out forwards';
+                     
+                     button.parentElement.appendChild(heart);
+                     
+                     setTimeout(() => heart.remove(), 2000);
+                 }, i * 200);
+             }
+             
+             setTimeout(() => {
+                 button.style.transform = 'scale(1)';
+                 button.style.color = '';
+             }, 300);
+         }
 
-        function addFriend(button, name) {
-            if (!currentUser.friends.includes(name)) {
-                currentUser.friends.push(name);
-                button.textContent = '✓';
-                alert(`${name} додано в друзі!`);
-            }
-        }
+         // Add floating heart animation to CSS
+         const style = document.createElement('style');
+         style.textContent = `
+             @keyframes floatHeart {
+                 0% { opacity: 1; transform: translateY(0) scale(1); }
+                 100% { opacity: 0; transform: translateY(-100px) scale(1.5); }
+             }
+         `;
+         document.head.appendChild(style);
+
+         // Toast notification system
+         function showToast(message, type = 'success') {
+             const toast = document.createElement('div');
+             const icons = {
+                 success: '✅',
+                 error: '❌',
+                 info: 'ℹ️',
+                 warning: '⚠️'
+             };
+             
+             toast.innerHTML = `
+                 <div style="display: flex; align-items: center; gap: 10px;">
+                     <span style="font-size: 18px;">${icons[type]}</span>
+                     <span>${message}</span>
+                 </div>
+             `;
+             
+             toast.style.cssText = `
+                 position: fixed;
+                 top: 20px;
+                 right: 20px;
+                 background: rgba(255, 255, 255, 0.95);
+                 backdrop-filter: blur(20px);
+                 color: #1f2937;
+                 padding: 16px 20px;
+                 border-radius: 16px;
+                 box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+                 z-index: 10000;
+                 transform: translateX(400px);
+                 transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                 border: 1px solid rgba(255, 255, 255, 0.2);
+                 font-weight: 500;
+                 max-width: 300px;
+             `;
+             
+             document.body.appendChild(toast);
+             
+             // Animate in
+             setTimeout(() => {
+                 toast.style.transform = 'translateX(0)';
+             }, 100);
+             
+             // Auto remove
+             setTimeout(() => {
+                 toast.style.transform = 'translateX(400px)';
+                 setTimeout(() => toast.remove(), 400);
+             }, 3000);
+         }
+
+                 function addFriend(button, name) {
+             if (!currentUser.friends.includes(name)) {
+                 currentUser.friends.push(name);
+                 button.textContent = '✓';
+                 button.style.background = 'linear-gradient(45deg, #10b981, #059669)';
+                 showToast(`${name} додано в друзі! 👥`, 'success');
+             }
+         }
 
                  function showProfile(name) {
              if (name === 'own') {
@@ -1103,12 +1694,30 @@
          }
 
          function buyCoins(amount, priceUAH) {
-             alert(`Покупка ${amount} FlapCoins за ${priceUAH}₴\nПеренаправлення на оплату...`);
+             const button = event.target;
+             const originalText = button.textContent;
+             
+             // Show loading
+             button.innerHTML = `<span class="loading"></span> Обробка...`;
+             button.disabled = true;
+             button.style.opacity = '0.7';
+             
              setTimeout(() => {
                  currentUser.coins += amount;
                  document.getElementById('coinBalance').textContent = currentUser.coins + ' 🪙';
                  document.getElementById('modalBalance').textContent = currentUser.coins + ' 🪙';
-                 alert(`Успішно! +${amount} FlapCoins додано до балансу`);
+                 
+                 // Success animation
+                 button.innerHTML = '✅ Успішно!';
+                 button.style.background = 'linear-gradient(45deg, #10b981, #059669)';
+                 
+                 setTimeout(() => {
+                     button.innerHTML = originalText;
+                     button.disabled = false;
+                     button.style.opacity = '1';
+                     button.style.background = '';
+                     alert(`+${amount} FlapCoins додано до балансу! 🎉`);
+                 }, 1500);
              }, 2000);
          }
 
@@ -1412,7 +2021,7 @@
                  `;
                  commentsList.insertAdjacentHTML('afterbegin', newComment);
                  commentInput.value = '';
-                 alert('Коментар додано! 💬');
+                 showToast('Коментар додано! 💬', 'success');
              }
          }
 
@@ -1433,9 +2042,9 @@
 
          function copyLink() {
              navigator.clipboard.writeText('https://flap.app/video/12345').then(() => {
-                 alert('Посилання скопійовано! 📋');
+                 showToast('Посилання скопійовано! 📋', 'success');
              }).catch(() => {
-                 alert('Посилання скопійовано! 📋');
+                 showToast('Посилання скопійовано! 📋', 'success');
              });
          }
 
