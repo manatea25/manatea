@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLAP - Feel Like A Pro</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #00C851, #007E33);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        .screen {
+            display: none;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        /* Welcome Screen */
+        .welcome-screen {
+            background: linear-gradient(135deg, #00C851, #007E33);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .football-animation {
+            font-size: 80px;
+            animation: bounce 2s infinite;
+            margin-bottom: 40px;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .app-title {
+            font-size: 48px;
+            font-weight: bold;
+            letter-spacing: 4px;
+            margin-bottom: 20px;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-bottom: 60px;
+            line-height: 1.5;
+        }
+
+        .btn-primary {
+            background: #FF8800;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: transform 0.2s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Auth Screen */
+        .auth-screen {
+            background: linear-gradient(135deg, #1565C0, #0D47A1);
+            padding: 40px 30px;
+            color: white;
+            overflow-y: auto;
+        }
+
+        .auth-title {
+            font-size: 32px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .social-button {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .social-button:hover {
+            transform: translateY(-1px);
+        }
+
+        .google-btn {
+            background: white;
+            color: black;
+        }
+
+        .facebook-btn {
+            background: #4267B2;
+            color: white;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 30px 0;
+        }
+
+        .divider-line {
+            flex: 1;
+            height: 1px;
+            background: rgba(255,255,255,0.3);
+        }
+
+        .divider-text {
+            margin: 0 15px;
+            color: white;
+        }
+
+        .input-group {
+            margin-bottom: 30px;
+        }
+
+        .input {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            background: white;
+            color: black;
+        }
+
+        .btn-auth {
+            width: 100%;
+            background: #00C851;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .btn-register {
+            width: 100%;
+            background: transparent;
+            color: white;
+            border: 1px solid white;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 30px;
+        }
+
+        /* Main App Screen */
+        .main-app {
+            background: white;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #00C851, #007E33);
+            padding: 20px;
+            color: white;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .header-title {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .coins-container {
+            background: rgba(255,255,255,0.2);
+            padding: 6px 12px;
+            border-radius: 15px;
+        }
+
+        .coins-text {
+            font-weight: bold;
+        }
+
+        .profile-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 15px;
+            border: 1px solid rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+            background: #FF8800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            margin-right: 15px;
+            border: 2px solid white;
+        }
+
+        .user-details {
+            flex: 1;
+        }
+
+        .user-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .user-location {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-bottom: 6px;
+        }
+
+        .rating-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .stars {
+            margin-right: 8px;
+        }
+
+        .rating-number {
+            font-weight: bold;
+        }
+
+        /* Tab Navigation */
+        .tab-nav {
+            display: flex;
+            background: white;
+            border-top: 1px solid #F5F5F5;
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 400px;
+            height: 60px;
+        }
+
+        .tab-button {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            transition: opacity 0.2s;
+        }
+
+        .tab-button:hover {
+            background: #F5F5F5;
+        }
+
+        .tab-button.active {
+            color: #00C851;
+        }
+
+        .tab-button:not(.active) {
+            opacity: 0.6;
+        }
+
+        .tab-icon {
+            font-size: 24px;
+            margin-bottom: 2px;
+        }
+
+        .tab-label {
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* Tab Content */
+        .tab-content {
+            padding: 15px;
+            padding-bottom: 80px;
+            background: #F5F5F5;
+            min-height: calc(100vh - 200px);
+        }
+
+        /* Videos Tab */
+        .video-card {
+            background: white;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .video-preview {
+            height: 200px;
+            background: #424242;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .play-button {
+            font-size: 40px;
+            position: absolute;
+            z-index: 1;
+        }
+
+        .video-emoji {
+            font-size: 60px;
+            opacity: 0.5;
+        }
+
+        .video-info {
+            padding: 15px;
+        }
+
+        .video-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .video-actions {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .action-btn {
+            padding: 8px 20px;
+            background: #F5F5F5;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        .add-video-btn {
+            background: #00C851;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 20px;
+            width: calc(100% - 40px);
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .container {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Welcome Screen -->
+        <div class="screen active" id="welcome-screen">
+            <div class="welcome-screen">
+                <div class="football-animation">⚽</div>
+                <h1 class="app-title">FLAP</h1>
+                <p class="subtitle">Feel Like A Pro - Відчуй себе як професіонал</p>
+                <button class="btn-primary" onclick="showScreen('auth-screen')">Стати профі</button>
+            </div>
+        </div>
+
+        <!-- Auth Screen -->
+        <div class="screen" id="auth-screen">
+            <div class="auth-screen">
+                <h1 class="auth-title">Вхід до FLAP</h1>
+                
+                <button class="social-button google-btn" onclick="socialLogin('google')">
+                    🔍 Увійти через Google
+                </button>
+                
+                <button class="social-button facebook-btn" onclick="socialLogin('facebook')">
+                    📘 Увійти через Facebook
+                </button>
+                
+                <div class="divider">
+                    <div class="divider-line"></div>
+                    <span class="divider-text">або</span>
+                    <div class="divider-line"></div>
+                </div>
+                
+                <div class="input-group">
+                    <input type="email" class="input" id="login-email" placeholder="Email">
+                    <input type="password" class="input" id="login-password" placeholder="Пароль">
+                    <button class="btn-auth" onclick="login()">Увійти</button>
+                </div>
+                
+                <button class="btn-register" onclick="showScreen('register-screen')">Зареєструватися</button>
+            </div>
+        </div>
+
+        <!-- Main App Screen -->
+        <div class="screen" id="main-app">
+            <div class="main-app">
+                <!-- Header -->
+                <div class="header">
+                    <div class="header-top">
+                        <h1 class="header-title">FLAP</h1>
+                        <div class="coins-container">
+                            <span class="coins-text">💰 <span id="user-coins">250</span></span>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-card">
+                        <div class="profile-avatar" id="header-avatar">ОП</div>
+                        <div class="user-details">
+                            <div class="user-name" id="header-name">Олександр Петренко</div>
+                            <div class="user-location" id="header-location">Півзахисник • Київ</div>
+                            <div class="rating-container">
+                                <span class="stars">⭐⭐⭐⭐☆</span>
+                                <span class="rating-number">4.2</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab Content -->
+                <div class="tab-content">
+                    <!-- Videos Tab -->
+                    <div class="tab-panel active" id="videos-tab">
+                        <div id="videos-list">
+                            <div class="video-card">
+                                <div class="video-preview">
+                                    <div class="play-button">▶️</div>
+                                    <div class="video-emoji">🎬</div>
+                                </div>
+                                <div class="video-info">
+                                    <div class="video-title">Неймовірний фінт проти захисника</div>
+                                    <div class="video-actions">
+                                        <button class="action-btn">❤️ 24</button>
+                                        <button class="action-btn">💬 8</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="video-card">
+                                <div class="video-preview">
+                                    <div class="play-button">▶️</div>
+                                    <div class="video-emoji">🎬</div>
+                                </div>
+                                <div class="video-info">
+                                    <div class="video-title">Гол з 30 метрів</div>
+                                    <div class="video-actions">
+                                        <button class="action-btn">❤️ 45</button>
+                                        <button class="action-btn">💬 12</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="add-video-btn" onclick="alert('Додати відео')">➕ Додати відео</button>
+                    </div>
+                </div>
+
+                <!-- Tab Navigation -->
+                <div class="tab-nav">
+                    <button class="tab-button active">
+                        <div class="tab-icon">📺</div>
+                        <div class="tab-label">Відео</div>
+                    </button>
+                    <button class="tab-button">
+                        <div class="tab-icon">🏆</div>
+                        <div class="tab-label">Челенджі</div>
+                    </button>
+                    <button class="tab-button">
+                        <div class="tab-icon">⚽</div>
+                        <div class="tab-label">Матчі</div>
+                    </button>
+                    <button class="tab-button">
+                        <div class="tab-icon">👑</div>
+                        <div class="tab-label">Рейтинг</div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        function socialLogin(provider) {
+            alert(`${provider} login clicked`);
+            showScreen('main-app');
+        }
+
+        function login() {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            
+            if (!email || !password) {
+                alert('Будь ласка, заповніть всі поля');
+                return;
+            }
+            
+            showScreen('main-app');
+        }
+    </script>
+</body>
+</html>
