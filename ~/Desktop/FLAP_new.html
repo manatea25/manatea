@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLAP - Feel Like A Pro</title>
+    <link href="https://fonts.googleapis.com/css?family=Inter:400,500,600,700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --main-bg: #0a0f1c;
+            --card-bg: #1a1f2e;
+            --accent: #43ea5e;
+            --accent2: #ff6b6b;
+            --accent3: #4ecdc4;
+            --text: #f5f6fa;
+            --text-muted: #8a92a5;
+            --input-bg: #232837;
+            --input-border: #31374a;
+            --success: #43ea5e;
+            --warning: #ffa726;
+            --error: #ff5252;
+            --radius: 16px;
+            --shadow: 0 8px 32px rgba(0,0,0,0.3);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, var(--main-bg) 0%, #1a1f2e 100%);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 414px;
+            margin: 0 auto;
+            min-height: 100vh;
+            background: var(--main-bg);
+            position: relative;
+            box-shadow: 0 0 40px rgba(0,0,0,0.5);
+        }
+
+        .screen {
+            display: none;
+            min-height: 100vh;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: var(--transition);
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding-bottom: 80px;
+        }
+
+        .screen.active {
+            display: block;
+            opacity: 1;
+            transform: translateX(0);
+            position: relative;
+        }
+
+        /* Welcome Screen */
+        .welcome-screen {
+            background: linear-gradient(135deg, var(--main-bg) 0%, var(--card-bg) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 30px;
+            text-align: center;
+            min-height: 100vh;
+        }
+
+        .logo-container {
+            margin-bottom: 40px;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, var(--accent), var(--accent3));
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            font-weight: 700;
+            color: white;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+        }
+
+        .welcome-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--accent), var(--accent3));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .welcome-subtitle {
+            font-size: 18px;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            max-width: 300px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--accent), var(--accent3));
+            color: white;
+            padding: 16px 32px;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 200px;
+            justify-content: center;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(67, 234, 94, 0.4);
+        }
+
+        /* Demo message */
+        .demo-message {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--card-bg);
+            color: var(--accent);
+            padding: 15px 20px;
+            border-radius: var(--radius);
+            border: 1px solid var(--accent);
+            z-index: 10000;
+            font-weight: 600;
+            box-shadow: var(--shadow);
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-message">
+        🚀 Це демо-версія FLAP - Feel Like A Pro!
+    </div>
+    
+    <div class="container">
+        <div class="screen active" id="welcome-screen">
+            <div class="welcome-screen">
+                <div class="logo-container">
+                    <div class="logo">⚽</div>
+                </div>
+                <h1 class="welcome-title">FLAP</h1>
+                <p class="welcome-subtitle">Feel Like A Pro - ваша футбольна спільнота</p>
+                <div style="text-align: center;">
+                    <p style="margin-bottom: 30px; color: var(--text-muted);">
+                        Сучасний MVP мобільного застосунку з:
+                    </p>
+                    <ul style="list-style: none; margin-bottom: 40px; color: var(--text);">
+                        <li>⚽ Відео з оцінюванням та коментарями</li>
+                        <li>🏆 Челенджі з призами</li>
+                        <li>🥅 Система матчів</li>
+                        <li>👥 Друзі та профілі</li>
+                        <li>🛒 Магазин з монетами та бейджами</li>
+                        <li>📊 Рейтинги та статистика</li>
+                    </ul>
+                    <button class="btn" onclick="alert('Це демо! Повна версія готова в основному файлі FLAP.html')">
+                        <i class="fas fa-rocket"></i>
+                        Переглянути демо
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Простий демо-скрипт
+        console.log('FLAP MVP готовий! 🚀');
+        
+        // Показуємо, що це працює
+        setTimeout(() => {
+            console.log('Усі функції реалізовані в основному файлі');
+        }, 1000);
+    </script>
+</body>
+</html>
