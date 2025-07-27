@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLAP - Feel Like A Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #2d3436;
+        }
+
+        .app {
+            max-width: 420px;
+            margin: 0 auto;
+            background: #f8f9fa;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #00b894, #00a085);
+            padding: 20px;
+            border-radius: 0 0 25px 25px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -30px;
+            width: 150px;
+            height: 150px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: url('https://raw.githubusercontent.com/manatea25/manatea/main/Dynamic%20Logo%20Design%20Featuring%20Bold%20Green%20%27FLAP%27%20Text.png.jpg') center/cover;
+            border-radius: 12px;
+            border: 3px solid white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .brand {
+            color: white;
+        }
+
+        .brand h1 {
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: -2px;
+        }
+
+        .brand p {
+            font-size: 12px;
+            opacity: 0.9;
+            font-weight: 600;
+        }
+
+        .user-coins {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 10px 16px;
+            border-radius: 25px;
+            color: white;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Profile Section */
+        .profile-section {
+            background: white;
+            margin: 20px;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .user-avatar {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #fdcb6e, #e17055);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            color: white;
+            font-size: 32px;
+            font-weight: 800;
+            box-shadow: 0 8px 25px rgba(253, 203, 110, 0.3);
+        }
+
+        .user-name {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .user-position {
+            color: #636e72;
+            margin-bottom: 15px;
+        }
+
+        .user-stats {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+        }
+
+        .stat {
+            flex: 1;
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: 800;
+            color: #00b894;
+            margin-bottom: 2px;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: #636e72;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Main Sections */
+        .main-nav {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            padding: 0 20px 20px;
+        }
+
+        .nav-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px 20px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .nav-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .nav-card.videos {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+        }
+
+        .nav-card.challenges {
+            background: linear-gradient(135deg, #feca57, #ff9ff3);
+            color: white;
+        }
+
+        .nav-card.matches {
+            background: linear-gradient(135deg, #48dbfb, #0abde3);
+            color: white;
+        }
+
+        .nav-card.rating {
+            background: linear-gradient(135deg, #1dd1a1, #10ac84);
+            color: white;
+        }
+
+        .nav-icon {
+            font-size: 36px;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .nav-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .nav-subtitle {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        /* Content Sections */
+        .content-section {
+            display: none;
+            background: white;
+            margin: 20px;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            min-height: 400px;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #2d3436;
+        }
+
+        .back-btn {
+            background: #ddd;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #636e72;
+        }
+
+        /* Video Items */
+        .video-item {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .video-item:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .video-thumb {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+        }
+
+        .video-details {
+            flex: 1;
+        }
+
+        .video-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .video-info {
+            color: #636e72;
+            font-size: 13px;
+        }
+
+        /* Challenge Items */
+        .challenge-item {
+            background: linear-gradient(135deg, #feca57, #ff9ff3);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .challenge-item:hover {
+            transform: translateY(-2px);
+        }
+
+        .challenge-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .challenge-name {
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .challenge-prize {
+            background: rgba(255, 255, 255, 0.25);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .challenge-details {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+
+        /* Match Items */
+        .match-item {
+            background: linear-gradient(135deg, #48dbfb, #0abde3);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .match-item:hover {
+            transform: translateY(-2px);
+        }
+
+        .match-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .match-name {
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .match-status {
+            background: rgba(255, 255, 255, 0.25);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .match-details {
+            font-size: 13px;
+            opacity: 0.9;
+            line-height: 1.4;
+        }
+
+        /* Rating Items */
+        .rating-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .rating-item:last-child {
+            border-bottom: none;
+        }
+
+        .player-rank {
+            width: 35px;
+            text-align: center;
+            font-weight: 800;
+            font-size: 18px;
+            color: #1dd1a1;
+        }
+
+        .player-avatar {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #1dd1a1, #10ac84);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            margin: 0 15px;
+        }
+
+        .player-details {
+            flex: 1;
+        }
+
+        .player-name {
+            font-weight: 700;
+            margin-bottom: 3px;
+        }
+
+        .player-info {
+            color: #636e72;
+            font-size: 12px;
+        }
+
+        .player-score {
+            text-align: right;
+            font-weight: 700;
+            color: #fdcb6e;
+        }
+
+        /* Add Button */
+        .floating-add {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #00b894, #00a085);
+            border-radius: 50%;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(0, 184, 148, 0.4);
+            z-index: 100;
+            transition: transform 0.2s ease;
+        }
+
+        .floating-add:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-content">
+                <div class="logo-area">
+                    <div class="logo"></div>
+                    <div class="brand">
+                        <h1>FLAP</h1>
+                        <p>Feel Like A Pro</p>
+                    </div>
+                </div>
+                <div class="user-coins">
+                    <i class="fas fa-coins"></i>
+                    <span>250</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Section -->
+        <div class="profile-section">
+            <div class="user-avatar">МК</div>
+            <div class="user-name">Максим Коваль</div>
+            <div class="user-position">Півзахисник • Київ • ⭐ 4.8</div>
+            <div class="user-stats">
+                <div class="stat">
+                    <div class="stat-number">89%</div>
+                    <div class="stat-label">Win Rate</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">42</div>
+                    <div class="stat-label">Матчі</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">15</div>
+                    <div class="stat-label">Рівень</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Navigation -->
+        <div class="main-nav">
+            <div class="nav-card videos" onclick="showSection('videos')">
+                <i class="fas fa-video nav-icon"></i>
+                <div class="nav-title">Відео</div>
+                <div class="nav-subtitle">Дивись і голосуй</div>
+            </div>
+            <div class="nav-card challenges" onclick="showSection('challenges')">
+                <i class="fas fa-trophy nav-icon"></i>
+                <div class="nav-title">Челенджі</div>
+                <div class="nav-subtitle">Змагайся</div>
+            </div>
+            <div class="nav-card matches" onclick="showSection('matches')">
+                <i class="fas fa-futbol nav-icon"></i>
+                <div class="nav-title">Матчі</div>
+                <div class="nav-subtitle">Грай офлайн</div>
+            </div>
+            <div class="nav-card rating" onclick="showSection('rating')">
+                <i class="fas fa-star nav-icon"></i>
+                <div class="nav-title">Рейтинг</div>
+                <div class="nav-subtitle">Топ гравці</div>
+            </div>
+        </div>
+
+        <!-- Videos Section -->
+        <div class="content-section" id="videos">
+            <div class="section-header">
+                <div class="section-title">📹 Відео</div>
+                <button class="back-btn" onclick="hideSection()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="video-item">
+                <div class="video-thumb">
+                    <i class="fas fa-play"></i>
+                </div>
+                <div class="video-details">
+                    <div class="video-name">Епічний фінт у грі</div>
+                    <div class="video-info">Андрій К. • ❤️ 24 голоси</div>
+                </div>
+            </div>
+
+            <div class="video-item">
+                <div class="video-thumb">
+                    <i class="fas fa-futbol"></i>
+                </div>
+                <div class="video-details">
+                    <div class="video-name">Гол з штрафного</div>
+                    <div class="video-info">Петро М. • ❤️ 18 голосів</div>
+                </div>
+            </div>
+
+            <div class="video-item">
+                <div class="video-thumb">
+                    <i class="fas fa-hand-paper"></i>
+                </div>
+                <div class="video-details">
+                    <div class="video-name">Неймовірний сейв</div>
+                    <div class="video-info">Дмитро В. • ❤️ 31 голос</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Challenges Section -->
+        <div class="content-section" id="challenges">
+            <div class="section-header">
+                <div class="section-title">🏆 Челенджі</div>
+                <button class="back-btn" onclick="hideSection()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div class="challenge-item">
+                <div class="challenge-header">
+                    <div class="challenge-name">Кращий фінт тижня</div>
+                    <div class="challenge-prize">200₴</div>
+                </div>
+                <div class="challenge-details">
+                    12 учасників • Закінчується через 2 дні
+                </div>
+            </div>
+
+            <div class="challenge-item">
+                <div class="challenge-header">
+                    <div class="challenge-name">Точність ударів</div>
+                    <div class="challenge-prize">150₴</div>
+                </div>
+                <div class="challenge-details">
+                    8 учасників • Голосування відкрито
+                </div>
+            </div>
+        </div>
+
+        <!-- Matches Section -->
+        <div class="content-section" id="matches">
+            <div class="section-header">
+                <div class="section-title">⚽ Матчі</div>
+                <button class="back-btn" onclick="hideSection()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div class="match-item">
+                <div class="match-header">
+                    <div class="match-name">Гра в Гідропарку</div>
+                    <div class="match-status">Відкрито</div>
+                </div>
+                <div class="match-details">
+                    Завтра 18:00 • Гідропарк, поле №2<br>
+                    8/12 гравців • Орг: Олександр ⭐4.9
+                </div>
+            </div>
+
+            <div class="match-item">
+                <div class="match-header">
+                    <div class="match-name">Ранкова гра</div>
+                    <div class="match-status">Заповнено</div>
+                </div>
+                <div class="match-details">
+                    Сьогодні 10:00 • Стадіон "Колос"<br>
+                    12/12 гравців • Орг: Дмитро ⭐4.7
+                </div>
+            </div>
+        </div>
+
+        <!-- Rating Section -->
+        <div class="content-section" id="rating">
+            <div class="section-header">
+                <div class="section-title">⭐ Рейтинг</div>
+                <button class="back-btn" onclick="hideSection()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div class="rating-item">
+                <div class="player-rank">1</div>
+                <div class="player-avatar">ОМ</div>
+                <div class="player-details">
+                    <div class="player-name">Олександр Мельник</div>
+                    <div class="player-info">Нападник • Київ</div>
+                </div>
+                <div class="player-score">⭐ 4.9</div>
+            </div>
+
+            <div class="rating-item">
+                <div class="player-rank">2</div>
+                <div class="player-avatar">ВС</div>
+                <div class="player-details">
+                    <div class="player-name">Віталій Семенов</div>
+                    <div class="player-info">Півзахисник • Київ</div>
+                </div>
+                <div class="player-score">⭐ 4.8</div>
+            </div>
+
+            <div class="rating-item">
+                <div class="player-rank">3</div>
+                <div class="player-avatar">МК</div>
+                <div class="player-details">
+                    <div class="player-name">Максим Коваль</div>
+                    <div class="player-info">Півзахисник • Київ</div>
+                </div>
+                <div class="player-score">⭐ 4.8</div>
+            </div>
+        </div>
+
+        <!-- Floating Add Button -->
+        <button class="floating-add">
+            <i class="fas fa-plus"></i>
+        </button>
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            // Hide main nav
+            document.querySelector('.main-nav').style.display = 'none';
+            document.querySelector('.profile-section').style.display = 'none';
+            
+            // Show section
+            document.getElementById(sectionId).classList.add('active');
+        }
+
+        function hideSection() {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show main nav
+            document.querySelector('.main-nav').style.display = 'grid';
+            document.querySelector('.profile-section').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
