@@ -35,11 +35,22 @@
         .screen {
             display: none;
             min-height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            overflow-y: auto;
+            z-index: 1000;
         }
 
         .screen.active {
             display: block;
             animation: fadeIn 0.4s ease;
+        }
+
+        #mainScreen {
+            position: relative;
+            z-index: 1;
         }
 
         @keyframes fadeIn {
@@ -1272,6 +1283,18 @@
                         <input type="password" class="form-input" placeholder="••••••••" required>
                     </div>
                     <button type="submit" class="form-submit">Увійти</button>
+                    
+                    <div style="margin: 20px 0; text-align: center; color: rgba(255,255,255,0.6);">або</div>
+                    
+                    <button type="button" onclick="loginWithGoogle()" style="width: 100%; padding: 15px; border: 2px solid rgba(255,255,255,0.3); border-radius: 25px; background: rgba(255,255,255,0.1); color: white; font-size: 16px; font-weight: 600; cursor: pointer; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.3s ease;">
+                        <div style="width: 20px; height: 20px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #db4437; font-weight: 700; font-size: 12px;">G</div>
+                        Увійти через Google
+                    </button>
+                    
+                    <button type="button" onclick="loginWithFacebook()" style="width: 100%; padding: 15px; border: 2px solid rgba(255,255,255,0.3); border-radius: 25px; background: rgba(255,255,255,0.1); color: white; font-size: 16px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.3s ease;">
+                        <div style="width: 20px; height: 20px; background: #1877f2; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 12px;">f</div>
+                        Увійти через Facebook
+                    </button>
                 </form>
             </div>
         </div>
@@ -1318,6 +1341,18 @@
                         <input type="password" class="form-input" placeholder="••••••••" required>
                     </div>
                     <button type="submit" class="form-submit">Створити акаунт</button>
+                    
+                    <div style="margin: 20px 0; text-align: center; color: rgba(255,255,255,0.6);">або</div>
+                    
+                    <button type="button" onclick="registerWithGoogle()" style="width: 100%; padding: 15px; border: 2px solid rgba(255,255,255,0.3); border-radius: 25px; background: rgba(255,255,255,0.1); color: white; font-size: 16px; font-weight: 600; cursor: pointer; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.3s ease;">
+                        <div style="width: 20px; height: 20px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #db4437; font-weight: 700; font-size: 12px;">G</div>
+                        Реєстрація через Google
+                    </button>
+                    
+                    <button type="button" onclick="registerWithFacebook()" style="width: 100%; padding: 15px; border: 2px solid rgba(255,255,255,0.3); border-radius: 25px; background: rgba(255,255,255,0.1); color: white; font-size: 16px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.3s ease;">
+                        <div style="width: 20px; height: 20px; background: #1877f2; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 12px;">f</div>
+                        Реєстрація через Facebook
+                    </button>
                 </form>
             </div>
         </div>
@@ -1370,6 +1405,31 @@
             <div class="content-section active" id="videos">
                 <h3 style="margin-bottom: 15px; font-size: 18px;">🏆 Голосування за челенджі</h3>
                 
+                <!-- Search and Filters -->
+                <div style="margin-bottom: 15px;">
+                    <div style="position: relative; margin-bottom: 10px;">
+                        <input type="text" placeholder="🔍 Пошук відео..." onkeyup="searchVideos(this.value)" style="width: 100%; padding: 12px 40px 12px 15px; border: 2px solid rgba(255,255,255,0.3); border-radius: 20px; background: rgba(255,255,255,0.1); color: white; font-size: 14px;">
+                        <i class="fas fa-search" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.6);"></i>
+                    </div>
+                    <div style="display: flex; gap: 8px; overflow-x: auto; padding-bottom: 5px;">
+                        <button onclick="filterVideos('all')" class="video-filter active" style="padding: 6px 12px; background: rgba(76, 175, 80, 0.2); border: 2px solid #4caf50; border-radius: 15px; color: #2e7d32; font-weight: 600; font-size: 11px; white-space: nowrap; cursor: pointer;">
+                            🌟 Всі
+                        </button>
+                        <button onclick="filterVideos('tricks')" class="video-filter" style="padding: 6px 12px; background: rgba(255,255,255,0.1); border: 2px solid rgba(255,255,255,0.3); border-radius: 15px; color: white; font-weight: 600; font-size: 11px; white-space: nowrap; cursor: pointer;">
+                            🎯 Фінти
+                        </button>
+                        <button onclick="filterVideos('accuracy')" class="video-filter" style="padding: 6px 12px; background: rgba(255,255,255,0.1); border: 2px solid rgba(255,255,255,0.3); border-radius: 15px; color: white; font-weight: 600; font-size: 11px; white-space: nowrap; cursor: pointer;">
+                            ⚽ Точність
+                        </button>
+                        <button onclick="filterVideos('speed')" class="video-filter" style="padding: 6px 12px; background: rgba(255,255,255,0.1); border: 2px solid rgba(255,255,255,0.3); border-radius: 15px; color: white; font-weight: 600; font-size: 11px; white-space: nowrap; cursor: pointer;">
+                            🏃 Швидкість
+                        </button>
+                        <button onclick="filterVideos('top')" class="video-filter" style="padding: 6px 12px; background: rgba(255,255,255,0.1); border: 2px solid rgba(255,255,255,0.3); border-radius: 15px; color: white; font-weight: 600; font-size: 11px; white-space: nowrap; cursor: pointer;">
+                            🏆 Топ
+                        </button>
+                    </div>
+                </div>
+                
                 <div class="challenge-video-item">
                     <div class="challenge-video-header">
                         <div class="challenge-video-title">Кращий фінт тижня</div>
@@ -1382,21 +1442,51 @@
                         </div>
                     </div>
                     <div class="video-voting">
-                        <div class="vote-buttons">
-                            <button class="vote-btn like" onclick="voteForVideo('challenge1_video1', 'like', event)">
-                                <i class="fas fa-thumbs-up"></i>
-                                <span>24</span>
-                            </button>
-                            <button class="vote-btn dislike" onclick="voteForVideo('challenge1_video1', 'dislike', event)">
-                                <i class="fas fa-thumbs-down"></i>
-                                <span>3</span>
-                            </button>
+                        <div style="display: flex; align-items: center; gap: 10px; flex: 1;">
+                            <span style="font-weight: 600; font-size: 14px;">Ваша оцінка:</span>
+                            <input type="range" min="0" max="5" step="0.01" value="0" onchange="voteForVideo('challenge1_video1', this.value, event)" style="flex: 1; height: 6px; border-radius: 5px; background: #ddd; outline: none; -webkit-appearance: none;">
+                            <span id="vote_challenge1_video1" style="font-weight: 700; color: #ff9800; min-width: 35px;">0.0</span>
                         </div>
                         <div class="video-score">⭐ 8.1</div>
                     </div>
                     <div style="padding: 0 15px 15px; color: #333;">
                         <strong>Андрій Коваленко</strong> • Півзахисник<br>
                         <small style="color: #666;">2 години тому • Гідропарк</small>
+                        
+                        <!-- Comments Section -->
+                        <div style="margin-top: 15px; border-top: 1px solid #eee; padding-top: 15px;">
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                <i class="fas fa-comments" style="color: #666;"></i>
+                                <span style="font-weight: 600; font-size: 14px;">Коментарі (3)</span>
+                                <button onclick="toggleComments('challenge1_video1')" style="margin-left: auto; background: none; border: none; color: #4caf50; font-size: 12px; cursor: pointer;">
+                                    <i class="fas fa-chevron-down"></i>
+                                </button>
+                            </div>
+                            <div id="comments_challenge1_video1" style="display: none;">
+                                <div style="display: flex; gap: 8px; margin-bottom: 10px;">
+                                    <div style="width: 25px; height: 25px; background: #4caf50; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 10px; font-weight: 700;">МК</div>
+                                    <div style="flex: 1;">
+                                        <input type="text" placeholder="Додати коментар..." onkeypress="addComment(event, 'challenge1_video1')" style="width: 100%; padding: 8px 12px; border: 1px solid #ddd; border-radius: 15px; font-size: 12px;">
+                                    </div>
+                                </div>
+                                <div class="comment" style="display: flex; gap: 8px; margin-bottom: 8px; padding: 8px; background: #f8f8f8; border-radius: 8px;">
+                                    <div style="width: 25px; height: 25px; background: #2196f3; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 10px; font-weight: 700;">ОМ</div>
+                                    <div style="flex: 1;">
+                                        <div style="font-weight: 600; font-size: 12px;">Олександр М.</div>
+                                        <div style="font-size: 11px; color: #666;">Крутий фінт! 🔥</div>
+                                        <div style="font-size: 10px; color: #999; margin-top: 2px;">1 год тому</div>
+                                    </div>
+                                </div>
+                                <div class="comment" style="display: flex; gap: 8px; margin-bottom: 8px; padding: 8px; background: #f8f8f8; border-radius: 8px;">
+                                    <div style="width: 25px; height: 25px; background: #ff9800; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 10px; font-weight: 700;">ВС</div>
+                                    <div style="flex: 1;">
+                                        <div style="font-weight: 600; font-size: 12px;">Віталій С.</div>
+                                        <div style="font-size: 11px; color: #666;">Треба таке спробувати на тренуванні!</div>
+                                        <div style="font-size: 10px; color: #999; margin-top: 2px;">3 год тому</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -1412,15 +1502,10 @@
                         </div>
                     </div>
                     <div class="video-voting">
-                        <div class="vote-buttons">
-                            <button class="vote-btn like" onclick="voteForVideo('challenge1_video2', 'like', event)">
-                                <i class="fas fa-thumbs-up"></i>
-                                <span>31</span>
-                            </button>
-                            <button class="vote-btn dislike" onclick="voteForVideo('challenge1_video2', 'dislike', event)">
-                                <i class="fas fa-thumbs-down"></i>
-                                <span>1</span>
-                            </button>
+                        <div style="display: flex; align-items: center; gap: 10px; flex: 1;">
+                            <span style="font-weight: 600; font-size: 14px;">Ваша оцінка:</span>
+                            <input type="range" min="0" max="5" step="0.01" value="0" onchange="voteForVideo('challenge1_video2', this.value, event)" style="flex: 1; height: 6px; border-radius: 5px; background: #ddd; outline: none; -webkit-appearance: none;">
+                            <span id="vote_challenge1_video2" style="font-weight: 700; color: #ff9800; min-width: 35px;">0.0</span>
                         </div>
                         <div class="video-score">⭐ 9.2</div>
                     </div>
@@ -1442,15 +1527,10 @@
                         </div>
                     </div>
                     <div class="video-voting">
-                        <div class="vote-buttons">
-                            <button class="vote-btn like" onclick="voteForVideo('challenge2_video1', 'like', event)">
-                                <i class="fas fa-thumbs-up"></i>
-                                <span>18</span>
-                            </button>
-                            <button class="vote-btn dislike" onclick="voteForVideo('challenge2_video1', 'dislike', event)">
-                                <i class="fas fa-thumbs-down"></i>
-                                <span>2</span>
-                            </button>
+                        <div style="display: flex; align-items: center; gap: 10px; flex: 1;">
+                            <span style="font-weight: 600; font-size: 14px;">Ваша оцінка:</span>
+                            <input type="range" min="0" max="5" step="0.01" value="0" onchange="voteForVideo('challenge2_video1', this.value, event)" style="flex: 1; height: 6px; border-radius: 5px; background: #ddd; outline: none; -webkit-appearance: none;">
+                            <span id="vote_challenge2_video1" style="font-weight: 700; color: #ff9800; min-width: 35px;">0.0</span>
                         </div>
                         <div class="video-score">⭐ 7.8</div>
                     </div>
@@ -1729,6 +1809,12 @@
             <div class="content-section" id="rating">
                 <h3 style="margin-bottom: 15px; font-size: 18px;">👑 Рейтинг гравців</h3>
                 
+                <!-- Player Search -->
+                <div style="position: relative; margin-bottom: 15px;">
+                    <input type="text" placeholder="🔍 Пошук гравців..." onkeyup="searchPlayers(this.value)" style="width: 100%; padding: 12px 40px 12px 15px; border: 2px solid rgba(255,255,255,0.3); border-radius: 20px; background: rgba(255,255,255,0.1); color: white; font-size: 14px;">
+                    <i class="fas fa-search" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.6);"></i>
+                </div>
+                
                 <!-- Rating Filters -->
                 <div style="display: flex; gap: 8px; margin-bottom: 15px; overflow-x: auto; padding-bottom: 5px;">
                     <button onclick="filterRating('all')" class="rating-filter active" style="padding: 8px 15px; background: rgba(76, 175, 80, 0.2); border: 2px solid #4caf50; border-radius: 20px; color: #2e7d32; font-weight: 600; font-size: 12px; white-space: nowrap; cursor: pointer;">
@@ -1965,14 +2051,40 @@
                         </div>
                     </div>
 
-                    <div class="profile-actions">
-                        <button class="profile-btn primary" onclick="addFriend()">
-                            <i class="fas fa-user-plus"></i> Додати в друзі
-                        </button>
-                        <button class="profile-btn secondary" onclick="inviteToMatch()">
-                            <i class="fas fa-futbol"></i> Запросити грати
-                        </button>
-                    </div>
+                                            <div class="profile-actions">
+                            <button class="profile-btn primary" onclick="addFriend()">
+                                <i class="fas fa-user-plus"></i> Додати в друзі
+                            </button>
+                            <button class="profile-btn secondary" onclick="inviteToMatch()">
+                                <i class="fas fa-futbol"></i> Запросити грати
+                            </button>
+                        </div>
+
+                        <!-- Contact Info -->
+                        <div style="text-align: left; margin-bottom: 20px; padding: 15px; background: rgba(76, 175, 80, 0.05); border-radius: 12px;">
+                            <div style="font-size: 16px; font-weight: 700; color: #2e7d32; margin-bottom: 10px;">📞 Контакти</div>
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                                <i class="fas fa-phone" style="color: #4caf50; width: 16px;"></i>
+                                <span style="font-size: 13px;">+380123456789</span>
+                                <button onclick="copyContact('+380123456789')" style="background: none; border: none; color: #4caf50; cursor: pointer; padding: 2px;">
+                                    <i class="fas fa-copy" style="font-size: 10px;"></i>
+                                </button>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                                <i class="fab fa-telegram" style="color: #0088cc; width: 16px;"></i>
+                                <span style="font-size: 13px;">@oleksandr_m</span>
+                                <button onclick="copyContact('@oleksandr_m')" style="background: none; border: none; color: #0088cc; cursor: pointer; padding: 2px;">
+                                    <i class="fas fa-copy" style="font-size: 10px;"></i>
+                                </button>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <i class="fab fa-instagram" style="color: #e4405f; width: 16px;"></i>
+                                <span style="font-size: 13px;">@oleksandr.football</span>
+                                <button onclick="copyContact('@oleksandr.football')" style="background: none; border: none; color: #e4405f; cursor: pointer; padding: 2px;">
+                                    <i class="fas fa-copy" style="font-size: 10px;"></i>
+                                </button>
+                            </div>
+                        </div>
 
                     <div class="profile-achievements">
                         <div class="achievements-title">🏅 Досягнення</div>
@@ -2002,12 +2114,15 @@
                         <div class="rating-player-position" id="ratingPlayerPosition">Нападник</div>
                     </div>
                 </div>
-                <div class="star-rating" id="starRating">
-                    <span class="star" data-rating="1">★</span>
-                    <span class="star" data-rating="2">★</span>
-                    <span class="star" data-rating="3">★</span>
-                    <span class="star" data-rating="4">★</span>
-                    <span class="star" data-rating="5">★</span>
+                <div style="padding: 20px;">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                        <span style="font-weight: 600; font-size: 14px;">Оцінка:</span>
+                        <input type="range" min="0" max="5" step="0.01" value="0" onchange="updatePlayerRating(this.value)" style="flex: 1; height: 8px; border-radius: 5px; background: #ddd; outline: none; -webkit-appearance: none;">
+                        <span id="playerRatingValue" style="font-weight: 700; color: #ff9800; min-width: 35px; font-size: 16px;">0.0</span>
+                    </div>
+                    <div style="text-align: center; margin-bottom: 15px;">
+                        <div id="ratingStars" style="font-size: 24px; color: #ddd;">☆☆☆☆☆</div>
+                    </div>
                 </div>
                 <textarea class="rating-comment" placeholder="Додайте коментар про гру гравця (необов'язково)"></textarea>
                 <div class="rating-buttons">
@@ -2369,26 +2484,154 @@
             event.target.closest('.nav-tab').classList.add('active');
         }
 
-        // Video voting
-        function voteForVideo(videoId, voteType, event) {
-            event.stopPropagation();
+        // Social login functions
+        function loginWithGoogle() {
             showLoading();
-            
             setTimeout(() => {
                 hideLoading();
-                
-                if (voteType === 'like') {
-                    addCoins(2);
-                    showToast('👍 +2 монети за голос!', 'success');
-                } else {
-                    addCoins(1);
-                    showToast('👎 +1 монета за голос!', 'success');
-                }
-                
-                const btn = event.target.closest('.vote-btn');
-                const span = btn.querySelector('span');
-                span.textContent = parseInt(span.textContent) + 1;
-            }, 1000);
+                currentUser = {
+                    name: "Максим Коваль",
+                    position: "Півзахисник", 
+                    city: "Київ",
+                    rating: 4.8,
+                    provider: "Google"
+                };
+                hideAllScreens();
+                document.getElementById('mainScreen').classList.add('active');
+                showToast('✅ Вхід через Google успішний!', 'success');
+            }, 2000);
+        }
+
+        function loginWithFacebook() {
+            showLoading();
+            setTimeout(() => {
+                hideLoading();
+                currentUser = {
+                    name: "Максим Коваль",
+                    position: "Півзахисник",
+                    city: "Київ", 
+                    rating: 4.8,
+                    provider: "Facebook"
+                };
+                hideAllScreens();
+                document.getElementById('mainScreen').classList.add('active');
+                showToast('✅ Вхід через Facebook успішний!', 'success');
+            }, 2000);
+        }
+
+        function registerWithGoogle() {
+            showLoading();
+            setTimeout(() => {
+                hideLoading();
+                currentUser = {
+                    name: "Новий Користувач",
+                    position: "Півзахисник",
+                    city: "Київ",
+                    rating: 4.0,
+                    provider: "Google"
+                };
+                hideAllScreens();
+                document.getElementById('mainScreen').classList.add('active');
+                showToast('🎉 Реєстрація через Google завершена!', 'success');
+            }, 2000);
+        }
+
+        function registerWithFacebook() {
+            showLoading();
+            setTimeout(() => {
+                hideLoading();
+                currentUser = {
+                    name: "Новий Користувач", 
+                    position: "Півзахисник",
+                    city: "Київ",
+                    rating: 4.0,
+                    provider: "Facebook"
+                };
+                hideAllScreens();
+                document.getElementById('mainScreen').classList.add('active');
+                showToast('🎉 Реєстрація через Facebook завершена!', 'success');
+            }, 2000);
+        }
+
+        // Video voting with slider
+        function voteForVideo(videoId, rating, event) {
+            event.stopPropagation();
+            
+            const ratingValue = parseFloat(rating);
+            document.getElementById('vote_' + videoId).textContent = ratingValue.toFixed(2);
+            
+            if (ratingValue > 0) {
+                addCoins(Math.floor(ratingValue));
+                showToast(`⭐ Оцінка ${ratingValue.toFixed(2)} відправлена! +${Math.floor(ratingValue)} монет`, 'success');
+            }
+        }
+
+        // Video filters and search
+        function filterVideos(type) {
+            document.querySelectorAll('.video-filter').forEach(btn => {
+                btn.classList.remove('active');
+                btn.style.background = 'rgba(255,255,255,0.1)';
+                btn.style.borderColor = 'rgba(255,255,255,0.3)';
+                btn.style.color = 'white';
+            });
+            
+            event.target.classList.add('active');
+            event.target.style.background = 'rgba(76, 175, 80, 0.2)';
+            event.target.style.borderColor = '#4caf50';
+            event.target.style.color = '#2e7d32';
+            
+            const filters = {
+                'all': '🌟 Показано всі відео',
+                'tricks': '🎯 Показано тільки фінти',
+                'accuracy': '⚽ Показано відео точності',
+                'speed': '🏃 Показано швидкісні відео',
+                'top': '🏆 Показано топ відео'
+            };
+            
+            showToast(filters[type], 'success');
+        }
+
+        function searchVideos(query) {
+            if (query.length > 2) {
+                showToast(`🔍 Пошук: "${query}"`, 'success');
+            }
+        }
+
+        function searchPlayers(query) {
+            if (query.length > 2) {
+                showToast(`👤 Пошук гравців: "${query}"`, 'success');
+            }
+        }
+
+        // Comments functions
+        function toggleComments(videoId) {
+            const comments = document.getElementById('comments_' + videoId);
+            const button = event.target.closest('button');
+            const icon = button.querySelector('i');
+            
+            if (comments.style.display === 'none') {
+                comments.style.display = 'block';
+                icon.className = 'fas fa-chevron-up';
+            } else {
+                comments.style.display = 'none';
+                icon.className = 'fas fa-chevron-down';
+            }
+        }
+
+        function addComment(event, videoId) {
+            if (event.key === 'Enter' && event.target.value.trim()) {
+                const comment = event.target.value.trim();
+                event.target.value = '';
+                showToast(`💬 Коментар додано: "${comment}"`, 'success');
+                addCoins(1);
+            }
+        }
+
+        // Contact functions
+        function copyContact(contact) {
+            navigator.clipboard.writeText(contact).then(() => {
+                showToast(`📋 Скопійовано: ${contact}`, 'success');
+            });
         }
 
         function playVideo(videoId) {
@@ -2526,21 +2769,44 @@
             });
         }
 
+        function updatePlayerRating(value) {
+            currentRating = parseFloat(value);
+            document.getElementById('playerRatingValue').textContent = currentRating.toFixed(2);
+            
+            // Update star display
+            const fullStars = Math.floor(currentRating);
+            const hasHalfStar = currentRating % 1 >= 0.5;
+            let starsDisplay = '';
+            
+            for (let i = 0; i < 5; i++) {
+                if (i < fullStars) {
+                    starsDisplay += '★';
+                } else if (i === fullStars && hasHalfStar) {
+                    starsDisplay += '☆';
+                } else {
+                    starsDisplay += '☆';
+                }
+            }
+            
+            document.getElementById('ratingStars').textContent = starsDisplay;
+            document.getElementById('ratingStars').style.color = currentRating > 0 ? '#ffc107' : '#ddd';
+        }
+
         function submitRating() {
             if (currentRating === 0) {
                 showToast('⭐ Оберіть рейтинг!', 'error');
                 return;
             }
             
-            showLoading();
             document.getElementById('ratingModal').classList.remove('show');
+            addCoins(Math.floor(currentRating * 2));
+            showToast(`⭐ Рейтинг ${currentRating.toFixed(2)}/5 відправлено! +${Math.floor(currentRating * 2)} монет`, 'success');
+            currentRating = 0;
             
-            setTimeout(() => {
-                hideLoading();
-                addCoins(5);
-                showToast(`⭐ Рейтинг ${currentRating}/5 відправлено! +5 монет`, 'success');
-                currentRating = 0;
-            }, 1000);
+            // Reset rating form
+            document.getElementById('playerRatingValue').textContent = '0.0';
+            document.getElementById('ratingStars').textContent = '☆☆☆☆☆';
+            document.getElementById('ratingStars').style.color = '#ddd';
         }
 
         function skipRating() {
