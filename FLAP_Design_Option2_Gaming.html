@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLAP - Варіант 2: Геймерський</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --neon-green: #00ff88;
+            --neon-blue: #00ccff;
+            --neon-orange: #ff6600;
+            --dark-bg: #0a0a0f;
+            --dark-surface: #151520;
+            --dark-card: #1a1a2e;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --text-accent: #00ff88;
+            --shadow-neon: 0 0 20px rgba(0, 255, 136, 0.3);
+            --border-neon: 1px solid rgba(0, 255, 136, 0.5);
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(0, 255, 136, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 204, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(255, 102, 0, 0.05) 0%, transparent 50%);
+            z-index: -1;
+            animation: pulse 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.3; }
+            100% { opacity: 0.7; }
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--dark-surface), var(--dark-card));
+            padding: 20px;
+            border-bottom: var(--border-neon);
+            box-shadow: var(--shadow-neon);
+            position: relative;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--neon-green), transparent);
+            animation: scan 2s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(45deg, var(--neon-green), var(--neon-blue));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.5);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 0 15px rgba(0, 255, 136, 0.5); }
+            to { box-shadow: 0 0 25px rgba(0, 255, 136, 0.8); }
+        }
+
+        .logo-text {
+            font-family: 'Orbitron', monospace;
+            font-size: 24px;
+            font-weight: 900;
+            background: linear-gradient(45deg, var(--neon-green), var(--neon-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+        }
+
+        .level-display {
+            background: var(--dark-card);
+            border: var(--border-neon);
+            border-radius: 20px;
+            padding: 8px 15px;
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+            color: var(--text-accent);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 25px 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* HUD Style Stats */
+        .hud-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .hud-stat {
+            background: var(--dark-card);
+            border: var(--border-neon);
+            border-radius: 12px;
+            padding: 20px 15px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hud-stat::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--neon-green), transparent);
+            animation: sweep 3s ease-in-out infinite;
+        }
+
+        @keyframes sweep {
+            0% { left: -100%; }
+            50% { left: 100%; }
+            100% { left: 100%; }
+        }
+
+        .hud-number {
+            font-family: 'Orbitron', monospace;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--neon-green);
+            margin-bottom: 5px;
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+        }
+
+        .hud-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Action Buttons */
+        .action-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .action-btn {
+            background: var(--dark-card);
+            border: 2px solid transparent;
+            border-radius: 15px;
+            padding: 25px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .action-btn::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(0, 255, 136, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+            opacity: 0;
+        }
+
+        .action-btn:hover::before {
+            animation: shine 0.6s ease-in-out;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); opacity: 0; }
+        }
+
+        .action-btn:hover {
+            border-color: var(--neon-green);
+            box-shadow: var(--shadow-neon);
+            transform: translateY(-3px);
+        }
+
+        .action-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+            background: linear-gradient(45deg, var(--neon-green), var(--neon-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .action-title {
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+            font-size: 16px;
+            margin-bottom: 5px;
+            color: var(--text-primary);
+        }
+
+        .action-subtitle {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* Progress Bars */
+        .progress-section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text-accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .progress-item {
+            background: var(--dark-card);
+            border: var(--border-neon);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .progress-label {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .progress-value {
+            font-family: 'Orbitron', monospace;
+            color: var(--neon-green);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--dark-bg);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--neon-green), var(--neon-blue));
+            border-radius: 4px;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--dark-surface);
+            border-top: var(--border-neon);
+            padding: 15px 20px 25px;
+            box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--text-secondary);
+            border: 1px solid transparent;
+        }
+
+        .nav-item.active {
+            color: var(--neon-green);
+            border-color: var(--neon-green);
+            background: rgba(0, 255, 136, 0.1);
+            box-shadow: var(--shadow-neon);
+        }
+
+        .nav-icon {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .nav-label {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Screen Management */
+        .screen {
+            display: none;
+            padding-bottom: 100px;
+            min-height: calc(100vh - 200px);
+        }
+
+        .screen.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="logo-icon">⚽</div>
+                <div class="logo-text">FLAP</div>
+            </div>
+            <div class="level-display">
+                LVL 15 | 2,450 XP
+            </div>
+        </div>
+    </div>
+
+    <!-- Home Screen -->
+    <div class="screen active" id="home">
+        <div class="main-content">
+            <!-- HUD Stats -->
+            <div class="hud-stats">
+                <div class="hud-stat">
+                    <div class="hud-number">89%</div>
+                    <div class="hud-label">Accuracy</div>
+                </div>
+                <div class="hud-stat">
+                    <div class="hud-number">42</div>
+                    <div class="hud-label">Wins</div>
+                </div>
+                <div class="hud-stat">
+                    <div class="hud-number">2.5K</div>
+                    <div class="hud-label">Coins</div>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="action-grid">
+                <div class="action-btn" onclick="switchScreen('matches')">
+                    <div class="action-icon">
+                        <i class="fas fa-play-circle"></i>
+                    </div>
+                    <div class="action-title">LIVE MATCH</div>
+                    <div class="action-subtitle">Дивись зараз</div>
+                </div>
+                <div class="action-btn" onclick="switchScreen('predictions')">
+                    <div class="action-icon">
+                        <i class="fas fa-target"></i>
+                    </div>
+                    <div class="action-title">PREDICT</div>
+                    <div class="action-subtitle">Роби прогноз</div>
+                </div>
+                <div class="action-btn" onclick="switchScreen('chat')">
+                    <div class="action-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <div class="action-title">CHAT</div>
+                    <div class="action-subtitle">Спілкуйся</div>
+                </div>
+                <div class="action-btn" onclick="switchScreen('shop')">
+                    <div class="action-icon">
+                        <i class="fas fa-gem"></i>
+                    </div>
+                    <div class="action-title">STORE</div>
+                    <div class="action-subtitle">Купуй силу</div>
+                </div>
+            </div>
+
+            <!-- Progress -->
+            <div class="progress-section">
+                <h3 class="section-title">Mission Progress</h3>
+                <div class="progress-item">
+                    <div class="progress-header">
+                        <span class="progress-label">Щоденні завдання</span>
+                        <span class="progress-value">3/5</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 60%;"></div>
+                    </div>
+                </div>
+                <div class="progress-item">
+                    <div class="progress-header">
+                        <span class="progress-label">Тижневий рейтинг</span>
+                        <span class="progress-value">15/20</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 75%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Matches Screen -->
+    <div class="screen" id="matches">
+        <div class="main-content">
+            <h2 class="section-title">Live Matches</h2>
+            <div style="text-align: center; padding: 50px; color: var(--text-secondary);">
+                <i class="fas fa-satellite-dish" style="font-size: 48px; margin-bottom: 20px; color: var(--neon-green);"></i>
+                <p>Трансляції завантажуються...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Predictions Screen -->
+    <div class="screen" id="predictions">
+        <div class="main-content">
+            <h2 class="section-title">Prediction Arena</h2>
+            <div style="text-align: center; padding: 50px; color: var(--text-secondary);">
+                <i class="fas fa-crosshairs" style="font-size: 48px; margin-bottom: 20px; color: var(--neon-blue);"></i>
+                <p>Готуй свої прогнози...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chat Screen -->
+    <div class="screen" id="chat">
+        <div class="main-content">
+            <h2 class="section-title">Battle Chat</h2>
+            <div style="text-align: center; padding: 50px; color: var(--text-secondary);">
+                <i class="fas fa-headset" style="font-size: 48px; margin-bottom: 20px; color: var(--neon-orange);"></i>
+                <p>Підключайся до спілкування...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Shop Screen -->
+    <div class="screen" id="shop">
+        <div class="main-content">
+            <h2 class="section-title">Power Store</h2>
+            <div style="text-align: center; padding: 50px; color: var(--text-secondary);">
+                <i class="fas fa-shopping-cart" style="font-size: 48px; margin-bottom: 20px; color: var(--neon-green);"></i>
+                <p>Магазин незабаром...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <div class="nav-grid">
+            <a href="#" class="nav-item active" onclick="switchScreen('home')">
+                <div class="nav-icon"><i class="fas fa-home"></i></div>
+                <div class="nav-label">Home</div>
+            </a>
+            <a href="#" class="nav-item" onclick="switchScreen('matches')">
+                <div class="nav-icon"><i class="fas fa-play"></i></div>
+                <div class="nav-label">Live</div>
+            </a>
+            <a href="#" class="nav-item" onclick="switchScreen('predictions')">
+                <div class="nav-icon"><i class="fas fa-target"></i></div>
+                <div class="nav-label">Predict</div>
+            </a>
+            <a href="#" class="nav-item" onclick="switchScreen('chat')">
+                <div class="nav-icon"><i class="fas fa-comments"></i></div>
+                <div class="nav-label">Chat</div>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function switchScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            
+            document.getElementById(screenId).classList.add('active');
+            
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            event.target.closest('.nav-item').classList.add('active');
+        }
+
+        // Додаткові геймерські ефекти
+        document.addEventListener('DOMContentLoaded', function() {
+            // Випадкові блимання HUD елементів
+            setInterval(() => {
+                const hudStats = document.querySelectorAll('.hud-stat');
+                const randomStat = hudStats[Math.floor(Math.random() * hudStats.length)];
+                randomStat.style.borderColor = '#00ccff';
+                setTimeout(() => {
+                    randomStat.style.borderColor = 'rgba(0, 255, 136, 0.5)';
+                }, 200);
+            }, 3000);
+        });
+    </script>
+</body>
+</html>

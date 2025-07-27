@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLAP - Варіант 1: Сучасний</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #00C851;
+            --primary-light: #4fd177;
+            --secondary: #FFD700;
+            --background: #f8fffe;
+            --surface: #ffffff;
+            --text-primary: #1a1a1a;
+            --text-secondary: #666666;
+            --border: #e5f3ec;
+            --shadow: 0 8px 25px rgba(0, 200, 81, 0.1);
+            --radius: 20px;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--background);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            padding: 20px;
+            border-radius: 0 0 30px 30px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20px;
+            width: 100px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            transform: rotate(45deg);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--secondary);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .logo-text {
+            color: white;
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+
+        .user-info {
+            text-align: right;
+            color: white;
+        }
+
+        .user-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .coins-display {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 30px 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .action-card {
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 25px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .action-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 15px 35px rgba(0, 200, 81, 0.15);
+        }
+
+        .action-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            color: white;
+            font-size: 24px;
+        }
+
+        .action-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+
+        .action-description {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            margin-bottom: 40px;
+        }
+
+        .stats-card {
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            padding: 15px 20px 25px;
+            border-radius: 25px 25px 0 0;
+            box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 12px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--text-secondary);
+        }
+
+        .nav-item.active {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .nav-icon {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .nav-label {
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        /* Screen Management */
+        .screen {
+            display: none;
+            padding-bottom: 100px;
+        }
+
+        .screen.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="logo-icon">⚽</div>
+                <div class="logo-text">FLAP</div>
+            </div>
+            <div class="user-info">
+                <div class="user-name">Вітаємо!</div>
+                <div class="coins-display">
+                    <i class="fas fa-coins"></i> 250
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Home Screen -->
+    <div class="screen active" id="home">
+        <div class="main-content">
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <h2 class="section-title">Швидкі дії</h2>
+                <div class="actions-grid">
+                    <div class="action-card" onclick="switchScreen('matches')">
+                        <div class="action-icon">
+                            <i class="fas fa-play"></i>
+                        </div>
+                        <div class="action-title">Дивитись матчі</div>
+                        <div class="action-description">Трансляції та результати</div>
+                    </div>
+                    <div class="action-card" onclick="switchScreen('predictions')">
+                        <div class="action-icon">
+                            <i class="fas fa-crystal-ball"></i>
+                        </div>
+                        <div class="action-title">Прогнози</div>
+                        <div class="action-description">Передбач результати</div>
+                    </div>
+                    <div class="action-card" onclick="switchScreen('chat')">
+                        <div class="action-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <div class="action-title">Спілкування</div>
+                        <div class="action-description">Чат з фанатами</div>
+                    </div>
+                    <div class="action-card" onclick="switchScreen('shop')">
+                        <div class="action-icon">
+                            <i class="fas fa-shopping-bag"></i>
+                        </div>
+                        <div class="action-title">Магазин</div>
+                        <div class="action-description">Купуй бонуси</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats-section">
+                <h2 class="section-title">Твоя статистика</h2>
+                <div class="stats-card">
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-number">89</div>
+                            <div class="stat-label">Точність</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">42</div>
+                            <div class="stat-label">Прогнози</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">15</div>
+                            <div class="stat-label">Рівень</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Matches Screen -->
+    <div class="screen" id="matches">
+        <div class="main-content">
+            <h2 class="section-title">Матчі сьогодні</h2>
+            <div style="text-align: center; padding: 50px; color: var(--text-secondary);">
+                <i class="fas fa-futbol" style="font-size: 48px; margin-bottom: 20px; color: var(--primary);"></i>
+                <p>Список матчів буде тут</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Predictions Screen -->
+    <div class="screen" id="predictions">
+        <div class="main-content">
+            <h2 class="section-title">Мої прогнози</h2>
+            <div style="text-align: center; padding: 50px; color: var(--text-secondary);">
+                <i class="fas fa-crystal-ball" style="font-size: 48px; margin-bottom: 20px; color: var(--primary);"></i>
+                <p>Твої прогнози будуть тут</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chat Screen -->
+    <div class="screen" id="chat">
+        <div class="main-content">
+            <h2 class="section-title">Чат фанатів</h2>
+            <div style="text-align: center; padding: 50px; color: var(--text-secondary);">
+                <i class="fas fa-comments" style="font-size: 48px; margin-bottom: 20px; color: var(--primary);"></i>
+                <p>Чат буде тут</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Shop Screen -->
+    <div class="screen" id="shop">
+        <div class="main-content">
+            <h2 class="section-title">Магазин</h2>
+            <div style="text-align: center; padding: 50px; color: var(--text-secondary);">
+                <i class="fas fa-shopping-bag" style="font-size: 48px; margin-bottom: 20px; color: var(--primary);"></i>
+                <p>Товари будуть тут</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <div class="nav-grid">
+            <a href="#" class="nav-item active" onclick="switchScreen('home')">
+                <div class="nav-icon"><i class="fas fa-home"></i></div>
+                <div class="nav-label">Головна</div>
+            </a>
+            <a href="#" class="nav-item" onclick="switchScreen('matches')">
+                <div class="nav-icon"><i class="fas fa-play"></i></div>
+                <div class="nav-label">Матчі</div>
+            </a>
+            <a href="#" class="nav-item" onclick="switchScreen('predictions')">
+                <div class="nav-icon"><i class="fas fa-crystal-ball"></i></div>
+                <div class="nav-label">Прогнози</div>
+            </a>
+            <a href="#" class="nav-item" onclick="switchScreen('chat')">
+                <div class="nav-icon"><i class="fas fa-comments"></i></div>
+                <div class="nav-label">Чат</div>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function switchScreen(screenId) {
+            // Hide all screens
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            
+            // Show selected screen
+            document.getElementById(screenId).classList.add('active');
+            
+            // Update navigation
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            event.target.closest('.nav-item').classList.add('active');
+        }
+    </script>
+</body>
+</html>
