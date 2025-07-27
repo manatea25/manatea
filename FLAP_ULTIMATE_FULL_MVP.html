@@ -35,22 +35,11 @@
         .screen {
             display: none;
             min-height: 100vh;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            overflow-y: auto;
-            z-index: 1000;
         }
 
         .screen.active {
             display: block;
             animation: fadeIn 0.4s ease;
-        }
-
-        #mainScreen {
-            position: relative;
-            z-index: 1;
         }
 
         @keyframes fadeIn {
@@ -1273,16 +1262,16 @@
                     <h2 class="form-title">Вхід до FLAP</h2>
                     <p class="form-subtitle">Ласкаво просимо назад!</p>
                 </div>
-                <form onsubmit="handleLogin(event)">
+                <div>
                     <div class="form-group">
                         <label class="form-label">Email або номер телефону</label>
-                        <input type="text" class="form-input" placeholder="your@email.com" required>
+                        <input type="text" class="form-input" placeholder="your@email.com" id="loginEmail">
                     </div>
                     <div class="form-group">
                         <label class="form-label">Пароль</label>
-                        <input type="password" class="form-input" placeholder="••••••••" required>
+                        <input type="password" class="form-input" placeholder="••••••••" id="loginPassword">
                     </div>
-                    <button type="submit" class="form-submit">Увійти</button>
+                    <button type="button" onclick="handleQuickLogin()" class="form-submit">Увійти</button>
                     
                     <div style="margin: 20px 0; text-align: center; color: rgba(255,255,255,0.6);">або</div>
                     
@@ -1295,7 +1284,7 @@
                         <div style="width: 20px; height: 20px; background: #1877f2; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 12px;">f</div>
                         Увійти через Facebook
                     </button>
-                </form>
+                </div>
             </div>
         </div>
 
@@ -1309,22 +1298,22 @@
                     <h2 class="form-title">Реєстрація</h2>
                     <p class="form-subtitle">Приєднуйся до футбольної спільноти!</p>
                 </div>
-                <form onsubmit="handleRegister(event)">
+                <div>
                     <div class="form-group">
                         <label class="form-label">Ім'я та прізвище</label>
-                        <input type="text" class="form-input" placeholder="Максим Коваль" required>
+                        <input type="text" class="form-input" placeholder="Максим Коваль" id="registerName">
                     </div>
                     <div class="form-group">
                         <label class="form-label">Email</label>
-                        <input type="email" class="form-input" placeholder="your@email.com" required>
+                        <input type="email" class="form-input" placeholder="your@email.com" id="registerEmail">
                     </div>
                     <div class="form-group">
                         <label class="form-label">Номер телефону</label>
-                        <input type="tel" class="form-input" placeholder="+380123456789" required>
+                        <input type="tel" class="form-input" placeholder="+380123456789" id="registerPhone">
                     </div>
                     <div class="form-group">
                         <label class="form-label">Позиція на полі</label>
-                        <select class="position-select" required>
+                        <select class="position-select" id="registerPosition">
                             <option value="">Оберіть позицію</option>
                             <option value="goalkeeper">Воротар</option>
                             <option value="defender">Захисник</option>
@@ -1334,13 +1323,13 @@
                     </div>
                     <div class="form-group">
                         <label class="form-label">Місто</label>
-                        <input type="text" class="form-input" placeholder="Київ" required>
+                        <input type="text" class="form-input" placeholder="Київ" id="registerCity">
                     </div>
                     <div class="form-group">
                         <label class="form-label">Пароль</label>
-                        <input type="password" class="form-input" placeholder="••••••••" required>
+                        <input type="password" class="form-input" placeholder="••••••••" id="registerPassword">
                     </div>
-                    <button type="submit" class="form-submit">Створити акаунт</button>
+                    <button type="button" onclick="handleQuickRegister()" class="form-submit">Створити акаунт</button>
                     
                     <div style="margin: 20px 0; text-align: center; color: rgba(255,255,255,0.6);">або</div>
                     
@@ -1353,7 +1342,7 @@
                         <div style="width: 20px; height: 20px; background: #1877f2; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 12px;">f</div>
                         Реєстрація через Facebook
                     </button>
-                </form>
+                </div>
             </div>
         </div>
 
@@ -2434,40 +2423,32 @@
             });
         }
 
-        function handleLogin(event) {
-            event.preventDefault();
-            showLoading();
-            
-            setTimeout(() => {
-                hideLoading();
-                currentUser = {
-                    name: "Максим Коваль",
-                    position: "Півзахисник",
-                    city: "Київ",
-                    rating: 4.8
-                };
-                hideAllScreens();
-                document.getElementById('mainScreen').classList.add('active');
-                showToast('✅ Успішний вхід!', 'success');
-            }, 2000);
+        function handleQuickLogin() {
+            currentUser = {
+                name: "Максим Коваль",
+                position: "Півзахисник",
+                city: "Київ",
+                rating: 4.8
+            };
+            hideAllScreens();
+            document.getElementById('mainScreen').classList.add('active');
+            showToast('✅ Успішний вхід!', 'success');
         }
 
-        function handleRegister(event) {
-            event.preventDefault();
-            showLoading();
+        function handleQuickRegister() {
+            const name = document.getElementById('registerName').value || "Новий Користувач";
+            const position = document.getElementById('registerPosition').value || "Півзахисник";
+            const city = document.getElementById('registerCity').value || "Київ";
             
-            setTimeout(() => {
-                hideLoading();
-                currentUser = {
-                    name: event.target[0].value,
-                    position: event.target[3].value,
-                    city: event.target[4].value,
-                    rating: 4.0
-                };
-                hideAllScreens();
-                document.getElementById('mainScreen').classList.add('active');
-                showToast('🎉 Акаунт створено!', 'success');
-            }, 2000);
+            currentUser = {
+                name: name,
+                position: position,
+                city: city,
+                rating: 4.0
+            };
+            hideAllScreens();
+            document.getElementById('mainScreen').classList.add('active');
+            showToast('🎉 Акаунт створено!', 'success');
         }
 
         // Navigation
@@ -2486,71 +2467,55 @@
 
         // Social login functions
         function loginWithGoogle() {
-            showLoading();
-            setTimeout(() => {
-                hideLoading();
-                currentUser = {
-                    name: "Максим Коваль",
-                    position: "Півзахисник", 
-                    city: "Київ",
-                    rating: 4.8,
-                    provider: "Google"
-                };
-                hideAllScreens();
-                document.getElementById('mainScreen').classList.add('active');
-                showToast('✅ Вхід через Google успішний!', 'success');
-            }, 2000);
+            currentUser = {
+                name: "Максим Коваль",
+                position: "Півзахисник", 
+                city: "Київ",
+                rating: 4.8,
+                provider: "Google"
+            };
+            hideAllScreens();
+            document.getElementById('mainScreen').classList.add('active');
+            showToast('✅ Вхід через Google успішний!', 'success');
         }
 
         function loginWithFacebook() {
-            showLoading();
-            setTimeout(() => {
-                hideLoading();
-                currentUser = {
-                    name: "Максим Коваль",
-                    position: "Півзахисник",
-                    city: "Київ", 
-                    rating: 4.8,
-                    provider: "Facebook"
-                };
-                hideAllScreens();
-                document.getElementById('mainScreen').classList.add('active');
-                showToast('✅ Вхід через Facebook успішний!', 'success');
-            }, 2000);
+            currentUser = {
+                name: "Максим Коваль",
+                position: "Півзахисник",
+                city: "Київ", 
+                rating: 4.8,
+                provider: "Facebook"
+            };
+            hideAllScreens();
+            document.getElementById('mainScreen').classList.add('active');
+            showToast('✅ Вхід через Facebook успішний!', 'success');
         }
 
         function registerWithGoogle() {
-            showLoading();
-            setTimeout(() => {
-                hideLoading();
-                currentUser = {
-                    name: "Новий Користувач",
-                    position: "Півзахисник",
-                    city: "Київ",
-                    rating: 4.0,
-                    provider: "Google"
-                };
-                hideAllScreens();
-                document.getElementById('mainScreen').classList.add('active');
-                showToast('🎉 Реєстрація через Google завершена!', 'success');
-            }, 2000);
+            currentUser = {
+                name: "Новий Користувач",
+                position: "Півзахисник",
+                city: "Київ",
+                rating: 4.0,
+                provider: "Google"
+            };
+            hideAllScreens();
+            document.getElementById('mainScreen').classList.add('active');
+            showToast('🎉 Реєстрація через Google завершена!', 'success');
         }
 
         function registerWithFacebook() {
-            showLoading();
-            setTimeout(() => {
-                hideLoading();
-                currentUser = {
-                    name: "Новий Користувач", 
-                    position: "Півзахисник",
-                    city: "Київ",
-                    rating: 4.0,
-                    provider: "Facebook"
-                };
-                hideAllScreens();
-                document.getElementById('mainScreen').classList.add('active');
-                showToast('🎉 Реєстрація через Facebook завершена!', 'success');
-            }, 2000);
+            currentUser = {
+                name: "Новий Користувач", 
+                position: "Півзахисник",
+                city: "Київ",
+                rating: 4.0,
+                provider: "Facebook"
+            };
+            hideAllScreens();
+            document.getElementById('mainScreen').classList.add('active');
+            showToast('🎉 Реєстрація через Facebook завершена!', 'success');
         }
 
         // Video voting with slider
