@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLAP - Feel Like A Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-green: #22c55e;
+            --primary-dark: #16a34a;
+            --secondary-blue: #3b82f6;
+            --background-main: #fafafa;
+            --background-white: #ffffff;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --text-light: #9ca3af;
+            --border-light: #e5e7eb;
+            --border-medium: #d1d5db;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--background-main);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 414px;
+            margin: 0 auto;
+            background: var(--background-white);
+            min-height: 100vh;
+            position: relative;
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Header */
+        .header {
+            background: var(--background-white);
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-light);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .header-action {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: var(--primary-green);
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .header-action:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        /* Screen management */
+        .screen {
+            display: none;
+            min-height: calc(100vh - 140px);
+            padding-bottom: 80px;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        /* Welcome Screen */
+        .welcome {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 40px 20px;
+            text-align: center;
+            background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 100%);
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 32px;
+            border-radius: 24px;
+            background-image: url('./logo.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .welcome-title {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+
+        .welcome-subtitle {
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 48px;
+            max-width: 320px;
+        }
+
+        .btn {
+            padding: 16px 32px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 100%;
+            max-width: 280px;
+            margin-bottom: 12px;
+        }
+
+        .btn-primary {
+            background: var(--primary-green);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary-green);
+            border: 2px solid var(--primary-green);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-green);
+            color: white;
+        }
+
+        /* Content sections */
+        .content {
+            padding: 20px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--background-white);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.2s ease;
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-1px);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .card-meta {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        .card-content {
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        /* Video cards */
+        .video-card {
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .video-thumbnail {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary-green), var(--secondary-blue));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .play-button {
+            width: 64px;
+            height: 64px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: var(--primary-green);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .play-button:hover {
+            transform: scale(1.1);
+            background: white;
+        }
+
+        .video-info {
+            padding: 16px;
+            background: var(--background-white);
+        }
+
+        .video-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .video-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .video-author {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .video-rating {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .stars {
+            color: #fbbf24;
+            margin-right: 4px;
+        }
+
+        /* Match cards */
+        .match-card {
+            border-left: 4px solid var(--primary-green);
+        }
+
+        .match-type {
+            display: inline-block;
+            padding: 4px 12px;
+            background: var(--primary-green);
+            color: white;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .match-location {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .match-players {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+
+        .match-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-small {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-join {
+            background: var(--primary-green);
+            color: white;
+        }
+
+        .btn-join:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-decline {
+            background: transparent;
+            color: #dc2626;
+            border: 1px solid #dc2626;
+        }
+
+        .btn-decline:hover {
+            background: #dc2626;
+            color: white;
+        }
+
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 20px 16px;
+            background: var(--background-white);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary-green);
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Profile */
+        .profile-header {
+            background: linear-gradient(135deg, var(--primary-green), var(--secondary-blue));
+            padding: 32px 20px;
+            text-align: center;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .avatar {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin: 0 auto 16px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .profile-name {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .profile-rating {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        /* Shop */
+        .shop-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .shop-item {
+            background: var(--background-white);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .shop-item:hover {
+            border-color: var(--primary-green);
+            box-shadow: var(--shadow-md);
+        }
+
+        .shop-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .shop-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .shop-price {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary-green);
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 414px;
+            background: var(--background-white);
+            border-top: 1px solid var(--border-light);
+            padding: 12px 0;
+            display: flex;
+            justify-content: space-around;
+            z-index: 100;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-radius: 8px;
+            min-width: 60px;
+        }
+
+        .nav-item:hover {
+            background: #f3f4f6;
+        }
+
+        .nav-item.active {
+            color: var(--primary-green);
+        }
+
+        .nav-icon {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .nav-label {
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        /* Notifications */
+        .notification {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary-green);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            z-index: 1000;
+            display: none;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .notification.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateX(-50%) translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(-50%) translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Challenges */
+        .challenge-card {
+            background: linear-gradient(135deg, var(--primary-green), var(--secondary-blue));
+            color: white;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 16px;
+        }
+
+        .challenge-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .challenge-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+
+        .challenge-prize {
+            font-weight: 600;
+        }
+
+        .btn-challenge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-challenge:hover {
+            background: white;
+            color: var(--primary-green);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 414px) {
+            .container {
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        ✅ Дія виконана успішно!
+    </div>
+
+    <div class="container">
+        <!-- Welcome Screen -->
+        <div class="screen active" id="welcome">
+            <div class="welcome">
+                <div class="logo"></div>
+                <h1 class="welcome-title">FLAP</h1>
+                <p class="welcome-subtitle">Feel Like A Pro - твоя футбольна спільнота для відео, матчів та челенджів</p>
+                <button class="btn btn-primary" onclick="startApp()">Почати</button>
+                <button class="btn btn-secondary" onclick="showDemo()">Демо</button>
+            </div>
+        </div>
+
+        <!-- Videos Screen -->
+        <div class="screen" id="videos">
+            <div class="header">
+                <h1 class="header-title">Відео</h1>
+                <button class="header-action" onclick="showNotification('Додавання відео')">+</button>
+            </div>
+            
+            <div class="content">
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <div class="play-button" onclick="showNotification('Відео запущено')">▶</div>
+                    </div>
+                    <div class="video-info">
+                        <div class="video-title">Неймовірний гол з 30 метрів!</div>
+                        <div class="video-stats">
+                            <div class="video-author">@maxim_football</div>
+                            <div class="video-rating">
+                                <span class="stars">⭐⭐⭐⭐☆</span>
+                                4.2
+                            </div>
+                        </div>
+                        <button class="btn-small btn-join" onclick="showNotification('Відео забустено за 10 монет')">Бустити ⚡</button>
+                    </div>
+                </div>
+
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <div class="play-button" onclick="showNotification('Відео запущено')">▶</div>
+                    </div>
+                    <div class="video-info">
+                        <div class="video-title">Майстер-клас з дриблінгу</div>
+                        <div class="video-stats">
+                            <div class="video-author">@coach_alex</div>
+                            <div class="video-rating">
+                                <span class="stars">⭐⭐⭐⭐⭐</span>
+                                5.0
+                            </div>
+                        </div>
+                        <button class="btn-small btn-join" onclick="showNotification('Відео збережено')">Зберегти 💾</button>
+                    </div>
+                </div>
+
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <div class="play-button" onclick="showNotification('Відео запущено')">▶</div>
+                    </div>
+                    <div class="video-info">
+                        <div class="video-title">ТОП-10 голів тижня</div>
+                        <div class="video-stats">
+                            <div class="video-author">@football_highlights</div>
+                            <div class="video-rating">
+                                <span class="stars">⭐⭐⭐⭐☆</span>
+                                4.7
+                            </div>
+                        </div>
+                        <button class="btn-small btn-join" onclick="showNotification('Коментар додано')">Коментувати 💬</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Challenges Screen -->
+        <div class="screen" id="challenges">
+            <div class="header">
+                <h1 class="header-title">Челенджі</h1>
+                <button class="header-action" onclick="showNotification('Створення челенджу')">+</button>
+            </div>
+            
+            <div class="content">
+                <div class="challenge-card">
+                    <div class="challenge-title">🏆 Гол місяця</div>
+                    <div class="challenge-meta">
+                        <div class="challenge-prize">Приз: 5000 монет</div>
+                        <div>До 31 січня</div>
+                    </div>
+                    <button class="btn btn-challenge" onclick="showNotification('Участь в челенджі прийнята')">Взяти участь</button>
+                </div>
+
+                <div class="challenge-card">
+                    <div class="challenge-title">⚽ Найкращий дриблінг</div>
+                    <div class="challenge-meta">
+                        <div class="challenge-prize">Приз: 3000 монет</div>
+                        <div>До 15 лютого</div>
+                    </div>
+                    <button class="btn btn-challenge" onclick="showNotification('Відео завантажено на конкурс')">Завантажити відео</button>
+                </div>
+
+                <div class="challenge-card">
+                    <div class="challenge-title">🎯 Точність ударів</div>
+                    <div class="challenge-meta">
+                        <div class="challenge-prize">Приз: 2000 монет</div>
+                        <div>До 28 лютого</div>
+                    </div>
+                    <button class="btn btn-challenge" onclick="showNotification('Тренування розпочато')">Почати тренування</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Matches Screen -->
+        <div class="screen" id="matches">
+            <div class="header">
+                <h1 class="header-title">Матчі</h1>
+                <button class="header-action" onclick="showNotification('Створення матчу')">+</button>
+            </div>
+            
+            <div class="content">
+                <div class="card match-card">
+                    <div class="match-type">5x5</div>
+                    <div class="match-location">Стадіон "Динамо", Київ</div>
+                    <div class="match-players">Потрібно гравців: 3/10</div>
+                    <div class="card-meta">Сьогодні 18:00</div>
+                    <div class="match-actions">
+                        <button class="btn-small btn-join" onclick="showNotification('Заявка подана')">Подати заявку</button>
+                        <button class="btn-small btn-decline" onclick="showNotification('Матч відхилено')">Відхилити</button>
+                    </div>
+                </div>
+
+                <div class="card match-card">
+                    <div class="match-type" style="background: #3b82f6;">11x11</div>
+                    <div class="match-location">ФК "Арена", Львів</div>
+                    <div class="match-players">Потрібно гравців: 8/22</div>
+                    <div class="card-meta">Завтра 16:30</div>
+                    <div class="match-actions">
+                        <button class="btn-small btn-join" onclick="showNotification('Заявка подана')">Подати заявку</button>
+                        <button class="btn-small btn-decline" onclick="showNotification('Матч відхилено')">Відхилити</button>
+                    </div>
+                </div>
+
+                <div class="card match-card">
+                    <div class="match-type" style="background: #f59e0b;">7x7</div>
+                    <div class="match-location">Спорткомплекс "Олімп", Одеса</div>
+                    <div class="match-players">Потрібно гравців: 5/14</div>
+                    <div class="card-meta">П'ятниця 19:00</div>
+                    <div class="match-actions">
+                        <button class="btn-small btn-join" onclick="showNotification('Заявка подана')">Подати заявку</button>
+                        <button class="btn-small btn-decline" onclick="showNotification('Матч відхилено')">Відхилити</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Screen -->
+        <div class="screen" id="profile">
+            <div class="profile-header">
+                <div class="avatar">👤</div>
+                <div class="profile-name">Олександр К.</div>
+                <div class="profile-rating">Рейтинг: 4.7 ⭐</div>
+            </div>
+            
+            <div class="content">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">127</div>
+                        <div class="stat-label">Матчі</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">78%</div>
+                        <div class="stat-label">Перемоги</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">4.7</div>
+                        <div class="stat-label">Рейтинг</div>
+                    </div>
+                </div>
+
+                <h2 class="section-title">Останні матчі</h2>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Перемога 3:1</div>
+                        <div class="card-meta" style="color: var(--primary-green);">+50 рейтингу</div>
+                    </div>
+                    <div class="card-content">
+                        Стадіон "Динамо" • 5x5 • 2 години тому
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Поразка 1:2</div>
+                        <div class="card-meta" style="color: #dc2626;">-30 рейтингу</div>
+                    </div>
+                    <div class="card-content">
+                        ФК "Арена" • 11x11 • 1 день тому
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Нічия 2:2</div>
+                        <div class="card-meta" style="color: #f59e0b;">+10 рейтингу</div>
+                    </div>
+                    <div class="card-content">
+                        Спорткомплекс "Олімп" • 7x7 • 3 дні тому
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Shop Screen -->
+        <div class="screen" id="shop">
+            <div class="header">
+                <h1 class="header-title">Магазин</h1>
+                <div style="color: #f59e0b; font-weight: 600;">💰 1,250</div>
+            </div>
+            
+            <div class="content">
+                <h2 class="section-title">Монети</h2>
+                <div class="shop-grid">
+                    <div class="shop-item" onclick="showNotification('Куплено 100 монет')">
+                        <div class="shop-icon" style="color: #f59e0b;">💰</div>
+                        <div class="shop-title">100 монет</div>
+                        <div class="shop-price">$0.99</div>
+                    </div>
+                    <div class="shop-item" onclick="showNotification('Куплено 500 монет')">
+                        <div class="shop-icon" style="color: #f59e0b;">💰</div>
+                        <div class="shop-title">500 монет</div>
+                        <div class="shop-price">$4.99</div>
+                    </div>
+                </div>
+
+                <h2 class="section-title">Бейджі</h2>
+                <div class="shop-grid">
+                    <div class="shop-item" onclick="showNotification('Куплено бейдж')">
+                        <div class="shop-icon" style="color: #f59e0b;">🏅</div>
+                        <div class="shop-title">Гольовий король</div>
+                        <div class="shop-price">150 💰</div>
+                    </div>
+                    <div class="shop-item" onclick="showNotification('Куплено бейдж')">
+                        <div class="shop-icon" style="color: #dc2626;">👑</div>
+                        <div class="shop-title">Майстер пасу</div>
+                        <div class="shop-price">200 💰</div>
+                    </div>
+                </div>
+
+                <h2 class="section-title">FLAP Pro</h2>
+                <div class="card" style="background: linear-gradient(135deg, var(--primary-green), var(--secondary-blue)); color: white; border: none;">
+                    <div class="card-title" style="color: white; margin-bottom: 12px;">Преміум підписка</div>
+                    <div style="margin-bottom: 16px;">
+                        ✅ Безлімітні буст-монети<br>
+                        ✅ Ексклюзивні бейджі<br>
+                        ✅ Пріоритет у матчах<br>
+                        ✅ Без реклами
+                    </div>
+                    <button class="btn btn-primary" style="background: white; color: var(--primary-green);" onclick="showNotification('Підписка активована')">$9.99/місяць</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <div class="nav-item active" onclick="switchScreen('videos')">
+                <div class="nav-icon">📺</div>
+                <div class="nav-label">Відео</div>
+            </div>
+            <div class="nav-item" onclick="switchScreen('challenges')">
+                <div class="nav-icon">🏆</div>
+                <div class="nav-label">Челенджі</div>
+            </div>
+            <div class="nav-item" onclick="switchScreen('matches')">
+                <div class="nav-icon">⚽</div>
+                <div class="nav-label">Матчі</div>
+            </div>
+            <div class="nav-item" onclick="switchScreen('profile')">
+                <div class="nav-icon">👤</div>
+                <div class="nav-label">Профіль</div>
+            </div>
+            <div class="nav-item" onclick="switchScreen('shop')">
+                <div class="nav-icon">🛒</div>
+                <div class="nav-label">Магазин</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentScreen = 'welcome';
+
+        function startApp() {
+            switchScreen('videos');
+        }
+
+        function showDemo() {
+            showNotification('Демо режим активовано');
+            setTimeout(() => {
+                switchScreen('videos');
+            }, 1000);
+        }
+
+        function switchScreen(screenId) {
+            // Hide all screens
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+
+            // Show target screen
+            document.getElementById(screenId).classList.add('active');
+
+            // Update navigation
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // Find and activate corresponding nav item
+            const navItems = document.querySelectorAll('.nav-item');
+            const screens = ['videos', 'challenges', 'matches', 'profile', 'shop'];
+            const index = screens.indexOf(screenId);
+            
+            if (index !== -1 && navItems[index]) {
+                navItems[index].classList.add('active');
+            }
+
+            currentScreen = screenId;
+        }
+
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = `✅ ${message}`;
+            notification.classList.add('show');
+
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 2500);
+        }
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 FLAP MVP запущено!');
+            
+            // Show welcome message after short delay
+            setTimeout(() => {
+                showNotification('Ласкаво просимо до FLAP!');
+            }, 500);
+        });
+    </script>
+</body>
+</html>
