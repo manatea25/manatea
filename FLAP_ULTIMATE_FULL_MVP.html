@@ -1,0 +1,2083 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLAP - Feel Like A Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(180deg, #1e7d32 0%, #2e7d32 100%);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Football Field Background */
+        .app {
+            max-width: 414px;
+            margin: 0 auto;
+            min-height: 100vh;
+            position: relative;
+            background: 
+                linear-gradient(90deg, transparent 49%, rgba(255,255,255,0.1) 49%, rgba(255,255,255,0.1) 51%, transparent 51%),
+                repeating-linear-gradient(0deg, transparent, transparent 45px, rgba(255,255,255,0.1) 45px, rgba(255,255,255,0.1) 47px);
+        }
+
+        /* Hide all screens initially */
+        .screen {
+            display: none;
+            min-height: 100vh;
+        }
+
+        .screen.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Welcome Screen */
+        .welcome-screen {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .welcome-logo {
+            width: 120px;
+            height: 120px;
+            background: url('https://raw.githubusercontent.com/manatea25/manatea/design-options/Bold%20Graphic%20Design%20With%20Dynamic%20Logo%20On%20Green%20Background.png.jpg') center/cover;
+            border-radius: 30px;
+            border: 4px solid #fff;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            margin-bottom: 30px;
+            animation: logoBounce 2s infinite;
+        }
+
+        @keyframes logoBounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .welcome-title {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .welcome-subtitle {
+            font-size: 18px;
+            opacity: 0.9;
+            margin-bottom: 40px;
+            line-height: 1.5;
+        }
+
+        .auth-buttons {
+            width: 100%;
+            max-width: 300px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .auth-btn {
+            padding: 15px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .auth-btn.primary {
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            color: white;
+            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+        }
+
+        .auth-btn.secondary {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.5);
+        }
+
+        .auth-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(76, 175, 80, 0.6);
+        }
+
+        /* Auth Forms */
+        .auth-form {
+            padding: 40px 20px;
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .form-subtitle {
+            opacity: 0.8;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 15px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #4caf50;
+            background: rgba(255,255,255,0.2);
+        }
+
+        .form-input::placeholder {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .position-select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 15px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-size: 16px;
+        }
+
+        .position-select option {
+            background: #2e7d32;
+            color: white;
+        }
+
+        .form-submit {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 25px;
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .form-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.6);
+        }
+
+        .back-to-welcome {
+            background: none;
+            border: none;
+            color: rgba(255,255,255,0.8);
+            padding: 10px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1b5e20, #2e7d32);
+            padding: 15px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            border-bottom: 2px solid #4caf50;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            background: url('https://raw.githubusercontent.com/manatea25/manatea/design-options/Bold%20Graphic%20Design%20With%20Dynamic%20Logo%20On%20Green%20Background.png.jpg') center/cover;
+            border-radius: 10px;
+            border: 2px solid #fff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            animation: logoPulse 2s infinite;
+        }
+
+        @keyframes logoPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .brand-text {
+            color: white;
+        }
+
+        .brand-name {
+            font-size: 18px;
+            font-weight: 800;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .brand-tagline {
+            font-size: 9px;
+            opacity: 0.9;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .coins-display {
+            background: linear-gradient(135deg, #ffc107, #ff8f00);
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            box-shadow: 0 4px 15px rgba(255, 193, 7, 0.4);
+            font-size: 13px;
+        }
+
+        .notifications-btn {
+            position: relative;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .notifications-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.1);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            background: #f44336;
+            color: white;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            font-size: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            background: rgba(255,255,255,0.1);
+            margin: 0 15px;
+            border-radius: 12px;
+            padding: 4px;
+            backdrop-filter: blur(10px);
+            margin-top: 12px;
+        }
+
+        .nav-tab {
+            flex: 1;
+            padding: 8px 4px;
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 11px;
+        }
+
+        .nav-tab.active {
+            background: rgba(255,255,255,0.2);
+            color: #4caf50;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        /* Content Sections */
+        .content-section {
+            display: none;
+            padding: 15px;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        /* Challenge Video Voting */
+        .challenge-video-item {
+            background: rgba(255,255,255,0.9);
+            border-radius: 15px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+            color: #333;
+        }
+
+        .challenge-video-header {
+            padding: 15px;
+            background: linear-gradient(135deg, #ff9800, #ffb74d);
+            color: white;
+        }
+
+        .challenge-video-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .challenge-video-meta {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .video-thumbnail {
+            height: 200px;
+            background: linear-gradient(45deg, #4caf50, #8bc34a);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 50px;
+            cursor: pointer;
+        }
+
+        .play-button {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4caf50;
+            font-size: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .play-button:hover {
+            transform: scale(1.1);
+        }
+
+        .video-voting {
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .vote-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .vote-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .vote-btn.like {
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            color: white;
+        }
+
+        .vote-btn.dislike {
+            background: linear-gradient(135deg, #f44336, #ef5350);
+            color: white;
+        }
+
+        .vote-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .video-score {
+            font-size: 18px;
+            font-weight: 700;
+            color: #2e7d32;
+        }
+
+        /* Player Profile Modal */
+        .player-profile-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 3000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .player-profile-modal.show {
+            display: flex;
+            animation: modalIn 0.4s ease;
+        }
+
+        @keyframes modalIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .player-profile-content {
+            background: white;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 380px;
+            max-height: 90vh;
+            overflow-y: auto;
+            color: #333;
+            position: relative;
+        }
+
+        .profile-cover {
+            height: 120px;
+            background: linear-gradient(135deg, #4caf50, #8bc34a);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-avatar-large {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #2e7d32, #4caf50);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 32px;
+            font-weight: 800;
+            border: 4px solid white;
+            margin-top: -40px;
+        }
+
+        .profile-main {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .profile-name {
+            font-size: 22px;
+            font-weight: 700;
+            color: #2e7d32;
+            margin-bottom: 5px;
+        }
+
+        .profile-position {
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .profile-rating {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: #ff9800;
+            font-weight: 700;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .profile-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .profile-stat {
+            text-align: center;
+            padding: 15px;
+            background: rgba(76, 175, 80, 0.1);
+            border-radius: 12px;
+        }
+
+        .profile-stat-number {
+            font-size: 20px;
+            font-weight: 800;
+            color: #2e7d32;
+            margin-bottom: 5px;
+        }
+
+        .profile-stat-label {
+            font-size: 11px;
+            color: #666;
+            text-transform: uppercase;
+        }
+
+        .profile-actions {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .profile-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .profile-btn.primary {
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            color: white;
+        }
+
+        .profile-btn.secondary {
+            background: #f5f5f5;
+            color: #666;
+        }
+
+        .profile-achievements {
+            text-align: left;
+        }
+
+        .achievements-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #2e7d32;
+            margin-bottom: 15px;
+        }
+
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .achievement-badge {
+            aspect-ratio: 1;
+            background: rgba(76, 175, 80, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .achievement-badge:hover {
+            background: rgba(76, 175, 80, 0.2);
+            transform: scale(1.05);
+        }
+
+        /* Match Creation Form */
+        .match-form {
+            background: rgba(255,255,255,0.9);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            color: #333;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        }
+
+        .match-form-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #2e7d32;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .form-field {
+            flex: 1;
+        }
+
+        .form-field label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #333;
+            font-size: 13px;
+        }
+
+        .form-field input,
+        .form-field select,
+        .form-field textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .form-field input:focus,
+        .form-field select:focus,
+        .form-field textarea:focus {
+            outline: none;
+            border-color: #4caf50;
+        }
+
+        .create-match-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .create-match-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+        }
+
+        /* Waiting List */
+        .waiting-list {
+            background: rgba(255,255,255,0.9);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            color: #333;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        }
+
+        .waiting-list-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #2e7d32;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .waiting-player {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px;
+            background: rgba(76, 175, 80, 0.1);
+            border-radius: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .waiting-player:hover {
+            background: rgba(76, 175, 80, 0.2);
+            transform: translateX(5px);
+        }
+
+        .waiting-avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #4caf50, #2e7d32);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+        }
+
+        .waiting-info {
+            flex: 1;
+        }
+
+        .waiting-name {
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .waiting-meta {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .waiting-actions {
+            display: flex;
+            gap: 5px;
+        }
+
+        .waiting-btn {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .waiting-btn.accept {
+            background: #4caf50;
+            color: white;
+        }
+
+        .waiting-btn.reject {
+            background: #f44336;
+            color: white;
+        }
+
+        /* Team Builder */
+        .team-builder {
+            background: rgba(255,255,255,0.9);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            color: #333;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        }
+
+        .team-builder-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #2e7d32;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .teams-container {
+            display: flex;
+            gap: 15px;
+        }
+
+        .team {
+            flex: 1;
+            background: rgba(76, 175, 80, 0.1);
+            border-radius: 12px;
+            padding: 15px;
+            border: 2px solid #4caf50;
+        }
+
+        .team-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: #2e7d32;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .team-player {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .team-player:hover {
+            transform: scale(1.02);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .team-avatar {
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, #4caf50, #2e7d32);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .team-player-info {
+            flex: 1;
+        }
+
+        .team-player-name {
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .team-player-rating {
+            font-size: 11px;
+            color: #ff9800;
+        }
+
+        .auto-balance-btn {
+            width: 100%;
+            padding: 10px;
+            background: linear-gradient(135deg, #ff9800, #ffb74d);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .auto-balance-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 152, 0, 0.4);
+        }
+
+        /* Match Score Tracker */
+        .score-tracker {
+            background: rgba(255,255,255,0.9);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            color: #333;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        }
+
+        .score-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .match-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #2e7d32;
+            margin-bottom: 5px;
+        }
+
+        .match-time {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .score-display {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .team-score {
+            text-align: center;
+        }
+
+        .team-score-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: #2e7d32;
+            margin-bottom: 10px;
+        }
+
+        .team-score-number {
+            font-size: 48px;
+            font-weight: 800;
+            color: #4caf50;
+            background: rgba(76, 175, 80, 0.1);
+            border-radius: 15px;
+            padding: 15px 20px;
+            min-width: 100px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .team-score-number:hover {
+            background: rgba(76, 175, 80, 0.2);
+            transform: scale(1.05);
+        }
+
+        .score-vs {
+            font-size: 24px;
+            font-weight: 700;
+            color: #666;
+        }
+
+        .score-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .score-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .score-btn.end-match {
+            background: linear-gradient(135deg, #f44336, #ef5350);
+            color: white;
+        }
+
+        .score-btn.reset {
+            background: #f5f5f5;
+            color: #666;
+        }
+
+        /* Player Rating Modal */
+        .rating-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 3000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .rating-modal.show {
+            display: flex;
+            animation: modalIn 0.4s ease;
+        }
+
+        .rating-content {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            max-width: 350px;
+            width: 100%;
+            color: #333;
+            text-align: center;
+        }
+
+        .rating-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #2e7d32;
+            margin-bottom: 15px;
+        }
+
+        .rating-player {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(76, 175, 80, 0.1);
+            border-radius: 12px;
+        }
+
+        .rating-player-avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #4caf50, #2e7d32);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .rating-player-info {
+            flex: 1;
+            text-align: left;
+        }
+
+        .rating-player-name {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 3px;
+        }
+
+        .rating-player-position {
+            font-size: 13px;
+            color: #666;
+        }
+
+        .star-rating {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin-bottom: 20px;
+        }
+
+        .star {
+            font-size: 30px;
+            color: #ddd;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .star.active,
+        .star:hover {
+            color: #ffc107;
+            transform: scale(1.2);
+        }
+
+        .rating-comment {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            resize: vertical;
+            min-height: 60px;
+        }
+
+        .rating-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .rating-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .rating-btn.submit {
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            color: white;
+        }
+
+        .rating-btn.skip {
+            background: #f5f5f5;
+            color: #666;
+        }
+
+        /* Utilities */
+        .loading-spinner {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2000;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(76,175,80,0.3);
+            border-top: 4px solid #4caf50;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .message-toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #4caf50;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 14px;
+            z-index: 2000;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .message-toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .message-toast.error {
+            background: #f44336;
+        }
+
+        .fab {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #4caf50, #2e7d32);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .fab:hover {
+            transform: scale(1.1) rotate(90deg);
+            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.6);
+        }
+
+        /* Hide elements */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Responsive */
+        @media (max-width: 414px) {
+            .app {
+                margin: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <!-- Welcome Screen -->
+        <div class="screen welcome-screen active" id="welcomeScreen">
+            <div class="welcome-logo"></div>
+            <h1 class="welcome-title">FLAP</h1>
+            <p class="welcome-subtitle">Feel Like A Pro<br>Покажи свої футбольні навички<br>і стань професіоналом!</p>
+            <div class="auth-buttons">
+                <button class="auth-btn primary" onclick="showLogin()">Увійти</button>
+                <button class="auth-btn secondary" onclick="showRegister()">Реєстрація</button>
+            </div>
+        </div>
+
+        <!-- Login Screen -->
+        <div class="screen" id="loginScreen">
+            <div class="auth-form">
+                <button class="back-to-welcome" onclick="showWelcome()">
+                    <i class="fas fa-arrow-left"></i> Назад
+                </button>
+                <div class="form-header">
+                    <h2 class="form-title">Вхід до FLAP</h2>
+                    <p class="form-subtitle">Ласкаво просимо назад!</p>
+                </div>
+                <form onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label class="form-label">Email або номер телефону</label>
+                        <input type="text" class="form-input" placeholder="your@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Пароль</label>
+                        <input type="password" class="form-input" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="form-submit">Увійти</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Register Screen -->
+        <div class="screen" id="registerScreen">
+            <div class="auth-form">
+                <button class="back-to-welcome" onclick="showWelcome()">
+                    <i class="fas fa-arrow-left"></i> Назад
+                </button>
+                <div class="form-header">
+                    <h2 class="form-title">Реєстрація</h2>
+                    <p class="form-subtitle">Приєднуйся до футбольної спільноти!</p>
+                </div>
+                <form onsubmit="handleRegister(event)">
+                    <div class="form-group">
+                        <label class="form-label">Ім'я та прізвище</label>
+                        <input type="text" class="form-input" placeholder="Максим Коваль" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" placeholder="your@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Номер телефону</label>
+                        <input type="tel" class="form-input" placeholder="+380123456789" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Позиція на полі</label>
+                        <select class="position-select" required>
+                            <option value="">Оберіть позицію</option>
+                            <option value="goalkeeper">Воротар</option>
+                            <option value="defender">Захисник</option>
+                            <option value="midfielder">Півзахисник</option>
+                            <option value="forward">Нападник</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Місто</label>
+                        <input type="text" class="form-input" placeholder="Київ" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Пароль</label>
+                        <input type="password" class="form-input" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="form-submit">Створити акаунт</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Main App Screen -->
+        <div class="screen" id="mainScreen">
+            <!-- Header -->
+            <div class="header">
+                <div class="header-content">
+                    <div class="logo-section">
+                        <div class="logo"></div>
+                        <div class="brand-text">
+                            <div class="brand-name">FLAP</div>
+                            <div class="brand-tagline">FEEL LIKE A PRO</div>
+                        </div>
+                    </div>
+                    <div class="header-right">
+                        <div class="coins-display">
+                            <i class="fas fa-coins"></i>
+                            <span id="coinCount">250</span>
+                        </div>
+                        <button class="notifications-btn" onclick="toggleNotifications()">
+                            <i class="fas fa-bell"></i>
+                            <div class="notification-badge" id="notificationBadge">5</div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation Tabs -->
+            <div class="nav-tabs">
+                <div class="nav-tab active" onclick="showSection('videos')">
+                    <i class="fas fa-video"></i><br>Відео
+                </div>
+                <div class="nav-tab" onclick="showSection('challenges')">
+                    <i class="fas fa-trophy"></i><br>Челенджі
+                </div>
+                <div class="nav-tab" onclick="showSection('matches')">
+                    <i class="fas fa-futbol"></i><br>Матчі
+                </div>
+                <div class="nav-tab" onclick="showSection('rating')">
+                    <i class="fas fa-crown"></i><br>Рейтинг
+                </div>
+                <div class="nav-tab" onclick="showSection('profile')">
+                    <i class="fas fa-user"></i><br>Профіль
+                </div>
+            </div>
+
+            <!-- Challenge Videos Section -->
+            <div class="content-section active" id="videos">
+                <h3 style="margin-bottom: 15px; font-size: 18px;">🏆 Голосування за челенджі</h3>
+                
+                <div class="challenge-video-item">
+                    <div class="challenge-video-header">
+                        <div class="challenge-video-title">Кращий фінт тижня</div>
+                        <div class="challenge-video-meta">Призовий фонд: 200₴ • Учасників: 12</div>
+                    </div>
+                    <div class="video-thumbnail" onclick="playVideo('challenge1_video1')">
+                        <i class="fas fa-play-circle"></i>
+                        <div class="play-button">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <div class="video-voting">
+                        <div class="vote-buttons">
+                            <button class="vote-btn like" onclick="voteForVideo('challenge1_video1', 'like', event)">
+                                <i class="fas fa-thumbs-up"></i>
+                                <span>24</span>
+                            </button>
+                            <button class="vote-btn dislike" onclick="voteForVideo('challenge1_video1', 'dislike', event)">
+                                <i class="fas fa-thumbs-down"></i>
+                                <span>3</span>
+                            </button>
+                        </div>
+                        <div class="video-score">⭐ 8.1</div>
+                    </div>
+                    <div style="padding: 0 15px 15px; color: #333;">
+                        <strong>Андрій Коваленко</strong> • Півзахисник<br>
+                        <small style="color: #666;">2 години тому • Гідропарк</small>
+                    </div>
+                </div>
+
+                <div class="challenge-video-item">
+                    <div class="challenge-video-header">
+                        <div class="challenge-video-title">Кращий фінт тижня</div>
+                        <div class="challenge-video-meta">Призовий фонд: 200₴ • Учасників: 12</div>
+                    </div>
+                    <div class="video-thumbnail" onclick="playVideo('challenge1_video2')">
+                        <i class="fas fa-futbol"></i>
+                        <div class="play-button">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <div class="video-voting">
+                        <div class="vote-buttons">
+                            <button class="vote-btn like" onclick="voteForVideo('challenge1_video2', 'like', event)">
+                                <i class="fas fa-thumbs-up"></i>
+                                <span>31</span>
+                            </button>
+                            <button class="vote-btn dislike" onclick="voteForVideo('challenge1_video2', 'dislike', event)">
+                                <i class="fas fa-thumbs-down"></i>
+                                <span>1</span>
+                            </button>
+                        </div>
+                        <div class="video-score">⭐ 9.2</div>
+                    </div>
+                    <div style="padding: 0 15px 15px; color: #333;">
+                        <strong onclick="showPlayerProfile('petro_m')">Петро Мельник</strong> • Нападник<br>
+                        <small style="color: #666;">4 години тому • Стадіон "Динамо"</small>
+                    </div>
+                </div>
+
+                <div class="challenge-video-item">
+                    <div class="challenge-video-header">
+                        <div class="challenge-video-title">Точність ударів</div>
+                        <div class="challenge-video-meta">Призовий фонд: 150₴ • Учасників: 8</div>
+                    </div>
+                    <div class="video-thumbnail" onclick="playVideo('challenge2_video1')">
+                        <i class="fas fa-bullseye"></i>
+                        <div class="play-button">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <div class="video-voting">
+                        <div class="vote-buttons">
+                            <button class="vote-btn like" onclick="voteForVideo('challenge2_video1', 'like', event)">
+                                <i class="fas fa-thumbs-up"></i>
+                                <span>18</span>
+                            </button>
+                            <button class="vote-btn dislike" onclick="voteForVideo('challenge2_video1', 'dislike', event)">
+                                <i class="fas fa-thumbs-down"></i>
+                                <span>2</span>
+                            </button>
+                        </div>
+                        <div class="video-score">⭐ 7.8</div>
+                    </div>
+                    <div style="padding: 0 15px 15px; color: #333;">
+                        <strong onclick="showPlayerProfile('dmitro_k')">Дмитро Коваленко</strong> • Воротар<br>
+                        <small style="color: #666;">6 годин тому • Парк Шевченка</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Matches Section -->
+            <div class="content-section" id="matches">
+                <!-- Match Creation Form -->
+                <div class="match-form">
+                    <div class="match-form-title">➕ Створити матч</div>
+                    <form onsubmit="createMatch(event)">
+                        <div class="form-row">
+                            <div class="form-field">
+                                <label>Назва матчу</label>
+                                <input type="text" placeholder="Вечірній футбол" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-field">
+                                <label>Дата</label>
+                                <input type="date" required>
+                            </div>
+                            <div class="form-field">
+                                <label>Час</label>
+                                <input type="time" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-field">
+                                <label>Місце</label>
+                                <input type="text" placeholder="Гідропарк, поле №2" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-field">
+                                <label>Кількість гравців</label>
+                                <select required>
+                                    <option value="">Оберіть</option>
+                                    <option value="6">6 на 6</option>
+                                    <option value="8">8 на 8</option>
+                                    <option value="10">10 на 10</option>
+                                    <option value="11">11 на 11</option>
+                                </select>
+                            </div>
+                            <div class="form-field">
+                                <label>Вартість</label>
+                                <input type="number" placeholder="50" min="0">
+                            </div>
+                        </div>
+                        <div class="form-field">
+                            <label>Додаткова інформація</label>
+                            <textarea placeholder="Опишіть деталі матчу..." rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="create-match-btn">Створити матч</button>
+                    </form>
+                </div>
+
+                <!-- Waiting List -->
+                <div class="waiting-list">
+                    <div class="waiting-list-title">
+                        <i class="fas fa-clock"></i>
+                        Хочуть грати зі мною (3)
+                    </div>
+                    
+                    <div class="waiting-player" onclick="showPlayerProfile('oleksandr_m')">
+                        <div class="waiting-avatar">ОМ</div>
+                        <div class="waiting-info">
+                            <div class="waiting-name">Олександр Мельник</div>
+                            <div class="waiting-meta">Нападник • ⭐ 4.9 • 15 хв тому</div>
+                        </div>
+                        <div class="waiting-actions">
+                            <button class="waiting-btn accept" onclick="acceptPlayer('oleksandr_m', event)">✓</button>
+                            <button class="waiting-btn reject" onclick="rejectPlayer('oleksandr_m', event)">✗</button>
+                        </div>
+                    </div>
+
+                    <div class="waiting-player" onclick="showPlayerProfile('vitaliy_s')">
+                        <div class="waiting-avatar">ВС</div>
+                        <div class="waiting-info">
+                            <div class="waiting-name">Віталій Семенов</div>
+                            <div class="waiting-meta">Півзахисник • ⭐ 4.8 • 25 хв тому</div>
+                        </div>
+                        <div class="waiting-actions">
+                            <button class="waiting-btn accept" onclick="acceptPlayer('vitaliy_s', event)">✓</button>
+                            <button class="waiting-btn reject" onclick="rejectPlayer('vitaliy_s', event)">✗</button>
+                        </div>
+                    </div>
+
+                    <div class="waiting-player" onclick="showPlayerProfile('sergiy_p')">
+                        <div class="waiting-avatar">СП</div>
+                        <div class="waiting-info">
+                            <div class="waiting-name">Сергій Петренко</div>
+                            <div class="waiting-meta">Захисник • ⭐ 4.6 • 1 год тому</div>
+                        </div>
+                        <div class="waiting-actions">
+                            <button class="waiting-btn accept" onclick="acceptPlayer('sergiy_p', event)">✓</button>
+                            <button class="waiting-btn reject" onclick="rejectPlayer('sergiy_p', event)">✗</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Team Builder -->
+                <div class="team-builder">
+                    <div class="team-builder-title">⚽ Команди для матчу</div>
+                    <div class="teams-container">
+                        <div class="team">
+                            <div class="team-name">🟢 Зелені</div>
+                            <div class="team-player" onclick="showPlayerProfile('maksym_k')">
+                                <div class="team-avatar">МК</div>
+                                <div class="team-player-info">
+                                    <div class="team-player-name">Максим Коваль (Ви)</div>
+                                    <div class="team-player-rating">⭐ 4.8</div>
+                                </div>
+                            </div>
+                            <div class="team-player" onclick="showPlayerProfile('oleksandr_m')">
+                                <div class="team-avatar">ОМ</div>
+                                <div class="team-player-info">
+                                    <div class="team-player-name">Олександр М.</div>
+                                    <div class="team-player-rating">⭐ 4.9</div>
+                                </div>
+                            </div>
+                            <div class="team-player" onclick="showPlayerProfile('vitaliy_s')">
+                                <div class="team-avatar">ВС</div>
+                                <div class="team-player-info">
+                                    <div class="team-player-name">Віталій С.</div>
+                                    <div class="team-player-rating">⭐ 4.8</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="team">
+                            <div class="team-name">🔵 Сині</div>
+                            <div class="team-player" onclick="showPlayerProfile('dmitro_k')">
+                                <div class="team-avatar">ДК</div>
+                                <div class="team-player-info">
+                                    <div class="team-player-name">Дмитро К.</div>
+                                    <div class="team-player-rating">⭐ 4.7</div>
+                                </div>
+                            </div>
+                            <div class="team-player" onclick="showPlayerProfile('sergiy_p')">
+                                <div class="team-avatar">СП</div>
+                                <div class="team-player-info">
+                                    <div class="team-player-name">Сергій П.</div>
+                                    <div class="team-player-rating">⭐ 4.6</div>
+                                </div>
+                            </div>
+                            <div class="team-player" onclick="showPlayerProfile('andriy_p')">
+                                <div class="team-avatar">АП</div>
+                                <div class="team-player-info">
+                                    <div class="team-player-name">Андрій П.</div>
+                                    <div class="team-player-rating">⭐ 4.6</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="auto-balance-btn" onclick="autoBalanceTeams()">
+                        🎯 Авто-баланс по рейтингу
+                    </button>
+                </div>
+
+                <!-- Score Tracker -->
+                <div class="score-tracker">
+                    <div class="score-header">
+                        <div class="match-title">⚽ Вечірній футбол</div>
+                        <div class="match-time">🕐 Триває 32 хвилини</div>
+                    </div>
+                    <div class="score-display">
+                        <div class="team-score">
+                            <div class="team-score-name">🟢 Зелені</div>
+                            <div class="team-score-number" onclick="incrementScore('green')" id="greenScore">2</div>
+                        </div>
+                        <div class="score-vs">:</div>
+                        <div class="team-score">
+                            <div class="team-score-name">🔵 Сині</div>
+                            <div class="team-score-number" onclick="incrementScore('blue')" id="blueScore">1</div>
+                        </div>
+                    </div>
+                    <div class="score-actions">
+                        <button class="score-btn end-match" onclick="endMatch()">
+                            Завершити матч
+                        </button>
+                        <button class="score-btn reset" onclick="resetScore()">
+                            Скинути рахунок
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other sections content would continue here... -->
+            <div class="content-section" id="challenges">
+                <h3>🏆 Активні челенджі</h3>
+                <!-- Challenge content -->
+            </div>
+
+            <div class="content-section" id="rating">
+                <h3>👑 Рейтинг гравців</h3>
+                <!-- Rating content -->
+            </div>
+
+            <div class="content-section" id="profile">
+                <h3>👤 Мій профіль</h3>
+                <!-- Profile content -->
+            </div>
+
+            <!-- FAB -->
+            <button class="fab" onclick="showAddMenu()">
+                <i class="fas fa-plus"></i>
+            </button>
+        </div>
+
+        <!-- Player Profile Modal -->
+        <div class="player-profile-modal" id="playerProfileModal">
+            <div class="player-profile-content">
+                <div class="profile-cover">
+                    <button class="profile-close" onclick="closePlayerProfile()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="profile-main">
+                    <div class="profile-avatar-large" id="profileAvatar">ОМ</div>
+                    <div class="profile-name" id="profileName">Олександр Мельник</div>
+                    <div class="profile-position" id="profilePosition">Нападник • Київ • 25 років</div>
+                    <div class="profile-rating">
+                        <i class="fas fa-star"></i>
+                        <span id="profileRating">4.9</span>
+                        <span style="color: #666; font-size: 14px;">(47 оцінок)</span>
+                    </div>
+                    
+                    <div class="profile-stats">
+                        <div class="profile-stat">
+                            <div class="profile-stat-number" id="profileMatches">67</div>
+                            <div class="profile-stat-label">Матчі</div>
+                        </div>
+                        <div class="profile-stat">
+                            <div class="profile-stat-number" id="profileWinRate">92%</div>
+                            <div class="profile-stat-label">Win Rate</div>
+                        </div>
+                        <div class="profile-stat">
+                            <div class="profile-stat-number" id="profileGoals">89</div>
+                            <div class="profile-stat-label">Голи</div>
+                        </div>
+                    </div>
+
+                    <div class="profile-actions">
+                        <button class="profile-btn primary" onclick="addFriend()">
+                            <i class="fas fa-user-plus"></i> Додати в друзі
+                        </button>
+                        <button class="profile-btn secondary" onclick="inviteToMatch()">
+                            <i class="fas fa-futbol"></i> Запросити грати
+                        </button>
+                    </div>
+
+                    <div class="profile-achievements">
+                        <div class="achievements-title">🏅 Досягнення</div>
+                        <div class="achievements-grid">
+                            <div class="achievement-badge" title="Гольова машина">⚽</div>
+                            <div class="achievement-badge" title="Капітан">👑</div>
+                            <div class="achievement-badge" title="Снайпер">🎯</div>
+                            <div class="achievement-badge" title="MVP">🏆</div>
+                            <div class="achievement-badge" title="Лідер">⭐</div>
+                            <div class="achievement-badge" title="Чемпіон">🥇</div>
+                            <div class="achievement-badge" title="Майстер фінтів">✨</div>
+                            <div class="achievement-badge" title="Командний гравець">🤝</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Player Rating Modal -->
+        <div class="rating-modal" id="ratingModal">
+            <div class="rating-content">
+                <div class="rating-title">Оцініть гравця</div>
+                <div class="rating-player">
+                    <div class="rating-player-avatar" id="ratingPlayerAvatar">ОМ</div>
+                    <div class="rating-player-info">
+                        <div class="rating-player-name" id="ratingPlayerName">Олександр Мельник</div>
+                        <div class="rating-player-position" id="ratingPlayerPosition">Нападник</div>
+                    </div>
+                </div>
+                <div class="star-rating" id="starRating">
+                    <span class="star" data-rating="1">★</span>
+                    <span class="star" data-rating="2">★</span>
+                    <span class="star" data-rating="3">★</span>
+                    <span class="star" data-rating="4">★</span>
+                    <span class="star" data-rating="5">★</span>
+                </div>
+                <textarea class="rating-comment" placeholder="Додайте коментар про гру гравця (необов'язково)"></textarea>
+                <div class="rating-buttons">
+                    <button class="rating-btn submit" onclick="submitRating()">Оцінити</button>
+                    <button class="rating-btn skip" onclick="skipRating()">Пропустити</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading Spinner -->
+        <div class="loading-spinner" id="loadingSpinner">
+            <div class="spinner"></div>
+        </div>
+
+        <!-- Toast Messages -->
+        <div class="message-toast" id="messageToast"></div>
+    </div>
+
+    <script>
+        // Global state
+        let currentUser = null;
+        let currentRating = 0;
+        let currentMatchScore = { green: 2, blue: 1 };
+        let coins = 250;
+
+        // Authentication functions
+        function showWelcome() {
+            hideAllScreens();
+            document.getElementById('welcomeScreen').classList.add('active');
+        }
+
+        function showLogin() {
+            hideAllScreens();
+            document.getElementById('loginScreen').classList.add('active');
+        }
+
+        function showRegister() {
+            hideAllScreens();
+            document.getElementById('registerScreen').classList.add('active');
+        }
+
+        function hideAllScreens() {
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            showLoading();
+            
+            setTimeout(() => {
+                hideLoading();
+                currentUser = {
+                    name: "Максим Коваль",
+                    position: "Півзахисник",
+                    city: "Київ",
+                    rating: 4.8
+                };
+                hideAllScreens();
+                document.getElementById('mainScreen').classList.add('active');
+                showToast('✅ Успішний вхід!', 'success');
+            }, 2000);
+        }
+
+        function handleRegister(event) {
+            event.preventDefault();
+            showLoading();
+            
+            setTimeout(() => {
+                hideLoading();
+                currentUser = {
+                    name: event.target[0].value,
+                    position: event.target[3].value,
+                    city: event.target[4].value,
+                    rating: 4.0
+                };
+                hideAllScreens();
+                document.getElementById('mainScreen').classList.add('active');
+                showToast('🎉 Акаунт створено!', 'success');
+            }, 2000);
+        }
+
+        // Navigation
+        function showSection(sectionId) {
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            document.getElementById(sectionId).classList.add('active');
+            event.target.closest('.nav-tab').classList.add('active');
+        }
+
+        // Video voting
+        function voteForVideo(videoId, voteType, event) {
+            event.stopPropagation();
+            showLoading();
+            
+            setTimeout(() => {
+                hideLoading();
+                
+                if (voteType === 'like') {
+                    addCoins(2);
+                    showToast('👍 +2 монети за голос!', 'success');
+                } else {
+                    addCoins(1);
+                    showToast('👎 +1 монета за голос!', 'success');
+                }
+                
+                const btn = event.target.closest('.vote-btn');
+                const span = btn.querySelector('span');
+                span.textContent = parseInt(span.textContent) + 1;
+            }, 1000);
+        }
+
+        function playVideo(videoId) {
+            showToast('📹 Відтворення відео...', 'success');
+        }
+
+        // Player profile
+        function showPlayerProfile(playerId) {
+            const players = {
+                'oleksandr_m': {
+                    avatar: 'ОМ',
+                    name: 'Олександр Мельник',
+                    position: 'Нападник • Київ • 25 років',
+                    rating: '4.9',
+                    matches: '67',
+                    winRate: '92%',
+                    goals: '89'
+                },
+                'petro_m': {
+                    avatar: 'ПМ',
+                    name: 'Петро Мельник',
+                    position: 'Нападник • Київ • 23 роки',
+                    rating: '4.7',
+                    matches: '45',
+                    winRate: '88%',
+                    goals: '67'
+                },
+                'dmitro_k': {
+                    avatar: 'ДК',
+                    name: 'Дмитро Коваленко',
+                    position: 'Воротар • Київ • 27 років',
+                    rating: '4.7',
+                    matches: '38',
+                    winRate: '85%',
+                    goals: '2'
+                }
+            };
+
+            const player = players[playerId] || players['oleksandr_m'];
+            
+            document.getElementById('profileAvatar').textContent = player.avatar;
+            document.getElementById('profileName').textContent = player.name;
+            document.getElementById('profilePosition').textContent = player.position;
+            document.getElementById('profileRating').textContent = player.rating;
+            document.getElementById('profileMatches').textContent = player.matches;
+            document.getElementById('profileWinRate').textContent = player.winRate;
+            document.getElementById('profileGoals').textContent = player.goals;
+            
+            document.getElementById('playerProfileModal').classList.add('show');
+        }
+
+        function closePlayerProfile() {
+            document.getElementById('playerProfileModal').classList.remove('show');
+        }
+
+        // Match management
+        function createMatch(event) {
+            event.preventDefault();
+            showLoading();
+            
+            setTimeout(() => {
+                hideLoading();
+                showToast('✅ Матч створено!', 'success');
+                event.target.reset();
+            }, 1500);
+        }
+
+        function acceptPlayer(playerId, event) {
+            event.stopPropagation();
+            showToast('✅ Гравця прийнято!', 'success');
+            event.target.closest('.waiting-player').style.opacity = '0.5';
+        }
+
+        function rejectPlayer(playerId, event) {
+            event.stopPropagation();
+            showToast('❌ Гравця відхилено', 'error');
+            event.target.closest('.waiting-player').style.opacity = '0.5';
+        }
+
+        function autoBalanceTeams() {
+            showLoading();
+            setTimeout(() => {
+                hideLoading();
+                showToast('⚖️ Команди збалансовано!', 'success');
+            }, 1000);
+        }
+
+        function incrementScore(team) {
+            currentMatchScore[team]++;
+            document.getElementById(team + 'Score').textContent = currentMatchScore[team];
+            showToast(`⚽ Гол для ${team === 'green' ? 'зелених' : 'синіх'}!`, 'success');
+        }
+
+        function resetScore() {
+            currentMatchScore = { green: 0, blue: 0 };
+            document.getElementById('greenScore').textContent = '0';
+            document.getElementById('blueScore').textContent = '0';
+            showToast('🔄 Рахунок скинуто', 'success');
+        }
+
+        function endMatch() {
+            showToast('🏁 Матч завершено! Оцініть гравців', 'success');
+            setTimeout(() => {
+                showRatingModal('oleksandr_m');
+            }, 1500);
+        }
+
+        // Player rating
+        function showRatingModal(playerId) {
+            const players = {
+                'oleksandr_m': {
+                    avatar: 'ОМ',
+                    name: 'Олександр Мельник',
+                    position: 'Нападник'
+                }
+            };
+
+            const player = players[playerId] || players['oleksandr_m'];
+            
+            document.getElementById('ratingPlayerAvatar').textContent = player.avatar;
+            document.getElementById('ratingPlayerName').textContent = player.name;
+            document.getElementById('ratingPlayerPosition').textContent = player.position;
+            
+            document.getElementById('ratingModal').classList.add('show');
+            
+            // Star rating functionality
+            const stars = document.querySelectorAll('.star');
+            stars.forEach((star, index) => {
+                star.onclick = () => {
+                    currentRating = index + 1;
+                    stars.forEach((s, i) => {
+                        s.classList.toggle('active', i < currentRating);
+                    });
+                };
+            });
+        }
+
+        function submitRating() {
+            if (currentRating === 0) {
+                showToast('⭐ Оберіть рейтинг!', 'error');
+                return;
+            }
+            
+            showLoading();
+            document.getElementById('ratingModal').classList.remove('show');
+            
+            setTimeout(() => {
+                hideLoading();
+                addCoins(5);
+                showToast(`⭐ Рейтинг ${currentRating}/5 відправлено! +5 монет`, 'success');
+                currentRating = 0;
+            }, 1000);
+        }
+
+        function skipRating() {
+            document.getElementById('ratingModal').classList.remove('show');
+            currentRating = 0;
+        }
+
+        // Friends and invites
+        function addFriend() {
+            showLoading();
+            setTimeout(() => {
+                hideLoading();
+                showToast('👥 Запрошення до друзів надіслано!', 'success');
+            }, 1000);
+        }
+
+        function inviteToMatch() {
+            showLoading();
+            setTimeout(() => {
+                hideLoading();
+                showToast('⚽ Запрошення на матч надіслано!', 'success');
+            }, 1000);
+        }
+
+        // Coins management
+        function addCoins(amount) {
+            coins += amount;
+            document.getElementById('coinCount').textContent = coins;
+            
+            const coinDisplay = document.querySelector('.coins-display');
+            coinDisplay.style.transform = 'scale(1.1)';
+            setTimeout(() => {
+                coinDisplay.style.transform = 'scale(1)';
+            }, 200);
+        }
+
+        // Utility functions
+        function showLoading() {
+            document.getElementById('loadingSpinner').style.display = 'block';
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingSpinner').style.display = 'none';
+        }
+
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('messageToast');
+            toast.textContent = message;
+            toast.className = `message-toast ${type} show`;
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        function toggleNotifications() {
+            showToast('🔔 Панель повідомлень', 'success');
+        }
+
+        function showAddMenu() {
+            showToast('➕ Меню швидких дій', 'success');
+        }
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', () => {
+            // App initialization
+            console.log('FLAP App initialized');
+        });
+    </script>
+</body>
+</html>
