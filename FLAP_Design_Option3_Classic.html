@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLAP - Варіант 3: Класичний</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --football-green: #1e7e34;
+            --grass-light: #28a745;
+            --gold: #ffc107;
+            --white: #ffffff;
+            --dark-green: #155724;
+            --light-gray: #f8f9fa;
+            --medium-gray: #dee2e6;
+            --text-dark: #212529;
+            --text-muted: #6c757d;
+            --shadow-soft: 0 2px 10px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: var(--light-gray);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* Header with Football Field Effect */
+        .header {
+            background: linear-gradient(135deg, var(--football-green), var(--grass-light));
+            padding: 25px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 48px,
+                    rgba(255, 255, 255, 0.1) 48px,
+                    rgba(255, 255, 255, 0.1) 50px
+                );
+            pointer-events: none;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-container {
+            width: 55px;
+            height: 55px;
+            background: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-soft);
+            border: 3px solid var(--gold);
+        }
+
+        .logo-icon {
+            font-size: 24px;
+            color: var(--football-green);
+        }
+
+        .logo-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--white);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .tagline {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.9);
+            margin-top: -5px;
+            font-style: italic;
+        }
+
+        .user-badge {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 25px;
+            padding: 10px 15px;
+            color: var(--white);
+            text-align: center;
+        }
+
+        .user-level {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .user-coins {
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            justify-content: center;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 30px 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Welcome Message */
+        .welcome-card {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow-soft);
+            text-align: center;
+            border-left: 5px solid var(--football-green);
+        }
+
+        .welcome-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--football-green);
+            margin-bottom: 10px;
+        }
+
+        .welcome-subtitle {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        /* Quick Stats */
+        .stats-overview {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 20px 15px;
+            text-align: center;
+            box-shadow: var(--shadow-soft);
+            transition: all 0.3s ease;
+            border-top: 3px solid var(--medium-gray);
+        }
+
+        .stat-card:nth-child(1) { border-top-color: var(--football-green); }
+        .stat-card:nth-child(2) { border-top-color: var(--gold); }
+        .stat-card:nth-child(3) { border-top-color: var(--grass-light); }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--football-green);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Action Menu */
+        .action-menu {
+            margin-bottom: 30px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .section-icon {
+            width: 30px;
+            height: 30px;
+            background: var(--football-green);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 14px;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .menu-item {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 25px 20px;
+            text-align: center;
+            box-shadow: var(--shadow-soft);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--football-green);
+        }
+
+        .menu-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--football-green), var(--grass-light));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            color: var(--white);
+            font-size: 20px;
+        }
+
+        .menu-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-dark);
+        }
+
+        .menu-description {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        /* Recent Activity */
+        .activity-section {
+            margin-bottom: 30px;
+        }
+
+        .activity-list {
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: var(--shadow-soft);
+            overflow: hidden;
+        }
+
+        .activity-item {
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--medium-gray);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 35px;
+            height: 35px;
+            background: var(--light-gray);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--football-green);
+            font-size: 14px;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-title {
+            font-weight: 500;
+            font-size: 14px;
+            margin-bottom: 3px;
+        }
+
+        .activity-time {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            border-top: 1px solid var(--medium-gray);
+            padding: 12px 20px 20px;
+            box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .nav-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 12px 8px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--text-muted);
+            background: transparent;
+        }
+
+        .nav-button.active {
+            background: var(--football-green);
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+
+        .nav-button:hover:not(.active) {
+            background: var(--light-gray);
+            color: var(--football-green);
+        }
+
+        .nav-icon {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .nav-label {
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        /* Screen Management */
+        .screen {
+            display: none;
+            padding-bottom: 90px;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-overview {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 10px;
+            }
+            
+            .stat-card {
+                padding: 15px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="logo-container">
+                    <div class="logo-icon">⚽</div>
+                </div>
+                <div>
+                    <div class="logo-text">FLAP</div>
+                    <div class="tagline">Feel Like A Pro</div>
+                </div>
+            </div>
+            <div class="user-badge">
+                <div class="user-level">Рівень 15</div>
+                <div class="user-coins">
+                    <i class="fas fa-coins"></i>
+                    <span>2,450</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Home Screen -->
+    <div class="screen active" id="home">
+        <div class="main-content">
+            <!-- Welcome -->
+            <div class="welcome-card">
+                <div class="welcome-title">Вітаємо у спільноті FLAP!</div>
+                <div class="welcome-subtitle">Відчуй себе професіоналом футболу</div>
+            </div>
+
+            <!-- Stats Overview -->
+            <div class="stats-overview">
+                <div class="stat-card">
+                    <div class="stat-number">89%</div>
+                    <div class="stat-label">Точність</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">42</div>
+                    <div class="stat-label">Перемоги</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">15</div>
+                    <div class="stat-label">Рівень</div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="action-menu">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <div class="section-title">Швидкі дії</div>
+                </div>
+                <div class="menu-grid">
+                    <div class="menu-item" onclick="switchScreen('matches')">
+                        <div class="menu-icon">
+                            <i class="fas fa-tv"></i>
+                        </div>
+                        <div class="menu-title">Матчі</div>
+                        <div class="menu-description">Дивися трансляції та результати</div>
+                    </div>
+                    <div class="menu-item" onclick="switchScreen('predictions')">
+                        <div class="menu-icon">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <div class="menu-title">Прогнози</div>
+                        <div class="menu-description">Передбачай результати матчів</div>
+                    </div>
+                    <div class="menu-item" onclick="switchScreen('chat')">
+                        <div class="menu-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="menu-title">Спільнота</div>
+                        <div class="menu-description">Спілкуйся з іншими фанатами</div>
+                    </div>
+                    <div class="menu-item" onclick="switchScreen('shop')">
+                        <div class="menu-icon">
+                            <i class="fas fa-gift"></i>
+                        </div>
+                        <div class="menu-title">Магазин</div>
+                        <div class="menu-description">Купуй бонуси та привілеї</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="activity-section">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="section-title">Останні активності</div>
+                </div>
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-title">Вгадав результат матчу Шахтар - Динамо</div>
+                            <div class="activity-time">2 години тому</div>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-title">Досяг 15 рівня!</div>
+                            <div class="activity-time">1 день тому</div>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-title">Новий коментар у чаті</div>
+                            <div class="activity-time">2 дні тому</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Other Screens -->
+    <div class="screen" id="matches">
+        <div class="main-content">
+            <div class="section-header">
+                <div class="section-icon"><i class="fas fa-tv"></i></div>
+                <div class="section-title">Матчі та Трансляції</div>
+            </div>
+            <div style="text-align: center; padding: 60px 20px; color: var(--text-muted);">
+                <i class="fas fa-futbol" style="font-size: 48px; margin-bottom: 20px; color: var(--football-green);"></i>
+                <h3 style="margin-bottom: 10px; color: var(--text-dark);">Список матчів</h3>
+                <p>Тут будуть відображатися поточні та майбутні матчі</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="screen" id="predictions">
+        <div class="main-content">
+            <div class="section-header">
+                <div class="section-icon"><i class="fas fa-bullseye"></i></div>
+                <div class="section-title">Мої Прогнози</div>
+            </div>
+            <div style="text-align: center; padding: 60px 20px; color: var(--text-muted);">
+                <i class="fas fa-crystal-ball" style="font-size: 48px; margin-bottom: 20px; color: var(--gold);"></i>
+                <h3 style="margin-bottom: 10px; color: var(--text-dark);">Твої прогнози</h3>
+                <p>Переглядай та створюй нові прогнози на матчі</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="screen" id="chat">
+        <div class="main-content">
+            <div class="section-header">
+                <div class="section-icon"><i class="fas fa-users"></i></div>
+                <div class="section-title">Чат Спільноти</div>
+            </div>
+            <div style="text-align: center; padding: 60px 20px; color: var(--text-muted);">
+                <i class="fas fa-comments" style="font-size: 48px; margin-bottom: 20px; color: var(--grass-light);"></i>
+                <h3 style="margin-bottom: 10px; color: var(--text-dark);">Спілкування</h3>
+                <p>Обговорюй матчі з іншими фанатами</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="screen" id="shop">
+        <div class="main-content">
+            <div class="section-header">
+                <div class="section-icon"><i class="fas fa-gift"></i></div>
+                <div class="section-title">Магазин Бонусів</div>
+            </div>
+            <div style="text-align: center; padding: 60px 20px; color: var(--text-muted);">
+                <i class="fas fa-shopping-bag" style="font-size: 48px; margin-bottom: 20px; color: var(--football-green);"></i>
+                <h3 style="margin-bottom: 10px; color: var(--text-dark);">Магазин</h3>
+                <p>Купуй бонуси та покращення</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <div class="nav-container">
+            <div class="nav-grid">
+                <a href="#" class="nav-button active" onclick="switchScreen('home')">
+                    <div class="nav-icon"><i class="fas fa-home"></i></div>
+                    <div class="nav-label">Головна</div>
+                </a>
+                <a href="#" class="nav-button" onclick="switchScreen('matches')">
+                    <div class="nav-icon"><i class="fas fa-tv"></i></div>
+                    <div class="nav-label">Матчі</div>
+                </a>
+                <a href="#" class="nav-button" onclick="switchScreen('predictions')">
+                    <div class="nav-icon"><i class="fas fa-bullseye"></i></div>
+                    <div class="nav-label">Прогнози</div>
+                </a>
+                <a href="#" class="nav-button" onclick="switchScreen('chat')">
+                    <div class="nav-icon"><i class="fas fa-users"></i></div>
+                    <div class="nav-label">Чат</div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchScreen(screenId) {
+            // Hide all screens
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            
+            // Show selected screen
+            document.getElementById(screenId).classList.add('active');
+            
+            // Update navigation
+            document.querySelectorAll('.nav-button').forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            event.target.closest('.nav-button').classList.add('active');
+        }
+
+        // Smooth animations on load
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.stat-card, .menu-item, .activity-item');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>
