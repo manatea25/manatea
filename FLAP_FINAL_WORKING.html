@@ -1875,7 +1875,7 @@
                                 </button>
                             </div>
                             <div id="matchNotStarted" style="text-align: center; color: #666; font-size: 14px;">
-                                Спочатку створіть команди за допомогою автобалансу
+                                Матч ще не розпочався. Очікуйте на початок гри.
                             </div>
                         </div>
                     </div>
@@ -2359,7 +2359,7 @@
             </div>
 
             <!-- Rating Section -->
-            <div class="content-section" id="rating" style="display: none;">
+            <div class="content-section" id="rating">
                 <h3 style="margin-bottom: 15px; font-size: 18px;">👑 Рейтинг гравців</h3>
                 
                 <!-- Player Search -->
@@ -2522,7 +2522,7 @@
             </div>
 
             <!-- Profile Section -->
-            <div class="content-section" id="profile" style="display: none;">
+            <div class="content-section" id="profile">
                 <h3 style="margin-bottom: 15px; font-size: 18px;">👤 Мій профіль</h3>
                 
                 <!-- User Profile Card -->
@@ -4326,6 +4326,13 @@
         }
 
         // Missing functions found in onclick handlers
+        function closeNotifications() {
+            const panel = document.getElementById('notificationsPanel');
+            if (panel) {
+                panel.style.display = 'none';
+            }
+        }
+
         function toggleNotifications() {
             const panel = document.getElementById('notificationsPanel');
             if (panel) {
@@ -4350,8 +4357,9 @@
                     display: block;
                 `;
                 newPanel.innerHTML = `
-                    <div style="padding: 20px; border-bottom: 1px solid #eee;">
+                    <div style="padding: 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center;">
                         <h4 style="margin: 0; color: #333;">🔔 Сповіщення</h4>
+                        <button onclick="closeNotifications()" style="background: none; border: none; font-size: 18px; color: #666; cursor: pointer;">×</button>
                     </div>
                     <div style="padding: 15px;">
                         <div style="padding: 10px; background: #f0f8ff; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid #2196f3;">
