@@ -1328,7 +1328,69 @@
             </div>
         </div>
 
-
+        <!-- Profile Creation Modal -->
+        <div class="rating-modal" id="profileCreationModal">
+            <div class="rating-content" style="max-width: 400px; max-height: 90vh; overflow-y: auto;">
+                <div class="rating-title">👤 Створення профілю</div>
+                <form onsubmit="completeProfileCreation(event)">
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <div id="profilePhotoPreview" style="width: 80px; height: 80px; border-radius: 50%; background: #ddd; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; font-size: 24px; color: #666; cursor: pointer;" onclick="document.getElementById('profilePhoto').click()">
+                            📷
+                        </div>
+                        <input type="file" id="profilePhoto" accept="image/*" style="display: none;" onchange="previewProfilePhoto(event)">
+                        <div style="font-size: 12px; color: #666;">Натисніть щоб додати фото</div>
+                    </div>
+                    
+                    <div style="text-align: left; margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: 600;">Ім'я та прізвище</label>
+                        <input type="text" id="profileName" placeholder="Максим Коваль" style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px;">
+                    </div>
+                    
+                    <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                        <div style="flex: 1; text-align: left;">
+                            <label style="display: block; margin-bottom: 5px; font-weight: 600;">Позиція</label>
+                            <select id="profilePosition" style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px;">
+                                <option value="">Оберіть позицію</option>
+                                <option value="Воротар">Воротар</option>
+                                <option value="Захисник">Захисник</option>
+                                <option value="Півзахисник">Півзахисник</option>
+                                <option value="Нападник">Нападник</option>
+                            </select>
+                        </div>
+                        <div style="flex: 1; text-align: left;">
+                            <label style="display: block; margin-bottom: 5px; font-weight: 600;">Місто</label>
+                            <select id="profileCity" style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px;">
+                                <option value="">Оберіть місто</option>
+                                <option value="Київ">Київ</option>
+                                <option value="Львів">Львів</option>
+                                <option value="Одеса">Одеса</option>
+                                <option value="Харків">Харків</option>
+                                <option value="Дніпро">Дніпро</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: left; margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: 600;">Телефон</label>
+                        <input type="tel" id="profilePhone" placeholder="+380501234567" style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px;">
+                    </div>
+                    
+                    <div style="text-align: left; margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: 600;">Instagram</label>
+                        <input type="text" id="profileInstagram" placeholder="@your_instagram" style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px;">
+                    </div>
+                    
+                    <div style="text-align: left; margin-bottom: 20px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: 600;">Про себе</label>
+                        <textarea id="profileBio" placeholder="Розкажіть про себе..." rows="3" style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px; resize: vertical;"></textarea>
+                    </div>
+                    
+                    <div class="rating-buttons">
+                        <button type="submit" class="rating-btn submit">Створити профіль</button>
+                    </div>
+                </form>
+            </div>
+        </div>
 
         <!-- Main App Screen -->
         <div class="screen" id="mainScreen">
@@ -3014,6 +3076,46 @@
             }
         }
 
+        // Profile creation functions
+        function previewProfilePhoto(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('profilePhotoPreview').innerHTML = `<img src="${e.target.result}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function completeProfileCreation(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('profileName').value || "Новий Користувач";
+            const position = document.getElementById('profilePosition').value || "Півзахисник";
+            const city = document.getElementById('profileCity').value || "Київ";
+            const phone = document.getElementById('profilePhone').value || "+380501234567";
+            const instagram = document.getElementById('profileInstagram').value || "@new_user";
+            
+            currentUser = {
+                name: name,
+                position: position,
+                city: city,
+                rating: 4.0,
+                phone: phone,
+                instagram: instagram
+            };
+            
+            // Close profile creation modal
+            document.getElementById('profileCreationModal').classList.remove('show');
+            
+            // Hide auth screen and show main screen
+            document.getElementById('authScreen').classList.remove('active');
+            document.getElementById('mainScreen').classList.add('active');
+            
+            showToast('🎉 Профіль створено! Ласкаво просимо до FLAP!', 'success');
+        }
+
         function hideAllScreens() {
             document.querySelectorAll('.screen').forEach(screen => {
                 screen.classList.remove('active');
@@ -3027,21 +3129,16 @@
                 city: "Київ",
                 rating: 4.8
             };
-            hideAllScreens();
+            // Immediately hide auth screen and show main screen
+            document.getElementById('authScreen').classList.remove('active');
             document.getElementById('mainScreen').classList.add('active');
             showToast('✅ Успішний вхід!', 'success');
         }
 
         function handleQuickRegister() {
-            currentUser = {
-                name: "Новий Користувач",
-                position: "Півзахисник",
-                city: "Київ",
-                rating: 4.0
-            };
-            hideAllScreens();
-            document.getElementById('mainScreen').classList.add('active');
-            showToast('🎉 Акаунт створено!', 'success');
+            // Show profile creation modal instead of going directly to main screen
+            document.getElementById('profileCreationModal').classList.add('show');
+            showToast('📝 Заповніть профіль для завершення реєстрації', 'success');
         }
 
         // Navigation
