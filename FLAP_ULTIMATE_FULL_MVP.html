@@ -1579,8 +1579,128 @@
                 </div>
             </div>
 
-            <!-- Matches Section -->
+            <!-- Matches Section - COMPLETELY REDESIGNED -->
             <div class="content-section" id="matches">
+                <h3 style="margin-bottom: 15px; font-size: 18px;">⚽ Доступні матчі</h3>
+                
+                <!-- Create Match Button -->
+                <div style="margin-bottom: 20px;">
+                    <button onclick="showCreateMatchModal()" style="width: 100%; padding: 12px; background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; border: none; border-radius: 20px; font-weight: 700; cursor: pointer;">
+                        ➕ Створити матч
+                    </button>
+                </div>
+                
+                <!-- Filters -->
+                <div style="display: flex; gap: 8px; margin-bottom: 20px; overflow-x: auto; padding-bottom: 5px;">
+                    <button onclick="filterMatches('all')" class="match-filter active" style="padding: 6px 12px; background: rgba(76, 175, 80, 0.2); border: 1px solid #4caf50; border-radius: 15px; color: #2e7d32; font-size: 12px; cursor: pointer; white-space: nowrap;">
+                        🌟 Всі
+                    </button>
+                    <button onclick="filterMatches('city')" class="match-filter" style="padding: 6px 12px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); border-radius: 15px; color: white; font-size: 12px; cursor: pointer; white-space: nowrap;">
+                        🏙️ Моє місто
+                    </button>
+                    <button onclick="filterMatches('rating')" class="match-filter" style="padding: 6px 12px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); border-radius: 15px; color: white; font-size: 12px; cursor: pointer; white-space: nowrap;">
+                        ⭐ Мій рівень
+                    </button>
+                    <button onclick="filterMatches('time')" class="match-filter" style="padding: 6px 12px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); border-radius: 15px; color: white; font-size: 12px; cursor: pointer; white-space: nowrap;">
+                        🕐 Сьогодні
+                    </button>
+                    <button onclick="filterMatches('format')" class="match-filter" style="padding: 6px 12px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); border-radius: 15px; color: white; font-size: 12px; cursor: pointer; white-space: nowrap;">
+                        👥 7x7
+                    </button>
+                </div>
+                
+                <!-- Available Matches List -->
+                <div id="matchesList">
+                    <!-- Match 1 -->
+                    <div class="match-item" style="background: rgba(255,255,255,0.9); border-radius: 15px; margin-bottom: 15px; overflow: hidden; color: #333; box-shadow: 0 6px 20px rgba(0,0,0,0.1);">
+                        <div style="padding: 15px; background: linear-gradient(135deg, #4caf50, #66bb6a); color: white;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                                <div style="font-size: 16px; font-weight: 700;">⚽ Вечірній футбол</div>
+                                <div style="background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 10px; font-size: 11px;">7x7</div>
+                            </div>
+                            <div style="font-size: 12px; opacity: 0.9;">Сьогодні 19:00 • Гідропарк, поле №2 • 50₴</div>
+                        </div>
+                        <div style="padding: 15px;">
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #4caf50, #2e7d32); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 14px; font-weight: 700;">АК</div>
+                                <div style="flex: 1;">
+                                    <div style="font-weight: 600; font-size: 14px;">Андрій Коваленко</div>
+                                    <div style="font-size: 12px; color: #666;">Організатор • ⭐ 4.8 • Київ</div>
+                                </div>
+                                <div style="text-align: right;">
+                                    <div style="font-size: 12px; color: #4caf50; font-weight: 600;">5/14 гравців</div>
+                                    <div style="font-size: 10px; color: #666;">потрібно 9</div>
+                                </div>
+                            </div>
+                            <div style="margin-bottom: 15px; font-size: 13px; color: #666;">
+                                "Збираємося пограти у футбол! Шукаємо активних гравців. Рівень не важливий, головне - бажання грати!"
+                            </div>
+                            <button onclick="joinMatch('match1')" style="width: 100%; padding: 10px; background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; border: none; border-radius: 20px; font-weight: 600; cursor: pointer;">
+                                Приєднатися до матчу
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Match 2 -->
+                    <div class="match-item" style="background: rgba(255,255,255,0.9); border-radius: 15px; margin-bottom: 15px; overflow: hidden; color: #333; box-shadow: 0 6px 20px rgba(0,0,0,0.1);">
+                        <div style="padding: 15px; background: linear-gradient(135deg, #ff9800, #ffb74d); color: white;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                                <div style="font-size: 16px; font-weight: 700;">🏆 Турнір вихідного дня</div>
+                                <div style="background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 10px; font-size: 11px;">11x11</div>
+                            </div>
+                            <div style="font-size: 12px; opacity: 0.9;">Завтра 10:00 • Стадіон "Динамо" • 100₴</div>
+                        </div>
+                        <div style="padding: 15px;">
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #ff9800, #f57c00); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 14px; font-weight: 700;">ПМ</div>
+                                <div style="flex: 1;">
+                                    <div style="font-weight: 600; font-size: 14px;">Петро Мельник</div>
+                                    <div style="font-size: 12px; color: #666;">Організатор • ⭐ 4.9 • Львів</div>
+                                </div>
+                                <div style="text-align: right;">
+                                    <div style="font-size: 12px; color: #ff9800; font-weight: 600;">18/22 гравця</div>
+                                    <div style="font-size: 10px; color: #666;">потрібно 4</div>
+                                </div>
+                            </div>
+                            <div style="margin-bottom: 15px; font-size: 13px; color: #666;">
+                                "Турнір на кубок! Високий рівень гри, досвідчені гравці. Призовий фонд 2000₴!"
+                            </div>
+                            <button onclick="joinMatch('match2')" style="width: 100%; padding: 10px; background: linear-gradient(135deg, #ff9800, #ffb74d); color: white; border: none; border-radius: 20px; font-weight: 600; cursor: pointer;">
+                                Приєднатися до матчу
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Match 3 -->
+                    <div class="match-item" style="background: rgba(255,255,255,0.9); border-radius: 15px; margin-bottom: 15px; overflow: hidden; color: #333; box-shadow: 0 6px 20px rgba(0,0,0,0.1);">
+                        <div style="padding: 15px; background: linear-gradient(135deg, #9c27b0, #ba68c8); color: white;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                                <div style="font-size: 16px; font-weight: 700;">⚡ Швидка гра</div>
+                                <div style="background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 10px; font-size: 11px;">5x5</div>
+                            </div>
+                            <div style="font-size: 12px; opacity: 0.9;">Сьогодні 17:30 • Спорткомплекс "Арена" • Безкоштовно</div>
+                        </div>
+                        <div style="padding: 15px;">
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #9c27b0, #7b1fa2); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 14px; font-weight: 700;">ОС</div>
+                                <div style="flex: 1;">
+                                    <div style="font-weight: 600; font-size: 14px;">Олег Семенов</div>
+                                    <div style="font-size: 12px; color: #666;">Організатор • ⭐ 4.6 • Одеса</div>
+                                </div>
+                                <div style="text-align: right;">
+                                    <div style="font-size: 12px; color: #9c27b0; font-weight: 600;">7/10 гравців</div>
+                                    <div style="font-size: 10px; color: #666;">потрібно 3</div>
+                                </div>
+                            </div>
+                            <div style="margin-bottom: 15px; font-size: 13px; color: #666;">
+                                "Швидка гра після роботи. Футзал, 45 хвилин. Всі рівні welcome!"
+                            </div>
+                            <button onclick="joinMatch('match3')" style="width: 100%; padding: 10px; background: linear-gradient(135deg, #9c27b0, #ba68c8); color: white; border: none; border-radius: 20px; font-weight: 600; cursor: pointer;">
+                                Приєднатися до матчу
+                            </button>
+                        </div>
+                    </div>
+                </div>
                 <!-- Match Creation Form -->
                 <div class="match-form">
                     <div class="match-form-title">➕ Створити матч</div>
