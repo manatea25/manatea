@@ -3308,21 +3308,51 @@
         }
 
         function handleQuickLogin() {
+            console.log('🔥 handleQuickLogin CALLED!');
+            alert('ЛОГІН ПРАЦЮЄ!'); // Emergency test
+            
             currentUser = {
                 name: "Максим Коваль",
                 position: "Півзахисник",
                 city: "Київ",
                 rating: 4.8
             };
+            
             // Immediately hide auth screen and show main screen
-            document.getElementById('authScreen').classList.remove('active');
-            document.getElementById('mainScreen').classList.add('active');
+            const authScreen = document.getElementById('authScreen');
+            const mainScreen = document.getElementById('mainScreen');
+            
+            console.log('authScreen:', authScreen);
+            console.log('mainScreen:', mainScreen);
+            
+            if (authScreen && mainScreen) {
+                authScreen.classList.remove('active');
+                mainScreen.classList.add('active');
+                console.log('✅ Screens switched successfully');
+            } else {
+                console.error('❌ Screen elements not found!');
+                alert('ПОМИЛКА: Екрани не знайдено!');
+            }
+            
             showToast('✅ Успішний вхід!', 'success');
         }
 
         function handleQuickRegister() {
+            console.log('🔥 handleQuickRegister CALLED!');
+            alert('РЕЄСТРАЦІЯ ПРАЦЮЄ!'); // Emergency test
+            
             // Show profile creation modal instead of going directly to main screen
-            document.getElementById('profileCreationModal').classList.add('show');
+            const modal = document.getElementById('profileCreationModal');
+            console.log('profileCreationModal:', modal);
+            
+            if (modal) {
+                modal.classList.add('show');
+                console.log('✅ Profile modal shown');
+            } else {
+                console.error('❌ Profile modal not found!');
+                alert('ПОМИЛКА: Модаль профілю не знайдено!');
+            }
+            
             showToast('📝 Заповніть профіль для завершення реєстрації', 'success');
         }
 
@@ -4299,6 +4329,35 @@
                     }
                 });
             });
+            
+            // TEST LOGIN FUNCTIONS
+            console.log('Testing login functions...');
+            window.handleQuickLogin = handleQuickLogin;
+            window.handleQuickRegister = handleQuickRegister;
+            window.switchAuthMode = switchAuthMode;
+            
+            // Test if login buttons exist
+            const loginBtn = document.querySelector('button[onclick="handleQuickLogin()"]');
+            const registerBtn = document.querySelector('button[onclick="handleQuickRegister()"]');
+            console.log('Login button found:', !!loginBtn);
+            console.log('Register button found:', !!registerBtn);
+            
+            // Add backup event listeners to login buttons
+            if (loginBtn) {
+                loginBtn.addEventListener('click', function(e) {
+                    console.log('🚨 BACKUP LOGIN CLICKED');
+                    e.preventDefault();
+                    handleQuickLogin();
+                });
+            }
+            
+            if (registerBtn) {
+                registerBtn.addEventListener('click', function(e) {
+                    console.log('🚨 BACKUP REGISTER CLICKED');
+                    e.preventDefault();
+                    handleQuickRegister();
+                });
+            }
             
             // Preload some data
             currentUser = null;
