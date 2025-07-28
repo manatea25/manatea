@@ -4953,7 +4953,7 @@
         });
 
         // SIMPLE WORKING showSection function (TESTED AND WORKS!)
-        function showSection(sectionId) {
+        window.showSection = function showSection(sectionId) {
             console.log('🔍 showSection викликана для:', sectionId);
             
             // Hide all sections
@@ -5130,8 +5130,19 @@
             console.log('🚀 FLAP ULTIMATE MVP Initialized');
             
             // Test navigation function
-            console.log('Testing showSection function...');
-            window.showSection = showSection; // Make it globally available
+            console.log('🧪 Testing showSection function...');
+            if (typeof window.showSection === 'function') {
+                console.log('✅ showSection function EXISTS and is GLOBAL');
+            } else {
+                console.error('❌ showSection function NOT FOUND!');
+            }
+            
+            // Test navigation tabs
+            const navTabs = document.querySelectorAll('.nav-tab');
+            console.log('🔍 Navigation tabs found:', navTabs.length);
+            navTabs.forEach((tab, index) => {
+                console.log(`Tab ${index}:`, tab.onclick ? 'HAS ONCLICK' : 'NO ONCLICK');
+            });
             
             // Check if all required elements exist
             const requiredElements = ['videos', 'challenges', 'matches', 'rating', 'profile'];
@@ -5144,15 +5155,27 @@
             const navTabs = document.querySelectorAll('.nav-tab');
             console.log(`Found ${navTabs.length} navigation tabs`);
             
-            // Add backup click handlers
+            // FORCE click handlers (remove onclick conflicts)
             navTabs.forEach((tab, index) => {
-                tab.addEventListener('click', function() {
-                    console.log('Tab clicked:', this.textContent);
+                // Remove onclick attribute to avoid conflicts
+                tab.removeAttribute('onclick');
+                
+                // Add fresh click listener
+                tab.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('🔘 FORCE Tab clicked:', this.textContent.trim());
                     const sections = ['videos', 'challenges', 'matches', 'rating', 'profile'];
                     if (sections[index]) {
-                        showSection(sections[index]);
+                        console.log('🎯 Calling showSection for:', sections[index]);
+                        window.showSection(sections[index]);
                     }
                 });
+                
+                // Make sure tab is clickable
+                tab.style.cursor = 'pointer';
+                tab.style.pointerEvents = 'auto';
+                console.log(`✅ FORCE listener added for tab ${index}: ${sections[index] || 'unknown'}`);
             });
             
             // TEST LOGIN FUNCTIONS
