@@ -429,11 +429,23 @@
             display: block !important;
         }
 
-        /* FORCE RATING/PROFILE VISIBILITY */
-        #rating.active, #profile.active {
+        /* FORCE RATING/PROFILE/CHALLENGES VISIBILITY */
+        #rating.active, #profile.active, #challenges.active {
             display: block !important;
             visibility: visible !important;
             opacity: 1 !important;
+            background: rgba(255,255,255,0.05) !important;
+            min-height: 100vh !important;
+        }
+        
+        /* FORCE CHALLENGES CONTENT VISIBILITY */
+        #challenges .challenge-create,
+        #challenges .challenge-item,
+        #challenges h3 {
+            background: rgba(255,255,255,0.9) !important;
+            color: #333 !important;
+            margin: 10px !important;
+            border-radius: 15px !important;
         }
 
         /* Challenge Video Voting */
@@ -5058,6 +5070,58 @@
         function submitPlayerRatings() {
             alert('✅ Оцінки збережено! Матч завершено.');
             hideMatchManagement();
+        }
+        
+        // Missing Functions
+        function showCreateMatchModal() {
+            alert('🏗️ Модаль створення матчу (в розробці)');
+        }
+        
+        function showStore() {
+            alert('🛍️ Магазин (в розробці)');
+        }
+        
+        function showCreateChallenge() {
+            alert('🏆 Створення челенджу (в розробці)');
+        }
+        
+        function shareMatch() {
+            alert('📤 Поділитися матчем (в розробці)');
+        }
+        
+        function filterMatches(type) {
+            console.log('🔍 Фільтр матчів:', type);
+        }
+        
+        function searchPlayers(query) {
+            console.log('🔍 Пошук гравців:', query);
+        }
+        
+        function filterRating(type) {
+            console.log('🔍 Фільтр рейтингу:', type);
+        }
+        
+        function switchMatchTab(tab) {
+            const availableMatches = document.getElementById('availableMatches');
+            const myMatches = document.getElementById('myMatches');
+            const availableTab = document.getElementById('availableTab');
+            const myMatchesTab = document.getElementById('myMatchesTab');
+            
+            if (tab === 'available') {
+                availableMatches.style.display = 'block';
+                myMatches.style.display = 'none';
+                availableTab.style.background = 'linear-gradient(135deg, #4caf50, #66bb6a)';
+                availableTab.style.color = 'white';
+                myMatchesTab.style.background = 'transparent';
+                myMatchesTab.style.color = 'rgba(255,255,255,0.7)';
+            } else {
+                availableMatches.style.display = 'none';
+                myMatches.style.display = 'block';
+                myMatchesTab.style.background = 'linear-gradient(135deg, #4caf50, #66bb6a)';
+                myMatchesTab.style.color = 'white';
+                availableTab.style.background = 'transparent';
+                availableTab.style.color = 'rgba(255,255,255,0.7)';
+            }
         }
 
         // Initialize app
