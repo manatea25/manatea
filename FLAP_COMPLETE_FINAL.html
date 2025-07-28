@@ -3656,7 +3656,7 @@
         }
 
         // Modern auth system
-        function switchAuthMode(mode) {
+        window.switchAuthMode = function switchAuthMode(mode) {
             const loginTab = document.getElementById('loginTab');
             const registerTab = document.getElementById('registerTab');
             const loginForm = document.getElementById('loginForm');
@@ -4970,21 +4970,53 @@
             console.log('Login button found:', !!loginBtn);
             console.log('Register button found:', !!registerBtn);
             
-            // Add backup event listeners to login buttons
+            // FORCE login button listeners (remove onclick conflicts)
             if (loginBtn) {
+                loginBtn.removeAttribute('onclick');
                 loginBtn.addEventListener('click', function(e) {
-                    console.log('🚨 BACKUP LOGIN CLICKED');
+                    console.log('🔐 FORCE LOGIN CLICKED');
                     e.preventDefault();
-                    handleQuickLogin();
+                    e.stopPropagation();
+                    window.handleQuickLogin();
                 });
+                console.log('✅ FORCE login listener added');
             }
             
             if (registerBtn) {
+                registerBtn.removeAttribute('onclick');
                 registerBtn.addEventListener('click', function(e) {
-                    console.log('🚨 BACKUP REGISTER CLICKED');
+                    console.log('📝 FORCE REGISTER CLICKED');
                     e.preventDefault();
-                    handleQuickRegister();
+                    e.stopPropagation();
+                    window.handleQuickRegister();
                 });
+                console.log('✅ FORCE register listener added');
+            }
+            
+            // FORCE Google and Facebook login listeners
+            const googleBtn = document.querySelector('button[onclick="loginWithGoogle()"]');
+            const facebookBtn = document.querySelector('button[onclick="loginWithFacebook()"]');
+            
+            if (googleBtn) {
+                googleBtn.removeAttribute('onclick');
+                googleBtn.addEventListener('click', function(e) {
+                    console.log('🔍 FORCE GOOGLE LOGIN CLICKED');
+                    e.preventDefault();
+                    e.stopPropagation();
+                    window.loginWithGoogle();
+                });
+                console.log('✅ FORCE Google login listener added');
+            }
+            
+            if (facebookBtn) {
+                facebookBtn.removeAttribute('onclick');
+                facebookBtn.addEventListener('click', function(e) {
+                    console.log('📘 FORCE FACEBOOK LOGIN CLICKED');
+                    e.preventDefault();
+                    e.stopPropagation();
+                    window.loginWithFacebook();
+                });
+                console.log('✅ FORCE Facebook login listener added');
             }
             
             // Preload some data
