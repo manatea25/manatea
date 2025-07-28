@@ -1885,12 +1885,53 @@
                             </div>
                             <div style="text-align: left; margin-bottom: 15px;">
                                 <label style="display: block; margin-bottom: 5px; font-weight: 600;">Запросити</label>
-                                <div style="display: flex; gap: 5px; flex-wrap: wrap;">
-                                    <button type="button" onclick="toggleInvite('friends')" class="invite-btn" style="padding: 5px 10px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 15px; font-size: 12px; cursor: pointer;">👥 Друзі</button>
+                                <div style="display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 10px;">
+                                    <button type="button" onclick="showFriendsSelector()" class="invite-btn" style="padding: 5px 10px; background: #4caf50; color: white; border: 1px solid #4caf50; border-radius: 15px; font-size: 12px; cursor: pointer; font-weight: 600;">👥 Вибрати друзів</button>
                                     <button type="button" onclick="toggleInvite('kyiv')" class="invite-btn" style="padding: 5px 10px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 15px; font-size: 12px; cursor: pointer;">🏙️ Київ</button>
                                     <button type="button" onclick="toggleInvite('lviv')" class="invite-btn" style="padding: 5px 10px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 15px; font-size: 12px; cursor: pointer;">🦁 Львів</button>
                                     <button type="button" onclick="toggleInvite('odesa')" class="invite-btn" style="padding: 5px 10px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 15px; font-size: 12px; cursor: pointer;">🌊 Одеса</button>
                                     <button type="button" onclick="toggleInvite('all')" class="invite-btn" style="padding: 5px 10px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 15px; font-size: 12px; cursor: pointer;">🌍 Всі</button>
+                                </div>
+                                
+                                <!-- Friends selector (initially hidden) -->
+                                <div id="friendsSelector" style="display: none; background: #f8f9fa; border-radius: 8px; padding: 10px; margin-top: 10px;">
+                                    <div style="font-size: 12px; font-weight: 600; margin-bottom: 8px; color: #666;">Оберіть друзів для запрошення:</div>
+                                    
+                                    <div style="max-height: 150px; overflow-y: auto;">
+                                        <label style="display: flex; align-items: center; gap: 8px; padding: 5px; cursor: pointer; border-radius: 5px; margin-bottom: 5px;" onmouseover="this.style.background='#e9ecef'" onmouseout="this.style.background='transparent'">
+                                            <input type="checkbox" id="friend_oleksandr" onchange="updateSelectedFriends()">
+                                            <div style="width: 24px; height: 24px; background: linear-gradient(135deg, #4caf50, #2e7d32); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 10px; font-weight: 700;">ОМ</div>
+                                            <span style="font-size: 12px; font-weight: 600;">Олександр Мельник</span>
+                                        </label>
+                                        
+                                        <label style="display: flex; align-items: center; gap: 8px; padding: 5px; cursor: pointer; border-radius: 5px; margin-bottom: 5px;" onmouseover="this.style.background='#e9ecef'" onmouseout="this.style.background='transparent'">
+                                            <input type="checkbox" id="friend_vitaliy" onchange="updateSelectedFriends()">
+                                            <div style="width: 24px; height: 24px; background: linear-gradient(135deg, #ff9800, #f57c00); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 10px; font-weight: 700;">ВС</div>
+                                            <span style="font-size: 12px; font-weight: 600;">Віталій Семенов</span>
+                                        </label>
+                                        
+                                        <label style="display: flex; align-items: center; gap: 8px; padding: 5px; cursor: pointer; border-radius: 5px; margin-bottom: 5px;" onmouseover="this.style.background='#e9ecef'" onmouseout="this.style.background='transparent'">
+                                            <input type="checkbox" id="friend_dmitro" onchange="updateSelectedFriends()">
+                                            <div style="width: 24px; height: 24px; background: linear-gradient(135deg, #9c27b0, #7b1fa2); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 10px; font-weight: 700;">ДК</div>
+                                            <span style="font-size: 12px; font-weight: 600;">Дмитро Коваленко</span>
+                                        </label>
+                                        
+                                        <label style="display: flex; align-items: center; gap: 8px; padding: 5px; cursor: pointer; border-radius: 5px; margin-bottom: 5px;" onmouseover="this.style.background='#e9ecef'" onmouseout="this.style.background='transparent'">
+                                            <input type="checkbox" id="friend_sergiy" onchange="updateSelectedFriends()">
+                                            <div style="width: 24px; height: 24px; background: linear-gradient(135deg, #2196f3, #1976d2); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 10px; font-weight: 700;">СП</div>
+                                            <span style="font-size: 12px; font-weight: 600;">Сергій Петренко</span>
+                                        </label>
+                                        
+                                        <label style="display: flex; align-items: center; gap: 8px; padding: 5px; cursor: pointer; border-radius: 5px; margin-bottom: 5px;" onmouseover="this.style.background='#e9ecef'" onmouseout="this.style.background='transparent'">
+                                            <input type="checkbox" id="friend_andriy" onchange="updateSelectedFriends()">
+                                            <div style="width: 24px; height: 24px; background: linear-gradient(135deg, #607d8b, #455a64); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 10px; font-weight: 700;">АП</div>
+                                            <span style="font-size: 12px; font-weight: 600;">Андрій Попов</span>
+                                        </label>
+                                    </div>
+                                    
+                                    <div id="selectedFriendsDisplay" style="margin-top: 8px; font-size: 11px; color: #666;">
+                                        Обрано: 0 друзів
+                                    </div>
                                 </div>
                             </div>
                             <div class="rating-buttons">
@@ -2212,13 +2253,14 @@
                 
                 <!-- User Profile Card -->
                 <div style="background: rgba(255,255,255,0.9); border-radius: 15px; margin-bottom: 20px; overflow: hidden; color: #333; box-shadow: 0 6px 20px rgba(0,0,0,0.1);">
-                    <div style="height: 100px; background: linear-gradient(135deg, #4caf50, #8bc34a); position: relative; display: flex; align-items: center; justify-content: center;">
+                    <div style="height: 120px; background: linear-gradient(135deg, #4caf50, #8bc34a); position: relative; display: flex; align-items: center; justify-content: center;">
                         <button onclick="showSettings()" style="position: absolute; top: 15px; right: 15px; background: rgba(255,255,255,0.2); border: none; width: 35px; height: 35px; border-radius: 50%; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center;">
                             <i class="fas fa-cog"></i>
                         </button>
+                        <!-- Avatar positioned in header -->
+                        <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #4caf50, #2e7d32); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 32px; font-weight: 800; border: 4px solid white; box-shadow: 0 6px 20px rgba(0,0,0,0.2); position: absolute; bottom: -40px;">МК</div>
                     </div>
-                    <div style="padding: 20px; text-align: center; margin-top: -40px;">
-                        <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #4caf50, #2e7d32); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 32px; font-weight: 800; border: 4px solid white; margin: 0 auto 15px; box-shadow: 0 6px 20px rgba(0,0,0,0.2);">МК</div>
+                    <div style="padding: 20px; padding-top: 50px; text-align: center;">
                         <div style="font-size: 22px; font-weight: 700; color: #2e7d32; margin-bottom: 5px;">Максим Коваль</div>
                         <div style="color: #666; margin-bottom: 15px;">Півзахисник • Київ • 27 років</div>
                         
@@ -4037,6 +4079,46 @@
 
         function createChallenge() {
             showToast('🏆 Створення челенджу...', 'success');
+        }
+
+        // Friends selector functions
+        function showFriendsSelector() {
+            const selector = document.getElementById('friendsSelector');
+            if (selector.style.display === 'none') {
+                selector.style.display = 'block';
+                event.target.textContent = '👥 Приховати список';
+                event.target.style.background = '#ff9800';
+                event.target.style.borderColor = '#ff9800';
+            } else {
+                selector.style.display = 'none';
+                event.target.textContent = '👥 Вибрати друзів';
+                event.target.style.background = '#4caf50';
+                event.target.style.borderColor = '#4caf50';
+            }
+        }
+
+        function updateSelectedFriends() {
+            const checkboxes = document.querySelectorAll('#friendsSelector input[type="checkbox"]');
+            const selectedCount = Array.from(checkboxes).filter(cb => cb.checked).length;
+            const selectedNames = Array.from(checkboxes)
+                .filter(cb => cb.checked)
+                .map(cb => cb.nextElementSibling.nextElementSibling.textContent)
+                .slice(0, 3); // Show max 3 names
+            
+            let displayText = `Обрано: ${selectedCount} друзів`;
+            if (selectedCount > 0) {
+                displayText += ` (${selectedNames.join(', ')}${selectedCount > 3 ? '...' : ''})`;
+            }
+            
+            document.getElementById('selectedFriendsDisplay').textContent = displayText;
+            
+            if (selectedCount > 0) {
+                document.getElementById('selectedFriendsDisplay').style.color = '#4caf50';
+                document.getElementById('selectedFriendsDisplay').style.fontWeight = '600';
+            } else {
+                document.getElementById('selectedFriendsDisplay').style.color = '#666';
+                document.getElementById('selectedFriendsDisplay').style.fontWeight = 'normal';
+            }
         }
 
         // Rating functions
