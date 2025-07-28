@@ -1904,6 +1904,15 @@
                                 <label style="display: block; margin-bottom: 5px; font-weight: 600;">Опис</label>
                                 <textarea placeholder="Покажи найкращий гол за цей місяць!" rows="3" style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px; resize: vertical;" required></textarea>
                             </div>
+                            <div style="text-align: left; margin-bottom: 15px;">
+                                <label style="display: block; margin-bottom: 5px; font-weight: 600;">📹 Ваше відео-приклад</label>
+                                <div style="position: relative; border: 2px dashed #ddd; border-radius: 8px; padding: 20px; text-align: center; cursor: pointer; background: #f9f9f9;" onclick="document.getElementById('challengeVideoFile').click()">
+                                    <i class="fas fa-video" style="font-size: 24px; color: #666; margin-bottom: 10px;"></i>
+                                    <div style="font-size: 14px; color: #666;">Натисніть для завантаження відео</div>
+                                    <div style="font-size: 12px; color: #999; margin-top: 5px;">MP4, MOV, AVI (макс. 50MB)</div>
+                                    <input type="file" id="challengeVideoFile" accept="video/*" style="display: none;">
+                                </div>
+                            </div>
                             <div style="display: flex; gap: 10px; margin-bottom: 15px;">
                                 <div style="flex: 1; text-align: left;">
                                     <label style="display: block; margin-bottom: 5px; font-weight: 600;">Внесок (₴)</label>
@@ -2015,7 +2024,7 @@
                 <div class="challenge-item" style="background: rgba(255,255,255,0.9); border-radius: 15px; margin-bottom: 15px; overflow: hidden; color: #333; box-shadow: 0 6px 20px rgba(0,0,0,0.1);">
                     <div style="padding: 15px; background: linear-gradient(135deg, #ff9800, #ffb74d); color: white;">
                         <div style="font-size: 16px; font-weight: 700; margin-bottom: 5px;">🎯 Кращий фінт тижня</div>
-                        <div style="font-size: 12px; opacity: 0.9;">Призовий фонд: 200₴ • Завершення: 3 дні</div>
+                        <div style="font-size: 12px; opacity: 0.9;">Внесок: 20₴ • Призовий фонд: 200₴ • Завершення: 3 дні</div>
                     </div>
                     <div style="padding: 15px;">
                         <div style="margin-bottom: 10px;">
@@ -3903,7 +3912,7 @@
             
             // Show welcome subscription offer
             setTimeout(() => {
-                showToast('🎉 Ласкаво просимо до FLAP!', 'success');
+                showToast('🎉 Ласкаво просимо до FLAP! Даруємо тиждень безкоштовного преміуму!', 'success');
             }, 500);
         }
 
@@ -3964,6 +3973,18 @@
                 section.classList.remove('active');
             });
             
+            // Hide match management if switching away from matches
+            if (sectionId !== 'matches') {
+                const matchManagement = document.getElementById('matchManagement');
+                if (matchManagement) {
+                    matchManagement.style.display = 'none';
+                }
+                const myMatchesList = document.getElementById('myMatchesList');
+                if (myMatchesList) {
+                    myMatchesList.style.display = 'block';
+                }
+            }
+            
             // Remove active class from all nav tabs
             const navTabs = document.querySelectorAll('.nav-tab');
             navTabs.forEach(tab => tab.classList.remove('active'));
@@ -4018,6 +4039,57 @@
             const city = document.getElementById('cityFilter').value;
             const category = document.getElementById('categoryFilter').value;
             const rating = document.getElementById('ratingFilter').value;
+            
+            // Get all video items
+            const videoItems = document.querySelectorAll('.video-item');
+            
+            videoItems.forEach((item, index) => {
+                const videoTitle = item.querySelector('.video-title');
+                const videoAuthor = item.querySelector('.video-author');
+                const videoScore = item.querySelector('.video-score');
+                
+                if (videoTitle && videoAuthor && videoScore) {
+                    // Apply filters with visual changes
+                    if (city === 'kyiv') {
+                        videoTitle.textContent = `Київський футбол #${index + 1}`;
+                        videoAuthor.innerHTML = `<strong>Гравець з Києва</strong> • Півзахисник • Київ`;
+                        videoScore.textContent = '⭐ 4.2';
+                    } else if (city === 'lviv') {
+                        videoTitle.textContent = `Львівська майстерність #${index + 1}`;
+                        videoAuthor.innerHTML = `<strong>Львівський талант</strong> • Нападник • Львів`;
+                        videoScore.textContent = '⭐ 4.0';
+                    } else if (category === 'tricks') {
+                        videoTitle.textContent = `Технічний фінт #${index + 1}`;
+                        videoAuthor.innerHTML = `<strong>Майстер фінтів</strong> • Техніка • Різні міста`;
+                        videoScore.textContent = '⭐ 4.5';
+                    } else if (category === 'goals') {
+                        videoTitle.textContent = `Неймовірний гол #${index + 1}`;
+                        videoAuthor.innerHTML = `<strong>Снайпер</strong> • Нападник • Різні міста`;
+                        videoScore.textContent = '⭐ 4.7';
+                    } else if (rating === '4') {
+                        videoTitle.textContent = `Топ відео #${index + 1}`;
+                        videoAuthor.innerHTML = `<strong>Зірка футболу</strong> • Професіонал • Різні міста`;
+                        videoScore.textContent = '⭐ 4.8';
+                    } else {
+                        // Reset to default
+                        const defaults = [
+                            { title: 'Кращий фінт тижня', author: 'Андрій Коваленко', score: '⭐ 4.1' },
+                            { title: 'Точність ударів', author: 'Петро Мельник', score: '⭐ 4.2' },
+                            { title: 'Швидкісний дриблінг', author: 'Дмитро Коваленко', score: '⭐ 3.8' }
+                        ];
+                        const def = defaults[index] || defaults[0];
+                        videoTitle.textContent = def.title;
+                        videoAuthor.innerHTML = `<strong>${def.author}</strong> • Півзахисник • Київ`;
+                        videoScore.textContent = def.score;
+                    }
+                    
+                    // Add visual effect
+                    item.style.opacity = '0.7';
+                    setTimeout(() => {
+                        item.style.opacity = '1';
+                    }, 300);
+                }
+            });
             
             let message = 'Фільтри застосовано: ';
             if (city) message += `Місто: ${city} `;
@@ -4129,33 +4201,33 @@
             
             if (teamsDisplay) {
                 teamsDisplay.innerHTML = `
-                    <div style="background: rgba(255,255,255,0.1); border-radius: 15px; padding: 20px; margin: 20px 0;">
-                        <h3 style="text-align: center; margin: 0 0 20px 0; color: white;">⚖️ Збалансовані команди</h3>
+                    <div style="background: linear-gradient(135deg, rgba(46, 125, 50, 0.9), rgba(76, 175, 80, 0.9)); border-radius: 15px; padding: 20px; margin: 20px 0; box-shadow: 0 8px 32px rgba(0,0,0,0.3);">
+                        <h3 style="text-align: center; margin: 0 0 20px 0; color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">⚖️ Збалансовані команди</h3>
                         <div style="display: flex; gap: 20px; justify-content: space-between; margin: 20px 0;">
-                            <div style="flex: 1; background: linear-gradient(135deg, #4caf50, #66bb6a); padding: 15px; border-radius: 15px; color: white;">
-                                <h4 style="margin: 0 0 15px 0; text-align: center; font-size: 18px;">${teamPair[0]}</h4>
+                            <div style="flex: 1; background: linear-gradient(135deg, #4caf50, #66bb6a); padding: 15px; border-radius: 15px; color: white; box-shadow: 0 4px 16px rgba(76, 175, 80, 0.4);">
+                                <h4 style="margin: 0 0 15px 0; text-align: center; font-size: 18px; text-shadow: 0 1px 2px rgba(0,0,0,0.3);">${teamPair[0]}</h4>
                                 <div style="text-align: center; margin-bottom: 15px;">
-                                    <span style="background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 10px; font-weight: 600;">
+                                    <span style="background: rgba(255,255,255,0.25); padding: 8px 12px; border-radius: 12px; font-weight: 700; font-size: 14px; text-shadow: 0 1px 2px rgba(0,0,0,0.2);">
                                         ⭐ ${team1Rating} середній рейтинг
                                     </span>
                                 </div>
-                                ${team1.map(p => `<div style="padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.3); display: flex; justify-content: space-between;"><span>${p.name}</span><span>⭐ ${p.rating}</span></div>`).join('')}
+                                ${team1.map(p => `<div style="padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.2); display: flex; justify-content: space-between; align-items: center;"><span style="font-weight: 600;">${p.name}</span><span style="background: rgba(255,255,255,0.2); padding: 4px 8px; border-radius: 8px; font-size: 12px; font-weight: 600;">⭐ ${p.rating}</span></div>`).join('')}
                             </div>
-                            <div style="flex: 1; background: linear-gradient(135deg, #2196f3, #42a5f5); padding: 15px; border-radius: 15px; color: white;">
-                                <h4 style="margin: 0 0 15px 0; text-align: center; font-size: 18px;">${teamPair[1]}</h4>
+                            <div style="flex: 1; background: linear-gradient(135deg, #2196f3, #42a5f5); padding: 15px; border-radius: 15px; color: white; box-shadow: 0 4px 16px rgba(33, 150, 243, 0.4);">
+                                <h4 style="margin: 0 0 15px 0; text-align: center; font-size: 18px; text-shadow: 0 1px 2px rgba(0,0,0,0.3);">${teamPair[1]}</h4>
                                 <div style="text-align: center; margin-bottom: 15px;">
-                                    <span style="background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 10px; font-weight: 600;">
+                                    <span style="background: rgba(255,255,255,0.25); padding: 8px 12px; border-radius: 12px; font-weight: 700; font-size: 14px; text-shadow: 0 1px 2px rgba(0,0,0,0.2);">
                                         ⭐ ${team2Rating} середній рейтинг
                                     </span>
                                 </div>
-                                ${team2.map(p => `<div style="padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.3); display: flex; justify-content: space-between;"><span>${p.name}</span><span>⭐ ${p.rating}</span></div>`).join('')}
+                                ${team2.map(p => `<div style="padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.2); display: flex; justify-content: space-between; align-items: center;"><span style="font-weight: 600;">${p.name}</span><span style="background: rgba(255,255,255,0.2); padding: 4px 8px; border-radius: 8px; font-size: 12px; font-weight: 600;">⭐ ${p.rating}</span></div>`).join('')}
                             </div>
                         </div>
                         <div style="text-align: center; margin: 20px 0;">
-                            <button onclick="autoBalanceTeams()" style="padding: 12px 24px; background: linear-gradient(135deg, #9c27b0, #ba68c8); color: white; border: none; border-radius: 20px; font-weight: 600; cursor: pointer; margin-right: 10px; font-size: 14px;">
+                            <button onclick="autoBalanceTeams()" style="padding: 12px 24px; background: linear-gradient(135deg, #9c27b0, #ba68c8); color: white; border: none; border-radius: 20px; font-weight: 700; cursor: pointer; margin-right: 10px; font-size: 14px; box-shadow: 0 4px 16px rgba(156, 39, 176, 0.4); transition: all 0.3s ease;">
                                 🔄 Перешафлити команди
                             </button>
-                            <button onclick="showFinalScore()" style="padding: 12px 24px; background: linear-gradient(135deg, #ff9800, #ffb74d); color: white; border: none; border-radius: 20px; font-weight: 600; cursor: pointer; font-size: 14px;">
+                            <button onclick="showFinalScore()" style="padding: 12px 24px; background: linear-gradient(135deg, #ff9800, #ffb74d); color: white; border: none; border-radius: 20px; font-weight: 700; cursor: pointer; font-size: 14px; box-shadow: 0 4px 16px rgba(255, 152, 0, 0.4); transition: all 0.3s ease;">
                                 ⚽ Завершити матч
                             </button>
                         </div>
@@ -4300,9 +4372,94 @@
         }
 
         function showMatchDetails(matchId) {
-            console.log(`📋 showMatchDetails викликана для ${matchId}`);
             const modal = document.getElementById('matchDetailsModal');
-            if (modal) modal.style.display = 'flex';
+            if (!modal) return;
+            
+            // Demo match data
+            const matchData = {
+                'match1': {
+                    title: '🌃 Вечірній футбол',
+                    time: 'Сьогодні 18:00',
+                    location: 'Стадіон "Олімпійський"',
+                    organizer: 'Андрій Петренко',
+                    players: '7/10 гравців',
+                    price: '100₴',
+                    format: '5x5',
+                    rating: '3.5+ рейтинг',
+                    description: 'Дружній матч для покращення навичок',
+                    participants: [
+                        { name: 'Віктор Шевченко', position: 'Нападник', rating: 4.2, avatar: '🎯' },
+                        { name: 'Максим Зінченко', position: 'Воротар', rating: 3.9, avatar: '🥅' },
+                        { name: 'Олександр Мельник', position: 'Захисник', rating: 4.1, avatar: '🛡️' },
+                        { name: 'Дмитро Коваленко', position: 'Півзахисник', rating: 3.8, avatar: '⚽' },
+                        { name: 'Петро Мельник', position: 'Нападник', rating: 4.0, avatar: '🔥' }
+                    ]
+                }
+            };
+            
+            const match = matchData[matchId] || matchData['match1'];
+            
+            modal.innerHTML = `
+                <div class="modal-content" style="max-width: 500px; margin: 50px auto; background: linear-gradient(135deg, #2e7d32, #4caf50); border-radius: 20px; padding: 0; color: white; overflow: hidden;">
+                    <div style="background: linear-gradient(45deg, #1b5e20, #2e7d32); padding: 20px; text-align: center;">
+                        <button onclick="closeMatchDetails()" style="position: absolute; top: 10px; right: 15px; background: none; border: none; color: white; font-size: 24px; cursor: pointer;">&times;</button>
+                        <h3 style="margin: 0; font-size: 20px;">${match.title}</h3>
+                        <p style="margin: 5px 0; opacity: 0.9;">${match.time} • ${match.location}</p>
+                    </div>
+                    
+                    <div style="padding: 20px;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+                            <div>
+                                <strong>👤 Організатор:</strong><br>
+                                <span style="opacity: 0.9;">${match.organizer}</span>
+                            </div>
+                            <div>
+                                <strong>👥 Гравці:</strong><br>
+                                <span style="opacity: 0.9;">${match.players}</span>
+                            </div>
+                            <div>
+                                <strong>💰 Ціна:</strong><br>
+                                <span style="opacity: 0.9;">${match.price}</span>
+                            </div>
+                            <div>
+                                <strong>⚽ Формат:</strong><br>
+                                <span style="opacity: 0.9;">${match.format}</span>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <strong>📝 Опис:</strong><br>
+                            <span style="opacity: 0.9;">${match.description}</span>
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <strong>👥 Учасники (${match.participants.length}):</strong>
+                            <div style="max-height: 150px; overflow-y: auto; margin-top: 10px;">
+                                ${match.participants.map(player => `
+                                    <div style="display: flex; align-items: center; gap: 10px; padding: 8px; background: rgba(255,255,255,0.1); border-radius: 8px; margin-bottom: 8px; cursor: pointer;" onclick="showPlayerProfile('${player.name.toLowerCase().replace(' ', '_')}')">
+                                        <div style="width: 32px; height: 32px; background: #4caf50; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px;">${player.avatar}</div>
+                                        <div style="flex: 1;">
+                                            <div style="font-weight: 600; font-size: 14px;">${player.name}</div>
+                                            <div style="font-size: 12px; opacity: 0.8;">${player.position} • ⭐ ${player.rating}</div>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; gap: 10px;">
+                            <button onclick="joinMatchFromDetails()" style="flex: 1; padding: 12px; background: linear-gradient(45deg, #4caf50, #66bb6a); border: none; border-radius: 10px; color: white; font-weight: 600; cursor: pointer;">
+                                ✅ Приєднатися
+                            </button>
+                            <button onclick="shareMatch()" style="flex: 1; padding: 12px; background: linear-gradient(45deg, #ff9800, #ffb74d); border: none; border-radius: 10px; color: white; font-weight: 600; cursor: pointer;">
+                                📤 Поділитися
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            modal.style.display = 'flex';
         }
 
         function closeMatchDetails() {
