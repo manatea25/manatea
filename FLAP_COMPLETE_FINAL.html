@@ -3022,6 +3022,7 @@
         // GLOBAL FUNCTIONS FOR ONCLICK COMPATIBILITY (MUST BE FIRST!)
         var handleQuickLogin, handleQuickRegister, loginWithGoogle, loginWithFacebook, switchAuthMode;
         var showSection, showCreateMatchModal, showCreateChallenge, showStore;
+        var showMatchManagement, showChallengeVideos, manageMyMatch;
         
         // Global state
         let currentUser = null;
@@ -4196,7 +4197,7 @@
             document.querySelector('#challengeParticipateModal .rating-title').textContent = `📹 Завантажити відео для "${challengeName}"`;
         }
 
-        function showChallengeVideos(challengeId) {
+        window.showChallengeVideos = function showChallengeVideos(challengeId) {
             const challengeData = {
                 'best_trick': {
                     title: '🎯 Кращий фінт тижня',
@@ -4303,7 +4304,7 @@
 
             document.getElementById('challengeVideosContent').innerHTML = content;
             document.getElementById('challengeVideosModal').classList.add('show');
-        }
+        };
 
         function closeChallengeVideos() {
             document.getElementById('challengeVideosModal').classList.remove('show');
@@ -4528,14 +4529,14 @@
             }
         };
 
-        function manageMyMatch(matchId) {
+        window.manageMyMatch = function manageMyMatch(matchId) {
             showToast('🎮 Переходимо до управління матчем...', 'success');
             // This would show the match management interface
             document.getElementById('matchManagement').style.display = 'block';
             setTimeout(() => {
                 document.getElementById('matchManagement').scrollIntoView({ behavior: 'smooth' });
             }, 500);
-        }
+        };
 
         // Friends selector functions
         function showFriendsSelector() {
@@ -4731,6 +4732,9 @@
         showCreateMatchModal = window.showCreateMatchModal;
         showCreateChallenge = window.showCreateChallenge;
         showStore = window.showStore;
+        showMatchManagement = window.showMatchManagement;
+        showChallengeVideos = window.showChallengeVideos;
+        manageMyMatch = window.manageMyMatch;
 
         window.showSection = function showSection(sectionId) {
             console.log('🔍 showSection викликана для:', sectionId);
@@ -4766,9 +4770,9 @@
         showSection = window.showSection;
 
         // Match Management Functions
-        function showMatchManagement() {
+        window.showMatchManagement = function showMatchManagement() {
             document.getElementById('matchManagement').style.display = 'block';
-        }
+        };
         
         function hideMatchManagement() {
             document.getElementById('matchManagement').style.display = 'none';
