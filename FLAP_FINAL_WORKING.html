@@ -427,15 +427,7 @@
             display: block;
         }
 
-        /* RATING & PROFILE VISIBILITY FIX */
-        .content-section#rating.active,
-        .content-section#profile.active {
-            display: block !important;
-            background: rgba(255,255,255,0.05) !important;
-            min-height: 100vh !important;
-            padding: 0 !important;
-            margin: 0 !important;
-        }
+
 
         /* Challenge Video Voting */
         .challenge-video-item {
@@ -2331,12 +2323,12 @@
 
             <!-- Rating Section -->
             <div class="content-section" id="rating">
-                <h3 style="margin-bottom: 15px; font-size: 18px; color: #2e7d32; padding: 20px 20px 0 20px;">👑 Рейтинг гравців</h3>
+                <h3 style="margin-bottom: 15px; font-size: 18px;">👑 Рейтинг гравців</h3>
                 
                 <!-- Player Search -->
-                <div style="position: relative; margin-bottom: 15px; padding: 0 20px;">
-                    <input type="text" placeholder="🔍 Пошук гравців..." onkeyup="searchPlayers(this.value)" style="width: 100%; padding: 12px 40px 12px 15px; border: 2px solid #ddd; border-radius: 20px; background: white; color: #333; font-size: 14px;">
-                    <i class="fas fa-search" style="position: absolute; right: 35px; top: 50%; transform: translateY(-50%); color: #666;"></i>
+                <div style="position: relative; margin-bottom: 15px;">
+                    <input type="text" placeholder="🔍 Пошук гравців..." onkeyup="searchPlayers(this.value)" style="width: 100%; padding: 12px 40px 12px 15px; border: 2px solid rgba(255,255,255,0.3); border-radius: 20px; background: rgba(255,255,255,0.1); color: white; font-size: 14px;">
+                    <i class="fas fa-search" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.6);"></i>
                 </div>
                 
                 <!-- Rating Filters -->
@@ -2490,77 +2482,14 @@
                         </div>
                     </div>
                 </div>
-                
-                <!-- Players Rating List -->
-                <div id="playersList" style="padding: 0 20px 20px 20px;">
-                    <!-- Top Player -->
-                    <div class="player-item" style="background: rgba(255,255,255,0.9); border-radius: 15px; margin-bottom: 10px; overflow: hidden; color: #333; box-shadow: 0 6px 20px rgba(0,0,0,0.1); border: 2px solid #ffd700;">
-                        <div style="padding: 15px;">
-                            <div style="display: flex; align-items: center; gap: 15px;">
-                                <div style="font-size: 18px; font-weight: 800; color: #ffd700; min-width: 30px;">🏆1</div>
-                                <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #ffd700, #ffb300); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; font-weight: 700;">АК</div>
-                                <div style="flex: 1;">
-                                    <div style="font-size: 16px; font-weight: 700; margin-bottom: 3px;">Андрій Коваленко</div>
-                                    <div style="font-size: 12px; color: #666; margin-bottom: 5px;">Півзахисник • Київ</div>
-                                    <div style="display: flex; align-items: center; gap: 10px;">
-                                        <div style="background: #4caf50; color: white; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600;">⭐ 4.9</div>
-                                        <div style="font-size: 11px; color: #666;">127 матчів</div>
-                                        <div style="font-size: 11px; color: #666;">89 голів</div>
-                                    </div>
-                                </div>
-                                <button onclick="showPlayerProfile('andriy_k')" style="padding: 8px 12px; background: #4caf50; color: white; border: none; border-radius: 10px; font-size: 12px; cursor: pointer;">Профіль</button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Player 2 -->
-                    <div class="player-item" style="background: rgba(255,255,255,0.9); border-radius: 15px; margin-bottom: 10px; overflow: hidden; color: #333; box-shadow: 0 6px 20px rgba(0,0,0,0.1); border: 2px solid #c0c0c0;">
-                        <div style="padding: 15px;">
-                            <div style="display: flex; align-items: center; gap: 15px;">
-                                <div style="font-size: 18px; font-weight: 800; color: #c0c0c0; min-width: 30px;">🥈2</div>
-                                <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #2196f3, #1976d2); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; font-weight: 700;">ПМ</div>
-                                <div style="flex: 1;">
-                                    <div style="font-size: 16px; font-weight: 700; margin-bottom: 3px;">Петро Мельник</div>
-                                    <div style="font-size: 12px; color: #666; margin-bottom: 5px;">Нападник • Львів</div>
-                                    <div style="display: flex; align-items: center; gap: 10px;">
-                                        <div style="background: #4caf50; color: white; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600;">⭐ 4.8</div>
-                                        <div style="font-size: 11px; color: #666;">98 матчів</div>
-                                        <div style="font-size: 11px; color: #666;">156 голів</div>
-                                    </div>
-                                </div>
-                                <button onclick="showPlayerProfile('petro_m')" style="padding: 8px 12px; background: #4caf50; color: white; border: none; border-radius: 10px; font-size: 12px; cursor: pointer;">Профіль</button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Current User -->
-                    <div class="player-item" style="background: rgba(255,255,255,0.9); border-radius: 15px; margin-bottom: 10px; overflow: hidden; color: #333; box-shadow: 0 6px 20px rgba(0,0,0,0.1); border: 2px solid #4caf50;">
-                        <div style="padding: 15px;">
-                            <div style="display: flex; align-items: center; gap: 15px;">
-                                <div style="font-size: 18px; font-weight: 800; color: #4caf50; min-width: 30px;">47</div>
-                                <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #4caf50, #2e7d32); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; font-weight: 700;">МК</div>
-                                <div style="flex: 1;">
-                                    <div style="font-size: 16px; font-weight: 700; margin-bottom: 3px;">Максим Коваль <span style="color: #4caf50; font-size: 12px;">(Ви)</span></div>
-                                    <div style="font-size: 12px; color: #666; margin-bottom: 5px;">Півзахисник • Київ</div>
-                                    <div style="display: flex; align-items: center; gap: 10px;">
-                                        <div style="background: #ff9800; color: white; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600;">⭐ 3.8</div>
-                                        <div style="font-size: 11px; color: #666;">23 матчі</div>
-                                        <div style="font-size: 11px; color: #666;">8 голів</div>
-                                    </div>
-                                </div>
-                                <button onclick="showSection('profile')" style="padding: 8px 12px; background: #2196f3; color: white; border: none; border-radius: 10px; font-size: 12px; cursor: pointer;">Мій профіль</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
 
             <!-- Profile Section -->
             <div class="content-section" id="profile">
-                <h3 style="margin-bottom: 15px; font-size: 18px; color: #2e7d32; padding: 20px 20px 0 20px;">👤 Мій профіль</h3>
+                <h3 style="margin-bottom: 15px; font-size: 18px;">👤 Мій профіль</h3>
                 
                 <!-- User Profile Card -->
-                <div style="background: rgba(255,255,255,0.9); border-radius: 15px; margin: 0 20px 20px 20px; overflow: hidden; color: #333; box-shadow: 0 6px 20px rgba(0,0,0,0.1);">
+                <div style="background: rgba(255,255,255,0.9); border-radius: 15px; margin-bottom: 20px; overflow: hidden; color: #333; box-shadow: 0 6px 20px rgba(0,0,0,0.1);">
                     <div style="height: 120px; background: linear-gradient(135deg, #4caf50, #8bc34a); position: relative; display: flex; align-items: center; justify-content: center;">
                         <button onclick="showSettings()" style="position: absolute; top: 15px; right: 15px; background: rgba(255,255,255,0.2); border: none; width: 35px; height: 35px; border-radius: 50%; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center;">
                             <i class="fas fa-cog"></i>
