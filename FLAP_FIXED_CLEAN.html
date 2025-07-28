@@ -4185,43 +4185,121 @@
             // Get random team names
             const teamPair = teamNames[Math.floor(Math.random() * teamNames.length)];
             
-            // Update teams display
-            const teamsDisplay = document.getElementById('teamsDisplay');
+            // Update teams display - try multiple possible IDs
+            let teamsDisplay = document.getElementById('teamsDisplay');
+            if (!teamsDisplay) {
+                teamsDisplay = document.getElementById('teamBuilder');
+            }
+            if (!teamsDisplay) {
+                teamsDisplay = document.querySelector('.team-builder');
+            }
+            
             if (teamsDisplay) {
                 teamsDisplay.innerHTML = `
-                    <div style="display: flex; gap: 20px; justify-content: space-between; margin: 20px 0;">
-                        <div style="flex: 1; background: linear-gradient(135deg, #4caf50, #66bb6a); padding: 15px; border-radius: 15px; color: white;">
-                            <h4 style="margin: 0 0 10px 0; text-align: center;">${teamPair[0]} (⭐ ${team1Rating})</h4>
-                            ${team1.map(p => `<div style="padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.3);">${p.name} - ${p.rating}</div>`).join('')}
+                    <div style="background: rgba(255,255,255,0.1); border-radius: 15px; padding: 20px; margin: 20px 0;">
+                        <h3 style="text-align: center; margin: 0 0 20px 0; color: white;">⚖️ Збалансовані команди</h3>
+                        <div style="display: flex; gap: 20px; justify-content: space-between; margin: 20px 0;">
+                            <div style="flex: 1; background: linear-gradient(135deg, #4caf50, #66bb6a); padding: 15px; border-radius: 15px; color: white;">
+                                <h4 style="margin: 0 0 15px 0; text-align: center; font-size: 18px;">${teamPair[0]}</h4>
+                                <div style="text-align: center; margin-bottom: 15px;">
+                                    <span style="background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 10px; font-weight: 600;">
+                                        ⭐ ${team1Rating} середній рейтинг
+                                    </span>
+                                </div>
+                                ${team1.map(p => `<div style="padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.3); display: flex; justify-content: space-between;"><span>${p.name}</span><span>⭐ ${p.rating}</span></div>`).join('')}
+                            </div>
+                            <div style="flex: 1; background: linear-gradient(135deg, #2196f3, #42a5f5); padding: 15px; border-radius: 15px; color: white;">
+                                <h4 style="margin: 0 0 15px 0; text-align: center; font-size: 18px;">${teamPair[1]}</h4>
+                                <div style="text-align: center; margin-bottom: 15px;">
+                                    <span style="background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 10px; font-weight: 600;">
+                                        ⭐ ${team2Rating} середній рейтинг
+                                    </span>
+                                </div>
+                                ${team2.map(p => `<div style="padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.3); display: flex; justify-content: space-between;"><span>${p.name}</span><span>⭐ ${p.rating}</span></div>`).join('')}
+                            </div>
                         </div>
-                        <div style="flex: 1; background: linear-gradient(135deg, #2196f3, #42a5f5); padding: 15px; border-radius: 15px; color: white;">
-                            <h4 style="margin: 0 0 10px 0; text-align: center;">${teamPair[1]} (⭐ ${team2Rating})</h4>
-                            ${team2.map(p => `<div style="padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.3);">${p.name} - ${p.rating}</div>`).join('')}
+                        <div style="text-align: center; margin: 20px 0;">
+                            <button onclick="autoBalanceTeams()" style="padding: 12px 24px; background: linear-gradient(135deg, #9c27b0, #ba68c8); color: white; border: none; border-radius: 20px; font-weight: 600; cursor: pointer; margin-right: 10px; font-size: 14px;">
+                                🔄 Перешафлити команди
+                            </button>
+                            <button onclick="showFinalScore()" style="padding: 12px 24px; background: linear-gradient(135deg, #ff9800, #ffb74d); color: white; border: none; border-radius: 20px; font-weight: 600; cursor: pointer; font-size: 14px;">
+                                ⚽ Завершити матч
+                            </button>
                         </div>
-                    </div>
-                    <div style="text-align: center; margin: 20px 0;">
-                        <button onclick="autoBalanceTeams()" style="padding: 10px 20px; background: linear-gradient(135deg, #9c27b0, #ba68c8); color: white; border: none; border-radius: 20px; font-weight: 600; cursor: pointer; margin-right: 10px;">
-                            🔄 Перешафлити
-                        </button>
-                        <button onclick="showFinalScore()" style="padding: 10px 20px; background: linear-gradient(135deg, #ff9800, #ffb74d); color: white; border: none; border-radius: 20px; font-weight: 600; cursor: pointer;">
-                            ⚽ Завершити матч
-                        </button>
                     </div>
                 `;
                 teamsDisplay.style.display = 'block';
+                
+                // Also show final score section
+                showFinalScore();
+            } else {
+                console.error('❌ teamsDisplay element not found');
+                showToast('❌ Елемент для відображення команд не знайдено', 'error');
             }
             
             showToast('⚖️ Команди збалансовано по рейтингу!', 'success');
         }
 
-        // Missing showFinalScore function
+        // Enhanced showFinalScore function
         function showFinalScore() {
-            const finalScoreSection = document.getElementById('finalScoreSection');
+            let finalScoreSection = document.getElementById('finalScoreSection');
+            
+            // If section doesn't exist, create it
+            if (!finalScoreSection) {
+                // Try to find a parent container
+                const parentContainer = document.getElementById('matchManagement') || 
+                                      document.getElementById('teamBuilder') || 
+                                      document.querySelector('.match-management');
+                
+                if (parentContainer) {
+                    const newSection = document.createElement('div');
+                    newSection.id = 'finalScoreSection';
+                    newSection.style.display = 'none';
+                    parentContainer.appendChild(newSection);
+                    finalScoreSection = newSection;
+                }
+            }
+            
             if (finalScoreSection) {
+                finalScoreSection.innerHTML = `
+                    <div style="background: rgba(255,255,255,0.1); border-radius: 15px; padding: 20px; margin: 20px 0;">
+                        <h3 style="text-align: center; margin: 0 0 20px 0; color: white;">⚽ Фінальний рахунок</h3>
+                        <div style="display: flex; align-items: center; justify-content: center; gap: 20px; margin: 20px 0;">
+                            <div style="text-align: center;">
+                                <div style="background: linear-gradient(135deg, #4caf50, #66bb6a); padding: 10px 15px; border-radius: 10px; color: white; font-weight: 600; margin-bottom: 10px;">
+                                    Команда 1
+                                </div>
+                                <input type="number" id="team1Score" min="0" max="20" value="0" 
+                                       style="width: 80px; padding: 15px; border: 2px solid rgba(255,255,255,0.4); border-radius: 10px; background: rgba(255,255,255,0.1); color: white; font-size: 24px; font-weight: 700; text-align: center;">
+                            </div>
+                            
+                            <div style="color: white; font-size: 32px; font-weight: 700;">:</div>
+                            
+                            <div style="text-align: center;">
+                                <div style="background: linear-gradient(135deg, #2196f3, #42a5f5); padding: 10px 15px; border-radius: 10px; color: white; font-weight: 600; margin-bottom: 10px;">
+                                    Команда 2
+                                </div>
+                                <input type="number" id="team2Score" min="0" max="20" value="0" 
+                                       style="width: 80px; padding: 15px; border: 2px solid rgba(255,255,255,0.4); border-radius: 10px; background: rgba(255,255,255,0.1); color: white; font-size: 24px; font-weight: 700; text-align: center;">
+                            </div>
+                        </div>
+                        
+                        <div style="text-align: center; margin-top: 20px;">
+                            <button onclick="finishMatch()" style="padding: 15px 30px; background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; border: none; border-radius: 20px; font-weight: 700; cursor: pointer; font-size: 16px;">
+                                🏁 Завершити матч та оцінити гравців
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
                 finalScoreSection.style.display = 'block';
                 finalScoreSection.scrollIntoView({ behavior: 'smooth' });
+                
+                showToast('⚽ Введіть фінальний рахунок матчу', 'info');
+            } else {
+                console.error('❌ Не вдалося створити секцію фінального рахунку');
+                showToast('❌ Не вдалося показати секцію рахунку', 'error');
             }
-            showToast('⚽ Введіть фінальний рахунок', 'info');
         }
 
         // Missing addFriend function
@@ -4328,15 +4406,185 @@
 
         function finishMatch() {
             console.log('🏁 finishMatch викликана');
-            showToast('🏁 Матч завершено! Введіть рахунок', 'info');
+            
+            // Get scores from inputs
+            const team1Score = document.getElementById('team1Score');
+            const team2Score = document.getElementById('team2Score');
+            
+            if (!team1Score || !team2Score) {
+                showToast('❌ Елементи для введення рахунку не знайдено', 'error');
+                return;
+            }
+            
+            const score1 = parseInt(team1Score.value) || 0;
+            const score2 = parseInt(team2Score.value) || 0;
+            
+            if (score1 === 0 && score2 === 0) {
+                showToast('❌ Введіть рахунок матчу!', 'error');
+                return;
+            }
+            
+            // Hide final score section
+            const finalScoreSection = document.getElementById('finalScoreSection');
+            if (finalScoreSection) {
+                finalScoreSection.style.display = 'none';
+            }
+            
+            // Show player rating modal for team players
+            const teamPlayers = [
+                { id: 'teammate1', name: 'Андрій К.', rating: 4.2 },
+                { id: 'teammate2', name: 'Петро М.', rating: 3.8 },
+                { id: 'teammate3', name: 'Дмитро Л.', rating: 4.5 },
+                { id: 'teammate4', name: 'Олексій Ш.', rating: 3.9 }
+            ];
+            
+            currentTeamRating = { 
+                teamPlayers: teamPlayers, 
+                currentIndex: 0,
+                finalScore: `${score1}:${score2}`
+            };
+            
+            showTeamRatingModal();
+        }
+
+        function showTeamRatingModal() {
+            const { teamPlayers, currentIndex } = currentTeamRating;
+            
+            if (currentIndex >= teamPlayers.length) {
+                showToast('🎉 Всіх гравців оцінено! Дякуємо за гру!', 'success');
+                // Reset for next match
+                currentTeamRating = { teamPlayers: [], currentIndex: 0 };
+                return;
+            }
+            
+            const player = teamPlayers[currentIndex];
+            showRatingModal(player.id, teamPlayers, currentIndex);
+        }
+
+        function showRatingModal(playerId, teamPlayers = null, playerIndex = 0) {
+            console.log(`⭐ showRatingModal викликана для ${playerId}`);
+            
+            const modal = document.getElementById('ratingModal');
+            if (!modal) {
+                showToast('❌ Модальне вікно рейтингу не знайдено', 'error');
+                return;
+            }
+            
+            let player;
+            let title = 'Оцініть гравця';
+            
+            if (teamPlayers && playerIndex !== undefined) {
+                player = teamPlayers[playerIndex];
+                title = `Оцініть гравця (${playerIndex + 1}/${teamPlayers.length})`;
+            } else {
+                player = playersDatabase[playerId] || { name: 'Гравець', avatar: '⚽' };
+            }
+            
+            modal.innerHTML = `
+                <div class="modal-content" style="max-width: 400px; margin: 50px auto; background: linear-gradient(135deg, #2e7d32, #4caf50); border-radius: 20px; padding: 0; color: white; overflow: hidden;">
+                    <div style="background: linear-gradient(45deg, #1b5e20, #2e7d32); padding: 20px; text-align: center;">
+                        <h3 style="margin: 0; font-size: 18px;">${title}</h3>
+                        <div style="width: 60px; height: 60px; background: ${player.avatar || '⚽'}; border-radius: 50%; margin: 15px auto; display: flex; align-items: center; justify-content: center; font-size: 30px; border: 3px solid white;">
+                            ${player.avatar || '⚽'}
+                        </div>
+                        <h4 style="margin: 0; font-size: 16px;">${player.name}</h4>
+                        ${teamPlayers ? `<p style="margin: 5px 0; opacity: 0.8; font-size: 14px;">Матч завершено: ${currentTeamRating.finalScore}</p>` : ''}
+                    </div>
+                    
+                    <div style="padding: 20px;">
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: block; margin-bottom: 10px; font-weight: 600;">Оцінка гравця (0-5):</label>
+                            <input type="range" id="playerRatingSlider" min="0" max="5" step="0.01" value="0" 
+                                   onchange="updatePlayerRating(this.value)"
+                                   style="width: 100%; height: 8px; border-radius: 4px; background: rgba(255,255,255,0.3); outline: none; margin-bottom: 10px;">
+                            <div style="text-align: center;">
+                                <span id="playerRatingValue" style="font-size: 24px; font-weight: 700; color: #ffd700;">0.00</span>
+                                <span style="font-size: 16px; opacity: 0.8;">/5.00</span>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; gap: 10px;">
+                            <button onclick="submitPlayerRating()" style="flex: 1; padding: 12px; background: linear-gradient(45deg, #4caf50, #66bb6a); border: none; border-radius: 10px; color: white; font-weight: 600; cursor: pointer;">
+                                ✅ Оцінити
+                            </button>
+                            <button onclick="closeModal('ratingModal')" style="flex: 1; padding: 12px; background: rgba(255,255,255,0.2); border: none; border-radius: 10px; color: white; font-weight: 600; cursor: pointer;">
+                                ❌ Скасувати
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            modal.style.display = 'flex';
+            currentRating = 0;
+        }
+
+        function updatePlayerRating(value) {
+            currentRating = parseFloat(value);
+            const display = document.getElementById('playerRatingValue');
+            if (display) {
+                display.textContent = currentRating.toFixed(2);
+            }
+        }
+
+        function submitPlayerRating() {
+            if (currentRating === 0) {
+                showToast('⭐ Оберіть рейтинг!', 'error');
+                return;
+            }
+            
+            // Close modal
+            closeModal('ratingModal');
+            
+            // If rating team players, move to next player
+            if (currentTeamRating.teamPlayers && currentTeamRating.teamPlayers.length > 0) {
+                currentTeamRating.currentIndex++;
+                
+                showToast(`⭐ Рейтинг ${currentRating.toFixed(2)}/5 відправлено!`, 'success');
+                
+                // Show rating change effect
+                setTimeout(() => {
+                    if (currentTeamRating.currentIndex < currentTeamRating.teamPlayers.length) {
+                        showTeamRatingModal();
+                    } else {
+                        showToast('🎉 Всіх гравців оцінено! Дякуємо за гру!', 'success');
+                        currentTeamRating = { teamPlayers: [], currentIndex: 0 };
+                    }
+                }, 1000);
+            } else {
+                showToast(`⭐ Рейтинг ${currentRating.toFixed(2)}/5 відправлено!`, 'success');
+            }
         }
 
         function manageMyMatch(matchId) {
             console.log(`⚙️ manageMyMatch викликана для ${matchId}`);
+            
+            // First ensure we're on "My Matches" tab
+            switchMatchTab('my');
+            
+            // Hide my matches list and show management
             const myMatchesList = document.getElementById('myMatchesList');
             const matchManagement = document.getElementById('matchManagement');
-            if (myMatchesList) myMatchesList.style.display = 'none';
-            if (matchManagement) matchManagement.style.display = 'block';
+            
+            if (myMatchesList) {
+                myMatchesList.style.display = 'none';
+                console.log('✅ myMatchesList приховано');
+            } else {
+                console.error('❌ myMatchesList не знайдено');
+            }
+            
+            if (matchManagement) {
+                matchManagement.style.display = 'block';
+                console.log('✅ matchManagement показано');
+                
+                // Scroll to management section
+                matchManagement.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                console.error('❌ matchManagement не знайдено');
+                showToast('❌ Секція управління матчем не знайдена', 'error');
+            }
+            
+            showToast(`⚙️ Управління матчем ${matchId}`, 'info');
         }
 
         function backToMyMatches() {
@@ -4354,13 +4602,199 @@
 
         function showFriendsSelector() {
             console.log('👥 showFriendsSelector викликана');
-            showToast('👥 Вибір друзів', 'info');
+            
+            const friendsSelector = document.getElementById('friendsSelector');
+            if (friendsSelector) {
+                const isVisible = friendsSelector.style.display === 'block';
+                friendsSelector.style.display = isVisible ? 'none' : 'block';
+                
+                const button = document.querySelector('[onclick="showFriendsSelector()"]');
+                if (button) {
+                    if (isVisible) {
+                        button.textContent = '👥 Вибрати друзів';
+                        button.style.background = '#4caf50';
+                    } else {
+                        button.textContent = '👥 Сховати список';
+                        button.style.background = '#ff9800';
+                    }
+                }
+            } else {
+                showToast('👥 Список друзів', 'info');
+            }
+        }
+
+        function updateSelectedFriends() {
+            const checkboxes = document.querySelectorAll('#friendsSelector input[type="checkbox"]:checked');
+            const selectedCount = checkboxes.length;
+            const selectedNames = Array.from(checkboxes).slice(0, 3).map(cb => cb.getAttribute('data-name'));
+            
+            const display = document.getElementById('selectedFriendsDisplay');
+            if (display) {
+                if (selectedCount === 0) {
+                    display.textContent = 'Не вибрано';
+                    display.style.color = 'rgba(255,255,255,0.6)';
+                } else {
+                    let text = selectedNames.join(', ');
+                    if (selectedCount > 3) {
+                        text += ` та ще ${selectedCount - 3}`;
+                    }
+                    display.textContent = text;
+                    display.style.color = '#4caf50';
+                }
+            }
+            
+            console.log(`👥 Вибрано друзів: ${selectedCount}`);
         }
 
         function showChallengeVideos(challengeId) {
             console.log(`📹 showChallengeVideos викликана для ${challengeId}`);
+            
+            const challengeData = {
+                'best_trick': {
+                    title: 'Кращий фінт тижня',
+                    totalVideos: 8,
+                    videos: [
+                        { id: 'trick1', title: 'Неймовірний фінт', author: 'Андрій К.', city: 'Київ', rating: 4.2, votes: 15 },
+                        { id: 'trick2', title: 'Технічний обвід', author: 'Петро М.', city: 'Львів', rating: 4.5, votes: 22 },
+                        { id: 'trick3', title: 'Швидкий дриблінг', author: 'Дмитро Л.', city: 'Одеса', rating: 3.8, votes: 12 },
+                        { id: 'trick4', title: 'Елегантний фінт', author: 'Олексій Ш.', city: 'Харків', rating: 4.1, votes: 18 },
+                        { id: 'trick5', title: 'Майстерський обвід', author: 'Максим З.', city: 'Дніпро', rating: 4.3, votes: 20 },
+                        { id: 'trick6', title: 'Креативний рух', author: 'Віктор С.', city: 'Київ', rating: 3.9, votes: 14 },
+                        { id: 'trick7', title: 'Фантастичний фінт', author: 'Олександр М.', city: 'Львів', rating: 4.4, votes: 25 },
+                        { id: 'trick8', title: 'Професійний обвід', author: 'Ігор П.', city: 'Одеса', rating: 4.0, votes: 16 }
+                    ]
+                },
+                'accuracy': {
+                    title: 'Точність ударів',
+                    totalVideos: 5,
+                    videos: [
+                        { id: 'acc1', title: 'Точний удар у кут', author: 'Сергій К.', city: 'Київ', rating: 4.6, votes: 28 },
+                        { id: 'acc2', title: 'Влучний постріл', author: 'Роман Т.', city: 'Львів', rating: 4.2, votes: 19 },
+                        { id: 'acc3', title: 'Ідеальна точність', author: 'Денис В.', city: 'Харків', rating: 4.8, votes: 32 },
+                        { id: 'acc4', title: 'Майстерський удар', author: 'Артем Г.', city: 'Дніпро', rating: 4.1, votes: 17 },
+                        { id: 'acc5', title: 'Неперевершена точність', author: 'Богдан Ф.', city: 'Одеса', rating: 4.4, votes: 23 }
+                    ]
+                },
+                'speed': {
+                    title: 'Швидкість дриблінгу',
+                    totalVideos: 6,
+                    videos: [
+                        { id: 'speed1', title: 'Блискавичний дриблінг', author: 'Тарас Л.', city: 'Київ', rating: 4.3, votes: 21 },
+                        { id: 'speed2', title: 'Швидкі ноги', author: 'Юрій М.', city: 'Львів', rating: 4.0, votes: 15 },
+                        { id: 'speed3', title: 'Надшвидкість', author: 'Владислав Н.', city: 'Одеса', rating: 4.7, votes: 29 },
+                        { id: 'speed4', title: 'Стрімкий рух', author: 'Михайло О.', city: 'Харків', rating: 3.9, votes: 13 },
+                        { id: 'speed5', title: 'Турбо-дриблінг', author: 'Назар П.', city: 'Дніпро', rating: 4.5, votes: 26 },
+                        { id: 'speed6', title: 'Космічна швидкість', author: 'Станіслав Р.', city: 'Київ', rating: 4.2, votes: 18 }
+                    ]
+                }
+            };
+
+            const challenge = challengeData[challengeId];
+            if (!challenge) {
+                showToast('❌ Челендж не знайдено', 'error');
+                return;
+            }
+
             const modal = document.getElementById('challengeVideosModal');
-            if (modal) modal.style.display = 'flex';
+            if (!modal) {
+                showToast('❌ Модальне вікно не знайдено', 'error');
+                return;
+            }
+
+            // Create modal content
+            modal.innerHTML = `
+                <div class="modal-content" style="max-width: 600px; margin: 50px auto; background: linear-gradient(135deg, #2e7d32, #4caf50); border-radius: 20px; padding: 0; color: white; overflow: hidden; max-height: 80vh; overflow-y: auto;">
+                    <div style="background: linear-gradient(45deg, #1b5e20, #2e7d32); padding: 20px; text-align: center; position: sticky; top: 0; z-index: 10;">
+                        <button onclick="closeChallengeVideos()" style="position: absolute; top: 10px; right: 15px; background: none; border: none; color: white; font-size: 24px; cursor: pointer;">&times;</button>
+                        <h3 style="margin: 0; font-size: 20px;">${challenge.title}</h3>
+                        <p style="margin: 5px 0; opacity: 0.9;">Всього відео: ${challenge.totalVideos}</p>
+                        <button onclick="sortChallengeVideos('${challengeId}')" style="padding: 8px 15px; background: rgba(255,255,255,0.2); border: none; border-radius: 15px; color: white; cursor: pointer; font-size: 12px; margin-top: 10px;">
+                            📊 Сортувати за рейтингом
+                        </button>
+                    </div>
+                    
+                    <div style="padding: 20px;">
+                        <div id="challengeVideosList">
+                            ${challenge.videos.map(video => `
+                                <div style="background: rgba(255,255,255,0.1); border-radius: 15px; padding: 15px; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.2);">
+                                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 10px;">
+                                        <div style="width: 60px; height: 60px; background: linear-gradient(45deg, #ff6b6b, #ee5a24); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 18px;">
+                                            ▶️
+                                        </div>
+                                        <div style="flex: 1;">
+                                            <h4 style="margin: 0 0 5px 0; font-size: 16px;">${video.title}</h4>
+                                            <p style="margin: 0; opacity: 0.8; font-size: 14px;">
+                                                <strong>${video.author}</strong> • ${video.city}<br>
+                                                ⭐ ${video.rating}/5 • 👥 ${video.votes} голосів
+                                            </p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div style="display: flex; align-items: center; gap: 10px; margin-top: 10px;">
+                                        <span style="font-size: 12px; opacity: 0.8;">Ваша оцінка:</span>
+                                        <input type="range" id="slider_${video.id}" min="0" max="5" step="0.01" value="0" 
+                                               onchange="updateChallengeVoteValue('${video.id}', this.value)"
+                                               style="flex: 1; height: 6px; border-radius: 3px; background: rgba(255,255,255,0.3); outline: none;">
+                                        <span id="vote_${video.id}" style="min-width: 35px; font-weight: 600; font-size: 14px;">0.00</span>
+                                        <button id="btn_${video.id}" onclick="voteForChallengeVideo('${video.id}', event)" 
+                                                style="padding: 6px 12px; background: #4caf50; color: white; border: none; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer;">
+                                            Голос
+                                        </button>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        
+                        <div style="text-align: center; margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.2);">
+                            <button onclick="submitAllChallengeVotes('${challengeId}')" style="padding: 12px 30px; background: linear-gradient(45deg, #4caf50, #66bb6a); color: white; border: none; border-radius: 20px; font-weight: 700; cursor: pointer; font-size: 16px;">
+                                ✅ Підтвердити всі голоси (+20 монет)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            modal.style.display = 'flex';
+        }
+
+        function updateChallengeVoteValue(videoId, value) {
+            const ratingValue = parseFloat(value);
+            const display = document.getElementById('vote_' + videoId);
+            if (display) {
+                display.textContent = ratingValue.toFixed(2);
+            }
+        }
+
+        function voteForChallengeVideo(videoId, event) {
+            const slider = document.getElementById('slider_' + videoId);
+            const button = document.getElementById('btn_' + videoId);
+            
+            if (!slider || !button) return;
+            
+            const rating = parseFloat(slider.value);
+            if (rating === 0) {
+                showToast('❌ Оберіть оцінку на повзунку!', 'error');
+                return;
+            }
+            
+            // Disable slider and button
+            slider.disabled = true;
+            button.disabled = true;
+            button.textContent = 'Проголосовано';
+            button.style.background = '#757575';
+            
+            showToast(`⭐ Голос ${rating.toFixed(2)} відправлено!`, 'success');
+        }
+
+        function submitAllChallengeVotes(challengeId) {
+            coins += 20;
+            document.querySelector('.coins-count').textContent = coins;
+            closeChallengeVideos();
+            showToast('🎉 Всі голоси підтверджено! +20 монет', 'success');
+        }
+
+        function sortChallengeVideos(challengeId) {
+            showToast('📊 Відео відсортовано за рейтингом', 'info');
         }
 
         function closeChallengeVideos() {
