@@ -421,12 +421,22 @@
         /* Content Sections */
         .content-section {
             display: none !important;
-            padding: 15px;
+            padding: 0 !important;
             animation: fadeIn 0.4s ease;
         }
 
         .content-section.active {
             display: block !important;
+        }
+
+        /* Special styling for rating and profile */
+        #rating, #profile {
+            background: rgba(255,255,255,0.95) !important;
+            margin: 15px !important;
+            border-radius: 20px !important;
+            color: #333 !important;
+            padding: 0 !important;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2) !important;
         }
 
         /* Challenge Video Voting */
@@ -2322,7 +2332,7 @@
             </div>
 
             <!-- Rating Section -->
-            <div class="content-section" id="rating" style="background: rgba(255,255,255,0.95); margin: 15px; border-radius: 20px; color: #333;">
+            <div class="content-section" id="rating">
                 <h3 style="margin-bottom: 15px; font-size: 18px; color: #2e7d32; padding: 20px 20px 0 20px;">👑 Рейтинг гравців</h3>
                 
                 <!-- Player Search -->
@@ -2548,7 +2558,7 @@
             </div>
 
             <!-- Profile Section -->
-            <div class="content-section" id="profile" style="background: rgba(255,255,255,0.95); margin: 15px; border-radius: 20px; color: #333;">
+            <div class="content-section" id="profile">
                 <h3 style="margin-bottom: 15px; font-size: 18px; color: #2e7d32; padding: 20px 20px 0 20px;">👤 Мій профіль</h3>
                 
                 <!-- User Profile Card -->
