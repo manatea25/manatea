@@ -1629,23 +1629,45 @@
                         </button>
                     </div>
                 
-                <!-- Filters -->
-                <div style="display: flex; gap: 8px; margin-bottom: 20px; overflow-x: auto; padding-bottom: 5px;">
-                    <button onclick="filterMatches('all')" class="match-filter active" style="padding: 6px 12px; background: rgba(76, 175, 80, 0.2); border: 1px solid #4caf50; border-radius: 15px; color: #2e7d32; font-size: 12px; cursor: pointer; white-space: nowrap;">
-                        🌟 Всі
-                    </button>
-                    <button onclick="filterMatches('city')" class="match-filter" style="padding: 6px 12px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); border-radius: 15px; color: white; font-size: 12px; cursor: pointer; white-space: nowrap;">
-                        🏙️ Моє місто
-                    </button>
-                    <button onclick="filterMatches('rating')" class="match-filter" style="padding: 6px 12px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); border-radius: 15px; color: white; font-size: 12px; cursor: pointer; white-space: nowrap;">
-                        ⭐ Мій рівень
-                    </button>
-                    <button onclick="filterMatches('time')" class="match-filter" style="padding: 6px 12px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); border-radius: 15px; color: white; font-size: 12px; cursor: pointer; white-space: nowrap;">
-                        🕐 Сьогодні
-                    </button>
-                    <button onclick="filterMatches('format')" class="match-filter" style="padding: 6px 12px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); border-radius: 15px; color: white; font-size: 12px; cursor: pointer; white-space: nowrap;">
-                        👥 7x7
-                    </button>
+                <!-- Search -->
+                <div style="position: relative; margin-bottom: 15px;">
+                    <input type="text" placeholder="🔍 Пошук матчів..." onkeyup="searchMatches(this.value)" style="width: 100%; padding: 12px 40px 12px 15px; border: 2px solid rgba(255,255,255,0.3); border-radius: 20px; background: rgba(255,255,255,0.1); color: white; font-size: 14px;">
+                    <i class="fas fa-search" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.6);"></i>
+                </div>
+                
+                <!-- Advanced Filters -->
+                <div style="background: rgba(255,255,255,0.1); border-radius: 15px; padding: 15px; margin-bottom: 20px;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+                        <select id="cityFilterMatch" onchange="applyMatchFilters()" style="padding: 8px; border-radius: 10px; border: none; background: rgba(255,255,255,0.9); color: #333; font-size: 12px;">
+                            <option value="">🏙️ Всі міста</option>
+                            <option value="Київ">Київ</option>
+                            <option value="Львів">Львів</option>
+                            <option value="Одеса">Одеса</option>
+                            <option value="Харків">Харків</option>
+                            <option value="Дніпро">Дніпро</option>
+                        </select>
+                        <select id="formatFilterMatch" onchange="applyMatchFilters()" style="padding: 8px; border-radius: 10px; border: none; background: rgba(255,255,255,0.9); color: #333; font-size: 12px;">
+                            <option value="">👥 Всі формати</option>
+                            <option value="5x5">5 на 5</option>
+                            <option value="7x7">7 на 7</option>
+                            <option value="11x11">11 на 11</option>
+                        </select>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                        <select id="timeFilterMatch" onchange="applyMatchFilters()" style="padding: 8px; border-radius: 10px; border: none; background: rgba(255,255,255,0.9); color: #333; font-size: 12px;">
+                            <option value="">🕐 Будь-коли</option>
+                            <option value="today">Сьогодні</option>
+                            <option value="tomorrow">Завтра</option>
+                            <option value="week">Цей тиждень</option>
+                        </select>
+                        <select id="priceFilterMatch" onchange="applyMatchFilters()" style="padding: 8px; border-radius: 10px; border: none; background: rgba(255,255,255,0.9); color: #333; font-size: 12px;">
+                            <option value="">💰 Будь-яка ціна</option>
+                            <option value="free">Безкоштовно</option>
+                            <option value="cheap">До 50₴</option>
+                            <option value="medium">50-100₴</option>
+                            <option value="expensive">100₴+</option>
+                        </select>
+                    </div>
                 </div>
                 
                 <!-- Available Matches List -->
@@ -1851,34 +1873,7 @@
                         </div>
                     </div>
 
-                    <!-- Match Control -->
-                    <div style="background: rgba(255,255,255,0.9); border-radius: 15px; color: #333; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.1);">
-                        <div style="padding: 15px; background: linear-gradient(135deg, #4caf50, #66bb6a); color: white;">
-                            <div style="font-size: 16px; font-weight: 700;">🏁 Завершення матчу</div>
-                            <div style="font-size: 12px; opacity: 0.9;">Введіть рахунок після гри</div>
-                        </div>
-                        <div style="padding: 15px;">
-                            <div id="finalScoreSection" style="display: none;">
-                                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
-                                    <div style="flex: 1; text-align: center;">
-                                        <div id="team1Name" style="font-weight: 600; margin-bottom: 5px;">Команда 1</div>
-                                        <input type="number" id="team1Score" min="0" placeholder="0" style="width: 60px; padding: 8px; border: 2px solid #ddd; border-radius: 8px; text-align: center;">
-                                    </div>
-                                    <div style="font-size: 24px; font-weight: 700;">:</div>
-                                    <div style="flex: 1; text-align: center;">
-                                        <div id="team2Name" style="font-weight: 600; margin-bottom: 5px;">Команда 2</div>
-                                        <input type="number" id="team2Score" min="0" placeholder="0" style="width: 60px; padding: 8px; border: 2px solid #ddd; border-radius: 8px; text-align: center;">
-                                    </div>
-                                </div>
-                                <button onclick="finishMatch()" style="width: 100%; padding: 10px; background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; border: none; border-radius: 20px; font-weight: 600; cursor: pointer;">
-                                    Завершити матч
-                                </button>
-                            </div>
-                            <div id="matchNotStarted" style="text-align: center; color: #666; font-size: 14px;">
-                                Матч ще не розпочався. Очікуйте на початок гри.
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
             </div>
 
