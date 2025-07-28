@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEST Rating/Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(180deg, #1e7d32 0%, #2e7d32 100%);
+            color: white;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .content-section {
+            display: none;
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 15px;
+            min-height: 300px;
+        }
+        
+        .content-section.active {
+            display: block;
+        }
+        
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .nav-tab {
+            padding: 10px 20px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            border-radius: 20px;
+            color: white;
+            cursor: pointer;
+        }
+        
+        .nav-tab.active {
+            background: #4caf50;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 TEST Rating/Profile</h1>
+    
+    <div class="nav-tabs">
+        <button class="nav-tab active" onclick="showSection('videos')">📹 Відео</button>
+        <button class="nav-tab" onclick="showSection('rating')">👑 Рейтинг</button>
+        <button class="nav-tab" onclick="showSection('profile')">👤 Профіль</button>
+    </div>
+    
+    <div class="content-section active" id="videos">
+        <h2>📹 Відео секція</h2>
+        <p>Це відео секція - вона працює!</p>
+    </div>
+    
+    <div class="content-section" id="rating">
+        <h2>👑 Рейтинг секція</h2>
+        <div style="background: rgba(255,255,255,0.9); color: #333; padding: 15px; border-radius: 10px; margin: 10px 0;">
+            <h3>Топ гравець</h3>
+            <p>Віктор Шевченко - ⭐ 4.96</p>
+        </div>
+        <div style="background: rgba(255,255,255,0.9); color: #333; padding: 15px; border-radius: 10px; margin: 10px 0;">
+            <h3>Гравець 2</h3>
+            <p>Андрій Петренко - ⭐ 4.92</p>
+        </div>
+    </div>
+    
+    <div class="content-section" id="profile">
+        <h2>👤 Профіль секція</h2>
+        <div style="background: rgba(255,255,255,0.9); color: #333; padding: 15px; border-radius: 10px; margin: 10px 0;">
+            <h3>Максим Коваль</h3>
+            <p>Півзахисник • Київ • ⭐ 4.78</p>
+            <p>34 матчі • 88% winrate</p>
+        </div>
+        <div style="background: rgba(255,255,255,0.9); color: #333; padding: 15px; border-radius: 10px; margin: 10px 0;">
+            <h3>👥 Друзі</h3>
+            <p>23 друга онлайн</p>
+        </div>
+    </div>
+    
+    <div id="debug" style="position: fixed; bottom: 20px; right: 20px; background: rgba(0,0,0,0.8); padding: 10px; border-radius: 10px; font-size: 12px;"></div>
+    
+    <script>
+        function showSection(sectionId) {
+            console.log('🔍 showSection викликана для:', sectionId);
+            
+            // Hide all sections
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => {
+                section.style.display = 'none';
+                section.classList.remove('active');
+                console.log('❌ Приховано:', section.id);
+            });
+            
+            // Remove active from all tabs
+            document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
+            
+            // Show target section
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.style.display = 'block';
+                targetSection.classList.add('active');
+                console.log('✅ Показано:', sectionId);
+                
+                // Add active to clicked tab
+                event.target.classList.add('active');
+                
+                // Update debug info
+                document.getElementById('debug').innerHTML = `
+                    Активна секція: ${sectionId}<br>
+                    Display: ${targetSection.style.display}<br>
+                    Class: ${targetSection.className}
+                `;
+            } else {
+                console.error('❌ Секція не знайдена:', sectionId);
+                document.getElementById('debug').innerHTML = `❌ Секція ${sectionId} не знайдена!`;
+            }
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 DOM завантажено');
+            showSection('videos');
+        });
+    </script>
+</body>
+</html>
