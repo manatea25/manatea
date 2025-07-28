@@ -3370,10 +3370,7 @@
             });
         }
 
-        // Challenge participation
-        function joinChallenge(challengeId) {
-            document.getElementById('challengeParticipateModal').classList.add('show');
-        }
+        // joinChallenge DUPLICATE REMOVED
 
         function closeChallengeParticipate() {
             document.getElementById('challengeParticipateModal').classList.remove('show');
@@ -3389,42 +3386,9 @@
 
 
 
-        // Enhanced end match with multiple player ratings
-        function endMatch() {
-            document.getElementById('scoreInstructions').innerHTML = '🏁 Матч завершено! Тепер оцініть всіх гравців з вашої команди';
-            showToast('🏁 Матч завершено! Оцініть гравців зі своєї команди', 'success');
-            setTimeout(() => {
-                showRatingModal('oleksandr_m');
-            }, 1500);
-        }
+        // endMatch DUPLICATE REMOVED
 
-        // Enhanced rating with change display
-        function submitRating() {
-            if (currentRating === 0) {
-                showToast('⭐ Оберіть рейтинг!', 'error');
-                return;
-            }
-            
-            document.getElementById('ratingModal').classList.remove('show');
-            showToast(`⭐ Рейтинг ${currentRating.toFixed(2)}/5 відправлено!`, 'success');
-            
-            // Show rating changes
-            setTimeout(() => {
-                if (currentRating >= 4.0) {
-                    showRatingChange('+0.2', '#4caf50');
-                } else if (currentRating >= 2.5) {
-                    showRatingChange('+0.1', '#ff9800');
-                } else {
-                    showRatingChange('-0.1', '#f44336');
-                }
-            }, 1000);
-            
-            currentRating = 0;
-            
-            // Reset rating form
-            document.getElementById('playerRatingValue').textContent = '0.0';
-            document.getElementById('ratingStars').textContent = '☆☆☆☆☆';
-            document.getElementById('ratingStars').style.color = '#ddd';
+        // submitRating DUPLICATE REMOVED
         }
 
         // Store and subscription functions
@@ -3761,7 +3725,7 @@
             });
         }
 
-        function handleQuickLogin() {
+        window.handleQuickLogin = function handleQuickLogin() {
             currentUser = { name: 'Максим Коваль', avatar: 'МК', rating: 4.8 };
             
             const authScreen = document.getElementById('authScreen');
@@ -3776,11 +3740,11 @@
             }, 1000);
         }
 
-        function handleQuickRegister() {
+        window.handleQuickRegister = function handleQuickRegister() {
             document.getElementById('profileCreationModal').classList.add('show');
         }
 
-        function loginWithGoogle() {
+        window.loginWithGoogle = function loginWithGoogle() {
             currentUser = { name: 'Максим Коваль', avatar: 'МК', rating: 4.8 };
             const authScreen = document.getElementById('authScreen');
             const mainScreen = document.getElementById('mainScreen');
@@ -3793,7 +3757,7 @@
             }, 1000);
         }
 
-        function loginWithFacebook() {
+        window.loginWithFacebook = function loginWithFacebook() {
             currentUser = { name: 'Максим Коваль', avatar: 'МК', rating: 4.8 };
             const authScreen = document.getElementById('authScreen');
             const mainScreen = document.getElementById('mainScreen');
@@ -3808,152 +3772,13 @@
 
         // ========== CLEANED UP - ONLY NEW FUNCTIONS BELOW ==========
         
-        // Video voting functions
-        function updateVoteValue(videoId, value) {
-            document.getElementById('vote_' + videoId).textContent = parseFloat(value).toFixed(2);
-        }
+        // Video voting functions DUPLICATE REMOVED
 
-        function voteForVideo(videoId, event) {
-            event.stopPropagation();
-            
-            const slider = document.getElementById('slider_' + videoId);
-            const button = event.target;
-            const ratingValue = parseFloat(slider.value);
-            
-            if (ratingValue === 0) {
-                showToast('❌ Оберіть оцінку на повзунку!', 'error');
-                return;
-            }
-            
-            // Disable slider and button after voting
-            slider.disabled = true;
-            button.disabled = true;
-            button.textContent = 'Проголосовано';
-            button.style.background = '#9e9e9e';
-            button.style.cursor = 'not-allowed';
-            
-            // Show success message WITHOUT coins
-            showToast(`⭐ Оцінка ${ratingValue.toFixed(2)} відправлена!`, 'success');
-            
-            // Show rating change after 1 second
-            setTimeout(() => {
-                showToast(`Рейтинг +0.1`, 'success');
-            }, 1000);
-        }
+        // voteForVideo DUPLICATE REMOVED
 
-        function filterVideos(type) {
-            document.querySelectorAll('.video-filter').forEach(btn => {
-                btn.classList.remove('active');
-                btn.style.background = 'rgba(255,255,255,0.1)';
-                btn.style.borderColor = 'rgba(255,255,255,0.3)';
-                btn.style.color = 'white';
-            });
-            
-            event.target.classList.add('active');
-            event.target.style.background = 'rgba(76, 175, 80, 0.2)';
-            event.target.style.borderColor = '#4caf50';
-            event.target.style.color = '#2e7d32';
-            
-            // Actually change video content based on filter
-            const videoItems = document.querySelectorAll('.challenge-video-item');
-            const filterData = {
-                'all': [
-                    { title: 'Кращий фінт тижня', author: 'Андрій Коваленко' },
-                    { title: 'Точність ударів', author: 'Петро Мельник' },
-                    { title: 'Швидкісний дриблінг', author: 'Дмитро Коваленко' }
-                ],
-                'tricks': [
-                    { title: 'Неймовірний фінт', author: 'Віталій Фінтер' },
-                    { title: 'Технічний трюк', author: 'Олег Технік' },
-                    { title: 'Майстерський обвід', author: 'Артур Майстер' }
-                ],
-                'accuracy': [
-                    { title: 'Супер точність', author: 'Андрій Снайпер' },
-                    { title: 'Влучний удар', author: 'Максим Влучник' },
-                    { title: 'Ідеальний постріл', author: 'Сергій Точний' }
-                ],
-                'speed': [
-                    { title: 'Швидкість блискавки', author: 'Олександр Швидкий' },
-                    { title: 'Рекордний час', author: 'Петро Рекорд' },
-                    { title: 'Спринт з м\'ячем', author: 'Ігор Спринтер' }
-                ],
-                'top': [
-                    { title: '🏆 ТОП відео місяця', author: 'Зірка Футболу' },
-                    { title: '🥇 Переможець тижня', author: 'Професіонал Про' },
-                    { title: '⭐ Найкраще виконання', author: 'Чемпіон Чемп' }
-                ]
-            };
-            
-            const data = filterData[type] || filterData['all'];
-            
-            videoItems.forEach((item, index) => {
-                if (data[index]) {
-                    const titleEl = item.querySelector('h4');
-                    const authorEl = item.querySelector('.video-author');
-                    
-                    if (titleEl) {
-                        titleEl.style.transition = 'all 0.3s ease';
-                        titleEl.style.opacity = '0';
-                        setTimeout(() => {
-                            titleEl.textContent = data[index].title;
-                            titleEl.style.opacity = '1';
-                        }, 150);
-                    }
-                    
-                    if (authorEl) {
-                        authorEl.style.transition = 'all 0.3s ease';
-                        authorEl.style.opacity = '0';
-                        setTimeout(() => {
-                            authorEl.textContent = data[index].author;
-                            authorEl.style.opacity = '1';
-                        }, 150);
-                    }
-                }
-            });
-            
-            const filters = {
-                'all': '🌟 Показано всі відео',
-                'tricks': '🎯 Фільтр: Тільки фінти',
-                'accuracy': '⚽ Фільтр: Точність ударів',
-                'speed': '🏃 Фільтр: Швидкісні відео',
-                'top': '🏆 Фільтр: Топ відео'
-            };
-            
-            showToast(filters[type], 'success');
-        }
+        // filterVideos DUPLICATE REMOVED
 
-        function searchVideos(query) {
-            if (query.length > 2) {
-                // Enhanced search with city and rating detection
-                const lowerQuery = query.toLowerCase();
-                let searchType = 'загальний';
-                let searchResult = '';
-                
-                if (lowerQuery.includes('київ') || lowerQuery.includes('kyiv')) {
-                    searchType = 'місто';
-                    searchResult = 'Київ - знайдено 15 відео';
-                } else if (lowerQuery.includes('львів') || lowerQuery.includes('lviv')) {
-                    searchType = 'місто';
-                    searchResult = 'Львів - знайдено 8 відео';
-                } else if (lowerQuery.includes('одеса') || lowerQuery.includes('odesa')) {
-                    searchType = 'місто';
-                    searchResult = 'Одеса - знайдено 6 відео';
-                } else if (lowerQuery.includes('рейтинг') || lowerQuery.match(/\d\.\d/)) {
-                    searchType = 'рейтинг';
-                    searchResult = 'Рейтинг 4.5+ - знайдено 12 відео';
-                } else {
-                    searchResult = `"${query}" - знайдено 7 відео`;
-                }
-                
-                showToast(`🔍 ${searchType === 'загальний' ? 'Пошук' : 'Фільтр по ' + searchType}: ${searchResult}`, 'success');
-            }
-        }
-
-        function searchPlayers(query) {
-            if (query.length > 2) {
-                showToast(`👤 Пошук гравців: "${query}"`, 'success');
-            }
-        }
+        // searchVideos and searchPlayers DUPLICATES REMOVED
 
         // Comments functions
         function toggleComments(videoId) {
@@ -3990,50 +3815,7 @@
             showToast('📹 Відтворення відео...', 'success');
         }
 
-        // Player profile
-        function showPlayerProfile(playerId) {
-            const players = {
-                'oleksandr_m': {
-                    avatar: 'ОМ',
-                    name: 'Олександр Мельник',
-                    position: 'Нападник • Київ • 25 років',
-                    rating: '4.9',
-                    matches: '67',
-                    winRate: '92%',
-                    goals: '89'
-                },
-                'petro_m': {
-                    avatar: 'ПМ',
-                    name: 'Петро Мельник',
-                    position: 'Нападник • Київ • 23 роки',
-                    rating: '4.7',
-                    matches: '45',
-                    winRate: '88%',
-                    goals: '67'
-                },
-                'dmitro_k': {
-                    avatar: 'ДК',
-                    name: 'Дмитро Коваленко',
-                    position: 'Воротар • Київ • 27 років',
-                    rating: '4.7',
-                    matches: '38',
-                    winRate: '85%',
-                    goals: '2'
-                }
-            };
-
-            const player = players[playerId] || players['oleksandr_m'];
-            
-            document.getElementById('profileAvatar').textContent = player.avatar;
-            document.getElementById('profileName').textContent = player.name;
-            document.getElementById('profilePosition').textContent = player.position;
-            document.getElementById('profileRating').textContent = player.rating;
-            document.getElementById('profileMatches').textContent = player.matches;
-            document.getElementById('profileWinRate').textContent = player.winRate;
-            document.getElementById('profileGoals').textContent = player.goals;
-            
-            document.getElementById('playerProfileModal').classList.add('show');
-        }
+        // showPlayerProfile DUPLICATE REMOVED
 
         function closePlayerProfile() {
             document.getElementById('playerProfileModal').classList.remove('show');
@@ -4389,9 +4171,7 @@
             }
         }
 
-        function toggleNotifications() {
-            showToast('🔔 Панель повідомлень', 'success');
-        }
+        // toggleNotifications DUPLICATE REMOVED
 
         function showAddMenu() {
             showToast('➕ Меню швидких дій', 'success');
