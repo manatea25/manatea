@@ -1701,191 +1701,146 @@
                         </div>
                     </div>
                 </div>
-                <!-- Match Creation Form -->
-                <div class="match-form">
-                    <div class="match-form-title">➕ Створити матч</div>
-                    <form onsubmit="createMatch(event)">
-                        <div class="form-row">
-                            <div class="form-field">
-                                <label>Назва матчу</label>
-                                <input type="text" placeholder="Вечірній футбол" required>
+                <!-- Create Match Modal -->
+                <div id="createMatchModal" class="rating-modal">
+                    <div class="rating-content" style="max-width: 400px; max-height: 90vh; overflow-y: auto;">
+                        <div class="rating-title">⚽ Створити новий матч</div>
+                        <form onsubmit="createNewMatch(event)">
+                            <div style="text-align: left; margin-bottom: 15px;">
+                                <label style="display: block; margin-bottom: 5px; font-weight: 600;">Назва матчу</label>
+                                <input type="text" placeholder="Вечірній футбол" style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px;">
                             </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-field">
-                                <label>Дата</label>
-                                <input type="date" required>
+                            
+                            <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                                <div style="flex: 1; text-align: left;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600;">Дата</label>
+                                    <input type="date" style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px;">
+                                </div>
+                                <div style="flex: 1; text-align: left;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600;">Час</label>
+                                    <input type="time" style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px;">
+                                </div>
                             </div>
-                            <div class="form-field">
-                                <label>Час</label>
-                                <input type="time" required>
+                            
+                            <div style="text-align: left; margin-bottom: 15px;">
+                                <label style="display: block; margin-bottom: 5px; font-weight: 600;">Місце</label>
+                                <input type="text" placeholder="Гідропарк, поле №2" style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px;">
                             </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-field">
-                                <label>Місце</label>
-                                <input type="text" placeholder="Гідропарк, поле №2" required>
+                            
+                            <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                                <div style="flex: 1; text-align: left;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600;">Формат</label>
+                                    <select style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px;">
+                                        <option value="5x5">5 на 5</option>
+                                        <option value="7x7" selected>7 на 7</option>
+                                        <option value="11x11">11 на 11</option>
+                                    </select>
+                                </div>
+                                <div style="flex: 1; text-align: left;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600;">Вартість (₴)</label>
+                                    <input type="number" placeholder="50" min="0" style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px;">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-field">
-                                <label>Кількість гравців</label>
-                                <select required>
-                                    <option value="">Оберіть</option>
-                                    <option value="6">6 на 6</option>
-                                    <option value="8">8 на 8</option>
-                                    <option value="10">10 на 10</option>
-                                    <option value="11">11 на 11</option>
-                                </select>
+                            
+                            <div style="text-align: left; margin-bottom: 20px;">
+                                <label style="display: block; margin-bottom: 5px; font-weight: 600;">Опис</label>
+                                <textarea placeholder="Опишіть деталі матчу..." rows="3" style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px; resize: vertical;"></textarea>
                             </div>
-                            <div class="form-field">
-                                <label>Вартість</label>
-                                <input type="number" placeholder="50" min="0">
+                            
+                            <div class="rating-buttons">
+                                <button type="button" onclick="closeCreateMatchModal()" class="rating-btn skip">Скасувати</button>
+                                <button type="submit" class="rating-btn submit">Створити матч</button>
                             </div>
-                        </div>
-                        <div class="form-field">
-                            <label>Додаткова інформація</label>
-                            <textarea placeholder="Опишіть деталі матчу..." rows="3"></textarea>
-                        </div>
-                        <button type="submit" class="create-match-btn">Створити матч</button>
-                    </form>
+                        </form>
+                    </div>
                 </div>
 
-                <!-- Waiting List -->
-                <div class="waiting-list">
-                    <div class="waiting-list-title">
-                        <i class="fas fa-clock"></i>
-                        Хочуть грати зі мною (3)
-                    </div>
+                <!-- Match Management (shown after joining a match) -->
+                <div id="matchManagement" style="display: none;">
+                    <h4 style="margin: 20px 0 15px 0; color: white; font-size: 16px;">👥 Управління матчем</h4>
                     
-                    <div class="waiting-player" onclick="showPlayerProfile('oleksandr_m')">
-                        <div class="waiting-avatar">ОМ</div>
-                        <div class="waiting-info">
-                            <div class="waiting-name">Олександр Мельник</div>
-                            <div class="waiting-meta">Нападник • ⭐ 4.9 • 15 хв тому</div>
+                    <!-- Waiting List -->
+                    <div style="background: rgba(255,255,255,0.9); border-radius: 15px; margin-bottom: 20px; color: #333; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.1);">
+                        <div style="padding: 15px; background: linear-gradient(135deg, #ff9800, #ffb74d); color: white;">
+                            <div style="font-size: 16px; font-weight: 700;">🕐 Хочуть приєднатися (10)</div>
+                            <div style="font-size: 12px; opacity: 0.9;">Приймайте або відхиляйте заявки</div>
                         </div>
-                        <div class="waiting-actions">
-                            <button class="waiting-btn accept" onclick="acceptPlayer('oleksandr_m', event)">✓</button>
-                            <button class="waiting-btn reject" onclick="rejectPlayer('oleksandr_m', event)">✗</button>
+                        <div style="padding: 15px; max-height: 300px; overflow-y: auto;">
+                            <!-- Demo players -->
+                            <div style="display: flex; align-items: center; gap: 10px; padding: 8px; background: #f8f9fa; border-radius: 8px; margin-bottom: 8px;">
+                                <div style="width: 32px; height: 32px; background: linear-gradient(135deg, #4caf50, #2e7d32); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: 700;">ОМ</div>
+                                <div style="flex: 1;">
+                                    <div style="font-weight: 600; font-size: 13px;">Олександр Мельник</div>
+                                    <div style="font-size: 11px; color: #666;">Нападник • ⭐ 4.9 • 5 хв тому</div>
+                                </div>
+                                <div style="display: flex; gap: 5px;">
+                                    <button onclick="acceptPlayer('oleksandr_m')" style="width: 28px; height: 28px; background: #4caf50; color: white; border: none; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;">✓</button>
+                                    <button onclick="rejectPlayer('oleksandr_m')" style="width: 28px; height: 28px; background: #f44336; color: white; border: none; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;">✗</button>
+                                </div>
+                            </div>
+                            <!-- More demo players... -->
+                            <div style="display: flex; align-items: center; gap: 10px; padding: 8px; background: #f8f9fa; border-radius: 8px; margin-bottom: 8px;">
+                                <div style="width: 32px; height: 32px; background: linear-gradient(135deg, #ff9800, #f57c00); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: 700;">ВС</div>
+                                <div style="flex: 1;">
+                                    <div style="font-weight: 600; font-size: 13px;">Віталій Семенов</div>
+                                    <div style="font-size: 11px; color: #666;">Півзахисник • ⭐ 4.8 • 12 хв тому</div>
+                                </div>
+                                <div style="display: flex; gap: 5px;">
+                                    <button onclick="acceptPlayer('vitaliy_s')" style="width: 28px; height: 28px; background: #4caf50; color: white; border: none; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;">✓</button>
+                                    <button onclick="rejectPlayer('vitaliy_s')" style="width: 28px; height: 28px; background: #f44336; color: white; border: none; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;">✗</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="waiting-player" onclick="showPlayerProfile('vitaliy_s')">
-                        <div class="waiting-avatar">ВС</div>
-                        <div class="waiting-info">
-                            <div class="waiting-name">Віталій Семенов</div>
-                            <div class="waiting-meta">Півзахисник • ⭐ 4.8 • 25 хв тому</div>
+                    <!-- Team Builder -->
+                    <div style="background: rgba(255,255,255,0.9); border-radius: 15px; margin-bottom: 20px; color: #333; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.1);">
+                        <div style="padding: 15px; background: linear-gradient(135deg, #9c27b0, #ba68c8); color: white;">
+                            <div style="font-size: 16px; font-weight: 700;">⚽ Команди для матчу</div>
+                            <div style="font-size: 12px; opacity: 0.9;">Автобаланс за рейтингом</div>
                         </div>
-                        <div class="waiting-actions">
-                            <button class="waiting-btn accept" onclick="acceptPlayer('vitaliy_s', event)">✓</button>
-                            <button class="waiting-btn reject" onclick="rejectPlayer('vitaliy_s', event)">✗</button>
+                        <div style="padding: 15px;">
+                            <div id="teamsDisplay" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                                <!-- Teams will be populated by JavaScript -->
+                            </div>
+                            
+                            <button onclick="autoBalanceTeams()" style="width: 100%; padding: 10px; background: linear-gradient(135deg, #9c27b0, #ba68c8); color: white; border: none; border-radius: 20px; font-weight: 600; cursor: pointer; margin-bottom: 10px;">
+                                🎯 Авто-баланс по рейтингу
+                            </button>
+                            
+                            <div id="teamNamesDisplay" style="text-align: center; font-size: 12px; color: #666;">
+                                Натисніть автобаланс для створення команд
+                            </div>
                         </div>
                     </div>
 
-                    <div class="waiting-player" onclick="showPlayerProfile('sergiy_p')">
-                        <div class="waiting-avatar">СП</div>
-                        <div class="waiting-info">
-                            <div class="waiting-name">Сергій Петренко</div>
-                            <div class="waiting-meta">Захисник • ⭐ 4.6 • 1 год тому</div>
+                    <!-- Match Control -->
+                    <div style="background: rgba(255,255,255,0.9); border-radius: 15px; color: #333; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.1);">
+                        <div style="padding: 15px; background: linear-gradient(135deg, #4caf50, #66bb6a); color: white;">
+                            <div style="font-size: 16px; font-weight: 700;">🏁 Завершення матчу</div>
+                            <div style="font-size: 12px; opacity: 0.9;">Введіть рахунок після гри</div>
                         </div>
-                        <div class="waiting-actions">
-                            <button class="waiting-btn accept" onclick="acceptPlayer('sergiy_p', event)">✓</button>
-                            <button class="waiting-btn reject" onclick="rejectPlayer('sergiy_p', event)">✗</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Team Builder -->
-                <div class="team-builder">
-                    <div class="team-builder-title">⚽ Команди для матчу</div>
-                    <div class="teams-container">
-                        <div class="team">
-                            <div class="team-name">🟢 Зелені</div>
-                            <div class="team-player" onclick="showPlayerProfile('maksym_k')">
-                                <div class="team-avatar">МК</div>
-                                <div class="team-player-info">
-                                    <div class="team-player-name">Максим Коваль (Ви)</div>
-                                    <div class="team-player-rating">⭐ 4.8</div>
+                        <div style="padding: 15px;">
+                            <div id="finalScoreSection" style="display: none;">
+                                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+                                    <div style="flex: 1; text-align: center;">
+                                        <div id="team1Name" style="font-weight: 600; margin-bottom: 5px;">Команда 1</div>
+                                        <input type="number" id="team1Score" min="0" placeholder="0" style="width: 60px; padding: 8px; border: 2px solid #ddd; border-radius: 8px; text-align: center;">
+                                    </div>
+                                    <div style="font-size: 24px; font-weight: 700;">:</div>
+                                    <div style="flex: 1; text-align: center;">
+                                        <div id="team2Name" style="font-weight: 600; margin-bottom: 5px;">Команда 2</div>
+                                        <input type="number" id="team2Score" min="0" placeholder="0" style="width: 60px; padding: 8px; border: 2px solid #ddd; border-radius: 8px; text-align: center;">
+                                    </div>
                                 </div>
+                                <button onclick="finishMatch()" style="width: 100%; padding: 10px; background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; border: none; border-radius: 20px; font-weight: 600; cursor: pointer;">
+                                    Завершити матч
+                                </button>
                             </div>
-                            <div class="team-player" onclick="showPlayerProfile('oleksandr_m')">
-                                <div class="team-avatar">ОМ</div>
-                                <div class="team-player-info">
-                                    <div class="team-player-name">Олександр М.</div>
-                                    <div class="team-player-rating">⭐ 4.9</div>
-                                </div>
-                            </div>
-                            <div class="team-player" onclick="showPlayerProfile('vitaliy_s')">
-                                <div class="team-avatar">ВС</div>
-                                <div class="team-player-info">
-                                    <div class="team-player-name">Віталій С.</div>
-                                    <div class="team-player-rating">⭐ 4.8</div>
-                                </div>
+                            <div id="matchNotStarted" style="text-align: center; color: #666; font-size: 14px;">
+                                Спочатку створіть команди за допомогою автобалансу
                             </div>
                         </div>
-                        <div class="team">
-                            <div class="team-name">🔵 Сині</div>
-                            <div class="team-player" onclick="showPlayerProfile('dmitro_k')">
-                                <div class="team-avatar">ДК</div>
-                                <div class="team-player-info">
-                                    <div class="team-player-name">Дмитро К.</div>
-                                    <div class="team-player-rating">⭐ 4.7</div>
-                                </div>
-                            </div>
-                            <div class="team-player" onclick="showPlayerProfile('sergiy_p')">
-                                <div class="team-avatar">СП</div>
-                                <div class="team-player-info">
-                                    <div class="team-player-name">Сергій П.</div>
-                                    <div class="team-player-rating">⭐ 4.6</div>
-                                </div>
-                            </div>
-                            <div class="team-player" onclick="showPlayerProfile('andriy_p')">
-                                <div class="team-avatar">АП</div>
-                                <div class="team-player-info">
-                                    <div class="team-player-name">Андрій П.</div>
-                                    <div class="team-player-rating">⭐ 4.6</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="auto-balance-btn" onclick="autoBalanceTeams()">
-                        🎯 Авто-баланс по рейтингу
-                    </button>
-                    <div style="margin-top: 10px; text-align: center; font-size: 12px; color: #666;">
-                        Останні назви команд: "⚡ Блискавки" vs "🔥 Вогняні"
-                    </div>
-                </div>
-
-                <!-- Score Tracker -->
-                <div class="score-tracker">
-                    <div class="score-header">
-                        <div class="match-title">⚽ Вечірній футбол</div>
-                        <div class="match-time">🕐 Триває 32 хвилини</div>
-                    </div>
-                    <div style="margin-bottom: 15px; text-align: center; font-size: 14px; color: #666;">
-                        💡 Натисніть на рахунок щоб додати гол
-                    </div>
-                    <div class="score-display">
-                        <div class="team-score">
-                            <div class="team-score-name">🟢 Зелені</div>
-                            <div class="team-score-number" onclick="incrementScore('green')" id="greenScore">2</div>
-                        </div>
-                        <div class="score-vs">:</div>
-                        <div class="team-score">
-                            <div class="team-score-name">🔵 Сині</div>
-                            <div class="team-score-number" onclick="incrementScore('blue')" id="blueScore">1</div>
-                        </div>
-                    </div>
-                    <div class="score-actions">
-                        <button class="score-btn end-match" onclick="endMatch()">
-                            Завершити матч
-                        </button>
-                        <button class="score-btn reset" onclick="resetScore()">
-                            Скинути рахунок
-                        </button>
-                    </div>
-                    <div id="scoreInstructions" style="margin-top: 15px; padding: 10px; background: rgba(76, 175, 80, 0.1); border-radius: 8px; text-align: center; font-size: 12px; color: #2e7d32;">
-                        ℹ️ Спочатку натискайте на рахунок для додавання голів, потім завершіть матч для оцінки гравців
                     </div>
                 </div>
             </div>
