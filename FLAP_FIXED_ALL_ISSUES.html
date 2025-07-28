@@ -1794,9 +1794,7 @@
                     </div>
                 </div>
 
-                <!-- Match Management (shown after joining a match) -->
-                <div id="matchManagement" style="display: none;">
-                    <h4 style="margin: 20px 0 15px 0; color: white; font-size: 16px;">👥 Управління матчем</h4>
+                <!-- Match Management moved to myMatches section -->
                     
                     <!-- Waiting List -->
                     <div style="background: rgba(255,255,255,0.9); border-radius: 15px; margin-bottom: 20px; color: #333; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.1);">
@@ -2146,6 +2144,62 @@
                         <p style="color: rgba(255,255,255,0.7); font-size: 14px; margin-bottom: 20px;">
                             Тут будуть відображатися матчі, які ви створили
                         </p>
+                        
+                        <!-- Match Management -->
+                        <div id="matchManagement" style="display: none;">
+                            <h4 style="margin: 20px 0 15px 0; color: white; font-size: 16px;">👥 Управління матчем</h4>
+                            
+                            <!-- Waiting List -->
+                            <div style="background: rgba(255,255,255,0.9); border-radius: 15px; margin-bottom: 20px; color: #333; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.1);">
+                                <div style="padding: 15px; background: linear-gradient(135deg, #ff9800, #ffb74d); color: white;">
+                                    <div style="font-size: 16px; font-weight: 700;">🕐 Хочуть приєднатися (10)</div>
+                                    <div style="font-size: 12px; opacity: 0.9;">Приймайте або відхиляйте заявки</div>
+                                </div>
+                                <div style="padding: 15px;">
+                                    <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee;">
+                                        <div style="display: flex; align-items: center; gap: 10px;">
+                                            <div style="width: 35px; height: 35px; background: #4caf50; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; color: white;">🎯</div>
+                                            <div>
+                                                <div style="font-weight: 600; font-size: 14px;">Олексій Петренко</div>
+                                                <div style="font-size: 12px; color: #666;">Рейтинг: 4.2 ⭐</div>
+                                            </div>
+                                        </div>
+                                        <div style="display: flex; gap: 8px;">
+                                            <button onclick="acceptPlayer('player1')" style="padding: 6px 12px; background: #4caf50; color: white; border: none; border-radius: 8px; font-size: 12px; cursor: pointer;">✓ Прийняти</button>
+                                            <button onclick="rejectPlayer('player1')" style="padding: 6px 12px; background: #ff5722; color: white; border: none; border-radius: 8px; font-size: 12px; cursor: pointer;">✗ Відхилити</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Auto Balance Button -->
+                            <div style="text-align: center; margin: 20px 0;">
+                                <button onclick="autoBalanceTeams()" style="padding: 12px 24px; background: linear-gradient(135deg, #2196f3, #64b5f6); color: white; border: none; border-radius: 20px; font-weight: 700; cursor: pointer; font-size: 14px;">
+                                    ⚖️ Автобаланс по рейтингу
+                                </button>
+                            </div>
+                            
+                            <!-- Final Score Section -->
+                            <div id="finalScoreSection" style="display: none; background: rgba(255,255,255,0.9); border-radius: 15px; padding: 20px; margin-bottom: 20px; color: #333;">
+                                <h4 style="text-align: center; margin-bottom: 15px; color: #2e7d32;">⚽ Завершити матч</h4>
+                                <div style="display: flex; gap: 15px; align-items: center; justify-content: center;">
+                                    <div style="text-align: center;">
+                                        <label style="display: block; margin-bottom: 5px; font-weight: 600;">Команда 1</label>
+                                        <input type="number" id="team1Score" min="0" value="0" style="width: 60px; padding: 8px; border: 2px solid #ddd; border-radius: 8px; text-align: center;">
+                                    </div>
+                                    <div style="font-size: 24px; font-weight: 700; color: #2e7d32;">:</div>
+                                    <div style="text-align: center;">
+                                        <label style="display: block; margin-bottom: 5px; font-weight: 600;">Команда 2</label>
+                                        <input type="number" id="team2Score" min="0" value="0" style="width: 60px; padding: 8px; border: 2px solid #ddd; border-radius: 8px; text-align: center;">
+                                    </div>
+                                </div>
+                                <div style="text-align: center; margin-top: 15px;">
+                                    <button onclick="finishMatch()" style="padding: 10px 20px; background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; border: none; border-radius: 15px; font-weight: 600; cursor: pointer;">
+                                        🏁 Завершити матч
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                         
                         <!-- Demo My Match -->
                         <div style="background: rgba(255,255,255,0.9); border-radius: 15px; margin-bottom: 15px; color: #333; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.1);">
@@ -3505,7 +3559,7 @@
         }
 
         function closeStore() {
-            document.getElementById('storeModal').classList.remove('show');
+            document.getElementById('storeModal').style.display = 'none';
         }
 
         function buyItem(itemId, price) {
@@ -4343,9 +4397,7 @@
             showToast('🔔 Панель повідомлень', 'success');
         }
 
-        function showAddMenu() {
-            showToast('➕ Меню швидких дій', 'success');
-        }
+
 
         // Challenge functions
         function joinChallenge(challengeId) {
