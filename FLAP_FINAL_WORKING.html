@@ -420,11 +420,20 @@
 
         /* Content Sections - WORKING VERSION */
         .content-section {
-            display: none;
+            display: none !important;
         }
 
         .content-section.active {
-            display: block;
+            display: block !important;
+        }
+
+        /* FORCE RATING/PROFILE VISIBILITY */
+        #rating.active, #profile.active {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            height: auto !important;
+            overflow: visible !important;
         }
 
 
@@ -3934,7 +3943,7 @@
             }, 1000);
         }
 
-        // Enhanced showSection function
+        // SIMPLE WORKING showSection function (from test)
         window.showSection = function showSection(sectionId) {
             console.log('🔍 showSection викликана для:', sectionId);
             
@@ -3946,48 +3955,23 @@
                 console.log('❌ Приховано:', section.id);
             });
             
-            // Hide match management if switching away from matches
-            if (sectionId !== 'matches') {
-                const matchManagement = document.getElementById('matchManagement');
-                if (matchManagement) {
-                    matchManagement.style.display = 'none';
-                }
-                const myMatchesList = document.getElementById('myMatchesList');
-                if (myMatchesList) {
-                    myMatchesList.style.display = 'block';
-                }
-            }
+            // Remove active from all tabs
+            document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
             
-            // Remove active class from all nav tabs
-            const navTabs = document.querySelectorAll('.nav-tab');
-            navTabs.forEach(tab => tab.classList.remove('active'));
-            
-            // Show selected section
+            // Show target section
             const targetSection = document.getElementById(sectionId);
             if (targetSection) {
                 targetSection.style.display = 'block';
                 targetSection.classList.add('active');
                 console.log('✅ Показано:', sectionId);
                 
-                // Extra debug for rating/profile
-                if (sectionId === 'rating' || sectionId === 'profile') {
-                    console.log('🔍 Додаткова перевірка для', sectionId + ':');
-                    console.log('   Display:', window.getComputedStyle(targetSection).display);
-                    console.log('   Visibility:', window.getComputedStyle(targetSection).visibility);
-                    console.log('   Height:', window.getComputedStyle(targetSection).height);
-                    console.log('   Background:', window.getComputedStyle(targetSection).backgroundColor);
+                // Add active to clicked tab
+                if (event && event.target) {
+                    event.target.classList.add('active');
                 }
             } else {
                 console.error('❌ Секція не знайдена:', sectionId);
             }
-            
-            // Add active class to clicked nav tab
-            setTimeout(() => {
-                const clickedTab = document.querySelector(`.nav-tab[onclick*="${sectionId}"]`);
-                if (clickedTab) {
-                    clickedTab.classList.add('active');
-                }
-            }, 10);
         }
 
         // Enhanced player profiles with unique data
