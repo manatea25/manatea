@@ -1811,6 +1811,14 @@
                         <div style="margin-bottom: 15px;">
                             <strong>👥 Учасники: 12</strong> • <strong>📹 Відео: 8</strong>
                         </div>
+                        
+                        <!-- Quick Leaderboard Preview -->
+                        <div style="background: #f8f9fa; border-radius: 8px; padding: 10px; margin-bottom: 15px;">
+                            <div style="font-weight: 600; font-size: 12px; margin-bottom: 8px; color: #666;">🏆 ТОП-3 ВІДЕО:</div>
+                            <div style="font-size: 11px; margin-bottom: 3px;">🥇 Неймовірний фінт - <span style="color: #4caf50; font-weight: 700;">⭐ 4.8</span></div>
+                            <div style="font-size: 11px; margin-bottom: 3px;">🥈 Технічний трюк - <span style="color: #ff9800; font-weight: 700;">⭐ 4.6</span></div>
+                            <div style="font-size: 11px;">🥉 Майстерський обвід - <span style="color: #f44336; font-weight: 700;">⭐ 4.3</span></div>
+                        </div>
                         <div style="display: flex; gap: 10px;">
                             <button onclick="joinChallenge('best_trick')" style="flex: 1; padding: 8px; background: #4caf50; color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer;">
                                 Приєднатися
@@ -1833,6 +1841,14 @@
                         </div>
                         <div style="margin-bottom: 15px;">
                             <strong>👥 Учасники: 8</strong> • <strong>📹 Відео: 6</strong>
+                        </div>
+                        
+                        <!-- Quick Leaderboard Preview -->
+                        <div style="background: #f8f9fa; border-radius: 8px; padding: 10px; margin-bottom: 15px;">
+                            <div style="font-weight: 600; font-size: 12px; margin-bottom: 8px; color: #666;">🏆 ТОП-3 ВІДЕО:</div>
+                            <div style="font-size: 11px; margin-bottom: 3px;">🥇 Супер точність - <span style="color: #4caf50; font-weight: 700;">⭐ 4.9</span></div>
+                            <div style="font-size: 11px; margin-bottom: 3px;">🥈 Влучний удар - <span style="color: #ff9800; font-weight: 700;">⭐ 4.4</span></div>
+                            <div style="font-size: 11px;">🥉 Ідеальний постріл - <span style="color: #f44336; font-weight: 700;">⭐ 4.1</span></div>
                         </div>
                         <div style="display: flex; gap: 10px;">
                             <button onclick="joinChallenge('accuracy')" style="flex: 1; padding: 8px; background: #4caf50; color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer;">
@@ -1857,6 +1873,14 @@
                         <div style="margin-bottom: 15px;">
                             <strong>👥 Учасники: 15</strong> • <strong>📹 Відео: 12</strong>
                         </div>
+                        
+                        <!-- Quick Leaderboard Preview -->
+                        <div style="background: #f8f9fa; border-radius: 8px; padding: 10px; margin-bottom: 15px;">
+                            <div style="font-weight: 600; font-size: 12px; margin-bottom: 8px; color: #666;">🏆 ТОП-3 ВІДЕО:</div>
+                            <div style="font-size: 11px; margin-bottom: 3px;">🥇 Швидкість блискавки - <span style="color: #4caf50; font-weight: 700;">⭐ 4.7</span></div>
+                            <div style="font-size: 11px; margin-bottom: 3px;">🥈 Рекордний час - <span style="color: #ff9800; font-weight: 700;">⭐ 4.5</span></div>
+                            <div style="font-size: 11px;">🥉 Спринт з м'ячем - <span style="color: #f44336; font-weight: 700;">⭐ 4.2</span></div>
+                        </div>
                         <div style="display: flex; gap: 10px;">
                             <button onclick="joinChallenge('speed')" style="flex: 1; padding: 8px; background: #4caf50; color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer;">
                                 Приєднатися
@@ -1864,6 +1888,19 @@
                             <button onclick="showChallengeVideos('speed')" style="flex: 1; padding: 8px; background: #2196f3; color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer;">
                                 Переглянути відео
                             </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Challenge Videos Modal -->
+                <div id="challengeVideosModal" class="rating-modal">
+                    <div class="rating-content" style="max-width: 450px; max-height: 80vh; overflow-y: auto;">
+                        <div class="rating-title">🏆 Рейтинги відео в челенджі</div>
+                        <div id="challengeVideosContent">
+                            <!-- Content will be loaded dynamically -->
+                        </div>
+                        <div class="rating-buttons">
+                            <button onclick="closeChallengeVideos()" class="rating-btn skip">Закрити</button>
                         </div>
                     </div>
                 </div>
@@ -3501,8 +3538,86 @@
         }
 
         function showChallengeVideos(challengeId) {
-            showSection('videos');
-            showToast('📹 Перегляд відео челенджу', 'success');
+            const challengeData = {
+                'best_trick': {
+                    title: '🎯 Кращий фінт тижня',
+                    videos: [
+                        { name: 'Неймовірний фінт від Андрія', author: 'Андрій Коваленко', city: 'Київ', rating: 4.8, votes: 23 },
+                        { name: 'Технічний трюк майстра', author: 'Олег Технік', city: 'Львів', rating: 4.6, votes: 19 },
+                        { name: 'Майстерський обвід', author: 'Артур Майстер', city: 'Одеса', rating: 4.3, votes: 15 },
+                        { name: 'Класичний фінт', author: 'Петро Класик', city: 'Харків', rating: 4.1, votes: 12 },
+                        { name: 'Швидкий обвід', author: 'Ігор Швидкий', city: 'Дніпро', rating: 3.9, votes: 8 }
+                    ]
+                },
+                'accuracy': {
+                    title: '⚽ Точність ударів',
+                    videos: [
+                        { name: 'Супер точність снайпера', author: 'Андрій Снайпер', city: 'Харків', rating: 4.9, votes: 18 },
+                        { name: 'Влучний удар у дев\'ятку', author: 'Максим Влучник', city: 'Дніпро', rating: 4.4, votes: 12 },
+                        { name: 'Ідеальний постріл', author: 'Сергій Точний', city: 'Київ', rating: 4.1, votes: 9 },
+                        { name: 'Точний удар у кут', author: 'Олег Меткий', city: 'Львів', rating: 3.8, votes: 7 }
+                    ]
+                },
+                'speed': {
+                    title: '🏃‍♂️ Швидкість дриблінгу',
+                    videos: [
+                        { name: 'Швидкість блискавки', author: 'Олександр Швидкий', city: 'Київ', rating: 4.7, votes: 21 },
+                        { name: 'Рекордний час', author: 'Петро Рекорд', city: 'Львів', rating: 4.5, votes: 16 },
+                        { name: 'Спринт з м\'ячем', author: 'Ігор Спринтер', city: 'Одеса', rating: 4.2, votes: 13 },
+                        { name: 'Швидкий слалом', author: 'Максим Швидкий', city: 'Харків', rating: 4.0, votes: 11 },
+                        { name: 'Блискавичний дриблінг', author: 'Артур Блискавка', city: 'Дніпро', rating: 3.7, votes: 6 }
+                    ]
+                }
+            };
+
+            const challenge = challengeData[challengeId];
+            if (!challenge) return;
+
+            let content = `<div style="margin-bottom: 20px; text-align: center;">
+                <h4 style="color: #2e7d32; margin: 0 0 10px 0;">${challenge.title}</h4>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <span style="font-size: 14px; color: #666;">Всього відео: ${challenge.videos.length}</span>
+                    <button onclick="sortChallengeVideos('${challengeId}')" style="background: #4caf50; color: white; border: none; padding: 4px 8px; border-radius: 8px; font-size: 11px; cursor: pointer;">
+                        Сортувати за рейтингом
+                    </button>
+                </div>
+            </div>`;
+
+            challenge.videos.forEach((video, index) => {
+                const medalEmoji = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `${index + 1}`;
+                const ratingColor = video.rating >= 4.5 ? '#4caf50' : video.rating >= 4.0 ? '#ff9800' : '#f44336';
+                
+                content += `
+                    <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px; background: #f8f9fa; border-radius: 10px; margin-bottom: 10px; border-left: 4px solid ${ratingColor};">
+                        <div style="display: flex; align-items: center; gap: 12px; flex: 1;">
+                            <div style="width: 32px; height: 32px; background: ${ratingColor}; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700;">
+                                ${medalEmoji}
+                            </div>
+                            <div style="flex: 1;">
+                                <div style="font-weight: 600; font-size: 14px; margin-bottom: 2px;">${video.name}</div>
+                                <div style="font-size: 12px; color: #666;">${video.author} • ${video.city}</div>
+                            </div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-weight: 700; color: ${ratingColor}; font-size: 16px;">⭐ ${video.rating}</div>
+                            <div style="font-size: 10px; color: #666;">${video.votes} голосів</div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            document.getElementById('challengeVideosContent').innerHTML = content;
+            document.getElementById('challengeVideosModal').classList.add('show');
+        }
+
+        function closeChallengeVideos() {
+            document.getElementById('challengeVideosModal').classList.remove('show');
+        }
+
+        function sortChallengeVideos(challengeId) {
+            showToast('🔄 Відео відсортовано за рейтингом!', 'success');
+            // Re-show with sorted data (already sorted in the data structure)
+            showChallengeVideos(challengeId);
         }
 
         function createChallenge() {
