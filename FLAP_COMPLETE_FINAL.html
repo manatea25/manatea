@@ -1464,19 +1464,19 @@
 
             <!-- Navigation Tabs -->
             <div class="nav-tabs">
-                <div class="nav-tab active" onclick="showSection('videos')">
+                <div class="nav-tab active" id="tab-videos" data-section="videos">
                     <i class="fas fa-video"></i><br>Відео
                 </div>
-                <div class="nav-tab" onclick="showSection('challenges')">
+                <div class="nav-tab" id="tab-challenges" data-section="challenges">
                     <i class="fas fa-trophy"></i><br>Челенджі
                 </div>
-                <div class="nav-tab" onclick="showSection('matches')">
+                <div class="nav-tab" id="tab-matches" data-section="matches">
                     <i class="fas fa-futbol"></i><br>Матчі
                 </div>
-                <div class="nav-tab" onclick="showSection('rating')">
+                <div class="nav-tab" id="tab-rating" data-section="rating">
                     <i class="fas fa-crown"></i><br>Рейтинг
                 </div>
-                <div class="nav-tab" onclick="showSection('profile')">
+                <div class="nav-tab" id="tab-profile" data-section="profile">
                     <i class="fas fa-user"></i><br>Профіль
                 </div>
             </div>
@@ -4863,61 +4863,36 @@
                 console.log(`Element #${id}:`, element ? 'EXISTS' : 'MISSING');
             });
             
-            // Test click handlers
-            console.log(`Found ${navTabs.length} navigation tabs`);
+            // SIMPLE BRUTAL NAVIGATION FIX
+            console.log('🔥 BRUTAL NAVIGATION FIX STARTING...');
             
-            // FORCE RELIABLE click handlers
-            navTabs.forEach((tab, index) => {
-                // Get section from onclick attribute before removing it
-                const onclickAttr = tab.getAttribute('onclick');
-                let sectionId = null;
-                
-                if (onclickAttr) {
-                    const match = onclickAttr.match(/showSection\('(.+?)'\)/);
-                    if (match) {
-                        sectionId = match[1];
-                    }
-                }
-                
-                // Fallback to index-based mapping
-                if (!sectionId) {
-                    const sections = ['videos', 'challenges', 'matches', 'rating', 'profile'];
-                    sectionId = sections[index];
-                }
-                
-                // Remove onclick to avoid conflicts
-                tab.removeAttribute('onclick');
-                
-                // Add reliable click listener
-                tab.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    console.log('🔘 RELIABLE Tab clicked:', this.textContent.trim(), '-> Section:', sectionId);
-                    
-                    if (sectionId && typeof window.showSection === 'function') {
-                        window.showSection(sectionId);
-                    } else {
-                        console.error('❌ showSection not available or sectionId missing:', sectionId);
-                    }
-                });
-                
-                // Ensure tab is visually and functionally clickable
-                tab.style.cursor = 'pointer';
-                tab.style.pointerEvents = 'auto';
-                tab.style.userSelect = 'none';
-                
-                console.log(`✅ RELIABLE listener added for tab ${index}: ${sectionId}`);
+            // Direct ID-based listeners - NO LOOPS, NO COMPLEXITY
+            document.getElementById('tab-videos').addEventListener('click', () => {
+                console.log('🎬 VIDEOS clicked');
+                window.showSection('videos');
             });
             
-            // TEST NAVIGATION AFTER 2 SECONDS
-            setTimeout(() => {
-                console.log('🧪 TESTING NAVIGATION...');
-                navTabs.forEach((tab, index) => {
-                    const hasListener = tab.onclick || tab.addEventListener;
-                    console.log(`Tab ${index} (${tab.textContent.trim()}): ${hasListener ? 'HAS LISTENERS' : 'NO LISTENERS'}`);
-                });
-                console.log('🎯 Navigation test complete. Try clicking tabs now!');
-            }, 2000);
+            document.getElementById('tab-challenges').addEventListener('click', () => {
+                console.log('🏆 CHALLENGES clicked');
+                window.showSection('challenges');
+            });
+            
+            document.getElementById('tab-matches').addEventListener('click', () => {
+                console.log('⚽ MATCHES clicked');
+                window.showSection('matches');
+            });
+            
+            document.getElementById('tab-rating').addEventListener('click', () => {
+                console.log('👑 RATING clicked');
+                window.showSection('rating');
+            });
+            
+            document.getElementById('tab-profile').addEventListener('click', () => {
+                console.log('👤 PROFILE clicked');
+                window.showSection('profile');
+            });
+            
+            console.log('🔥 BRUTAL NAVIGATION FIX COMPLETE!');
             
             // MAKE ALL FUNCTIONS GLOBALLY ACCESSIBLE FOR ONCLICK
             console.log('🌐 Making functions globally accessible...');
