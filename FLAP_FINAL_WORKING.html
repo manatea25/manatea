@@ -2138,35 +2138,151 @@
 
                 <!-- My Matches Tab -->
                 <div id="myMatches" style="display: none;">
-                    <div style="text-align: center; padding: 30px 20px;">
-                        <div style="font-size: 48px; margin-bottom: 20px;">⚽</div>
-                        <h4 style="color: white; margin-bottom: 15px;">Ваші матчі</h4>
-                        <p style="color: rgba(255,255,255,0.7); font-size: 14px; margin-bottom: 20px;">
-                            Тут будуть відображатися матчі, які ви створили
-                        </p>
+                    <!-- My Matches List -->
+                    <div id="myMatchesList">
+                        <h4 style="color: white; margin-bottom: 15px; font-size: 16px;">⚽ Ваші матчі</h4>
                         
-                        <!-- Match Management -->
-                        <div id="matchManagement" style="display: none;">
-                            <h4 style="margin: 20px 0 15px 0; color: white; font-size: 16px;">👥 Управління матчем</h4>
-                            
-                            <!-- Waiting List -->
-                            <div style="background: rgba(255,255,255,0.9); border-radius: 15px; margin-bottom: 20px; color: #333; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.1);">
-                                <div style="padding: 15px; background: linear-gradient(135deg, #ff9800, #ffb74d); color: white;">
-                                    <div style="font-size: 16px; font-weight: 700;">🕐 Хочуть приєднатися (10)</div>
-                                    <div style="font-size: 12px; opacity: 0.9;">Приймайте або відхиляйте заявки</div>
+                        <!-- Demo My Match -->
+                        <div style="background: rgba(255,255,255,0.9); border-radius: 15px; margin-bottom: 15px; color: #333; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.1);">
+                            <div style="padding: 15px; background: linear-gradient(135deg, #4caf50, #66bb6a); color: white;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <div style="font-size: 16px; font-weight: 700;">🏟️ Футбол 5x5</div>
+                                        <div style="font-size: 12px; opacity: 0.9;">Сьогодні 18:00 • Стадіон "Олімпійський"</div>
+                                    </div>
+                                    <div style="font-size: 14px; font-weight: 600;">8/10</div>
                                 </div>
-                                <div style="padding: 15px;">
-                                    <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee;">
+                            </div>
+                            <div style="padding: 15px;">
+                                <div style="display: flex; gap: 10px;">
+                                    <button onclick="manageMyMatch('match1')" style="flex: 1; padding: 10px; background: linear-gradient(135deg, #2196f3, #64b5f6); color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer;">
+                                        👥 Управляти матчем
+                                    </button>
+                                    <button onclick="editMatch('match1')" style="flex: 1; padding: 10px; background: rgba(255,193,7,0.9); color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer;">
+                                        ✏️ Редагувати
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Match Management (shown when managing specific match) -->
+                    <div id="matchManagement" style="display: none;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                                <h4 style="margin: 0; color: white; font-size: 16px;">👥 Управління матчем "Футбол 5x5"</h4>
+                                <button onclick="backToMyMatches()" style="padding: 8px 15px; background: rgba(255,255,255,0.2); color: white; border: none; border-radius: 10px; font-size: 12px; cursor: pointer;">← Назад</button>
+                            </div>
+                            
+                            <!-- 1. Waiting List (Очікують) -->
+                            <div style="background: rgba(255,255,255,0.9); border-radius: 15px; margin-bottom: 15px; color: #333; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.1);">
+                                <div style="padding: 12px 15px; background: linear-gradient(135deg, #ff9800, #ffb74d); color: white;">
+                                    <div style="font-size: 14px; font-weight: 700;">🕐 Очікують підтвердження (3)</div>
+                                </div>
+                                <div style="padding: 10px 15px; max-height: 200px; overflow-y: auto;">
+                                    <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #eee;">
                                         <div style="display: flex; align-items: center; gap: 10px;">
-                                            <div style="width: 35px; height: 35px; background: #4caf50; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; color: white;">🎯</div>
+                                            <div style="width: 32px; height: 32px; background: #4caf50; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; color: white;">🎯</div>
                                             <div>
-                                                <div style="font-weight: 600; font-size: 14px;">Олексій Петренко</div>
-                                                <div style="font-size: 12px; color: #666;">Рейтинг: 4.2 ⭐</div>
+                                                <div style="font-weight: 600; font-size: 13px;">Олексій Петренко</div>
+                                                <div style="font-size: 11px; color: #666;">⭐ 4.2 • Нападник • Київ</div>
                                             </div>
                                         </div>
-                                        <div style="display: flex; gap: 8px;">
-                                            <button onclick="acceptPlayer('player1')" style="padding: 6px 12px; background: #4caf50; color: white; border: none; border-radius: 8px; font-size: 12px; cursor: pointer;">✓ Прийняти</button>
-                                            <button onclick="rejectPlayer('player1')" style="padding: 6px 12px; background: #ff5722; color: white; border: none; border-radius: 8px; font-size: 12px; cursor: pointer;">✗ Відхилити</button>
+                                        <div style="display: flex; gap: 6px;">
+                                            <button onclick="acceptPlayer('player1')" style="padding: 5px 10px; background: #4caf50; color: white; border: none; border-radius: 6px; font-size: 11px; cursor: pointer;">✓</button>
+                                            <button onclick="rejectPlayer('player1')" style="padding: 5px 10px; background: #ff5722; color: white; border: none; border-radius: 6px; font-size: 11px; cursor: pointer;">✗</button>
+                                        </div>
+                                    </div>
+                                    <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #eee;">
+                                        <div style="display: flex; align-items: center; gap: 10px;">
+                                            <div style="width: 32px; height: 32px; background: #2196f3; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; color: white;">⚽</div>
+                                            <div>
+                                                <div style="font-weight: 600; font-size: 13px;">Михайло Коваль</div>
+                                                <div style="font-size: 11px; color: #666;">⭐ 3.8 • Півзахисник • Львів</div>
+                                            </div>
+                                        </div>
+                                        <div style="display: flex; gap: 6px;">
+                                            <button onclick="acceptPlayer('player2')" style="padding: 5px 10px; background: #4caf50; color: white; border: none; border-radius: 6px; font-size: 11px; cursor: pointer;">✓</button>
+                                            <button onclick="rejectPlayer('player2')" style="padding: 5px 10px; background: #ff5722; color: white; border: none; border-radius: 6px; font-size: 11px; cursor: pointer;">✗</button>
+                                        </div>
+                                    </div>
+                                    <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 0;">
+                                        <div style="display: flex; align-items: center; gap: 10px;">
+                                            <div style="width: 32px; height: 32px; background: #9c27b0; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; color: white;">🏃</div>
+                                            <div>
+                                                <div style="font-weight: 600; font-size: 13px;">Андрій Мельник</div>
+                                                <div style="font-size: 11px; color: #666;">⭐ 4.5 • Захисник • Одеса</div>
+                                            </div>
+                                        </div>
+                                        <div style="display: flex; gap: 6px;">
+                                            <button onclick="acceptPlayer('player3')" style="padding: 5px 10px; background: #4caf50; color: white; border: none; border-radius: 6px; font-size: 11px; cursor: pointer;">✓</button>
+                                            <button onclick="rejectPlayer('player3')" style="padding: 5px 10px; background: #ff5722; color: white; border: none; border-radius: 6px; font-size: 11px; cursor: pointer;">✗</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 2. Accepted Players (Підтверджені) -->
+                            <div style="background: rgba(255,255,255,0.9); border-radius: 15px; margin-bottom: 15px; color: #333; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.1);">
+                                <div style="padding: 12px 15px; background: linear-gradient(135deg, #4caf50, #66bb6a); color: white;">
+                                    <div style="font-size: 14px; font-weight: 700;">✅ Підтверджені гравці (5)</div>
+                                </div>
+                                <div style="padding: 10px 15px; max-height: 200px; overflow-y: auto;">
+                                    <div style="display: flex; align-items: center; gap: 10px; padding: 6px 0; border-bottom: 1px solid #eee;">
+                                        <div style="width: 28px; height: 28px; background: #4caf50; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; color: white;">🛡️</div>
+                                        <div style="flex: 1;">
+                                            <div style="font-weight: 600; font-size: 12px;">Віктор Шевченко</div>
+                                            <div style="font-size: 10px; color: #666;">⭐ 4.0 • Захисник • Київ</div>
+                                        </div>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 10px; padding: 6px 0; border-bottom: 1px solid #eee;">
+                                        <div style="width: 28px; height: 28px; background: #2196f3; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; color: white;">🥅</div>
+                                        <div style="flex: 1;">
+                                            <div style="font-weight: 600; font-size: 12px;">Максим Зінченко</div>
+                                            <div style="font-size: 10px; color: #666;">⭐ 3.7 • Воротар • Дніпро</div>
+                                        </div>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 10px; padding: 6px 0; border-bottom: 1px solid #eee;">
+                                        <div style="width: 28px; height: 28px; background: #ff9800; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; color: white;">🔥</div>
+                                        <div style="flex: 1;">
+                                            <div style="font-weight: 600; font-size: 12px;">Олександр Мельник</div>
+                                            <div style="font-size: 10px; color: #666;">⭐ 4.3 • Нападник • Львів</div>
+                                        </div>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 10px; padding: 6px 0; border-bottom: 1px solid #eee;">
+                                        <div style="width: 28px; height: 28px; background: #9c27b0; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; color: white;">⚡</div>
+                                        <div style="flex: 1;">
+                                            <div style="font-weight: 600; font-size: 12px;">Дмитро Коваленко</div>
+                                            <div style="font-size: 10px; color: #666;">⭐ 3.8 • Воротар • Одеса</div>
+                                        </div>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 10px; padding: 6px 0;">
+                                        <div style="width: 28px; height: 28px; background: #795548; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; color: white;">⚽</div>
+                                        <div style="flex: 1;">
+                                            <div style="font-weight: 600; font-size: 12px;">Петро Мельник</div>
+                                            <div style="font-size: 10px; color: #666;">⭐ 4.2 • Нападник • Львів</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 3. Rejected Players (Відхилені) -->
+                            <div style="background: rgba(255,255,255,0.9); border-radius: 15px; margin-bottom: 20px; color: #333; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.1);">
+                                <div style="padding: 12px 15px; background: linear-gradient(135deg, #f44336, #ef5350); color: white;">
+                                    <div style="font-size: 14px; font-weight: 700;">❌ Відхилені гравці (2)</div>
+                                </div>
+                                <div style="padding: 10px 15px;">
+                                    <div style="display: flex; align-items: center; gap: 10px; padding: 6px 0; border-bottom: 1px solid #eee; opacity: 0.7;">
+                                        <div style="width: 28px; height: 28px; background: #666; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; color: white;">🚫</div>
+                                        <div style="flex: 1;">
+                                            <div style="font-weight: 600; font-size: 12px;">Ігор Сидоренко</div>
+                                            <div style="font-size: 10px; color: #666;">⭐ 2.1 • Нападник • Харків</div>
+                                        </div>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 10px; padding: 6px 0; opacity: 0.7;">
+                                        <div style="width: 28px; height: 28px; background: #666; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; color: white;">🚫</div>
+                                        <div style="flex: 1;">
+                                            <div style="font-weight: 600; font-size: 12px;">Сергій Іваненко</div>
+                                            <div style="font-size: 10px; color: #666;">⭐ 1.8 • Захисник • Київ</div>
                                         </div>
                                     </div>
                                 </div>
@@ -4748,12 +4864,21 @@
         }
 
         function manageMyMatch(matchId) {
-            showToast('🎮 Переходимо до управління матчем...', 'success');
-            // This would show the match management interface
+            // Hide matches list and show management
+            document.getElementById('myMatchesList').style.display = 'none';
             document.getElementById('matchManagement').style.display = 'block';
-            setTimeout(() => {
-                document.getElementById('matchManagement').scrollIntoView({ behavior: 'smooth' });
-            }, 500);
+            showToast('🎮 Управління матчем активовано', 'success');
+        }
+        
+        function backToMyMatches() {
+            // Hide management and show matches list
+            document.getElementById('matchManagement').style.display = 'none';
+            document.getElementById('myMatchesList').style.display = 'block';
+            showToast('📋 Повернулися до списку матчів', 'info');
+        }
+        
+        function editMatch(matchId) {
+            showToast('✏️ Редагування матчу (в розробці)', 'info');
         }
 
         // Friends selector functions
