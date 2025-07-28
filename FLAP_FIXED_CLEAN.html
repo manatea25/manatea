@@ -1841,9 +1841,7 @@
                                 <!-- Teams will be populated by JavaScript -->
                             </div>
                             
-                            <button onclick="autoBalanceTeams()" style="width: 100%; padding: 10px; background: linear-gradient(135deg, #9c27b0, #ba68c8); color: white; border: none; border-radius: 20px; font-weight: 600; cursor: pointer; margin-bottom: 10px;">
-                                🎯 Авто-баланс по рейтингу
-                            </button>
+
                             
                             <div id="teamNamesDisplay" style="text-align: center; font-size: 12px; color: #666;">
                                 Натисніть автобаланс для створення команд
@@ -3152,39 +3150,9 @@
         let coins = 250;
         let videoRatings = {}; // Store current rating values
         
-        // Test function availability on page load
+        // DOM ready handler
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('📄 DOM завантажено');
-            console.log('🔍 Перевірка функцій:');
-            console.log('- handleQuickLogin:', typeof handleQuickLogin);
-            console.log('- handleQuickRegister:', typeof handleQuickRegister);
-            console.log('- switchAuthMode:', typeof switchAuthMode);
-            
-            console.log('🔍 Перевірка елементів:');
-            console.log('- authScreen:', !!document.getElementById('authScreen'));
-            console.log('- mainScreen:', !!document.getElementById('mainScreen'));
-            
-            // Add test button for debugging
-            const testBtn = document.createElement('button');
-            testBtn.textContent = '🧪 ТЕСТ ВХОДУ';
-            testBtn.style.position = 'fixed';
-            testBtn.style.top = '10px';
-            testBtn.style.right = '10px';
-            testBtn.style.zIndex = '9999';
-            testBtn.style.padding = '10px';
-            testBtn.style.background = 'red';
-            testBtn.style.color = 'white';
-            testBtn.style.border = 'none';
-            testBtn.style.borderRadius = '5px';
-            testBtn.onclick = function() {
-                console.log('🧪 Тестовий вхід');
-                if (typeof handleQuickLogin === 'function') {
-                    handleQuickLogin();
-                } else {
-                    alert('❌ handleQuickLogin не знайдена!');
-                }
-            };
-            document.body.appendChild(testBtn);
+            // Initialize app
         });
 
         // Team names for auto-balance
@@ -3925,49 +3893,18 @@
         }
 
         function handleQuickLogin() {
-            console.log('🔑 handleQuickLogin викликана');
+            currentUser = { name: 'Максим Коваль', avatar: 'МК', rating: 4.8 };
             
-            try {
-                currentUser = { name: 'Максим Коваль', avatar: 'МК', rating: 4.8 };
-                
-                const authScreen = document.getElementById('authScreen');
-                const mainScreen = document.getElementById('mainScreen');
-                
-                console.log('📱 authScreen знайдено:', !!authScreen);
-                console.log('📱 mainScreen знайдено:', !!mainScreen);
-                
-                if (authScreen) {
-                    authScreen.style.display = 'none';
-                    console.log('✅ authScreen приховано');
-                } else {
-                    console.error('❌ authScreen не знайдено!');
-                    alert('❌ Помилка: authScreen не знайдено!');
-                    return;
-                }
-                
-                if (mainScreen) {
-                    mainScreen.style.display = 'block';
-                    console.log('✅ mainScreen показано');
-                } else {
-                    console.error('❌ mainScreen не знайдено!');
-                    alert('❌ Помилка: mainScreen не знайдено!');
-                    return;
-                }
-                
-                // Show success message
-                alert('🎉 Успішний вхід в систему!');
-                
-                // Show welcome subscription offer
-                setTimeout(() => {
-                    if (typeof showToast === 'function') {
-                        showToast('🎉 Даруємо вам тиждень безкоштовного користування підпискою Ліга Чемпіонів!', 'success');
-                    }
-                }, 1000);
-                
-            } catch (error) {
-                console.error('❌ Помилка в handleQuickLogin:', error);
-                alert('❌ Помилка входу: ' + error.message);
-            }
+            const authScreen = document.getElementById('authScreen');
+            const mainScreen = document.getElementById('mainScreen');
+            
+            if (authScreen) authScreen.style.display = 'none';
+            if (mainScreen) mainScreen.style.display = 'block';
+            
+            // Show welcome subscription offer
+            setTimeout(() => {
+                showToast('🎉 Ласкаво просимо до FLAP!', 'success');
+            }, 500);
         }
 
         function handleQuickRegister() {
@@ -4020,11 +3957,8 @@
 
         // Enhanced showSection function
         function showSection(sectionId) {
-            console.log('🔄 showSection called with:', sectionId);
-            
             // Hide all sections
             const sections = document.querySelectorAll('.content-section');
-            console.log('📋 Found sections:', sections.length);
             sections.forEach(section => {
                 section.style.display = 'none';
                 section.classList.remove('active');
@@ -4036,13 +3970,9 @@
             
             // Show selected section
             const targetSection = document.getElementById(sectionId);
-            console.log('🎯 Target section found:', !!targetSection);
             if (targetSection) {
                 targetSection.style.display = 'block';
                 targetSection.classList.add('active');
-                console.log('✅ Section displayed:', sectionId);
-            } else {
-                console.error('❌ Section not found:', sectionId);
             }
             
             // Add active class to clicked nav tab
@@ -4050,7 +3980,6 @@
                 const clickedTab = document.querySelector(`.nav-tab[onclick*="${sectionId}"]`);
                 if (clickedTab) {
                     clickedTab.classList.add('active');
-                    console.log('✅ Tab activated:', sectionId);
                 }
             }, 10);
         }
@@ -4185,13 +4114,17 @@
             // Get random team names
             const teamPair = teamNames[Math.floor(Math.random() * teamNames.length)];
             
-            // Update teams display - try multiple possible IDs
-            let teamsDisplay = document.getElementById('teamsDisplay');
+            // Find the correct teams display element (should be in matchManagement)
+            let teamsDisplay = document.querySelector('#matchManagement #finalScoreSection');
+            
+            // If finalScoreSection doesn't exist, create it
             if (!teamsDisplay) {
-                teamsDisplay = document.getElementById('teamBuilder');
-            }
-            if (!teamsDisplay) {
-                teamsDisplay = document.querySelector('.team-builder');
+                const matchManagement = document.getElementById('matchManagement');
+                if (matchManagement) {
+                    teamsDisplay = document.createElement('div');
+                    teamsDisplay.id = 'teamsDisplay';
+                    matchManagement.appendChild(teamsDisplay);
+                }
             }
             
             if (teamsDisplay) {
