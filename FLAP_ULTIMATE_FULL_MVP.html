@@ -2136,6 +2136,74 @@
                         </div>
                     </div>
                 </div>
+                
+                <!-- Video Rating Section -->
+                <div style="margin-top: 30px;">
+                    <h4 style="margin-bottom: 15px; font-size: 16px; color: white;">📹 Оцініть відео гравців</h4>
+                    
+                    <!-- Video 1 -->
+                    <div style="background: rgba(255,255,255,0.9); border-radius: 15px; margin-bottom: 15px; overflow: hidden; color: #333; box-shadow: 0 6px 20px rgba(0,0,0,0.1);">
+                        <div style="padding: 15px; background: linear-gradient(135deg, #4caf50, #66bb6a); color: white;">
+                            <div style="font-size: 14px; font-weight: 700;">⚽ Неймовірний гол від Віктора</div>
+                            <div style="font-size: 12px; opacity: 0.9;">Віктор Шевченко • Нападник • Київ</div>
+                        </div>
+                        <div style="padding: 15px;">
+                            <div style="background: #f5f5f5; height: 120px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 15px; color: #666;">
+                                <i class="fas fa-play-circle" style="font-size: 48px;"></i>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                <span style="font-size: 14px; font-weight: 600;">Ваша оцінка:</span>
+                                <input type="range" id="video_rating_1" min="0" max="5" step="0.01" value="0" onchange="updateVoteValue('video1', this.value)" style="flex: 1;">
+                                <span id="vote_value_video1" style="font-size: 14px; font-weight: 700; color: #4caf50; min-width: 40px;">0.0</span>
+                            </div>
+                            <button onclick="voteForVideo('video1', event)" style="width: 100%; padding: 8px; background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; border: none; border-radius: 15px; font-weight: 600; cursor: pointer;">
+                                Голосувати
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Video 2 -->
+                    <div style="background: rgba(255,255,255,0.9); border-radius: 15px; margin-bottom: 15px; overflow: hidden; color: #333; box-shadow: 0 6px 20px rgba(0,0,0,0.1);">
+                        <div style="padding: 15px; background: linear-gradient(135deg, #ff9800, #ffb74d); color: white;">
+                            <div style="font-size: 14px; font-weight: 700;">🎯 Точний удар Андрія</div>
+                            <div style="font-size: 12px; opacity: 0.9;">Андрій Петренко • Півзахисник • Львів</div>
+                        </div>
+                        <div style="padding: 15px;">
+                            <div style="background: #f5f5f5; height: 120px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 15px; color: #666;">
+                                <i class="fas fa-play-circle" style="font-size: 48px;"></i>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                <span style="font-size: 14px; font-weight: 600;">Ваша оцінка:</span>
+                                <input type="range" id="video_rating_2" min="0" max="5" step="0.01" value="0" onchange="updateVoteValue('video2', this.value)" style="flex: 1;">
+                                <span id="vote_value_video2" style="font-size: 14px; font-weight: 700; color: #ff9800; min-width: 40px;">0.0</span>
+                            </div>
+                            <button onclick="voteForVideo('video2', event)" style="width: 100%; padding: 8px; background: linear-gradient(135deg, #ff9800, #ffb74d); color: white; border: none; border-radius: 15px; font-weight: 600; cursor: pointer;">
+                                Голосувати
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Video 3 -->
+                    <div style="background: rgba(255,255,255,0.9); border-radius: 15px; margin-bottom: 15px; overflow: hidden; color: #333; box-shadow: 0 6px 20px rgba(0,0,0,0.1);">
+                        <div style="padding: 15px; background: linear-gradient(135deg, #9c27b0, #ba68c8); color: white;">
+                            <div style="font-size: 14px; font-weight: 700;">⚡ Швидкий дриблінг Олександра</div>
+                            <div style="font-size: 12px; opacity: 0.9;">Олександр Мельник • Нападник • Одеса</div>
+                        </div>
+                        <div style="padding: 15px;">
+                            <div style="background: #f5f5f5; height: 120px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 15px; color: #666;">
+                                <i class="fas fa-play-circle" style="font-size: 48px;"></i>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                <span style="font-size: 14px; font-weight: 600;">Ваша оцінка:</span>
+                                <input type="range" id="video_rating_3" min="0" max="5" step="0.01" value="0" onchange="updateVoteValue('video3', this.value)" style="flex: 1;">
+                                <span id="vote_value_video3" style="font-size: 14px; font-weight: 700; color: #9c27b0; min-width: 40px;">0.0</span>
+                            </div>
+                            <button onclick="voteForVideo('video3', event)" style="width: 100%; padding: 8px; background: linear-gradient(135deg, #9c27b0, #ba68c8); color: white; border: none; border-radius: 15px; font-weight: 600; cursor: pointer;">
+                                Голосувати
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Profile Section -->
@@ -3515,36 +3583,160 @@
             document.getElementById('playerProfileModal').classList.remove('show');
         }
 
-        // Match management
-        function createMatch(event) {
+        // NEW Match System Functions
+        function showCreateMatchModal() {
+            document.getElementById('createMatchModal').classList.add('show');
+        }
+
+        function closeCreateMatchModal() {
+            document.getElementById('createMatchModal').classList.remove('show');
+        }
+
+        function createNewMatch(event) {
             event.preventDefault();
-            showLoading();
+            document.getElementById('createMatchModal').classList.remove('show');
+            showToast('✅ Матч створено і додано до списку!', 'success');
+            event.target.reset();
+        }
+
+        function joinMatch(matchId) {
+            // Show match management section
+            document.getElementById('matchManagement').style.display = 'block';
+            showToast('🎉 Ви приєдналися до матчу! Тепер ви організатор.', 'success');
             
+            // Scroll to match management
             setTimeout(() => {
-                hideLoading();
-                showToast('✅ Матч створено!', 'success');
-                event.target.reset();
+                document.getElementById('matchManagement').scrollIntoView({ behavior: 'smooth' });
+            }, 500);
+        }
+
+        function filterMatches(filterType) {
+            // Update filter buttons appearance
+            document.querySelectorAll('.match-filter').forEach(btn => {
+                btn.style.background = 'rgba(255,255,255,0.1)';
+                btn.style.border = '1px solid rgba(255,255,255,0.3)';
+                btn.style.color = 'white';
+            });
+            
+            event.target.style.background = 'rgba(76, 175, 80, 0.2)';
+            event.target.style.border = '1px solid #4caf50';
+            event.target.style.color = '#2e7d32';
+            
+            // Simulate filtering
+            const filterNames = {
+                'all': '🌟 Всі матчі',
+                'city': '🏙️ Матчі у вашому місті',
+                'rating': '⭐ Матчі вашого рівня',
+                'time': '🕐 Матчі сьогодні',
+                'format': '👥 Матчі 7x7'
+            };
+            
+            showToast(`🔍 Показано: ${filterNames[filterType]}`, 'success');
+        }
+
+        function acceptPlayer(playerId) {
+            showToast('✅ Гравця прийнято до матчу!', 'success');
+            event.target.closest('div').style.opacity = '0.5';
+        }
+
+        function rejectPlayer(playerId) {
+            showToast('❌ Заявку відхилено', 'error');
+            event.target.closest('div').style.opacity = '0.5';
+        }
+
+        let currentTeams = null;
+        let teamNames = ['⚡ Блискавки', '🔥 Вогняні', '💎 Діаманти', '🚀 Ракети', '⭐ Зірки', '🦁 Леви', '🏆 Чемпіони', '💪 Титани'];
+
+        function autoBalanceTeams() {
+            // Demo players for teams
+            const players = [
+                { name: 'Максим Коваль (Ви)', rating: 4.8, avatar: 'МК' },
+                { name: 'Олександр Мельник', rating: 4.9, avatar: 'ОМ' },
+                { name: 'Віталій Семенов', rating: 4.8, avatar: 'ВС' },
+                { name: 'Дмитро Коваленко', rating: 4.7, avatar: 'ДК' },
+                { name: 'Сергій Петренко', rating: 4.6, avatar: 'СП' },
+                { name: 'Андрій Попов', rating: 4.6, avatar: 'АП' },
+                { name: 'Ігор Мельничук', rating: 4.5, avatar: 'ІМ' },
+                { name: 'Роман Ткач', rating: 4.4, avatar: 'РТ' },
+                { name: 'Володимир Савченко', rating: 4.3, avatar: 'ВС' },
+                { name: 'Олег Кравець', rating: 4.2, avatar: 'ОК' }
+            ];
+
+            // Shuffle and balance teams
+            const shuffled = [...players].sort(() => Math.random() - 0.5);
+            const team1 = shuffled.slice(0, 5);
+            const team2 = shuffled.slice(5, 10);
+            
+            // Random team names
+            const shuffledNames = [...teamNames].sort(() => Math.random() - 0.5);
+            const team1Name = shuffledNames[0];
+            const team2Name = shuffledNames[1];
+            
+            currentTeams = { team1: { name: team1Name, players: team1 }, team2: { name: team2Name, players: team2 } };
+
+            // Update display
+            document.getElementById('teamsDisplay').innerHTML = `
+                <div style="background: #f8f9fa; border-radius: 10px; padding: 10px;">
+                    <div style="font-weight: 700; color: #4caf50; margin-bottom: 8px; text-align: center;">${team1Name}</div>
+                    <div style="font-size: 11px; color: #666; margin-bottom: 8px; text-align: center;">Рейтинг команди: ${(team1.reduce((a,p) => a + p.rating, 0) / team1.length).toFixed(1)}</div>
+                    ${team1.map(p => `
+                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;" onclick="showPlayerProfile('${p.avatar}')">
+                            <div style="width: 24px; height: 24px; background: linear-gradient(135deg, #4caf50, #2e7d32); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 10px; font-weight: 700;">${p.avatar}</div>
+                            <div style="flex: 1; font-size: 11px; font-weight: 600;">${p.name}</div>
+                            <div style="font-size: 10px; color: #666;">⭐${p.rating}</div>
+                        </div>
+                    `).join('')}
+                </div>
+                <div style="background: #f8f9fa; border-radius: 10px; padding: 10px;">
+                    <div style="font-weight: 700; color: #ff9800; margin-bottom: 8px; text-align: center;">${team2Name}</div>
+                    <div style="font-size: 11px; color: #666; margin-bottom: 8px; text-align: center;">Рейтинг команди: ${(team2.reduce((a,p) => a + p.rating, 0) / team2.length).toFixed(1)}</div>
+                    ${team2.map(p => `
+                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;" onclick="showPlayerProfile('${p.avatar}')">
+                            <div style="width: 24px; height: 24px; background: linear-gradient(135deg, #ff9800, #f57c00); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 10px; font-weight: 700;">${p.avatar}</div>
+                            <div style="flex: 1; font-size: 11px; font-weight: 600;">${p.name}</div>
+                            <div style="font-size: 10px; color: #666;">⭐${p.rating}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            document.getElementById('teamNamesDisplay').innerHTML = `Команди: "${team1Name}" vs "${team2Name}"`;
+            
+            // Show final score section
+            document.getElementById('finalScoreSection').style.display = 'block';
+            document.getElementById('matchNotStarted').style.display = 'none';
+            document.getElementById('team1Name').textContent = team1Name;
+            document.getElementById('team2Name').textContent = team2Name;
+
+            showToast('⚖️ Команди збалансовано за рейтингом!', 'success');
+        }
+
+        function finishMatch() {
+            const team1Score = document.getElementById('team1Score').value || 0;
+            const team2Score = document.getElementById('team2Score').value || 0;
+            
+            if (!currentTeams) {
+                showToast('❌ Спочатку створіть команди!', 'error');
+                return;
+            }
+
+            showToast(`🏁 Матч завершено! Рахунок: ${team1Score}:${team2Score}`, 'success');
+            
+            // Start rating all players from user's team
+            setTimeout(() => {
+                showTeamRatingModal();
             }, 1500);
         }
 
-        function acceptPlayer(playerId, event) {
-            event.stopPropagation();
-            showToast('✅ Гравця прийнято!', 'success');
-            event.target.closest('.waiting-player').style.opacity = '0.5';
-        }
-
-        function rejectPlayer(playerId, event) {
-            event.stopPropagation();
-            showToast('❌ Гравця відхилено', 'error');
-            event.target.closest('.waiting-player').style.opacity = '0.5';
-        }
-
-        function autoBalanceTeams() {
-            showLoading();
-            setTimeout(() => {
-                hideLoading();
-                showToast('⚖️ Команди збалансовано!', 'success');
-            }, 1000);
+        function showTeamRatingModal() {
+            if (!currentTeams) return;
+            
+            // Show rating for all players from user's team (team1)
+            const team1Players = currentTeams.team1.players.filter(p => !p.name.includes('(Ви)'));
+            
+            if (team1Players.length > 0) {
+                showRatingModal(team1Players[0].avatar, team1Players, 0);
+            }
         }
 
         function incrementScore(team) {
@@ -3567,34 +3759,50 @@
             }, 1500);
         }
 
-        // Player rating
-        function showRatingModal(playerId) {
-            const players = {
-                'oleksandr_m': {
-                    avatar: 'ОМ',
-                    name: 'Олександр Мельник',
-                    position: 'Нападник'
-                }
-            };
+        // Player rating - Updated for team rating
+        let currentTeamRating = { players: [], currentIndex: 0 };
+        
+        function showRatingModal(playerId, teamPlayers = null, playerIndex = 0) {
+            if (teamPlayers) {
+                // Team rating mode
+                currentTeamRating = { players: teamPlayers, currentIndex: playerIndex };
+                const player = teamPlayers[playerIndex];
+                
+                document.getElementById('ratingPlayerAvatar').textContent = player.avatar;
+                document.getElementById('ratingPlayerName').textContent = player.name;
+                document.getElementById('ratingPlayerPosition').textContent = 'Гравець команди';
+                
+                // Update modal title to show progress
+                const progressText = `Оцініть гравця (${playerIndex + 1}/${teamPlayers.length})`;
+                document.querySelector('.rating-title').textContent = progressText;
+            } else {
+                // Single player rating mode
+                const players = {
+                    'oleksandr_m': { avatar: 'ОМ', name: 'Олександр Мельник', position: 'Нападник' },
+                    'МК': { avatar: 'МК', name: 'Максим Коваль', position: 'Півзахисник' },
+                    'ОМ': { avatar: 'ОМ', name: 'Олександр Мельник', position: 'Нападник' },
+                    'ВС': { avatar: 'ВС', name: 'Віталій Семенов', position: 'Півзахисник' },
+                    'ДК': { avatar: 'ДК', name: 'Дмитро Коваленко', position: 'Захисник' },
+                    'СП': { avatar: 'СП', name: 'Сергій Петренко', position: 'Захисник' },
+                    'АП': { avatar: 'АП', name: 'Андрій Попов', position: 'Півзахисник' }
+                };
 
-            const player = players[playerId] || players['oleksandr_m'];
+                const player = players[playerId] || players['oleksandr_m'];
+                
+                document.getElementById('ratingPlayerAvatar').textContent = player.avatar;
+                document.getElementById('ratingPlayerName').textContent = player.name;
+                document.getElementById('ratingPlayerPosition').textContent = player.position;
+                
+                document.querySelector('.rating-title').textContent = '⭐ Оцініть гравця';
+                currentTeamRating = { players: [], currentIndex: 0 };
+            }
             
-            document.getElementById('ratingPlayerAvatar').textContent = player.avatar;
-            document.getElementById('ratingPlayerName').textContent = player.name;
-            document.getElementById('ratingPlayerPosition').textContent = player.position;
+            // Reset rating
+            currentRating = 0;
+            document.getElementById('playerRatingSlider').value = 0;
+            updatePlayerRating(0);
             
             document.getElementById('ratingModal').classList.add('show');
-            
-            // Star rating functionality
-            const stars = document.querySelectorAll('.star');
-            stars.forEach((star, index) => {
-                star.onclick = () => {
-                    currentRating = index + 1;
-                    stars.forEach((s, i) => {
-                        s.classList.toggle('active', i < currentRating);
-                    });
-                };
-            });
         }
 
         function updatePlayerRating(value) {
@@ -3627,8 +3835,37 @@
             }
             
             document.getElementById('ratingModal').classList.remove('show');
-            addCoins(Math.floor(currentRating * 2));
-            showToast(`⭐ Рейтинг ${currentRating.toFixed(2)}/5 відправлено! +${Math.floor(currentRating * 2)} монет`, 'success');
+            
+            // Check if we're in team rating mode
+            if (currentTeamRating.players.length > 0) {
+                const playerName = currentTeamRating.players[currentTeamRating.currentIndex].name;
+                showToast(`⭐ ${playerName}: ${currentRating.toFixed(2)}/5`, 'success');
+                
+                // Move to next player
+                currentTeamRating.currentIndex++;
+                
+                if (currentTeamRating.currentIndex < currentTeamRating.players.length) {
+                    // Rate next player
+                    setTimeout(() => {
+                        showRatingModal(null, currentTeamRating.players, currentTeamRating.currentIndex);
+                    }, 1000);
+                } else {
+                    // All players rated
+                    setTimeout(() => {
+                        showToast('🎉 Всіх гравців оцінено! Рейтинги оновлено.', 'success');
+                        
+                        // Show rating changes simulation
+                        setTimeout(() => {
+                            showToast('📈 Ваш рейтинг: 4.8 → 4.9 (+0.1)', 'success');
+                        }, 1500);
+                    }, 1000);
+                    currentTeamRating = { players: [], currentIndex: 0 };
+                }
+            } else {
+                // Single player rating
+                showToast(`⭐ Рейтинг ${currentRating.toFixed(2)}/5 відправлено!`, 'success');
+            }
+            
             currentRating = 0;
             
             // Reset rating form
@@ -3701,12 +3938,18 @@
 
         // Challenge functions
         function joinChallenge(challengeId) {
-            showLoading();
-            setTimeout(() => {
-                hideLoading();
-                addCoins(10);
-                showToast('🏆 Приєднались до челенджу! +10 монет', 'success');
-            }, 1000);
+            // Open video upload modal instead of just showing success
+            document.getElementById('challengeParticipateModal').classList.add('show');
+            
+            // Update modal title with challenge name
+            const challengeNames = {
+                'best_trick': '🎯 Кращий фінт тижня',
+                'accuracy': '🎯 Точність ударів',
+                'speed': '⚡ Швидкість дриблінгу'
+            };
+            
+            const challengeName = challengeNames[challengeId] || 'Челендж';
+            document.querySelector('#challengeParticipateModal .rating-title').textContent = `📹 Завантажити відео для "${challengeName}"`;
         }
 
         function showChallengeVideos(challengeId) {
