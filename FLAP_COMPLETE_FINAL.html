@@ -1856,34 +1856,7 @@
                         </div>
                     </div>
 
-                    <!-- Match Control -->
-                    <div style="background: rgba(255,255,255,0.9); border-radius: 15px; color: #333; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.1);">
-                        <div style="padding: 15px; background: linear-gradient(135deg, #4caf50, #66bb6a); color: white;">
-                            <div style="font-size: 16px; font-weight: 700;">🏁 Завершення матчу</div>
-                            <div style="font-size: 12px; opacity: 0.9;">Введіть рахунок після гри</div>
-                        </div>
-                        <div style="padding: 15px;">
-                            <div id="finalScoreSection" style="display: none;">
-                                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
-                                    <div style="flex: 1; text-align: center;">
-                                        <div id="team1Name" style="font-weight: 600; margin-bottom: 5px;">Команда 1</div>
-                                        <input type="number" id="team1Score" min="0" placeholder="0" style="width: 60px; padding: 8px; border: 2px solid #ddd; border-radius: 8px; text-align: center;">
-                                    </div>
-                                    <div style="font-size: 24px; font-weight: 700;">:</div>
-                                    <div style="flex: 1; text-align: center;">
-                                        <div id="team2Name" style="font-weight: 600; margin-bottom: 5px;">Команда 2</div>
-                                        <input type="number" id="team2Score" min="0" placeholder="0" style="width: 60px; padding: 8px; border: 2px solid #ddd; border-radius: 8px; text-align: center;">
-                                    </div>
-                                </div>
-                                <button onclick="finishMatch()" style="width: 100%; padding: 10px; background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; border: none; border-radius: 20px; font-weight: 600; cursor: pointer;">
-                                    Завершити матч
-                                </button>
-                            </div>
-                            <div id="matchNotStarted" style="text-align: center; color: #666; font-size: 14px;">
-                                Спочатку створіть команди за допомогою автобалансу
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
             </div>
 
@@ -2165,12 +2138,111 @@
                                     <span style="font-size: 13px; font-weight: 600; color: #4caf50;">12/14 гравців</span>
                                 </div>
                                 <div style="display: flex; gap: 8px;">
-                                    <button onclick="manageMyMatch('my_match_1')" style="flex: 1; padding: 8px; background: #4caf50; color: white; border: none; border-radius: 8px; font-size: 12px; cursor: pointer;">
+                                    <button onclick="showMatchManagement()" style="flex: 1; padding: 8px; background: #4caf50; color: white; border: none; border-radius: 8px; font-size: 12px; cursor: pointer;">
                                         Управління
                                     </button>
                                     <button onclick="shareMatch()" style="flex: 1; padding: 8px; background: #ff9800; color: white; border: none; border-radius: 8px; font-size: 12px; cursor: pointer;">
                                         Поділитися
                                     </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Match Management Panel -->
+                        <div id="matchManagement" style="display: none; background: rgba(255,255,255,0.9); border-radius: 15px; margin-bottom: 15px; color: #333; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.1);">
+                            <div style="padding: 15px; background: linear-gradient(135deg, #2196f3, #64b5f6); color: white;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div style="font-size: 16px; font-weight: 700;">🎮 Управління матчем</div>
+                                    <button onclick="hideMatchManagement()" style="background: rgba(255,255,255,0.2); border: none; width: 30px; height: 30px; border-radius: 50%; color: white; cursor: pointer;">
+                                        ✕
+                                    </button>
+                                </div>
+                            </div>
+                            <div style="padding: 15px;">
+                                <!-- Player Lists -->
+                                <div style="margin-bottom: 20px;">
+                                    <h4 style="margin-bottom: 10px; color: #2e7d32;">👥 Списки гравців</h4>
+                                    
+                                    <!-- Approved Players -->
+                                    <div style="margin-bottom: 15px;">
+                                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                            <span style="font-weight: 600; color: #4caf50;">✅ Підтверджені (8)</span>
+                                        </div>
+                                        <div style="background: #f5f5f5; border-radius: 10px; padding: 10px;">
+                                            <div style="display: flex; flex-wrap: wrap; gap: 5px;">
+                                                <span style="background: #4caf50; color: white; padding: 4px 8px; border-radius: 12px; font-size: 11px;">Максим К.</span>
+                                                <span style="background: #4caf50; color: white; padding: 4px 8px; border-radius: 12px; font-size: 11px;">Андрій П.</span>
+                                                <span style="background: #4caf50; color: white; padding: 4px 8px; border-radius: 12px; font-size: 11px;">Віктор Ш.</span>
+                                                <span style="background: #4caf50; color: white; padding: 4px 8px; border-radius: 12px; font-size: 11px;">Олександр М.</span>
+                                                <span style="background: #4caf50; color: white; padding: 4px 8px; border-radius: 12px; font-size: 11px;">Дмитро К.</span>
+                                                <span style="background: #4caf50; color: white; padding: 4px 8px; border-radius: 12px; font-size: 11px;">Петро М.</span>
+                                                <span style="background: #4caf50; color: white; padding: 4px 8px; border-radius: 12px; font-size: 11px;">Іван С.</span>
+                                                <span style="background: #4caf50; color: white; padding: 4px 8px; border-radius: 12px; font-size: 11px;">Сергій Т.</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Pending Players -->
+                                    <div style="margin-bottom: 15px;">
+                                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                            <span style="font-weight: 600; color: #ff9800;">⏳ Очікують (3)</span>
+                                        </div>
+                                        <div style="background: #fff3e0; border-radius: 10px; padding: 10px;">
+                                            <div style="display: flex; flex-wrap: wrap; gap: 5px;">
+                                                <span style="background: #ff9800; color: white; padding: 4px 8px; border-radius: 12px; font-size: 11px;">Михайло Р.</span>
+                                                <span style="background: #ff9800; color: white; padding: 4px 8px; border-radius: 12px; font-size: 11px;">Олег В.</span>
+                                                <span style="background: #ff9800; color: white; padding: 4px 8px; border-radius: 12px; font-size: 11px;">Богdan Л.</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Rejected Players -->
+                                    <div style="margin-bottom: 15px;">
+                                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                            <span style="font-weight: 600; color: #f44336;">❌ Відхилені (1)</span>
+                                        </div>
+                                        <div style="background: #ffebee; border-radius: 10px; padding: 10px;">
+                                            <div style="display: flex; flex-wrap: wrap; gap: 5px;">
+                                                <span style="background: #f44336; color: white; padding: 4px 8px; border-radius: 12px; font-size: 11px;">Роман К.</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Auto Balance -->
+                                <div style="margin-bottom: 20px;">
+                                    <h4 style="margin-bottom: 10px; color: #2e7d32;">⚖️ Автобаланс команд</h4>
+                                    <button onclick="autoBalanceTeams()" style="width: 100%; padding: 10px; background: linear-gradient(135deg, #9c27b0, #ba68c8); color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; margin-bottom: 10px;">
+                                        🔄 Перемішати команди
+                                    </button>
+                                    <div id="teamsDisplay" style="display: none; background: #f5f5f5; border-radius: 10px; padding: 15px;">
+                                        <!-- Teams will be displayed here -->
+                                    </div>
+                                </div>
+                                
+                                <!-- Final Score -->
+                                <div style="margin-bottom: 20px;">
+                                    <h4 style="margin-bottom: 10px; color: #2e7d32;">⚽ Фінальний рахунок</h4>
+                                    <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 10px;">
+                                        <div style="flex: 1; text-align: center;">
+                                            <label style="display: block; margin-bottom: 5px; font-size: 12px; color: #666;">Команда А</label>
+                                            <input type="number" id="scoreTeamA" min="0" placeholder="0" style="width: 60px; padding: 8px; border: 2px solid #ddd; border-radius: 8px; text-align: center;">
+                                        </div>
+                                        <div style="font-size: 20px; font-weight: 700; color: #666;">:</div>
+                                        <div style="flex: 1; text-align: center;">
+                                            <label style="display: block; margin-bottom: 5px; font-size: 12px; color: #666;">Команда Б</label>
+                                            <input type="number" id="scoreTeamB" min="0" placeholder="0" style="width: 60px; padding: 8px; border: 2px solid #ddd; border-radius: 8px; text-align: center;">
+                                        </div>
+                                    </div>
+                                    <button onclick="finishMatch()" style="width: 100%; padding: 10px; background: linear-gradient(135deg, #f44336, #ef5350); color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer;">
+                                        🏁 Завершити матч
+                                    </button>
+                                </div>
+                                
+                                <!-- Player Rating -->
+                                <div id="playerRatingSection" style="display: none; margin-top: 20px;">
+                                    <h4 style="margin-bottom: 10px; color: #2e7d32;">⭐ Оцінити гравців</h4>
+                                    <div id="playersToRate"></div>
                                 </div>
                             </div>
                         </div>
@@ -4897,6 +4969,95 @@
             } else {
                 console.error('❌ Секція не знайдена:', sectionId);
             }
+        }
+
+        // Match Management Functions
+        function showMatchManagement() {
+            document.getElementById('matchManagement').style.display = 'block';
+        }
+        
+        function hideMatchManagement() {
+            document.getElementById('matchManagement').style.display = 'none';
+        }
+        
+        function autoBalanceTeams() {
+            const teamsDisplay = document.getElementById('teamsDisplay');
+            const teamNames = ['⚡ Блискавки', '🔥 Вогняні', '💎 Діаманти', '🌟 Зірки'];
+            const teamA = teamNames[Math.floor(Math.random() * teamNames.length)];
+            let teamB = teamNames[Math.floor(Math.random() * teamNames.length)];
+            while (teamB === teamA) {
+                teamB = teamNames[Math.floor(Math.random() * teamNames.length)];
+            }
+            
+            teamsDisplay.innerHTML = `
+                <div style="display: flex; gap: 15px;">
+                    <div style="flex: 1; background: linear-gradient(135deg, #4caf50, #66bb6a); border-radius: 10px; padding: 15px; color: white;">
+                        <h5 style="margin-bottom: 10px; text-align: center;">${teamA}</h5>
+                        <div style="font-size: 12px;">
+                            <div>Максим К. (4.2⭐)</div>
+                            <div>Віктор Ш. (4.8⭐)</div>
+                            <div>Дмитро К. (3.9⭐)</div>
+                            <div>Іван С. (4.1⭐)</div>
+                        </div>
+                        <div style="text-align: center; margin-top: 10px; font-weight: 600;">Сер. рейтинг: 4.25</div>
+                    </div>
+                    <div style="flex: 1; background: linear-gradient(135deg, #ff9800, #ffb74d); border-radius: 10px; padding: 15px; color: white;">
+                        <h5 style="margin-bottom: 10px; text-align: center;">${teamB}</h5>
+                        <div style="font-size: 12px;">
+                            <div>Андрій П. (4.6⭐)</div>
+                            <div>Олександр М. (4.3⭐)</div>
+                            <div>Петро М. (4.0⭐)</div>
+                            <div>Сергій Т. (3.8⭐)</div>
+                        </div>
+                        <div style="text-align: center; margin-top: 10px; font-weight: 600;">Сер. рейтинг: 4.18</div>
+                    </div>
+                </div>
+            `;
+            teamsDisplay.style.display = 'block';
+        }
+        
+        function finishMatch() {
+            const scoreA = document.getElementById('scoreTeamA').value;
+            const scoreB = document.getElementById('scoreTeamB').value;
+            
+            if (!scoreA || !scoreB) {
+                alert('Введіть рахунок обох команд!');
+                return;
+            }
+            
+            // Show player rating section
+            const ratingSection = document.getElementById('playerRatingSection');
+            const playersToRate = document.getElementById('playersToRate');
+            
+            playersToRate.innerHTML = `
+                <div style="background: #f5f5f5; border-radius: 10px; padding: 15px; margin-bottom: 10px;">
+                    <div style="font-weight: 600; margin-bottom: 10px;">Оцініть гравців (0-5):</div>
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                        <span style="flex: 1; font-size: 14px;">Андрій П.</span>
+                        <input type="range" min="0" max="5" step="0.01" value="0" style="flex: 2;">
+                        <span style="min-width: 40px; font-weight: 600;">0.0</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                        <span style="flex: 1; font-size: 14px;">Віктор Ш.</span>
+                        <input type="range" min="0" max="5" step="0.01" value="0" style="flex: 2;">
+                        <span style="min-width: 40px; font-weight: 600;">0.0</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                        <span style="flex: 1; font-size: 14px;">Олександр М.</span>
+                        <input type="range" min="0" max="5" step="0.01" value="0" style="flex: 2;">
+                        <span style="min-width: 40px; font-weight: 600;">0.0</span>
+                    </div>
+                    <button onclick="submitPlayerRatings()" style="width: 100%; padding: 10px; background: #4caf50; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; margin-top: 10px;">
+                        Підтвердити оцінки
+                    </button>
+                </div>
+            `;
+            ratingSection.style.display = 'block';
+        }
+        
+        function submitPlayerRatings() {
+            alert('✅ Оцінки збережено! Матч завершено.');
+            hideMatchManagement();
         }
 
         // Initialize app
