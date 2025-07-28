@@ -5052,6 +5052,87 @@
             closeModal('playerModal');
         }
 
+        // Missing functions
+        function acceptNotification(notificationId) {
+            console.log('✅ acceptNotification викликана для:', notificationId);
+            showToast('✅ Сповіщення прийнято', 'success');
+        }
+
+        function addVideo() {
+            console.log('📹 addVideo викликана');
+            showCreateVideo();
+        }
+
+        function closeFriends() {
+            console.log('❌ closeFriends викликана');
+            const modal = document.getElementById('friendsModal');
+            if (modal) modal.style.display = 'none';
+        }
+
+        function closeSettings() {
+            console.log('❌ closeSettings викликана');
+            const modal = document.getElementById('settingsModal');
+            if (modal) modal.style.display = 'none';
+        }
+
+        function copyContact(contactType, value) {
+            console.log('📋 copyContact викликана:', contactType, value);
+            navigator.clipboard.writeText(value).then(() => {
+                showToast('📋 Контакт скопійовано', 'success');
+            }).catch(() => {
+                showToast('❌ Помилка копіювання', 'error');
+            });
+        }
+
+        function createMatch() {
+            console.log('⚽ createMatch викликана');
+            showCreateMatchModal();
+        }
+
+        function inviteToMatch(matchId, playerId) {
+            console.log('📨 inviteToMatch викликана:', matchId, playerId);
+            showToast('📨 Запрошення надіслано', 'success');
+        }
+
+        function logout() {
+            console.log('🚪 logout викликана');
+            if (confirm('Ви впевнені, що хочете вийти?')) {
+                document.getElementById('authScreen').classList.add('active');
+                document.getElementById('mainScreen').classList.remove('active');
+                showToast('👋 До побачення!', 'info');
+            }
+        }
+
+        function readNotification(notificationId) {
+            console.log('👁️ readNotification викликана для:', notificationId);
+            // Mark notification as read
+            const notification = document.querySelector(`[data-notification-id="${notificationId}"]`);
+            if (notification) {
+                notification.style.opacity = '0.7';
+                notification.style.background = '#f5f5f5';
+            }
+        }
+
+        function showNotificationSettings() {
+            console.log('🔔 showNotificationSettings викликана');
+            showToast('🔔 Налаштування сповіщень', 'info');
+        }
+
+        function showPrivacySettings() {
+            console.log('🔒 showPrivacySettings викликана');
+            showToast('🔒 Налаштування приватності', 'info');
+        }
+
+        function skipRating() {
+            console.log('⏭️ skipRating викликана');
+            showToast('⏭️ Оцінювання пропущено', 'info');
+            // Close any open rating modal
+            const ratingModal = document.querySelector('.rating-modal.show');
+            if (ratingModal) {
+                ratingModal.classList.remove('show');
+            }
+        }
+
     </script>
 </body>
 </html>
