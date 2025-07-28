@@ -1307,7 +1307,7 @@
             .app {
                 margin: 0;
             }
-        }
+        };
     </style>
 </head>
 <body>
@@ -3203,7 +3203,7 @@
                 } else {
                     showToast(`🔍 Пошук: "${query}"`, 'success');
                 }
-            }
+            };
         }
 
         // Enhanced player profiles with different avatars
@@ -3306,7 +3306,7 @@
                         telegram: '@oleksandr_speed',
                         instagram: '@oleksandr.rocket.kyiv'
                     }
-                }
+                };
             };
 
             const player = players[playerId] || players['andriy_k'];
@@ -3335,7 +3335,7 @@
         // Challenge creation functions
         window.showCreateChallenge = function showCreateChallenge() {
             document.getElementById('createChallengeModal').classList.add('show');
-        }
+        };
 
         function calculatePrizePool(contribution) {
             const estimatedParticipants = 10; // Приблизна кількість учасників
@@ -3356,7 +3356,7 @@
                 btn.style.background = '#4caf50';
                 btn.style.color = 'white';
             }
-        }
+        };
 
         function createChallenge(event) {
             event.preventDefault();
@@ -3510,7 +3510,7 @@
             }
             
             storeModal.classList.add('show');
-        }
+        };
 
         function closeStore() {
             document.getElementById('storeModal').classList.remove('show');
@@ -3537,7 +3537,7 @@
             } else {
                 showToast('❌ Недостатньо монет!', 'error');
             }
-        }
+        };
 
         function showSubscriptions() {
             document.getElementById('subscriptionsModal').style.display = 'flex';
@@ -3554,7 +3554,7 @@
                 showToast('🏆 Ліга Чемпіонів активована! Повний доступ', 'success');
                 addCoins(100);
             }
-        }
+        };
 
         function buyCoins(amount, price) {
             showToast(`💰 Придбано ${amount} монет за ${price}₴!`, 'success');
@@ -3677,7 +3677,7 @@
                 registerForm.style.display = 'block';
                 loginForm.style.display = 'none';
             }
-        }
+        };
 
         // Profile creation functions
         function previewProfilePhoto(event) {
@@ -3689,7 +3689,7 @@
                 };
                 reader.readAsDataURL(file);
             }
-        }
+        };
 
         function completeProfileCreation(event) {
             event.preventDefault();
@@ -3738,11 +3738,11 @@
             setTimeout(() => {
                 showToast('🎉 Даруємо вам тиждень безкоштовного користування підпискою Ліга Чемпіонів!', 'success');
             }, 1000);
-        }
+        };
 
         window.handleQuickRegister = function handleQuickRegister() {
             document.getElementById('profileCreationModal').classList.add('show');
-        }
+        };
 
         window.loginWithGoogle = function loginWithGoogle() {
             currentUser = { name: 'Максим Коваль', avatar: 'МК', rating: 4.8 };
@@ -3793,7 +3793,7 @@
                 comments.style.display = 'none';
                 icon.className = 'fas fa-chevron-down';
             }
-        }
+        };
 
         function addComment(event, videoId) {
             if (event.key === 'Enter' && event.target.value.trim()) {
@@ -3802,7 +3802,7 @@
                 showToast(`💬 Коментар додано: "${comment}"`, 'success');
                 // NO COINS for comments anymore
             }
-        }
+        };
 
         // Contact functions
         function copyContact(contact) {
@@ -3974,7 +3974,7 @@
             if (team1Players.length > 0) {
                 showRatingModal(team1Players[0].avatar, team1Players, 0);
             }
-        }
+        };
 
         function incrementScore(team) {
             currentMatchScore[team]++;
@@ -4059,7 +4059,7 @@
                 } else {
                     starsDisplay += '☆';
                 }
-            }
+            };
             
             document.getElementById('ratingStars').textContent = starsDisplay;
             document.getElementById('ratingStars').style.color = currentRating > 0 ? '#ffc107' : '#ddd';
@@ -4169,7 +4169,7 @@
                 // Fallback - show alert if toast element doesn't exist
                 alert(message);
             }
-        }
+        };
 
         // toggleNotifications DUPLICATE REMOVED
 
@@ -4523,7 +4523,7 @@
                 availableMatches.style.display = 'none';
                 myMatches.style.display = 'block';
             }
-        }
+        };
 
         function manageMyMatch(matchId) {
             showToast('🎮 Переходимо до управління матчем...', 'success');
@@ -4548,7 +4548,7 @@
                 event.target.style.background = '#4caf50';
                 event.target.style.borderColor = '#4caf50';
             }
-        }
+        };
 
         function updateSelectedFriends() {
             const checkboxes = document.querySelectorAll('#friendsSelector input[type="checkbox"]');
@@ -4572,7 +4572,7 @@
                 document.getElementById('selectedFriendsDisplay').style.color = '#666';
                 document.getElementById('selectedFriendsDisplay').style.fontWeight = 'normal';
             }
-        }
+        };
 
         // Rating functions
         function filterRating(type) {
@@ -4663,7 +4663,7 @@
                     panel.style.display = 'none';
                 }, 5000);
             }
-        }
+        };
 
         function acceptNotification(notificationId) {
             showToast('✅ Запрошення прийнято!', 'success');
@@ -4696,7 +4696,7 @@
                 showSection('matches');
                 showToast('⚽ Створення нового матчу', 'success');
             }
-        }
+        };
 
         // Close panels when clicking outside
         document.addEventListener('click', (event) => {
@@ -4747,7 +4747,7 @@
             } else {
                 console.error('❌ Секція не знайдена:', sectionId);
             }
-        }
+        };
 
         // Match Management Functions
         function showMatchManagement() {
@@ -4810,7 +4810,7 @@
                 availableTab.style.background = 'transparent';
                 availableTab.style.color = 'rgba(255,255,255,0.7)';
             }
-        }
+        };
 
         // Initialize app
         document.addEventListener('DOMContentLoaded', () => {
@@ -4866,11 +4866,36 @@
                 console.log(`✅ FORCE listener added for tab ${index}: ${sections[index] || 'unknown'}`);
             });
             
-            // TEST LOGIN FUNCTIONS
-            console.log('Testing login functions...');
-            window.handleQuickLogin = handleQuickLogin;
-            window.handleQuickRegister = handleQuickRegister;
-            window.switchAuthMode = switchAuthMode;
+            // MAKE ALL FUNCTIONS GLOBALLY ACCESSIBLE FOR ONCLICK
+            console.log('🌐 Making functions globally accessible...');
+            
+            // Login functions
+            window.handleQuickLogin = window.handleQuickLogin;
+            window.handleQuickRegister = window.handleQuickRegister;
+            window.loginWithGoogle = window.loginWithGoogle;
+            window.loginWithFacebook = window.loginWithFacebook;
+            window.switchAuthMode = window.switchAuthMode;
+            
+            // Navigation functions
+            window.showSection = window.showSection;
+            
+            // Creation functions
+            window.showCreateMatchModal = window.showCreateMatchModal;
+            window.showCreateChallenge = window.showCreateChallenge;
+            window.showStore = window.showStore;
+            
+            // Make functions available without window prefix for onclick compatibility
+            handleQuickLogin = window.handleQuickLogin;
+            handleQuickRegister = window.handleQuickRegister;
+            loginWithGoogle = window.loginWithGoogle;
+            loginWithFacebook = window.loginWithFacebook;
+            switchAuthMode = window.switchAuthMode;
+            showSection = window.showSection;
+            showCreateMatchModal = window.showCreateMatchModal;
+            showCreateChallenge = window.showCreateChallenge;
+            showStore = window.showStore;
+            
+            console.log('✅ All functions made globally accessible');
             
             // Test if login buttons exist
             const loginBtn = document.querySelector('button[onclick="handleQuickLogin()"]');
