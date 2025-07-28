@@ -3019,6 +3019,10 @@
     </div>
 
     <script>
+        // GLOBAL FUNCTIONS FOR ONCLICK COMPATIBILITY (MUST BE FIRST!)
+        var handleQuickLogin, handleQuickRegister, loginWithGoogle, loginWithFacebook, switchAuthMode;
+        var showSection, showCreateMatchModal, showCreateChallenge, showStore;
+        
         // Global state
         let currentUser = null;
         let currentRating = 0;
@@ -3307,7 +3311,6 @@
                         instagram: '@oleksandr.rocket.kyiv'
                     }
                 };
-            };
 
             const player = players[playerId] || players['andriy_k'];
             
@@ -4719,6 +4722,16 @@
         });
 
         // SIMPLE WORKING showSection function (TESTED AND WORKS!)
+        // ASSIGN GLOBAL FUNCTIONS FOR ONCLICK COMPATIBILITY
+        handleQuickLogin = window.handleQuickLogin;
+        handleQuickRegister = window.handleQuickRegister;
+        loginWithGoogle = window.loginWithGoogle;
+        loginWithFacebook = window.loginWithFacebook;
+        switchAuthMode = window.switchAuthMode;
+        showCreateMatchModal = window.showCreateMatchModal;
+        showCreateChallenge = window.showCreateChallenge;
+        showStore = window.showStore;
+
         window.showSection = function showSection(sectionId) {
             console.log('🔍 showSection викликана для:', sectionId);
             
@@ -4748,6 +4761,9 @@
                 console.error('❌ Секція не знайдена:', sectionId);
             }
         };
+        
+        // Assign showSection globally
+        showSection = window.showSection;
 
         // Match Management Functions
         function showMatchManagement() {
@@ -4883,17 +4899,6 @@
             window.showCreateMatchModal = window.showCreateMatchModal;
             window.showCreateChallenge = window.showCreateChallenge;
             window.showStore = window.showStore;
-            
-            // Make functions available without window prefix for onclick compatibility
-            handleQuickLogin = window.handleQuickLogin;
-            handleQuickRegister = window.handleQuickRegister;
-            loginWithGoogle = window.loginWithGoogle;
-            loginWithFacebook = window.loginWithFacebook;
-            switchAuthMode = window.switchAuthMode;
-            showSection = window.showSection;
-            showCreateMatchModal = window.showCreateMatchModal;
-            showCreateChallenge = window.showCreateChallenge;
-            showStore = window.showStore;
             
             console.log('✅ All functions made globally accessible');
             
