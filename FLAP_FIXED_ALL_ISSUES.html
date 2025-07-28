@@ -1609,7 +1609,7 @@
             </div>
 
             <!-- Matches Section - COMPLETELY REDESIGNED -->
-            <div class="content-section" id="matches">
+            <div class="content-section" id="matches" style="display: none;">
                 <!-- Match Tabs -->
                 <div style="display: flex; margin-bottom: 20px; background: rgba(255,255,255,0.1); border-radius: 25px; padding: 4px;">
                     <button id="availableTab" onclick="switchMatchTab('available')" style="flex: 1; padding: 10px; background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; border: none; border-radius: 20px; font-weight: 600; cursor: pointer; transition: all 0.3s;">
@@ -2180,7 +2180,7 @@
             </div>
 
             <!-- Rating Section -->
-            <div class="content-section" id="rating">
+            <div class="content-section" id="rating" style="display: none;">
                 <h3 style="margin-bottom: 15px; font-size: 18px;">👑 Рейтинг гравців</h3>
                 
                 <!-- Player Search -->
@@ -2343,7 +2343,7 @@
             </div>
 
             <!-- Profile Section -->
-            <div class="content-section" id="profile">
+            <div class="content-section" id="profile" style="display: none;">
                 <h3 style="margin-bottom: 15px; font-size: 18px;">👤 Мій профіль</h3>
                 
                 <!-- User Profile Card -->
@@ -5064,10 +5064,11 @@
 
         // Fix showSection to properly show all sections
         function showSection(sectionId) {
-            console.log('showSection called with:', sectionId);
+            console.log('🔄 showSection called with:', sectionId);
             
             // Hide all sections
             const sections = document.querySelectorAll('.content-section');
+            console.log('📋 Found sections:', sections.length);
             sections.forEach(section => {
                 section.style.display = 'none';
                 section.classList.remove('active');
@@ -5079,10 +5080,13 @@
             
             // Show selected section
             const targetSection = document.getElementById(sectionId);
-            console.log('Target section found:', !!targetSection);
+            console.log('🎯 Target section found:', !!targetSection);
             if (targetSection) {
                 targetSection.style.display = 'block';
                 targetSection.classList.add('active');
+                console.log('✅ Section displayed:', sectionId);
+            } else {
+                console.error('❌ Section not found:', sectionId);
             }
             
             // Add active class to clicked nav tab
@@ -5090,6 +5094,7 @@
                 const clickedTab = document.querySelector(`.nav-tab[onclick*="${sectionId}"]`);
                 if (clickedTab) {
                     clickedTab.classList.add('active');
+                    console.log('✅ Tab activated:', sectionId);
                 }
             }, 10);
         }
