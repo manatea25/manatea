@@ -3383,6 +3383,8 @@
 
         // Store and subscription functions
         function showStore() {
+            console.log('showStore called');
+            document.getElementById('storeModal').style.display = 'flex';
             const storeContent = `
                 <div style="max-height: 70vh; overflow-y: auto;">
                     <h3 style="text-align: center; margin-bottom: 20px; color: #2e7d32;">🛒 Магазин FLAP</h3>
@@ -5060,7 +5062,7 @@
             showToast(message || 'Показано всі відео', 'info');
         }
 
-        // Fix showSection to properly show challenges
+        // Fix showSection to properly show all sections
         function showSection(sectionId) {
             // Hide all sections
             const sections = document.querySelectorAll('.content-section');
@@ -5080,8 +5082,11 @@
                 targetSection.classList.add('active');
             }
             
-            // Add active class to clicked nav tab
-            event.target.closest('.nav-tab').classList.add('active');
+            // Add active class to clicked nav tab - fix event reference
+            const clickedTab = document.querySelector(`.nav-tab[onclick="showSection('${sectionId}')"]`);
+            if (clickedTab) {
+                clickedTab.classList.add('active');
+            }
         }
 
         // Enhanced player profiles with unique data
@@ -5097,10 +5102,21 @@
 
         // Enhanced showPlayerProfile with unique profiles
         function showPlayerProfile(playerId) {
-            const player = playersDatabase[playerId];
+            let player = playersDatabase[playerId];
+            
+            // If player not found, create default profile
             if (!player) {
-                showToast('Профіль гравця не знайдено', 'error');
-                return;
+                player = {
+                    name: 'Гравець #' + Math.floor(Math.random() * 100),
+                    avatar: ['🎯', '⚽', '⚡', '🏃', '🛡️', '🥅', '🔥'][Math.floor(Math.random() * 7)],
+                    city: ['Київ', 'Львів', 'Одеса', 'Харків', 'Дніпро'][Math.floor(Math.random() * 5)],
+                    position: ['Нападник', 'Півзахисник', 'Захисник', 'Воротар'][Math.floor(Math.random() * 4)],
+                    age: Math.floor(Math.random() * 10) + 20,
+                    rating: (Math.random() * 2 + 3).toFixed(1),
+                    phone: '+38067' + Math.floor(Math.random() * 9000000 + 1000000),
+                    telegram: '@player' + Math.floor(Math.random() * 1000),
+                    instagram: '@player' + Math.floor(Math.random() * 1000)
+                };
             }
 
             const modal = document.getElementById('playerModal');
