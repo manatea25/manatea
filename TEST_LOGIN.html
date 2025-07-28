@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLAP - Test Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(180deg, #1e7d32 0%, #2e7d32 100%);
+            color: white;
+            padding: 20px;
+        }
+        .screen {
+            display: none;
+            padding: 20px;
+            border: 2px solid white;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .screen.active {
+            display: block;
+        }
+        button {
+            padding: 15px 30px;
+            background: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>FLAP - Test Login</h1>
+    
+    <!-- Auth Screen -->
+    <div class="screen active" id="authScreen">
+        <h2>Вхід в систему</h2>
+        <button onclick="handleQuickLogin()">Увійти (ТЕСТ)</button>
+        <button onclick="handleQuickRegister()">Створити акаунт (ТЕСТ)</button>
+        <p>Натисніть кнопку для тесту</p>
+    </div>
+    
+    <!-- Main Screen -->
+    <div class="screen" id="mainScreen">
+        <h2>Головна сторінка</h2>
+        <p>✅ Успішно увійшли в систему!</p>
+        <button onclick="logout()">Вийти</button>
+    </div>
+
+    <script>
+        console.log('🚀 JavaScript завантажено');
+        
+        function handleQuickLogin() {
+            console.log('🔑 handleQuickLogin викликана');
+            
+            const authScreen = document.getElementById('authScreen');
+            const mainScreen = document.getElementById('mainScreen');
+            
+            console.log('📱 authScreen:', authScreen);
+            console.log('📱 mainScreen:', mainScreen);
+            
+            if (authScreen) {
+                authScreen.style.display = 'none';
+                authScreen.classList.remove('active');
+                console.log('✅ authScreen приховано');
+            }
+            
+            if (mainScreen) {
+                mainScreen.style.display = 'block';
+                mainScreen.classList.add('active');
+                console.log('✅ mainScreen показано');
+            }
+            
+            alert('🎉 Успішний вхід!');
+        }
+        
+        function handleQuickRegister() {
+            console.log('📝 handleQuickRegister викликана');
+            alert('📝 Реєстрація (тест)');
+            handleQuickLogin(); // Одразу входимо
+        }
+        
+        function logout() {
+            console.log('🚪 logout викликана');
+            
+            const authScreen = document.getElementById('authScreen');
+            const mainScreen = document.getElementById('mainScreen');
+            
+            if (mainScreen) {
+                mainScreen.style.display = 'none';
+                mainScreen.classList.remove('active');
+            }
+            
+            if (authScreen) {
+                authScreen.style.display = 'block';
+                authScreen.classList.add('active');
+            }
+            
+            alert('🚪 Вихід з системи');
+        }
+        
+        // Тест при завантаженні
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('📄 DOM завантажено');
+            console.log('🔍 Елементи знайдено:');
+            console.log('- authScreen:', !!document.getElementById('authScreen'));
+            console.log('- mainScreen:', !!document.getElementById('mainScreen'));
+        });
+    </script>
+</body>
+</html>
