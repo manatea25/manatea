@@ -3924,8 +3924,6 @@
             });
         }
 
-        let currentUser = null; // Global user variable
-        
         function handleQuickLogin() {
             console.log('🔑 handleQuickLogin викликана');
             
@@ -4068,77 +4066,7 @@
             'player7': { name: 'Олександр Мельник', avatar: '🔥', city: 'Львів', position: 'Нападник', age: 22, rating: 4.3, phone: '+380637890123', telegram: '@alex_mel', instagram: '@alex_forward' }
         };
 
-        // Enhanced showPlayerProfile with unique profiles
-        function showPlayerProfile(playerId) {
-            let player = playersDatabase[playerId];
-            
-            // If player not found, create default profile
-            if (!player) {
-                player = {
-                    name: 'Гравець #' + Math.floor(Math.random() * 100),
-                    avatar: ['🎯', '⚽', '⚡', '🏃', '🛡️', '🥅', '🔥'][Math.floor(Math.random() * 7)],
-                    city: ['Київ', 'Львів', 'Одеса', 'Харків', 'Дніпро'][Math.floor(Math.random() * 5)],
-                    position: ['Нападник', 'Півзахисник', 'Захисник', 'Воротар'][Math.floor(Math.random() * 4)],
-                    age: Math.floor(Math.random() * 10) + 20,
-                    rating: (Math.random() * 2 + 3).toFixed(1),
-                    phone: '+38067' + Math.floor(Math.random() * 9000000 + 1000000),
-                    telegram: '@player' + Math.floor(Math.random() * 1000),
-                    instagram: '@player' + Math.floor(Math.random() * 1000)
-                };
-            }
 
-            const modal = document.getElementById('playerModal');
-            modal.innerHTML = `
-                <div class="modal-content" style="max-width: 400px; margin: 50px auto; background: linear-gradient(135deg, #2e7d32, #4caf50); border-radius: 20px; padding: 0; color: white; overflow: hidden;">
-                    <div style="background: linear-gradient(45deg, #1b5e20, #2e7d32); padding: 20px; text-align: center; position: relative;">
-                        <button onclick="closeModal('playerModal')" style="position: absolute; top: 10px; right: 15px; background: none; border: none; color: white; font-size: 24px; cursor: pointer;">&times;</button>
-                        <div style="width: 80px; height: 80px; background: ${player.avatar}; border-radius: 50%; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; font-size: 40px; border: 3px solid white;">${player.avatar}</div>
-                        <h3 style="margin: 0; font-size: 20px;">${player.name}</h3>
-                        <p style="margin: 5px 0; opacity: 0.9;">${player.position} • ${player.city}</p>
-                        <div style="display: flex; justify-content: center; align-items: center; gap: 5px; margin-top: 10px;">
-                            <span style="color: #ffd700;">⭐</span>
-                            <span style="font-weight: 600; font-size: 18px;">${player.rating}</span>
-                        </div>
-                    </div>
-                    
-                    <div style="padding: 20px;">
-                        <div style="margin-bottom: 15px;">
-                            <strong>📞 Телефон:</strong>
-                            <div style="display: flex; align-items: center; gap: 10px; margin-top: 5px;">
-                                <span>${player.phone}</span>
-                                <button onclick="copyToClipboard('${player.phone}')" style="padding: 5px 10px; background: rgba(255,255,255,0.2); border: none; border-radius: 5px; color: white; cursor: pointer; font-size: 12px;">📋</button>
-                            </div>
-                        </div>
-                        
-                        <div style="margin-bottom: 15px;">
-                            <strong>📱 Telegram:</strong>
-                            <div style="display: flex; align-items: center; gap: 10px; margin-top: 5px;">
-                                <span>${player.telegram}</span>
-                                <button onclick="copyToClipboard('${player.telegram}')" style="padding: 5px 10px; background: rgba(255,255,255,0.2); border: none; border-radius: 5px; color: white; cursor: pointer; font-size: 12px;">📋</button>
-                            </div>
-                        </div>
-                        
-                        <div style="margin-bottom: 20px;">
-                            <strong>📸 Instagram:</strong>
-                            <div style="display: flex; align-items: center; gap: 10px; margin-top: 5px;">
-                                <span>${player.instagram}</span>
-                                <button onclick="copyToClipboard('${player.instagram}')" style="padding: 5px 10px; background: rgba(255,255,255,0.2); border: none; border-radius: 5px; color: white; cursor: pointer; font-size: 12px;">📋</button>
-                            </div>
-                        </div>
-                        
-                        <div style="display: flex; gap: 10px;">
-                            <button onclick="addFriend('${playerId}')" style="flex: 1; padding: 12px; background: linear-gradient(45deg, #66bb6a, #81c784); border: none; border-radius: 10px; color: white; font-weight: 600; cursor: pointer;">
-                                👥 Додати в друзі
-                            </button>
-                            <button onclick="closeModal('playerModal')" style="flex: 1; padding: 12px; background: rgba(255,255,255,0.2); border: none; border-radius: 10px; color: white; font-weight: 600; cursor: pointer;">
-                                ❌ Закрити
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `;
-            modal.style.display = 'flex';
-        }
 
         // Create Video Functions
         function showCreateVideo() {
