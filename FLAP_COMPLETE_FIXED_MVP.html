@@ -1,0 +1,1796 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLAP - Футбольний Додаток</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Screen System - FIXED NAVIGATION */
+        .screen {
+            display: none;
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        /* Welcome/Auth Screen */
+        .welcome-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .welcome-logo {
+            width: 200px;
+            height: 200px;
+            background: url('https://github.com/manatea25/manatea/blob/design-options/Bold%20Graphic%20Design%20With%20Dynamic%20Logo%20On%20Green%20Background.png.jpg?raw=true') center/contain no-repeat;
+            margin-bottom: 30px;
+            border-radius: 20px;
+            animation: logoBounce 2s infinite;
+        }
+
+        @keyframes logoBounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .auth-container {
+            width: 100%;
+            max-width: 300px;
+            margin-top: 20px;
+        }
+
+        .auth-tabs {
+            display: flex;
+            background: rgba(255,255,255,0.1);
+            border-radius: 25px;
+            padding: 4px;
+            margin-bottom: 30px;
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 20px;
+            background: transparent;
+            color: rgba(255,255,255,0.7);
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .auth-tab.active {
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            color: white;
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+        }
+
+        .auth-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(255,255,255,0.4);
+            border-radius: 15px;
+            background: rgba(255,255,255,0.15);
+            color: white;
+            font-size: 16px;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .auth-input::placeholder {
+            color: rgba(255,255,255,0.8) !important;
+            font-weight: 400;
+        }
+
+        .auth-input:focus {
+            outline: none;
+            border-color: #4caf50;
+            box-shadow: 0 0 20px rgba(76, 175, 80, 0.3);
+        }
+
+        .auth-btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 25px;
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .auth-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(76, 175, 80, 0.4);
+        }
+
+        .social-btn {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 25px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .social-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* Main App Screen */
+        .main-screen {
+            padding-bottom: 80px;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(0,0,0,0.3);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-logo {
+            width: 40px;
+            height: 40px;
+            background: url('https://github.com/manatea25/manatea/blob/design-options/Bold%20Graphic%20Design%20With%20Dynamic%20Logo%20On%20Green%20Background.png.jpg?raw=true') center/contain no-repeat;
+            border-radius: 10px;
+        }
+
+        .header-user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-avatar {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .coins-display {
+            background: rgba(255,193,7,0.2);
+            padding: 8px 15px;
+            border-radius: 20px;
+            border: 2px solid #ffc107;
+            color: #ffc107;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            background: rgba(0,0,0,0.2);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .nav-tab {
+            flex: 1;
+            padding: 15px 10px;
+            text-align: center;
+            color: rgba(255,255,255,0.6);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            background: none;
+            font-size: 12px;
+        }
+
+        .nav-tab.active {
+            color: #4caf50;
+            background: rgba(76, 175, 80, 0.1);
+        }
+
+        .nav-tab i {
+            display: block;
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        /* Content Sections */
+        .content-section {
+            display: none;
+            padding: 20px;
+            min-height: calc(100vh - 140px);
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        /* Section Headers */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+        }
+
+        /* Video Section */
+        .video-filters {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+
+        .video-filter {
+            padding: 8px 16px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 20px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+
+        .video-filter.active {
+            background: rgba(76, 175, 80, 0.2);
+            border-color: #4caf50;
+            color: #2e7d32;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 12px 20px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 25px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .search-box::placeholder {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .video-item {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .video-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .video-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .video-author {
+            color: rgba(255,255,255,0.7);
+            font-size: 14px;
+        }
+
+        .video-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .play-btn {
+            background: #4caf50;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .rating-slider {
+            flex: 1;
+            margin: 0 10px;
+        }
+
+        .vote-btn {
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            border: none;
+            border-radius: 20px;
+            padding: 8px 16px;
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .vote-btn:disabled {
+            background: #666;
+            cursor: not-allowed;
+        }
+
+        /* Challenge Section */
+        .challenge-item {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .challenge-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .challenge-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .challenge-prize {
+            background: linear-gradient(135deg, #ffc107, #ff8f00);
+            padding: 8px 15px;
+            border-radius: 20px;
+            color: white;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .challenge-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            color: rgba(255,255,255,0.8);
+            font-size: 14px;
+        }
+
+        .challenge-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        /* Match Section */
+        .match-filters {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+        }
+
+        .match-filter {
+            padding: 8px 16px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 20px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+
+        .match-filter.active {
+            background: rgba(76, 175, 80, 0.2);
+            border-color: #4caf50;
+            color: #2e7d32;
+        }
+
+        .match-item {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .match-item:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateY(-2px);
+        }
+
+        .match-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .match-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .match-status {
+            background: #4caf50;
+            padding: 4px 12px;
+            border-radius: 15px;
+            color: white;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .match-details {
+            color: rgba(255,255,255,0.8);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* Rating Section */
+        .rating-item {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .player-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .player-info {
+            flex: 1;
+        }
+
+        .player-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        .player-details {
+            color: rgba(255,255,255,0.7);
+            font-size: 14px;
+        }
+
+        .player-rating {
+            background: rgba(255,193,7,0.2);
+            padding: 8px 15px;
+            border-radius: 20px;
+            border: 2px solid #ffc107;
+            color: #ffc107;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        /* Profile Section */
+        .profile-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 30px 20px;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 24px;
+            margin: 0 auto 15px;
+            border: 4px solid white;
+        }
+
+        .profile-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        .profile-position {
+            color: rgba(255,255,255,0.8);
+            font-size: 16px;
+        }
+
+        .profile-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-item {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: #4caf50;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: rgba(255,255,255,0.7);
+            font-size: 12px;
+        }
+
+        .profile-menu {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .profile-menu-item {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .profile-menu-item:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateY(-2px);
+        }
+
+        .profile-menu-item i {
+            font-size: 24px;
+            color: #4caf50;
+            margin-bottom: 10px;
+        }
+
+        .profile-menu-item span {
+            display: block;
+            color: white;
+            font-weight: 600;
+        }
+
+        /* Modals */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 400px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Toast Messages */
+        .toast {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: #4caf50;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 25px;
+            font-weight: 700;
+            z-index: 3000;
+            transform: translateX(300px);
+            transition: all 0.5s ease;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.error {
+            background: #f44336;
+        }
+
+        /* Animations */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide-in {
+            animation: slideIn 0.3s ease;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .profile-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .profile-menu {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Welcome/Auth Screen -->
+    <div class="screen active" id="authScreen">
+        <div class="welcome-screen">
+            <div class="welcome-logo"></div>
+            <h1 style="font-size: 32px; font-weight: 900; margin-bottom: 10px;">FLAP</h1>
+            <p style="font-size: 16px; color: rgba(255,255,255,0.8); margin-bottom: 40px;">Футбольний додаток для гравців</p>
+            
+            <div class="auth-container">
+                <div class="auth-tabs">
+                    <button class="auth-tab active" onclick="switchAuthMode('login')">Увійти</button>
+                    <button class="auth-tab" onclick="switchAuthMode('register')">Реєстрація</button>
+                </div>
+
+                <!-- Login Form -->
+                <div class="auth-form active" id="loginForm">
+                    <input type="text" class="auth-input" placeholder="Email або телефон">
+                    <input type="password" class="auth-input" placeholder="Пароль">
+                    <button class="auth-btn" onclick="handleLogin()">Увійти</button>
+                </div>
+
+                <!-- Register Form -->
+                <div class="auth-form" id="registerForm">
+                    <input type="text" class="auth-input" placeholder="Ім'я та прізвище">
+                    <input type="email" class="auth-input" placeholder="Email">
+                    <input type="password" class="auth-input" placeholder="Пароль">
+                    <button class="auth-btn" onclick="handleRegister()">Створити акаунт</button>
+                </div>
+
+                <div style="margin: 20px 0; text-align: center; color: rgba(255,255,255,0.6);">або</div>
+                
+                <button class="social-btn" onclick="handleLogin()">
+                    <div style="width: 20px; height: 20px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #db4437; font-weight: 700; font-size: 12px;">G</div>
+                    Google
+                </button>
+                
+                <button class="social-btn" onclick="handleLogin()">
+                    <div style="width: 20px; height: 20px; background: #1877f2; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 12px;">f</div>
+                    Facebook
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App Screen -->
+    <div class="screen" id="mainScreen">
+        <div class="main-screen">
+            <!-- Header -->
+            <div class="header">
+                <div class="header-logo"></div>
+                <div class="header-user">
+                    <div class="coins-display">
+                        <i class="fas fa-coins"></i> <span id="coinsCount">250</span>
+                    </div>
+                    <div class="user-avatar" id="userAvatar">МК</div>
+                </div>
+            </div>
+
+            <!-- Content Sections -->
+            
+            <!-- Videos Section -->
+            <div class="content-section active" id="videos">
+                <div class="section-header">
+                    <h2 class="section-title">Відео</h2>
+                    <button class="btn btn-primary" onclick="showAddVideoModal()">
+                        <i class="fas fa-plus"></i> Додати
+                    </button>
+                </div>
+
+                <div class="video-filters">
+                    <button class="video-filter active" onclick="filterVideos('all')">Всі</button>
+                    <button class="video-filter" onclick="filterVideos('tricks')">Фінти</button>
+                    <button class="video-filter" onclick="filterVideos('accuracy')">Точність</button>
+                    <button class="video-filter" onclick="filterVideos('speed')">Швидкість</button>
+                    <button class="video-filter" onclick="filterVideos('top')">Топ</button>
+                </div>
+
+                <input type="text" class="search-box" placeholder="🔍 Пошук відео..." oninput="searchVideos(this.value)">
+
+                <div id="videosList">
+                    <div class="video-item">
+                        <div class="video-header">
+                            <div>
+                                <div class="video-title">Кращий фінт тижня</div>
+                                <div class="video-author">Андрій Коваленко • Київ</div>
+                            </div>
+                            <div style="color: #ffc107; font-weight: 700;">⭐ 4.8</div>
+                        </div>
+                        <div class="video-controls">
+                            <button class="play-btn"><i class="fas fa-play"></i></button>
+                            <div class="rating-slider">
+                                <input type="range" min="0" max="5" step="0.01" value="0" 
+                                       onchange="updateVoteValue('video1', this.value)" 
+                                       style="width: 100%;">
+                                <div style="text-align: center; margin-top: 5px; color: #ffc107; font-weight: 700;">
+                                    <span id="vote_video1">0.00</span>/5
+                                </div>
+                            </div>
+                            <button class="vote-btn" onclick="voteForVideo('video1', event)">Голос</button>
+                        </div>
+                    </div>
+
+                    <div class="video-item">
+                        <div class="video-header">
+                            <div>
+                                <div class="video-title">Точність ударів</div>
+                                <div class="video-author">Петро Мельник • Львів</div>
+                            </div>
+                            <div style="color: #ffc107; font-weight: 700;">⭐ 4.7</div>
+                        </div>
+                        <div class="video-controls">
+                            <button class="play-btn"><i class="fas fa-play"></i></button>
+                            <div class="rating-slider">
+                                <input type="range" min="0" max="5" step="0.01" value="0" 
+                                       onchange="updateVoteValue('video2', this.value)" 
+                                       style="width: 100%;">
+                                <div style="text-align: center; margin-top: 5px; color: #ffc107; font-weight: 700;">
+                                    <span id="vote_video2">0.00</span>/5
+                                </div>
+                            </div>
+                            <button class="vote-btn" onclick="voteForVideo('video2', event)">Голос</button>
+                        </div>
+                    </div>
+
+                    <div class="video-item">
+                        <div class="video-header">
+                            <div>
+                                <div class="video-title">Швидкість дриблінгу</div>
+                                <div class="video-author">Олександр Швидкий • Одеса</div>
+                            </div>
+                            <div style="color: #ffc107; font-weight: 700;">⭐ 4.9</div>
+                        </div>
+                        <div class="video-controls">
+                            <button class="play-btn"><i class="fas fa-play"></i></button>
+                            <div class="rating-slider">
+                                <input type="range" min="0" max="5" step="0.01" value="0" 
+                                       onchange="updateVoteValue('video3', this.value)" 
+                                       style="width: 100%;">
+                                <div style="text-align: center; margin-top: 5px; color: #ffc107; font-weight: 700;">
+                                    <span id="vote_video3">0.00</span>/5
+                                </div>
+                            </div>
+                            <button class="vote-btn" onclick="voteForVideo('video3', event)">Голос</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Challenges Section -->
+            <div class="content-section" id="challenges">
+                <div class="section-header">
+                    <h2 class="section-title">Челенджі</h2>
+                    <button class="btn btn-primary" onclick="showCreateChallengeModal()">
+                        <i class="fas fa-plus"></i> Створити
+                    </button>
+                </div>
+
+                <div class="challenge-item">
+                    <div class="challenge-header">
+                        <div class="challenge-title">🏆 Кращий фінт тижня</div>
+                        <div class="challenge-prize">500₴</div>
+                    </div>
+                    <div class="challenge-info">
+                        <span>📹 8 відео</span>
+                        <span>⏰ 3 дні до завершення</span>
+                        <span>👥 12 учасників</span>
+                    </div>
+                    <div class="challenge-actions">
+                        <button class="btn btn-primary" onclick="joinChallenge('challenge1')">Приєднатися</button>
+                        <button class="btn btn-secondary" onclick="showChallengeVideos('challenge1')">Переглянути відео</button>
+                    </div>
+                </div>
+
+                <div class="challenge-item">
+                    <div class="challenge-header">
+                        <div class="challenge-title">⚽ Точність ударів</div>
+                        <div class="challenge-prize">300₴</div>
+                    </div>
+                    <div class="challenge-info">
+                        <span>📹 5 відео</span>
+                        <span>⏰ 5 днів до завершення</span>
+                        <span>👥 8 учасників</span>
+                    </div>
+                    <div class="challenge-actions">
+                        <button class="btn btn-primary" onclick="joinChallenge('challenge2')">Приєднатися</button>
+                        <button class="btn btn-secondary" onclick="showChallengeVideos('challenge2')">Переглянути відео</button>
+                    </div>
+                </div>
+
+                <div class="challenge-item">
+                    <div class="challenge-header">
+                        <div class="challenge-title">🏃 Швидкість дриблінгу</div>
+                        <div class="challenge-prize">200₴</div>
+                    </div>
+                    <div class="challenge-info">
+                        <span>📹 6 відео</span>
+                        <span>⏰ 1 тиждень до завершення</span>
+                        <span>👥 10 учасників</span>
+                    </div>
+                    <div class="challenge-actions">
+                        <button class="btn btn-primary" onclick="joinChallenge('challenge3')">Приєднатися</button>
+                        <button class="btn btn-secondary" onclick="showChallengeVideos('challenge3')">Переглянути відео</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Matches Section -->
+            <div class="content-section" id="matches">
+                <div class="section-header">
+                    <h2 class="section-title">Матчі</h2>
+                    <button class="btn btn-primary" onclick="showCreateMatchModal()">
+                        <i class="fas fa-plus"></i> Створити
+                    </button>
+                </div>
+
+                <div class="match-filters">
+                    <button class="match-filter active" onclick="filterMatches('all')">Всі</button>
+                    <button class="match-filter" onclick="filterMatches('available')">Доступні</button>
+                    <button class="match-filter" onclick="filterMatches('my')">Мої матчі</button>
+                    <button class="match-filter" onclick="filterMatches('city')">По місту</button>
+                    <button class="match-filter" onclick="filterMatches('rating')">По рейтингу</button>
+                </div>
+
+                <div id="matchesList">
+                    <div class="match-item" onclick="showMatchDetails('match1')">
+                        <div class="match-header">
+                            <div class="match-title">Футбол 5х5 - Київ</div>
+                            <div class="match-status">Шукаємо гравців</div>
+                        </div>
+                        <div class="match-details">
+                            📅 Сьогодні, 18:00<br>
+                            📍 Стадіон "Динамо", Київ<br>
+                            👥 6/10 гравців • 💰 50₴/особа<br>
+                            ⭐ Рейтинг: 4.0-5.0
+                        </div>
+                    </div>
+
+                    <div class="match-item" onclick="showMatchDetails('match2')">
+                        <div class="match-header">
+                            <div class="match-title">Футбол 7х7 - Львів</div>
+                            <div class="match-status">Шукаємо гравців</div>
+                        </div>
+                        <div class="match-details">
+                            📅 Завтра, 19:00<br>
+                            📍 Арена "Львів", Львів<br>
+                            👥 10/14 гравців • 💰 70₴/особа<br>
+                            ⭐ Рейтинг: 3.5-4.5
+                        </div>
+                    </div>
+
+                    <div class="match-item" onclick="showMatchDetails('match3')">
+                        <div class="match-header">
+                            <div class="match-title">Футбол 11х11 - Одеса</div>
+                            <div class="match-status">Шукаємо гравців</div>
+                        </div>
+                        <div class="match-details">
+                            📅 Неділя, 16:00<br>
+                            📍 Стадіон "Чорноморець", Одеса<br>
+                            👥 18/22 гравців • 💰 100₴/особа<br>
+                            ⭐ Рейтинг: 4.5-5.0
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rating Section -->
+            <div class="content-section" id="rating">
+                <div class="section-header">
+                    <h2 class="section-title">Рейтинг</h2>
+                    <button class="btn btn-secondary" onclick="showFriends()">
+                        <i class="fas fa-users"></i> Друзі
+                    </button>
+                </div>
+
+                <input type="text" class="search-box" placeholder="🔍 Пошук гравців..." oninput="searchPlayers(this.value)">
+
+                <div id="ratingsList">
+                    <div class="rating-item" onclick="showPlayerProfile('player1')">
+                        <div class="player-avatar">🚀</div>
+                        <div class="player-info">
+                            <div class="player-name">Олександр Мельник</div>
+                            <div class="player-details">Нападник • Київ • 25 років</div>
+                        </div>
+                        <div class="player-rating">4.9</div>
+                    </div>
+
+                    <div class="rating-item" onclick="showPlayerProfile('player2')">
+                        <div class="player-avatar">🎯</div>
+                        <div class="player-info">
+                            <div class="player-name">Андрій Коваленко</div>
+                            <div class="player-details">Півзахисник • Київ • 24 роки</div>
+                        </div>
+                        <div class="player-rating">4.8</div>
+                    </div>
+
+                    <div class="rating-item" onclick="showPlayerProfile('player3')">
+                        <div class="player-avatar">⚽</div>
+                        <div class="player-info">
+                            <div class="player-name">Петро Мельник</div>
+                            <div class="player-details">Нападник • Львів • 23 роки</div>
+                        </div>
+                        <div class="player-rating">4.7</div>
+                    </div>
+
+                    <div class="rating-item" onclick="showPlayerProfile('player4')">
+                        <div class="player-avatar">🥅</div>
+                        <div class="player-info">
+                            <div class="player-name">Дмитро Коваленко</div>
+                            <div class="player-details">Воротар • Одеса • 27 років</div>
+                        </div>
+                        <div class="player-rating">4.7</div>
+                    </div>
+
+                    <div class="rating-item" onclick="showPlayerProfile('player5')">
+                        <div class="player-avatar">⚡</div>
+                        <div class="player-info">
+                            <div class="player-name">Віктор Шевченко</div>
+                            <div class="player-details">Захисник • Харків • 26 років</div>
+                        </div>
+                        <div class="player-rating">4.6</div>
+                    </div>
+
+                    <div class="rating-item" onclick="showPlayerProfile('player6')">
+                        <div class="player-avatar">🔥</div>
+                        <div class="player-info">
+                            <div class="player-name">Ігор Петренко</div>
+                            <div class="player-details">Півзахисник • Дніпро • 22 роки</div>
+                        </div>
+                        <div class="player-rating">4.5</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Section -->
+            <div class="content-section" id="profile">
+                <div class="profile-header">
+                    <div class="profile-avatar" id="profileAvatar">МК</div>
+                    <div class="profile-name" id="profileName">Максим Коваль</div>
+                    <div class="profile-position" id="profilePosition">Півзахисник • Київ • 25 років</div>
+                </div>
+
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <div class="stat-value" id="profileRating">4.8</div>
+                        <div class="stat-label">Рейтинг</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="profileMatches">89</div>
+                        <div class="stat-label">Матчі</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="profileWinRate">91%</div>
+                        <div class="stat-label">Перемоги</div>
+                    </div>
+                </div>
+
+                <div class="profile-menu">
+                    <div class="profile-menu-item" onclick="showAchievements()">
+                        <i class="fas fa-trophy"></i>
+                        <span>Досягнення</span>
+                    </div>
+                    <div class="profile-menu-item" onclick="showStore()">
+                        <i class="fas fa-store"></i>
+                        <span>Магазин</span>
+                    </div>
+                    <div class="profile-menu-item" onclick="showSubscriptions()">
+                        <i class="fas fa-crown"></i>
+                        <span>Підписки</span>
+                    </div>
+                    <div class="profile-menu-item" onclick="showSettings()">
+                        <i class="fas fa-cog"></i>
+                        <span>Налаштування</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showSection('videos')">
+                <i class="fas fa-video"></i>
+                Відео
+            </button>
+            <button class="nav-tab" onclick="showSection('challenges')">
+                <i class="fas fa-trophy"></i>
+                Челенджі
+            </button>
+            <button class="nav-tab" onclick="showSection('matches')">
+                <i class="fas fa-futbol"></i>
+                Матчі
+            </button>
+            <button class="nav-tab" onclick="showSection('rating')">
+                <i class="fas fa-crown"></i>
+                Рейтинг
+            </button>
+            <button class="nav-tab" onclick="showSection('profile')">
+                <i class="fas fa-user"></i>
+                Профіль
+            </button>
+        </div>
+    </div>
+
+    <!-- Challenge Videos Modal -->
+    <div class="modal" id="challengeVideosModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="challengeModalTitle">Відео челенджу</h3>
+                <button class="modal-close" onclick="closeChallengeVideos()">&times;</button>
+            </div>
+            <div id="challengeVideosList">
+                <!-- Challenge videos will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Player Profile Modal -->
+    <div class="modal" id="playerProfileModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Профіль гравця</h3>
+                <button class="modal-close" onclick="closePlayerProfile()">&times;</button>
+            </div>
+            <div style="text-align: center; margin-bottom: 20px;">
+                <div class="player-avatar" id="modalPlayerAvatar" style="width: 80px; height: 80px; font-size: 24px; margin: 0 auto 15px;">🚀</div>
+                <h3 id="modalPlayerName" style="color: white; margin-bottom: 5px;">Олександр Мельник</h3>
+                <p id="modalPlayerPosition" style="color: rgba(255,255,255,0.8);">Нападник • Київ • 25 років</p>
+            </div>
+            <div class="profile-stats">
+                <div class="stat-item">
+                    <div class="stat-value" id="modalPlayerRating">4.9</div>
+                    <div class="stat-label">Рейтинг</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="modalPlayerMatches">78</div>
+                    <div class="stat-label">Матчі</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="modalPlayerWinRate">92%</div>
+                    <div class="stat-label">Перемоги</div>
+                </div>
+            </div>
+            <div style="margin: 20px 0;">
+                <h4 style="color: white; margin-bottom: 15px;">Контакти:</h4>
+                <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 15px;">
+                    <div style="margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-phone" style="color: #4caf50;"></i>
+                        <span id="modalPlayerPhone">+380631234567</span>
+                        <button onclick="copyContact('+380631234567')" style="background: #4caf50; border: none; padding: 5px 10px; border-radius: 10px; color: white; cursor: pointer;">Копіювати</button>
+                    </div>
+                    <div style="margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
+                        <i class="fab fa-telegram" style="color: #0088cc;"></i>
+                        <span id="modalPlayerTelegram">@oleksandr_speed</span>
+                        <button onclick="copyContact('@oleksandr_speed')" style="background: #0088cc; border: none; padding: 5px 10px; border-radius: 10px; color: white; cursor: pointer;">Копіювати</button>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <i class="fab fa-instagram" style="color: #e4405f;"></i>
+                        <span id="modalPlayerInstagram">@oleksandr.rocket.kyiv</span>
+                        <button onclick="copyContact('@oleksandr.rocket.kyiv')" style="background: #e4405f; border: none; padding: 5px 10px; border-radius: 10px; color: white; cursor: pointer;">Копіювати</button>
+                    </div>
+                </div>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <button class="btn btn-primary" style="flex: 1;" onclick="addFriend()">Додати в друзі</button>
+                <button class="btn btn-secondary" style="flex: 1;" onclick="inviteToMatch()">Запросити в матч</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Match Details Modal -->
+    <div class="modal" id="matchDetailsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="matchDetailsTitle">Деталі матчу</h3>
+                <button class="modal-close" onclick="closeMatchDetails()">&times;</button>
+            </div>
+            <div id="matchDetailsContent">
+                <!-- Match details will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Message -->
+    <div class="toast" id="messageToast"></div>
+
+    <script>
+        // Global Variables
+        let currentUser = null;
+        let coins = 250;
+        let videoRatings = {};
+
+        // Auth Functions
+        function switchAuthMode(mode) {
+            const loginTab = document.querySelector('.auth-tab:first-child');
+            const registerTab = document.querySelector('.auth-tab:last-child');
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+
+            if (mode === 'login') {
+                loginTab.classList.add('active');
+                registerTab.classList.remove('active');
+                loginForm.classList.add('active');
+                registerForm.classList.remove('active');
+            } else {
+                registerTab.classList.add('active');
+                loginTab.classList.remove('active');
+                registerForm.classList.add('active');
+                loginForm.classList.remove('active');
+            }
+        }
+
+        function handleLogin() {
+            currentUser = {
+                name: "Максим Коваль",
+                position: "Півзахисник",
+                city: "Київ",
+                rating: 4.8
+            };
+            
+            // FIXED: Proper screen navigation
+            document.getElementById('authScreen').classList.remove('active');
+            document.getElementById('mainScreen').classList.add('active');
+            
+            showToast('✅ Успішний вхід!', 'success');
+        }
+
+        function handleRegister() {
+            // For demo, just login
+            handleLogin();
+        }
+
+        // Navigation Functions
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Find and activate the correct tab
+            const tabs = document.querySelectorAll('.nav-tab');
+            tabs.forEach(tab => {
+                const tabText = tab.textContent.toLowerCase();
+                if ((sectionId === 'videos' && tabText.includes('відео')) ||
+                    (sectionId === 'challenges' && tabText.includes('челенджі')) ||
+                    (sectionId === 'matches' && tabText.includes('матчі')) ||
+                    (sectionId === 'rating' && tabText.includes('рейтинг')) ||
+                    (sectionId === 'profile' && tabText.includes('профіль'))) {
+                    tab.classList.add('active');
+                }
+            });
+        }
+
+        // Video Functions
+        function updateVoteValue(videoId, value) {
+            const ratingValue = parseFloat(value);
+            document.getElementById('vote_' + videoId).textContent = ratingValue.toFixed(2);
+            videoRatings[videoId] = ratingValue;
+        }
+
+        function voteForVideo(videoId, event) {
+            event.stopPropagation();
+            
+            const ratingValue = videoRatings[videoId] || 0;
+            
+            if (ratingValue === 0) {
+                showToast('❌ Оберіть оцінку на повзунку!', 'error');
+                return;
+            }
+            
+            // Disable slider and button after voting
+            const slider = document.querySelector(`input[onchange*="${videoId}"]`);
+            const button = event.target;
+            if (slider) slider.disabled = true;
+            button.disabled = true;
+            button.textContent = 'Проголосовано';
+            button.style.background = '#666';
+            
+            showToast(`⭐ Голос ${ratingValue.toFixed(2)} відправлено!`, 'success');
+        }
+
+        function filterVideos(type) {
+            // Update filter buttons
+            document.querySelectorAll('.video-filter').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Simulate filtering
+            const filters = {
+                'all': '🌟 Показано всі відео',
+                'tricks': '🎯 Показано тільки фінти',
+                'accuracy': '⚽ Показано відео точності',
+                'speed': '🏃 Показано швидкісні відео',
+                'top': '🏆 Показано топ відео'
+            };
+            
+            showToast(filters[type], 'success');
+        }
+
+        function searchVideos(query) {
+            if (query.length > 2) {
+                showToast(`🔍 Пошук: "${query}"`, 'success');
+            }
+        }
+
+        // Challenge Functions
+        function joinChallenge(challengeId) {
+            showToast('🏆 Ви приєдналися до челенджу! Завантажте своє відео щоб отримати +20 монет', 'success');
+            coins += 20;
+            document.getElementById('coinsCount').textContent = coins;
+        }
+
+        function showChallengeVideos(challengeId) {
+            const challengeData = {
+                'challenge1': {
+                    title: '🏆 Кращий фінт тижня - Відео',
+                    videos: [
+                        { name: 'Неймовірний фінт', author: 'Андрій К.', city: 'Київ', rating: 4.8, votes: 24 },
+                        { name: 'Технічний трюк', author: 'Петро М.', city: 'Львів', rating: 4.7, votes: 18 },
+                        { name: 'Швидкий фінт', author: 'Олег Ш.', city: 'Одеса', rating: 4.6, votes: 15 },
+                        { name: 'Класичний обвід', author: 'Максим В.', city: 'Харків', rating: 4.5, votes: 12 },
+                        { name: 'Креативний рух', author: 'Віталій Т.', city: 'Дніпро', rating: 4.4, votes: 10 },
+                        { name: 'Елегантний фінт', author: 'Ігор П.', city: 'Київ', rating: 4.3, votes: 8 },
+                        { name: 'Швидкісний трюк', author: 'Сергій К.', city: 'Львів', rating: 4.2, votes: 6 },
+                        { name: 'Майстерний обвід', author: 'Роман М.', city: 'Одеса', rating: 4.1, votes: 4 }
+                    ]
+                },
+                'challenge2': {
+                    title: '⚽ Точність ударів - Відео',
+                    videos: [
+                        { name: 'Супер точність', author: 'Андрій С.', city: 'Київ', rating: 4.9, votes: 20 },
+                        { name: 'Влучний удар', author: 'Максим В.', city: 'Львів', rating: 4.8, votes: 16 },
+                        { name: 'Точний постріл', author: 'Олег Т.', city: 'Одеса', rating: 4.7, votes: 12 },
+                        { name: 'Майстерний удар', author: 'Петро П.', city: 'Харків', rating: 4.6, votes: 8 },
+                        { name: 'Прицільний постріл', author: 'Віталій В.', city: 'Дніпро', rating: 4.5, votes: 5 }
+                    ]
+                },
+                'challenge3': {
+                    title: '🏃 Швидкість дриблінгу - Відео',
+                    videos: [
+                        { name: 'Швидкість блискавки', author: 'Олександр Ш.', city: 'Київ', rating: 4.9, votes: 22 },
+                        { name: 'Рекордний час', author: 'Петро Р.', city: 'Львів', rating: 4.8, votes: 18 },
+                        { name: 'Швидкий дриблінг', author: 'Максим Д.', city: 'Одеса', rating: 4.7, votes: 14 },
+                        { name: 'Блискавичний рух', author: 'Андрій Б.', city: 'Харків', rating: 4.6, votes: 10 },
+                        { name: 'Швидкісний контроль', author: 'Ігор К.', city: 'Дніпро', rating: 4.5, votes: 8 },
+                        { name: 'Рекордний дриблінг', author: 'Сергій Р.', city: 'Київ', rating: 4.4, votes: 6 }
+                    ]
+                }
+            };
+
+            const challenge = challengeData[challengeId];
+            if (!challenge) return;
+
+            document.getElementById('challengeModalTitle').textContent = challenge.title;
+            
+            let videosHtml = `
+                <div style="margin-bottom: 20px;">
+                    <button class="btn btn-secondary" onclick="sortChallengeVideos('${challengeId}')" style="width: 100%;">
+                        <i class="fas fa-sort"></i> Сортувати за рейтингом
+                    </button>
+                </div>
+            `;
+
+            challenge.videos.forEach((video, index) => {
+                const ratingColor = video.rating >= 4.7 ? '#4caf50' : video.rating >= 4.5 ? '#ff9800' : '#f44336';
+                videosHtml += `
+                    <div class="video-item" style="margin-bottom: 15px;">
+                        <div class="video-header">
+                            <div>
+                                <div class="video-title">${video.name}</div>
+                                <div class="video-author">${video.author} • ${video.city}</div>
+                            </div>
+                            <div style="color: ${ratingColor}; font-weight: 700;">⭐ ${video.rating}</div>
+                        </div>
+                        <div style="margin-top: 10px; color: rgba(255,255,255,0.7); font-size: 14px;">
+                            👥 ${video.votes} голосів
+                        </div>
+                        <div class="video-controls">
+                            <button class="play-btn"><i class="fas fa-play"></i></button>
+                            <div class="rating-slider">
+                                <input type="range" min="0" max="5" step="0.01" value="0" 
+                                       onchange="updateVoteValue('challenge_${challengeId}_video${index}', this.value)" 
+                                       style="width: 100%;">
+                                <div style="text-align: center; margin-top: 5px; color: #ffc107; font-weight: 700;">
+                                    <span id="vote_challenge_${challengeId}_video${index}">0.00</span>/5
+                                </div>
+                            </div>
+                            <button class="vote-btn" onclick="voteForChallengeVideo('challenge_${challengeId}_video${index}', event)">Голос</button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            document.getElementById('challengeVideosList').innerHTML = videosHtml;
+            document.getElementById('challengeVideosModal').classList.add('show');
+        }
+
+        function voteForChallengeVideo(videoId, event) {
+            event.stopPropagation();
+            
+            const ratingValue = videoRatings[videoId] || 0;
+            
+            if (ratingValue === 0) {
+                showToast('❌ Оберіть оцінку на повзунку!', 'error');
+                return;
+            }
+            
+            // Disable slider and button after voting
+            const slider = document.querySelector(`input[onchange*="${videoId}"]`);
+            const button = event.target;
+            if (slider) slider.disabled = true;
+            button.disabled = true;
+            button.textContent = 'Проголосовано';
+            button.style.background = '#666';
+            
+            showToast(`⭐ Голос ${ratingValue.toFixed(2)} відправлено! +5 монет за участь`, 'success');
+            coins += 5;
+            document.getElementById('coinsCount').textContent = coins;
+        }
+
+        function closeChallengeVideos() {
+            document.getElementById('challengeVideosModal').classList.remove('show');
+        }
+
+        function sortChallengeVideos(challengeId) {
+            showToast('📊 Відео відсортовано за рейтингом!', 'success');
+        }
+
+        // Match Functions
+        function filterMatches(type) {
+            // Update filter buttons
+            document.querySelectorAll('.match-filter').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            const filters = {
+                'all': '🌟 Показано всі матчі',
+                'available': '🟢 Показано доступні матчі',
+                'my': '👤 Показано мої матчі',
+                'city': '🏙️ Фільтр по місту',
+                'rating': '⭐ Фільтр по рейтингу'
+            };
+            
+            showToast(filters[type], 'success');
+        }
+
+        function showMatchDetails(matchId) {
+            const matchData = {
+                'match1': {
+                    title: 'Футбол 5х5 - Київ',
+                    organizer: 'Андрій Коваленко',
+                    date: 'Сьогодні, 18:00',
+                    location: 'Стадіон "Динамо", Київ',
+                    players: '6/10 гравців',
+                    price: '50₴/особа',
+                    rating: '4.0-5.0',
+                    description: 'Дружній матч на штучному покритті. Шукаємо 4 гравців для завершення складу. Після гри можемо піти в кафе обговорити матч!',
+                    players_list: [
+                        'Андрій Коваленко (організатор) - 4.8⭐',
+                        'Петро Мельник - 4.7⭐',
+                        'Олександр Швидкий - 4.9⭐',
+                        'Максим Віталійович - 4.6⭐',
+                        'Ігор Петренко - 4.5⭐',
+                        'Сергій Коваль - 4.4⭐'
+                    ]
+                },
+                'match2': {
+                    title: 'Футбол 7х7 - Львів',
+                    organizer: 'Петро Мельник',
+                    date: 'Завтра, 19:00',
+                    location: 'Арена "Львів", Львів',
+                    players: '10/14 гравців',
+                    price: '70₴/особа',
+                    rating: '3.5-4.5',
+                    description: 'Турнірний матч з призовим фондом. Переможці отримають медалі та грошові призи.',
+                    players_list: [
+                        'Петро Мельник (організатор) - 4.7⭐',
+                        'Віктор Шевченко - 4.6⭐',
+                        'Дмитро Коваленко - 4.7⭐'
+                    ]
+                },
+                'match3': {
+                    title: 'Футбол 11х11 - Одеса',
+                    organizer: 'Олександр Мельник',
+                    date: 'Неділя, 16:00',
+                    location: 'Стадіон "Чорноморець", Одеса',
+                    players: '18/22 гравців',
+                    price: '100₴/особа',
+                    rating: '4.5-5.0',
+                    description: 'Професійний матч на великому полі. Тільки для досвідчених гравців з високим рейтингом.',
+                    players_list: [
+                        'Олександр Мельник (організатор) - 4.9⭐',
+                        'Андрій Коваленко - 4.8⭐'
+                    ]
+                }
+            };
+
+            const match = matchData[matchId];
+            if (!match) return;
+
+            document.getElementById('matchDetailsTitle').textContent = match.title;
+            
+            let detailsHtml = `
+                <div style="margin-bottom: 20px;">
+                    <h4 style="color: white; margin-bottom: 10px;">Деталі матчу:</h4>
+                    <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 15px; line-height: 1.6;">
+                        <div style="margin-bottom: 8px;"><strong>📅 Дата:</strong> ${match.date}</div>
+                        <div style="margin-bottom: 8px;"><strong>📍 Місце:</strong> ${match.location}</div>
+                        <div style="margin-bottom: 8px;"><strong>👥 Гравці:</strong> ${match.players}</div>
+                        <div style="margin-bottom: 8px;"><strong>💰 Вартість:</strong> ${match.price}</div>
+                        <div style="margin-bottom: 8px;"><strong>⭐ Рейтинг:</strong> ${match.rating}</div>
+                        <div style="margin-bottom: 8px;"><strong>👤 Організатор:</strong> ${match.organizer}</div>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <h4 style="color: white; margin-bottom: 10px;">Опис:</h4>
+                    <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 15px;">
+                        ${match.description}
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <h4 style="color: white; margin-bottom: 10px;">Учасники:</h4>
+                    <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 15px;">
+                        ${match.players_list.map(player => `<div style="margin-bottom: 5px;">• ${player}</div>`).join('')}
+                    </div>
+                </div>
+                
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn btn-primary" style="flex: 1;" onclick="joinMatch('${matchId}')">Приєднатися</button>
+                    <button class="btn btn-secondary" style="flex: 1;" onclick="shareMatch('${matchId}')">Поділитися</button>
+                </div>
+            `;
+
+            document.getElementById('matchDetailsContent').innerHTML = detailsHtml;
+            document.getElementById('matchDetailsModal').classList.add('show');
+        }
+
+        function closeMatchDetails() {
+            document.getElementById('matchDetailsModal').classList.remove('show');
+        }
+
+        function joinMatch(matchId) {
+            closeMatchDetails();
+            showToast('⚽ Заявка надіслана! Очікуйте підтвердження від організатора', 'success');
+        }
+
+        function shareMatch(matchId) {
+            showToast('📤 Посилання на матч скопійовано!', 'success');
+        }
+
+        // Player Functions
+        function searchPlayers(query) {
+            if (query.length > 2) {
+                showToast(`🔍 Пошук гравців: "${query}"`, 'success');
+            }
+        }
+
+        function showPlayerProfile(playerId) {
+            const players = {
+                'player1': {
+                    avatar: '🚀',
+                    name: 'Олександр Мельник',
+                    position: 'Нападник • Київ • 25 років',
+                    rating: '4.9',
+                    matches: '78',
+                    winRate: '92%',
+                    phone: '+380631234567',
+                    telegram: '@oleksandr_speed',
+                    instagram: '@oleksandr.rocket.kyiv'
+                },
+                'player2': {
+                    avatar: '🎯',
+                    name: 'Андрій Коваленко',
+                    position: 'Півзахисник • Київ • 24 роки',
+                    rating: '4.8',
+                    matches: '89',
+                    winRate: '91%',
+                    phone: '+380501234567',
+                    telegram: '@andriy_football',
+                    instagram: '@andriy.football.kiev'
+                },
+                'player3': {
+                    avatar: '⚽',
+                    name: 'Петро Мельник',
+                    position: 'Нападник • Львів • 23 роки',
+                    rating: '4.7',
+                    matches: '67',
+                    winRate: '88%',
+                    phone: '+380671234567',
+                    telegram: '@petro_striker',
+                    instagram: '@petro.goals.lviv'
+                },
+                'player4': {
+                    avatar: '🥅',
+                    name: 'Дмитро Коваленко',
+                    position: 'Воротар • Одеса • 27 років',
+                    rating: '4.7',
+                    matches: '56',
+                    winRate: '85%',
+                    phone: '+380931234567',
+                    telegram: '@dmitro_keeper',
+                    instagram: '@dmitro.saves.odesa'
+                },
+                'player5': {
+                    avatar: '⚡',
+                    name: 'Віктор Шевченко',
+                    position: 'Захисник • Харків • 26 років',
+                    rating: '4.6',
+                    matches: '45',
+                    winRate: '82%',
+                    phone: '+380971234567',
+                    telegram: '@viktor_defense',
+                    instagram: '@viktor.shield.kharkiv'
+                },
+                'player6': {
+                    avatar: '🔥',
+                    name: 'Ігор Петренко',
+                    position: 'Півзахисник • Дніпро • 22 роки',
+                    rating: '4.5',
+                    matches: '34',
+                    winRate: '79%',
+                    phone: '+380661234567',
+                    telegram: '@igor_midfield',
+                    instagram: '@igor.fire.dnipro'
+                }
+            };
+
+            const player = players[playerId] || players['player1'];
+            
+            document.getElementById('modalPlayerAvatar').textContent = player.avatar;
+            document.getElementById('modalPlayerName').textContent = player.name;
+            document.getElementById('modalPlayerPosition').textContent = player.position;
+            document.getElementById('modalPlayerRating').textContent = player.rating;
+            document.getElementById('modalPlayerMatches').textContent = player.matches;
+            document.getElementById('modalPlayerWinRate').textContent = player.winRate;
+            document.getElementById('modalPlayerPhone').textContent = player.phone;
+            document.getElementById('modalPlayerTelegram').textContent = player.telegram;
+            document.getElementById('modalPlayerInstagram').textContent = player.instagram;
+            
+            // Update copy buttons
+            document.querySelector('[onclick*="copyContact"]').setAttribute('onclick', `copyContact('${player.phone}')`);
+            document.querySelectorAll('[onclick*="copyContact"]')[1].setAttribute('onclick', `copyContact('${player.telegram}')`);
+            document.querySelectorAll('[onclick*="copyContact"]')[2].setAttribute('onclick', `copyContact('${player.instagram}')`);
+            
+            document.getElementById('playerProfileModal').classList.add('show');
+        }
+
+        function closePlayerProfile() {
+            document.getElementById('playerProfileModal').classList.remove('show');
+        }
+
+        function addFriend() {
+            closePlayerProfile();
+            showToast('👥 Додано до друзів!', 'success');
+        }
+
+        function inviteToMatch() {
+            closePlayerProfile();
+            showToast('⚽ Запрошення надіслано!', 'success');
+        }
+
+        function copyContact(contact) {
+            navigator.clipboard.writeText(contact).then(() => {
+                showToast('📋 Скопійовано: ' + contact, 'success');
+            });
+        }
+
+        // Profile Functions
+        function showAchievements() {
+            // Navigate to achievements page instead of modal
+            showToast('🏆 Переходимо до досягнень...', 'success');
+            // Here you would implement full page navigation
+        }
+
+        function showStore() {
+            // Navigate to store page instead of modal
+            showToast('🛒 Переходимо до магазину...', 'success');
+            // Here you would implement full page navigation
+        }
+
+        function showSubscriptions() {
+            // Navigate to subscriptions page instead of modal
+            showToast('👑 Переходимо до підписок...', 'success');
+            // Here you would implement full page navigation
+        }
+
+        function showSettings() {
+            // Navigate to settings page instead of modal
+            showToast('⚙️ Переходимо до налаштувань...', 'success');
+            // Here you would implement full page navigation
+        }
+
+        function showFriends() {
+            // Navigate to friends page instead of modal
+            showToast('👥 Переходимо до списку друзів...', 'success');
+            // Here you would implement full page navigation
+        }
+
+        // Utility Functions
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('messageToast');
+            toast.textContent = message;
+            toast.className = `toast ${type}`;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Initialize App
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('🚀 FLAP Complete MVP Initialized');
+            
+            // Initialize coins display
+            document.getElementById('coinsCount').textContent = coins;
+            
+            // Set default section
+            showSection('videos');
+        });
+    </script>
+</body>
+</html>
