@@ -185,7 +185,24 @@
         }
 
         .form-input::placeholder {
-            color: rgba(255,255,255,0.6);
+            color: rgba(255,255,255,0.7);
+            font-weight: 400;
+        }
+
+        /* Better input styling for auth screen */
+        input[type="text"]::placeholder,
+        input[type="email"]::placeholder,
+        input[type="password"]::placeholder {
+            color: rgba(255,255,255,0.8) !important;
+            font-weight: 400;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            border-color: #4caf50 !important;
+            background: rgba(255,255,255,0.25) !important;
+            box-shadow: 0 0 15px rgba(76, 175, 80, 0.3);
         }
 
         .position-select {
@@ -1273,8 +1290,8 @@
                     <!-- Login Form -->
                     <div id="loginForm" style="display: block;">
                         <div style="margin-bottom: 20px;">
-                            <input type="text" placeholder="Email або телефон" style="width: 100%; padding: 15px; border: 2px solid rgba(255,255,255,0.3); border-radius: 15px; background: rgba(255,255,255,0.1); color: white; font-size: 16px; margin-bottom: 15px;">
-                            <input type="password" placeholder="Пароль" style="width: 100%; padding: 15px; border: 2px solid rgba(255,255,255,0.3); border-radius: 15px; background: rgba(255,255,255,0.1); color: white; font-size: 16px;">
+                            <input type="text" placeholder="Email або телефон" style="width: 100%; padding: 15px; border: 2px solid rgba(255,255,255,0.4); border-radius: 15px; background: rgba(255,255,255,0.15); color: white; font-size: 16px; margin-bottom: 15px; font-weight: 500;">
+                            <input type="password" placeholder="Пароль" style="width: 100%; padding: 15px; border: 2px solid rgba(255,255,255,0.4); border-radius: 15px; background: rgba(255,255,255,0.15); color: white; font-size: 16px; font-weight: 500;">
                         </div>
                         <button onclick="handleQuickLogin()" style="width: 100%; padding: 15px; border: none; border-radius: 25px; background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; font-size: 16px; font-weight: 700; cursor: pointer; margin-bottom: 20px;">
                             Увійти
@@ -1284,9 +1301,9 @@
                     <!-- Register Form -->
                     <div id="registerForm" style="display: none;">
                         <div style="margin-bottom: 20px;">
-                            <input type="text" placeholder="Ім'я та прізвище" style="width: 100%; padding: 15px; border: 2px solid rgba(255,255,255,0.3); border-radius: 15px; background: rgba(255,255,255,0.1); color: white; font-size: 16px; margin-bottom: 15px;">
-                            <input type="email" placeholder="Email" style="width: 100%; padding: 15px; border: 2px solid rgba(255,255,255,0.3); border-radius: 15px; background: rgba(255,255,255,0.1); color: white; font-size: 16px; margin-bottom: 15px;">
-                            <input type="password" placeholder="Пароль" style="width: 100%; padding: 15px; border: 2px solid rgba(255,255,255,0.3); border-radius: 15px; background: rgba(255,255,255,0.1); color: white; font-size: 16px;">
+                            <input type="text" placeholder="Ім'я та прізвище" style="width: 100%; padding: 15px; border: 2px solid rgba(255,255,255,0.4); border-radius: 15px; background: rgba(255,255,255,0.15); color: white; font-size: 16px; margin-bottom: 15px; font-weight: 500;">
+                            <input type="email" placeholder="Email" style="width: 100%; padding: 15px; border: 2px solid rgba(255,255,255,0.4); border-radius: 15px; background: rgba(255,255,255,0.15); color: white; font-size: 16px; margin-bottom: 15px; font-weight: 500;">
+                            <input type="password" placeholder="Пароль" style="width: 100%; padding: 15px; border: 2px solid rgba(255,255,255,0.4); border-radius: 15px; background: rgba(255,255,255,0.15); color: white; font-size: 16px; font-weight: 500;">
                         </div>
                         <button onclick="handleQuickRegister()" style="width: 100%; padding: 15px; border: none; border-radius: 25px; background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; font-size: 16px; font-weight: 700; cursor: pointer; margin-bottom: 20px;">
                             Створити акаунт
@@ -1386,7 +1403,7 @@
                 
                 <div class="challenge-video-item">
                     <div class="challenge-video-header">
-                        <div class="challenge-video-title">Кращий фінт тижня</div>
+                        <h4 class="challenge-video-title">Кращий фінт тижня</h4>
                         <div class="challenge-video-meta">Призовий фонд: 200₴ • Учасників: 12</div>
                     </div>
                     <div class="video-thumbnail" onclick="playVideo('challenge1_video1')">
@@ -1398,14 +1415,14 @@
                     <div class="video-voting">
                         <div style="display: flex; align-items: center; gap: 10px; flex: 1;">
                             <span style="font-weight: 600; font-size: 14px;">Ваша оцінка:</span>
-                            <input type="range" min="0" max="5" step="0.01" value="0" onchange="updateVoteValue('challenge1_video1', this.value)" style="flex: 1; height: 6px; border-radius: 5px; background: #ddd; outline: none; -webkit-appearance: none;">
+                            <input type="range" id="slider_challenge1_video1" min="0" max="5" step="0.01" value="0" onchange="updateVoteValue('challenge1_video1', this.value)" style="flex: 1; height: 6px; border-radius: 5px; background: #ddd; outline: none; -webkit-appearance: none;">
                             <span id="vote_challenge1_video1" style="font-weight: 700; color: #ff9800; min-width: 35px;">0.0</span>
                             <button onclick="voteForVideo('challenge1_video1', event)" style="padding: 6px 12px; background: #4caf50; color: white; border: none; border-radius: 12px; font-size: 12px; font-weight: 600; cursor: pointer; margin-left: 5px;">Голос</button>
                         </div>
                         <div class="video-score">⭐ 8.1</div>
                     </div>
                     <div style="padding: 0 15px 15px; color: #333;">
-                        <strong onclick="showPlayerProfile('andriy_k')">Андрій Коваленко</strong> • Півзахисник • Київ<br>
+                        <strong class="video-author" onclick="showPlayerProfile('andriy_k')">Андрій Коваленко</strong> • Півзахисник • Київ<br>
                         <small style="color: #666;">2 години тому • Гідропарк</small>
                         
                         <!-- Comments Section -->
@@ -1447,8 +1464,8 @@
 
                 <div class="challenge-video-item">
                     <div class="challenge-video-header">
-                        <div class="challenge-video-title">Кращий фінт тижня</div>
-                        <div class="challenge-video-meta">Призовий фонд: 200₴ • Учасників: 12</div>
+                        <h4 class="challenge-video-title">Точність ударів</h4>
+                        <div class="challenge-video-meta">Призовий фонд: 150₴ • Учасників: 8</div>
                     </div>
                     <div class="video-thumbnail" onclick="playVideo('challenge1_video2')">
                         <i class="fas fa-futbol"></i>
@@ -1459,22 +1476,22 @@
                     <div class="video-voting">
                         <div style="display: flex; align-items: center; gap: 10px; flex: 1;">
                             <span style="font-weight: 600; font-size: 14px;">Ваша оцінка:</span>
-                            <input type="range" min="0" max="5" step="0.01" value="0" onchange="updateVoteValue('challenge1_video2', this.value)" style="flex: 1; height: 6px; border-radius: 5px; background: #ddd; outline: none; -webkit-appearance: none;">
+                            <input type="range" id="slider_challenge1_video2" min="0" max="5" step="0.01" value="0" onchange="updateVoteValue('challenge1_video2', this.value)" style="flex: 1; height: 6px; border-radius: 5px; background: #ddd; outline: none; -webkit-appearance: none;">
                             <span id="vote_challenge1_video2" style="font-weight: 700; color: #ff9800; min-width: 35px;">0.0</span>
                             <button onclick="voteForVideo('challenge1_video2', event)" style="padding: 6px 12px; background: #4caf50; color: white; border: none; border-radius: 12px; font-size: 12px; font-weight: 600; cursor: pointer; margin-left: 5px;">Голос</button>
                         </div>
                         <div class="video-score">⭐ 9.2</div>
                     </div>
                     <div style="padding: 0 15px 15px; color: #333;">
-                        <strong onclick="showPlayerProfile('petro_m')">Петро Мельник</strong> • Нападник • Львів<br>
+                        <strong class="video-author" onclick="showPlayerProfile('petro_m')">Петро Мельник</strong> • Нападник • Львів<br>
                         <small style="color: #666;">4 години тому • Стадіон "Динамо"</small>
                     </div>
                 </div>
 
                 <div class="challenge-video-item">
                     <div class="challenge-video-header">
-                        <div class="challenge-video-title">Точність ударів</div>
-                        <div class="challenge-video-meta">Призовий фонд: 150₴ • Учасників: 8</div>
+                        <h4 class="challenge-video-title">Швидкісний дриблінг</h4>
+                        <div class="challenge-video-meta">Призовий фонд: 100₴ • Учасників: 15</div>
                     </div>
                     <div class="video-thumbnail" onclick="playVideo('challenge2_video1')">
                         <i class="fas fa-bullseye"></i>
@@ -1485,14 +1502,14 @@
                     <div class="video-voting">
                         <div style="display: flex; align-items: center; gap: 10px; flex: 1;">
                             <span style="font-weight: 600; font-size: 14px;">Ваша оцінка:</span>
-                            <input type="range" min="0" max="5" step="0.01" value="0" onchange="updateVoteValue('challenge2_video1', this.value)" style="flex: 1; height: 6px; border-radius: 5px; background: #ddd; outline: none; -webkit-appearance: none;">
+                            <input type="range" id="slider_challenge2_video1" min="0" max="5" step="0.01" value="0" onchange="updateVoteValue('challenge2_video1', this.value)" style="flex: 1; height: 6px; border-radius: 5px; background: #ddd; outline: none; -webkit-appearance: none;">
                             <span id="vote_challenge2_video1" style="font-weight: 700; color: #ff9800; min-width: 35px;">0.0</span>
                             <button onclick="voteForVideo('challenge2_video1', event)" style="padding: 6px 12px; background: #4caf50; color: white; border: none; border-radius: 12px; font-size: 12px; font-weight: 600; cursor: pointer; margin-left: 5px;">Голос</button>
                         </div>
                         <div class="video-score">⭐ 7.8</div>
                     </div>
                     <div style="padding: 0 15px 15px; color: #333;">
-                        <strong onclick="showPlayerProfile('dmitro_k')">Дмитро Коваленко</strong> • Воротар • Одеса<br>
+                        <strong class="video-author" onclick="showPlayerProfile('dmitro_k')">Дмитро Коваленко</strong> • Воротар • Одеса<br>
                         <small style="color: #666;">6 годин тому • Парк Шевченка</small>
                     </div>
                 </div>
@@ -2806,19 +2823,14 @@
 
         function createChallenge(event) {
             event.preventDefault();
-            showLoading();
-            
-            setTimeout(() => {
-                hideLoading();
-                closeCreateChallenge();
-                showToast('🏆 Челендж створено!', 'success');
-                event.target.reset();
-                // Reset invite buttons
-                document.querySelectorAll('.invite-btn').forEach(btn => {
-                    btn.style.background = '#f5f5f5';
-                    btn.style.color = '#333';
-                });
-            }, 2000);
+            closeCreateChallenge();
+            showToast('🏆 Челендж створено!', 'success');
+            event.target.reset();
+            // Reset invite buttons
+            document.querySelectorAll('.invite-btn').forEach(btn => {
+                btn.style.background = '#f5f5f5';
+                btn.style.color = '#333';
+            });
         }
 
         // Challenge participation
@@ -2832,30 +2844,20 @@
 
         function submitChallengeVideo(event) {
             event.preventDefault();
-            showLoading();
-            
-            setTimeout(() => {
-                hideLoading();
-                closeChallengeParticipate();
-                showToast('📹 Відео завантажено! Чекайте результатів голосування', 'success');
-                addCoins(20); // +20 за прийняття виклику та завантаження
-                event.target.reset();
-            }, 3000);
+            closeChallengeParticipate();
+            showToast('📹 Відео завантажено! +20 монет', 'success');
+            addCoins(20); // +20 за прийняття виклику та завантаження
+            event.target.reset();
         }
 
         // Enhanced auto-balance teams
         function autoBalanceTeams() {
-            showLoading();
-            setTimeout(() => {
-                hideLoading();
-                
-                // Get random team names
-                const randomNames = teamNames[Math.floor(Math.random() * teamNames.length)];
-                document.querySelector('.team:first-child .team-name').textContent = `🟢 ${randomNames[0]}`;
-                document.querySelector('.team:last-child .team-name').textContent = `🔵 ${randomNames[1]}`;
-                
-                showToast(`⚖️ Команди збалансовано! "${randomNames[0]}" vs "${randomNames[1]}"`, 'success');
-            }, 1000);
+            // Get random team names
+            const randomNames = teamNames[Math.floor(Math.random() * teamNames.length)];
+            document.querySelector('.team:first-child .team-name').textContent = `🟢 ${randomNames[0]}`;
+            document.querySelector('.team:last-child .team-name').textContent = `🔵 ${randomNames[1]}`;
+            
+            showToast(`⚖️ Команди збалансовано! "${randomNames[0]}" vs "${randomNames[1]}"`, 'success');
         }
 
         // Enhanced end match with multiple player ratings
@@ -3053,20 +3055,40 @@
             showToast('🎉 Реєстрація через Facebook завершена!', 'success');
         }
 
-        // Video voting with slider
-        function voteForVideo(videoId, rating, event) {
-            event.stopPropagation();
-            
-            const ratingValue = parseFloat(rating);
-            document.getElementById('vote_' + videoId).textContent = ratingValue.toFixed(2);
-            
-            if (ratingValue > 0) {
-                addCoins(Math.floor(ratingValue));
-                showToast(`⭐ Оцінка ${ratingValue.toFixed(2)} відправлена! +${Math.floor(ratingValue)} монет`, 'success');
-            }
+        // Video voting with slider - FIXED VERSION
+        function updateVoteValue(videoId, value) {
+            document.getElementById('vote_' + videoId).textContent = parseFloat(value).toFixed(2);
         }
 
-        // Video filters and search
+        function voteForVideo(videoId, event) {
+            event.stopPropagation();
+            
+            const slider = document.getElementById('slider_' + videoId);
+            const button = event.target;
+            const ratingValue = parseFloat(slider.value);
+            
+            if (ratingValue === 0) {
+                showToast('❌ Оберіть оцінку на повзунку!', 'error');
+                return;
+            }
+            
+            // Disable slider and button after voting
+            slider.disabled = true;
+            button.disabled = true;
+            button.textContent = 'Проголосовано';
+            button.style.background = '#9e9e9e';
+            button.style.cursor = 'not-allowed';
+            
+            // Show success message WITHOUT coins
+            showToast(`⭐ Оцінка ${ratingValue.toFixed(2)} відправлена!`, 'success');
+            
+            // Show rating change after 1 second
+            setTimeout(() => {
+                showToast(`Рейтинг +0.1`, 'success');
+            }, 1000);
+        }
+
+        // Video filters and search - IMPROVED VERSION
         function filterVideos(type) {
             document.querySelectorAll('.video-filter').forEach(btn => {
                 btn.classList.remove('active');
@@ -3080,12 +3102,69 @@
             event.target.style.borderColor = '#4caf50';
             event.target.style.color = '#2e7d32';
             
+            // Actually change video content based on filter
+            const videoItems = document.querySelectorAll('.challenge-video-item');
+            const filterData = {
+                'all': [
+                    { title: 'Кращий фінт тижня', author: 'Андрій Коваленко' },
+                    { title: 'Точність ударів', author: 'Петро Мельник' },
+                    { title: 'Швидкісний дриблінг', author: 'Дмитро Коваленко' }
+                ],
+                'tricks': [
+                    { title: 'Неймовірний фінт', author: 'Віталій Фінтер' },
+                    { title: 'Технічний трюк', author: 'Олег Технік' },
+                    { title: 'Майстерський обвід', author: 'Артур Майстер' }
+                ],
+                'accuracy': [
+                    { title: 'Супер точність', author: 'Андрій Снайпер' },
+                    { title: 'Влучний удар', author: 'Максим Влучник' },
+                    { title: 'Ідеальний постріл', author: 'Сергій Точний' }
+                ],
+                'speed': [
+                    { title: 'Швидкість блискавки', author: 'Олександр Швидкий' },
+                    { title: 'Рекордний час', author: 'Петро Рекорд' },
+                    { title: 'Спринт з м\'ячем', author: 'Ігор Спринтер' }
+                ],
+                'top': [
+                    { title: '🏆 ТОП відео місяця', author: 'Зірка Футболу' },
+                    { title: '🥇 Переможець тижня', author: 'Професіонал Про' },
+                    { title: '⭐ Найкраще виконання', author: 'Чемпіон Чемп' }
+                ]
+            };
+            
+            const data = filterData[type] || filterData['all'];
+            
+            videoItems.forEach((item, index) => {
+                if (data[index]) {
+                    const titleEl = item.querySelector('h4');
+                    const authorEl = item.querySelector('.video-author');
+                    
+                    if (titleEl) {
+                        titleEl.style.transition = 'all 0.3s ease';
+                        titleEl.style.opacity = '0';
+                        setTimeout(() => {
+                            titleEl.textContent = data[index].title;
+                            titleEl.style.opacity = '1';
+                        }, 150);
+                    }
+                    
+                    if (authorEl) {
+                        authorEl.style.transition = 'all 0.3s ease';
+                        authorEl.style.opacity = '0';
+                        setTimeout(() => {
+                            authorEl.textContent = data[index].author;
+                            authorEl.style.opacity = '1';
+                        }, 150);
+                    }
+                }
+            });
+            
             const filters = {
                 'all': '🌟 Показано всі відео',
-                'tricks': '🎯 Показано тільки фінти',
-                'accuracy': '⚽ Показано відео точності',
-                'speed': '🏃 Показано швидкісні відео',
-                'top': '🏆 Показано топ відео'
+                'tricks': '🎯 Фільтр: Тільки фінти',
+                'accuracy': '⚽ Фільтр: Точність ударів',
+                'speed': '🏃 Фільтр: Швидкісні відео',
+                'top': '🏆 Фільтр: Топ відео'
             };
             
             showToast(filters[type], 'success');
@@ -3093,7 +3172,28 @@
 
         function searchVideos(query) {
             if (query.length > 2) {
-                showToast(`🔍 Пошук: "${query}"`, 'success');
+                // Enhanced search with city and rating detection
+                const lowerQuery = query.toLowerCase();
+                let searchType = 'загальний';
+                let searchResult = '';
+                
+                if (lowerQuery.includes('київ') || lowerQuery.includes('kyiv')) {
+                    searchType = 'місто';
+                    searchResult = 'Київ - знайдено 15 відео';
+                } else if (lowerQuery.includes('львів') || lowerQuery.includes('lviv')) {
+                    searchType = 'місто';
+                    searchResult = 'Львів - знайдено 8 відео';
+                } else if (lowerQuery.includes('одеса') || lowerQuery.includes('odesa')) {
+                    searchType = 'місто';
+                    searchResult = 'Одеса - знайдено 6 відео';
+                } else if (lowerQuery.includes('рейтинг') || lowerQuery.match(/\d\.\d/)) {
+                    searchType = 'рейтинг';
+                    searchResult = 'Рейтинг 4.5+ - знайдено 12 відео';
+                } else {
+                    searchResult = `"${query}" - знайдено 7 відео`;
+                }
+                
+                showToast(`🔍 ${searchType === 'загальний' ? 'Пошук' : 'Фільтр по ' + searchType}: ${searchResult}`, 'success');
             }
         }
 
@@ -3123,7 +3223,7 @@
                 const comment = event.target.value.trim();
                 event.target.value = '';
                 showToast(`💬 Коментар додано: "${comment}"`, 'success');
-                addCoins(1);
+                // NO COINS for comments anymore
             }
         }
 
@@ -3516,15 +3616,10 @@
         function createMatch(event) {
             if (event) {
                 event.preventDefault();
-                showLoading();
-                
-                setTimeout(() => {
-                    hideLoading();
-                    showToast('✅ Матч створено!', 'success');
-                    if (event.target.reset) {
-                        event.target.reset();
-                    }
-                }, 1500);
+                showToast('✅ Матч створено!', 'success');
+                if (event.target.reset) {
+                    event.target.reset();
+                }
             } else {
                 // Called from add menu
                 document.getElementById('addMenu').style.display = 'none';
