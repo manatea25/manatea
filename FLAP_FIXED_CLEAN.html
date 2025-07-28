@@ -4316,8 +4316,53 @@
 
         // Missing functions found in onclick handlers
         function toggleNotifications() {
-            console.log('🔔 toggleNotifications викликана');
-            showToast('🔔 Сповіщення переключено', 'info');
+            const panel = document.getElementById('notificationsPanel');
+            if (panel) {
+                const isVisible = panel.style.display === 'block';
+                panel.style.display = isVisible ? 'none' : 'block';
+                showToast(isVisible ? '🔔 Сповіщення приховано' : '🔔 Сповіщення показано', 'info');
+            } else {
+                // Create notifications panel if it doesn't exist
+                const newPanel = document.createElement('div');
+                newPanel.id = 'notificationsPanel';
+                newPanel.style.cssText = `
+                    position: fixed;
+                    top: 70px;
+                    right: 20px;
+                    width: 300px;
+                    max-height: 400px;
+                    background: white;
+                    border-radius: 15px;
+                    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+                    z-index: 1000;
+                    overflow-y: auto;
+                    display: block;
+                `;
+                newPanel.innerHTML = `
+                    <div style="padding: 20px; border-bottom: 1px solid #eee;">
+                        <h4 style="margin: 0; color: #333;">🔔 Сповіщення</h4>
+                    </div>
+                    <div style="padding: 15px;">
+                        <div style="padding: 10px; background: #f0f8ff; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid #2196f3;">
+                            <div style="font-weight: 600; font-size: 14px; color: #333;">Новий челендж!</div>
+                            <div style="font-size: 12px; color: #666; margin-top: 5px;">Андрій створив "Кращі голи тижня"</div>
+                            <div style="font-size: 11px; color: #999; margin-top: 5px;">5 хв тому</div>
+                        </div>
+                        <div style="padding: 10px; background: #f0fff0; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid #4caf50;">
+                            <div style="font-weight: 600; font-size: 14px; color: #333;">Матч підтверджено</div>
+                            <div style="font-size: 12px; color: #666; margin-top: 5px;">Вас прийняли в матч "Вечірній футбол"</div>
+                            <div style="font-size: 11px; color: #999; margin-top: 5px;">1 год тому</div>
+                        </div>
+                        <div style="padding: 10px; background: #fff8f0; border-radius: 8px; border-left: 4px solid #ff9800;">
+                            <div style="font-weight: 600; font-size: 14px; color: #333;">Новий рейтинг</div>
+                            <div style="font-size: 12px; color: #666; margin-top: 5px;">Ваш рейтинг підвищився до 4.8!</div>
+                            <div style="font-size: 11px; color: #999; margin-top: 5px;">2 год тому</div>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(newPanel);
+                showToast('🔔 Сповіщення показано', 'info');
+            }
         }
 
         function playVideo(videoId) {
@@ -4924,8 +4969,59 @@
         }
 
         function showAddMenu() {
-            console.log('➕ showAddMenu викликана');
-            showToast('➕ Меню додавання', 'info');
+            const menu = document.getElementById('addMenu');
+            if (menu) {
+                const isVisible = menu.style.display === 'block';
+                menu.style.display = isVisible ? 'none' : 'block';
+            } else {
+                // Create add menu if it doesn't exist
+                const newMenu = document.createElement('div');
+                newMenu.id = 'addMenu';
+                newMenu.style.cssText = `
+                    position: fixed;
+                    bottom: 90px;
+                    right: 20px;
+                    background: white;
+                    border-radius: 15px;
+                    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+                    z-index: 1000;
+                    display: block;
+                    min-width: 200px;
+                `;
+                newMenu.innerHTML = `
+                    <div style="padding: 15px;">
+                        <div onclick="showCreateVideo(); document.getElementById('addMenu').style.display='none';" style="padding: 12px; display: flex; align-items: center; gap: 12px; cursor: pointer; border-radius: 8px; transition: background 0.2s;" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background='transparent'">
+                            <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #4caf50, #66bb6a); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 18px;">📹</div>
+                            <div>
+                                <div style="font-weight: 600; font-size: 14px; color: #333;">Створити відео</div>
+                                <div style="font-size: 12px; color: #666;">Поділіться своїм моментом</div>
+                            </div>
+                        </div>
+                        <div onclick="showCreateChallenge(); document.getElementById('addMenu').style.display='none';" style="padding: 12px; display: flex; align-items: center; gap: 12px; cursor: pointer; border-radius: 8px; transition: background 0.2s;" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background='transparent'">
+                            <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #ff9800, #ffb74d); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 18px;">🏆</div>
+                            <div>
+                                <div style="font-weight: 600; font-size: 14px; color: #333;">Створити челендж</div>
+                                <div style="font-size: 12px; color: #666;">Запросіть інших до змагання</div>
+                            </div>
+                        </div>
+                        <div onclick="showCreateMatchModal(); document.getElementById('addMenu').style.display='none';" style="padding: 12px; display: flex; align-items: center; gap: 12px; cursor: pointer; border-radius: 8px; transition: background 0.2s;" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background='transparent'">
+                            <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #2196f3, #64b5f6); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 18px;">⚽</div>
+                            <div>
+                                <div style="font-weight: 600; font-size: 14px; color: #333;">Створити матч</div>
+                                <div style="font-size: 12px; color: #666;">Організуйте гру</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(newMenu);
+                
+                // Close menu when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (!newMenu.contains(e.target) && !e.target.closest('.fab')) {
+                        newMenu.style.display = 'none';
+                    }
+                });
+            }
         }
 
         function closePlayerProfile() {
