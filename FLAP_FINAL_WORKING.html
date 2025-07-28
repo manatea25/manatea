@@ -5128,6 +5128,37 @@
             }
         }
 
+        // NEW FUNCTIONS FOR FIXES
+        function searchMatches(query) {
+            console.log('🔍 searchMatches:', query);
+            const matches = document.querySelectorAll('.match-item');
+            matches.forEach(match => {
+                const text = match.textContent.toLowerCase();
+                const visible = text.includes(query.toLowerCase());
+                match.style.display = visible ? 'block' : 'none';
+            });
+        }
+
+        function applyMatchFilters() {
+            console.log('🔧 applyMatchFilters викликана');
+            const city = document.getElementById('cityFilterMatch')?.value || '';
+            const format = document.getElementById('formatFilterMatch')?.value || '';
+            const time = document.getElementById('timeFilterMatch')?.value || '';
+            const price = document.getElementById('priceFilterMatch')?.value || '';
+            
+            showToast(`🔍 Фільтри: ${city} ${format} ${time} ${price}`, 'info');
+        }
+
+        function searchPlayers(query) {
+            console.log('🔍 searchPlayers:', query);
+            const players = document.querySelectorAll('.player-item');
+            players.forEach(player => {
+                const text = player.textContent.toLowerCase();
+                const visible = text.includes(query.toLowerCase());
+                player.style.display = visible ? 'block' : 'none';
+            });
+        }
+
     </script>
 </body>
 </html>
