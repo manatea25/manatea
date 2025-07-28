@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEST SECTIONS</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(180deg, #1e7d32 0%, #2e7d32 100%);
+            color: white;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 4px;
+            margin-bottom: 20px;
+        }
+
+        .nav-tab {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .nav-tab.active {
+            background: rgba(255,255,255,0.2);
+            color: #4caf50;
+        }
+
+        .content-section {
+            display: none !important;
+            padding: 0 !important;
+        }
+
+        .content-section.active {
+            display: block !important;
+        }
+
+        #rating, #profile {
+            background: rgba(255,255,255,0.95) !important;
+            margin: 15px !important;
+            border-radius: 20px !important;
+            color: #333 !important;
+            padding: 20px !important;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2) !important;
+            min-height: 300px;
+        }
+
+        .player-item {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            border: 2px solid #4caf50;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 ТЕСТ СЕКЦІЙ</h1>
+
+    <!-- Navigation -->
+    <div class="nav-tabs">
+        <div class="nav-tab active" onclick="showSection('videos')">Відео</div>
+        <div class="nav-tab" onclick="showSection('rating')">Рейтинг</div>
+        <div class="nav-tab" onclick="showSection('profile')">Профіль</div>
+    </div>
+
+    <!-- Videos Section -->
+    <div class="content-section active" id="videos">
+        <h2>📹 Відео секція</h2>
+        <p>Це відео секція - вона працює нормально</p>
+    </div>
+
+    <!-- Rating Section -->
+    <div class="content-section" id="rating">
+        <h2>👑 Рейтинг гравців</h2>
+        <div class="player-item">
+            <strong>Андрій Коваленко</strong> - ⭐ 4.9
+        </div>
+        <div class="player-item">
+            <strong>Петро Мельник</strong> - ⭐ 4.8
+        </div>
+        <div class="player-item">
+            <strong>Максим Коваль</strong> - ⭐ 3.8
+        </div>
+    </div>
+
+    <!-- Profile Section -->
+    <div class="content-section" id="profile">
+        <h2>👤 Мій профіль</h2>
+        <div style="background: #f0f0f0; padding: 20px; border-radius: 10px; color: #333;">
+            <h3>Максим Коваль</h3>
+            <p>Рейтинг: ⭐ 4.78</p>
+            <p>Матчі: 34</p>
+            <p>Голи: 23</p>
+        </div>
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            console.log('🔍 showSection викликана для:', sectionId);
+            
+            // Hide all sections
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => {
+                section.style.display = 'none';
+                section.classList.remove('active');
+                console.log('❌ Приховано:', section.id);
+            });
+            
+            // Remove active from tabs
+            const tabs = document.querySelectorAll('.nav-tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Show target section
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.style.display = 'block';
+                targetSection.classList.add('active');
+                console.log('✅ Показано:', sectionId);
+                
+                // Add active to clicked tab
+                const clickedTab = event.target;
+                clickedTab.classList.add('active');
+            } else {
+                console.error('❌ Секція не знайдена:', sectionId);
+            }
+        }
+
+        // Test on load
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🔍 DOM завантажено');
+            console.log('📊 Секцій знайдено:', document.querySelectorAll('.content-section').length);
+            
+            // Test rating section specifically
+            const rating = document.getElementById('rating');
+            if (rating) {
+                console.log('✅ Rating секція існує');
+                console.log('📐 Rating стилі:', window.getComputedStyle(rating).display);
+                console.log('🎨 Rating background:', window.getComputedStyle(rating).background);
+            }
+            
+            const profile = document.getElementById('profile');
+            if (profile) {
+                console.log('✅ Profile секція існує');
+                console.log('📐 Profile стилі:', window.getComputedStyle(profile).display);
+                console.log('🎨 Profile background:', window.getComputedStyle(profile).background);
+            }
+        });
+    </script>
+</body>
+</html>
