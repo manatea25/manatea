@@ -3153,15 +3153,7 @@
             event.target.reset();
         }
 
-        // Enhanced auto-balance teams
-        function autoBalanceTeams() {
-            // Get random team names
-            const randomNames = teamNames[Math.floor(Math.random() * teamNames.length)];
-            document.querySelector('.team:first-child .team-name').textContent = `🟢 ${randomNames[0]}`;
-            document.querySelector('.team:last-child .team-name').textContent = `🔵 ${randomNames[1]}`;
-            
-            showToast(`⚖️ Команди збалансовано! "${randomNames[0]}" vs "${randomNames[1]}"`, 'success');
-        }
+
 
         // Enhanced end match with multiple player ratings
         function endMatch() {
