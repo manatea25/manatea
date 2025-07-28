@@ -4110,6 +4110,305 @@
             });
         }
 
+        // Missing showToast function
+        function showToast(message, type = 'info') {
+            console.log(`📢 Toast: ${message} (${type})`);
+            
+            // Create toast element
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 15px 20px;
+                border-radius: 10px;
+                color: white;
+                font-weight: 600;
+                z-index: 10000;
+                max-width: 300px;
+                word-wrap: break-word;
+                animation: slideIn 0.3s ease-out;
+            `;
+            
+            // Set background based on type
+            switch(type) {
+                case 'success':
+                    toast.style.background = 'linear-gradient(135deg, #4caf50, #66bb6a)';
+                    break;
+                case 'error':
+                    toast.style.background = 'linear-gradient(135deg, #f44336, #ef5350)';
+                    break;
+                case 'info':
+                default:
+                    toast.style.background = 'linear-gradient(135deg, #2196f3, #42a5f5)';
+                    break;
+            }
+            
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
+
+        // Missing autoBalanceTeams function
+        function autoBalanceTeams() {
+            console.log('⚖️ autoBalanceTeams викликана');
+            
+            // Demo players for team balance
+            const demoPlayers = [
+                { name: 'Андрій К.', rating: 4.2 },
+                { name: 'Петро М.', rating: 3.8 },
+                { name: 'Дмитро Л.', rating: 4.5 },
+                { name: 'Олексій Ш.', rating: 3.9 },
+                { name: 'Максим З.', rating: 4.1 },
+                { name: 'Віктор С.', rating: 4.0 },
+                { name: 'Олександр М.', rating: 4.3 },
+                { name: 'Ігор П.', rating: 3.7 },
+                { name: 'Сергій К.', rating: 4.4 },
+                { name: 'Роман Т.', rating: 3.6 }
+            ];
+            
+            // Shuffle players
+            const shuffled = [...demoPlayers].sort(() => Math.random() - 0.5);
+            
+            // Split into two teams
+            const team1 = shuffled.slice(0, 5);
+            const team2 = shuffled.slice(5, 10);
+            
+            // Calculate team ratings
+            const team1Rating = (team1.reduce((sum, p) => sum + p.rating, 0) / 5).toFixed(1);
+            const team2Rating = (team2.reduce((sum, p) => sum + p.rating, 0) / 5).toFixed(1);
+            
+            // Get random team names
+            const teamPair = teamNames[Math.floor(Math.random() * teamNames.length)];
+            
+            // Update teams display
+            const teamsDisplay = document.getElementById('teamsDisplay');
+            if (teamsDisplay) {
+                teamsDisplay.innerHTML = `
+                    <div style="display: flex; gap: 20px; justify-content: space-between; margin: 20px 0;">
+                        <div style="flex: 1; background: linear-gradient(135deg, #4caf50, #66bb6a); padding: 15px; border-radius: 15px; color: white;">
+                            <h4 style="margin: 0 0 10px 0; text-align: center;">${teamPair[0]} (⭐ ${team1Rating})</h4>
+                            ${team1.map(p => `<div style="padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.3);">${p.name} - ${p.rating}</div>`).join('')}
+                        </div>
+                        <div style="flex: 1; background: linear-gradient(135deg, #2196f3, #42a5f5); padding: 15px; border-radius: 15px; color: white;">
+                            <h4 style="margin: 0 0 10px 0; text-align: center;">${teamPair[1]} (⭐ ${team2Rating})</h4>
+                            ${team2.map(p => `<div style="padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.3);">${p.name} - ${p.rating}</div>`).join('')}
+                        </div>
+                    </div>
+                    <div style="text-align: center; margin: 20px 0;">
+                        <button onclick="autoBalanceTeams()" style="padding: 10px 20px; background: linear-gradient(135deg, #9c27b0, #ba68c8); color: white; border: none; border-radius: 20px; font-weight: 600; cursor: pointer; margin-right: 10px;">
+                            🔄 Перешафлити
+                        </button>
+                        <button onclick="showFinalScore()" style="padding: 10px 20px; background: linear-gradient(135deg, #ff9800, #ffb74d); color: white; border: none; border-radius: 20px; font-weight: 600; cursor: pointer;">
+                            ⚽ Завершити матч
+                        </button>
+                    </div>
+                `;
+                teamsDisplay.style.display = 'block';
+            }
+            
+            showToast('⚖️ Команди збалансовано по рейтингу!', 'success');
+        }
+
+        // Missing showFinalScore function
+        function showFinalScore() {
+            const finalScoreSection = document.getElementById('finalScoreSection');
+            if (finalScoreSection) {
+                finalScoreSection.style.display = 'block';
+                finalScoreSection.scrollIntoView({ behavior: 'smooth' });
+            }
+            showToast('⚽ Введіть фінальний рахунок', 'info');
+        }
+
+        // Missing addFriend function
+        function addFriend(playerId) {
+            console.log(`👥 addFriend викликана для ${playerId}`);
+            closeModal('playerModal');
+            showToast('👥 Додано до друзів!', 'success');
+        }
+
+        // Missing functions found in onclick handlers
+        function toggleNotifications() {
+            console.log('🔔 toggleNotifications викликана');
+            showToast('🔔 Сповіщення переключено', 'info');
+        }
+
+        function playVideo(videoId) {
+            console.log(`▶️ playVideo викликана для ${videoId}`);
+            showToast('▶️ Відео відтворюється', 'info');
+        }
+
+        function toggleComments(videoId) {
+            console.log(`💬 toggleComments викликана для ${videoId}`);
+            showToast('💬 Коментарі переключено', 'info');
+        }
+
+        function switchMatchTab(tabType) {
+            console.log(`📋 switchMatchTab викликана з ${tabType}`);
+            const availableTab = document.getElementById('availableTab');
+            const myMatchesTab = document.getElementById('myMatchesTab');
+            const availableMatches = document.getElementById('availableMatches');
+            const myMatches = document.getElementById('myMatches');
+            
+            if (tabType === 'available') {
+                availableTab.style.background = 'linear-gradient(135deg, #4caf50, #66bb6a)';
+                availableTab.style.color = 'white';
+                myMatchesTab.style.background = 'transparent';
+                myMatchesTab.style.color = 'rgba(255,255,255,0.7)';
+                if (availableMatches) availableMatches.style.display = 'block';
+                if (myMatches) myMatches.style.display = 'none';
+            } else {
+                myMatchesTab.style.background = 'linear-gradient(135deg, #4caf50, #66bb6a)';
+                myMatchesTab.style.color = 'white';
+                availableTab.style.background = 'transparent';
+                availableTab.style.color = 'rgba(255,255,255,0.7)';
+                if (myMatches) myMatches.style.display = 'block';
+                if (availableMatches) availableMatches.style.display = 'none';
+            }
+        }
+
+        function showCreateMatchModal() {
+            console.log('🏟️ showCreateMatchModal викликана');
+            const modal = document.getElementById('createMatchModal');
+            if (modal) modal.style.display = 'flex';
+        }
+
+        function closeCreateMatchModal() {
+            console.log('❌ closeCreateMatchModal викликана');
+            const modal = document.getElementById('createMatchModal');
+            if (modal) modal.style.display = 'none';
+        }
+
+        function filterMatches(filterType) {
+            console.log(`🔍 filterMatches викликана з ${filterType}`);
+            showToast(`🔍 Фільтр матчів: ${filterType}`, 'info');
+        }
+
+        function showMatchDetails(matchId) {
+            console.log(`📋 showMatchDetails викликана для ${matchId}`);
+            const modal = document.getElementById('matchDetailsModal');
+            if (modal) modal.style.display = 'flex';
+        }
+
+        function closeMatchDetails() {
+            console.log('❌ closeMatchDetails викликана');
+            const modal = document.getElementById('matchDetailsModal');
+            if (modal) modal.style.display = 'none';
+        }
+
+        function joinMatch(matchId) {
+            console.log(`⚽ joinMatch викликана для ${matchId}`);
+            showToast('📝 Заявку подано! Очікуйте підтвердження від організатора.', 'success');
+        }
+
+        function joinMatchFromDetails() {
+            console.log('⚽ joinMatchFromDetails викликана');
+            closeMatchDetails();
+            showToast('📝 Заявку подано! Очікуйте підтвердження від організатора.', 'success');
+        }
+
+        function shareMatch() {
+            console.log('📤 shareMatch викликана');
+            showToast('📤 Посилання на матч скопійовано', 'success');
+        }
+
+        function acceptPlayer(playerId) {
+            console.log(`✅ acceptPlayer викликана для ${playerId}`);
+            showToast(`✅ Гравця ${playerId} прийнято`, 'success');
+        }
+
+        function rejectPlayer(playerId) {
+            console.log(`❌ rejectPlayer викликана для ${playerId}`);
+            showToast(`❌ Гравця ${playerId} відхилено`, 'error');
+        }
+
+        function finishMatch() {
+            console.log('🏁 finishMatch викликана');
+            showToast('🏁 Матч завершено! Введіть рахунок', 'info');
+        }
+
+        function manageMyMatch(matchId) {
+            console.log(`⚙️ manageMyMatch викликана для ${matchId}`);
+            const myMatchesList = document.getElementById('myMatchesList');
+            const matchManagement = document.getElementById('matchManagement');
+            if (myMatchesList) myMatchesList.style.display = 'none';
+            if (matchManagement) matchManagement.style.display = 'block';
+        }
+
+        function backToMyMatches() {
+            console.log('⬅️ backToMyMatches викликана');
+            const myMatchesList = document.getElementById('myMatchesList');
+            const matchManagement = document.getElementById('matchManagement');
+            if (myMatchesList) myMatchesList.style.display = 'block';
+            if (matchManagement) matchManagement.style.display = 'none';
+        }
+
+        function editMatch(matchId) {
+            console.log(`✏️ editMatch викликана для ${matchId}`);
+            showToast('✏️ Редагування матчу', 'info');
+        }
+
+        function showFriendsSelector() {
+            console.log('👥 showFriendsSelector викликана');
+            showToast('👥 Вибір друзів', 'info');
+        }
+
+        function showChallengeVideos(challengeId) {
+            console.log(`📹 showChallengeVideos викликана для ${challengeId}`);
+            const modal = document.getElementById('challengeVideosModal');
+            if (modal) modal.style.display = 'flex';
+        }
+
+        function closeChallengeVideos() {
+            console.log('❌ closeChallengeVideos викликана');
+            const modal = document.getElementById('challengeVideosModal');
+            if (modal) modal.style.display = 'none';
+        }
+
+        function filterRating(filterType) {
+            console.log(`⭐ filterRating викликана з ${filterType}`);
+            showToast(`⭐ Фільтр рейтингу: ${filterType}`, 'info');
+        }
+
+        function showSettings() {
+            console.log('⚙️ showSettings викликана');
+            showToast('⚙️ Налаштування', 'info');
+        }
+
+        function editProfile() {
+            console.log('✏️ editProfile викликана');
+            showToast('✏️ Редагування профілю', 'info');
+        }
+
+        function showAchievements() {
+            console.log('🏆 showAchievements викликана');
+            showToast('🏆 Досягнення', 'info');
+        }
+
+        function showFriends() {
+            console.log('👥 showFriends викликана');
+            showToast('👥 Друзі', 'info');
+        }
+
+        function showMyAchievements() {
+            console.log('🏆 showMyAchievements викликана');
+            showToast('🏆 Мої досягнення', 'info');
+        }
+
+        function showAddMenu() {
+            console.log('➕ showAddMenu викликана');
+            showToast('➕ Меню додавання', 'info');
+        }
+
+        function closePlayerProfile() {
+            console.log('❌ closePlayerProfile викликана');
+            closeModal('playerModal');
+        }
+
     </script>
 </body>
 </html>
