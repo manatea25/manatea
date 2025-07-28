@@ -3895,13 +3895,19 @@
         }
 
         function showToast(message, type = 'success') {
+            console.log('Toast:', message);
             const toast = document.getElementById('messageToast');
-            toast.textContent = message;
-            toast.className = `message-toast ${type} show`;
-            
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
+            if (toast) {
+                toast.textContent = message;
+                toast.className = `message-toast ${type} show`;
+                
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 3000);
+            } else {
+                // Fallback - show alert if toast element doesn't exist
+                alert(message);
+            }
         }
 
         function toggleNotifications() {
@@ -4213,17 +4219,28 @@
             }
         });
 
-        // Navigation enhancement
+        // Navigation enhancement - FIXED VERSION
         function showSection(sectionId) {
+            console.log('showSection called with:', sectionId);
+            
+            // Hide all sections
             document.querySelectorAll('.content-section').forEach(section => {
                 section.classList.remove('active');
             });
             
+            // Remove active class from all tabs
             document.querySelectorAll('.nav-tab').forEach(tab => {
                 tab.classList.remove('active');
             });
             
-            document.getElementById(sectionId).classList.add('active');
+            // Show selected section
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            } else {
+                console.error('Section not found:', sectionId);
+                return;
+            }
             
             // Find and activate the correct tab
             const tabs = document.querySelectorAll('.nav-tab');
@@ -4238,15 +4255,50 @@
                 }
             });
             
-            // Close any open panels
-            document.getElementById('notificationsPanel').style.display = 'none';
-            document.getElementById('addMenu').style.display = 'none';
+            // Close any open panels (with error checking)
+            const notificationsPanel = document.getElementById('notificationsPanel');
+            if (notificationsPanel) {
+                notificationsPanel.style.display = 'none';
+            }
+            
+            const addMenu = document.getElementById('addMenu');
+            if (addMenu) {
+                addMenu.style.display = 'none';
+            }
+            
+            console.log('Section switched to:', sectionId);
         }
 
         // Initialize app
         document.addEventListener('DOMContentLoaded', () => {
             // App initialization
             console.log('🚀 FLAP ULTIMATE MVP Initialized');
+            
+            // Test navigation function
+            console.log('Testing showSection function...');
+            window.showSection = showSection; // Make it globally available
+            
+            // Check if all required elements exist
+            const requiredElements = ['videos', 'challenges', 'matches', 'rating', 'profile'];
+            requiredElements.forEach(id => {
+                const element = document.getElementById(id);
+                console.log(`Element #${id}:`, element ? 'EXISTS' : 'MISSING');
+            });
+            
+            // Test click handlers
+            const navTabs = document.querySelectorAll('.nav-tab');
+            console.log(`Found ${navTabs.length} navigation tabs`);
+            
+            // Add backup click handlers
+            navTabs.forEach((tab, index) => {
+                tab.addEventListener('click', function() {
+                    console.log('Tab clicked:', this.textContent);
+                    const sections = ['videos', 'challenges', 'matches', 'rating', 'profile'];
+                    if (sections[index]) {
+                        showSection(sections[index]);
+                    }
+                });
+            });
             
             // Preload some data
             currentUser = null;
