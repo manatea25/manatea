@@ -3333,7 +3333,7 @@
         }
 
         // Challenge creation functions
-        function showCreateChallenge() {
+        window.showCreateChallenge = function showCreateChallenge() {
             document.getElementById('createChallengeModal').classList.add('show');
         }
 
@@ -3392,7 +3392,7 @@
         }
 
         // Store and subscription functions
-        function showStore() {
+        window.showStore = function showStore() {
             const storeContent = `
                 <div style="max-height: 70vh; overflow-y: auto;">
                     <h3 style="text-align: center; margin-bottom: 20px; color: #2e7d32;">🛒 Магазин FLAP</h3>
@@ -3822,7 +3822,7 @@
         }
 
         // NEW Match System Functions
-        function showCreateMatchModal() {
+        window.showCreateMatchModal = function showCreateMatchModal() {
             document.getElementById('createMatchModal').classList.add('show');
         }
 
@@ -4674,21 +4674,7 @@
             showToast('📖 Повідомлення прочитано', 'success');
         }
 
-        // Add menu functions
-        function showAddMenu() {
-            const menu = document.getElementById('addMenu');
-            const isVisible = menu.style.display === 'block';
-            
-            if (isVisible) {
-                menu.style.display = 'none';
-            } else {
-                menu.style.display = 'block';
-                // Hide after 3 seconds
-                setTimeout(() => {
-                    menu.style.display = 'none';
-                }, 3000);
-            }
-        }
+        // showAddMenu DUPLICATE REMOVED
 
         function addVideo() {
             document.getElementById('addMenu').style.display = 'none';
@@ -4772,98 +4758,20 @@
             document.getElementById('matchManagement').style.display = 'none';
         }
         
-        function autoBalanceTeams() {
-            const teamsDisplay = document.getElementById('teamsDisplay');
-            const teamNames = ['⚡ Блискавки', '🔥 Вогняні', '💎 Діаманти', '🌟 Зірки'];
-            const teamA = teamNames[Math.floor(Math.random() * teamNames.length)];
-            let teamB = teamNames[Math.floor(Math.random() * teamNames.length)];
-            while (teamB === teamA) {
-                teamB = teamNames[Math.floor(Math.random() * teamNames.length)];
-            }
-            
-            teamsDisplay.innerHTML = `
-                <div style="display: flex; gap: 15px;">
-                    <div style="flex: 1; background: linear-gradient(135deg, #4caf50, #66bb6a); border-radius: 10px; padding: 15px; color: white;">
-                        <h5 style="margin-bottom: 10px; text-align: center;">${teamA}</h5>
-                        <div style="font-size: 12px;">
-                            <div>Максим К. (4.2⭐)</div>
-                            <div>Віктор Ш. (4.8⭐)</div>
-                            <div>Дмитро К. (3.9⭐)</div>
-                            <div>Іван С. (4.1⭐)</div>
-                        </div>
-                        <div style="text-align: center; margin-top: 10px; font-weight: 600;">Сер. рейтинг: 4.25</div>
-                    </div>
-                    <div style="flex: 1; background: linear-gradient(135deg, #ff9800, #ffb74d); border-radius: 10px; padding: 15px; color: white;">
-                        <h5 style="margin-bottom: 10px; text-align: center;">${teamB}</h5>
-                        <div style="font-size: 12px;">
-                            <div>Андрій П. (4.6⭐)</div>
-                            <div>Олександр М. (4.3⭐)</div>
-                            <div>Петро М. (4.0⭐)</div>
-                            <div>Сергій Т. (3.8⭐)</div>
-                        </div>
-                        <div style="text-align: center; margin-top: 10px; font-weight: 600;">Сер. рейтинг: 4.18</div>
-                    </div>
-                </div>
-            `;
-            teamsDisplay.style.display = 'block';
-        }
+        // autoBalanceTeams DUPLICATE REMOVED
         
-        function finishMatch() {
-            const scoreA = document.getElementById('scoreTeamA').value;
-            const scoreB = document.getElementById('scoreTeamB').value;
-            
-            if (!scoreA || !scoreB) {
-                alert('Введіть рахунок обох команд!');
-                return;
-            }
-            
-            // Show player rating section
-            const ratingSection = document.getElementById('playerRatingSection');
-            const playersToRate = document.getElementById('playersToRate');
-            
-            playersToRate.innerHTML = `
-                <div style="background: #f5f5f5; border-radius: 10px; padding: 15px; margin-bottom: 10px;">
-                    <div style="font-weight: 600; margin-bottom: 10px;">Оцініть гравців (0-5):</div>
-                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
-                        <span style="flex: 1; font-size: 14px;">Андрій П.</span>
-                        <input type="range" min="0" max="5" step="0.01" value="0" style="flex: 2;">
-                        <span style="min-width: 40px; font-weight: 600;">0.0</span>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
-                        <span style="flex: 1; font-size: 14px;">Віктор Ш.</span>
-                        <input type="range" min="0" max="5" step="0.01" value="0" style="flex: 2;">
-                        <span style="min-width: 40px; font-weight: 600;">0.0</span>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
-                        <span style="flex: 1; font-size: 14px;">Олександр М.</span>
-                        <input type="range" min="0" max="5" step="0.01" value="0" style="flex: 2;">
-                        <span style="min-width: 40px; font-weight: 600;">0.0</span>
-                    </div>
-                    <button onclick="submitPlayerRatings()" style="width: 100%; padding: 10px; background: #4caf50; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; margin-top: 10px;">
-                        Підтвердити оцінки
-                    </button>
-                </div>
-            `;
-            ratingSection.style.display = 'block';
-        }
+        // finishMatch DUPLICATE REMOVED
         
         function submitPlayerRatings() {
             alert('✅ Оцінки збережено! Матч завершено.');
             hideMatchManagement();
         }
         
-        // Missing Functions
-        function showCreateMatchModal() {
-            alert('🏗️ Модаль створення матчу (в розробці)');
-        }
+        // Missing Functions - showCreateMatchModal DUPLICATE REMOVED
         
-        function showStore() {
-            alert('🛍️ Магазин (в розробці)');
-        }
+        // showStore DUPLICATE REMOVED
         
-        function showCreateChallenge() {
-            alert('🏆 Створення челенджу (в розробці)');
-        }
+        // showCreateChallenge DUPLICATE REMOVED
         
         function shareMatch() {
             alert('📤 Поділитися матчем (в розробці)');
