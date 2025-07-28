@@ -1464,19 +1464,19 @@
 
             <!-- Navigation Tabs -->
             <div class="nav-tabs">
-                <div class="nav-tab active" id="tab-videos" data-section="videos">
+                <div class="nav-tab active" id="tab-videos" data-section="videos" onclick="showSection('videos'); console.log('VIDEOS ONCLICK');">
                     <i class="fas fa-video"></i><br>Відео
                 </div>
-                <div class="nav-tab" id="tab-challenges" data-section="challenges">
+                <div class="nav-tab" id="tab-challenges" data-section="challenges" onclick="showSection('challenges'); console.log('CHALLENGES ONCLICK');">
                     <i class="fas fa-trophy"></i><br>Челенджі
                 </div>
-                <div class="nav-tab" id="tab-matches" data-section="matches">
+                <div class="nav-tab" id="tab-matches" data-section="matches" onclick="showSection('matches'); console.log('MATCHES ONCLICK');">
                     <i class="fas fa-futbol"></i><br>Матчі
                 </div>
-                <div class="nav-tab" id="tab-rating" data-section="rating">
+                <div class="nav-tab" id="tab-rating" data-section="rating" onclick="showSection('rating'); console.log('RATING ONCLICK');">
                     <i class="fas fa-crown"></i><br>Рейтинг
                 </div>
-                <div class="nav-tab" id="tab-profile" data-section="profile">
+                <div class="nav-tab" id="tab-profile" data-section="profile" onclick="showSection('profile'); console.log('PROFILE ONCLICK');">
                     <i class="fas fa-user"></i><br>Профіль
                 </div>
             </div>
@@ -4863,36 +4863,68 @@
                 console.log(`Element #${id}:`, element ? 'EXISTS' : 'MISSING');
             });
             
-            // SIMPLE BRUTAL NAVIGATION FIX
-            console.log('🔥 BRUTAL NAVIGATION FIX STARTING...');
+            // ULTIMATE DESPERATE NAVIGATION FIX
+            console.log('🚨 ULTIMATE DESPERATE FIX STARTING...');
             
-            // Direct ID-based listeners - NO LOOPS, NO COMPLEXITY
-            document.getElementById('tab-videos').addEventListener('click', () => {
-                console.log('🎬 VIDEOS clicked');
-                window.showSection('videos');
-            });
-            
-            document.getElementById('tab-challenges').addEventListener('click', () => {
-                console.log('🏆 CHALLENGES clicked');
-                window.showSection('challenges');
-            });
-            
-            document.getElementById('tab-matches').addEventListener('click', () => {
-                console.log('⚽ MATCHES clicked');
-                window.showSection('matches');
-            });
-            
-            document.getElementById('tab-rating').addEventListener('click', () => {
-                console.log('👑 RATING clicked');
-                window.showSection('rating');
-            });
-            
-            document.getElementById('tab-profile').addEventListener('click', () => {
-                console.log('👤 PROFILE clicked');
-                window.showSection('profile');
-            });
-            
-            console.log('🔥 BRUTAL NAVIGATION FIX COMPLETE!');
+            // Wait for everything to load, then force navigation
+            setTimeout(() => {
+                console.log('⏰ Setting up navigation after delay...');
+                
+                // Test if elements exist
+                const tabs = {
+                    'tab-videos': 'videos',
+                    'tab-challenges': 'challenges', 
+                    'tab-matches': 'matches',
+                    'tab-rating': 'rating',
+                    'tab-profile': 'profile'
+                };
+                
+                Object.keys(tabs).forEach(tabId => {
+                    const tab = document.getElementById(tabId);
+                    const section = tabs[tabId];
+                    
+                    if (tab) {
+                        console.log(`✅ Found ${tabId}, adding listener for ${section}`);
+                        
+                        // Remove any existing listeners
+                        const newTab = tab.cloneNode(true);
+                        tab.parentNode.replaceChild(newTab, tab);
+                        
+                        // Add the simplest possible click handler
+                        newTab.onclick = function() {
+                            console.log(`🔥 ${section.toUpperCase()} CLICKED!`);
+                            
+                            // Hide all sections
+                            document.querySelectorAll('.content-section').forEach(s => {
+                                s.style.display = 'none';
+                                s.classList.remove('active');
+                            });
+                            
+                            // Show target section
+                            const targetSection = document.getElementById(section);
+                            if (targetSection) {
+                                targetSection.style.display = 'block';
+                                targetSection.classList.add('active');
+                                console.log(`✅ ${section} section shown`);
+                            } else {
+                                console.error(`❌ Section ${section} not found!`);
+                            }
+                            
+                            // Update tab styles
+                            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+                            newTab.classList.add('active');
+                        };
+                        
+                        // Also add addEventListener as backup
+                        newTab.addEventListener('click', newTab.onclick);
+                        
+                    } else {
+                        console.error(`❌ Tab ${tabId} not found!`);
+                    }
+                });
+                
+                console.log('🚨 ULTIMATE DESPERATE FIX COMPLETE!');
+            }, 1000);
             
             // MAKE ALL FUNCTIONS GLOBALLY ACCESSIBLE FOR ONCLICK
             console.log('🌐 Making functions globally accessible...');
