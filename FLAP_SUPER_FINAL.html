@@ -1606,14 +1606,24 @@
 
             <!-- Matches Section - COMPLETELY REDESIGNED -->
             <div class="content-section" id="matches">
-                <h3 style="margin-bottom: 15px; font-size: 18px;">⚽ Доступні матчі</h3>
-                
-                <!-- Create Match Button -->
-                <div style="margin-bottom: 20px;">
-                    <button onclick="showCreateMatchModal()" style="width: 100%; padding: 12px; background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; border: none; border-radius: 20px; font-weight: 700; cursor: pointer;">
-                        ➕ Створити матч
+                <!-- Match Tabs -->
+                <div style="display: flex; margin-bottom: 20px; background: rgba(255,255,255,0.1); border-radius: 25px; padding: 4px;">
+                    <button id="availableTab" onclick="switchMatchTab('available')" style="flex: 1; padding: 10px; background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; border: none; border-radius: 20px; font-weight: 600; cursor: pointer; transition: all 0.3s;">
+                        🌟 Доступні матчі
+                    </button>
+                    <button id="myMatchesTab" onclick="switchMatchTab('my')" style="flex: 1; padding: 10px; background: transparent; color: rgba(255,255,255,0.7); border: none; border-radius: 20px; font-weight: 600; cursor: pointer; transition: all 0.3s;">
+                        👤 Мої матчі
                     </button>
                 </div>
+
+                <!-- Available Matches Tab -->
+                <div id="availableMatches" style="display: block;">
+                    <!-- Create Match Button -->
+                    <div style="margin-bottom: 20px;">
+                        <button onclick="showCreateMatchModal()" style="width: 100%; padding: 12px; background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; border: none; border-radius: 20px; font-weight: 700; cursor: pointer;">
+                            ➕ Створити матч
+                        </button>
+                    </div>
                 
                 <!-- Filters -->
                 <div style="display: flex; gap: 8px; margin-bottom: 20px; overflow-x: auto; padding-bottom: 5px;">
@@ -2120,6 +2130,47 @@
                             <button onclick="shareMatch()" class="rating-btn" style="background: #ff9800;">Поділитися</button>
                             <button onclick="closeMatchDetails()" class="rating-btn skip">Закрити</button>
                         </div>
+                    </div>
+                </div>
+                </div>
+
+                <!-- My Matches Tab -->
+                <div id="myMatches" style="display: none;">
+                    <div style="text-align: center; padding: 30px 20px;">
+                        <div style="font-size: 48px; margin-bottom: 20px;">⚽</div>
+                        <h4 style="color: white; margin-bottom: 15px;">Ваші матчі</h4>
+                        <p style="color: rgba(255,255,255,0.7); font-size: 14px; margin-bottom: 20px;">
+                            Тут будуть відображатися матчі, які ви створили
+                        </p>
+                        
+                        <!-- Demo My Match -->
+                        <div style="background: rgba(255,255,255,0.9); border-radius: 15px; margin-bottom: 15px; color: #333; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.1);">
+                            <div style="padding: 15px; background: linear-gradient(135deg, #4caf50, #66bb6a); color: white;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                                    <div style="font-size: 16px; font-weight: 700;">⚽ Мій турнір</div>
+                                    <div style="background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 10px; font-size: 11px;">7x7</div>
+                                </div>
+                                <div style="font-size: 12px; opacity: 0.9;">Завтра 16:00 • Стадіон "Олімпійський" • 75₴</div>
+                            </div>
+                            <div style="padding: 15px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                    <span style="font-size: 13px; color: #333;">👥 Статус:</span>
+                                    <span style="font-size: 13px; font-weight: 600; color: #4caf50;">12/14 гравців</span>
+                                </div>
+                                <div style="display: flex; gap: 8px;">
+                                    <button onclick="manageMyMatch('my_match_1')" style="flex: 1; padding: 8px; background: #4caf50; color: white; border: none; border-radius: 8px; font-size: 12px; cursor: pointer;">
+                                        Управління
+                                    </button>
+                                    <button onclick="shareMatch()" style="flex: 1; padding: 8px; background: #ff9800; color: white; border: none; border-radius: 8px; font-size: 12px; cursor: pointer;">
+                                        Поділитися
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button onclick="showCreateMatchModal()" style="width: 100%; padding: 12px; background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; border: none; border-radius: 20px; font-weight: 700; cursor: pointer; margin-top: 10px;">
+                            ➕ Створити новий матч
+                        </button>
                     </div>
                 </div>
             </div>
@@ -3264,8 +3315,7 @@
             }
             
             document.getElementById('ratingModal').classList.remove('show');
-            addCoins(Math.floor(currentRating * 2));
-            showToast(`⭐ Рейтинг ${currentRating.toFixed(2)}/5 відправлено! +${Math.floor(currentRating * 2)} монет`, 'success');
+            showToast(`⭐ Рейтинг ${currentRating.toFixed(2)}/5 відправлено!`, 'success');
             
             // Show rating changes
             setTimeout(() => {
@@ -3288,7 +3338,150 @@
 
         // Store and subscription functions
         function showStore() {
-            showToast('🛒 Магазин відкриється в наступній версії!', 'success');
+            const storeContent = `
+                <div style="max-height: 70vh; overflow-y: auto;">
+                    <h3 style="text-align: center; margin-bottom: 20px; color: #2e7d32;">🛒 Магазин FLAP</h3>
+                    
+                    <!-- Бустери -->
+                    <div style="margin-bottom: 25px;">
+                        <h4 style="color: #4caf50; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;">
+                            🚀 Бустери
+                        </h4>
+                        <div style="display: grid; gap: 10px;">
+                            <div style="background: #f8f9fa; padding: 12px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <div style="font-weight: 600; font-size: 14px;">⚡ Подвійний досвід</div>
+                                    <div style="font-size: 12px; color: #666;">x2 досвід за матчі (24 години)</div>
+                                </div>
+                                <button onclick="buyItem('double_xp', 50)" style="background: #4caf50; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer;">50 💰</button>
+                            </div>
+                            <div style="background: #f8f9fa; padding: 12px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <div style="font-weight: 600; font-size: 14px;">🎯 Точність+</div>
+                                    <div style="font-size: 12px; color: #666;">+0.2 до рейтингу точності (7 днів)</div>
+                                </div>
+                                <button onclick="buyItem('accuracy_boost', 100)" style="background: #4caf50; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer;">100 💰</button>
+                            </div>
+                            <div style="background: #f8f9fa; padding: 12px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <div style="font-weight: 600; font-size: 14px;">💪 Витривалість</div>
+                                    <div style="font-size: 12px; color: #666;">Менше втоми в матчах (3 дні)</div>
+                                </div>
+                                <button onclick="buyItem('stamina_boost', 75)" style="background: #4caf50; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer;">75 💰</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Бейджі -->
+                    <div style="margin-bottom: 25px;">
+                        <h4 style="color: #ff9800; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;">
+                            🏅 Бейджі
+                        </h4>
+                        <div style="display: grid; gap: 10px;">
+                            <div style="background: #f8f9fa; padding: 12px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <div style="font-weight: 600; font-size: 14px;">👑 VIP Гравець</div>
+                                    <div style="font-size: 12px; color: #666;">Золотий значок біля імені</div>
+                                </div>
+                                <button onclick="buyItem('vip_badge', 200)" style="background: #ff9800; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer;">200 💰</button>
+                            </div>
+                            <div style="background: #f8f9fa; padding: 12px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <div style="font-weight: 600; font-size: 14px;">⚽ Король Голів</div>
+                                    <div style="font-size: 12px; color: #666;">Для гравців з 100+ голами</div>
+                                </div>
+                                <button onclick="buyItem('goal_king', 150)" style="background: #ff9800; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer;">150 💰</button>
+                            </div>
+                            <div style="background: #f8f9fa; padding: 12px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <div style="font-weight: 600; font-size: 14px;">🛡️ Стіна</div>
+                                    <div style="font-size: 12px; color: #666;">Для захисників з 90%+ перехоплень</div>
+                                </div>
+                                <button onclick="buyItem('wall_badge', 120)" style="background: #ff9800; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer;">120 💰</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Емоції -->
+                    <div style="margin-bottom: 20px;">
+                        <h4 style="color: #9c27b0; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;">
+                            😄 Емоції
+                        </h4>
+                        <div style="display: grid; gap: 10px;">
+                            <div style="background: #f8f9fa; padding: 12px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <div style="font-weight: 600; font-size: 14px;">🔥 Пакет "Вогонь"</div>
+                                    <div style="font-size: 12px; color: #666;">5 унікальних емоцій для чату</div>
+                                </div>
+                                <button onclick="buyItem('fire_emotes', 80)" style="background: #9c27b0; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer;">80 💰</button>
+                            </div>
+                            <div style="background: #f8f9fa; padding: 12px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <div style="font-weight: 600; font-size: 14px;">⚽ Футбольні емоції</div>
+                                    <div style="font-size: 12px; color: #666;">Гол, офсайд, червона картка та інші</div>
+                                </div>
+                                <button onclick="buyItem('football_emotes', 60)" style="background: #9c27b0; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer;">60 💰</button>
+                            </div>
+                            <div style="background: #f8f9fa; padding: 12px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <div style="font-weight: 600; font-size: 14px;">🎉 Святкові</div>
+                                    <div style="font-size: 12px; color: #666;">Емоції для перемог та свят</div>
+                                </div>
+                                <button onclick="buyItem('celebration_emotes', 40)" style="background: #9c27b0; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer;">40 💰</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Create and show store modal
+            let storeModal = document.getElementById('storeModal');
+            if (!storeModal) {
+                storeModal = document.createElement('div');
+                storeModal.id = 'storeModal';
+                storeModal.className = 'rating-modal';
+                storeModal.innerHTML = `
+                    <div class="rating-content" style="max-width: 450px;">
+                        <div class="rating-title">🛒 Магазин</div>
+                        <div id="storeContent">${storeContent}</div>
+                        <div class="rating-buttons">
+                            <button onclick="closeStore()" class="rating-btn skip">Закрити</button>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(storeModal);
+            } else {
+                document.getElementById('storeContent').innerHTML = storeContent;
+            }
+            
+            storeModal.classList.add('show');
+        }
+
+        function closeStore() {
+            document.getElementById('storeModal').classList.remove('show');
+        }
+
+        function buyItem(itemId, price) {
+            if (coins >= price) {
+                coins -= price;
+                document.getElementById('coinCount').textContent = coins;
+                
+                const items = {
+                    'double_xp': '⚡ Подвійний досвід активовано на 24 години!',
+                    'accuracy_boost': '🎯 Бустер точності активовано на 7 днів!',
+                    'stamina_boost': '💪 Бустер витривалості активовано на 3 дні!',
+                    'vip_badge': '👑 VIP значок додано до профілю!',
+                    'goal_king': '⚽ Бейдж "Король Голів" отримано!',
+                    'wall_badge': '🛡️ Бейдж "Стіна" отримано!',
+                    'fire_emotes': '🔥 Пакет емоцій "Вогонь" розблоковано!',
+                    'football_emotes': '⚽ Футбольні емоції додано!',
+                    'celebration_emotes': '🎉 Святкові емоції розблоковано!'
+                };
+                
+                showToast(items[itemId] || 'Предмет куплено!', 'success');
+            } else {
+                showToast('❌ Недостатньо монет!', 'error');
+            }
         }
 
         function showSubscriptions() {
@@ -3314,11 +3507,97 @@
         }
 
         function showExpertReviews() {
-            showToast('🎯 Відгуки експертів - Coming Soon!', 'success');
+            const reviewContent = `
+                <div style="text-align: center; padding: 30px 20px;">
+                    <div style="font-size: 60px; margin-bottom: 20px;">🎯</div>
+                    <h3 style="color: #2e7d32; margin-bottom: 15px;">Експертні відгуки</h3>
+                    <p style="color: #666; font-size: 14px; line-height: 1.5; margin-bottom: 20px;">
+                        Отримайте професійний аналіз своєї гри від досвідчених тренерів, скаутів та футбольних зірок.
+                    </p>
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+                        <h4 style="color: #4caf50; margin-bottom: 10px;">Що буде доступно:</h4>
+                        <div style="text-align: left; font-size: 13px; color: #666;">
+                            • Аналіз техніки від професійних тренерів<br>
+                            • Відгуки від скаутів провідних клубів<br>
+                            • Персональні поради від футбольних зірок<br>
+                            • Детальний розбір ваших відео<br>
+                            • Рекомендації для покращення гри
+                        </div>
+                    </div>
+                    <div style="background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; padding: 12px; border-radius: 8px; font-weight: 600;">
+                        🚀 Скоро запуск!
+                    </div>
+                </div>
+            `;
+            
+            let reviewModal = document.getElementById('expertReviewModal');
+            if (!reviewModal) {
+                reviewModal = document.createElement('div');
+                reviewModal.id = 'expertReviewModal';
+                reviewModal.className = 'rating-modal';
+                reviewModal.innerHTML = `
+                    <div class="rating-content" style="max-width: 400px;">
+                        <div id="expertReviewContent">${reviewContent}</div>
+                        <div class="rating-buttons">
+                            <button onclick="closeExpertReview()" class="rating-btn skip">Закрити</button>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(reviewModal);
+            }
+            
+            reviewModal.classList.add('show');
+        }
+
+        function closeExpertReview() {
+            document.getElementById('expertReviewModal').classList.remove('show');
         }
 
         function showSportsGoods() {
-            showToast('⚽ Спорт товари - Coming Soon!', 'success');
+            const goodsContent = `
+                <div style="text-align: center; padding: 30px 20px;">
+                    <div style="font-size: 60px; margin-bottom: 20px;">🛍️</div>
+                    <h3 style="color: #2e7d32; margin-bottom: 15px;">Спортивні товари</h3>
+                    <p style="color: #666; font-size: 14px; line-height: 1.5; margin-bottom: 20px;">
+                        Купуйте якісне футбольне спорядження від наших партнерів зі знижками для користувачів FLAP.
+                    </p>
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+                        <h4 style="color: #ff9800; margin-bottom: 10px;">Що буде доступно:</h4>
+                        <div style="text-align: left; font-size: 13px; color: #666;">
+                            • Футбольні бутси від топових брендів<br>
+                            • Форми та екіпіровка команд<br>
+                            • М'ячі та тренувальне обладнання<br>
+                            • Аксесуари та захист<br>
+                            • Ексклюзивні знижки до 30%
+                        </div>
+                    </div>
+                    <div style="background: linear-gradient(135deg, #ff9800, #ffb74d); color: white; padding: 12px; border-radius: 8px; font-weight: 600;">
+                        🚀 Скоро запуск!
+                    </div>
+                </div>
+            `;
+            
+            let goodsModal = document.getElementById('sportsGoodsModal');
+            if (!goodsModal) {
+                goodsModal = document.createElement('div');
+                goodsModal.id = 'sportsGoodsModal';
+                goodsModal.className = 'rating-modal';
+                goodsModal.innerHTML = `
+                    <div class="rating-content" style="max-width: 400px;">
+                        <div id="sportsGoodsContent">${goodsContent}</div>
+                        <div class="rating-buttons">
+                            <button onclick="closeSportsGoods()" class="rating-btn skip">Закрити</button>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(goodsModal);
+            }
+            
+            goodsModal.classList.add('show');
+        }
+
+        function closeSportsGoods() {
+            document.getElementById('sportsGoodsModal').classList.remove('show');
         }
 
         // Modern auth system
@@ -4344,6 +4623,44 @@
 
         function shareMatch() {
             showToast('🔗 Посилання на матч скопійовано!', 'success');
+        }
+
+        function switchMatchTab(tabType) {
+            const availableTab = document.getElementById('availableTab');
+            const myMatchesTab = document.getElementById('myMatchesTab');
+            const availableMatches = document.getElementById('availableMatches');
+            const myMatches = document.getElementById('myMatches');
+
+            if (tabType === 'available') {
+                // Style tabs
+                availableTab.style.background = 'linear-gradient(135deg, #4caf50, #66bb6a)';
+                availableTab.style.color = 'white';
+                myMatchesTab.style.background = 'transparent';
+                myMatchesTab.style.color = 'rgba(255,255,255,0.7)';
+                
+                // Show/hide content
+                availableMatches.style.display = 'block';
+                myMatches.style.display = 'none';
+            } else {
+                // Style tabs
+                myMatchesTab.style.background = 'linear-gradient(135deg, #4caf50, #66bb6a)';
+                myMatchesTab.style.color = 'white';
+                availableTab.style.background = 'transparent';
+                availableTab.style.color = 'rgba(255,255,255,0.7)';
+                
+                // Show/hide content
+                availableMatches.style.display = 'none';
+                myMatches.style.display = 'block';
+            }
+        }
+
+        function manageMyMatch(matchId) {
+            showToast('🎮 Переходимо до управління матчем...', 'success');
+            // This would show the match management interface
+            document.getElementById('matchManagement').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('matchManagement').scrollIntoView({ behavior: 'smooth' });
+            }, 500);
         }
 
         // Friends selector functions
