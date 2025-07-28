@@ -3207,7 +3207,7 @@
                 } else {
                     showToast(`🔍 Пошук: "${query}"`, 'success');
                 }
-            };
+            }
         }
 
         // Enhanced player profiles with different avatars
@@ -3310,7 +3310,8 @@
                         telegram: '@oleksandr_speed',
                         instagram: '@oleksandr.rocket.kyiv'
                     }
-                };
+                }
+            };
 
             const player = players[playerId] || players['andriy_k'];
             
@@ -3392,7 +3393,6 @@
         // endMatch DUPLICATE REMOVED
 
         // submitRating DUPLICATE REMOVED
-        }
 
         // Store and subscription functions
         window.showStore = function showStore() {
@@ -4856,7 +4856,6 @@
             });
             
             // Test click handlers
-            const navTabs = document.querySelectorAll('.nav-tab');
             console.log(`Found ${navTabs.length} navigation tabs`);
             
             // FORCE click handlers (remove onclick conflicts)
