@@ -420,13 +420,13 @@
 
         /* Content Sections */
         .content-section {
-            display: none;
+            display: none !important;
             padding: 15px;
             animation: fadeIn 0.4s ease;
         }
 
         .content-section.active {
-            display: block;
+            display: block !important;
         }
 
         /* Challenge Video Voting */
@@ -1818,39 +1818,7 @@
 
                 <!-- Match Management moved to myMatches section -->
                     
-                    <!-- Waiting List -->
-                    <div style="background: rgba(255,255,255,0.9); border-radius: 15px; margin-bottom: 20px; color: #333; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.1);">
-                        <div style="padding: 15px; background: linear-gradient(135deg, #ff9800, #ffb74d); color: white;">
-                            <div style="font-size: 16px; font-weight: 700;">🕐 Хочуть приєднатися (10)</div>
-                            <div style="font-size: 12px; opacity: 0.9;">Приймайте або відхиляйте заявки</div>
-                        </div>
-                        <div style="padding: 15px; max-height: 300px; overflow-y: auto;">
-                            <!-- Demo players -->
-                            <div style="display: flex; align-items: center; gap: 10px; padding: 8px; background: #f8f9fa; border-radius: 8px; margin-bottom: 8px;">
-                                <div style="width: 32px; height: 32px; background: linear-gradient(135deg, #4caf50, #2e7d32); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: 700;">ОМ</div>
-                                <div style="flex: 1;">
-                                    <div style="font-weight: 600; font-size: 13px;">Олександр Мельник</div>
-                                    <div style="font-size: 11px; color: #666;">Нападник • ⭐ 4.9 • 5 хв тому</div>
-                                </div>
-                                <div style="display: flex; gap: 5px;">
-                                    <button onclick="acceptPlayer('oleksandr_m')" style="width: 28px; height: 28px; background: #4caf50; color: white; border: none; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;">✓</button>
-                                    <button onclick="rejectPlayer('oleksandr_m')" style="width: 28px; height: 28px; background: #f44336; color: white; border: none; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;">✗</button>
-                                </div>
-                            </div>
-                            <!-- More demo players... -->
-                            <div style="display: flex; align-items: center; gap: 10px; padding: 8px; background: #f8f9fa; border-radius: 8px; margin-bottom: 8px;">
-                                <div style="width: 32px; height: 32px; background: linear-gradient(135deg, #ff9800, #f57c00); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: 700;">ВС</div>
-                                <div style="flex: 1;">
-                                    <div style="font-weight: 600; font-size: 13px;">Віталій Семенов</div>
-                                    <div style="font-size: 11px; color: #666;">Півзахисник • ⭐ 4.8 • 12 хв тому</div>
-                                </div>
-                                <div style="display: flex; gap: 5px;">
-                                    <button onclick="acceptPlayer('vitaliy_s')" style="width: 28px; height: 28px; background: #4caf50; color: white; border: none; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;">✓</button>
-                                    <button onclick="rejectPlayer('vitaliy_s')" style="width: 28px; height: 28px; background: #f44336; color: white; border: none; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;">✗</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
 
                     <!-- Match Info -->
                     <div style="background: rgba(255,255,255,0.9); border-radius: 15px; margin-bottom: 20px; color: #333; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.1);">
