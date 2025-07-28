@@ -1433,13 +1433,14 @@
                     <div class="video-voting">
                         <div style="display: flex; align-items: center; gap: 10px; flex: 1;">
                             <span style="font-weight: 600; font-size: 14px;">Ваша оцінка:</span>
-                            <input type="range" min="0" max="5" step="0.01" value="0" onchange="voteForVideo('challenge1_video1', this.value, event)" style="flex: 1; height: 6px; border-radius: 5px; background: #ddd; outline: none; -webkit-appearance: none;">
+                            <input type="range" min="0" max="5" step="0.01" value="0" onchange="updateVoteValue('challenge1_video1', this.value)" style="flex: 1; height: 6px; border-radius: 5px; background: #ddd; outline: none; -webkit-appearance: none;">
                             <span id="vote_challenge1_video1" style="font-weight: 700; color: #ff9800; min-width: 35px;">0.0</span>
+                            <button onclick="voteForVideo('challenge1_video1', event)" style="padding: 6px 12px; background: #4caf50; color: white; border: none; border-radius: 12px; font-size: 12px; font-weight: 600; cursor: pointer; margin-left: 5px;">Голос</button>
                         </div>
                         <div class="video-score">⭐ 8.1</div>
                     </div>
                     <div style="padding: 0 15px 15px; color: #333;">
-                        <strong>Андрій Коваленко</strong> • Півзахисник<br>
+                        <strong onclick="showPlayerProfile('andriy_k')">Андрій Коваленко</strong> • Півзахисник • Київ<br>
                         <small style="color: #666;">2 години тому • Гідропарк</small>
                         
                         <!-- Comments Section -->
@@ -1493,13 +1494,14 @@
                     <div class="video-voting">
                         <div style="display: flex; align-items: center; gap: 10px; flex: 1;">
                             <span style="font-weight: 600; font-size: 14px;">Ваша оцінка:</span>
-                            <input type="range" min="0" max="5" step="0.01" value="0" onchange="voteForVideo('challenge1_video2', this.value, event)" style="flex: 1; height: 6px; border-radius: 5px; background: #ddd; outline: none; -webkit-appearance: none;">
+                            <input type="range" min="0" max="5" step="0.01" value="0" onchange="updateVoteValue('challenge1_video2', this.value)" style="flex: 1; height: 6px; border-radius: 5px; background: #ddd; outline: none; -webkit-appearance: none;">
                             <span id="vote_challenge1_video2" style="font-weight: 700; color: #ff9800; min-width: 35px;">0.0</span>
+                            <button onclick="voteForVideo('challenge1_video2', event)" style="padding: 6px 12px; background: #4caf50; color: white; border: none; border-radius: 12px; font-size: 12px; font-weight: 600; cursor: pointer; margin-left: 5px;">Голос</button>
                         </div>
                         <div class="video-score">⭐ 9.2</div>
                     </div>
                     <div style="padding: 0 15px 15px; color: #333;">
-                        <strong onclick="showPlayerProfile('petro_m')">Петро Мельник</strong> • Нападник<br>
+                        <strong onclick="showPlayerProfile('petro_m')">Петро Мельник</strong> • Нападник • Львів<br>
                         <small style="color: #666;">4 години тому • Стадіон "Динамо"</small>
                     </div>
                 </div>
@@ -1518,13 +1520,14 @@
                     <div class="video-voting">
                         <div style="display: flex; align-items: center; gap: 10px; flex: 1;">
                             <span style="font-weight: 600; font-size: 14px;">Ваша оцінка:</span>
-                            <input type="range" min="0" max="5" step="0.01" value="0" onchange="voteForVideo('challenge2_video1', this.value, event)" style="flex: 1; height: 6px; border-radius: 5px; background: #ddd; outline: none; -webkit-appearance: none;">
+                            <input type="range" min="0" max="5" step="0.01" value="0" onchange="updateVoteValue('challenge2_video1', this.value)" style="flex: 1; height: 6px; border-radius: 5px; background: #ddd; outline: none; -webkit-appearance: none;">
                             <span id="vote_challenge2_video1" style="font-weight: 700; color: #ff9800; min-width: 35px;">0.0</span>
+                            <button onclick="voteForVideo('challenge2_video1', event)" style="padding: 6px 12px; background: #4caf50; color: white; border: none; border-radius: 12px; font-size: 12px; font-weight: 600; cursor: pointer; margin-left: 5px;">Голос</button>
                         </div>
                         <div class="video-score">⭐ 7.8</div>
                     </div>
                     <div style="padding: 0 15px 15px; color: #333;">
-                        <strong onclick="showPlayerProfile('dmitro_k')">Дмитро Коваленко</strong> • Воротар<br>
+                        <strong onclick="showPlayerProfile('dmitro_k')">Дмитро Коваленко</strong> • Воротар • Одеса<br>
                         <small style="color: #666;">6 годин тому • Парк Шевченка</small>
                     </div>
                 </div>
@@ -1682,6 +1685,9 @@
                     <button class="auto-balance-btn" onclick="autoBalanceTeams()">
                         🎯 Авто-баланс по рейтингу
                     </button>
+                    <div style="margin-top: 10px; text-align: center; font-size: 12px; color: #666;">
+                        Останні назви команд: "⚡ Блискавки" vs "🔥 Вогняні"
+                    </div>
                 </div>
 
                 <!-- Score Tracker -->
@@ -1689,6 +1695,9 @@
                     <div class="score-header">
                         <div class="match-title">⚽ Вечірній футбол</div>
                         <div class="match-time">🕐 Триває 32 хвилини</div>
+                    </div>
+                    <div style="margin-bottom: 15px; text-align: center; font-size: 14px; color: #666;">
+                        💡 Натисніть на рахунок щоб додати гол
                     </div>
                     <div class="score-display">
                         <div class="team-score">
@@ -1709,6 +1718,9 @@
                             Скинути рахунок
                         </button>
                     </div>
+                    <div id="scoreInstructions" style="margin-top: 15px; padding: 10px; background: rgba(76, 175, 80, 0.1); border-radius: 8px; text-align: center; font-size: 12px; color: #2e7d32;">
+                        ℹ️ Спочатку натискайте на рахунок для додавання голів, потім завершіть матч для оцінки гравців
+                    </div>
                 </div>
             </div>
 
@@ -1718,9 +1730,84 @@
                 
                 <!-- Create Challenge Button -->
                 <div class="challenge-create" style="background: rgba(255,255,255,0.9); border-radius: 15px; padding: 15px; margin-bottom: 20px; color: #333; text-align: center;">
-                    <button onclick="createChallenge()" style="width: 100%; padding: 12px; background: linear-gradient(135deg, #ff9800, #ffb74d); color: white; border: none; border-radius: 20px; font-weight: 700; cursor: pointer;">
+                    <button onclick="showCreateChallenge()" style="width: 100%; padding: 12px; background: linear-gradient(135deg, #ff9800, #ffb74d); color: white; border: none; border-radius: 20px; font-weight: 700; cursor: pointer;">
                         ➕ Створити челендж
                     </button>
+                </div>
+
+                <!-- Create Challenge Modal -->
+                <div id="createChallengeModal" class="rating-modal">
+                    <div class="rating-content" style="max-width: 400px;">
+                        <div class="rating-title">🏆 Створити новий челендж</div>
+                        <form onsubmit="createChallenge(event)">
+                            <div style="text-align: left; margin-bottom: 15px;">
+                                <label style="display: block; margin-bottom: 5px; font-weight: 600;">Назва челенджу</label>
+                                <input type="text" placeholder="Кращий гол місяця" style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px;" required>
+                            </div>
+                            <div style="text-align: left; margin-bottom: 15px;">
+                                <label style="display: block; margin-bottom: 5px; font-weight: 600;">Опис</label>
+                                <textarea placeholder="Покажи найкращий гол за цей місяць!" rows="3" style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px; resize: vertical;" required></textarea>
+                            </div>
+                            <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                                <div style="flex: 1; text-align: left;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600;">Призовий фонд (₴)</label>
+                                    <input type="number" placeholder="200" min="50" style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px;" required>
+                                </div>
+                                <div style="flex: 1; text-align: left;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 600;">Тривалість (днів)</label>
+                                    <input type="number" placeholder="7" min="1" max="30" style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px;" required>
+                                </div>
+                            </div>
+                            <div style="text-align: left; margin-bottom: 15px;">
+                                <label style="display: block; margin-bottom: 5px; font-weight: 600;">Запросити</label>
+                                <div style="display: flex; gap: 5px; flex-wrap: wrap;">
+                                    <button type="button" onclick="toggleInvite('friends')" class="invite-btn" style="padding: 5px 10px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 15px; font-size: 12px; cursor: pointer;">👥 Друзі</button>
+                                    <button type="button" onclick="toggleInvite('kyiv')" class="invite-btn" style="padding: 5px 10px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 15px; font-size: 12px; cursor: pointer;">🏙️ Київ</button>
+                                    <button type="button" onclick="toggleInvite('lviv')" class="invite-btn" style="padding: 5px 10px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 15px; font-size: 12px; cursor: pointer;">🦁 Львів</button>
+                                    <button type="button" onclick="toggleInvite('odesa')" class="invite-btn" style="padding: 5px 10px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 15px; font-size: 12px; cursor: pointer;">🌊 Одеса</button>
+                                    <button type="button" onclick="toggleInvite('all')" class="invite-btn" style="padding: 5px 10px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 15px; font-size: 12px; cursor: pointer;">🌍 Всі</button>
+                                </div>
+                            </div>
+                            <div class="rating-buttons">
+                                <button type="button" onclick="closeCreateChallenge()" class="rating-btn skip">Скасувати</button>
+                                <button type="submit" class="rating-btn submit">Створити</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Challenge Participation Modal -->
+                <div id="challengeParticipateModal" class="rating-modal">
+                    <div class="rating-content" style="max-width: 400px;">
+                        <div class="rating-title">📹 Завантажити відео</div>
+                        <div style="text-align: left; margin-bottom: 15px;">
+                            <div style="font-weight: 600; margin-bottom: 10px;">🏆 Челендж: Кращий фінт тижня</div>
+                            <div style="color: #666; font-size: 14px; margin-bottom: 20px;">Покажи найкреативніший фінт! Голосування до неділі.</div>
+                        </div>
+                        <form onsubmit="submitChallengeVideo(event)">
+                            <div style="text-align: left; margin-bottom: 15px;">
+                                <label style="display: block; margin-bottom: 5px; font-weight: 600;">Назва відео</label>
+                                <input type="text" placeholder="Мій крутий фінт" style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px;" required>
+                            </div>
+                            <div style="text-align: left; margin-bottom: 15px;">
+                                <label style="display: block; margin-bottom: 5px; font-weight: 600;">Файл відео</label>
+                                <div style="border: 2px dashed #ddd; border-radius: 8px; padding: 20px; text-align: center; background: #f9f9f9; cursor: pointer;" onclick="document.getElementById('videoFile').click()">
+                                    <i class="fas fa-cloud-upload-alt" style="font-size: 24px; color: #666; margin-bottom: 10px;"></i>
+                                    <div style="color: #666;">Клікни тут або перетягни відео</div>
+                                    <div style="font-size: 12px; color: #999; margin-top: 5px;">MP4, MOV, AVI (макс. 100MB)</div>
+                                    <input type="file" id="videoFile" accept="video/*" style="display: none;" required>
+                                </div>
+                            </div>
+                            <div style="text-align: left; margin-bottom: 15px;">
+                                <label style="display: block; margin-bottom: 5px; font-weight: 600;">Опис (необов'язково)</label>
+                                <textarea placeholder="Розкажи про свій фінт..." rows="3" style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px; resize: vertical;"></textarea>
+                            </div>
+                            <div class="rating-buttons">
+                                <button type="button" onclick="closeChallengeParticipate()" class="rating-btn skip">Скасувати</button>
+                                <button type="submit" class="rating-btn submit">Завантажити</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
 
                 <!-- Active Challenges -->
@@ -2400,6 +2487,385 @@
         let currentRating = 0;
         let currentMatchScore = { green: 2, blue: 1 };
         let coins = 250;
+        let videoRatings = {}; // Store current rating values
+
+        // Team names for auto-balance
+        const teamNames = [
+            ["⚡ Блискавки", "🔥 Вогняні"],
+            ["🦅 Орли", "🐺 Вовки"], 
+            ["⭐ Зірки", "💎 Діаманти"],
+            ["🚀 Ракети", "⚔️ Воїни"],
+            ["🏆 Чемпіони", "👑 Королі"],
+            ["🌟 Легенди", "🔱 Титани"]
+        ];
+
+        // Video categories data
+        const videoCategories = {
+            'all': {
+                videos: [
+                    { id: 'video1', title: 'Кращий фінт тижня', author: 'Андрій Коваленко', city: 'Київ', position: 'Півзахисник', rating: 8.1, category: 'tricks' },
+                    { id: 'video2', title: 'Точність ударів', author: 'Петро Мельник', city: 'Львів', position: 'Нападник', rating: 9.2, category: 'accuracy' },
+                    { id: 'video3', title: 'Швидкісний дриблінг', author: 'Дмитро Коваленко', city: 'Одеса', position: 'Воротар', rating: 7.8, category: 'speed' },
+                    { id: 'video4', title: 'Неймовірний сейв', author: 'Олексій Шевченко', city: 'Харків', position: 'Воротар', rating: 9.5, category: 'top' },
+                    { id: 'video5', title: 'Технічний удар', author: 'Максим Зінченко', city: 'Дніпро', position: 'Півзахисник', rating: 8.7, category: 'accuracy' }
+                ]
+            }
+        };
+
+        // Update vote value display
+        function updateVoteValue(videoId, value) {
+            const ratingValue = parseFloat(value);
+            document.getElementById('vote_' + videoId).textContent = ratingValue.toFixed(2);
+            videoRatings[videoId] = ratingValue;
+        }
+
+        // Video voting with button
+        function voteForVideo(videoId, event) {
+            event.stopPropagation();
+            
+            const ratingValue = videoRatings[videoId] || 0;
+            
+            if (ratingValue === 0) {
+                showToast('❌ Оберіть оцінку на повзунку!', 'error');
+                return;
+            }
+            
+            addCoins(Math.floor(ratingValue));
+            showToast(`⭐ Голос ${ratingValue.toFixed(2)} відправлено! +${Math.floor(ratingValue)} монет`, 'success');
+            
+            // Show rating change animation
+            setTimeout(() => {
+                showRatingChange('+0.1', '#4caf50');
+            }, 1000);
+        }
+
+        // Show rating change
+        function showRatingChange(change, color) {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                top: 60px;
+                right: 20px;
+                background: ${color};
+                color: white;
+                padding: 8px 15px;
+                border-radius: 20px;
+                font-weight: 700;
+                font-size: 14px;
+                z-index: 2000;
+                transform: translateX(300px);
+                transition: all 0.5s ease;
+            `;
+            toast.textContent = `Рейтинг ${change}`;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.transform = 'translateX(0)';
+            }, 100);
+            
+            setTimeout(() => {
+                toast.style.transform = 'translateX(300px)';
+                setTimeout(() => document.body.removeChild(toast), 500);
+            }, 2000);
+        }
+
+        // Video filters with actual changes
+        function filterVideos(type) {
+            document.querySelectorAll('.video-filter').forEach(btn => {
+                btn.classList.remove('active');
+                btn.style.background = 'rgba(255,255,255,0.1)';
+                btn.style.borderColor = 'rgba(255,255,255,0.3)';
+                btn.style.color = 'white';
+            });
+            
+            event.target.classList.add('active');
+            event.target.style.background = 'rgba(76, 175, 80, 0.2)';
+            event.target.style.borderColor = '#4caf50';
+            event.target.style.color = '#2e7d32';
+            
+            // Simulate video content change
+            const videoContainer = document.querySelector('#videos');
+            const currentVideos = videoContainer.querySelectorAll('.challenge-video-item');
+            
+            currentVideos.forEach((video, index) => {
+                video.style.opacity = '0.3';
+                video.style.transform = 'scale(0.95)';
+                
+                setTimeout(() => {
+                    video.style.opacity = '1';
+                    video.style.transform = 'scale(1)';
+                    
+                    // Change video titles based on filter
+                    const titleElement = video.querySelector('.challenge-video-title');
+                    const authorElement = video.querySelector('strong');
+                    
+                    switch(type) {
+                        case 'tricks':
+                            titleElement.textContent = index === 0 ? 'Неймовірний фінт' : 'Технічний трюк';
+                            authorElement.textContent = index === 0 ? 'Віталій Фінтер' : 'Олег Технік';
+                            break;
+                        case 'accuracy':
+                            titleElement.textContent = index === 0 ? 'Супер точність' : 'Влучний удар';
+                            authorElement.textContent = index === 0 ? 'Андрій Снайпер' : 'Максим Влучник';
+                            break;
+                        case 'speed':
+                            titleElement.textContent = index === 0 ? 'Швидкість блискавки' : 'Рекордний час';
+                            authorElement.textContent = index === 0 ? 'Олександр Швидкий' : 'Петро Рекорд';
+                            break;
+                        case 'top':
+                            titleElement.textContent = index === 0 ? '🏆 ТОП відео місяця' : '🥇 Переможець тижня';
+                            authorElement.textContent = index === 0 ? 'Зірка Футболу' : 'Професіонал Про';
+                            break;
+                        default:
+                            titleElement.textContent = index === 0 ? 'Кращий фінт тижня' : 'Точність ударів';
+                            authorElement.textContent = index === 0 ? 'Андрій Коваленко' : 'Петро Мельник';
+                    }
+                }, index * 200);
+            });
+            
+            const filters = {
+                'all': '🌟 Показано всі відео',
+                'tricks': '🎯 Показано тільки фінти',
+                'accuracy': '⚽ Показано відео точності',
+                'speed': '🏃 Показано швидкісні відео',
+                'top': '🏆 Показано топ відео'
+            };
+            
+            showToast(filters[type], 'success');
+        }
+
+        // Better search with city and rating filters
+        function searchVideos(query) {
+            if (query.length > 2) {
+                const isCity = ['київ', 'львів', 'одеса', 'харків', 'дніпро'].some(city => 
+                    query.toLowerCase().includes(city)
+                );
+                const isRating = query.includes('4.') || query.includes('5.') || query.includes('рейтинг');
+                
+                if (isCity) {
+                    showToast(`🏙️ Фільтр по місту: "${query}"`, 'success');
+                } else if (isRating) {
+                    showToast(`⭐ Фільтр по рейтингу: "${query}"`, 'success');
+                } else {
+                    showToast(`🔍 Пошук: "${query}"`, 'success');
+                }
+            }
+        }
+
+        // Enhanced player profiles with different avatars
+        function showPlayerProfile(playerId) {
+            const players = {
+                'andriy_k': {
+                    avatar: '🎯',
+                    name: 'Андрій Коваленко',
+                    position: 'Півзахисник • Київ • 24 роки',
+                    rating: '4.8',
+                    matches: '89',
+                    winRate: '91%',
+                    goals: '45',
+                    contact: {
+                        phone: '+380501234567',
+                        telegram: '@andriy_football',
+                        instagram: '@andriy.football.kiev'
+                    }
+                },
+                'petro_m': {
+                    avatar: '⚽',
+                    name: 'Петро Мельник',
+                    position: 'Нападник • Львів • 23 роки',
+                    rating: '4.7',
+                    matches: '67',
+                    winRate: '88%',
+                    goals: '89',
+                    contact: {
+                        phone: '+380671234567',
+                        telegram: '@petro_striker',
+                        instagram: '@petro.goals.lviv'
+                    }
+                },
+                'dmitro_k': {
+                    avatar: '🥅',
+                    name: 'Дмитро Коваленко',
+                    position: 'Воротар • Одеса • 27 років',
+                    rating: '4.7',
+                    matches: '56',
+                    winRate: '85%',
+                    goals: '2',
+                    contact: {
+                        phone: '+380931234567',
+                        telegram: '@dmitro_keeper',
+                        instagram: '@dmitro.saves.odesa'
+                    }
+                },
+                'oleksandr_m': {
+                    avatar: '🚀',
+                    name: 'Олександр Мельник',
+                    position: 'Нападник • Київ • 25 років',
+                    rating: '4.9',
+                    matches: '78',
+                    winRate: '92%',
+                    goals: '67',
+                    contact: {
+                        phone: '+380631234567',
+                        telegram: '@oleksandr_speed',
+                        instagram: '@oleksandr.rocket.kyiv'
+                    }
+                }
+            };
+
+            const player = players[playerId] || players['andriy_k'];
+            
+            document.getElementById('profileAvatar').textContent = player.avatar;
+            document.getElementById('profileName').textContent = player.name;
+            document.getElementById('profilePosition').textContent = player.position;
+            document.getElementById('profileRating').textContent = player.rating;
+            document.getElementById('profileMatches').textContent = player.matches;
+            document.getElementById('profileWinRate').textContent = player.winRate;
+            document.getElementById('profileGoals').textContent = player.goals;
+            
+            // Update contact info
+            document.querySelector('[onclick="copyContact(\'+380501234567\')"]').setAttribute('onclick', `copyContact('${player.contact.phone}')`);
+            document.querySelector('[onclick="copyContact(\'+380501234567\')"]').previousElementSibling.textContent = player.contact.phone;
+            
+            document.querySelector('[onclick="copyContact(\'@maksym_football\')"]').setAttribute('onclick', `copyContact('${player.contact.telegram}')`);
+            document.querySelector('[onclick="copyContact(\'@maksym_football\')"]').previousElementSibling.textContent = player.contact.telegram;
+            
+            document.querySelector('[onclick="copyContact(\'@maksym.football.kyiv\')"]').setAttribute('onclick', `copyContact('${player.contact.instagram}')`);
+            document.querySelector('[onclick="copyContact(\'@maksym.football.kyiv\')"]').previousElementSibling.textContent = player.contact.instagram;
+            
+            document.getElementById('playerProfileModal').classList.add('show');
+        }
+
+        // Challenge creation functions
+        function showCreateChallenge() {
+            document.getElementById('createChallengeModal').classList.add('show');
+        }
+
+        function closeCreateChallenge() {
+            document.getElementById('createChallengeModal').classList.remove('show');
+        }
+
+        function toggleInvite(type) {
+            const btn = event.target;
+            if (btn.style.background === 'rgb(76, 175, 80)') {
+                btn.style.background = '#f5f5f5';
+                btn.style.color = '#333';
+            } else {
+                btn.style.background = '#4caf50';
+                btn.style.color = 'white';
+            }
+        }
+
+        function createChallenge(event) {
+            event.preventDefault();
+            showLoading();
+            
+            setTimeout(() => {
+                hideLoading();
+                closeCreateChallenge();
+                showToast('🏆 Челендж створено та запрошення надіслано!', 'success');
+                addCoins(10);
+                event.target.reset();
+                // Reset invite buttons
+                document.querySelectorAll('.invite-btn').forEach(btn => {
+                    btn.style.background = '#f5f5f5';
+                    btn.style.color = '#333';
+                });
+            }, 2000);
+        }
+
+        // Challenge participation
+        function joinChallenge(challengeId) {
+            document.getElementById('challengeParticipateModal').classList.add('show');
+        }
+
+        function closeChallengeParticipate() {
+            document.getElementById('challengeParticipateModal').classList.remove('show');
+        }
+
+        function submitChallengeVideo(event) {
+            event.preventDefault();
+            showLoading();
+            
+            setTimeout(() => {
+                hideLoading();
+                closeChallengeParticipate();
+                showToast('📹 Відео завантажено! Чекайте результатів голосування', 'success');
+                addCoins(15);
+                event.target.reset();
+            }, 3000);
+        }
+
+        // Enhanced auto-balance teams
+        function autoBalanceTeams() {
+            showLoading();
+            setTimeout(() => {
+                hideLoading();
+                
+                // Get random team names
+                const randomNames = teamNames[Math.floor(Math.random() * teamNames.length)];
+                document.querySelector('.team:first-child .team-name').textContent = `🟢 ${randomNames[0]}`;
+                document.querySelector('.team:last-child .team-name').textContent = `🔵 ${randomNames[1]}`;
+                
+                showToast(`⚖️ Команди збалансовано! "${randomNames[0]}" vs "${randomNames[1]}"`, 'success');
+            }, 1000);
+        }
+
+        // Enhanced end match with multiple player ratings
+        function endMatch() {
+            document.getElementById('scoreInstructions').innerHTML = '🏁 Матч завершено! Тепер оцініть всіх гравців з вашої команди';
+            showToast('🏁 Матч завершено! Оцініть гравців зі своєї команди', 'success');
+            setTimeout(() => {
+                showRatingModal('oleksandr_m');
+            }, 1500);
+        }
+
+        // Enhanced rating with change display
+        function submitRating() {
+            if (currentRating === 0) {
+                showToast('⭐ Оберіть рейтинг!', 'error');
+                return;
+            }
+            
+            document.getElementById('ratingModal').classList.remove('show');
+            addCoins(Math.floor(currentRating * 2));
+            showToast(`⭐ Рейтинг ${currentRating.toFixed(2)}/5 відправлено! +${Math.floor(currentRating * 2)} монет`, 'success');
+            
+            // Show rating changes
+            setTimeout(() => {
+                if (currentRating >= 4.0) {
+                    showRatingChange('+0.2', '#4caf50');
+                } else if (currentRating >= 2.5) {
+                    showRatingChange('+0.1', '#ff9800');
+                } else {
+                    showRatingChange('-0.1', '#f44336');
+                }
+            }, 1000);
+            
+            currentRating = 0;
+            
+            // Reset rating form
+            document.getElementById('playerRatingValue').textContent = '0.0';
+            document.getElementById('ratingStars').textContent = '☆☆☆☆☆';
+            document.getElementById('ratingStars').style.color = '#ddd';
+        }
+
+        // Store and subscription functions
+        function showStore() {
+            showToast('🛒 Магазин відкриється в наступній версії!', 'success');
+        }
+
+        function showSubscriptions() {
+            showToast('⭐ Підписки будуть доступні незабаром!', 'success');
+        }
+
+        function showExpertReviews() {
+            showToast('🎯 Відгуки експертів - Coming Soon!', 'success');
+        }
+
+        function showSportsGoods() {
+            showToast('⚽ Спорт товари - Coming Soon!', 'success');
+        }
 
         // Authentication functions
         function showWelcome() {
@@ -2885,45 +3351,6 @@
 
         function closeFriends() {
             document.getElementById('friendsModal').style.display = 'none';
-        }
-
-        // Store functions
-        function showStore() {
-            document.getElementById('storeModal').style.display = 'flex';
-            document.getElementById('storeCoins').textContent = coins;
-        }
-
-        function closeStore() {
-            document.getElementById('storeModal').style.display = 'none';
-        }
-
-        function buyItem(itemId, price) {
-            if (coins < price) {
-                showToast('💰 Недостатньо монет!', 'error');
-                return;
-            }
-
-            showLoading();
-            setTimeout(() => {
-                hideLoading();
-                coins -= price;
-                document.getElementById('coinCount').textContent = coins;
-                document.getElementById('storeCoins').textContent = coins;
-                
-                const items = {
-                    'rating_boost': '⭐ Бустер рейтингу придбано!',
-                    'mega_boost': '🚀 Мега бустер активовано!',
-                    'vip_badge': '💎 VIP бейдж отримано!',
-                    'legend_badge': '👑 Бейдж "Легенда" отримано!',
-                    'fire_badge': '🔥 Бейдж "Огонь" отримано!',
-                    'celebration': '🎉 Емоція отримана!',
-                    'cool': '😎 Емоція отримана!',
-                    'strong': '💪 Емоція отримана!',
-                    'lightning': '⚡ Емоція отримана!'
-                };
-                
-                showToast(items[itemId] || '✅ Придбано!', 'success');
-            }, 1000);
         }
 
         // Settings functions
