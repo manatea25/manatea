@@ -3651,7 +3651,6 @@
         }
 
         let currentTeams = null;
-        let teamNames = ['⚡ Блискавки', '🔥 Вогняні', '💎 Діаманти', '🚀 Ракети', '⭐ Зірки', '🦁 Леви', '🏆 Чемпіони', '💪 Титани'];
 
         function autoBalanceTeams() {
             // Demo players for teams
@@ -3674,9 +3673,9 @@
             const team2 = shuffled.slice(5, 10);
             
             // Random team names
-            const shuffledNames = [...teamNames].sort(() => Math.random() - 0.5);
-            const team1Name = shuffledNames[0];
-            const team2Name = shuffledNames[1];
+            const randomPair = teamNames[Math.floor(Math.random() * teamNames.length)];
+            const team1Name = randomPair[0];
+            const team2Name = randomPair[1];
             
             currentTeams = { team1: { name: team1Name, players: team1 }, team2: { name: team2Name, players: team2 } };
 
