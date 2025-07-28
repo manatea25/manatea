@@ -1471,7 +1471,7 @@
                 <div style="margin-bottom: 15px;">
                     <h4 style="color: white; margin-bottom: 10px; font-size: 14px;">🔍 Фільтри</h4>
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
-                        <select id="cityFilter" onchange="applyVideoFilters()" style="padding: 8px; border-radius: 10px; border: 2px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: white; font-size: 12px;">
+                        <select id="cityFilter" onchange="applyVideoFilters()" style="padding: 8px; border-radius: 10px; border: 2px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.9); color: #333; font-size: 12px;">
                             <option value="">🏙️ Всі міста</option>
                             <option value="Київ">Київ</option>
                             <option value="Львів">Львів</option>
@@ -1479,7 +1479,7 @@
                             <option value="Харків">Харків</option>
                             <option value="Дніпро">Дніпро</option>
                         </select>
-                        <select id="categoryFilter" onchange="applyVideoFilters()" style="padding: 8px; border-radius: 10px; border: 2px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: white; font-size: 12px;">
+                        <select id="categoryFilter" onchange="applyVideoFilters()" style="padding: 8px; border-radius: 10px; border: 2px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.9); color: #333; font-size: 12px;">
                             <option value="">⚽ Всі категорії</option>
                             <option value="tricks">🎯 Фінти</option>
                             <option value="accuracy">⚽ Точність</option>
@@ -1487,7 +1487,7 @@
                             <option value="top">🔥 Топ</option>
                         </select>
                     </div>
-                    <select id="ratingFilter" onchange="applyVideoFilters()" style="width: 100%; padding: 8px; border-radius: 10px; border: 2px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: white; font-size: 12px;">
+                    <select id="ratingFilter" onchange="applyVideoFilters()" style="width: 100%; padding: 8px; border-radius: 10px; border: 2px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.9); color: #333; font-size: 12px;">
                         <option value="">⭐ Всі рейтинги</option>
                         <option value="4.0">⭐ 4.0+</option>
                         <option value="4.5">⭐ 4.5+</option>
@@ -1512,7 +1512,7 @@
                             <span id="vote_challenge1_video1" style="font-weight: 700; color: #ff9800; min-width: 35px;">0.0</span>
                             <button onclick="voteForVideo('challenge1_video1', event)" style="padding: 6px 12px; background: #4caf50; color: white; border: none; border-radius: 12px; font-size: 12px; font-weight: 600; cursor: pointer; margin-left: 5px;">Голос</button>
                         </div>
-                        <div class="video-score">⭐ 8.1</div>
+                        <div class="video-score">⭐ 4.1</div>
                     </div>
                     <div style="padding: 0 15px 15px; color: #333;">
                         <strong class="video-author" onclick="showPlayerProfile('andriy_k')">Андрій Коваленко</strong> • Півзахисник • Київ<br>
@@ -1573,7 +1573,7 @@
                             <span id="vote_challenge1_video2" style="font-weight: 700; color: #ff9800; min-width: 35px;">0.0</span>
                             <button onclick="voteForVideo('challenge1_video2', event)" style="padding: 6px 12px; background: #4caf50; color: white; border: none; border-radius: 12px; font-size: 12px; font-weight: 600; cursor: pointer; margin-left: 5px;">Голос</button>
                         </div>
-                        <div class="video-score">⭐ 9.2</div>
+                        <div class="video-score">⭐ 4.2</div>
                     </div>
                     <div style="padding: 0 15px 15px; color: #333;">
                         <strong class="video-author" onclick="showPlayerProfile('petro_m')">Петро Мельник</strong> • Нападник • Львів<br>
@@ -1599,7 +1599,7 @@
                             <span id="vote_challenge2_video1" style="font-weight: 700; color: #ff9800; min-width: 35px;">0.0</span>
                             <button onclick="voteForVideo('challenge2_video1', event)" style="padding: 6px 12px; background: #4caf50; color: white; border: none; border-radius: 12px; font-size: 12px; font-weight: 600; cursor: pointer; margin-left: 5px;">Голос</button>
                         </div>
-                        <div class="video-score">⭐ 7.8</div>
+                        <div class="video-score">⭐ 3.8</div>
                     </div>
                     <div style="padding: 0 15px 15px; color: #333;">
                         <strong class="video-author" onclick="showPlayerProfile('dmitro_k')">Дмитро Коваленко</strong> • Воротар • Одеса<br>
@@ -5064,6 +5064,8 @@
 
         // Fix showSection to properly show all sections
         function showSection(sectionId) {
+            console.log('showSection called with:', sectionId);
+            
             // Hide all sections
             const sections = document.querySelectorAll('.content-section');
             sections.forEach(section => {
@@ -5077,16 +5079,19 @@
             
             // Show selected section
             const targetSection = document.getElementById(sectionId);
+            console.log('Target section found:', !!targetSection);
             if (targetSection) {
                 targetSection.style.display = 'block';
                 targetSection.classList.add('active');
             }
             
-            // Add active class to clicked nav tab - fix event reference
-            const clickedTab = document.querySelector(`.nav-tab[onclick="showSection('${sectionId}')"]`);
-            if (clickedTab) {
-                clickedTab.classList.add('active');
-            }
+            // Add active class to clicked nav tab
+            setTimeout(() => {
+                const clickedTab = document.querySelector(`.nav-tab[onclick*="${sectionId}"]`);
+                if (clickedTab) {
+                    clickedTab.classList.add('active');
+                }
+            }, 10);
         }
 
         // Enhanced player profiles with unique data
