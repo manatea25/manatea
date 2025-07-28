@@ -1830,21 +1830,23 @@
                         </div>
                     </div>
 
-                    <!-- Team Builder -->
+                    <!-- Match Info -->
                     <div style="background: rgba(255,255,255,0.9); border-radius: 15px; margin-bottom: 20px; color: #333; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.1);">
-                        <div style="padding: 15px; background: linear-gradient(135deg, #9c27b0, #ba68c8); color: white;">
-                            <div style="font-size: 16px; font-weight: 700;">⚽ Команди для матчу</div>
-                            <div style="font-size: 12px; opacity: 0.9;">Автобаланс за рейтингом</div>
+                        <div style="padding: 15px; background: linear-gradient(135deg, #2196f3, #64b5f6); color: white;">
+                            <div style="font-size: 16px; font-weight: 700;">ℹ️ Інформація про матч</div>
+                            <div style="font-size: 12px; opacity: 0.9;">Деталі та учасники</div>
                         </div>
                         <div style="padding: 15px;">
-                            <div id="teamsDisplay" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
-                                <!-- Teams will be populated by JavaScript -->
+                            <div style="text-align: center; font-size: 14px; color: #666; margin-bottom: 15px;">
+                                📍 <strong>Локація:</strong> Стадіон "Динамо"<br>
+                                ⏰ <strong>Час:</strong> 18:00 - 20:00<br>
+                                👥 <strong>Учасники:</strong> 8/10 гравців<br>
+                                💰 <strong>Вартість:</strong> 100₴ за гру
                             </div>
-                            
-
-                            
-                            <div id="teamNamesDisplay" style="text-align: center; font-size: 12px; color: #666;">
-                                Натисніть автобаланс для створення команд
+                            <div style="text-align: center;">
+                                <button onclick="showMatchDetails('demo_match')" style="padding: 10px 20px; background: linear-gradient(135deg, #2196f3, #64b5f6); color: white; border: none; border-radius: 15px; font-weight: 600; cursor: pointer;">
+                                    📋 Деталі матчу
+                                </button>
                             </div>
                         </div>
                     </div>
