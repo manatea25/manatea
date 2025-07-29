@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLAP - Feel Like A Pro (COMPLETE FIXED)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(180deg, #1e7d32 0%, #2e7d32 100%);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .app {
+            max-width: 414px;
+            margin: 0 auto;
+            min-height: 100vh;
+            position: relative;
+            background: 
+                linear-gradient(90deg, transparent 49%, rgba(255,255,255,0.1) 49%, rgba(255,255,255,0.1) 51%, transparent 51%),
+                repeating-linear-gradient(0deg, transparent, transparent 45px, rgba(255,255,255,0.1) 45px, rgba(255,255,255,0.1) 47px);
+        }
+
+        .screen {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            min-height: 100vh;
+            width: 100%;
+            background: linear-gradient(180deg, #1e7d32 0%, #2e7d32 100%);
+            overflow-y: auto;
+        }
+
+        .screen.active {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+
+        .welcome-screen {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .welcome-logo {
+            width: 120px;
+            height: 120px;
+            background: url('https://raw.githubusercontent.com/manatea25/manatea/design-options/Bold%20Graphic%20Design%20With%20Dynamic%20Logo%20On%20Green%20Background.png.jpg') center/cover;
+            border-radius: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            animation: fadeIn 1s ease;
+        }
+
+        .welcome-title {
+            font-size: 48px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff, #e8f5e8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            animation: fadeIn 1.2s ease;
+        }
+
+        .welcome-subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            animation: fadeIn 1.4s ease;
+        }
+
+        input[type="email"], input[type="password"], input[type="text"], input[type="tel"], input[type="number"], select {
+            transition: all 0.3s ease !important;
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(255,255,255,0.4);
+            border-radius: 15px;
+            background: rgba(255,255,255,0.15);
+            color: white;
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        input:focus, select:focus {
+            border-color: rgba(255,255,255,0.8) !important;
+            background: rgba(255,255,255,0.25) !important;
+            box-shadow: 0 0 20px rgba(255,255,255,0.3) !important;
+            outline: none !important;
+        }
+
+        input::placeholder {
+            color: rgba(255,255,255,0.8) !important;
+            font-weight: 400 !important;
+        }
+
+        .profile-creation-container {
+            padding: 40px 20px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .profile-creation-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .profile-creation-header h2 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .avatar-selection {
+            margin-bottom: 25px;
+        }
+
+        .avatar-selection label {
+            display: block;
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .avatar-options {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .avatar-option {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 3px solid transparent;
+        }
+
+        .avatar-option:hover {
+            background: rgba(255,255,255,0.2);
+            transform: scale(1.1);
+        }
+
+        .avatar-option.selected {
+            border-color: #4caf50;
+            background: rgba(76, 175, 80, 0.3);
+            transform: scale(1.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .complete-profile-btn {
+            width: 100%;
+            padding: 18px;
+            border: none;
+            border-radius: 25px;
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: all 0.3s;
+        }
+
+        .complete-profile-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+        }
+
+        .header {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(20px);
+            padding: 15px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            background: url('https://raw.githubusercontent.com/manatea25/manatea/design-options/Bold%20Graphic%20Design%20With%20Dynamic%20Logo%20On%20Green%20Background.png.jpg') center/cover;
+            border-radius: 10px;
+        }
+
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-name {
+            font-size: 20px;
+            font-weight: 800;
+            color: white;
+            line-height: 1;
+        }
+
+        .brand-tagline {
+            font-size: 10px;
+            opacity: 0.8;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .coins-display {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.15);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .store-btn, .notifications-btn {
+            background: linear-gradient(135deg, #4caf50, #2e7d32);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #ff4444;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 414px;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            padding: 15px 0;
+            z-index: 1000;
+        }
+
+        .nav-tab {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            background: none;
+            color: rgba(255,255,255,0.6);
+        }
+
+        .nav-tab.active {
+            color: #4caf50;
+            transform: translateY(-2px);
+        }
+
+        .nav-tab i {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .nav-tab span {
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .content-section {
+            display: none !important;
+            padding: 20px;
+            padding-bottom: 100px;
+            min-height: calc(100vh - 160px);
+        }
+
+        .content-section.active {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            height: auto !important;
+            overflow: visible !important;
+        }
+
+        .fab-button {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #4caf50, #2e7d32);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+            z-index: 999;
+            transition: all 0.3s;
+        }
+
+        .fab-button:hover {
+            transform: scale(1.1);
+        }
+
+        .add-menu {
+            position: fixed;
+            bottom: 160px;
+            right: 20px;
+            background: rgba(255,255,255,0.95);
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 998;
+            display: none;
+            min-width: 200px;
+        }
+
+        .add-menu-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .add-menu-item:hover {
+            background: rgba(76, 175, 80, 0.1);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 10000;
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background: linear-gradient(180deg, #1e7d32 0%, #2e7d32 100%);
+            margin: 20px auto;
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 400px;
+            position: relative;
+            color: white;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .modal-header h3 {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .close-btn:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 16px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+        }
+
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(76, 175, 80, 0.95);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            z-index: 10001;
+            animation: slideInRight 0.3s ease;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        .toast.error {
+            background: rgba(244, 67, 54, 0.95);
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .video-item, .challenge-item, .match-item {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+        }
+
+        .video-item:hover, .challenge-item:hover, .match-item:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateY(-2px);
+        }
+
+        .user-avatar-clickable {
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .user-avatar-clickable:hover {
+            transform: scale(1.1);
+        }
+
+        .player-name-clickable {
+            cursor: pointer;
+            color: #4caf50;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .player-name-clickable:hover {
+            color: #66bb6a;
+            text-decoration: underline;
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .rating-slider {
+            flex: 1;
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(255,255,255,0.3);
+            outline: none;
+            appearance: none;
+        }
+
+        .rating-slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #4caf50;
+            cursor: pointer;
+        }
+
+        .vote-btn {
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .vote-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+        }
+
+        .vote-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Rating and Profile sections fix */
+        #rating.active, #profile.active {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            height: auto !important;
+            overflow: visible !important;
+            background: transparent !important;
+            color: white !important;
+            padding: 20px !important;
+            margin: 0 !important;
+            box-shadow: none !important;
+            border-radius: 0 !important;
+        }
+
+        .player-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.3s;
+        }
+
+        .player-card:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateY(-2px);
+        }
+
+        .player-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(76, 175, 80, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .player-info {
+            flex: 1;
+        }
+
+        .player-name {
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            color: #4caf50;
+        }
+
+        .player-stats {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .filter-dropdown {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 10px;
+            padding: 8px 12px;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .filter-dropdown option {
+            background: #2e7d32;
+            color: white;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 25px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .search-input::placeholder {
+            color: rgba(255,255,255,0.6);
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <!-- Auth Screen -->
+        <div class="screen welcome-screen active" id="authScreen">
+            <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; padding: 40px 20px; text-align: center;">
+                <div class="welcome-logo"></div>
+                <h1 class="welcome-title">FLAP</h1>
+                <p class="welcome-subtitle">Feel Like A Pro<br>Покажи свої футбольні навички<br>і стань професіоналом!</p>
+                
+                <div style="width: 100%; max-width: 300px; margin-top: 40px;">
+                    <div id="authToggle" style="display: flex; background: rgba(255,255,255,0.1); border-radius: 25px; padding: 4px; margin-bottom: 30px;">
+                        <button id="loginTab" onclick="switchAuthMode('login')" style="flex: 1; padding: 12px; border: none; border-radius: 20px; background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; font-weight: 700; cursor: pointer; transition: all 0.3s ease;">
+                            Увійти
+                        </button>
+                        <button id="registerTab" onclick="switchAuthMode('register')" style="flex: 1; padding: 12px; border: none; border-radius: 20px; background: transparent; color: rgba(255,255,255,0.7); font-weight: 700; cursor: pointer; transition: all 0.3s ease;">
+                            Реєстрація
+                        </button>
+                    </div>
+
+                    <!-- Login Form -->
+                    <div id="loginForm" style="display: block;">
+                        <div style="margin-bottom: 20px;">
+                            <input type="text" placeholder="Email або телефон">
+                            <input type="password" placeholder="Пароль">
+                        </div>
+                        <button onclick="handleQuickLogin()" style="width: 100%; padding: 15px; border: none; border-radius: 25px; background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; font-size: 16px; font-weight: 700; cursor: pointer; margin-bottom: 20px;">
+                            Увійти
+                        </button>
+                    </div>
+
+                    <!-- Register Form -->
+                    <div id="registerForm" style="display: none;">
+                        <div style="margin-bottom: 20px;">
+                            <input type="text" placeholder="Ім'я та прізвище">
+                            <input type="email" placeholder="Email">
+                            <input type="password" placeholder="Пароль">
+                        </div>
+                        <button onclick="handleQuickRegister()" style="width: 100%; padding: 15px; border: none; border-radius: 25px; background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; font-size: 16px; font-weight: 700; cursor: pointer; margin-bottom: 20px;">
+                            Створити акаунт
+                        </button>
+                    </div>
+
+                    <!-- Social Login -->
+                    <div style="margin: 20px 0; text-align: center; color: rgba(255,255,255,0.6);">або</div>
+                    
+                    <button onclick="loginWithGoogle()" style="width: 100%; padding: 15px; border: 2px solid rgba(255,255,255,0.3); border-radius: 25px; background: rgba(255,255,255,0.1); color: white; font-size: 16px; font-weight: 600; cursor: pointer; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                        <div style="width: 20px; height: 20px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #db4437; font-weight: 700; font-size: 12px;">G</div>
+                        Google
+                    </button>
+                    
+                    <button onclick="loginWithFacebook()" style="width: 100%; padding: 15px; border: 2px solid rgba(255,255,255,0.3); border-radius: 25px; background: rgba(255,255,255,0.1); color: white; font-size: 16px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                        <div style="width: 20px; height: 20px; background: #1877f2; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 12px;">f</div>
+                        Facebook
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Creation Screen -->
+        <div class="screen" id="profileCreationScreen">
+            <div class="profile-creation-container">
+                <div class="profile-creation-header">
+                    <h2>🎯 Створення профілю</h2>
+                    <p>Розкажи про себе (необов'язково для демо)</p>
+                </div>
+                
+                <div class="profile-creation-form">
+                    <div class="avatar-selection">
+                        <label>Оберіть аватар:</label>
+                        <div class="avatar-options">
+                            <div class="avatar-option" onclick="selectAvatar('⚽')">⚽</div>
+                            <div class="avatar-option" onclick="selectAvatar('🏆')">🏆</div>
+                            <div class="avatar-option" onclick="selectAvatar('👑')">👑</div>
+                            <div class="avatar-option" onclick="selectAvatar('🔥')">🔥</div>
+                            <div class="avatar-option" onclick="selectAvatar('⭐')">⭐</div>
+                            <div class="avatar-option" onclick="selectAvatar('🚀')">🚀</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Ім'я та прізвище:</label>
+                        <input type="text" id="profileName" placeholder="Введіть ваше ім'я">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Позиція:</label>
+                        <select id="profilePosition">
+                            <option value="">Оберіть позицію</option>
+                            <option value="Воротар">Воротар</option>
+                            <option value="Захисник">Захисник</option>
+                            <option value="Півзахисник">Півзахисник</option>
+                            <option value="Нападник">Нападник</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Місто:</label>
+                        <select id="profileCity">
+                            <option value="">Оберіть місто</option>
+                            <option value="Київ">Київ</option>
+                            <option value="Харків">Харків</option>
+                            <option value="Одеса">Одеса</option>
+                            <option value="Дніпро">Дніпро</option>
+                            <option value="Львів">Львів</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Вік:</label>
+                        <input type="number" id="profileAge" placeholder="Ваш вік" min="16" max="50">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Телефон:</label>
+                        <input type="tel" id="profilePhone" placeholder="+380">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Telegram (необов'язково):</label>
+                        <input type="text" id="profileTelegram" placeholder="@username">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Instagram (необов'язково):</label>
+                        <input type="text" id="profileInstagram" placeholder="@username">
+                    </div>
+
+                    <button class="complete-profile-btn" onclick="completeProfile()">
+                        🎯 Завершити створення профілю
+                    </button>
+                    
+                    <button class="complete-profile-btn" onclick="skipProfile()" style="background: rgba(255,255,255,0.2); margin-top: 15px;">
+                        ⏭️ Пропустити (для демо)
+                    </button>
+                </div>
+            </div>
+        </div>
