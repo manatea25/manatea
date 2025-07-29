@@ -1800,9 +1800,121 @@
 
                 <!-- My Matches Tab -->
                 <div id="myMatches" style="display: none;">
-                    <p style="text-align: center; color: rgba(255,255,255,0.7); margin-top: 50px;">
-                        У вас поки немає матчів.<br>
-                        Створіть новий або приєднайтеся до існуючого!
+                    <!-- Match Management Section -->
+                    <div style="background: rgba(255,255,255,0.1); border-radius: 15px; padding: 20px; margin-bottom: 20px;">
+                        <h4 style="margin: 0 0 15px 0; color: white; font-size: 18px;">⚽ Мій матч: Вечірній футбол у парку</h4>
+                        
+                        <!-- Player Lists -->
+                        <div style="margin-bottom: 20px;">
+                            <div style="background: rgba(76, 175, 80, 0.2); border-radius: 10px; padding: 15px; margin-bottom: 15px;">
+                                <h5 style="margin: 0 0 10px 0; color: #4caf50; font-size: 16px;">✅ Підтвердженні гравці (5)</h5>
+                                <div style="display: grid; gap: 8px;">
+                                    <div style="display: flex; align-items: center; gap: 10px; padding: 8px; background: rgba(255,255,255,0.1); border-radius: 8px;">
+                                        <div style="width: 30px; height: 30px; background: #4caf50; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: 700;">МК</div>
+                                        <span style="color: white; font-size: 14px;">Максим Коваль (Ви)</span>
+                                        <span style="margin-left: auto; color: #ff9800; font-size: 12px;">⭐ 4.2</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 10px; padding: 8px; background: rgba(255,255,255,0.1); border-radius: 8px;">
+                                        <div style="width: 30px; height: 30px; background: #4caf50; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: 700;">АП</div>
+                                        <span style="color: white; font-size: 14px;">Андрій Петренко</span>
+                                        <span style="margin-left: auto; color: #ff9800; font-size: 12px;">⭐ 3.8</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 10px; padding: 8px; background: rgba(255,255,255,0.1); border-radius: 8px;">
+                                        <div style="width: 30px; height: 30px; background: #4caf50; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: 700;">ОС</div>
+                                        <span style="color: white; font-size: 14px;">Олег Сидоренко</span>
+                                        <span style="margin-left: auto; color: #ff9800; font-size: 12px;">⭐ 4.0</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 10px; padding: 8px; background: rgba(255,255,255,0.1); border-radius: 8px;">
+                                        <div style="width: 30px; height: 30px; background: #4caf50; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: 700;">ДІ</div>
+                                        <span style="color: white; font-size: 14px;">Дмитро Іваненко</span>
+                                        <span style="margin-left: auto; color: #ff9800; font-size: 12px;">⭐ 3.9</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 10px; padding: 8px; background: rgba(255,255,255,0.1); border-radius: 8px;">
+                                        <div style="width: 30px; height: 30px; background: #4caf50; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: 700;">СК</div>
+                                        <span style="color: white; font-size: 14px;">Сергій Коваль</span>
+                                        <span style="margin-left: auto; color: #ff9800; font-size: 12px;">⭐ 4.1</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div style="background: rgba(255, 152, 0, 0.2); border-radius: 10px; padding: 15px; margin-bottom: 15px;">
+                                <h5 style="margin: 0 0 10px 0; color: #ff9800; font-size: 16px;">⏳ В очікуванні (2)</h5>
+                                <div style="display: grid; gap: 8px;">
+                                    <div style="display: flex; align-items: center; gap: 10px; padding: 8px; background: rgba(255,255,255,0.1); border-radius: 8px;">
+                                        <div style="width: 30px; height: 30px; background: #ff9800; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: 700;">ВМ</div>
+                                        <span style="color: white; font-size: 14px;">Віталій Мельник</span>
+                                        <span style="margin-left: auto; color: #ff9800; font-size: 12px;">⭐ 3.7</span>
+                                        <div style="display: flex; gap: 5px; margin-left: 10px;">
+                                            <button onclick="approvePlayer('vitaliy_m')" style="padding: 4px 8px; background: #4caf50; color: white; border: none; border-radius: 5px; font-size: 10px; cursor: pointer;">✓</button>
+                                            <button onclick="rejectPlayer('vitaliy_m')" style="padding: 4px 8px; background: #f44336; color: white; border: none; border-radius: 5px; font-size: 10px; cursor: pointer;">✗</button>
+                                        </div>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 10px; padding: 8px; background: rgba(255,255,255,0.1); border-radius: 8px;">
+                                        <div style="width: 30px; height: 30px; background: #ff9800; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: 700;">РТ</div>
+                                        <span style="color: white; font-size: 14px;">Роман Ткаченко</span>
+                                        <span style="margin-left: auto; color: #ff9800; font-size: 12px;">⭐ 4.3</span>
+                                        <div style="display: flex; gap: 5px; margin-left: 10px;">
+                                            <button onclick="approvePlayer('roman_t')" style="padding: 4px 8px; background: #4caf50; color: white; border: none; border-radius: 5px; font-size: 10px; cursor: pointer;">✓</button>
+                                            <button onclick="rejectPlayer('roman_t')" style="padding: 4px 8px; background: #f44336; color: white; border: none; border-radius: 5px; font-size: 10px; cursor: pointer;">✗</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div style="background: rgba(244, 67, 54, 0.2); border-radius: 10px; padding: 15px; margin-bottom: 15px;">
+                                <h5 style="margin: 0 0 10px 0; color: #f44336; font-size: 16px;">❌ Відхиленні (1)</h5>
+                                <div style="display: grid; gap: 8px;">
+                                    <div style="display: flex; align-items: center; gap: 10px; padding: 8px; background: rgba(255,255,255,0.1); border-radius: 8px;">
+                                        <div style="width: 30px; height: 30px; background: #f44336; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: 700;">ІГ</div>
+                                        <span style="color: rgba(255,255,255,0.7); font-size: 14px;">Ігор Грищенко</span>
+                                        <span style="margin-left: auto; color: #ff9800; font-size: 12px;">⭐ 2.8</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Match Control Buttons -->
+                        <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                            <button onclick="autoBalanceTeams()" style="flex: 1; padding: 12px; background: #2196f3; color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer;">
+                                🔄 Автобаланс команд
+                            </button>
+                            <button onclick="showFinalScore()" style="flex: 1; padding: 12px; background: #ff9800; color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer;">
+                                🏁 Завершити матч
+                            </button>
+                        </div>
+                        
+                        <!-- Teams Display (Hidden by default) -->
+                        <div id="teamsDisplay" style="display: none; margin-top: 20px;">
+                            <!-- Teams will be displayed here after auto-balance -->
+                        </div>
+                        
+                        <!-- Final Score Section (Hidden by default) -->
+                        <div id="finalScoreSection" style="display: none; background: rgba(255,255,255,0.1); border-radius: 10px; padding: 15px; margin-top: 15px;">
+                            <h5 style="margin: 0 0 15px 0; color: white; text-align: center;">🏁 Фінальний рахунок</h5>
+                            <div style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 15px;">
+                                <div style="text-align: center;">
+                                    <div style="color: rgba(255,255,255,0.8); margin-bottom: 5px;">Команда 1</div>
+                                    <input type="number" id="team1Score" min="0" value="0" style="width: 60px; padding: 8px; text-align: center; border: none; border-radius: 5px; font-size: 18px; font-weight: 700;">
+                                </div>
+                                <div style="color: white; font-size: 24px; font-weight: 700;">:</div>
+                                <div style="text-align: center;">
+                                    <div style="color: rgba(255,255,255,0.8); margin-bottom: 5px;">Команда 2</div>
+                                    <input type="number" id="team2Score" min="0" value="0" style="width: 60px; padding: 8px; text-align: center; border: none; border-radius: 5px; font-size: 18px; font-weight: 700;">
+                                </div>
+                            </div>
+                            <button onclick="finishMatch()" style="width: 100%; padding: 12px; background: #4caf50; color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer;">
+                                ✅ Підтвердити результат
+                            </button>
+                        </div>
+                        
+                        <!-- Player Rating Section (Hidden by default) -->
+                        <div id="playerRatingSection" style="display: none; background: rgba(255,255,255,0.1); border-radius: 10px; padding: 15px; margin-top: 15px;">
+                            <!-- Player rating will be displayed here -->
+                        </div>
+                    </div>
+                    
+                    <p style="text-align: center; color: rgba(255,255,255,0.5); font-size: 14px; margin-top: 30px;">
+                        Це демо-версія управління матчем
                     </p>
                 </div>
             </div>
@@ -4057,6 +4169,233 @@
             if (comment && comment.trim()) {
                 showToast(`💬 Коментар додано до ${videoId}!`, 'success');
                 // В реальному додатку тут би був запит до сервера
+            }
+        }
+        
+        function showStore() {
+            console.log('🛒 Show store');
+            const modal = document.getElementById('storeModal');
+            if (modal) {
+                modal.classList.add('show');
+            } else {
+                showToast('❌ Магазин не знайдено', 'error');
+            }
+        }
+        
+        function showStoreTab(tabName) {
+            console.log('🏪 Show store tab:', tabName);
+            
+            // Update tab buttons
+            document.querySelectorAll('.store-tab').forEach(tab => {
+                tab.style.background = 'rgba(255,255,255,0.1)';
+                tab.style.color = 'white';
+            });
+            
+            const activeTab = document.getElementById(`store-tab-${tabName}`);
+            if (activeTab) {
+                activeTab.style.background = '#4caf50';
+                activeTab.style.color = 'white';
+            }
+            
+            // Show/hide content
+            document.querySelectorAll('.store-content').forEach(content => {
+                content.style.display = 'none';
+            });
+            
+            const activeContent = document.getElementById(`store-${tabName}`);
+            if (activeContent) {
+                activeContent.style.display = 'block';
+            }
+        }
+        
+        function closeStore() {
+            console.log('❌ Close store');
+            const modal = document.getElementById('storeModal');
+            if (modal) {
+                modal.classList.remove('show');
+            }
+        }
+        
+        function buySubscription(type) {
+            const subscriptions = {
+                'europa': { name: 'Europa League', price: '99₴/місяць' },
+                'champions': { name: 'Champions League', price: '159₴/місяць' }
+            };
+            
+            const sub = subscriptions[type];
+            if (sub) {
+                showToast(`🎉 Підписка "${sub.name}" активована! (${sub.price})`, 'success');
+                closeStore();
+            }
+        }
+        
+        function buyCoins(amount, price) {
+            showToast(`💰 Придбано ${amount} монет за ${price}₴!`, 'success');
+            
+            // Update coin count
+            const coinCount = document.getElementById('coinCount');
+            if (coinCount) {
+                const currentCoins = parseInt(coinCount.textContent) || 0;
+                coinCount.textContent = currentCoins + amount;
+            }
+            
+            closeStore();
+        }
+        
+        // Match management functions
+        function approvePlayer(playerId) {
+            showToast(`✅ Гравця ${playerId} підтверджено!`, 'success');
+        }
+        
+        function rejectPlayer(playerId) {
+            showToast(`❌ Гравця ${playerId} відхилено`, 'warning');
+        }
+        
+        function autoBalanceTeams() {
+            const teamsDisplay = document.getElementById('teamsDisplay');
+            if (teamsDisplay) {
+                const teamNames = [
+                    'Лісові Вовки', 'Степові Орли', 'Морські Леви', 'Гірські Барси',
+                    'Небесні Соколи', 'Річкові Дельфіни', 'Польові Зубри', 'Міські Тигри'
+                ];
+                
+                const team1Name = teamNames[Math.floor(Math.random() * teamNames.length)];
+                let team2Name = teamNames[Math.floor(Math.random() * teamNames.length)];
+                while (team2Name === team1Name) {
+                    team2Name = teamNames[Math.floor(Math.random() * teamNames.length)];
+                }
+                
+                teamsDisplay.innerHTML = `
+                    <div style="background: rgba(255,255,255,0.1); border-radius: 10px; padding: 15px;">
+                        <h5 style="margin: 0 0 15px 0; color: white; text-align: center;">🏆 Автобаланс команд</h5>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                            <div style="background: rgba(76, 175, 80, 0.2); border-radius: 10px; padding: 15px; text-align: center;">
+                                <h6 style="margin: 0 0 10px 0; color: #4caf50; font-size: 16px;">${team1Name}</h6>
+                                <div style="font-size: 12px; color: rgba(255,255,255,0.8); margin-bottom: 10px;">Середній рейтинг: 4.0</div>
+                                <div style="display: grid; gap: 5px;">
+                                    <div style="background: rgba(255,255,255,0.1); padding: 5px; border-radius: 5px; font-size: 12px; color: white;">Максим К. (4.2)</div>
+                                    <div style="background: rgba(255,255,255,0.1); padding: 5px; border-radius: 5px; font-size: 12px; color: white;">Олег С. (4.0)</div>
+                                    <div style="background: rgba(255,255,255,0.1); padding: 5px; border-radius: 5px; font-size: 12px; color: white;">Дмитро І. (3.9)</div>
+                                </div>
+                            </div>
+                            
+                            <div style="background: rgba(255, 152, 0, 0.2); border-radius: 10px; padding: 15px; text-align: center;">
+                                <h6 style="margin: 0 0 10px 0; color: #ff9800; font-size: 16px;">${team2Name}</h6>
+                                <div style="font-size: 12px; color: rgba(255,255,255,0.8); margin-bottom: 10px;">Середній рейтинг: 3.95</div>
+                                <div style="display: grid; gap: 5px;">
+                                    <div style="background: rgba(255,255,255,0.1); padding: 5px; border-radius: 5px; font-size: 12px; color: white;">Андрій П. (3.8)</div>
+                                    <div style="background: rgba(255,255,255,0.1); padding: 5px; border-radius: 5px; font-size: 12px; color: white;">Сергій К. (4.1)</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; gap: 10px; margin-top: 15px;">
+                            <button onclick="autoBalanceTeams()" style="flex: 1; padding: 8px; background: #2196f3; color: white; border: none; border-radius: 8px; font-size: 12px; cursor: pointer;">
+                                🔄 Перемішати знову
+                            </button>
+                            <button onclick="showFinalScore()" style="flex: 1; padding: 8px; background: #4caf50; color: white; border: none; border-radius: 8px; font-size: 12px; cursor: pointer;">
+                                ▶️ Почати матч
+                            </button>
+                        </div>
+                    </div>
+                `;
+                teamsDisplay.style.display = 'block';
+                showToast('🔄 Команди збалансовано!', 'success');
+            }
+        }
+        
+        function showFinalScore() {
+            const finalScoreSection = document.getElementById('finalScoreSection');
+            if (finalScoreSection) {
+                finalScoreSection.style.display = 'block';
+                showToast('🏁 Введіть фінальний рахунок матчу', 'info');
+            }
+        }
+        
+        function finishMatch() {
+            const team1Score = document.getElementById('team1Score').value;
+            const team2Score = document.getElementById('team2Score').value;
+            
+            if (team1Score !== '' && team2Score !== '') {
+                showToast(`🏆 Матч завершено! Рахунок: ${team1Score}:${team2Score}`, 'success');
+                
+                // Show player rating section
+                const playerRatingSection = document.getElementById('playerRatingSection');
+                if (playerRatingSection) {
+                    playerRatingSection.innerHTML = `
+                        <h5 style="margin: 0 0 15px 0; color: white; text-align: center;">⭐ Оцініть гравців своєї команди</h5>
+                        <div style="background: rgba(76, 175, 80, 0.2); border-radius: 10px; padding: 15px;">
+                            <div style="margin-bottom: 15px;">
+                                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                    <div style="width: 40px; height: 40px; background: #4caf50; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 14px; font-weight: 700;">ОС</div>
+                                    <span style="color: white; font-size: 16px;">Олег Сидоренко</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <span style="color: rgba(255,255,255,0.8); font-size: 14px;">Оцінка:</span>
+                                    <input type="range" min="0" max="5" step="0.01" value="4.0" style="flex: 1; height: 6px;">
+                                    <span style="color: white; font-weight: 600;">4.00</span>
+                                </div>
+                            </div>
+                            
+                            <div style="margin-bottom: 15px;">
+                                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                    <div style="width: 40px; height: 40px; background: #4caf50; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 14px; font-weight: 700;">ДІ</div>
+                                    <span style="color: white; font-size: 16px;">Дмитро Іваненко</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <span style="color: rgba(255,255,255,0.8); font-size: 14px;">Оцінка:</span>
+                                    <input type="range" min="0" max="5" step="0.01" value="3.9" style="flex: 1; height: 6px;">
+                                    <span style="color: white; font-weight: 600;">3.90</span>
+                                </div>
+                            </div>
+                            
+                            <button onclick="submitPlayerRatings()" style="width: 100%; padding: 12px; background: #4caf50; color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer;">
+                                ✅ Відправити оцінки
+                            </button>
+                        </div>
+                    `;
+                    playerRatingSection.style.display = 'block';
+                }
+                
+                // Hide final score section
+                document.getElementById('finalScoreSection').style.display = 'none';
+            } else {
+                showToast('❌ Введіть рахунок для обох команд', 'error');
+            }
+        }
+        
+        function submitPlayerRatings() {
+            showToast('⭐ Оцінки відправлено! Дякуємо за гру!', 'success');
+            
+            // Add coins for match completion
+            const coinCount = document.getElementById('coinCount');
+            if (coinCount) {
+                const currentCoins = parseInt(coinCount.textContent) || 0;
+                coinCount.textContent = currentCoins + 30;
+            }
+            
+            showToast('💰 +30 монет за завершення матчу!', 'success');
+        }
+        
+        // Create functions for FAB menu
+        function showCreateChallenge() {
+            console.log('🏆 Show create challenge modal');
+            const modal = document.getElementById('createChallengeModal');
+            if (modal) {
+                modal.classList.add('show');
+            } else {
+                showToast('❌ Модаль створення челенджу не знайдено', 'error');
+            }
+        }
+        
+        function showCreateMatchModal() {
+            console.log('⚽ Show create match modal');
+            const modal = document.getElementById('createMatchModal');
+            if (modal) {
+                modal.classList.add('show');
+            } else {
+                showToast('❌ Модаль створення матчу не знайдено', 'error');
             }
         }
 
