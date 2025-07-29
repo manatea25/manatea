@@ -1121,7 +1121,7 @@
                             <i class="fas fa-coins"></i>
                             <span id="coinCount">250</span>
                         </div>
-                        <button class="store-btn" onclick="showStore()" style="background: linear-gradient(135deg, #4caf50, #2e7d32); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; margin-right: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3); transition: all 0.3s;">
+                        <button class="store-btn" id="storeButton" style="background: linear-gradient(135deg, #4caf50, #2e7d32); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; margin-right: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3); transition: all 0.3s; z-index: 100; position: relative;">
                             🛒
                         </button>
                         <button class="notifications-btn" onclick="toggleNotifications()">
@@ -2313,7 +2313,7 @@
         </div>
 
         <!-- FAB Button -->
-        <button class="fab" onclick="showAddMenu()">
+        <button class="fab" id="fabButton" style="position: fixed; bottom: 25px; right: 25px; width: 64px; height: 64px; background: linear-gradient(135deg, #4caf50, #2e7d32); border: none; border-radius: 50%; color: white; font-size: 24px; cursor: pointer; box-shadow: 0 8px 24px rgba(76, 175, 80, 0.4), 0 0 0 1px rgba(255,255,255,0.1); z-index: 1000; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
             <i class="fas fa-plus"></i>
         </button>
 
@@ -4578,6 +4578,30 @@
             closeStore();
         }
 
+        function buyBadge(badgeType, cost) {
+            const coinCount = document.getElementById('coinCount');
+            const currentCoins = parseInt(coinCount.textContent) || 0;
+            
+            if (currentCoins >= cost) {
+                coinCount.textContent = currentCoins - cost;
+                
+                const badges = {
+                    rookie: { name: 'Новачок', emoji: '🌟' },
+                    striker: { name: 'Бомбардир', emoji: '⚽' },
+                    defender: { name: 'Захисник', emoji: '🛡️' },
+                    playmaker: { name: 'Плеймейкер', emoji: '🎯' },
+                    legend: { name: 'Легенда', emoji: '👑' },
+                    champion: { name: 'Чемпіон', emoji: '🏆' }
+                };
+                
+                const badge = badges[badgeType];
+                showToast(`${badge.emoji} Бейдж "${badge.name}" куплено за ${cost} монет!`, 'success');
+                closeStore();
+            } else {
+                showToast(`❌ Недостатньо монет! Потрібно ${cost}, у вас ${currentCoins}`, 'error');
+            }
+        }
+
         // Enhanced click outside to close menus
         document.addEventListener('click', function(event) {
             const addMenu = document.getElementById('addMenu');
@@ -4604,6 +4628,37 @@
         `;
         document.head.appendChild(style);
 
+        // Initialize button event listeners when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 Initializing FLAP buttons...');
+            
+            // Store button
+            const storeButton = document.getElementById('storeButton');
+            if (storeButton) {
+                storeButton.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('🛒 Store button clicked');
+                    showStore();
+                });
+                console.log('✅ Store button initialized');
+            }
+            
+            // FAB button
+            const fabButton = document.getElementById('fabButton');
+            if (fabButton) {
+                fabButton.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('➕ FAB button clicked');
+                    showAddMenu();
+                });
+                console.log('✅ FAB button initialized');
+            }
+            
+            console.log('🎉 All buttons initialized successfully!');
+        });
+
     </script>
 
     <!-- Store Modal HTML -->
@@ -4618,9 +4673,10 @@
 
             <!-- Store Tabs -->
             <div style="display: flex; margin-bottom: 20px; background: #f0f0f0; border-radius: 10px; padding: 3px;">
-                <button onclick="showStoreTab('subscriptions')" id="store-tab-subscriptions" class="store-tab active" style="flex: 1; padding: 10px 8px; background: #4caf50; color: white; border: none; border-radius: 7px; font-weight: 600; cursor: pointer; transition: all 0.3s; font-size: 13px;">Підписки</button>
-                <button onclick="showStoreTab('coins')" id="store-tab-coins" class="store-tab" style="flex: 1; padding: 10px 8px; background: transparent; color: #666; border: none; font-weight: 600; cursor: pointer; transition: all 0.3s; font-size: 13px;">Монети</button>
-                <button onclick="showStoreTab('expert')" id="store-tab-expert" class="store-tab" style="flex: 1; padding: 10px 8px; background: transparent; color: #666; border: none; font-weight: 600; cursor: pointer; transition: all 0.3s; font-size: 13px;">Експерт</button>
+                <button onclick="showStoreTab('subscriptions')" id="store-tab-subscriptions" class="store-tab active" style="flex: 1; padding: 10px 8px; background: #4caf50; color: white; border: none; border-radius: 7px; font-weight: 600; cursor: pointer; transition: all 0.3s; font-size: 12px;">Підписки</button>
+                <button onclick="showStoreTab('coins')" id="store-tab-coins" class="store-tab" style="flex: 1; padding: 10px 8px; background: transparent; color: #666; border: none; font-weight: 600; cursor: pointer; transition: all 0.3s; font-size: 12px;">Монети</button>
+                <button onclick="showStoreTab('badges')" id="store-tab-badges" class="store-tab" style="flex: 1; padding: 10px 8px; background: transparent; color: #666; border: none; font-weight: 600; cursor: pointer; transition: all 0.3s; font-size: 12px;">Бейджі</button>
+                <button onclick="showStoreTab('expert')" id="store-tab-expert" class="store-tab" style="flex: 1; padding: 10px 8px; background: transparent; color: #666; border: none; font-weight: 600; cursor: pointer; transition: all 0.3s; font-size: 12px;">Експерт</button>
             </div>
 
             <!-- Subscriptions Tab -->
@@ -4673,6 +4729,42 @@
                         <div style="font-size: 20px; margin-bottom: 6px;">🪙</div>
                         <div style="font-size: 15px; font-weight: 700; margin-bottom: 2px;">500 монет</div>
                         <div style="font-size: 14px; opacity: 0.9;">400₴</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Badges Tab -->
+            <div id="store-badges" class="store-tab-content" style="display: none;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px;">
+                    <div onclick="buyBadge('rookie', 50)" style="background: linear-gradient(135deg, #28a745, #20c997); border-radius: 12px; padding: 15px; text-align: center; cursor: pointer; transition: all 0.3s; color: white; box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);">
+                        <div style="font-size: 20px; margin-bottom: 6px;">🌟</div>
+                        <div style="font-size: 14px; font-weight: 700; margin-bottom: 2px;">Новачок</div>
+                        <div style="font-size: 12px; opacity: 0.9;">50 монет</div>
+                    </div>
+                    <div onclick="buyBadge('striker', 100)" style="background: linear-gradient(135deg, #ff6b35, #f7931e); border-radius: 12px; padding: 15px; text-align: center; cursor: pointer; transition: all 0.3s; color: white; box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);">
+                        <div style="font-size: 20px; margin-bottom: 6px;">⚽</div>
+                        <div style="font-size: 14px; font-weight: 700; margin-bottom: 2px;">Бомбардир</div>
+                        <div style="font-size: 12px; opacity: 0.9;">100 монет</div>
+                    </div>
+                    <div onclick="buyBadge('defender', 75)" style="background: linear-gradient(135deg, #6f42c1, #e83e8c); border-radius: 12px; padding: 15px; text-align: center; cursor: pointer; transition: all 0.3s; color: white; box-shadow: 0 4px 12px rgba(111, 66, 193, 0.3);">
+                        <div style="font-size: 20px; margin-bottom: 6px;">🛡️</div>
+                        <div style="font-size: 14px; font-weight: 700; margin-bottom: 2px;">Захисник</div>
+                        <div style="font-size: 12px; opacity: 0.9;">75 монет</div>
+                    </div>
+                    <div onclick="buyBadge('playmaker', 120)" style="background: linear-gradient(135deg, #17a2b8, #6610f2); border-radius: 12px; padding: 15px; text-align: center; cursor: pointer; transition: all 0.3s; color: white; box-shadow: 0 4px 12px rgba(23, 162, 184, 0.3);">
+                        <div style="font-size: 20px; margin-bottom: 6px;">🎯</div>
+                        <div style="font-size: 14px; font-weight: 700; margin-bottom: 2px;">Плеймейкер</div>
+                        <div style="font-size: 12px; opacity: 0.9;">120 монет</div>
+                    </div>
+                    <div onclick="buyBadge('legend', 200)" style="background: linear-gradient(135deg, #ffd700, #ff8c00); border-radius: 12px; padding: 15px; text-align: center; cursor: pointer; transition: all 0.3s; color: white; box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);">
+                        <div style="font-size: 20px; margin-bottom: 6px;">👑</div>
+                        <div style="font-size: 14px; font-weight: 700; margin-bottom: 2px;">Легенда</div>
+                        <div style="font-size: 12px; opacity: 0.9;">200 монет</div>
+                    </div>
+                    <div onclick="buyBadge('champion', 300)" style="background: linear-gradient(135deg, #dc3545, #fd7e14); border-radius: 12px; padding: 15px; text-align: center; cursor: pointer; transition: all 0.3s; color: white; box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);">
+                        <div style="font-size: 20px; margin-bottom: 6px;">🏆</div>
+                        <div style="font-size: 14px; font-weight: 700; margin-bottom: 2px;">Чемпіон</div>
+                        <div style="font-size: 12px; opacity: 0.9;">300 монет</div>
                     </div>
                 </div>
             </div>
