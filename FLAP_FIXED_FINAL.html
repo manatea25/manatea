@@ -644,10 +644,71 @@
             background: white;
             border-radius: 20px;
             padding: 25px;
-            max-width: 350px;
+            max-width: 400px;
             width: 100%;
-            color: #333;
+            max-height: 85vh;
+            overflow-y: auto;
+            color: #333 !important;
             text-align: center;
+            font-family: 'Poppins', sans-serif !important;
+            line-height: 1.6 !important;
+        }
+        
+        /* Fix for modal content text */
+        .rating-content h3,
+        .rating-content h4,
+        .rating-content h5,
+        .rating-content p,
+        .rating-content span,
+        .rating-content div {
+            color: #333 !important;
+            font-family: 'Poppins', sans-serif !important;
+            line-height: 1.4 !important;
+            z-index: 9999 !important;
+            position: relative !important;
+        }
+        
+        .rating-content strong {
+            color: #2e7d32 !important;
+            font-weight: 700 !important;
+        }
+        
+        .rating-content input,
+        .rating-content button,
+        .rating-content select {
+            font-family: 'Poppins', sans-serif !important;
+            z-index: 9999 !important;
+            position: relative !important;
+        }
+        
+        /* Specific fixes for challenge videos modal */
+        #challengeVideosContent {
+            font-family: 'Poppins', sans-serif !important;
+            color: #333 !important;
+            line-height: 1.5 !important;
+        }
+        
+        #challengeVideosContent h4,
+        #challengeVideosContent p,
+        #challengeVideosContent span,
+        #challengeVideosContent div {
+            color: #333 !important;
+            font-family: 'Poppins', sans-serif !important;
+            text-shadow: none !important;
+            background: none !important;
+        }
+        
+        /* Player rating modal fixes */
+        .player-rating-content {
+            font-family: 'Poppins', sans-serif !important;
+            color: #333 !important;
+        }
+        
+        .player-rating-content * {
+            color: #333 !important;
+            font-family: 'Poppins', sans-serif !important;
+            text-shadow: none !important;
+        }
             max-height: 90vh;
             overflow-y: auto;
         }
@@ -887,7 +948,21 @@
                 
                 <div>
                     <div style="margin-bottom: 25px;">
-                        <label style="display: block; margin-bottom: 15px; font-weight: 600; color: white; font-size: 18px;">Оберіть аватар:</label>
+                        <label style="display: block; margin-bottom: 15px; font-weight: 600; color: white; font-size: 18px;">Оберіть аватар або завантажте фото:</label>
+                        
+                        <!-- Upload Photo Option -->
+                        <div style="margin-bottom: 20px; text-align: center;">
+                            <input type="file" id="avatarUpload" accept="image/*" style="display: none;" onchange="uploadAvatar(this)">
+                            <button onclick="document.getElementById('avatarUpload').click()" style="padding: 12px 20px; background: linear-gradient(135deg, #2196f3, #42a5f5); color: white; border: none; border-radius: 15px; font-weight: 600; cursor: pointer; margin-bottom: 15px;">
+                                📷 Завантажити фото
+                            </button>
+                            <div id="uploadedAvatar" style="display: none; width: 80px; height: 80px; border-radius: 50%; margin: 10px auto; border: 3px solid #4caf50; overflow: hidden;">
+                                <img id="uploadedAvatarImg" style="width: 100%; height: 100%; object-fit: cover;">
+                            </div>
+                        </div>
+                        
+                        <div style="text-align: center; margin-bottom: 15px; color: rgba(255,255,255,0.7);">або</div>
+                        
                         <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
                             <div class="avatar-option" onclick="selectAvatar('⚽')" style="width: 60px; height: 60px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 24px; cursor: pointer; transition: all 0.3s; border: 3px solid transparent; backdrop-filter: blur(10px);">⚽</div>
                             <div class="avatar-option" onclick="selectAvatar('🏆')" style="width: 60px; height: 60px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 24px; cursor: pointer; transition: all 0.3s; border: 3px solid transparent; backdrop-filter: blur(10px);">🏆</div>
@@ -1821,7 +1896,7 @@
                                     </div>
                                     <div style="display: flex; align-items: center; gap: 10px; padding: 8px; background: rgba(255,255,255,0.1); border-radius: 8px;">
                                         <div style="width: 30px; height: 30px; background: #4caf50; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: 700;">ОС</div>
-                                        <span style="color: white; font-size: 14px;">Олег Сидоренко</span>
+                                        <span style="color: white; font-size: 14px; cursor: pointer;" onclick="showPlayerProfile('oleh_s')">Олег Сидоренко</span>
                                         <span style="margin-left: auto; color: #ff9800; font-size: 12px;">⭐ 4.0</span>
                                     </div>
                                     <div style="display: flex; align-items: center; gap: 10px; padding: 8px; background: rgba(255,255,255,0.1); border-radius: 8px;">
@@ -3074,31 +3149,31 @@
             let videosHTML = '';
             challenge.videos.forEach((video, index) => {
                 videosHTML += `
-                    <div style="background: rgba(255,255,255,0.1); border-radius: 15px; padding: 15px; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.2);">
+                    <div style="background: rgba(240,240,240,0.95); border-radius: 15px; padding: 15px; margin-bottom: 15px; border: 1px solid #ddd;">
                         <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 10px;">
-                            <div style="width: 60px; height: 60px; background: linear-gradient(45deg, #ff6b6b, #ee5a24); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 18px; cursor: pointer;" onclick="playVideo('${video.id}')">
+                            <div style="width: 60px; height: 60px; background: linear-gradient(45deg, #4caf50, #66bb6a); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 18px; cursor: pointer;" onclick="playVideo('${video.id}')">
                                 ▶️
                             </div>
                             <div style="flex: 1;">
-                                <h4 style="margin: 0 0 5px 0; font-size: 16px; color: white;">${video.title}</h4>
-                                <p style="margin: 0; opacity: 0.8; font-size: 14px; color: rgba(255,255,255,0.8);">
-                                    <strong>${video.author}</strong> • ${video.city}<br>
+                                <h4 style="margin: 0 0 5px 0; font-size: 16px; color: #333; font-family: 'Poppins', sans-serif; font-weight: 600;">${video.title}</h4>
+                                <p style="margin: 0; font-size: 14px; color: #666; font-family: 'Poppins', sans-serif; line-height: 1.4;">
+                                    <strong style="color: #2e7d32;">${video.author}</strong> • ${video.city}<br>
                                     ⭐ ${video.rating}/5 • 👥 ${video.votes} голосів
                                 </p>
                             </div>
                             <div style="text-align: right;">
-                                <div style="font-size: 20px; font-weight: 700; color: #4caf50;">#${index + 1}</div>
+                                <div style="font-size: 20px; font-weight: 700; color: #4caf50; font-family: 'Poppins', sans-serif;">#${index + 1}</div>
                             </div>
                         </div>
                         
                         <div style="display: flex; align-items: center; gap: 10px; margin-top: 10px;">
-                            <span style="font-size: 12px; opacity: 0.8; color: rgba(255,255,255,0.8);">Ваша оцінка:</span>
+                            <span style="font-size: 12px; color: #666; font-family: 'Poppins', sans-serif;">Ваша оцінка:</span>
                             <input type="range" id="challenge_slider_${video.id}" min="0" max="5" step="0.01" value="0" 
                                    onchange="updateChallengeVoteValue('${video.id}', this.value)"
-                                   style="flex: 1; height: 6px; border-radius: 3px; background: rgba(255,255,255,0.3); outline: none;">
-                            <span id="challenge_vote_${video.id}" style="min-width: 35px; font-weight: 600; font-size: 14px; color: white;">0.00</span>
+                                   style="flex: 1; height: 6px; border-radius: 3px; background: #ddd; outline: none;">
+                            <span id="challenge_vote_${video.id}" style="min-width: 35px; font-weight: 600; font-size: 14px; color: #333; font-family: 'Poppins', sans-serif;">0.00</span>
                             <button id="challenge_btn_${video.id}" onclick="voteForChallengeVideo('${video.id}', event)" 
-                                    style="padding: 6px 12px; background: #4caf50; color: white; border: none; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer;">
+                                    style="padding: 6px 12px; background: #4caf50; color: white; border: none; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: 'Poppins', sans-serif;">
                                 Голос
                             </button>
                         </div>
@@ -3517,35 +3592,35 @@
                 const modal = document.createElement('div');
                 modal.className = 'rating-modal show';
                 modal.innerHTML = `
-                    <div class="rating-content" style="max-width: 400px;">
-                        <div class="rating-title">⭐ Оцініть гравця</div>
+                    <div class="rating-content player-rating-content" style="max-width: 400px;">
+                        <div class="rating-title" style="color: #333 !important; font-family: 'Poppins', sans-serif !important;">⭐ Оцініть гравця</div>
                         
                         <div style="text-align: center; margin-bottom: 20px;">
                             <div style="width: 80px; height: 80px; background: linear-gradient(135deg, ${player.team === 'blue' ? '#2196f3, #1976d2' : '#f44336, #d32f2f'}); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; font-weight: 700; margin: 0 auto 15px;">
                                 ${player.name.split(' ').map(n => n[0]).join('')}
                             </div>
-                            <h3 style="margin: 0 0 5px 0; color: white;">${player.name}</h3>
-                            <div style="color: rgba(255,255,255,0.8); font-size: 14px;">Поточний рейтинг: ⭐ ${player.currentRating}</div>
+                            <h3 style="margin: 0 0 5px 0; color: #333 !important; font-family: 'Poppins', sans-serif !important;">${player.name}</h3>
+                            <div style="color: #666 !important; font-size: 14px; font-family: 'Poppins', sans-serif !important;">Поточний рейтинг: ⭐ ${player.currentRating}</div>
                         </div>
                         
                         <div style="margin-bottom: 20px;">
                             <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-                                <span style="color: rgba(255,255,255,0.8); font-size: 14px;">Ваша оцінка:</span>
+                                <span style="color: #666 !important; font-size: 14px; font-family: 'Poppins', sans-serif !important;">Ваша оцінка:</span>
                                 <input type="range" id="playerRating" min="0" max="5" step="0.01" value="3" 
                                        onchange="document.getElementById('ratingValue').textContent = parseFloat(this.value).toFixed(2)"
-                                       style="flex: 1; height: 6px; border-radius: 3px; background: rgba(255,255,255,0.3); outline: none;">
-                                <span id="ratingValue" style="min-width: 35px; font-weight: 600; font-size: 16px; color: white;">3.00</span>
+                                       style="flex: 1; height: 6px; border-radius: 3px; background: #ddd; outline: none;">
+                                <span id="ratingValue" style="min-width: 35px; font-weight: 600; font-size: 16px; color: #333 !important; font-family: 'Poppins', sans-serif !important;">3.00</span>
                             </div>
                             
-                            <div style="display: flex; justify-content: space-between; font-size: 12px; color: rgba(255,255,255,0.6);">
+                            <div style="display: flex; justify-content: space-between; font-size: 12px; color: #999 !important; font-family: 'Poppins', sans-serif !important;">
                                 <span>0.0</span>
                                 <span>2.5</span>
                                 <span>5.0</span>
                             </div>
                         </div>
                         
-                        <div style="background: rgba(255,255,255,0.1); border-radius: 10px; padding: 15px; margin-bottom: 20px;">
-                            <div style="color: rgba(255,255,255,0.8); font-size: 14px; text-align: center;">
+                        <div style="background: rgba(76, 175, 80, 0.1); border-radius: 10px; padding: 15px; margin-bottom: 20px;">
+                            <div style="color: #333 !important; font-size: 14px; text-align: center; font-family: 'Poppins', sans-serif !important;">
                                 Прогрес: ${playerIndex + 1} з ${players.length} гравців
                             </div>
                         </div>
@@ -3582,16 +3657,16 @@
             const modal = document.createElement('div');
             modal.className = 'rating-modal show';
             modal.innerHTML = `
-                <div class="rating-content" style="max-width: 500px;">
-                    <div class="rating-title">📊 Результати оцінювання</div>
+                <div class="rating-content player-rating-content" style="max-width: 500px;">
+                    <div class="rating-title" style="color: #333 !important; font-family: 'Poppins', sans-serif !important;">📊 Результати оцінювання</div>
                     
-                    <div style="background: rgba(76, 175, 80, 0.1); border-radius: 15px; padding: 20px; margin-bottom: 20px; border-left: 4px solid #4caf50;">
-                        <div style="color: #4caf50; font-weight: 700; margin-bottom: 10px;">🎉 Матч завершено успішно!</div>
-                        <div style="color: rgba(255,255,255,0.8); font-size: 14px;">Оцінки гравців збережено та враховано в рейтингу</div>
+                    <div style="background: rgba(76, 175, 80, 0.15); border-radius: 15px; padding: 20px; margin-bottom: 20px; border-left: 4px solid #4caf50;">
+                        <div style="color: #2e7d32 !important; font-weight: 700; margin-bottom: 10px; font-family: 'Poppins', sans-serif !important;">🎉 Матч завершено успішно!</div>
+                        <div style="color: #666 !important; font-size: 14px; font-family: 'Poppins', sans-serif !important;">Оцінки гравців збережено та враховано в рейтингу</div>
                     </div>
                     
                     <div style="margin-bottom: 20px;">
-                        <h4 style="margin: 0 0 15px 0; color: white;">📈 Зміни рейтингу:</h4>
+                        <h4 style="margin: 0 0 15px 0; color: #333 !important; font-family: 'Poppins', sans-serif !important;">📈 Зміни рейтингу:</h4>
                         
                         ${Object.entries(ratings).map(([name, rating]) => {
                             const change = (rating - 3.5).toFixed(1); // Simulate rating change
@@ -3599,18 +3674,18 @@
                             const changeIcon = change >= 0 ? '↗️' : '↘️';
                             
                             return `
-                                <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px; border-radius: 10px; margin-bottom: 8px; background: rgba(255,255,255,0.05);">
+                                <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px; border-radius: 10px; margin-bottom: 8px; background: rgba(240,240,240,0.8);">
                                     <div style="display: flex; align-items: center; gap: 10px;">
                                         <div style="width: 35px; height: 35px; background: linear-gradient(135deg, #4caf50, #2e7d32); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: 700;">
                                             ${name.split(' ').map(n => n[0]).join('')}
                                         </div>
                                         <div>
-                                            <div style="color: white; font-weight: 600; font-size: 14px;">${name}</div>
-                                            <div style="color: rgba(255,255,255,0.7); font-size: 12px;">Ваша оцінка: ⭐ ${rating.toFixed(1)}</div>
+                                            <div style="color: #333 !important; font-weight: 600; font-size: 14px; font-family: 'Poppins', sans-serif !important;">${name}</div>
+                                            <div style="color: #666 !important; font-size: 12px; font-family: 'Poppins', sans-serif !important;">Ваша оцінка: ⭐ ${rating.toFixed(1)}</div>
                                         </div>
                                     </div>
                                     <div style="text-align: right;">
-                                        <div style="color: ${changeColor}; font-weight: 700; font-size: 14px;">
+                                        <div style="color: ${changeColor} !important; font-weight: 700; font-size: 14px; font-family: 'Poppins', sans-serif !important;">
                                             ${changeIcon} ${change > 0 ? '+' : ''}${change}
                                         </div>
                                     </div>
@@ -4102,12 +4177,47 @@
                 option.style.transform = 'scale(1)';
             });
             
+            // Hide uploaded photo
+            document.getElementById('uploadedAvatar').style.display = 'none';
+            
             // Highlight selected avatar
             event.target.style.border = '3px solid #4caf50';
             event.target.style.background = 'rgba(76, 175, 80, 0.3)';
             event.target.style.transform = 'scale(1.1)';
             
+            // Clear uploaded avatar data
+            window.uploadedAvatarData = null;
+            
             showToast(`Обрано аватар: ${avatar}`, 'success');
+        }
+        
+        function uploadAvatar(input) {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    // Show uploaded photo
+                    const uploadedAvatar = document.getElementById('uploadedAvatar');
+                    const uploadedAvatarImg = document.getElementById('uploadedAvatarImg');
+                    
+                    uploadedAvatarImg.src = e.target.result;
+                    uploadedAvatar.style.display = 'block';
+                    
+                    // Store photo data
+                    window.uploadedAvatarData = e.target.result;
+                    selectedAvatar = null; // Clear emoji avatar
+                    
+                    // Remove selection from emoji avatars
+                    document.querySelectorAll('.avatar-option').forEach(option => {
+                        option.style.border = '3px solid transparent';
+                        option.style.background = 'rgba(255,255,255,0.1)';
+                        option.style.transform = 'scale(1)';
+                    });
+                    
+                    showToast('📷 Фото завантажено!', 'success');
+                };
+                reader.readAsDataURL(file);
+            }
         }
         
         function completeProfile() {
