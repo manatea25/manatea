@@ -873,7 +873,7 @@
         }
 
         .add-menu.show {
-            display: block;
+            display: block !important;
             animation: menuSlideIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
@@ -3989,14 +3989,7 @@
             showToast(`⚽ Запрошення в матч надіслано для ${playerName}`, 'success');
         }
         
-        // Utility functions
-        function showAddMenu() {
-            console.log('➕ Show add menu');
-            const addMenu = document.getElementById('addMenu');
-            if (addMenu) {
-                addMenu.style.display = addMenu.style.display === 'block' ? 'none' : 'block';
-            }
-        }
+        // Utility functions (REMOVED DUPLICATE)
         
         function toggleNotifications() {
             console.log('🔔 Toggle notifications');
@@ -4340,41 +4333,9 @@
             }
         }
         
-        function showStore() {
-            console.log('🛒 Show store');
-            const modal = document.getElementById('storeModal');
-            if (modal) {
-                modal.classList.add('show');
-            } else {
-                showToast('❌ Магазин не знайдено', 'error');
-            }
-        }
+        // REMOVED DUPLICATE showStore function
         
-        function showStoreTab(tabName) {
-            console.log('🏪 Show store tab:', tabName);
-            
-            // Update tab buttons
-            document.querySelectorAll('.store-tab').forEach(tab => {
-                tab.style.background = 'rgba(255,255,255,0.1)';
-                tab.style.color = 'white';
-            });
-            
-            const activeTab = document.getElementById(`store-tab-${tabName}`);
-            if (activeTab) {
-                activeTab.style.background = '#4caf50';
-                activeTab.style.color = 'white';
-            }
-            
-            // Show/hide content
-            document.querySelectorAll('.store-content').forEach(content => {
-                content.style.display = 'none';
-            });
-            
-            const activeContent = document.getElementById(`store-${tabName}`);
-            if (activeContent) {
-                activeContent.style.display = 'block';
-            }
-        }
+        // REMOVED DUPLICATE showStoreTab function
         
         function closeStore() {
             console.log('❌ Close store');
