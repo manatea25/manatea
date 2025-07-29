@@ -349,6 +349,38 @@
             font-size: 13px;
         }
 
+        .store-btn {
+            background: linear-gradient(135deg, #4caf50, #66bb6a) !important;
+            color: white !important;
+            border: none !important;
+            border-radius: 50% !important;
+            width: 44px !important;
+            height: 44px !important;
+            cursor: pointer !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            font-size: 18px !important;
+            box-shadow: 0 6px 16px rgba(76, 175, 80, 0.4) !important;
+            transition: all 0.3s ease !important;
+            z-index: 1000 !important;
+            position: relative !important;
+            padding: 0 !important;
+            outline: none !important;
+            -webkit-tap-highlight-color: transparent !important;
+            touch-action: manipulation !important;
+        }
+
+        .store-btn:hover {
+            transform: scale(1.1) !important;
+            box-shadow: 0 8px 20px rgba(76, 175, 80, 0.6) !important;
+            background: linear-gradient(135deg, #66bb6a, #4caf50) !important;
+        }
+
+        .store-btn:active {
+            transform: scale(0.95) !important;
+        }
+
         .notifications-btn {
             position: relative;
             background: rgba(255,255,255,0.2);
@@ -1121,8 +1153,8 @@
                             <i class="fas fa-coins"></i>
                             <span id="coinCount">250</span>
                         </div>
-                        <button class="store-btn" id="storeButton" style="background: linear-gradient(135deg, #4caf50, #2e7d32); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; margin-right: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3); transition: all 0.3s; z-index: 100; position: relative;">
-                            🛒
+                        <button class="store-btn" id="storeButton" style="background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; border: none; border-radius: 50%; width: 44px; height: 44px; margin-right: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; box-shadow: 0 6px 16px rgba(76, 175, 80, 0.4); transition: all 0.3s; z-index: 1000; position: relative; padding: 0; outline: none; -webkit-tap-highlight-color: transparent;">
+                            <span style="display: block; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; pointer-events: none;">🛒</span>
                         </button>
                         <button class="notifications-btn" onclick="toggleNotifications()">
                             <i class="fas fa-bell"></i>
@@ -4635,13 +4667,31 @@
             // Store button
             const storeButton = document.getElementById('storeButton');
             if (storeButton) {
+                // Multiple event listeners for better compatibility
                 storeButton.addEventListener('click', function(e) {
                     e.preventDefault();
                     e.stopPropagation();
                     console.log('🛒 Store button clicked');
                     showStore();
                 });
-                console.log('✅ Store button initialized');
+                
+                storeButton.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
+                    console.log('📱 Store button touched');
+                });
+                
+                storeButton.addEventListener('touchend', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('🛒 Store button touch end - opening store');
+                    showStore();
+                });
+                
+                // Make sure the button is always clickable
+                storeButton.style.pointerEvents = 'auto';
+                storeButton.style.userSelect = 'none';
+                
+                console.log('✅ Store button initialized with multiple events');
             }
             
             // FAB button
