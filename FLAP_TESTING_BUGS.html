@@ -1,0 +1,1545 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLAP - Feel Like A Pro (TESTING)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Copying all styles from original file... */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(180deg, #1e7d32 0%, #2e7d32 100%);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Football Field Background */
+        .app {
+            max-width: 414px;
+            margin: 0 auto;
+            min-height: 100vh;
+            position: relative;
+            background: 
+                linear-gradient(90deg, transparent 49%, rgba(255,255,255,0.1) 49%, rgba(255,255,255,0.1) 51%, transparent 51%),
+                repeating-linear-gradient(0deg, transparent, transparent 45px, rgba(255,255,255,0.1) 45px, rgba(255,255,255,0.1) 47px);
+        }
+
+        /* Modern screen system */
+        .screen {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            min-height: 100vh;
+            width: 100%;
+            background: linear-gradient(180deg, #1e7d32 0%, #2e7d32 100%);
+            overflow-y: auto;
+        }
+
+        .screen.active {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+
+        /* Fix for modal scrolling */
+        .modal {
+            overflow-y: auto !important;
+        }
+
+        /* Enhanced input field styles */
+        input[type="email"], input[type="password"], input[type="text"], input[type="tel"] {
+            transition: all 0.3s ease !important;
+        }
+
+        input[type="email"]:focus, input[type="password"]:focus, input[type="text"]:focus, input[type="tel"]:focus {
+            border-color: rgba(255,255,255,0.8) !important;
+            background: rgba(255,255,255,0.25) !important;
+            box-shadow: 0 0 20px rgba(255,255,255,0.3) !important;
+            outline: none !important;
+        }
+
+        input::placeholder {
+            color: rgba(255,255,255,0.8) !important;
+            font-weight: 400 !important;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Welcome Screen */
+        .welcome-screen {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .welcome-logo {
+            width: 120px;
+            height: 120px;
+            background: url('https://raw.githubusercontent.com/manatea25/manatea/design-options/Bold%20Graphic%20Design%20With%20Dynamic%20Logo%20On%20Green%20Background.png.jpg') center/cover;
+            border-radius: 30px;
+            border: 4px solid #fff;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            margin-bottom: 30px;
+            animation: logoBounce 2s infinite;
+        }
+
+        @keyframes logoBounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .welcome-title {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .welcome-subtitle {
+            font-size: 18px;
+            opacity: 0.9;
+            margin-bottom: 40px;
+            line-height: 1.5;
+        }
+
+        .auth-buttons {
+            width: 100%;
+            max-width: 300px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .auth-btn {
+            padding: 15px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .auth-btn.primary {
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            color: white;
+            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+        }
+
+        .auth-btn.secondary {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.5);
+        }
+
+        .auth-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(76, 175, 80, 0.6);
+        }
+
+        /* Auth Forms */
+        .auth-form {
+            padding: 40px 20px;
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .form-subtitle {
+            opacity: 0.8;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 15px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #4caf50;
+            background: rgba(255,255,255,0.2);
+        }
+
+        .form-input::placeholder {
+            color: rgba(255,255,255,0.7);
+            font-weight: 400;
+        }
+
+        /* Better input styling for auth screen */
+        input[type="text"]::placeholder,
+        input[type="email"]::placeholder,
+        input[type="password"]::placeholder {
+            color: rgba(255,255,255,0.8) !important;
+            font-weight: 400;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            border-color: #4caf50 !important;
+            background: rgba(255,255,255,0.25) !important;
+            box-shadow: 0 0 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .position-select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 15px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-size: 16px;
+        }
+
+        .position-select option {
+            background: #2e7d32;
+            color: white;
+        }
+
+        .form-submit {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 25px;
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .form-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.6);
+        }
+
+        .back-to-welcome {
+            background: none;
+            border: none;
+            color: rgba(255,255,255,0.8);
+            padding: 10px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1b5e20, #2e7d32);
+            padding: 15px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            border-bottom: 2px solid #4caf50;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            background: url('https://raw.githubusercontent.com/manatea25/manatea/design-options/Bold%20Graphic%20Design%20With%20Dynamic%20Logo%20On%20Green%20Background.png.jpg') center/cover;
+            border-radius: 10px;
+            border: 2px solid #fff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            animation: logoPulse 2s infinite;
+        }
+
+        @keyframes logoPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .brand-text {
+            color: white;
+        }
+
+        .brand-name {
+            font-size: 18px;
+            font-weight: 800;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .brand-tagline {
+            font-size: 9px;
+            opacity: 0.9;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .coins-display {
+            background: linear-gradient(135deg, #ffc107, #ff8f00);
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            box-shadow: 0 4px 15px rgba(255, 193, 7, 0.4);
+            font-size: 13px;
+        }
+
+        .notifications-btn {
+            position: relative;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .notifications-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.1);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            background: #f44336;
+            color: white;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            font-size: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            background: rgba(255,255,255,0.1);
+            margin: 0 15px;
+            border-radius: 12px;
+            padding: 4px;
+            backdrop-filter: blur(10px);
+            margin-top: 12px;
+        }
+
+        .nav-tab {
+            flex: 1;
+            padding: 8px 4px;
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 11px;
+            border: none;
+            background: none;
+            color: white;
+        }
+
+        .nav-tab.active {
+            background: rgba(255,255,255,0.2);
+            color: #4caf50;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        /* Content Sections - WORKING VERSION */
+        .content-section {
+            display: none;
+            padding: 15px;
+        }
+
+        .content-section.active {
+            display: block !important;
+        }
+
+        /* RATING & PROFILE VISIBILITY FIX */
+        .content-section#rating.active,
+        .content-section#profile.active {
+            display: block !important;
+            background: rgba(255,255,255,0.05) !important;
+            min-height: 100vh !important;
+            padding: 15px !important;
+            margin: 0 !important;
+        }
+
+        /* Challenge Video Voting */
+        .challenge-video-item {
+            background: rgba(255,255,255,0.9);
+            border-radius: 15px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+            color: #333;
+        }
+
+        .challenge-video-header {
+            padding: 15px;
+            background: linear-gradient(135deg, #ff9800, #ffb74d);
+            color: white;
+        }
+
+        .challenge-video-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .challenge-video-meta {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .video-thumbnail {
+            height: 200px;
+            background: linear-gradient(45deg, #4caf50, #8bc34a);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 50px;
+            cursor: pointer;
+        }
+
+        .play-button {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4caf50;
+            font-size: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .play-button:hover {
+            transform: scale(1.1);
+        }
+
+        .video-voting {
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .vote-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .vote-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .vote-btn.like {
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            color: white;
+        }
+
+        .vote-btn.dislike {
+            background: linear-gradient(135deg, #f44336, #ef5350);
+            color: white;
+        }
+
+        .vote-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .video-score {
+            font-size: 18px;
+            font-weight: 700;
+            color: #2e7d32;
+        }
+
+        /* Player Profile Modal */
+        .player-profile-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 3000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .player-profile-modal.show {
+            display: flex;
+            animation: modalIn 0.4s ease;
+        }
+
+        @keyframes modalIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .player-profile-content {
+            background: white;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 380px;
+            max-height: 90vh;
+            overflow-y: auto;
+            color: #333;
+            position: relative;
+        }
+
+        .profile-cover {
+            height: 120px;
+            background: linear-gradient(135deg, #4caf50, #8bc34a);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-avatar-large {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #2e7d32, #4caf50);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 32px;
+            font-weight: 800;
+            border: 4px solid white;
+            margin-top: -40px;
+        }
+
+        /* Player Rating Modal */
+        .rating-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 3000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .rating-modal.show {
+            display: flex;
+            animation: modalIn 0.4s ease;
+        }
+
+        .rating-content {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            max-width: 350px;
+            width: 100%;
+            color: #333;
+            text-align: center;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .rating-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #2e7d32;
+            margin-bottom: 15px;
+        }
+
+        .rating-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .rating-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .rating-btn.submit {
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            color: white;
+        }
+
+        .rating-btn.skip {
+            background: #f5f5f5;
+            color: #666;
+        }
+
+        /* Utilities */
+        .loading-spinner {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2000;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(76,175,80,0.3);
+            border-top: 4px solid #4caf50;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .message-toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #4caf50;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 14px;
+            z-index: 2000;
+            opacity: 0;
+            transition: all 0.3s ease;
+            min-width: 200px;
+            text-align: center;
+        }
+
+        .message-toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .message-toast.error {
+            background: #f44336;
+        }
+
+        .fab {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #4caf50, #2e7d32);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .fab:hover {
+            transform: scale(1.1) rotate(90deg);
+            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.6);
+        }
+
+        /* Hide elements */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Responsive */
+        @media (max-width: 414px) {
+            .app {
+                margin: 0;
+            }
+        }
+
+        /* Additional Menu Styles */
+        .add-menu {
+            position: fixed;
+            bottom: 90px;
+            right: 25px;
+            background: rgba(255,255,255,0.95);
+            border-radius: 15px;
+            padding: 10px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+            display: none;
+            z-index: 1001;
+            color: #333;
+            min-width: 200px;
+        }
+
+        .add-menu-item {
+            padding: 12px 15px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .add-menu-item:hover {
+            background: rgba(76, 175, 80, 0.1);
+        }
+
+        /* Modal backdrop fix */
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2999;
+            display: none;
+        }
+
+        .modal-backdrop.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <!-- Modern Auth Screen -->
+        <div class="screen welcome-screen active" id="authScreen">
+            <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; padding: 40px 20px; text-align: center;">
+                <div class="welcome-logo"></div>
+                <h1 class="welcome-title">FLAP</h1>
+                <p class="welcome-subtitle">Feel Like A Pro<br>Покажи свої футбольні навички<br>і стань професіоналом!</p>
+                
+                <!-- Modern Auth Form -->
+                <div style="width: 100%; max-width: 300px; margin-top: 40px;">
+                    <div id="authToggle" style="display: flex; background: rgba(255,255,255,0.1); border-radius: 25px; padding: 4px; margin-bottom: 30px;">
+                        <button id="loginTab" onclick="switchAuthMode('login')" style="flex: 1; padding: 12px; border: none; border-radius: 20px; background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; font-weight: 700; cursor: pointer; transition: all 0.3s ease;">
+                            Увійти
+                        </button>
+                        <button id="registerTab" onclick="switchAuthMode('register')" style="flex: 1; padding: 12px; border: none; border-radius: 20px; background: transparent; color: rgba(255,255,255,0.7); font-weight: 700; cursor: pointer; transition: all 0.3s ease;">
+                            Реєстрація
+                        </button>
+                    </div>
+
+                    <!-- Login Form -->
+                    <div id="loginForm" style="display: block;">
+                        <div style="margin-bottom: 20px;">
+                            <input type="text" placeholder="Email або телефон" style="width: 100%; padding: 15px; border: 2px solid rgba(255,255,255,0.4); border-radius: 15px; background: rgba(255,255,255,0.15); color: white; font-size: 16px; margin-bottom: 15px; font-weight: 500;">
+                            <input type="password" placeholder="Пароль" style="width: 100%; padding: 15px; border: 2px solid rgba(255,255,255,0.4); border-radius: 15px; background: rgba(255,255,255,0.15); color: white; font-size: 16px; font-weight: 500;">
+                        </div>
+                        <button onclick="handleQuickLogin()" style="width: 100%; padding: 15px; border: none; border-radius: 25px; background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; font-size: 16px; font-weight: 700; cursor: pointer; margin-bottom: 20px;">
+                            Увійти
+                        </button>
+                    </div>
+
+                    <!-- Register Form -->
+                    <div id="registerForm" style="display: none;">
+                        <div style="margin-bottom: 20px;">
+                            <input type="text" placeholder="Ім'я та прізвище" style="width: 100%; padding: 15px; border: 2px solid rgba(255,255,255,0.4); border-radius: 15px; background: rgba(255,255,255,0.15); color: white; font-size: 16px; margin-bottom: 15px; font-weight: 500;">
+                            <input type="email" placeholder="Email" style="width: 100%; padding: 15px; border: 2px solid rgba(255,255,255,0.4); border-radius: 15px; background: rgba(255,255,255,0.15); color: white; font-size: 16px; margin-bottom: 15px; font-weight: 500;">
+                            <input type="password" placeholder="Пароль" style="width: 100%; padding: 15px; border: 2px solid rgba(255,255,255,0.4); border-radius: 15px; background: rgba(255,255,255,0.15); color: white; font-size: 16px; font-weight: 500;">
+                        </div>
+                        <button onclick="handleQuickRegister()" style="width: 100%; padding: 15px; border: none; border-radius: 25px; background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; font-size: 16px; font-weight: 700; cursor: pointer; margin-bottom: 20px;">
+                            Створити акаунт
+                        </button>
+                    </div>
+
+                    <!-- Social Login -->
+                    <div style="margin: 20px 0; text-align: center; color: rgba(255,255,255,0.6);">або</div>
+                    
+                    <button onclick="loginWithGoogle()" style="width: 100%; padding: 15px; border: 2px solid rgba(255,255,255,0.3); border-radius: 25px; background: rgba(255,255,255,0.1); color: white; font-size: 16px; font-weight: 600; cursor: pointer; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                        <div style="width: 20px; height: 20px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #db4437; font-weight: 700; font-size: 12px;">G</div>
+                        Google
+                    </button>
+                    
+                    <button onclick="loginWithFacebook()" style="width: 100%; padding: 15px; border: 2px solid rgba(255,255,255,0.3); border-radius: 25px; background: rgba(255,255,255,0.1); color: white; font-size: 16px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                        <div style="width: 20px; height: 20px; background: #1877f2; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 12px;">f</div>
+                        Facebook
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main App Screen -->
+        <div class="screen" id="mainScreen">
+            <!-- Header -->
+            <div class="header">
+                <div class="header-content">
+                    <div class="logo-section">
+                        <div class="logo"></div>
+                        <div class="brand-text">
+                            <div class="brand-name">FLAP</div>
+                            <div class="brand-tagline">FEEL LIKE A PRO</div>
+                        </div>
+                    </div>
+                    <div class="header-right">
+                        <div class="coins-display">
+                            <i class="fas fa-coins"></i>
+                            <span id="coinCount">250</span>
+                        </div>
+                        <button class="notifications-btn" onclick="toggleNotifications()">
+                            <i class="fas fa-bell"></i>
+                            <div class="notification-badge" id="notificationBadge">5</div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation Tabs -->
+            <div class="nav-tabs">
+                <button class="nav-tab active" onclick="showSection('videos')">
+                    <i class="fas fa-video"></i><br>Відео
+                </button>
+                <button class="nav-tab" onclick="showSection('challenges')">
+                    <i class="fas fa-trophy"></i><br>Челенджі
+                </button>
+                <button class="nav-tab" onclick="showSection('matches')">
+                    <i class="fas fa-futbol"></i><br>Матчі
+                </button>
+                <button class="nav-tab" onclick="showSection('rating')">
+                    <i class="fas fa-crown"></i><br>Рейтинг
+                </button>
+                <button class="nav-tab" onclick="showSection('profile')">
+                    <i class="fas fa-user"></i><br>Профіль
+                </button>
+            </div>
+
+            <!-- Videos Section -->
+            <div class="content-section active" id="videos">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <h3 style="font-size: 18px; margin: 0;">📹 Відео</h3>
+                    <button class="create-video-btn" onclick="showCreateVideo()" style="padding: 8px 15px; background: linear-gradient(45deg, #4caf50, #66bb6a); border: none; border-radius: 20px; color: white; font-weight: 600; font-size: 12px; cursor: pointer;">
+                        ➕ Створити відео
+                    </button>
+                </div>
+                
+                <!-- Video Filters -->
+                <div style="margin-bottom: 15px;">
+                    <h4 style="color: white; margin-bottom: 10px; font-size: 14px;">🔍 Фільтри</h4>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+                        <select id="cityFilter" onchange="applyVideoFilters()" style="padding: 8px; border-radius: 10px; border: 2px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.9); color: #333; font-size: 12px;">
+                            <option value="">🏙️ Всі міста</option>
+                            <option value="Київ">Київ</option>
+                            <option value="Львів">Львів</option>
+                            <option value="Одеса">Одеса</option>
+                            <option value="Харків">Харків</option>
+                            <option value="Дніпро">Дніпро</option>
+                        </select>
+                        <select id="categoryFilter" onchange="applyVideoFilters()" style="padding: 8px; border-radius: 10px; border: 2px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.9); color: #333; font-size: 12px;">
+                            <option value="">⚽ Всі категорії</option>
+                            <option value="tricks">🎯 Фінти</option>
+                            <option value="accuracy">⚽ Точність</option>
+                            <option value="speed">🏃 Швидкість</option>
+                            <option value="top">🔥 Топ</option>
+                        </select>
+                    </div>
+                    <select id="ratingFilter" onchange="applyVideoFilters()" style="width: 100%; padding: 8px; border-radius: 10px; border: 2px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.9); color: #333; font-size: 12px;">
+                        <option value="">⭐ Всі рейтинги</option>
+                        <option value="4.0">⭐ 4.0+</option>
+                        <option value="4.5">⭐ 4.5+</option>
+                    </select>
+                </div>
+                
+                <!-- Sample Video 1 -->
+                <div class="challenge-video-item">
+                    <div class="challenge-video-header">
+                        <h4 class="challenge-video-title">Кращий фінт тижня</h4>
+                        <div class="challenge-video-meta">Призовий фонд: 200₴ • Учасників: 12</div>
+                    </div>
+                    <div class="video-thumbnail" onclick="playVideo('challenge1_video1')">
+                        <i class="fas fa-play-circle"></i>
+                        <div class="play-button">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <div class="video-voting">
+                        <div style="display: flex; align-items: center; gap: 10px; flex: 1;">
+                            <span style="font-weight: 600; font-size: 14px;">Ваша оцінка:</span>
+                            <input type="range" id="slider_challenge1_video1" min="0" max="5" step="0.01" value="0" onchange="updateVoteValue('challenge1_video1', this.value)" style="flex: 1; height: 6px; border-radius: 5px; background: #ddd; outline: none; -webkit-appearance: none;">
+                            <span id="vote_challenge1_video1" style="font-weight: 700; color: #ff9800; min-width: 35px;">0.0</span>
+                            <button onclick="voteForVideo('challenge1_video1', event)" style="padding: 6px 12px; background: #4caf50; color: white; border: none; border-radius: 12px; font-size: 12px; font-weight: 600; cursor: pointer; margin-left: 5px;">Голос</button>
+                        </div>
+                        <div class="video-score">⭐ 4.1</div>
+                    </div>
+                    <div style="padding: 0 15px 15px; color: #333;">
+                        <strong class="video-author" onclick="showPlayerProfile('andriy_k')">Андрій Коваленко</strong> • Півзахисник • Київ<br>
+                        <small style="color: #666;">2 години тому • Гідропарк</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Challenges Section -->
+            <div class="content-section" id="challenges">
+                <h3 style="margin-bottom: 15px; font-size: 18px;">🏆 Активні челенджі</h3>
+                
+                <!-- Create Challenge Button -->
+                <div class="challenge-create" style="background: rgba(255,255,255,0.9); border-radius: 15px; padding: 15px; margin-bottom: 20px; color: #333; text-align: center;">
+                    <button onclick="showCreateChallenge()" style="width: 100%; padding: 12px; background: linear-gradient(135deg, #ff9800, #ffb74d); color: white; border: none; border-radius: 20px; font-weight: 700; cursor: pointer;">
+                        ➕ Створити челендж
+                    </button>
+                </div>
+
+                <!-- Sample Challenge 1 -->
+                <div class="challenge-item" style="background: rgba(255,255,255,0.9); border-radius: 15px; margin-bottom: 15px; overflow: hidden; color: #333; box-shadow: 0 6px 20px rgba(0,0,0,0.1);">
+                    <div style="padding: 15px; background: linear-gradient(135deg, #ff9800, #ffb74d); color: white;">
+                        <div style="font-size: 16px; font-weight: 700; margin-bottom: 5px;">🎯 Кращий фінт тижня</div>
+                        <div style="font-size: 12px; opacity: 0.9;">Внесок: 20₴ • Призовий фонд: 200₴ • Завершення: 3 дні</div>
+                    </div>
+                    <div style="padding: 15px;">
+                        <div style="margin-bottom: 10px;">
+                            <strong>📝 Опис:</strong> Покажи найкреативніший фінт! Голосування до неділі.
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <strong>👥 Учасники: 12</strong> • <strong>📹 Відео: 8</strong>
+                        </div>
+                        
+                        <!-- Quick Leaderboard Preview -->
+                        <div style="background: #f8f9fa; border-radius: 8px; padding: 10px; margin-bottom: 15px;">
+                            <div style="font-weight: 600; font-size: 12px; margin-bottom: 8px; color: #666;">🏆 ТОП-3 ВІДЕО:</div>
+                            <div style="font-size: 11px; margin-bottom: 3px;">🥇 Неймовірний фінт - <span style="color: #4caf50; font-weight: 700;">⭐ 4.8</span></div>
+                            <div style="font-size: 11px; margin-bottom: 3px;">🥈 Технічний трюк - <span style="color: #ff9800; font-weight: 700;">⭐ 4.6</span></div>
+                            <div style="font-size: 11px;">🥉 Майстерський обвід - <span style="color: #f44336; font-weight: 700;">⭐ 4.3</span></div>
+                        </div>
+                        <div style="display: flex; gap: 10px;">
+                            <button onclick="joinChallenge('best_trick')" style="flex: 1; padding: 8px; background: #4caf50; color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer;">
+                                Приєднатися
+                            </button>
+                            <button onclick="showChallengeVideos('best_trick')" style="flex: 1; padding: 8px; background: #2196f3; color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer;">
+                                Переглянути відео
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Matches Section -->
+            <div class="content-section" id="matches">
+                <h3 style="margin-bottom: 15px; font-size: 18px;">⚽ Матчі</h3>
+                
+                <!-- Match Tabs -->
+                <div style="display: flex; margin-bottom: 20px; background: rgba(255,255,255,0.1); border-radius: 25px; padding: 4px;">
+                    <button id="availableTab" onclick="switchMatchTab('available')" style="flex: 1; padding: 10px; background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; border: none; border-radius: 20px; font-weight: 600; cursor: pointer; transition: all 0.3s;">
+                        🌟 Доступні матчі
+                    </button>
+                    <button id="myMatchesTab" onclick="switchMatchTab('my')" style="flex: 1; padding: 10px; background: transparent; color: rgba(255,255,255,0.7); border: none; border-radius: 20px; font-weight: 600; cursor: pointer; transition: all 0.3s;">
+                        👤 Мої матчі
+                    </button>
+                </div>
+
+                <!-- Available Matches Tab -->
+                <div id="availableMatches" style="display: block;">
+                    <!-- Create Match Button -->
+                    <div style="margin-bottom: 20px;">
+                        <button onclick="showCreateMatchModal()" style="width: 100%; padding: 12px; background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; border: none; border-radius: 20px; font-weight: 700; cursor: pointer;">
+                            ➕ Створити матч
+                        </button>
+                    </div>
+                
+                    <!-- Sample Match 1 -->
+                    <div class="match-item" style="background: rgba(255,255,255,0.9); border-radius: 15px; margin-bottom: 15px; overflow: hidden; color: #333; box-shadow: 0 6px 20px rgba(0,0,0,0.1); cursor: pointer;" onclick="showMatchDetails('match1')">
+                        <div style="padding: 15px; background: linear-gradient(135deg, #4caf50, #66bb6a); color: white;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                                <div style="font-size: 16px; font-weight: 700;">⚽ Вечірній футбол</div>
+                                <div style="background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 10px; font-size: 11px;">7x7</div>
+                            </div>
+                            <div style="font-size: 12px; opacity: 0.9;">Сьогодні 19:00 • Гідропарк, поле №2 • 50₴</div>
+                        </div>
+                        <div style="padding: 15px;">
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #4caf50, #2e7d32); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 14px; font-weight: 700;">АК</div>
+                                <div style="flex: 1;">
+                                    <div style="font-weight: 600; font-size: 14px;">Андрій Коваленко</div>
+                                    <div style="font-size: 12px; color: #666;">Організатор • ⭐ 4.8 • Київ</div>
+                                </div>
+                                <div style="text-align: right;">
+                                    <div style="font-size: 12px; color: #4caf50; font-weight: 600;">5/14 гравців</div>
+                                    <div style="font-size: 10px; color: #666;">потрібно 9</div>
+                                </div>
+                            </div>
+                            <div style="margin-bottom: 15px; font-size: 13px; color: #666;">
+                                "Збираємося пограти у футбол! Шукаємо активних гравців. Рівень не важливий, головне - бажання грати!"
+                            </div>
+                            <button onclick="joinMatch('match1')" style="width: 100%; padding: 10px; background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; border: none; border-radius: 20px; font-weight: 600; cursor: pointer;">
+                                Приєднатися до матчу
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- My Matches Tab -->
+                <div id="myMatches" style="display: none;">
+                    <p style="text-align: center; color: rgba(255,255,255,0.7); margin-top: 50px;">
+                        У вас поки немає матчів.<br>
+                        Створіть новий або приєднайтеся до існуючого!
+                    </p>
+                </div>
+            </div>
+
+            <!-- Rating Section -->
+            <div class="content-section" id="rating">
+                <h3 style="margin-bottom: 15px; font-size: 18px;">👑 Рейтинг гравців</h3>
+                
+                <!-- Current User -->
+                <div style="background: rgba(255,255,255,0.9); border-radius: 15px; margin-bottom: 15px; padding: 15px; color: #333; border: 2px solid #4caf50;">
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #4caf50, #2e7d32); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; font-weight: 700;">МК</div>
+                        <div style="flex: 1;">
+                            <div style="font-weight: 700; font-size: 16px; color: #2e7d32;">Максим Коваль (Ви)</div>
+                            <div style="font-size: 14px; color: #666;">Півзахисник • Київ</div>
+                            <div style="display: flex; align-items: center; gap: 5px; margin-top: 5px;">
+                                <span style="color: #ff9800; font-weight: 700;">⭐ 4.2</span>
+                                <span style="color: #666;">• #47 місце</span>
+                            </div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-size: 20px; font-weight: 800; color: #4caf50;">47</div>
+                            <div style="font-size: 12px; color: #666;">позиція</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Top Players -->
+                <div style="background: rgba(255,255,255,0.9); border-radius: 15px; padding: 15px; color: #333;">
+                    <h4 style="margin-bottom: 15px; color: #2e7d32;">🏆 Топ гравці</h4>
+                    
+                    <!-- Player 1 -->
+                    <div style="display: flex; align-items: center; gap: 15px; padding: 10px; border-radius: 10px; margin-bottom: 10px; background: linear-gradient(135deg, #ffd700, #ffed4e); cursor: pointer;" onclick="showPlayerProfile('player1')">
+                        <div style="width: 30px; height: 30px; background: #4caf50; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: 700;">1</div>
+                        <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #2e7d32, #4caf50); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 16px; font-weight: 700;">АК</div>
+                        <div style="flex: 1;">
+                            <div style="font-weight: 600; font-size: 14px;">Андрій Коваленко</div>
+                            <div style="font-size: 12px; color: #666;">Півзахисник • Київ</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="color: #ff9800; font-weight: 700;">⭐ 4.9</div>
+                            <div style="font-size: 11px; color: #666;">156 матчів</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Player 2 -->
+                    <div style="display: flex; align-items: center; gap: 15px; padding: 10px; border-radius: 10px; margin-bottom: 10px; background: linear-gradient(135deg, #c0c0c0, #e8e8e8); cursor: pointer;" onclick="showPlayerProfile('player2')">
+                        <div style="width: 30px; height: 30px; background: #ff9800; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: 700;">2</div>
+                        <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #ff9800, #f57c00); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 16px; font-weight: 700;">ПМ</div>
+                        <div style="flex: 1;">
+                            <div style="font-weight: 600; font-size: 14px;">Петро Мельник</div>
+                            <div style="font-size: 12px; color: #666;">Нападник • Львів</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="color: #ff9800; font-weight: 700;">⭐ 4.8</div>
+                            <div style="font-size: 11px; color: #666;">142 матчів</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Player 3 -->
+                    <div style="display: flex; align-items: center; gap: 15px; padding: 10px; border-radius: 10px; margin-bottom: 10px; background: linear-gradient(135deg, #cd7f32, #d4a574); cursor: pointer;" onclick="showPlayerProfile('player3')">
+                        <div style="width: 30px; height: 30px; background: #f44336; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: 700;">3</div>
+                        <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #9c27b0, #7b1fa2); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 16px; font-weight: 700;">ДК</div>
+                        <div style="flex: 1;">
+                            <div style="font-weight: 600; font-size: 14px;">Дмитро Коваленко</div>
+                            <div style="font-size: 12px; color: #666;">Воротар • Одеса</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="color: #ff9800; font-weight: 700;">⭐ 4.7</div>
+                            <div style="font-size: 11px; color: #666;">128 матчів</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Section -->
+            <div class="content-section" id="profile">
+                <div style="background: rgba(255,255,255,0.9); border-radius: 15px; padding: 20px; color: #333;">
+                    <!-- Profile Header -->
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #4caf50, #2e7d32); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 32px; font-weight: 700; margin: 0 auto 15px;">МК</div>
+                        <h3 style="margin: 0 0 5px 0; color: #2e7d32;">Максим Коваль</h3>
+                        <p style="margin: 0; color: #666;">Півзахисник • Київ</p>
+                        <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 10px;">
+                            <span style="color: #ff9800; font-weight: 700; font-size: 18px;">⭐ 4.2</span>
+                            <span style="color: #666;">• #47 місце</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Stats -->
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 20px;">
+                        <div style="text-align: center; padding: 15px; background: rgba(76, 175, 80, 0.1); border-radius: 12px;">
+                            <div style="font-size: 20px; font-weight: 800; color: #2e7d32; margin-bottom: 5px;">23</div>
+                            <div style="font-size: 11px; color: #666; text-transform: uppercase;">Матчі</div>
+                        </div>
+                        <div style="text-align: center; padding: 15px; background: rgba(76, 175, 80, 0.1); border-radius: 12px;">
+                            <div style="font-size: 20px; font-weight: 800; color: #2e7d32; margin-bottom: 5px;">12</div>
+                            <div style="font-size: 11px; color: #666; text-transform: uppercase;">Голи</div>
+                        </div>
+                        <div style="text-align: center; padding: 15px; background: rgba(76, 175, 80, 0.1); border-radius: 12px;">
+                            <div style="font-size: 20px; font-weight: 800; color: #2e7d32; margin-bottom: 5px;">8</div>
+                            <div style="font-size: 11px; color: #666; text-transform: uppercase;">Асисти</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Contact Info -->
+                    <div style="margin-bottom: 20px;">
+                        <h4 style="margin-bottom: 15px; color: #2e7d32;">📞 Контакти</h4>
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; padding: 10px; background: rgba(76, 175, 80, 0.1); border-radius: 8px;">
+                            <i class="fas fa-phone" style="color: #4caf50;"></i>
+                            <span>+380501234567</span>
+                            <button onclick="copyToClipboard('+380501234567')" style="margin-left: auto; background: none; border: none; color: #4caf50; cursor: pointer;">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; padding: 10px; background: rgba(76, 175, 80, 0.1); border-radius: 8px;">
+                            <i class="fab fa-telegram" style="color: #4caf50;"></i>
+                            <span>@maksym_koval</span>
+                            <button onclick="copyToClipboard('@maksym_koval')" style="margin-left: auto; background: none; border: none; color: #4caf50; cursor: pointer;">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px; padding: 10px; background: rgba(76, 175, 80, 0.1); border-radius: 8px;">
+                            <i class="fab fa-instagram" style="color: #4caf50;"></i>
+                            <span>@maksym_football</span>
+                            <button onclick="copyToClipboard('@maksym_football')" style="margin-left: auto; background: none; border: none; color: #4caf50; cursor: pointer;">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Achievements -->
+                    <div>
+                        <h4 style="margin-bottom: 15px; color: #2e7d32;">🏆 Досягнення</h4>
+                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;">
+                            <div style="aspect-ratio: 1; background: rgba(76, 175, 80, 0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; cursor: pointer; transition: all 0.3s ease;" title="Перша гра">
+                                ⚽
+                            </div>
+                            <div style="aspect-ratio: 1; background: rgba(76, 175, 80, 0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; cursor: pointer; transition: all 0.3s ease;" title="10 матчів">
+                                🎯
+                            </div>
+                            <div style="aspect-ratio: 1; background: rgba(76, 175, 80, 0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; cursor: pointer; transition: all 0.3s ease;" title="Перший гол">
+                                🥅
+                            </div>
+                            <div style="aspect-ratio: 1; background: rgba(200, 200, 200, 0.3); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; opacity: 0.5;" title="Заблоковано">
+                                🏆
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAB Button -->
+        <button class="fab" onclick="showAddMenu()">
+            <i class="fas fa-plus"></i>
+        </button>
+
+        <!-- Add Menu -->
+        <div class="add-menu" id="addMenu">
+            <div class="add-menu-item" onclick="showCreateVideo(); document.getElementById('addMenu').style.display='none';">
+                <i class="fas fa-video" style="color: #ff9800;"></i>
+                Створити відео
+            </div>
+            <div class="add-menu-item" onclick="showCreateChallenge(); document.getElementById('addMenu').style.display='none';">
+                <i class="fas fa-trophy" style="color: #4caf50;"></i>
+                Створити челендж
+            </div>
+            <div class="add-menu-item" onclick="showCreateMatchModal(); document.getElementById('addMenu').style.display='none';">
+                <i class="fas fa-futbol" style="color: #2196f3;"></i>
+                Створити матч
+            </div>
+        </div>
+
+        <!-- Modals will be added here -->
+        <div class="message-toast" id="messageToast"></div>
+    </div>
+
+    <script>
+        console.log('🚀 FLAP Testing Version Loading...');
+        
+        // Global variables
+        let currentUser = {
+            name: 'Максим Коваль',
+            position: 'Півзахисник',
+            city: 'Київ',
+            rating: 4.2,
+            coins: 250
+        };
+        
+        let coins = 250;
+        let videoRatings = {};
+        
+        // Authentication functions
+        function switchAuthMode(mode) {
+            console.log('🔄 Switching auth mode to:', mode);
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            const loginTab = document.getElementById('loginTab');
+            const registerTab = document.getElementById('registerTab');
+            
+            if (mode === 'login') {
+                loginForm.style.display = 'block';
+                registerForm.style.display = 'none';
+                loginTab.style.background = 'linear-gradient(135deg, #4caf50, #66bb6a)';
+                loginTab.style.color = 'white';
+                registerTab.style.background = 'transparent';
+                registerTab.style.color = 'rgba(255,255,255,0.7)';
+            } else {
+                loginForm.style.display = 'none';
+                registerForm.style.display = 'block';
+                registerTab.style.background = 'linear-gradient(135deg, #4caf50, #66bb6a)';
+                registerTab.style.color = 'white';
+                loginTab.style.background = 'transparent';
+                loginTab.style.color = 'rgba(255,255,255,0.7)';
+            }
+        }
+        
+        function handleQuickLogin() {
+            console.log('🔑 Quick login initiated');
+            showToast('Вхід виконано успішно!', 'success');
+            setTimeout(() => {
+                document.getElementById('authScreen').style.display = 'none';
+                document.getElementById('mainScreen').style.display = 'block';
+                document.getElementById('mainScreen').classList.add('active');
+            }, 1000);
+        }
+        
+        function handleQuickRegister() {
+            console.log('📝 Quick register initiated');
+            showToast('Акаунт створено успішно!', 'success');
+            setTimeout(() => {
+                document.getElementById('authScreen').style.display = 'none';
+                document.getElementById('mainScreen').style.display = 'block';
+                document.getElementById('mainScreen').classList.add('active');
+            }, 1000);
+        }
+        
+        function loginWithGoogle() {
+            console.log('🔍 Google login initiated');
+            showToast('Вхід через Google успішний!', 'success');
+            setTimeout(() => {
+                document.getElementById('authScreen').style.display = 'none';
+                document.getElementById('mainScreen').style.display = 'block';
+                document.getElementById('mainScreen').classList.add('active');
+            }, 1000);
+        }
+        
+        function loginWithFacebook() {
+            console.log('📘 Facebook login initiated');
+            showToast('Вхід через Facebook успішний!', 'success');
+            setTimeout(() => {
+                document.getElementById('authScreen').style.display = 'none';
+                document.getElementById('mainScreen').style.display = 'block';
+                document.getElementById('mainScreen').classList.add('active');
+            }, 1000);
+        }
+        
+        // Navigation function - FIXED VERSION
+        function showSection(sectionId) {
+            console.log('🔍 showSection called for:', sectionId);
+            
+            // Hide all sections
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => {
+                section.style.display = 'none';
+                section.classList.remove('active');
+            });
+            
+            // Remove active class from all nav tabs
+            const navTabs = document.querySelectorAll('.nav-tab');
+            navTabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Show selected section
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.style.display = 'block';
+                targetSection.classList.add('active');
+                console.log('✅ Section shown:', sectionId);
+            } else {
+                console.error('❌ Section not found:', sectionId);
+            }
+            
+            // Add active class to clicked nav tab
+            setTimeout(() => {
+                const clickedTab = document.querySelector(`.nav-tab[onclick*="${sectionId}"]`);
+                if (clickedTab) {
+                    clickedTab.classList.add('active');
+                }
+            }, 10);
+        }
+        
+        // Challenge functions
+        function showCreateChallenge() {
+            console.log('🏆 Show create challenge modal');
+            showToast('Функція створення челенджу в розробці', 'info');
+        }
+        
+        function joinChallenge(challengeId) {
+            console.log('🎯 Join challenge:', challengeId);
+            showToast('Ви приєдналися до челенджу!', 'success');
+        }
+        
+        function showChallengeVideos(challengeId) {
+            console.log('📹 Show challenge videos:', challengeId);
+            showToast('Відкриття відео челенджу...', 'info');
+        }
+        
+        // Match functions
+        function switchMatchTab(tab) {
+            console.log('🔄 Switch match tab to:', tab);
+            const availableMatches = document.getElementById('availableMatches');
+            const myMatches = document.getElementById('myMatches');
+            const availableTab = document.getElementById('availableTab');
+            const myMatchesTab = document.getElementById('myMatchesTab');
+            
+            if (tab === 'available') {
+                availableMatches.style.display = 'block';
+                myMatches.style.display = 'none';
+                availableTab.style.background = 'linear-gradient(135deg, #4caf50, #66bb6a)';
+                availableTab.style.color = 'white';
+                myMatchesTab.style.background = 'transparent';
+                myMatchesTab.style.color = 'rgba(255,255,255,0.7)';
+            } else {
+                availableMatches.style.display = 'none';
+                myMatches.style.display = 'block';
+                myMatchesTab.style.background = 'linear-gradient(135deg, #4caf50, #66bb6a)';
+                myMatchesTab.style.color = 'white';
+                availableTab.style.background = 'transparent';
+                availableTab.style.color = 'rgba(255,255,255,0.7)';
+            }
+        }
+        
+        function showCreateMatchModal() {
+            console.log('⚽ Show create match modal');
+            showToast('Функція створення матчу в розробці', 'info');
+        }
+        
+        function showMatchDetails(matchId) {
+            console.log('📋 Show match details:', matchId);
+            showToast('Деталі матчу завантажуються...', 'info');
+        }
+        
+        function joinMatch(matchId) {
+            console.log('🤝 Join match:', matchId);
+            showToast('Ви приєдналися до матчу!', 'success');
+        }
+        
+        // Video functions
+        function showCreateVideo() {
+            console.log('📹 Show create video modal');
+            showToast('Функція створення відео в розробці', 'info');
+        }
+        
+        function updateVoteValue(videoId, value) {
+            console.log('🎚️ Update vote value:', videoId, value);
+            const voteDisplay = document.getElementById('vote_' + videoId);
+            if (voteDisplay) {
+                voteDisplay.textContent = parseFloat(value).toFixed(1);
+            }
+        }
+        
+        function voteForVideo(videoId, event) {
+            console.log('🗳️ Vote for video:', videoId);
+            const slider = document.getElementById('slider_' + videoId);
+            const value = slider ? slider.value : '0';
+            showToast(`Ваш голос ${value}/5 зараховано!`, 'success');
+            
+            // Disable slider after voting
+            if (slider) {
+                slider.disabled = true;
+            }
+            
+            // Disable vote button
+            if (event && event.target) {
+                event.target.disabled = true;
+                event.target.textContent = 'Проголосовано';
+                event.target.style.background = '#ccc';
+            }
+        }
+        
+        function applyVideoFilters() {
+            console.log('🔍 Apply video filters');
+            showToast('Фільтри застосовано', 'info');
+        }
+        
+        function playVideo(videoId) {
+            console.log('▶️ Play video:', videoId);
+            showToast('Відтворення відео...', 'info');
+        }
+        
+        // Profile functions
+        function showPlayerProfile(playerId) {
+            console.log('👤 Show player profile:', playerId);
+            showToast('Завантаження профілю гравця...', 'info');
+        }
+        
+        function copyToClipboard(text) {
+            console.log('📋 Copy to clipboard:', text);
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('Скопійовано в буфер обміну!', 'success');
+            }).catch(() => {
+                showToast('Помилка копіювання', 'error');
+            });
+        }
+        
+        // Utility functions
+        function showAddMenu() {
+            console.log('➕ Show add menu');
+            const addMenu = document.getElementById('addMenu');
+            if (addMenu) {
+                addMenu.style.display = addMenu.style.display === 'block' ? 'none' : 'block';
+            }
+        }
+        
+        function toggleNotifications() {
+            console.log('🔔 Toggle notifications');
+            showToast('Сповіщення відкриті', 'info');
+        }
+        
+        function showToast(message, type = 'info') {
+            console.log('🍞 Show toast:', message, type);
+            const toast = document.getElementById('messageToast');
+            if (toast) {
+                toast.textContent = message;
+                toast.className = 'message-toast show';
+                if (type === 'error') {
+                    toast.classList.add('error');
+                }
+                
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                    toast.classList.remove('error');
+                }, 3000);
+            }
+        }
+        
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('✅ FLAP Testing Version Loaded Successfully!');
+            showToast('FLAP Testing Version готова до тестування!', 'success');
+        });
+        
+        // Close menus when clicking outside
+        document.addEventListener('click', function(event) {
+            const addMenu = document.getElementById('addMenu');
+            const fab = document.querySelector('.fab');
+            
+            if (addMenu && fab && !addMenu.contains(event.target) && !fab.contains(event.target)) {
+                addMenu.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
