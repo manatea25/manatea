@@ -4251,68 +4251,6 @@
             showToast(`❌ Гравця ${playerId} відхилено`, 'warning');
         }
         
-        function autoBalanceTeams() {
-            const teamsDisplay = document.getElementById('teamsDisplay');
-            if (teamsDisplay) {
-                const teamNames = [
-                    'Лісові Вовки', 'Степові Орли', 'Морські Леви', 'Гірські Барси',
-                    'Небесні Соколи', 'Річкові Дельфіни', 'Польові Зубри', 'Міські Тигри'
-                ];
-                
-                const team1Name = teamNames[Math.floor(Math.random() * teamNames.length)];
-                let team2Name = teamNames[Math.floor(Math.random() * teamNames.length)];
-                while (team2Name === team1Name) {
-                    team2Name = teamNames[Math.floor(Math.random() * teamNames.length)];
-                }
-                
-                teamsDisplay.innerHTML = `
-                    <div style="background: rgba(255,255,255,0.1); border-radius: 10px; padding: 15px;">
-                        <h5 style="margin: 0 0 15px 0; color: white; text-align: center;">🏆 Автобаланс команд</h5>
-                        
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                            <div style="background: rgba(76, 175, 80, 0.2); border-radius: 10px; padding: 15px; text-align: center;">
-                                <h6 style="margin: 0 0 10px 0; color: #4caf50; font-size: 16px;">${team1Name}</h6>
-                                <div style="font-size: 12px; color: rgba(255,255,255,0.8); margin-bottom: 10px;">Середній рейтинг: 4.0</div>
-                                <div style="display: grid; gap: 5px;">
-                                    <div style="background: rgba(255,255,255,0.1); padding: 5px; border-radius: 5px; font-size: 12px; color: white;">Максим К. (4.2)</div>
-                                    <div style="background: rgba(255,255,255,0.1); padding: 5px; border-radius: 5px; font-size: 12px; color: white;">Олег С. (4.0)</div>
-                                    <div style="background: rgba(255,255,255,0.1); padding: 5px; border-radius: 5px; font-size: 12px; color: white;">Дмитро І. (3.9)</div>
-                                </div>
-                            </div>
-                            
-                            <div style="background: rgba(255, 152, 0, 0.2); border-radius: 10px; padding: 15px; text-align: center;">
-                                <h6 style="margin: 0 0 10px 0; color: #ff9800; font-size: 16px;">${team2Name}</h6>
-                                <div style="font-size: 12px; color: rgba(255,255,255,0.8); margin-bottom: 10px;">Середній рейтинг: 3.95</div>
-                                <div style="display: grid; gap: 5px;">
-                                    <div style="background: rgba(255,255,255,0.1); padding: 5px; border-radius: 5px; font-size: 12px; color: white;">Андрій П. (3.8)</div>
-                                    <div style="background: rgba(255,255,255,0.1); padding: 5px; border-radius: 5px; font-size: 12px; color: white;">Сергій К. (4.1)</div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div style="display: flex; gap: 10px; margin-top: 15px;">
-                            <button onclick="autoBalanceTeams()" style="flex: 1; padding: 8px; background: #2196f3; color: white; border: none; border-radius: 8px; font-size: 12px; cursor: pointer;">
-                                🔄 Перемішати знову
-                            </button>
-                            <button onclick="showFinalScore()" style="flex: 1; padding: 8px; background: #4caf50; color: white; border: none; border-radius: 8px; font-size: 12px; cursor: pointer;">
-                                ▶️ Почати матч
-                            </button>
-                        </div>
-                    </div>
-                `;
-                teamsDisplay.style.display = 'block';
-                showToast('🔄 Команди збалансовано!', 'success');
-            }
-        }
-        
-        function showFinalScore() {
-            const finalScoreSection = document.getElementById('finalScoreSection');
-            if (finalScoreSection) {
-                finalScoreSection.style.display = 'block';
-                showToast('🏁 Введіть фінальний рахунок матчу', 'info');
-            }
-        }
-        
         function finishMatch() {
             const team1Score = document.getElementById('team1Score').value;
             const team2Score = document.getElementById('team2Score').value;
@@ -4378,24 +4316,35 @@
             showToast('💰 +30 монет за завершення матчу!', 'success');
         }
         
-        // Create functions for FAB menu
-        function showCreateChallenge() {
-            console.log('🏆 Show create challenge modal');
-            const modal = document.getElementById('createChallengeModal');
-            if (modal) {
-                modal.classList.add('show');
+        // Missing functions
+        function shareVideo(videoId) {
+            console.log('📤 Share video:', videoId);
+            showToast(`📤 Відео ${videoId} поділилося!`, 'success');
+            
+            // Simulate sharing functionality
+            if (navigator.share) {
+                navigator.share({
+                    title: 'FLAP - Подивіться це відео!',
+                    text: 'Класне футбольне відео на FLAP!',
+                    url: window.location.href
+                });
             } else {
-                showToast('❌ Модаль створення челенджу не знайдено', 'error');
+                // Fallback for browsers without Web Share API
+                const url = window.location.href;
+                navigator.clipboard.writeText(url).then(() => {
+                    showToast('🔗 Посилання скопійовано!', 'success');
+                }).catch(() => {
+                    showToast('📤 Відео поділилося!', 'success');
+                });
             }
         }
         
-        function showCreateMatchModal() {
-            console.log('⚽ Show create match modal');
-            const modal = document.getElementById('createMatchModal');
-            if (modal) {
-                modal.classList.add('show');
-            } else {
-                showToast('❌ Модаль створення матчу не знайдено', 'error');
+        function searchVideos() {
+            console.log('🔍 Search videos');
+            const searchInput = document.getElementById('videoSearch');
+            if (searchInput) {
+                const query = searchInput.value.toLowerCase();
+                showToast(`🔍 Пошук: "${query}"`, 'info');
             }
         }
 
