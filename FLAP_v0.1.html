@@ -381,6 +381,36 @@
             box-shadow: 0 4px 12px rgba(255, 152, 0, 0.8) !important;
         }
 
+        .profile-store-btn {
+            background: linear-gradient(135deg, #ff9800, #ffb74d) !important;
+            color: white !important;
+            border: none !important;
+            border-radius: 25px !important;
+            width: 200px !important;
+            height: 45px !important;
+            cursor: pointer !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            font-size: 16px !important;
+            box-shadow: 0 6px 16px rgba(255, 152, 0, 0.4) !important;
+            transition: all 0.3s ease !important;
+            user-select: none !important;
+            font-weight: 600 !important;
+            margin: 0 auto !important;
+        }
+
+        .profile-store-btn:hover {
+            transform: translateY(-2px) scale(1.05) !important;
+            box-shadow: 0 8px 20px rgba(255, 152, 0, 0.6) !important;
+            background: linear-gradient(135deg, #ffb74d, #ff9800) !important;
+        }
+
+        .profile-store-btn:active {
+            transform: translateY(0) scale(0.98) !important;
+            box-shadow: 0 4px 12px rgba(255, 152, 0, 0.8) !important;
+        }
+
         .notifications-btn {
             position: relative;
             background: rgba(255,255,255,0.2);
@@ -2277,6 +2307,14 @@
                         <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 10px;">
                             <span style="color: #ff9800; font-weight: 700; font-size: 18px;">⭐ 4.2</span>
                             <span style="color: #666;">• #47 місце</span>
+                        </div>
+                        
+                        <!-- Store Button in Profile -->
+                        <div style="margin-top: 15px;">
+                            <div class="profile-store-btn" id="profileStoreButton" style="background: linear-gradient(135deg, #ff9800, #ffb74d); color: white; border: none; border-radius: 25px; width: 200px; height: 45px; margin: 0 auto; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; box-shadow: 0 6px 16px rgba(255, 152, 0, 0.4); transition: all 0.3s; user-select: none; font-weight: 600;">
+                                <i class="fas fa-shopping-cart" style="margin-right: 8px; font-size: 16px;"></i>
+                                Магазин
+                            </div>
                         </div>
                     </div>
                     
@@ -4694,6 +4732,26 @@
                     showAddMenu();
                 });
                 console.log('✅ FAB button initialized');
+            }
+            
+            // Profile Store button
+            const profileStoreButton = document.getElementById('profileStoreButton');
+            if (profileStoreButton) {
+                console.log('🛒 Initializing profile store button...');
+                
+                // Простий клік обробник
+                profileStoreButton.onclick = function() {
+                    console.log('🛒 PROFILE STORE CLICKED!');
+                    showStore();
+                };
+                
+                // Додатковий addEventListener для надійності
+                profileStoreButton.addEventListener('click', function(e) {
+                    console.log('🛒 PROFILE STORE EVENT LISTENER!');
+                    showStore();
+                });
+                
+                console.log('✅ Profile store button ready!');
             }
             
             console.log('🎉 All buttons initialized successfully!');
