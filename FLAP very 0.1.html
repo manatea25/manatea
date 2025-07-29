@@ -1,0 +1,1372 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLAP - Feel Like A Pro v0.1</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(180deg, #1e7d32 0%, #2e7d32 100%);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .app {
+            max-width: 414px;
+            margin: 0 auto;
+            min-height: 100vh;
+            position: relative;
+            background: 
+                linear-gradient(90deg, transparent 49%, rgba(255,255,255,0.1) 49%, rgba(255,255,255,0.1) 51%, transparent 51%),
+                repeating-linear-gradient(0deg, transparent, transparent 45px, rgba(255,255,255,0.1) 45px, rgba(255,255,255,0.1) 47px);
+        }
+
+        .screen {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            min-height: 100vh;
+            width: 100%;
+            background: linear-gradient(180deg, #1e7d32 0%, #2e7d32 100%);
+            overflow-y: auto;
+        }
+
+        .screen.active {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+
+        /* Enhanced Modal Styles - Instagram/TikTok inspired */
+        .rating-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 3000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .rating-modal.show {
+            display: flex;
+            animation: modalIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes modalIn {
+            from { 
+                opacity: 0; 
+                transform: scale(0.7) translateY(50px);
+            }
+            to { 
+                opacity: 1; 
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .rating-content {
+            background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+            border-radius: 24px;
+            padding: 30px;
+            max-width: 420px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            color: #1a1a1a !important;
+            text-align: center;
+            font-family: 'Poppins', sans-serif !important;
+            line-height: 1.6 !important;
+            box-shadow: 
+                0 20px 60px rgba(0,0,0,0.3),
+                0 0 0 1px rgba(255,255,255,0.1);
+            position: relative;
+        }
+
+        .rating-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #4caf50, #2196f3, #ff9800, #e91e63);
+            border-radius: 24px 24px 0 0;
+        }
+
+        /* Challenge Videos Modal - TikTok Style */
+        .challenge-video-card {
+            background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 
+                0 8px 32px rgba(0,0,0,0.12),
+                0 0 0 1px rgba(0,0,0,0.05);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .challenge-video-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 
+                0 16px 48px rgba(0,0,0,0.18),
+                0 0 0 1px rgba(0,0,0,0.08);
+        }
+
+        .video-play-button {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 24px rgba(76, 175, 80, 0.4);
+        }
+
+        .video-play-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 32px rgba(76, 175, 80, 0.6);
+        }
+
+        /* Player Rating Modal - Modern Design */
+        .player-rating-content {
+            background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+            border-radius: 24px;
+            padding: 30px;
+            max-width: 420px;
+            width: 100%;
+            color: #1a1a1a !important;
+            font-family: 'Poppins', sans-serif !important;
+            box-shadow: 
+                0 20px 60px rgba(0,0,0,0.3),
+                0 0 0 1px rgba(255,255,255,0.1);
+        }
+
+        .player-avatar-large {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #4caf50, #2e7d32);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 32px;
+            font-weight: 700;
+            box-shadow: 
+                0 12px 32px rgba(76, 175, 80, 0.4),
+                0 0 0 4px rgba(255,255,255,0.8);
+        }
+
+        /* Enhanced Range Slider */
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: linear-gradient(90deg, #e0e0e0 0%, #4caf50 0%);
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0 6px 16px rgba(76, 175, 80, 0.6);
+        }
+
+        /* Store Modal - App Store Style */
+        .store-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 4000;
+            display: none;
+            backdrop-filter: blur(20px);
+        }
+
+        .store-modal.show {
+            display: block;
+            animation: storeSlideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes storeSlideUp {
+            from { 
+                transform: translateY(100%);
+                opacity: 0;
+            }
+            to { 
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .store-content {
+            background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+            height: 100%;
+            border-radius: 24px 24px 0 0;
+            margin-top: 60px;
+            padding: 30px 20px;
+            color: #1a1a1a;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .store-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .store-close {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #f5f5f5;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .store-close:hover {
+            background: #e0e0e0;
+            transform: scale(1.1);
+        }
+
+        .subscription-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 20px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 12px 32px rgba(102, 126, 234, 0.3);
+        }
+
+        .subscription-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+        }
+
+        .premium-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255,255,255,0.2);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+        }
+
+        /* FAB Button - Material Design 3.0 */
+        .fab {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #4caf50, #2e7d32);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 
+                0 8px 24px rgba(76, 175, 80, 0.4),
+                0 0 0 1px rgba(255,255,255,0.1);
+            z-index: 1000;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .fab:hover {
+            transform: scale(1.1) rotate(90deg);
+            box-shadow: 
+                0 12px 36px rgba(76, 175, 80, 0.6),
+                0 0 0 1px rgba(255,255,255,0.2);
+        }
+
+        .fab:active {
+            transform: scale(0.95) rotate(90deg);
+        }
+
+        /* Add Menu - Floating Action Menu */
+        .add-menu {
+            position: fixed;
+            bottom: 100px;
+            right: 25px;
+            background: rgba(255,255,255,0.98);
+            border-radius: 20px;
+            padding: 15px;
+            box-shadow: 
+                0 16px 48px rgba(0,0,0,0.2),
+                0 0 0 1px rgba(0,0,0,0.05);
+            display: none;
+            z-index: 1001;
+            color: #1a1a1a;
+            min-width: 220px;
+            backdrop-filter: blur(20px);
+        }
+
+        .add-menu.show {
+            display: block;
+            animation: menuSlideIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes menuSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .add-menu-item {
+            padding: 16px 20px;
+            cursor: pointer;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .add-menu-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .add-menu-item:hover {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(76, 175, 80, 0.05));
+            transform: translateX(4px);
+        }
+
+        .add-menu-item i {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        /* Content sections */
+        .content-section {
+            display: none;
+            padding: 15px;
+        }
+
+        .content-section.active {
+            display: block !important;
+        }
+
+        .content-section#rating.active,
+        .content-section#profile.active {
+            display: block !important;
+            background: rgba(255,255,255,0.05) !important;
+            min-height: 100vh !important;
+            padding: 15px !important;
+            margin: 0 !important;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1b5e20, #2e7d32);
+            padding: 15px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            border-bottom: 2px solid #4caf50;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            background: url('https://raw.githubusercontent.com/manatea25/manatea/design-options/Bold%20Graphic%20Design%20With%20Dynamic%20Logo%20On%20Green%20Background.png.jpg') center/cover;
+            border-radius: 10px;
+            border: 2px solid #fff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            animation: logoPulse 2s infinite;
+        }
+
+        @keyframes logoPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .brand-text {
+            color: white;
+        }
+
+        .brand-name {
+            font-size: 18px;
+            font-weight: 800;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .brand-tagline {
+            font-size: 9px;
+            opacity: 0.9;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .coins-display {
+            background: linear-gradient(135deg, #ffc107, #ff8f00);
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            box-shadow: 0 4px 15px rgba(255, 193, 7, 0.4);
+            font-size: 13px;
+        }
+
+        .store-btn {
+            background: linear-gradient(135deg, #4caf50, #2e7d32);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .store-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(76, 175, 80, 0.5);
+        }
+
+        .notifications-btn {
+            position: relative;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .notifications-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.1);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            background: #f44336;
+            color: white;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            font-size: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            background: rgba(255,255,255,0.1);
+            margin: 0 15px;
+            border-radius: 12px;
+            padding: 4px;
+            backdrop-filter: blur(10px);
+            margin-top: 12px;
+        }
+
+        .nav-tab {
+            flex: 1;
+            padding: 8px 4px;
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 11px;
+            border: none;
+            background: none;
+            color: white;
+        }
+
+        .nav-tab.active {
+            background: rgba(255,255,255,0.2);
+            color: #4caf50;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        /* Auth Screen */
+        .welcome-screen {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .welcome-logo {
+            width: 120px;
+            height: 120px;
+            background: url('https://raw.githubusercontent.com/manatea25/manatea/design-options/Bold%20Graphic%20Design%20With%20Dynamic%20Logo%20On%20Green%20Background.png.jpg') center/cover;
+            border-radius: 30px;
+            border: 4px solid #fff;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            margin-bottom: 30px;
+            animation: logoBounce 2s infinite;
+        }
+
+        @keyframes logoBounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .welcome-title {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .welcome-subtitle {
+            font-size: 18px;
+            opacity: 0.9;
+            margin-bottom: 40px;
+            line-height: 1.5;
+        }
+
+        /* Message Toast */
+        .message-toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #4caf50;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 14px;
+            z-index: 2000;
+            opacity: 0;
+            transition: all 0.3s ease;
+            min-width: 200px;
+            text-align: center;
+        }
+
+        .message-toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .message-toast.error {
+            background: #f44336;
+        }
+
+        /* Video items */
+        .video-item {
+            background: rgba(255,255,255,0.9);
+            border-radius: 15px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            color: #333;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        }
+
+        /* Challenge items */
+        .challenge-item {
+            background: rgba(255,255,255,0.9);
+            border-radius: 15px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            color: #333;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        }
+
+        /* Match items */
+        .match-item {
+            background: rgba(255,255,255,0.9);
+            border-radius: 15px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            color: #333;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 414px) {
+            .app {
+                margin: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <!-- Auth Screen -->
+        <div class="screen welcome-screen active" id="authScreen">
+            <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; padding: 40px 20px; text-align: center;">
+                <div class="welcome-logo"></div>
+                <h1 class="welcome-title">FLAP</h1>
+                <p class="welcome-subtitle">Feel Like A Pro<br>Покажи свої футбольні навички<br>і стань професіоналом!</p>
+                
+                <div style="width: 100%; max-width: 300px; margin-top: 40px;">
+                    <div id="authToggle" style="display: flex; background: rgba(255,255,255,0.1); border-radius: 25px; padding: 4px; margin-bottom: 30px;">
+                        <button id="loginTab" onclick="switchAuthMode('login')" style="flex: 1; padding: 12px; border: none; border-radius: 20px; background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; font-weight: 700; cursor: pointer; transition: all 0.3s ease;">
+                            Увійти
+                        </button>
+                        <button id="registerTab" onclick="switchAuthMode('register')" style="flex: 1; padding: 12px; border: none; border-radius: 20px; background: transparent; color: rgba(255,255,255,0.7); font-weight: 700; cursor: pointer; transition: all 0.3s ease;">
+                            Реєстрація
+                        </button>
+                    </div>
+
+                    <div id="loginForm" style="display: block;">
+                        <div style="margin-bottom: 20px;">
+                            <input type="text" placeholder="Email або телефон" style="width: 100%; padding: 15px; border: 2px solid rgba(255,255,255,0.4); border-radius: 15px; background: rgba(255,255,255,0.15); color: white; font-size: 16px; margin-bottom: 15px; font-weight: 500;">
+                            <input type="password" placeholder="Пароль" style="width: 100%; padding: 15px; border: 2px solid rgba(255,255,255,0.4); border-radius: 15px; background: rgba(255,255,255,0.15); color: white; font-size: 16px; font-weight: 500;">
+                        </div>
+                        <button onclick="handleQuickLogin()" style="width: 100%; padding: 15px; border: none; border-radius: 25px; background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; font-size: 16px; font-weight: 700; cursor: pointer; margin-bottom: 20px;">
+                            Увійти
+                        </button>
+                    </div>
+
+                    <div id="registerForm" style="display: none;">
+                        <div style="margin-bottom: 20px;">
+                            <input type="text" placeholder="Ім'я та прізвище" style="width: 100%; padding: 15px; border: 2px solid rgba(255,255,255,0.4); border-radius: 15px; background: rgba(255,255,255,0.15); color: white; font-size: 16px; margin-bottom: 15px; font-weight: 500;">
+                            <input type="email" placeholder="Email" style="width: 100%; padding: 15px; border: 2px solid rgba(255,255,255,0.4); border-radius: 15px; background: rgba(255,255,255,0.15); color: white; font-size: 16px; margin-bottom: 15px; font-weight: 500;">
+                            <input type="password" placeholder="Пароль" style="width: 100%; padding: 15px; border: 2px solid rgba(255,255,255,0.4); border-radius: 15px; background: rgba(255,255,255,0.15); color: white; font-size: 16px; font-weight: 500;">
+                        </div>
+                        <button onclick="handleQuickRegister()" style="width: 100%; padding: 15px; border: none; border-radius: 25px; background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; font-size: 16px; font-weight: 700; cursor: pointer; margin-bottom: 20px;">
+                            Створити акаунт
+                        </button>
+                    </div>
+
+                    <div style="margin: 20px 0; text-align: center; color: rgba(255,255,255,0.6);">або</div>
+                    
+                    <button onclick="loginWithGoogle()" style="width: 100%; padding: 15px; border: 2px solid rgba(255,255,255,0.3); border-radius: 25px; background: rgba(255,255,255,0.1); color: white; font-size: 16px; font-weight: 600; cursor: pointer; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                        <div style="width: 20px; height: 20px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #db4437; font-weight: 700; font-size: 12px;">G</div>
+                        Google
+                    </button>
+                    
+                    <button onclick="loginWithFacebook()" style="width: 100%; padding: 15px; border: 2px solid rgba(255,255,255,0.3); border-radius: 25px; background: rgba(255,255,255,0.1); color: white; font-size: 16px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                        <div style="width: 20px; height: 20px; background: #1877f2; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 12px;">f</div>
+                        Facebook
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Creation Screen -->
+        <div class="screen" id="profileCreationScreen">
+            <div style="padding: 40px 20px; max-width: 400px; margin: 0 auto; background: linear-gradient(135deg, #1e7d32 0%, #2e7d32 100%); min-height: 100vh;">
+                <div style="text-align: center; margin-bottom: 40px;">
+                    <h2 style="font-size: 32px; font-weight: 700; margin-bottom: 10px; background: linear-gradient(135deg, #ffffff, #e8f5e8); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">🎯 Створення профілю</h2>
+                    <p style="opacity: 0.8; font-size: 16px;">Розкажи про себе (необов'язково для демо)</p>
+                </div>
+                
+                <div>
+                    <div style="margin-bottom: 25px;">
+                        <label style="display: block; margin-bottom: 15px; font-weight: 600; color: white; font-size: 18px;">Оберіть аватар або завантажте фото:</label>
+                        
+                        <div style="margin-bottom: 20px; text-align: center;">
+                            <input type="file" id="avatarUpload" accept="image/*" style="display: none;" onchange="uploadAvatar(this)">
+                            <button onclick="document.getElementById('avatarUpload').click()" style="padding: 12px 20px; background: linear-gradient(135deg, #2196f3, #42a5f5); color: white; border: none; border-radius: 15px; font-weight: 600; cursor: pointer; margin-bottom: 15px;">
+                                📷 Завантажити фото
+                            </button>
+                            <div id="uploadedAvatar" style="display: none; width: 80px; height: 80px; border-radius: 50%; margin: 10px auto; border: 3px solid #4caf50; overflow: hidden;">
+                                <img id="uploadedAvatarImg" style="width: 100%; height: 100%; object-fit: cover;">
+                            </div>
+                        </div>
+                        
+                        <div style="text-align: center; margin-bottom: 15px; color: rgba(255,255,255,0.7);">або</div>
+                        
+                        <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                            <div class="avatar-option" onclick="selectAvatar('⚽')" style="width: 60px; height: 60px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 24px; cursor: pointer; transition: all 0.3s; border: 3px solid transparent; backdrop-filter: blur(10px);">⚽</div>
+                            <div class="avatar-option" onclick="selectAvatar('🏆')" style="width: 60px; height: 60px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 24px; cursor: pointer; transition: all 0.3s; border: 3px solid transparent; backdrop-filter: blur(10px);">🏆</div>
+                            <div class="avatar-option" onclick="selectAvatar('👑')" style="width: 60px; height: 60px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 24px; cursor: pointer; transition: all 0.3s; border: 3px solid transparent; backdrop-filter: blur(10px);">👑</div>
+                            <div class="avatar-option" onclick="selectAvatar('🔥')" style="width: 60px; height: 60px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 24px; cursor: pointer; transition: all 0.3s; border: 3px solid transparent; backdrop-filter: blur(10px);">🔥</div>
+                            <div class="avatar-option" onclick="selectAvatar('⭐')" style="width: 60px; height: 60px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 24px; cursor: pointer; transition: all 0.3s; border: 3px solid transparent; backdrop-filter: blur(10px);">⭐</div>
+                            <div class="avatar-option" onclick="selectAvatar('🚀')" style="width: 60px; height: 60px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 24px; cursor: pointer; transition: all 0.3s; border: 3px solid transparent; backdrop-filter: blur(10px);">🚀</div>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: 600; color: white; font-size: 16px;">Ім'я та прізвище:</label>
+                        <input type="text" id="profileName" placeholder="Введіть ваше ім'я" style="width: 100%; padding: 15px; border: 2px solid rgba(255,255,255,0.4); border-radius: 15px; background: rgba(255,255,255,0.15); color: white; font-size: 16px; font-weight: 500; margin-bottom: 15px; font-family: 'Poppins', sans-serif;">
+                    </div>
+
+                    <button onclick="completeProfile()" style="width: 100%; padding: 18px; border: none; border-radius: 25px; background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; font-size: 18px; font-weight: 700; cursor: pointer; margin-top: 30px; transition: all 0.3s; font-family: 'Poppins', sans-serif; box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);">
+                        🎯 Завершити створення профілю
+                    </button>
+                    
+                    <button onclick="skipProfile()" style="width: 100%; padding: 18px; border: none; border-radius: 25px; background: rgba(255,255,255,0.2); color: white; font-size: 18px; font-weight: 700; cursor: pointer; margin-top: 15px; transition: all 0.3s; font-family: 'Poppins', sans-serif;">
+                        ⏭️ Пропустити (для демо)
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main App Screen -->
+        <div class="screen" id="mainScreen">
+            <!-- Header -->
+            <div class="header">
+                <div class="header-content">
+                    <div class="logo-section">
+                        <div class="logo"></div>
+                        <div class="brand-text">
+                            <div class="brand-name">FLAP</div>
+                            <div class="brand-tagline">FEEL LIKE A PRO</div>
+                        </div>
+                    </div>
+                    <div class="header-right">
+                        <div class="coins-display">
+                            <i class="fas fa-coins"></i>
+                            <span id="coinCount">250</span>
+                        </div>
+                        <button class="store-btn" onclick="showStore()">
+                            🛒
+                        </button>
+                        <button class="notifications-btn" onclick="toggleNotifications()">
+                            <i class="fas fa-bell"></i>
+                            <div class="notification-badge" id="notificationBadge">5</div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation Tabs -->
+            <div class="nav-tabs">
+                <button class="nav-tab active" onclick="showSection('videos')">
+                    <i class="fas fa-video"></i><br>Відео
+                </button>
+                <button class="nav-tab" onclick="showSection('challenges')">
+                    <i class="fas fa-trophy"></i><br>Челенджі
+                </button>
+                <button class="nav-tab" onclick="showSection('matches')">
+                    <i class="fas fa-futbol"></i><br>Матчі
+                </button>
+                <button class="nav-tab" onclick="showSection('rating')">
+                    <i class="fas fa-crown"></i><br>Рейтинг
+                </button>
+                <button class="nav-tab" onclick="showSection('profile')">
+                    <i class="fas fa-user"></i><br>Профіль
+                </button>
+            </div>
+
+            <!-- Videos Section -->
+            <div class="content-section active" id="videos">
+                <h3 style="margin-bottom: 15px; font-size: 18px;">📹 Відео</h3>
+                
+                <div class="video-item">
+                    <div style="position: relative; width: 100%; height: 200px; background: linear-gradient(45deg, #ff9800, #f57c00); display: flex; align-items: center; justify-content: center; color: white; font-size: 48px; cursor: pointer;" onclick="playVideo('video1')">
+                        ▶️
+                    </div>
+                    <div style="padding: 15px;">
+                        <h4 style="margin: 0 0 8px 0; font-size: 16px; color: #333;">Майстерський фінт</h4>
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                            <div onclick="showPlayerProfile('player1')" style="width: 32px; height: 32px; background: linear-gradient(135deg, #ff9800, #f57c00); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 14px; font-weight: 700; cursor: pointer;">МК</div>
+                            <div onclick="showPlayerProfile('player1')" style="font-weight: 600; font-size: 14px; color: #333; cursor: pointer;">Максим Коваль</div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span style="color: #666; font-size: 14px;">Ваша оцінка:</span>
+                            <input type="range" min="0" max="5" step="0.01" value="0" style="flex: 1;">
+                            <span style="font-weight: 600; color: #333;">0.00</span>
+                            <button onclick="voteForVideo('video1')" style="padding: 6px 12px; background: #4caf50; color: white; border: none; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer;">Голос</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Challenges Section -->
+            <div class="content-section" id="challenges">
+                <h3 style="margin-bottom: 15px; font-size: 18px;">🏆 Активні челенджі</h3>
+                
+                <div class="challenge-item">
+                    <div style="padding: 15px; background: linear-gradient(135deg, #ff9800, #ffb74d); color: white;">
+                        <div style="font-size: 16px; font-weight: 700; margin-bottom: 5px;">🎯 Кращий фінт тижня</div>
+                        <div style="font-size: 12px; opacity: 0.9;">Внесок: 20₴ • Призовий фонд: 200₴</div>
+                    </div>
+                    <div style="padding: 15px;">
+                        <p>Покажи найкреативніший фінт! Голосування до неділі.</p>
+                        <div style="display: flex; gap: 10px; margin-top: 15px;">
+                            <button onclick="joinChallenge('best_trick')" style="flex: 1; padding: 8px; background: #4caf50; color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer;">Приєднатися</button>
+                            <button onclick="showChallengeVideos('best_trick')" style="flex: 1; padding: 8px; background: #2196f3; color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer;">Переглянути відео</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Matches Section -->
+            <div class="content-section" id="matches">
+                <h3 style="margin-bottom: 15px; font-size: 18px;">⚽ Матчі</h3>
+                
+                <div class="match-item">
+                    <div style="padding: 15px; background: linear-gradient(135deg, #4caf50, #66bb6a); color: white;">
+                        <div style="font-size: 16px; font-weight: 700;">⚽ Вечірній футбол</div>
+                        <div style="font-size: 12px; opacity: 0.9;">Сьогодні 19:00 • Гідропарк • 50₴</div>
+                    </div>
+                    <div style="padding: 15px;">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                            <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #4caf50, #2e7d32); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 14px; font-weight: 700;">АК</div>
+                            <div>
+                                <div style="font-weight: 600; font-size: 14px;">Андрій Коваленко</div>
+                                <div style="font-size: 12px; color: #666;">Організатор • ⭐ 4.8</div>
+                            </div>
+                            <div style="text-align: right; margin-left: auto;">
+                                <div style="font-size: 12px; color: #4caf50; font-weight: 600;">5/14 гравців</div>
+                            </div>
+                        </div>
+                        <button onclick="joinMatch('match1')" style="width: 100%; padding: 10px; background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; border: none; border-radius: 20px; font-weight: 600; cursor: pointer;">Приєднатися до матчу</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rating Section -->
+            <div class="content-section" id="rating">
+                <h3 style="margin-bottom: 15px; font-size: 18px; color: white;">👑 Рейтинг гравців</h3>
+                
+                <div style="background: rgba(255,255,255,0.9); border-radius: 15px; padding: 20px; color: #333;">
+                    <h4 style="margin-bottom: 15px;">🏆 ТОП-10 гравців</h4>
+                    
+                    <div onclick="showPlayerProfile('player1')" style="display: flex; align-items: center; gap: 15px; padding: 10px; border-radius: 10px; margin-bottom: 10px; background: linear-gradient(135deg, #ffd700, #ffed4e); cursor: pointer;">
+                        <div style="width: 30px; height: 30px; background: #ff9800; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: 700;">1</div>
+                        <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #ffd700, #ffed4e); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #333; font-size: 16px; font-weight: 700;">МК</div>
+                        <div style="flex: 1;">
+                            <div style="font-weight: 600; font-size: 14px; color: #333;">Максим Коваль</div>
+                            <div style="font-size: 12px; color: #666;">Нападник • Київ</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="color: #ff9800; font-weight: 700;">⭐ 4.9</div>
+                            <div style="font-size: 11px; color: #666;">127 матчів</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Section -->
+            <div class="content-section" id="profile">
+                <h3 style="margin-bottom: 15px; font-size: 18px; color: white;">👤 Мій профіль</h3>
+                
+                <div style="background: rgba(255,255,255,0.9); border-radius: 15px; padding: 20px; color: #333; text-align: center;">
+                    <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #4caf50, #2e7d32); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 32px; font-weight: 700; margin: 0 auto 15px;">МК</div>
+                    <h3 style="margin: 0 0 5px 0; color: #2e7d32;">Максим Коваль</h3>
+                    <p style="color: #666; margin-bottom: 20px;">Нападник • Київ • ⭐ 4.2</p>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 20px; font-weight: 700; color: #4caf50;">47</div>
+                            <div style="font-size: 12px; color: #666;">Матчі</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 20px; font-weight: 700; color: #ff9800;">23</div>
+                            <div style="font-size: 12px; color: #666;">Голи</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 20px; font-weight: 700; color: #2196f3;">15</div>
+                            <div style="font-size: 12px; color: #666;">Асисти</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAB Button -->
+        <button class="fab" onclick="showAddMenu()">
+            <i class="fas fa-plus"></i>
+        </button>
+
+        <!-- Add Menu -->
+        <div class="add-menu" id="addMenu">
+            <div class="add-menu-item" onclick="showCreateVideo(); hideAddMenu();">
+                <i class="fas fa-video" style="color: #ff9800; background: rgba(255, 152, 0, 0.1);"></i>
+                Створити відео
+            </div>
+            <div class="add-menu-item" onclick="showCreateChallenge(); hideAddMenu();">
+                <i class="fas fa-trophy" style="color: #4caf50; background: rgba(76, 175, 80, 0.1);"></i>
+                Створити челендж
+            </div>
+            <div class="add-menu-item" onclick="showCreateMatchModal(); hideAddMenu();">
+                <i class="fas fa-futbol" style="color: #2196f3; background: rgba(33, 150, 243, 0.1);"></i>
+                Створити матч
+            </div>
+        </div>
+
+        <!-- Store Modal -->
+        <div class="store-modal" id="storeModal">
+            <div class="store-content">
+                <div class="store-header">
+                    <h2 style="margin: 0; font-size: 24px; font-weight: 700; color: #1a1a1a;">🛒 Магазин</h2>
+                    <button class="store-close" onclick="closeStore()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <!-- Store Tabs -->
+                <div style="display: flex; margin-bottom: 30px; background: #f5f5f5; border-radius: 12px; padding: 4px;">
+                    <button onclick="showStoreTab('subscriptions')" id="store-tab-subscriptions" class="store-tab active" style="flex: 1; padding: 12px; background: #4caf50; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s;">Підписки</button>
+                    <button onclick="showStoreTab('coins')" id="store-tab-coins" class="store-tab" style="flex: 1; padding: 12px; background: transparent; color: #666; border: none; font-weight: 600; cursor: pointer; transition: all 0.3s;">Монети</button>
+                    <button onclick="showStoreTab('expert')" id="store-tab-expert" class="store-tab" style="flex: 1; padding: 12px; background: transparent; color: #666; border: none; font-weight: 600; cursor: pointer; transition: all 0.3s;">Експерт</button>
+                </div>
+
+                <!-- Subscriptions Tab -->
+                <div id="store-subscriptions" class="store-tab-content" style="display: block;">
+                    <div class="subscription-card">
+                        <div class="premium-badge">ПОПУЛЯРНИЙ</div>
+                        <h3 style="margin: 0 0 10px 0; font-size: 20px; font-weight: 700;">🏆 Europa League</h3>
+                        <div style="font-size: 32px; font-weight: 800; margin-bottom: 10px;">99₴<span style="font-size: 16px; font-weight: 400;">/місяць</span></div>
+                        <ul style="list-style: none; padding: 0; margin: 0 0 20px 0;">
+                            <li style="margin-bottom: 8px;">✅ Видимий рейтинг</li>
+                            <li style="margin-bottom: 8px;">✅ 3 челенджі на місяць</li>
+                            <li style="margin-bottom: 8px;">✅ Пріоритетна підтримка</li>
+                        </ul>
+                        <button onclick="buySubscription('europa')" style="width: 100%; padding: 12px; background: rgba(255,255,255,0.2); color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; backdrop-filter: blur(10px);">Підписатися</button>
+                    </div>
+
+                    <div class="subscription-card" style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);">
+                        <div class="premium-badge">ПРЕМІУМ</div>
+                        <h3 style="margin: 0 0 10px 0; font-size: 20px; font-weight: 700;">🏆 Champions League</h3>
+                        <div style="font-size: 32px; font-weight: 800; margin-bottom: 10px;">159₴<span style="font-size: 16px; font-weight: 400;">/місяць</span></div>
+                        <ul style="list-style: none; padding: 0; margin: 0 0 20px 0;">
+                            <li style="margin-bottom: 8px;">✅ Видимий рейтинг</li>
+                            <li style="margin-bottom: 8px;">✅ Безлімітні челенджі</li>
+                            <li style="margin-bottom: 8px;">✅ +100 монет щомісяця</li>
+                            <li style="margin-bottom: 8px;">✅ Ексклюзивні значки</li>
+                        </ul>
+                        <button onclick="buySubscription('champions')" style="width: 100%; padding: 12px; background: rgba(255,255,255,0.2); color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; backdrop-filter: blur(10px);">Підписатися</button>
+                    </div>
+                </div>
+
+                <!-- Coins Tab -->
+                <div id="store-coins" class="store-tab-content" style="display: none;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div onclick="buyCoins(10, 10)" style="background: linear-gradient(135deg, #ffd700, #ffb300); border-radius: 16px; padding: 20px; text-align: center; cursor: pointer; transition: all 0.3s; color: white;">
+                            <div style="font-size: 24px; margin-bottom: 8px;">🪙</div>
+                            <div style="font-size: 18px; font-weight: 700;">10 монет</div>
+                            <div style="font-size: 16px;">10₴</div>
+                        </div>
+                        <div onclick="buyCoins(50, 45)" style="background: linear-gradient(135deg, #ffd700, #ffb300); border-radius: 16px; padding: 20px; text-align: center; cursor: pointer; transition: all 0.3s; color: white;">
+                            <div style="font-size: 24px; margin-bottom: 8px;">🪙</div>
+                            <div style="font-size: 18px; font-weight: 700;">50 монет</div>
+                            <div style="font-size: 16px;">45₴</div>
+                        </div>
+                        <div onclick="buyCoins(100, 90)" style="background: linear-gradient(135deg, #ffd700, #ffb300); border-radius: 16px; padding: 20px; text-align: center; cursor: pointer; transition: all 0.3s; color: white;">
+                            <div style="font-size: 24px; margin-bottom: 8px;">🪙</div>
+                            <div style="font-size: 18px; font-weight: 700;">100 монет</div>
+                            <div style="font-size: 16px;">90₴</div>
+                        </div>
+                        <div onclick="buyCoins(500, 400)" style="background: linear-gradient(135deg, #ffd700, #ffb300); border-radius: 16px; padding: 20px; text-align: center; cursor: pointer; transition: all 0.3s; color: white;">
+                            <div style="font-size: 24px; margin-bottom: 8px;">🪙</div>
+                            <div style="font-size: 18px; font-weight: 700;">500 монет</div>
+                            <div style="font-size: 16px;">400₴</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Expert Tab -->
+                <div id="store-expert" class="store-tab-content" style="display: none;">
+                    <div style="text-align: center; padding: 40px 20px;">
+                        <div style="font-size: 64px; margin-bottom: 20px;">🔬</div>
+                        <h3 style="margin-bottom: 15px; color: #1a1a1a;">Експерт огляд</h3>
+                        <p style="color: #666; margin-bottom: 20px;">Професійний аналіз ваших відео від тренерів</p>
+                        <div style="background: #f5f5f5; border-radius: 12px; padding: 20px;">
+                            <div style="font-size: 18px; font-weight: 600; color: #ff9800;">Незабаром...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Challenge Videos Modal -->
+        <div id="challengeVideosModal" class="rating-modal">
+            <div class="rating-content" style="max-width: 600px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+                    <h3 style="margin: 0; color: #1a1a1a;">🏆 Відео челенджу</h3>
+                    <button onclick="closeChallengeVideos()" style="width: 32px; height: 32px; border-radius: 50%; background: #f5f5f5; border: none; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div id="challengeVideosContent">
+                    <div class="challenge-video-card">
+                        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+                            <div class="video-play-button">▶️</div>
+                            <div style="flex: 1;">
+                                <h4 style="margin: 0 0 5px 0; color: #1a1a1a;">Неймовірний фінт</h4>
+                                <p style="margin: 0; color: #666; font-size: 14px;">Андрій К. • Київ<br>⭐ 4.8/5 • 👥 15 голосів</p>
+                            </div>
+                            <div style="font-size: 20px; font-weight: 700; color: #4caf50;">#1</div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span style="font-size: 12px; color: #666;">Ваша оцінка:</span>
+                            <input type="range" min="0" max="5" step="0.01" value="0" style="flex: 1;">
+                            <span style="font-weight: 600; color: #1a1a1a;">0.00</span>
+                            <button style="padding: 6px 12px; background: #4caf50; color: white; border: none; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer;">Голос</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let coins = 250;
+        let selectedAvatar = null;
+
+        // Auth functions
+        function switchAuthMode(mode) {
+            const loginTab = document.getElementById('loginTab');
+            const registerTab = document.getElementById('registerTab');
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+
+            if (mode === 'login') {
+                loginTab.style.background = 'linear-gradient(135deg, #4caf50, #66bb6a)';
+                loginTab.style.color = 'white';
+                registerTab.style.background = 'transparent';
+                registerTab.style.color = 'rgba(255,255,255,0.7)';
+                loginForm.style.display = 'block';
+                registerForm.style.display = 'none';
+            } else {
+                registerTab.style.background = 'linear-gradient(135deg, #4caf50, #66bb6a)';
+                registerTab.style.color = 'white';
+                loginTab.style.background = 'transparent';
+                loginTab.style.color = 'rgba(255,255,255,0.7)';
+                registerForm.style.display = 'block';
+                loginForm.style.display = 'none';
+            }
+        }
+
+        function handleQuickLogin() {
+            showToast('🎉 Вхід успішний!', 'success');
+            setTimeout(() => {
+                document.getElementById('authScreen').classList.remove('active');
+                document.getElementById('mainScreen').classList.add('active');
+            }, 1000);
+        }
+
+        function handleQuickRegister() {
+            showToast('✅ Реєстрація успішна!', 'success');
+            setTimeout(() => {
+                document.getElementById('authScreen').classList.remove('active');
+                document.getElementById('profileCreationScreen').classList.add('active');
+            }, 1000);
+        }
+
+        function loginWithGoogle() {
+            showToast('🔄 Вхід через Google...', 'info');
+            setTimeout(handleQuickLogin, 1500);
+        }
+
+        function loginWithFacebook() {
+            showToast('🔄 Вхід через Facebook...', 'info');
+            setTimeout(handleQuickLogin, 1500);
+        }
+
+        // Profile functions
+        function selectAvatar(avatar) {
+            selectedAvatar = avatar;
+            
+            document.querySelectorAll('.avatar-option').forEach(option => {
+                option.style.border = '3px solid transparent';
+                option.style.background = 'rgba(255,255,255,0.1)';
+                option.style.transform = 'scale(1)';
+            });
+            
+            document.getElementById('uploadedAvatar').style.display = 'none';
+            
+            event.target.style.border = '3px solid #4caf50';
+            event.target.style.background = 'rgba(76, 175, 80, 0.3)';
+            event.target.style.transform = 'scale(1.1)';
+            
+            window.uploadedAvatarData = null;
+            
+            showToast(`Обрано аватар: ${avatar}`, 'success');
+        }
+        
+        function uploadAvatar(input) {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const uploadedAvatar = document.getElementById('uploadedAvatar');
+                    const uploadedAvatarImg = document.getElementById('uploadedAvatarImg');
+                    
+                    uploadedAvatarImg.src = e.target.result;
+                    uploadedAvatar.style.display = 'block';
+                    
+                    window.uploadedAvatarData = e.target.result;
+                    selectedAvatar = null;
+                    
+                    document.querySelectorAll('.avatar-option').forEach(option => {
+                        option.style.border = '3px solid transparent';
+                        option.style.background = 'rgba(255,255,255,0.1)';
+                        option.style.transform = 'scale(1)';
+                    });
+                    
+                    showToast('📷 Фото завантажено!', 'success');
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function completeProfile() {
+            showToast('🎯 Профіль створено!', 'success');
+            setTimeout(() => {
+                document.getElementById('profileCreationScreen').classList.remove('active');
+                document.getElementById('mainScreen').classList.add('active');
+            }, 1000);
+        }
+
+        function skipProfile() {
+            showToast('⏭️ Профіль пропущено', 'info');
+            setTimeout(() => {
+                document.getElementById('profileCreationScreen').classList.remove('active');
+                document.getElementById('mainScreen').classList.add('active');
+            }, 1000);
+        }
+
+        // Navigation
+        function showSection(sectionId) {
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            document.getElementById(sectionId).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // FAB Menu
+        function showAddMenu() {
+            const menu = document.getElementById('addMenu');
+            menu.classList.toggle('show');
+        }
+
+        function hideAddMenu() {
+            document.getElementById('addMenu').classList.remove('show');
+        }
+
+        // Store functions
+        function showStore() {
+            document.getElementById('storeModal').classList.add('show');
+        }
+
+        function closeStore() {
+            document.getElementById('storeModal').classList.remove('show');
+        }
+
+        function showStoreTab(tabName) {
+            document.querySelectorAll('.store-tab').forEach(tab => {
+                tab.style.background = 'transparent';
+                tab.style.color = '#666';
+            });
+            
+            document.querySelectorAll('.store-tab-content').forEach(content => {
+                content.style.display = 'none';
+            });
+            
+            document.getElementById('store-tab-' + tabName).style.background = '#4caf50';
+            document.getElementById('store-tab-' + tabName).style.color = 'white';
+            document.getElementById('store-' + tabName).style.display = 'block';
+        }
+
+        function buySubscription(type) {
+            const subscriptions = {
+                europa: { name: 'Europa League', price: 99 },
+                champions: { name: 'Champions League', price: 159 }
+            };
+            
+            const sub = subscriptions[type];
+            showToast(`🎉 Підписка ${sub.name} активована!`, 'success');
+            closeStore();
+        }
+
+        function buyCoins(amount, price) {
+            coins += amount;
+            document.getElementById('coinCount').textContent = coins;
+            showToast(`🪙 +${amount} монет куплено за ${price}₴!`, 'success');
+            closeStore();
+        }
+
+        // Video functions
+        function playVideo(videoId) {
+            showToast(`▶️ Відтворення відео ${videoId}`, 'info');
+        }
+
+        function voteForVideo(videoId) {
+            showToast(`⭐ Голос за відео ${videoId} зараховано!`, 'success');
+        }
+
+        function showPlayerProfile(playerId) {
+            showToast(`👤 Відкриття профілю ${playerId}`, 'info');
+        }
+
+        // Challenge functions
+        function joinChallenge(challengeId) {
+            showToast(`🏆 Приєднання до челенджу ${challengeId}!`, 'success');
+        }
+
+        function showChallengeVideos(challengeId) {
+            document.getElementById('challengeVideosModal').classList.add('show');
+        }
+
+        function closeChallengeVideos() {
+            document.getElementById('challengeVideosModal').classList.remove('show');
+        }
+
+        function showCreateChallenge() {
+            showToast('🏆 Створення челенджу...', 'info');
+        }
+
+        function showCreateVideo() {
+            showToast('📹 Створення відео...', 'info');
+        }
+
+        function showCreateMatchModal() {
+            showToast('⚽ Створення матчу...', 'info');
+        }
+
+        // Match functions
+        function joinMatch(matchId) {
+            showToast(`⚽ Приєднання до матчу ${matchId}!`, 'success');
+        }
+
+        // Notifications
+        function toggleNotifications() {
+            showToast('🔔 Сповіщення', 'info');
+        }
+
+        // Toast messages
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `message-toast ${type}`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+
+            setTimeout(() => toast.classList.add('show'), 100);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => document.body.removeChild(toast), 300);
+            }, 3000);
+        }
+
+        // Click outside to close menus
+        document.addEventListener('click', function(event) {
+            const addMenu = document.getElementById('addMenu');
+            const fab = document.querySelector('.fab');
+            
+            if (!addMenu.contains(event.target) && !fab.contains(event.target)) {
+                hideAddMenu();
+            }
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            showToast('🎮 FLAP v0.1 завантажено!', 'success');
+        });
+    </script>
+</body>
+</html>
