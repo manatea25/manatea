@@ -83,6 +83,24 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* Enhanced Avatar System */
+        .avatar {
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .avatar:hover {
+            border-color: rgba(255,255,255,0.5);
+            transform: scale(1.05);
+        }
+
+        .avatar-sm { width: 32px; height: 32px; }
+        .avatar-md { width: 48px; height: 48px; }
+        .avatar-lg { width: 64px; height: 64px; }
+        .avatar-xl { width: 100px; height: 100px; }
+
         /* Welcome Screen */
         .welcome-screen {
             display: flex;
@@ -1271,7 +1289,7 @@
                         <div class="video-score">⭐ 4.1</div>
                     </div>
                     <div style="padding: 0 15px 15px; color: #333;">
-                        <strong class="video-author" onclick="showPlayerProfile('andriy_k')">Андрій Коваленко</strong> • Півзахисник • Київ<br>
+                        <strong class="video-author" onclick="showPlayerProfileWithAvatar('player1')">Олександр Петренко</strong> • Нападник • Київ<br>
                         <small style="color: #666;">2 години тому • Гідропарк</small>
                     </div>
                 </div>
@@ -1290,9 +1308,9 @@
                     <div style="padding: 15px;">
                         <h4 style="margin: 0 0 8px 0; font-size: 16px; color: #333;">Майстерський фінт Роналдіньо</h4>
                         <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-                            <div onclick="showPlayerProfile('roman_s')" style="width: 32px; height: 32px; background: linear-gradient(135deg, #ff9800, #f57c00); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 14px; font-weight: 700; cursor: pointer; transition: all 0.3s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">РС</div>
+                            <img src="https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=150&h=150&fit=crop&crop=face" alt="Роман Семенчук" onclick="showPlayerProfileWithAvatar('player7')" class="avatar avatar-sm" style="cursor: pointer; transition: all 0.3s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
                             <div>
-                                <div onclick="showPlayerProfile('roman_s')" style="font-weight: 600; font-size: 14px; color: #333; cursor: pointer; transition: all 0.3s;" onmouseover="this.style.color='#4caf50'" onmouseout="this.style.color='#333'">Роман Семенчук</div>
+                                <div onclick="showPlayerProfileWithAvatar('player7')" style="font-weight: 600; font-size: 14px; color: #333; cursor: pointer; transition: all 0.3s;" onmouseover="this.style.color='#4caf50'" onmouseout="this.style.color='#333'">Роман Коваль</div>
                                 <div style="font-size: 12px; color: #666;">🦁 Львів • 3 дні тому</div>
                             </div>
                         </div>
@@ -2852,6 +2870,247 @@
     <script>
         console.log('🚀 FLAP Testing Version Loading...');
         
+        // Enhanced Players Database with real avatars
+        const playersDatabase = {
+            player1: {
+                id: 'player1',
+                name: 'Олександр Петренко',
+                position: 'Нападник',
+                city: 'Київ',
+                rating: '4.8',
+                avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
+                phone: '+380 67 123 45 67',
+                telegram: '@alex_football',
+                instagram: '@alex.striker',
+                matches: 45,
+                goals: 32,
+                assists: 18
+            },
+            player2: {
+                id: 'player2',
+                name: 'Віталій Коваленко',
+                position: 'Захисник',
+                city: 'Львів',
+                rating: '4.5',
+                avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
+                phone: '+380 67 234 56 78',
+                telegram: '@vitaly_defender',
+                instagram: '@vitaly.defense',
+                matches: 38,
+                goals: 5,
+                assists: 12
+            },
+            player3: {
+                id: 'player3',
+                name: 'Дмитро Сидоренко',
+                position: 'Півзахисник',
+                city: 'Одеса',
+                rating: '4.3',
+                avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face',
+                phone: '+380 67 345 67 89',
+                telegram: '@dimka_midfielder',
+                instagram: '@dmitro.mid',
+                matches: 29,
+                goals: 15,
+                assists: 22
+            },
+            player4: {
+                id: 'player4',
+                name: 'Сергій Іваненко',
+                position: 'Воротар',
+                city: 'Харків',
+                rating: '4.7',
+                avatar: 'https://images.unsplash.com/photo-1566492031773-4f4e44671d66?w=150&h=150&fit=crop&crop=face',
+                phone: '+380 67 456 78 90',
+                telegram: '@sergio_keeper',
+                instagram: '@sergiy.goal',
+                matches: 52,
+                goals: 0,
+                assists: 3
+            },
+            player5: {
+                id: 'player5',
+                name: 'Андрій Мельник',
+                position: 'Нападник',
+                city: 'Дніпро',
+                rating: '4.6',
+                avatar: 'https://images.unsplash.com/photo-1552058544-f2b08422138a?w=150&h=150&fit=crop&crop=face',
+                phone: '+380 67 567 89 01',
+                telegram: '@andrey_striker',
+                instagram: '@andrey.goals',
+                matches: 41,
+                goals: 28,
+                assists: 14
+            },
+            player6: {
+                id: 'player6',
+                name: 'Юрій Петрович',
+                position: 'Захисник',
+                city: 'Запоріжжя',
+                rating: '4.4',
+                avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&h=150&fit=crop&crop=face',
+                phone: '+380 67 678 90 12',
+                telegram: '@yura_defense',
+                instagram: '@yura.def',
+                matches: 33,
+                goals: 7,
+                assists: 9
+            },
+            player7: {
+                id: 'player7',
+                name: 'Роман Коваль',
+                position: 'Півзахисник',
+                city: 'Вінниця',
+                rating: '4.2',
+                avatar: 'https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=150&h=150&fit=crop&crop=face',
+                phone: '+380 67 789 01 23',
+                telegram: '@roma_midfielder',
+                instagram: '@roma.mid',
+                matches: 26,
+                goals: 11,
+                assists: 19
+            },
+            player8: {
+                id: 'player8',
+                name: 'Ігор Савченко',
+                position: 'Нападник',
+                city: 'Полтава',
+                rating: '4.1',
+                avatar: 'https://images.unsplash.com/photo-1463453091185-61582044d556?w=150&h=150&fit=crop&crop=face',
+                phone: '+380 67 890 12 34',
+                telegram: '@igor_forward',
+                instagram: '@igor.attack',
+                matches: 22,
+                goals: 16,
+                assists: 8
+            },
+            player9: {
+                id: 'player9',
+                name: 'Тарас Шевченко',
+                position: 'Воротар',
+                city: 'Черкаси',
+                rating: '4.0',
+                avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop&crop=face',
+                phone: '+380 67 901 23 45',
+                telegram: '@taras_goalkeeper',
+                instagram: '@taras.saves',
+                matches: 18,
+                goals: 0,
+                assists: 1
+            },
+            player10: {
+                id: 'player10',
+                name: 'Максим Бондаренко',
+                position: 'Захисник',
+                city: 'Кривий Ріг',
+                rating: '3.9',
+                avatar: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=150&h=150&fit=crop&crop=face',
+                phone: '+380 67 012 34 56',
+                telegram: '@max_defender',
+                instagram: '@max.defense',
+                matches: 15,
+                goals: 3,
+                assists: 5
+            },
+            player11: {
+                id: 'player11',
+                name: 'Василь Кравченко',
+                position: 'Півзахисник',
+                city: 'Миколаїв',
+                rating: '4.4',
+                avatar: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=150&h=150&fit=crop&crop=face',
+                phone: '+380 67 111 22 33',
+                telegram: '@vasyl_mid',
+                instagram: '@vasyl.football',
+                matches: 31,
+                goals: 12,
+                assists: 16
+            },
+            player12: {
+                id: 'player12',
+                name: 'Богdan Лисенко',
+                position: 'Нападник',
+                city: 'Житомир',
+                rating: '3.8',
+                avatar: 'https://images.unsplash.com/photo-1543132220-4bf3de6e10ae?w=150&h=150&fit=crop&crop=face',
+                phone: '+380 67 222 33 44',
+                telegram: '@bogdan_striker',
+                instagram: '@bogdan.goals',
+                matches: 19,
+                goals: 14,
+                assists: 6
+            },
+            player13: {
+                id: 'player13',
+                name: 'Артем Мороз',
+                position: 'Захисник',
+                city: 'Чернігів',
+                rating: '4.1',
+                avatar: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=150&h=150&fit=crop&crop=face',
+                phone: '+380 67 333 44 55',
+                telegram: '@artem_defense',
+                instagram: '@artem.defender',
+                matches: 27,
+                goals: 4,
+                assists: 8
+            },
+            player14: {
+                id: 'player14',
+                name: 'Павло Гриценко',
+                position: 'Воротар',
+                city: 'Суми',
+                rating: '4.3',
+                avatar: 'https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?w=150&h=150&fit=crop&crop=face',
+                phone: '+380 67 444 55 66',
+                telegram: '@pavlo_keeper',
+                instagram: '@pavlo.saves',
+                matches: 24,
+                goals: 0,
+                assists: 2
+            },
+            player15: {
+                id: 'player15',
+                name: 'Микола Ткаченко',
+                position: 'Півзахисник',
+                city: 'Херсон',
+                rating: '3.7',
+                avatar: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=150&h=150&fit=crop&crop=face',
+                phone: '+380 67 555 66 77',
+                telegram: '@mykola_mid',
+                instagram: '@mykola.football',
+                matches: 16,
+                goals: 8,
+                assists: 11
+            }
+        };
+        
+        // Helper function to get player data
+        function getPlayer(playerId) {
+            return playersDatabase[playerId] || {
+                id: playerId,
+                name: 'Невідомий гравець',
+                position: 'Невідома',
+                city: 'Невідоме',
+                rating: '0.0',
+                avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
+                phone: '+380 XX XXX XX XX',
+                telegram: '@unknown',
+                instagram: '@unknown',
+                matches: 0,
+                goals: 0,
+                assists: 0
+            };
+        }
+        
+        // Copy contact function
+        function copyContact(contact) {
+            navigator.clipboard.writeText(contact).then(function() {
+                showToast('📋 Скопійовано: ' + contact, 'success');
+            }).catch(function() {
+                showToast('❌ Помилка копіювання', 'error');
+            });
+        }
+        
         // Global variables
         let currentUser = {
             name: 'Максим Коваль',
@@ -3931,6 +4190,103 @@
             showToast('Відтворення відео...', 'info');
         }
         
+        // Enhanced Profile function with avatars
+        function showPlayerProfileWithAvatar(playerId) {
+            console.log('👤 Show enhanced player profile:', playerId);
+            const player = getPlayer(playerId);
+            
+            // Create modern player profile modal with real avatar
+            const modal = document.getElementById('playerProfileModal');
+            if (modal) {
+                const modalContent = `
+                    <div style="background: white; border-radius: 24px; max-width: 400px; width: 90%; max-height: 80vh; overflow-y: auto; position: relative;">
+                        <!-- Header with avatar -->
+                        <div style="background: linear-gradient(135deg, #4caf50, #66bb6a); padding: 32px 24px; text-align: center; border-radius: 24px 24px 0 0;">
+                            <img src="${player.avatar}" alt="${player.name}" class="avatar avatar-xl" style="margin: 0 auto 16px; border: 4px solid rgba(255,255,255,0.2);">
+                            <h3 style="font-size: 20px; font-weight: 700; margin-bottom: 8px; color: white;">${player.name}</h3>
+                            <div style="font-size: 14px; opacity: 0.8; margin-bottom: 12px; color: white;">${player.position} • ${player.city}</div>
+                            <div style="display: flex; align-items: center; justify-content: center; gap: 4px; color: #ffeb3b;">
+                                <i class="fas fa-star"></i>
+                                <span>${player.rating}</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Stats Grid -->
+                        <div style="padding: 24px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; border-bottom: 1px solid #f0f0f0;">
+                            <div style="text-align: center;">
+                                <div style="font-size: 18px; font-weight: 700; color: #4caf50;">${player.matches}</div>
+                                <div style="font-size: 12px; color: #666; text-transform: uppercase;">Матчі</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="font-size: 18px; font-weight: 700; color: #4caf50;">${player.goals}</div>
+                                <div style="font-size: 12px; color: #666; text-transform: uppercase;">Голи</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="font-size: 18px; font-weight: 700; color: #4caf50;">${player.assists}</div>
+                                <div style="font-size: 12px; color: #666; text-transform: uppercase;">Паси</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="font-size: 18px; font-weight: 700; color: #4caf50;">${Math.round((player.goals + player.assists) / player.matches * 10) / 10 || 0}</div>
+                                <div style="font-size: 12px; color: #666; text-transform: uppercase;">Г+П/Матч</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Contact Info -->
+                        <div style="padding: 24px;">
+                            <h4 style="font-size: 16px; font-weight: 700; color: #333; margin-bottom: 16px;">Контактна інформація</h4>
+                            
+                            <!-- Phone -->
+                            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px; padding: 12px; background: #f8f9fa; border-radius: 12px;">
+                                <i class="fas fa-phone" style="width: 24px; height: 24px; color: #4caf50;"></i>
+                                <div style="flex: 1;">
+                                    <span style="font-size: 14px; color: #333;">${player.phone}</span>
+                                </div>
+                                <button onclick="copyContact('${player.phone}')" style="background: rgba(76,175,80,0.2); border: none; border-radius: 8px; padding: 6px 10px; color: #4caf50; font-size: 11px; cursor: pointer;">Копіювати</button>
+                            </div>
+                            
+                            <!-- Telegram -->
+                            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px; padding: 12px; background: #f8f9fa; border-radius: 12px;">
+                                <i class="fab fa-telegram" style="width: 24px; height: 24px; color: #4caf50;"></i>
+                                <div style="flex: 1;">
+                                    <span style="font-size: 14px; color: #333;">${player.telegram}</span>
+                                </div>
+                                <button onclick="copyContact('${player.telegram}')" style="background: rgba(76,175,80,0.2); border: none; border-radius: 8px; padding: 6px 10px; color: #4caf50; font-size: 11px; cursor: pointer;">Копіювати</button>
+                            </div>
+                            
+                            <!-- Instagram -->
+                            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding: 12px; background: #f8f9fa; border-radius: 12px;">
+                                <i class="fab fa-instagram" style="width: 24px; height: 24px; color: #4caf50;"></i>
+                                <div style="flex: 1;">
+                                    <span style="font-size: 14px; color: #333;">${player.instagram}</span>
+                                </div>
+                                <button onclick="copyContact('${player.instagram}')" style="background: rgba(76,175,80,0.2); border: none; border-radius: 8px; padding: 6px 10px; color: #4caf50; font-size: 11px; cursor: pointer;">Копіювати</button>
+                            </div>
+                            
+                            <!-- Action Buttons -->
+                            <div style="display: flex; gap: 12px;">
+                                <button style="flex: 1; background: #4caf50; color: white; border: none; padding: 12px; border-radius: 12px; font-weight: 600; cursor: pointer;">
+                                    <i class="fas fa-user-plus"></i> Додати в друзі
+                                </button>
+                                <button style="flex: 1; background: #2196f3; color: white; border: none; padding: 12px; border-radius: 12px; font-weight: 600; cursor: pointer;">
+                                    <i class="fas fa-envelope"></i> Запросити в матч
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Close Button -->
+                        <button onclick="closePlayerProfile()" style="position: absolute; top: 16px; right: 16px; background: rgba(255,255,255,0.2); border: none; width: 32px; height: 32px; border-radius: 50%; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                `;
+                
+                modal.innerHTML = modalContent;
+                modal.classList.add('show');
+            } else {
+                showToast('❌ Модаль профілю не знайдено', 'error');
+            }
+        }
+
         // Profile functions
         function showPlayerProfile(playerId) {
             console.log('👤 Show player profile:', playerId);
