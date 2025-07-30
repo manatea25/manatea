@@ -3537,15 +3537,18 @@
                 });
                 
                 if (authScreen) {
-                    authScreen.style.display = 'none';
+                    authScreen.style.display = 'none !important';
                     authScreen.classList.remove('active');
+                    authScreen.classList.remove('welcome-screen');
                     console.log('✅ Auth screen hidden');
                 }
                 
                 if (mainScreen) {
-                    mainScreen.style.display = 'block';
+                    mainScreen.style.display = 'block !important';
                     mainScreen.classList.add('active');
                     console.log('✅ Main screen shown');
+                } else {
+                    console.error('❌ mainScreen not found!');
                 }
                 
                 console.log('✅ Navigation completed: authScreen -> mainScreen');
@@ -3558,13 +3561,22 @@
             setTimeout(() => {
                 // Hide auth screen
                 const authScreen = document.getElementById('authScreen');
-                authScreen.style.display = 'none';
-                authScreen.classList.remove('active');
-                
-                // Show profile creation screen
                 const profileScreen = document.getElementById('profileCreationScreen');
-                profileScreen.style.display = 'block';
-                profileScreen.classList.add('active');
+                
+                if (authScreen) {
+                    authScreen.style.display = 'none !important';
+                    authScreen.classList.remove('active');
+                    authScreen.classList.remove('welcome-screen');
+                    console.log('✅ Auth screen hidden');
+                }
+                
+                if (profileScreen) {
+                    profileScreen.style.display = 'block !important';
+                    profileScreen.classList.add('active');
+                    console.log('✅ Profile screen shown');
+                } else {
+                    console.error('❌ profileCreationScreen not found!');
+                }
                 
                 console.log('✅ Navigation completed: authScreen -> profileCreationScreen');
             }, 1000);
@@ -5374,12 +5386,76 @@
             }
         }
 
+        // COMBINED DOMContentLoaded - NO DUPLICATES
         document.addEventListener('DOMContentLoaded', function() {
             console.log('✅ FLAP Testing Version Loaded Successfully!');
             showToast('FLAP Testing Version готова до тестування!', 'success');
             
             // Initialize notification badge
             updateNotificationBadge();
+            
+            // Initialize button event listeners
+            console.log('🚀 Initializing FLAP buttons...');
+            
+            // Store button - ПРОСТИЙ І НАДІЙНИЙ
+            const storeButton = document.getElementById('storeButton');
+            if (storeButton) {
+                console.log('🛒 Initializing store button...');
+                
+                // Простий клік обробник
+                storeButton.onclick = function() {
+                    console.log('🛒 STORE CLICKED!');
+                    showStore();
+                };
+                
+                // Додатковий addEventListener для надійності
+                storeButton.addEventListener('click', function(e) {
+                    console.log('🛒 STORE EVENT LISTENER!');
+                    showStore();
+                });
+                
+                console.log('✅ Store button ready!');
+            }
+            
+            // FAB button
+            const fabButton = document.getElementById('fabButton');
+            if (fabButton) {
+                console.log('➕ Initializing FAB button...');
+                
+                fabButton.onclick = function() {
+                    console.log('➕ FAB CLICKED!');
+                    showAddMenu();
+                };
+                
+                fabButton.addEventListener('click', function(e) {
+                    console.log('➕ FAB EVENT LISTENER!');
+                    showAddMenu();
+                });
+                
+                console.log('✅ FAB button ready!');
+            }
+            
+            // Profile Store button
+            const profileStoreButton = document.getElementById('profileStoreButton');
+            if (profileStoreButton) {
+                console.log('🛒 Initializing profile store button...');
+                
+                // Простий клік обробник
+                profileStoreButton.onclick = function() {
+                    console.log('🛒 PROFILE STORE CLICKED!');
+                    showStore();
+                };
+                
+                // Додатковий addEventListener для надійності
+                profileStoreButton.addEventListener('click', function(e) {
+                    console.log('🛒 PROFILE STORE EVENT LISTENER!');
+                    showStore();
+                });
+                
+                console.log('✅ Profile store button ready!');
+            }
+            
+            console.log('🎉 All buttons initialized successfully!');
         });
         
         // Close menus when clicking outside
@@ -5512,64 +5588,7 @@
         `;
         document.head.appendChild(style);
 
-        // Initialize button event listeners when DOM is ready
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('🚀 Initializing FLAP buttons...');
-            
-            // Store button - ПРОСТИЙ І НАДІЙНИЙ
-            const storeButton = document.getElementById('storeButton');
-            if (storeButton) {
-                console.log('🛒 Initializing store button...');
-                
-                // Простий клік обробник
-                storeButton.onclick = function() {
-                    console.log('🛒 STORE CLICKED!');
-                    showStore();
-                };
-                
-                // Додатковий addEventListener для надійності
-                storeButton.addEventListener('click', function(e) {
-                    console.log('🛒 STORE EVENT LISTENER!');
-                    showStore();
-                });
-                
-                console.log('✅ Store button ready!');
-            }
-            
-            // FAB button
-            const fabButton = document.getElementById('fabButton');
-            if (fabButton) {
-                fabButton.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    console.log('➕ FAB button clicked');
-                    showAddMenu();
-                });
-                console.log('✅ FAB button initialized');
-            }
-            
-            // Profile Store button
-            const profileStoreButton = document.getElementById('profileStoreButton');
-            if (profileStoreButton) {
-                console.log('🛒 Initializing profile store button...');
-                
-                // Простий клік обробник
-                profileStoreButton.onclick = function() {
-                    console.log('🛒 PROFILE STORE CLICKED!');
-                    showStore();
-                };
-                
-                // Додатковий addEventListener для надійності
-                profileStoreButton.addEventListener('click', function(e) {
-                    console.log('🛒 PROFILE STORE EVENT LISTENER!');
-                    showStore();
-                });
-                
-                console.log('✅ Profile store button ready!');
-            }
-            
-            console.log('🎉 All buttons initialized successfully!');
-        });
+        // DUPLICATE REMOVED - All button initialization moved to main DOMContentLoaded above
 
     </script>
 
