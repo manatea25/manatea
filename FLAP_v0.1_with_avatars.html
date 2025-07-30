@@ -34,7 +34,7 @@
 
         /* Modern screen system */
         .screen {
-            display: none;
+            display: none !important;
             position: fixed;
             top: 0;
             left: 0;
@@ -44,11 +44,61 @@
             width: 100%;
             background: linear-gradient(180deg, #1e7d32 0%, #2e7d32 100%);
             overflow-y: auto;
+            z-index: 100;
         }
 
         .screen.active {
-            display: block;
+            display: block !important;
             animation: slideIn 0.3s ease;
+            z-index: 100;
+        }
+
+        /* Fix video sections z-index */
+        .content-section {
+            position: relative;
+            z-index: 1;
+        }
+
+        .video-item {
+            position: relative;
+            z-index: 1;
+        }
+
+        .comments-section {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Prevent video overflow */
+        .video-thumbnail {
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        /* Ensure proper stacking */
+        .modal {
+            z-index: 2000 !important;
+        }
+
+        .fab {
+            z-index: 1000 !important;
+        }
+
+        .store-modal {
+            z-index: 3000 !important;
+        }
+
+        /* Fix video container positioning */
+        .videos-container {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Reset problematic positioning */
+        .video-voting-fixed {
+            position: relative;
+            z-index: 1;
         }
 
         /* Fix for modal scrolling */
