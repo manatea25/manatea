@@ -3527,9 +3527,28 @@
             console.log('🔑 Quick login initiated');
             showToast('Вхід виконано успішно!', 'success');
             setTimeout(() => {
-                document.getElementById('authScreen').style.display = 'none';
-                document.getElementById('mainScreen').style.display = 'block';
-                document.getElementById('mainScreen').classList.add('active');
+                // Hide auth screen
+                const authScreen = document.getElementById('authScreen');
+                const mainScreen = document.getElementById('mainScreen');
+                
+                console.log('🔍 Elements found:', {
+                    authScreen: !!authScreen,
+                    mainScreen: !!mainScreen
+                });
+                
+                if (authScreen) {
+                    authScreen.style.display = 'none';
+                    authScreen.classList.remove('active');
+                    console.log('✅ Auth screen hidden');
+                }
+                
+                if (mainScreen) {
+                    mainScreen.style.display = 'block';
+                    mainScreen.classList.add('active');
+                    console.log('✅ Main screen shown');
+                }
+                
+                console.log('✅ Navigation completed: authScreen -> mainScreen');
             }, 1000);
         }
         
@@ -3537,9 +3556,17 @@
             console.log('📝 Quick register initiated');
             showToast('Переходимо до створення профілю!', 'success');
             setTimeout(() => {
-                document.getElementById('authScreen').style.display = 'none';
-                document.getElementById('profileCreationScreen').style.display = 'block';
-                document.getElementById('profileCreationScreen').classList.add('active');
+                // Hide auth screen
+                const authScreen = document.getElementById('authScreen');
+                authScreen.style.display = 'none';
+                authScreen.classList.remove('active');
+                
+                // Show profile creation screen
+                const profileScreen = document.getElementById('profileCreationScreen');
+                profileScreen.style.display = 'block';
+                profileScreen.classList.add('active');
+                
+                console.log('✅ Navigation completed: authScreen -> profileCreationScreen');
             }, 1000);
         }
         
@@ -3547,9 +3574,17 @@
             console.log('🔍 Google login initiated');
             showToast('Вхід через Google успішний!', 'success');
             setTimeout(() => {
-                document.getElementById('authScreen').style.display = 'none';
-                document.getElementById('mainScreen').style.display = 'block';
-                document.getElementById('mainScreen').classList.add('active');
+                // Hide auth screen
+                const authScreen = document.getElementById('authScreen');
+                authScreen.style.display = 'none';
+                authScreen.classList.remove('active');
+                
+                // Show main screen
+                const mainScreen = document.getElementById('mainScreen');
+                mainScreen.style.display = 'block';
+                mainScreen.classList.add('active');
+                
+                console.log('✅ Navigation completed: Google login -> mainScreen');
             }, 1000);
         }
         
@@ -3557,9 +3592,17 @@
             console.log('📘 Facebook login initiated');
             showToast('Вхід через Facebook успішний!', 'success');
             setTimeout(() => {
-                document.getElementById('authScreen').style.display = 'none';
-                document.getElementById('mainScreen').style.display = 'block';
-                document.getElementById('mainScreen').classList.add('active');
+                // Hide auth screen
+                const authScreen = document.getElementById('authScreen');
+                authScreen.style.display = 'none';
+                authScreen.classList.remove('active');
+                
+                // Show main screen
+                const mainScreen = document.getElementById('mainScreen');
+                mainScreen.style.display = 'block';
+                mainScreen.classList.add('active');
+                
+                console.log('✅ Navigation completed: Facebook login -> mainScreen');
             }, 1000);
         }
         
@@ -5082,9 +5125,17 @@
             
             showToast('Профіль створено успішно!', 'success');
             setTimeout(() => {
-                document.getElementById('profileCreationScreen').style.display = 'none';
-                document.getElementById('mainScreen').style.display = 'block';
-                document.getElementById('mainScreen').classList.add('active');
+                // Hide profile creation screen
+                const profileScreen = document.getElementById('profileCreationScreen');
+                profileScreen.style.display = 'none';
+                profileScreen.classList.remove('active');
+                
+                // Show main screen
+                const mainScreen = document.getElementById('mainScreen');
+                mainScreen.style.display = 'block';
+                mainScreen.classList.add('active');
+                
+                console.log('✅ Navigation completed: profileCreationScreen -> mainScreen');
             }, 1000);
         }
         
@@ -5105,9 +5156,17 @@
             
             showToast('Використовуємо базовий профіль для демо', 'info');
             setTimeout(() => {
-                document.getElementById('profileCreationScreen').style.display = 'none';
-                document.getElementById('mainScreen').style.display = 'block';
-                document.getElementById('mainScreen').classList.add('active');
+                // Hide profile creation screen
+                const profileScreen = document.getElementById('profileCreationScreen');
+                profileScreen.style.display = 'none';
+                profileScreen.classList.remove('active');
+                
+                // Show main screen
+                const mainScreen = document.getElementById('mainScreen');
+                mainScreen.style.display = 'block';
+                mainScreen.classList.add('active');
+                
+                console.log('✅ Navigation completed: skipProfile -> mainScreen');
             }, 1000);
         }
         
