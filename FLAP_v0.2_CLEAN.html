@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FLAP - Feel Like A Pro v0.2 CLEAN - FIXED BUTTONS</title>
+    <title>FLAP - Feel Like A Pro v0.2 Enhanced</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -32,9 +32,9 @@
                 repeating-linear-gradient(0deg, transparent, transparent 45px, rgba(255,255,255,0.1) 45px, rgba(255,255,255,0.1) 47px);
         }
 
-        /* Modern screen system - FIXED */
+        /* Modern screen system */
         .screen {
-            display: none !important;
+            display: none;
             position: fixed;
             top: 0;
             left: 0;
@@ -44,19 +44,11 @@
             width: 100%;
             background: linear-gradient(180deg, #1e7d32 0%, #2e7d32 100%);
             overflow-y: auto;
-            z-index: 1000;
         }
 
         .screen.active {
-            display: block !important;
+            display: block;
             animation: slideIn 0.3s ease;
-            z-index: 1001;
-        }
-        
-        /* Force hide inactive screens */
-        .screen:not(.active) {
-            display: none !important;
-            visibility: hidden !important;
         }
 
         /* Fix for modal scrolling */
@@ -100,29 +92,28 @@
         }
 
         .avatar:hover {
-            border-color: #4caf50;
+            border-color: rgba(255,255,255,0.5);
             transform: scale(1.05);
         }
 
         .avatar-sm { width: 32px; height: 32px; }
         .avatar-md { width: 48px; height: 48px; }
         .avatar-lg { width: 64px; height: 64px; }
-        .avatar-xl { width: 80px; height: 80px; }
+        .avatar-xl { width: 100px; height: 100px; }
 
-        /* Enhanced Video Card Layout */
+        /* Enhanced Video Cards */
         .video-card-enhanced {
-            background: rgba(255,255,255,0.1);
-            border-radius: 16px;
-            margin: 12px 16px;
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            margin-bottom: 20px;
             overflow: hidden;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
             transition: all 0.3s ease;
         }
 
         .video-card-enhanced:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
         }
 
         .video-header-enhanced {
@@ -130,6 +121,7 @@
             display: flex;
             align-items: center;
             gap: 12px;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
         }
 
         .video-info-enhanced {
@@ -138,81 +130,186 @@
         }
 
         .video-title-enhanced {
-            font-size: 14px;
-            font-weight: 600;
+            font-size: 16px;
+            font-weight: 700;
+            color: #2e7d32;
             margin-bottom: 4px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            line-height: 1.3;
         }
 
         .video-author-enhanced {
-            font-size: 12px;
-            opacity: 0.8;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            font-size: 14px;
+            color: #666;
+            font-weight: 500;
         }
 
         .video-rating-enhanced {
             display: flex;
             align-items: center;
             gap: 4px;
-            background: rgba(255,152,0,0.2);
-            padding: 6px 10px;
-            border-radius: 12px;
-            font-size: 12px;
+            font-size: 14px;
             font-weight: 600;
             color: #ff9800;
-            white-space: nowrap;
-            min-width: 60px;
-            justify-content: center;
+            flex-shrink: 0;
         }
 
         .video-actions-enhanced {
-            padding: 0 16px 16px;
+            padding: 16px;
             display: flex;
             align-items: center;
+            justify-content: space-between;
             gap: 12px;
         }
 
         .vote-container-enhanced {
+            display: flex;
+            align-items: center;
+            gap: 8px;
             flex: 1;
-            min-width: 0;
         }
 
         .vote-display-enhanced {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 12px;
-            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #2e7d32;
+            min-width: 60px;
         }
 
         .vote-value-enhanced {
-            font-weight: 700;
             color: #ff9800;
-            min-width: 45px;
-            text-align: right;
+            font-size: 16px;
         }
 
         .vote-btn-enhanced {
             background: linear-gradient(135deg, #4caf50, #66bb6a);
-            border: none;
-            border-radius: 20px;
-            padding: 10px 16px;
             color: white;
-            font-size: 12px;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
             font-weight: 600;
+            font-size: 14px;
             cursor: pointer;
             transition: all 0.3s ease;
-            white-space: nowrap;
-            min-width: 80px;
+            flex-shrink: 0;
         }
 
         .vote-btn-enhanced:hover {
+            background: linear-gradient(135deg, #66bb6a, #4caf50);
             transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(76,175,80,0.4);
+        }
+
+        /* Comments System */
+        .comments-section {
+            background: rgba(255,255,255,0.98);
+            border-top: 1px solid rgba(0,0,0,0.1);
+            padding: 16px;
+            display: none;
+        }
+
+        .comments-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .comments-count {
+            font-size: 16px;
+            font-weight: 700;
+            color: #2e7d32;
+        }
+
+        .toggle-comments {
+            background: none;
+            border: none;
+            color: #4caf50;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .comments-list {
+            margin-bottom: 16px;
+        }
+
+        .comment-item {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .comment-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .comment-avatar {
+            flex-shrink: 0;
+        }
+
+        .comment-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .comment-author {
+            font-size: 14px;
+            font-weight: 600;
+            color: #2e7d32;
+            margin-bottom: 4px;
+        }
+
+        .comment-text {
+            font-size: 14px;
+            color: #333;
+            line-height: 1.4;
+            margin-bottom: 4px;
+        }
+
+        .comment-time {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .add-comment {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .comment-input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid rgba(0,0,0,0.1);
+            border-radius: 20px;
+            font-size: 14px;
+            background: rgba(0,0,0,0.02);
+        }
+
+        .comment-input:focus {
+            outline: none;
+            border-color: #4caf50;
+            background: white;
+        }
+
+        .send-comment {
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 12px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .send-comment:hover {
+            background: #66bb6a;
+            transform: translateY(-1px);
         }
 
         /* Welcome Screen */
@@ -694,209 +791,10 @@
         }
 
         .video-voting {
-            padding: 12px 16px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: rgba(255,255,255,0.05);
-            border-top: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .video-voting-controls {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex: 1;
-            min-width: 0;
-        }
-
-        .video-rating-display {
-            background: rgba(255,152,0,0.2);
-            padding: 6px 10px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
-            color: #ff9800;
-            white-space: nowrap;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            min-width: 60px;
-            justify-content: center;
-        }
-
-        .vote-slider-enhanced {
-            flex: 1;
-            height: 6px;
-            border-radius: 3px;
-            background: rgba(255,255,255,0.3);
-            outline: none;
-            -webkit-appearance: none;
-            min-width: 80px;
-        }
-
-        .vote-value-display {
-            font-weight: 700;
-            color: #ff9800;
-            min-width: 40px;
-            text-align: center;
-            font-size: 12px;
-        }
-
-        .vote-button-enhanced {
-            background: linear-gradient(135deg, #4caf50, #66bb6a);
-            border: none;
-            border-radius: 16px;
-            padding: 8px 14px;
-            color: white;
-            font-size: 11px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            white-space: nowrap;
-            min-width: 60px;
-        }
-
-        .vote-button-enhanced:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(76,175,80,0.4);
-        }
-
-        /* Enhanced Comments System */
-        .comments-section {
-            background: rgba(255,255,255,0.05);
-            border-top: 1px solid rgba(255,255,255,0.1);
-            padding: 16px;
-        }
-
-        .comments-header {
+            padding: 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 16px;
-        }
-
-        .comments-count {
-            font-size: 14px;
-            font-weight: 600;
-            color: white;
-        }
-
-        .toggle-comments {
-            background: rgba(76,175,80,0.2);
-            border: none;
-            color: #4caf50;
-            font-size: 12px;
-            padding: 6px 12px;
-            border-radius: 16px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .toggle-comments:hover {
-            background: rgba(76,175,80,0.3);
-        }
-
-        .comments-list {
-            max-height: 200px;
-            overflow-y: auto;
-            margin-bottom: 16px;
-        }
-
-        .comment-item {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 12px;
-            padding: 12px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 12px;
-            transition: all 0.3s ease;
-        }
-
-        .comment-item:hover {
-            background: rgba(255,255,255,0.08);
-        }
-
-        .comment-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid rgba(255,255,255,0.2);
-        }
-
-        .comment-content {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .comment-author {
-            font-size: 12px;
-            font-weight: 600;
-            margin-bottom: 4px;
-            color: #4caf50;
-        }
-
-        .comment-text {
-            font-size: 12px;
-            opacity: 0.9;
-            line-height: 1.4;
-            color: white;
-            word-wrap: break-word;
-        }
-
-        .comment-time {
-            font-size: 10px;
-            opacity: 0.6;
-            margin-top: 4px;
-            color: rgba(255,255,255,0.6);
-        }
-
-        .add-comment {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-
-        .comment-input {
-            flex: 1;
-            padding: 10px 14px;
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 20px;
-            background: rgba(255,255,255,0.1);
-            color: white;
-            font-size: 12px;
-            outline: none;
-            transition: all 0.3s ease;
-        }
-
-        .comment-input:focus {
-            border-color: #4caf50;
-            background: rgba(255,255,255,0.15);
-        }
-
-        .comment-input::placeholder {
-            color: rgba(255,255,255,0.6);
-        }
-
-        .send-comment {
-            background: linear-gradient(135deg, #4caf50, #66bb6a);
-            border: none;
-            border-radius: 50%;
-            width: 36px;
-            height: 36px;
-            color: white;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
-
-        .send-comment:hover {
-            transform: scale(1.1);
-            box-shadow: 0 4px 12px rgba(76,175,80,0.4);
         }
 
         .vote-buttons {
@@ -1593,78 +1491,38 @@
                         </div>
                     </div>
                     <div class="video-voting">
-                        <div class="video-voting-controls">
-                            <span style="font-weight: 600; font-size: 12px; color: white;">Оцінка:</span>
-                            <input type="range" id="slider_challenge1_video1" min="0" max="5" step="0.01" value="0" onchange="updateVoteValue('challenge1_video1', this.value)" class="vote-slider-enhanced">
-                            <span id="vote_challenge1_video1" class="vote-value-display">0.0</span>
-                            <button onclick="voteForVideo('challenge1_video1', event)" class="vote-button-enhanced">Голос</button>
+                        <div style="display: flex; align-items: center; gap: 10px; flex: 1;">
+                            <span style="font-weight: 600; font-size: 14px;">Ваша оцінка:</span>
+                            <input type="range" id="slider_challenge1_video1" min="0" max="5" step="0.01" value="0" onchange="updateVoteValue('challenge1_video1', this.value)" style="flex: 1; height: 6px; border-radius: 5px; background: #ddd; outline: none; -webkit-appearance: none;">
+                            <span id="vote_challenge1_video1" style="font-weight: 700; color: #ff9800; min-width: 35px;">0.0</span>
+                            <button onclick="voteForVideo('challenge1_video1', event)" style="padding: 6px 12px; background: #4caf50; color: white; border: none; border-radius: 12px; font-size: 12px; font-weight: 600; cursor: pointer; margin-left: 5px;">Голос</button>
                         </div>
-                        <div class="video-rating-display">
-                            <i class="fas fa-star"></i>
-                            <span>4.1</span>
-                        </div>
+                        <div class="video-score">⭐ 4.1</div>
                     </div>
-                    <div style="padding: 16px; background: rgba(255,255,255,0.05); color: white;">
-                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
-                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face" alt="Андрій Коваленко" class="avatar avatar-sm" onclick="showPlayerProfile('andriy_k')" style="cursor: pointer;">
-                            <div>
-                                <strong class="video-author" onclick="showPlayerProfile('andriy_k')" style="cursor: pointer; color: #4caf50; font-size: 14px;">Андрій Коваленко</strong>
-                                <div style="font-size: 12px; opacity: 0.8; color: rgba(255,255,255,0.8);">Півзахисник • Київ</div>
-                            </div>
-                        </div>
-                        <div style="font-size: 11px; opacity: 0.6; color: rgba(255,255,255,0.6);">2 години тому • Гідропарк</div>
-                        
-                        <!-- Action buttons for challenge video -->
-                        <div style="display: flex; gap: 8px; margin-top: 12px;">
-                            <button onclick="shareVideo('challenge1_video1')" style="flex: 1; padding: 8px; background: #ff9800; color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; font-size: 11px;">
-                                📤 Поділитися
-                            </button>
-                            <button onclick="toggleComments('challenge1_video1')" style="flex: 1; padding: 8px; background: #4caf50; color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; font-size: 11px;">
-                                💬 Коментарі
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Comments Section for Challenge Video -->
-                    <div id="comments_challenge1_video1" class="comments-section" style="display: none;">
-                        <div class="comments-header">
-                            <div class="comments-count">💬 Коментарі (5)</div>
-                            <button onclick="toggleComments('challenge1_video1')" class="toggle-comments">Згорнути</button>
-                        </div>
-                        
-                        <div class="comments-list">
-                            <div class="comment-item">
-                                <img src="https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=150&h=150&fit=crop&crop=face" alt="Дмитро" class="comment-avatar">
-                                <div class="comment-content">
-                                    <div class="comment-author">Дмитро Шевченко</div>
-                                    <div class="comment-text">Круто! Такий фінт я ще не бачив 🔥</div>
-                                    <div class="comment-time">1 година тому</div>
-                                </div>
-                            </div>
-                            
-                            <div class="comment-item">
-                                <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&h=150&fit=crop&crop=face" alt="Андрій" class="comment-avatar">
-                                <div class="comment-content">
-                                    <div class="comment-author">Андрій Мельник</div>
-                                    <div class="comment-text">Респект! Треба буде спробувати</div>
-                                    <div class="comment-time">30 хвилин тому</div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="add-comment">
-                            <input type="text" class="comment-input" placeholder="Додати коментар..." id="comment_input_challenge1_video1">
-                            <button onclick="addComment('challenge1_video1')" class="send-comment">
-                                <i class="fas fa-paper-plane"></i>
-                            </button>
-                        </div>
+                    <div style="padding: 0 15px 15px; color: #333;">
+                        <strong class="video-author" onclick="showPlayerProfile('andriy_k')">Андрій Коваленко</strong> • Півзахисник • Київ<br>
+                        <small style="color: #666;">2 години тому • Гідропарк</small>
                     </div>
                 </div>
 
-                <!-- Sample Video 4 -->
-                <div class="video-item" style="background: rgba(255,255,255,0.9); border-radius: 15px; margin-bottom: 15px; overflow: hidden; color: #333; box-shadow: 0 6px 20px rgba(0,0,0,0.1);">
-                    <div style="position: relative; width: 100%; height: 200px; background: linear-gradient(45deg, #ff9800, #f57c00); display: flex; align-items: center; justify-content: center; color: white; font-size: 48px; cursor: pointer;" onclick="playVideo('video4')">
-                        ▶️
+                <!-- Enhanced Video 4 -->
+                <div class="video-card-enhanced">
+                    <div class="video-header-enhanced">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face" alt="Олександр Петренко" class="avatar avatar-md">
+                        <div class="video-info-enhanced">
+                            <div class="video-title-enhanced">Майстерський фінт Роналдіньо</div>
+                            <div class="video-author-enhanced" onclick="showPlayerProfile('player1')" style="cursor: pointer;">Олександр Петренко</div>
+                        </div>
+                        <div class="video-rating-enhanced">
+                            <i class="fas fa-star"></i>
+                            <span>4.7</span>
+                        </div>
+                    </div>
+                    
+                    <div style="position: relative; width: 100%; height: 200px; background: linear-gradient(45deg, #ff9800, #f57c00); display: flex; align-items: center; justify-content: center; color: white; cursor: pointer;" onclick="playVideo('video4')">
+                        <div class="play-button" style="width: 60px; height: 60px; background: rgba(255,255,255,0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #ff9800; font-size: 24px;">
+                            <i class="fas fa-play"></i>
+                        </div>
                         <div style="position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.7); color: white; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: 600;">
                             🎯 Фінти
                         </div>
@@ -1672,89 +1530,71 @@
                             2:15
                         </div>
                     </div>
-                    <div style="padding: 15px;">
-                        <h4 style="margin: 0 0 8px 0; font-size: 16px; color: #333;">Майстерський фінт Роналдіньо</h4>
-                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-                            <img src="https://images.unsplash.com/photo-1463453091185-61582044d556?w=150&h=150&fit=crop&crop=face" alt="Роман Семенчук" class="avatar avatar-sm" onclick="showPlayerProfile('roman_boyko')" style="cursor: pointer;">
-                            <div>
-                                <div onclick="showPlayerProfile('roman_boyko')" style="font-weight: 600; font-size: 14px; color: #333; cursor: pointer; transition: all 0.3s;" onmouseover="this.style.color='#4caf50'" onmouseout="this.style.color='#333'">Роман Бойко</div>
-                                <div style="font-size: 12px; color: #666;">🏙️ Вінниця • 3 дні тому</div>
+                    
+                    <div class="video-actions-enhanced">
+                        <div class="vote-container-enhanced">
+                            <div class="vote-display-enhanced">
+                                Оцінка: <span class="vote-value-enhanced" id="vote_video4">0.0</span>/5
+                            </div>
+                            <input type="range" class="vote-slider-enhanced" id="slider_video4" min="0" max="5" step="0.01" value="0" onchange="updateVoteValue('video4', this.value)" style="flex: 1; margin: 0 8px;">
+                        </div>
+                        <button class="vote-btn-enhanced" onclick="voteForVideo('video4', event)">
+                            <i class="fas fa-thumbs-up"></i> Голос
+                        </button>
+                    </div>
+                    
+                    <!-- Comments Section -->
+                    <div id="comments_video4" class="comments-section">
+                        <div class="comments-header">
+                            <div class="comments-count">💬 Коментарі (3)</div>
+                            <button class="toggle-comments" onclick="toggleComments('video4')">Сховати</button>
+                        </div>
+                        <div class="comments-list">
+                            <div class="comment-item">
+                                <div class="comment-avatar">
+                                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face" alt="Віталій" class="avatar avatar-sm">
+                                </div>
+                                <div class="comment-content">
+                                    <div class="comment-author">Віталій Коваленко</div>
+                                    <div class="comment-text">Неймовірний фінт! 🔥</div>
+                                    <div class="comment-time">2 години тому</div>
+                                </div>
+                            </div>
+                            <div class="comment-item">
+                                <div class="comment-avatar">
+                                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face" alt="Дмитро" class="avatar avatar-sm">
+                                </div>
+                                <div class="comment-content">
+                                    <div class="comment-author">Дмитро Сидоренко</div>
+                                    <div class="comment-text">Треба вчитися таким рухам!</div>
+                                    <div class="comment-time">1 година тому</div>
+                                </div>
                             </div>
                         </div>
-                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
-                            <div style="display: flex; align-items: center; gap: 5px;">
-                                <span style="color: #ff9800; font-weight: 700;">⭐ 4.7</span>
-                                <span style="color: #666; font-size: 14px;">• 👁️ 892</span>
-                            </div>
-                            <div style="display: flex; gap: 5px;">
-                                <span style="background: #e3f2fd; color: #1976d2; padding: 3px 8px; border-radius: 12px; font-size: 11px; font-weight: 600;">#фінт</span>
-                                <span style="background: #f3e5f5; color: #7b1fa2; padding: 3px 8px; border-radius: 12px; font-size: 11px; font-weight: 600;">#майстерність</span>
-                            </div>
-                        </div>
-                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px; padding: 12px; background: rgba(255,255,255,0.05); border-radius: 12px;">
-                            <span style="color: #666; font-size: 12px; font-weight: 600;">Оцінка:</span>
-                            <input type="range" id="slider_video4" min="0" max="5" step="0.01" value="0" 
-                                   onchange="updateVoteValue('video4', this.value)"
-                                   style="flex: 1; height: 6px; border-radius: 3px; background: rgba(255,255,255,0.3); outline: none; min-width: 80px;">
-                            <span id="vote_video4" style="min-width: 40px; font-weight: 700; font-size: 12px; color: #ff9800; text-align: center;">0.00</span>
-                            <button onclick="voteForVideo('video4')" style="padding: 8px 14px; background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; border: none; border-radius: 16px; font-size: 11px; font-weight: 600; cursor: pointer; min-width: 60px; white-space: nowrap;">
-                                Голос
+                        <div class="add-comment">
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face" alt="Your Avatar" class="avatar avatar-sm">
+                            <input type="text" class="comment-input" placeholder="Додати коментар...">
+                            <button class="send-comment" onclick="addComment('video4')">
+                                <i class="fas fa-paper-plane"></i>
                             </button>
-                            <div style="background: rgba(255,152,0,0.2); padding: 6px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; color: #ff9800; display: flex; align-items: center; gap: 4px;">
-                                <i class="fas fa-star"></i>
-                                <span>4.7</span>
-                            </div>
                         </div>
+                    </div>
+                    
+                    <div style="padding: 12px 16px; background: #f8f9fa; display: flex; justify-content: space-between; align-items: center;">
+                        <button onclick="toggleComments('video4')" style="background: none; border: none; color: #4caf50; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 4px;">
+                            <i class="fas fa-comment"></i> Коментарі (3)
+                        </button>
+                        <button style="background: none; border: none; color: #666; cursor: pointer;">
+                            <i class="fas fa-share"></i> Поділитися
+                        </button>
+                    </div>
+                </div>
                         <div style="display: flex; gap: 8px;">
                             <button onclick="shareVideo('video4')" style="flex: 1; padding: 8px; background: #ff9800; color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; font-size: 12px;">
                                 📤 Поділитися
                             </button>
-                            <button onclick="toggleComments('video4')" style="flex: 1; padding: 8px; background: #4caf50; color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; font-size: 12px;">
-                                💬 Коментарі
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Comments Section -->
-                    <div id="comments_video4" class="comments-section" style="display: none;">
-                        <div class="comments-header">
-                            <div class="comments-count">💬 Коментарі (8)</div>
-                            <button onclick="toggleComments('video4')" class="toggle-comments">Згорнути</button>
-                        </div>
-                        
-                        <div class="comments-list">
-                            <div class="comment-item">
-                                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face" alt="Віталій" class="comment-avatar">
-                                <div class="comment-content">
-                                    <div class="comment-author">Віталій Коваленко</div>
-                                    <div class="comment-text">Неймовірний фінт! 🔥 Треба буде спробувати на тренуванні</div>
-                                    <div class="comment-time">2 години тому</div>
-                                </div>
-                            </div>
-                            
-                            <div class="comment-item">
-                                <img src="https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=150&h=150&fit=crop&crop=face" alt="Дмитро" class="comment-avatar">
-                                <div class="comment-content">
-                                    <div class="comment-author">Дмитро Шевченко</div>
-                                    <div class="comment-text">Класна техніка! А можеш показати в повільному повторі?</div>
-                                    <div class="comment-time">1 година тому</div>
-                                </div>
-                            </div>
-                            
-                            <div class="comment-item">
-                                <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&h=150&fit=crop&crop=face" alt="Андрій" class="comment-avatar">
-                                <div class="comment-content">
-                                    <div class="comment-author">Андрій Мельник</div>
-                                    <div class="comment-text">Роман, ти як завжди на висоті! 👏</div>
-                                    <div class="comment-time">45 хвилин тому</div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="add-comment">
-                            <input type="text" class="comment-input" placeholder="Додати коментар..." id="comment_input_video4">
-                            <button onclick="addComment('video4')" class="send-comment">
-                                <i class="fas fa-paper-plane"></i>
+                            <button onclick="addComment('video4')" style="flex: 1; padding: 8px; background: #4caf50; color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; font-size: 12px;">
+                                💬 Коментар
                             </button>
                         </div>
                     </div>
@@ -3128,8 +2968,8 @@
                                 🏆
                             </div>
                             <div style="flex: 1;">
-                                <h3 style="margin: 0 0 5px 0; color: #ff9800; font-size: 18px;">🏆 Europa League</h3>
-                                <div style="font-size: 24px; font-weight: 700; color: white;">49 ₴<span style="font-size: 14px; font-weight: 400;">/місяць</span></div>
+                                <h3 style="margin: 0 0 5px 0; color: #ff9800; font-size: 18px;">Europa League</h3>
+                                <div style="font-size: 24px; font-weight: 700; color: white;">99 ₴<span style="font-size: 14px; font-weight: 400;">/місяць</span></div>
                             </div>
                         </div>
                         
@@ -3140,19 +2980,15 @@
                             </div>
                             <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
                                 <span style="color: #4caf50;">✅</span>
-                                <span style="color: white; font-size: 14px;">5 челенджів на місяць</span>
+                                <span style="color: white; font-size: 14px;">3 челенджі на місяць</span>
                             </div>
                             <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
                                 <span style="color: #4caf50;">✅</span>
-                                <span style="color: white; font-size: 14px;">+30 монет щомісяця</span>
-                            </div>
-                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
-                                <span style="color: #4caf50;">✅</span>
-                                <span style="color: white; font-size: 14px;">Коментарі до відео</span>
+                                <span style="color: white; font-size: 14px;">Пріоритетна підтримка</span>
                             </div>
                             <div style="display: flex; align-items: center; gap: 8px;">
                                 <span style="color: #4caf50;">✅</span>
-                                <span style="color: white; font-size: 14px;">Синя позначка біля імені</span>
+                                <span style="color: white; font-size: 14px;">Спеціальна відзнака</span>
                             </div>
                         </div>
                         
@@ -3172,8 +3008,8 @@
                                 👑
                             </div>
                             <div style="flex: 1;">
-                                <h3 style="margin: 0 0 5px 0; color: #2196f3; font-size: 18px;">🏆 Champions League</h3>
-                                <div style="font-size: 24px; font-weight: 700; color: white;">89 ₴<span style="font-size: 14px; font-weight: 400;">/місяць</span></div>
+                                <h3 style="margin: 0 0 5px 0; color: #2196f3; font-size: 18px;">Champions League</h3>
+                                <div style="font-size: 24px; font-weight: 700; color: white;">159 ₴<span style="font-size: 14px; font-weight: 400;">/місяць</span></div>
                             </div>
                         </div>
                         
@@ -3184,23 +3020,19 @@
                             </div>
                             <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
                                 <span style="color: #4caf50;">✅</span>
-                                <span style="color: white; font-size: 14px;">Необмежені челенджі</span>
+                                <span style="color: white; font-size: 14px;">Безлімітні челенджі</span>
                             </div>
                             <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
                                 <span style="color: #4caf50;">✅</span>
-                                <span style="color: white; font-size: 14px;">+60 монет щомісяця</span>
+                                <span style="color: white; font-size: 14px;">+100 монет щомісяця</span>
                             </div>
                             <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
                                 <span style="color: #4caf50;">✅</span>
-                                <span style="color: white; font-size: 14px;">Знижка 20% на монети</span>
-                            </div>
-                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
-                                <span style="color: #4caf50;">✅</span>
-                                <span style="color: white; font-size: 14px;">Детальна статистика</span>
+                                <span style="color: white; font-size: 14px;">Експертний аналіз відео</span>
                             </div>
                             <div style="display: flex; align-items: center; gap: 8px;">
                                 <span style="color: #4caf50;">✅</span>
-                                <span style="color: white; font-size: 14px;">Золота позначка біля імені</span>
+                                <span style="color: white; font-size: 14px;">Ексклюзивна відзнака</span>
                             </div>
                         </div>
                         
@@ -3291,161 +3123,151 @@
     </div>
 
     <script>
-        console.log('🚀 FLAP Testing Version Loading...');
+        console.log('🚀 FLAP Enhanced Version Loading...');
         
-        // Global variables
-        let currentUser = {
-            name: 'Максим Коваль',
-            position: 'Півзахисник',
-            city: 'Київ',
-            rating: 4.2,
-            coins: 250,
-            avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face'
-        };
-
-        // Enhanced Player Database with Real Avatars
+        // Players Database with real avatars
         const playersDatabase = {
-            'oleksandr_petrenko': {
+            player1: {
                 name: 'Олександр Петренко',
                 position: 'Нападник',
                 city: 'Київ',
-                rating: 4.5,
-                avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
-                phone: '+380501234567',
-                telegram: '@oleksandr_p',
-                instagram: '@alex_football',
+                rating: '4.8',
+                avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
+                phone: '+380 67 123 45 67',
+                telegram: '@alex_football',
+                instagram: '@alex.striker',
                 matches: 45,
-                goals: 23,
-                assists: 12
+                goals: 32,
+                assists: 18
             },
-            'vitaliy_kovalenko': {
+            player2: {
                 name: 'Віталій Коваленко',
                 position: 'Захисник',
-                city: 'Харків',
-                rating: 4.1,
-                avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face',
-                phone: '+380671234567',
-                telegram: '@vitaliy_k',
-                instagram: '@vitaly_defender',
+                city: 'Львів',
+                rating: '4.5',
+                avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
+                phone: '+380 67 234 56 78',
+                telegram: '@vitaly_defender',
+                instagram: '@vitaly.defense',
                 matches: 38,
                 goals: 5,
-                assists: 15
+                assists: 12
             },
-            'dmitro_shevchenko': {
-                name: 'Дмитро Шевченко',
+            player3: {
+                name: 'Дмитро Сидоренко',
                 position: 'Півзахисник',
                 city: 'Одеса',
-                rating: 4.3,
-                avatar: 'https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=150&h=150&fit=crop&crop=face',
-                phone: '+380931234567',
-                telegram: '@dmitro_s',
-                instagram: '@dimka_midfielder',
-                matches: 52,
-                goals: 18,
+                rating: '4.3',
+                avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face',
+                phone: '+380 67 345 67 89',
+                telegram: '@dimka_midfielder',
+                instagram: '@dmitro.mid',
+                matches: 29,
+                goals: 15,
                 assists: 22
             },
-            'sergiy_bondar': {
-                name: 'Сергій Бондар',
+            player4: {
+                name: 'Сергій Іваненко',
                 position: 'Воротар',
-                city: 'Дніпро',
-                rating: 4.0,
-                avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop&crop=face',
-                phone: '+380661234567',
-                telegram: '@sergiy_gk',
-                instagram: '@sergio_keeper',
-                matches: 41,
+                city: 'Харків',
+                rating: '4.7',
+                avatar: 'https://images.unsplash.com/photo-1566492031773-4f4e44671d66?w=150&h=150&fit=crop&crop=face',
+                phone: '+380 67 456 78 90',
+                telegram: '@sergio_keeper',
+                instagram: '@sergiy.goal',
+                matches: 52,
                 goals: 0,
                 assists: 3
             },
-            'andriy_melnyk': {
+            player5: {
                 name: 'Андрій Мельник',
                 position: 'Нападник',
-                city: 'Львів',
-                rating: 4.4,
-                avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&h=150&fit=crop&crop=face',
-                phone: '+380501234568',
-                telegram: '@andriy_m',
-                instagram: '@andrey_striker',
-                matches: 36,
+                city: 'Дніпро',
+                rating: '4.6',
+                avatar: 'https://images.unsplash.com/photo-1552058544-f2b08422138a?w=150&h=150&fit=crop&crop=face',
+                phone: '+380 67 567 89 01',
+                telegram: '@andrey_striker',
+                instagram: '@andrey.goals',
+                matches: 41,
                 goals: 28,
-                assists: 9
+                assists: 14
             },
-            'yuriy_tkachenko': {
-                name: 'Юрій Ткаченко',
+            player6: {
+                name: 'Юрій Петрович',
                 position: 'Захисник',
                 city: 'Запоріжжя',
-                rating: 3.9,
-                avatar: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=150&h=150&fit=crop&crop=face',
-                phone: '+380671234568',
-                telegram: '@yuriy_t',
-                instagram: '@yura_defense',
-                matches: 29,
-                goals: 3,
-                assists: 8
+                rating: '4.4',
+                avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&h=150&fit=crop&crop=face',
+                phone: '+380 67 678 90 12',
+                telegram: '@yura_defense',
+                instagram: '@yura.def',
+                matches: 33,
+                goals: 7,
+                assists: 9
             },
-            'roman_boyko': {
-                name: 'Роман Бойко',
+            player7: {
+                name: 'Роман Коваль',
                 position: 'Півзахисник',
                 city: 'Вінниця',
-                rating: 4.2,
-                avatar: 'https://images.unsplash.com/photo-1463453091185-61582044d556?w=150&h=150&fit=crop&crop=face',
-                phone: '+380931234568',
-                telegram: '@roman_b',
-                instagram: '@roma_midfielder',
-                matches: 33,
+                rating: '4.2',
+                avatar: 'https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=150&h=150&fit=crop&crop=face',
+                phone: '+380 67 789 01 23',
+                telegram: '@roma_midfielder',
+                instagram: '@roma.mid',
+                matches: 26,
                 goals: 11,
-                assists: 16
+                assists: 19
             },
-            'igor_savchenko': {
+            player8: {
                 name: 'Ігор Савченко',
                 position: 'Нападник',
                 city: 'Полтава',
-                rating: 4.1,
-                avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
-                phone: '+380661234568',
-                telegram: '@igor_s',
-                instagram: '@igor_forward',
-                matches: 27,
-                goals: 19,
-                assists: 7
-            },
-            'taras_kravchenko': {
-                name: 'Тарас Кравченко',
-                position: 'Воротар',
-                city: 'Чернігів',
-                rating: 3.8,
-                avatar: 'https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?w=150&h=150&fit=crop&crop=face',
-                phone: '+380501234569',
-                telegram: '@taras_gk',
-                instagram: '@taras_goalkeeper',
+                rating: '4.1',
+                avatar: 'https://images.unsplash.com/photo-1463453091185-61582044d556?w=150&h=150&fit=crop&crop=face',
+                phone: '+380 67 890 12 34',
+                telegram: '@igor_forward',
+                instagram: '@igor.attack',
                 matches: 22,
+                goals: 16,
+                assists: 8
+            },
+            player9: {
+                name: 'Тарас Шевченко',
+                position: 'Воротар',
+                city: 'Черкаси',
+                rating: '4.0',
+                avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop&crop=face',
+                phone: '+380 67 901 23 45',
+                telegram: '@taras_goalkeeper',
+                instagram: '@taras.saves',
+                matches: 18,
                 goals: 0,
                 assists: 1
             },
-            'maxim_petrovich': {
-                name: 'Максим Петрович',
+            player10: {
+                name: 'Максим Бондаренко',
                 position: 'Захисник',
-                city: 'Черкаси',
-                rating: 4.0,
-                avatar: 'https://images.unsplash.com/photo-1542909168-82c3e7fdca5c?w=150&h=150&fit=crop&crop=face',
-                phone: '+380671234569',
-                telegram: '@maxim_p',
-                instagram: '@max_defender',
-                matches: 31,
-                goals: 4,
-                assists: 11
+                city: 'Кривий Ріг',
+                rating: '3.9',
+                avatar: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=150&h=150&fit=crop&crop=face',
+                phone: '+380 67 012 34 56',
+                telegram: '@max_defender',
+                instagram: '@max.defense',
+                matches: 15,
+                goals: 3,
+                assists: 5
             }
         };
-
-        // Helper function to get player by ID
+        
+        // Helper function to get player data
         function getPlayer(playerId) {
             return playersDatabase[playerId] || {
                 name: 'Невідомий гравець',
-                position: 'Гравець',
-                city: 'Україна',
-                rating: 3.0,
-                avatar: 'https://images.unsplash.com/photo-1511367461989-f85a21fda167?w=150&h=150&fit=crop&crop=face',
-                phone: '+380000000000',
+                position: 'Невідома',
+                city: 'Невідоме',
+                rating: '0.0',
+                avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
+                phone: '+380 XX XXX XX XX',
                 telegram: '@unknown',
                 instagram: '@unknown',
                 matches: 0,
@@ -3453,6 +3275,53 @@
                 assists: 0
             };
         }
+        
+        // Comments functions
+        function toggleComments(videoId) {
+            console.log('💬 Toggle comments for video:', videoId);
+            const comments = document.getElementById('comments_' + videoId);
+            if (comments) {
+                if (comments.style.display === 'none' || !comments.style.display) {
+                    comments.style.display = 'block';
+                    comments.style.animation = 'slideDown 0.3s ease';
+                } else {
+                    comments.style.display = 'none';
+                }
+            }
+        }
+
+        function addComment(videoId) {
+            console.log('💬 Add comment to video:', videoId);
+            const input = document.querySelector('#comments_' + videoId + ' .comment-input');
+            if (input && input.value.trim()) {
+                const commentsList = document.querySelector('#comments_' + videoId + ' .comments-list');
+                const commentsCount = document.querySelector('#comments_' + videoId + ' .comments-count');
+                
+                if (commentsList && commentsCount) {
+                    const newComment = document.createElement('div');
+                    newComment.className = 'comment-item';
+                    newComment.innerHTML = '<div class="comment-avatar"><img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face" alt="Your Avatar" class="avatar avatar-sm"></div><div class="comment-content"><div class="comment-author">Максим Коваль</div><div class="comment-text">' + input.value + '</div><div class="comment-time">щойно</div></div>';
+                    
+                    commentsList.appendChild(newComment);
+                    
+                    // Update comment count
+                    const currentCount = parseInt(commentsCount.textContent.match(/\d+/)[0]);
+                    commentsCount.textContent = '💬 Коментарі (' + (currentCount + 1) + ')';
+                    
+                    input.value = '';
+                    showToast('💬 Коментар додано!', 'success');
+                }
+            }
+        }
+        
+        // Global variables
+        let currentUser = {
+            name: 'Максим Коваль',
+            position: 'Півзахисник',
+            city: 'Київ',
+            rating: 4.2,
+            coins: 250
+        };
         
         let coins = 250;
         let videoRatings = {};
@@ -3535,31 +3404,9 @@
             console.log('🔑 Quick login initiated');
             showToast('Вхід виконано успішно!', 'success');
             setTimeout(() => {
-                // Hide auth screen
-                const authScreen = document.getElementById('authScreen');
-                const mainScreen = document.getElementById('mainScreen');
-                
-                console.log('🔍 Elements found:', {
-                    authScreen: !!authScreen,
-                    mainScreen: !!mainScreen
-                });
-                
-                if (authScreen) {
-                    authScreen.style.display = 'none !important';
-                    authScreen.classList.remove('active');
-                    authScreen.classList.remove('welcome-screen');
-                    console.log('✅ Auth screen hidden');
-                }
-                
-                if (mainScreen) {
-                    mainScreen.style.display = 'block !important';
-                    mainScreen.classList.add('active');
-                    console.log('✅ Main screen shown');
-                } else {
-                    console.error('❌ mainScreen not found!');
-                }
-                
-                console.log('✅ Navigation completed: authScreen -> mainScreen');
+                document.getElementById('authScreen').style.display = 'none';
+                document.getElementById('mainScreen').style.display = 'block';
+                document.getElementById('mainScreen').classList.add('active');
             }, 1000);
         }
         
@@ -3567,26 +3414,9 @@
             console.log('📝 Quick register initiated');
             showToast('Переходимо до створення профілю!', 'success');
             setTimeout(() => {
-                // Hide auth screen
-                const authScreen = document.getElementById('authScreen');
-                const profileScreen = document.getElementById('profileCreationScreen');
-                
-                if (authScreen) {
-                    authScreen.style.display = 'none !important';
-                    authScreen.classList.remove('active');
-                    authScreen.classList.remove('welcome-screen');
-                    console.log('✅ Auth screen hidden');
-                }
-                
-                if (profileScreen) {
-                    profileScreen.style.display = 'block !important';
-                    profileScreen.classList.add('active');
-                    console.log('✅ Profile screen shown');
-                } else {
-                    console.error('❌ profileCreationScreen not found!');
-                }
-                
-                console.log('✅ Navigation completed: authScreen -> profileCreationScreen');
+                document.getElementById('authScreen').style.display = 'none';
+                document.getElementById('profileCreationScreen').style.display = 'block';
+                document.getElementById('profileCreationScreen').classList.add('active');
             }, 1000);
         }
         
@@ -3594,31 +3424,9 @@
             console.log('🔍 Google login initiated');
             showToast('Вхід через Google успішний!', 'success');
             setTimeout(() => {
-                // Hide auth screen
-                const authScreen = document.getElementById('authScreen');
-                const mainScreen = document.getElementById('mainScreen');
-                
-                console.log('🔍 Elements found:', {
-                    authScreen: !!authScreen,
-                    mainScreen: !!mainScreen
-                });
-                
-                if (authScreen) {
-                    authScreen.style.display = 'none !important';
-                    authScreen.classList.remove('active');
-                    authScreen.classList.remove('welcome-screen');
-                    console.log('✅ Auth screen hidden');
-                }
-                
-                if (mainScreen) {
-                    mainScreen.style.display = 'block !important';
-                    mainScreen.classList.add('active');
-                    console.log('✅ Main screen shown');
-                } else {
-                    console.error('❌ mainScreen not found!');
-                }
-                
-                console.log('✅ Navigation completed: Google login -> mainScreen');
+                document.getElementById('authScreen').style.display = 'none';
+                document.getElementById('mainScreen').style.display = 'block';
+                document.getElementById('mainScreen').classList.add('active');
             }, 1000);
         }
         
@@ -3626,31 +3434,9 @@
             console.log('📘 Facebook login initiated');
             showToast('Вхід через Facebook успішний!', 'success');
             setTimeout(() => {
-                // Hide auth screen
-                const authScreen = document.getElementById('authScreen');
-                const mainScreen = document.getElementById('mainScreen');
-                
-                console.log('🔍 Elements found:', {
-                    authScreen: !!authScreen,
-                    mainScreen: !!mainScreen
-                });
-                
-                if (authScreen) {
-                    authScreen.style.display = 'none !important';
-                    authScreen.classList.remove('active');
-                    authScreen.classList.remove('welcome-screen');
-                    console.log('✅ Auth screen hidden');
-                }
-                
-                if (mainScreen) {
-                    mainScreen.style.display = 'block !important';
-                    mainScreen.classList.add('active');
-                    console.log('✅ Main screen shown');
-                } else {
-                    console.error('❌ mainScreen not found!');
-                }
-                
-                console.log('✅ Navigation completed: Facebook login -> mainScreen');
+                document.getElementById('authScreen').style.display = 'none';
+                document.getElementById('mainScreen').style.display = 'block';
+                document.getElementById('mainScreen').classList.add('active');
             }, 1000);
         }
         
@@ -4166,107 +3952,70 @@
             const modal = document.createElement('div');
             modal.className = 'rating-modal show';
             modal.innerHTML = `
-                <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); display: flex; align-items: center; justify-content: center; z-index: 1000; backdrop-filter: blur(10px); overflow-y: auto; padding: 20px;">
-                    <div style="background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05)); border-radius: 24px; max-width: 420px; width: 100%; backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.2); box-shadow: 0 20px 40px rgba(0,0,0,0.3); overflow: hidden; max-height: 90vh; display: flex; flex-direction: column;">
+                <div class="rating-content" style="max-width: 500px; max-height: 90vh; overflow-y: auto;">
+                    <div class="rating-title">📋 Деталі матчу</div>
+                    
+                    <div style="background: rgba(255,255,255,0.1); border-radius: 15px; padding: 20px; margin-bottom: 20px;">
+                        <h3 style="margin: 0 0 15px 0; color: white;">${match.title}</h3>
                         
-                        <!-- Match Header -->
-                        <div style="background: linear-gradient(135deg, #4caf50, #66bb6a); padding: 24px; text-align: center; position: relative;">
-                            <button onclick="closeModal(this)" style="position: absolute; top: 16px; right: 16px; background: rgba(255,255,255,0.2); border: none; border-radius: 50%; width: 32px; height: 32px; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center;">
-                                <i class="fas fa-times"></i>
-                            </button>
-                            <div style="font-size: 24px; margin-bottom: 8px;">⚽</div>
-                            <h3 style="margin: 0; color: white; font-size: 18px; font-weight: 700; line-height: 1.3;">${match.title}</h3>
-                            <div style="margin-top: 8px; opacity: 0.9; font-size: 14px;">${match.date} о ${match.time}</div>
-                        </div>
-                        
-                        <div style="flex: 1; overflow-y: auto; padding: 20px;">
-                            <!-- Match Info Grid -->
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px;">
-                                <div style="background: rgba(255,255,255,0.05); padding: 16px; border-radius: 16px; text-align: center;">
-                                    <div style="font-size: 20px; color: #4caf50; margin-bottom: 8px;">📍</div>
-                                    <div style="font-size: 11px; opacity: 0.8; margin-bottom: 4px; color: rgba(255,255,255,0.8);">МІСЦЕ</div>
-                                    <div style="font-size: 13px; font-weight: 600; color: white;">${match.city}</div>
-                                </div>
-                                <div style="background: rgba(255,255,255,0.05); padding: 16px; border-radius: 16px; text-align: center;">
-                                    <div style="font-size: 20px; color: #ff9800; margin-bottom: 8px;">⚽</div>
-                                    <div style="font-size: 11px; opacity: 0.8; margin-bottom: 4px; color: rgba(255,255,255,0.8);">ФОРМАТ</div>
-                                    <div style="font-size: 13px; font-weight: 600; color: white;">${match.format}</div>
-                                </div>
-                                <div style="background: rgba(255,255,255,0.05); padding: 16px; border-radius: 16px; text-align: center;">
-                                    <div style="font-size: 20px; color: #2196f3; margin-bottom: 8px;">💰</div>
-                                    <div style="font-size: 11px; opacity: 0.8; margin-bottom: 4px; color: rgba(255,255,255,0.8);">ЦІНА</div>
-                                    <div style="font-size: 13px; font-weight: 600; color: white;">${match.price}</div>
-                                </div>
-                                <div style="background: rgba(255,255,255,0.05); padding: 16px; border-radius: 16px; text-align: center;">
-                                    <div style="font-size: 20px; color: #9c27b0; margin-bottom: 8px;">🎯</div>
-                                    <div style="font-size: 11px; opacity: 0.8; margin-bottom: 4px; color: rgba(255,255,255,0.8);">РІВЕНЬ</div>
-                                    <div style="font-size: 13px; font-weight: 600; color: white;">${match.level}</div>
-                                </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                            <div>
+                                <div style="color: rgba(255,255,255,0.8); font-size: 12px; margin-bottom: 3px;">📅 Дата і час</div>
+                                <div style="color: white; font-weight: 600;">${match.date} о ${match.time}</div>
                             </div>
-                            
-                            <!-- Location Details -->
-                            <div style="background: rgba(255,255,255,0.05); padding: 16px; border-radius: 16px; margin-bottom: 24px;">
-                                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
-                                    <div style="width: 32px; height: 32px; background: rgba(76,175,80,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                                        <i class="fas fa-map-marker-alt" style="color: #4caf50; font-size: 14px;"></i>
-                                    </div>
-                                    <div style="font-size: 14px; font-weight: 600; color: white;">Адреса</div>
-                                </div>
-                                <div style="font-size: 13px; color: rgba(255,255,255,0.9); line-height: 1.4; margin-left: 44px;">${match.location}</div>
+                            <div>
+                                <div style="color: rgba(255,255,255,0.8); font-size: 12px; margin-bottom: 3px;">📍 Місце</div>
+                                <div style="color: white; font-weight: 600;">${match.city}</div>
                             </div>
-                            
-                            <!-- Players Progress -->
-                            <div style="background: rgba(255,255,255,0.05); padding: 16px; border-radius: 16px; margin-bottom: 24px;">
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                                    <div style="font-size: 14px; font-weight: 600; color: white;">👥 Гравці</div>
-                                    <div style="font-size: 14px; font-weight: 700; color: #4caf50;">${match.currentPlayers}/${match.maxPlayers}</div>
-                                </div>
-                                <div style="background: rgba(255,255,255,0.1); height: 8px; border-radius: 4px; overflow: hidden;">
-                                    <div style="background: linear-gradient(90deg, #4caf50, #66bb6a); height: 100%; width: ${(match.currentPlayers / match.maxPlayers) * 100}%; border-radius: 4px; transition: width 0.3s ease;"></div>
-                                </div>
-                                <div style="font-size: 11px; opacity: 0.8; margin-top: 8px; color: rgba(255,255,255,0.8);">
-                                    ${match.maxPlayers - match.currentPlayers > 0 ? `Залишилось ${match.maxPlayers - match.currentPlayers} місць` : 'Матч заповнений'}
-                                </div>
+                            <div>
+                                <div style="color: rgba(255,255,255,0.8); font-size: 12px; margin-bottom: 3px;">⚽ Формат</div>
+                                <div style="color: white; font-weight: 600;">${match.format}</div>
                             </div>
-                            
-                            <!-- Participants -->
-                            <div style="margin-bottom: 24px;">
-                                <div style="font-size: 14px; font-weight: 600; color: white; margin-bottom: 16px;">👥 Учасники (${match.participants.length})</div>
-                                <div style="max-height: 200px; overflow-y: auto;">
-                                    ${match.participants.map((participant, index) => {
-                                        const playerIds = Object.keys(playersDatabase);
-                                        const playerId = playerIds[index % playerIds.length];
-                                        const player = getPlayer(playerId);
-                                        return `
-                                        <div style="display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 12px; margin-bottom: 8px; background: rgba(255,255,255,0.05); cursor: pointer; transition: all 0.3s ease;" onclick="showPlayerProfile('${playerId}')" onmouseover="this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">
-                                            <img src="${player.avatar}" alt="${participant.name}" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.2);">
-                                            <div style="flex: 1; min-width: 0;">
-                                                <div style="font-weight: 600; color: white; font-size: 13px; margin-bottom: 2px;">${participant.name}</div>
-                                                <div style="font-size: 11px; color: rgba(255,255,255,0.7);">${participant.position === 'Організатор' ? '👑 Організатор' : '⚽ Гравець'}</div>
-                                            </div>
-                                            <div style="text-align: right;">
-                                                <div style="background: rgba(255,152,0,0.2); padding: 4px 8px; border-radius: 8px; display: inline-flex; align-items: center; gap: 4px;">
-                                                    <i class="fas fa-star" style="color: #ff9800; font-size: 10px;"></i>
-                                                    <span style="color: #ff9800; font-weight: 700; font-size: 12px;">${participant.rating}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    `}).join('')}
-                                </div>
+                            <div>
+                                <div style="color: rgba(255,255,255,0.8); font-size: 12px; margin-bottom: 3px;">💰 Ціна</div>
+                                <div style="color: white; font-weight: 600;">${match.price}</div>
                             </div>
                         </div>
                         
-                        <!-- Action Buttons -->
-                        <div style="padding: 20px; border-top: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.02);">
-                            <div style="display: flex; gap: 12px;">
-                                <button onclick="closeModal(this)" style="flex: 1; padding: 14px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white; border-radius: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">
-                                    Закрити
-                                </button>
-                                <button onclick="joinMatch('${matchId}'); closeModal(this);" style="flex: 2; padding: 14px; background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(76,175,80,0.3);">
-                                    ⚽ Приєднатися
-                                </button>
+                        <div style="margin-bottom: 15px;">
+                            <div style="color: rgba(255,255,255,0.8); font-size: 12px; margin-bottom: 8px;">📍 Адреса</div>
+                            <div style="color: white; font-weight: 600;">${match.location}</div>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                            <div>
+                                <div style="color: rgba(255,255,255,0.8); font-size: 12px;">👥 Гравці</div>
+                                <div style="color: white; font-weight: 600;">${match.currentPlayers}/${match.maxPlayers}</div>
+                            </div>
+                            <div>
+                                <div style="color: rgba(255,255,255,0.8); font-size: 12px;">🎯 Рівень</div>
+                                <div style="color: white; font-weight: 600;">${match.level}</div>
                             </div>
                         </div>
+                    </div>
+                    
+                    <div style="background: rgba(255,255,255,0.1); border-radius: 15px; padding: 20px; margin-bottom: 20px;">
+                        <h4 style="margin: 0 0 15px 0; color: white;">👥 Учасники (${match.participants.length})</h4>
+                        
+                        ${match.participants.map((participant, index) => `
+                            <div style="display: flex; align-items: center; gap: 15px; padding: 10px; border-radius: 10px; margin-bottom: 8px; background: rgba(255,255,255,0.05); cursor: pointer;" onclick="showPlayerProfile('player${index + 1}')">
+                                <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #4caf50, #2e7d32); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 14px; font-weight: 700;">
+                                    ${participant.name.split(' ').map(n => n[0]).join('')}
+                                </div>
+                                <div style="flex: 1;">
+                                    <div style="font-weight: 600; color: white; font-size: 14px;">${participant.name}</div>
+                                    <div style="font-size: 12px; color: rgba(255,255,255,0.7);">${participant.position}</div>
+                                </div>
+                                <div style="text-align: right;">
+                                    <div style="color: #ff9800; font-weight: 700; font-size: 14px;">⭐ ${participant.rating}</div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    
+                    <div class="rating-buttons">
+                        <button onclick="closeModal(this)" class="rating-btn skip">Закрити</button>
+                        <button onclick="joinMatch('${matchId}'); closeModal(this);" class="rating-btn submit">Приєднатися</button>
                     </div>
                 </div>
             `;
@@ -4647,90 +4396,20 @@
         // Enhanced Profile functions
         function showPlayerProfile(playerId) {
             console.log('👤 Show player profile:', playerId);
-            
             const player = getPlayer(playerId);
-            const modal = document.getElementById('playerProfileModal');
             
+            // Create modern player profile modal
+            const modal = document.getElementById('playerProfileModal');
             if (modal) {
-                // Create enhanced player profile modal
-                modal.innerHTML = `
-                    <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 1000; backdrop-filter: blur(10px);">
-                        <div style="background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05)); border-radius: 24px; padding: 24px; margin: 20px; max-width: 360px; width: 100%; backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.2); box-shadow: 0 20px 40px rgba(0,0,0,0.3); position: relative;">
-                            <div style="text-align: center; margin-bottom: 24px;">
-                                <img src="${player.avatar}" alt="${player.name}" style="width: 100px; height: 100px; border-radius: 50%; margin: 0 auto 16px; border: 4px solid rgba(255,255,255,0.2); object-fit: cover;">
-                                <h3 style="font-size: 20px; font-weight: 700; margin-bottom: 8px; color: white;">${player.name}</h3>
-                                <div style="font-size: 14px; opacity: 0.8; margin-bottom: 12px; color: white;">${player.position} • ${player.city}</div>
-                                <div style="display: inline-flex; align-items: center; gap: 6px; background: rgba(255,152,0,0.2); padding: 8px 16px; border-radius: 20px; font-weight: 600; color: #ff9800;">
-                                    <i class="fas fa-star"></i>
-                                    <span>${player.rating}</span>
-                                </div>
-                            </div>
-                            
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 24px 0;">
-                                <div style="text-align: center; background: rgba(255,255,255,0.05); padding: 12px; border-radius: 12px;">
-                                    <div style="font-size: 18px; font-weight: 700; color: #4caf50;">${player.matches}</div>
-                                    <div style="font-size: 12px; opacity: 0.8; margin-top: 4px; color: white;">Матчі</div>
-                                </div>
-                                <div style="text-align: center; background: rgba(255,255,255,0.05); padding: 12px; border-radius: 12px;">
-                                    <div style="font-size: 18px; font-weight: 700; color: #4caf50;">${player.goals}</div>
-                                    <div style="font-size: 12px; opacity: 0.8; margin-top: 4px; color: white;">Голи</div>
-                                </div>
-                                <div style="text-align: center; background: rgba(255,255,255,0.05); padding: 12px; border-radius: 12px;">
-                                    <div style="font-size: 18px; font-weight: 700; color: #4caf50;">${player.assists}</div>
-                                    <div style="font-size: 12px; opacity: 0.8; margin-top: 4px; color: white;">Асисти</div>
-                                </div>
-                                <div style="text-align: center; background: rgba(255,255,255,0.05); padding: 12px; border-radius: 12px;">
-                                    <div style="font-size: 18px; font-weight: 700; color: #4caf50;">${Math.round((player.goals + player.assists) / player.matches * 10) / 10 || 0}</div>
-                                    <div style="font-size: 12px; opacity: 0.8; margin-top: 4px; color: white;">Г+П/Матч</div>
-                                </div>
-                            </div>
-                            
-                            <div style="margin: 24px 0;">
-                                <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px; background: rgba(255,255,255,0.05); border-radius: 12px; margin-bottom: 8px;">
-                                    <div style="display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0;">
-                                        <i class="fas fa-phone" style="width: 24px; height: 24px; color: #4caf50;"></i>
-                                        <span style="font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: white;">${player.phone}</span>
-                                    </div>
-                                    <button onclick="copyContact('${player.phone}')" style="background: rgba(76,175,80,0.2); border: none; border-radius: 8px; padding: 6px 10px; color: #4caf50; font-size: 11px; cursor: pointer;">Копіювати</button>
-                                </div>
-                                <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px; background: rgba(255,255,255,0.05); border-radius: 12px; margin-bottom: 8px;">
-                                    <div style="display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0;">
-                                        <i class="fab fa-telegram" style="width: 24px; height: 24px; color: #4caf50;"></i>
-                                        <span style="font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: white;">${player.telegram}</span>
-                                    </div>
-                                    <button onclick="copyContact('${player.telegram}')" style="background: rgba(76,175,80,0.2); border: none; border-radius: 8px; padding: 6px 10px; color: #4caf50; font-size: 11px; cursor: pointer;">Копіювати</button>
-                                </div>
-                                <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px; background: rgba(255,255,255,0.05); border-radius: 12px;">
-                                    <div style="display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0;">
-                                        <i class="fab fa-instagram" style="width: 24px; height: 24px; color: #4caf50;"></i>
-                                        <span style="font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: white;">${player.instagram}</span>
-                                    </div>
-                                    <button onclick="copyContact('${player.instagram}')" style="background: rgba(76,175,80,0.2); border: none; border-radius: 8px; padding: 6px 10px; color: #4caf50; font-size: 11px; cursor: pointer;">Копіювати</button>
-                                </div>
-                            </div>
-                            
-                            <div style="display: flex; gap: 12px; margin-top: 24px;">
-                                <button onclick="addFriend()" style="flex: 1; padding: 12px; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; background: linear-gradient(135deg, #4caf50, #66bb6a); color: white;">
-                                    <i class="fas fa-user-plus"></i> Додати в друзі
-                                </button>
-                                <button onclick="inviteToMatch()" style="flex: 1; padding: 12px; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2);">
-                                    <i class="fas fa-futbol"></i> Запросити на матч
-                                </button>
-                            </div>
-                            
-                            <button onclick="closePlayerProfile()" style="position: absolute; top: 16px; right: 16px; background: rgba(255,255,255,0.1); border: none; border-radius: 50%; width: 32px; height: 32px; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center;">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                    </div>
-                `;
+                const modalContent = '<div style="background: white; border-radius: 24px; max-width: 400px; width: 90%; max-height: 80vh; overflow-y: auto; position: relative;"><div style="background: linear-gradient(135deg, #4caf50, #66bb6a); padding: 32px 24px; text-align: center; border-radius: 24px 24px 0 0;"><img src="' + player.avatar + '" alt="' + player.name + '" class="avatar avatar-xl" style="margin: 0 auto 16px; border: 4px solid rgba(255,255,255,0.2);"><h3 style="font-size: 20px; font-weight: 700; margin-bottom: 8px; color: white;">' + player.name + '</h3><div style="font-size: 14px; opacity: 0.8; margin-bottom: 12px; color: white;">' + player.position + ' • ' + player.city + '</div><div style="display: flex; align-items: center; justify-content: center; gap: 4px; color: #ffeb3b;"><i class="fas fa-star"></i><span>' + player.rating + '</span></div></div><div style="padding: 24px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; border-bottom: 1px solid #f0f0f0;"><div style="text-align: center;"><div style="font-size: 18px; font-weight: 700; color: #4caf50;">' + player.matches + '</div><div style="font-size: 12px; color: #666; text-transform: uppercase;">Матчі</div></div><div style="text-align: center;"><div style="font-size: 18px; font-weight: 700; color: #4caf50;">' + player.goals + '</div><div style="font-size: 12px; color: #666; text-transform: uppercase;">Голи</div></div><div style="text-align: center;"><div style="font-size: 18px; font-weight: 700; color: #4caf50;">' + player.assists + '</div><div style="font-size: 12px; color: #666; text-transform: uppercase;">Паси</div></div><div style="text-align: center;"><div style="font-size: 18px; font-weight: 700; color: #4caf50;">' + (Math.round((player.goals + player.assists) / player.matches * 10) / 10 || 0) + '</div><div style="font-size: 12px; color: #666; text-transform: uppercase;">Г+П/Матч</div></div></div><div style="padding: 24px;"><h4 style="font-size: 16px; font-weight: 700; color: #333; margin-bottom: 16px;">Контактна інформація</h4><div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px; padding: 12px; background: #f8f9fa; border-radius: 12px;"><i class="fas fa-phone" style="width: 24px; height: 24px; color: #4caf50;"></i><div style="flex: 1;"><span style="font-size: 14px; color: #333;">' + player.phone + '</span></div><button onclick="copyContact(\'' + player.phone + '\')" style="background: rgba(76,175,80,0.2); border: none; border-radius: 8px; padding: 6px 10px; color: #4caf50; font-size: 11px; cursor: pointer;">Копіювати</button></div><div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px; padding: 12px; background: #f8f9fa; border-radius: 12px;"><i class="fab fa-telegram" style="width: 24px; height: 24px; color: #4caf50;"></i><div style="flex: 1;"><span style="font-size: 14px; color: #333;">' + player.telegram + '</span></div><button onclick="copyContact(\'' + player.telegram + '\')" style="background: rgba(76,175,80,0.2); border: none; border-radius: 8px; padding: 6px 10px; color: #4caf50; font-size: 11px; cursor: pointer;">Копіювати</button></div><div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding: 12px; background: #f8f9fa; border-radius: 12px;"><i class="fab fa-instagram" style="width: 24px; height: 24px; color: #4caf50;"></i><div style="flex: 1;"><span style="font-size: 14px; color: #333;">' + player.instagram + '</span></div><button onclick="copyContact(\'' + player.instagram + '\')" style="background: rgba(76,175,80,0.2); border: none; border-radius: 8px; padding: 6px 10px; color: #4caf50; font-size: 11px; cursor: pointer;">Копіювати</button></div><div style="display: flex; gap: 12px;"><button style="flex: 1; background: #4caf50; color: white; border: none; padding: 12px; border-radius: 12px; font-weight: 600; cursor: pointer;"><i class="fas fa-user-plus"></i> Додати в друзі</button><button style="flex: 1; background: #2196f3; color: white; border: none; padding: 12px; border-radius: 12px; font-weight: 600; cursor: pointer;"><i class="fas fa-envelope"></i> Запросити в матч</button></div></div><button onclick="closePlayerProfile()" style="position: absolute; top: 16px; right: 16px; background: rgba(255,255,255,0.2); border: none; width: 32px; height: 32px; border-radius: 50%; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center;"><i class="fas fa-times"></i></button></div>';
                 
-                modal.style.display = 'block';
+                modal.innerHTML = modalContent;
+                modal.classList.add('show');
+            } else {
+                showToast('❌ Модаль профілю не знайдено', 'error');
             }
         }
-        
-        // Old players array for reference (keeping structure but using new database)
-        const oldPlayersReference = [
+            const players = [
                 {
                     name: 'Андрій Коваленко',
                     city: '🏙️ Київ',
@@ -5173,17 +4852,9 @@
             
             showToast('Профіль створено успішно!', 'success');
             setTimeout(() => {
-                // Hide profile creation screen
-                const profileScreen = document.getElementById('profileCreationScreen');
-                profileScreen.style.display = 'none';
-                profileScreen.classList.remove('active');
-                
-                // Show main screen
-                const mainScreen = document.getElementById('mainScreen');
-                mainScreen.style.display = 'block';
-                mainScreen.classList.add('active');
-                
-                console.log('✅ Navigation completed: profileCreationScreen -> mainScreen');
+                document.getElementById('profileCreationScreen').style.display = 'none';
+                document.getElementById('mainScreen').style.display = 'block';
+                document.getElementById('mainScreen').classList.add('active');
             }, 1000);
         }
         
@@ -5204,79 +4875,19 @@
             
             showToast('Використовуємо базовий профіль для демо', 'info');
             setTimeout(() => {
-                // Hide profile creation screen
-                const profileScreen = document.getElementById('profileCreationScreen');
-                profileScreen.style.display = 'none';
-                profileScreen.classList.remove('active');
-                
-                // Show main screen
-                const mainScreen = document.getElementById('mainScreen');
-                mainScreen.style.display = 'block';
-                mainScreen.classList.add('active');
-                
-                console.log('✅ Navigation completed: skipProfile -> mainScreen');
+                document.getElementById('profileCreationScreen').style.display = 'none';
+                document.getElementById('mainScreen').style.display = 'block';
+                document.getElementById('mainScreen').classList.add('active');
             }, 1000);
         }
         
-        // Enhanced Comments Functions
-        function toggleComments(videoId) {
-            console.log('💬 Toggle comments for video:', videoId);
-            const commentsSection = document.getElementById(`comments_${videoId}`);
-            if (commentsSection) {
-                if (commentsSection.style.display === 'none') {
-                    commentsSection.style.display = 'block';
-                    commentsSection.style.animation = 'slideDown 0.3s ease';
-                } else {
-                    commentsSection.style.display = 'none';
-                }
-            }
-        }
-
         function addComment(videoId) {
-            console.log('💬 Add comment to video:', videoId);
-            const input = document.getElementById(`comment_input_${videoId}`);
-            if (input && input.value.trim()) {
-                const commentText = input.value.trim();
-                const commentsList = document.querySelector(`#comments_${videoId} .comments-list`);
-                
-                if (commentsList) {
-                    const newComment = document.createElement('div');
-                    newComment.className = 'comment-item';
-                    newComment.innerHTML = `
-                        <img src="${currentUser.avatar}" alt="${currentUser.name}" class="comment-avatar">
-                        <div class="comment-content">
-                            <div class="comment-author">${currentUser.name}</div>
-                            <div class="comment-text">${commentText}</div>
-                            <div class="comment-time">щойно</div>
-                        </div>
-                    `;
-                    
-                    commentsList.insertBefore(newComment, commentsList.firstChild);
-                    input.value = '';
-                    
-                    // Update comments count
-                    const countElement = document.querySelector(`#comments_${videoId} .comments-count`);
-                    if (countElement) {
-                        const currentCount = parseInt(countElement.textContent.match(/\d+/)[0]);
-                        countElement.textContent = `💬 Коментарі (${currentCount + 1})`;
-                    }
-                    
-                    showToast('💬 Коментар додано!', 'success');
-                }
-            } else {
-                showToast('❌ Введіть текст коментаря', 'error');
+            const comment = prompt('Додайте коментар до відео:');
+            if (comment && comment.trim()) {
+                showToast(`💬 Коментар додано до ${videoId}!`, 'success');
+                // В реальному додатку тут би був запит до сервера
             }
         }
-
-        // Add slideDown animation
-        const commentStyle = document.createElement('style');
-        commentStyle.textContent = `
-            @keyframes slideDown {
-                from { opacity: 0; transform: translateY(-10px); }
-                to { opacity: 1; transform: translateY(0); }
-            }
-        `;
-        document.head.appendChild(commentStyle);
         
         // REMOVED DUPLICATE showStore function
         
@@ -5422,103 +5033,12 @@
             }
         }
 
-        // COMBINED DOMContentLoaded - NO DUPLICATES
         document.addEventListener('DOMContentLoaded', function() {
             console.log('✅ FLAP Testing Version Loaded Successfully!');
             showToast('FLAP Testing Version готова до тестування!', 'success');
             
-            // FORCE CORRECT INITIAL SCREEN STATE
-            const authScreen = document.getElementById('authScreen');
-            const mainScreen = document.getElementById('mainScreen');
-            const profileScreen = document.getElementById('profileCreationScreen');
-            
-            console.log('🔧 Forcing initial screen state...');
-            
-            // Hide all screens first
-            if (mainScreen) {
-                mainScreen.style.display = 'none !important';
-                mainScreen.classList.remove('active');
-                console.log('✅ Main screen hidden');
-            }
-            
-            if (profileScreen) {
-                profileScreen.style.display = 'none !important';
-                profileScreen.classList.remove('active');
-                console.log('✅ Profile screen hidden');
-            }
-            
-            // Show only auth screen
-            if (authScreen) {
-                authScreen.style.display = 'block !important';
-                authScreen.classList.add('active');
-                console.log('✅ Auth screen shown');
-            }
-            
             // Initialize notification badge
             updateNotificationBadge();
-            
-            // Initialize button event listeners
-            console.log('🚀 Initializing FLAP buttons...');
-            
-            // Store button - ПРОСТИЙ І НАДІЙНИЙ
-            const storeButton = document.getElementById('storeButton');
-            if (storeButton) {
-                console.log('🛒 Initializing store button...');
-                
-                // Простий клік обробник
-                storeButton.onclick = function() {
-                    console.log('🛒 STORE CLICKED!');
-                    showStore();
-                };
-                
-                // Додатковий addEventListener для надійності
-                storeButton.addEventListener('click', function(e) {
-                    console.log('🛒 STORE EVENT LISTENER!');
-                    showStore();
-                });
-                
-                console.log('✅ Store button ready!');
-            }
-            
-            // FAB button
-            const fabButton = document.getElementById('fabButton');
-            if (fabButton) {
-                console.log('➕ Initializing FAB button...');
-                
-                fabButton.onclick = function() {
-                    console.log('➕ FAB CLICKED!');
-                    showAddMenu();
-                };
-                
-                fabButton.addEventListener('click', function(e) {
-                    console.log('➕ FAB EVENT LISTENER!');
-                    showAddMenu();
-                });
-                
-                console.log('✅ FAB button ready!');
-            }
-            
-            // Profile Store button
-            const profileStoreButton = document.getElementById('profileStoreButton');
-            if (profileStoreButton) {
-                console.log('🛒 Initializing profile store button...');
-                
-                // Простий клік обробник
-                profileStoreButton.onclick = function() {
-                    console.log('🛒 PROFILE STORE CLICKED!');
-                    showStore();
-                };
-                
-                // Додатковий addEventListener для надійності
-                profileStoreButton.addEventListener('click', function(e) {
-                    console.log('🛒 PROFILE STORE EVENT LISTENER!');
-                    showStore();
-                });
-                
-                console.log('✅ Profile store button ready!');
-            }
-            
-            console.log('🎉 All buttons initialized successfully!');
         });
         
         // Close menus when clicking outside
@@ -5651,9 +5171,189 @@
         `;
         document.head.appendChild(style);
 
-        // DUPLICATE REMOVED - All button initialization moved to main DOMContentLoaded above
+        // Initialize button event listeners when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 Initializing FLAP buttons...');
+            
+            // Store button - ПРОСТИЙ І НАДІЙНИЙ
+            const storeButton = document.getElementById('storeButton');
+            if (storeButton) {
+                console.log('🛒 Initializing store button...');
+                
+                // Простий клік обробник
+                storeButton.onclick = function() {
+                    console.log('🛒 STORE CLICKED!');
+                    showStore();
+                };
+                
+                // Додатковий addEventListener для надійності
+                storeButton.addEventListener('click', function(e) {
+                    console.log('🛒 STORE EVENT LISTENER!');
+                    showStore();
+                });
+                
+                console.log('✅ Store button ready!');
+            }
+            
+            // FAB button
+            const fabButton = document.getElementById('fabButton');
+            if (fabButton) {
+                fabButton.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('➕ FAB button clicked');
+                    showAddMenu();
+                });
+                console.log('✅ FAB button initialized');
+            }
+            
+            // Profile Store button
+            const profileStoreButton = document.getElementById('profileStoreButton');
+            if (profileStoreButton) {
+                console.log('🛒 Initializing profile store button...');
+                
+                // Простий клік обробник
+                profileStoreButton.onclick = function() {
+                    console.log('🛒 PROFILE STORE CLICKED!');
+                    showStore();
+                };
+                
+                // Додатковий addEventListener для надійності
+                profileStoreButton.addEventListener('click', function(e) {
+                    console.log('🛒 PROFILE STORE EVENT LISTENER!');
+                    showStore();
+                });
+                
+                console.log('✅ Profile store button ready!');
+            }
+            
+            console.log('🎉 All buttons initialized successfully!');
+        });
 
     </script>
+
+    <!-- Store Modal HTML -->
+    <div class="store-modal" id="storeModal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0,0,0,0.9); z-index: 4000; display: none; backdrop-filter: blur(15px); padding: 0; margin: 0;">
+        <div class="store-content" style="background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%); height: 100vh; width: 100%; max-width: 414px; margin: 0 auto; padding: 20px 15px; color: #1a1a1a; overflow-y: auto; position: relative; box-sizing: border-box;">
+            <div class="store-header" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 2px solid #e0e0e0; position: sticky; top: 0; background: inherit; z-index: 10;">
+                <h2 style="margin: 0; font-size: 22px; font-weight: 700; color: #1a1a1a;">🛒 Магазин</h2>
+                <button class="store-close" onclick="closeStore()" style="width: 36px; height: 36px; border-radius: 50%; background: #f5f5f5; border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; font-size: 16px; color: #666;">
+                    ✕
+                </button>
+            </div>
+
+            <!-- Store Tabs -->
+            <div style="display: flex; margin-bottom: 20px; background: #f0f0f0; border-radius: 10px; padding: 3px;">
+                <button onclick="showStoreTab('subscriptions')" id="store-tab-subscriptions" class="store-tab active" style="flex: 1; padding: 10px 8px; background: #4caf50; color: white; border: none; border-radius: 7px; font-weight: 600; cursor: pointer; transition: all 0.3s; font-size: 12px;">Підписки</button>
+                <button onclick="showStoreTab('coins')" id="store-tab-coins" class="store-tab" style="flex: 1; padding: 10px 8px; background: transparent; color: #666; border: none; font-weight: 600; cursor: pointer; transition: all 0.3s; font-size: 12px;">Монети</button>
+                <button onclick="showStoreTab('badges')" id="store-tab-badges" class="store-tab" style="flex: 1; padding: 10px 8px; background: transparent; color: #666; border: none; font-weight: 600; cursor: pointer; transition: all 0.3s; font-size: 12px;">Бейджі</button>
+                <button onclick="showStoreTab('expert')" id="store-tab-expert" class="store-tab" style="flex: 1; padding: 10px 8px; background: transparent; color: #666; border: none; font-weight: 600; cursor: pointer; transition: all 0.3s; font-size: 12px;">Експерт</button>
+            </div>
+
+            <!-- Subscriptions Tab -->
+            <div id="store-subscriptions" class="store-tab-content" style="display: block;">
+                <div class="subscription-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 15px; padding: 20px; margin-bottom: 15px; color: white; position: relative; overflow: hidden; box-shadow: 0 8px 24px rgba(102, 126, 234, 0.25);">
+                    <div class="premium-badge" style="position: absolute; top: 12px; right: 12px; background: rgba(255,255,255,0.25); padding: 4px 8px; border-radius: 15px; font-size: 10px; font-weight: 600; backdrop-filter: blur(10px);">ПОПУЛЯРНИЙ</div>
+                    <h3 style="margin: 0 0 8px 0; font-size: 18px; font-weight: 700; line-height: 1.2;">🏆 Europa League</h3>
+                    <div style="font-size: 28px; font-weight: 800; margin-bottom: 8px; line-height: 1;">99₴<span style="font-size: 14px; font-weight: 400;">/місяць</span></div>
+                    <ul style="list-style: none; padding: 0; margin: 0 0 15px 0;">
+                        <li style="margin-bottom: 6px; font-size: 14px; line-height: 1.3;">✅ Видимий рейтинг</li>
+                        <li style="margin-bottom: 6px; font-size: 14px; line-height: 1.3;">✅ 3 челенджі на місяць</li>
+                        <li style="margin-bottom: 6px; font-size: 14px; line-height: 1.3;">✅ Пріоритетна підтримка</li>
+                    </ul>
+                    <button onclick="buySubscription('europa')" style="width: 100%; padding: 10px; background: rgba(255,255,255,0.25); color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; backdrop-filter: blur(10px); font-size: 14px; transition: all 0.3s;">Підписатися</button>
+                </div>
+
+                <div class="subscription-card" style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%); border-radius: 15px; padding: 20px; margin-bottom: 15px; color: white; position: relative; overflow: hidden; box-shadow: 0 8px 24px rgba(255, 107, 107, 0.25);">
+                    <div class="premium-badge" style="position: absolute; top: 12px; right: 12px; background: rgba(255,255,255,0.25); padding: 4px 8px; border-radius: 15px; font-size: 10px; font-weight: 600; backdrop-filter: blur(10px);">ПРЕМІУМ</div>
+                    <h3 style="margin: 0 0 8px 0; font-size: 18px; font-weight: 700; line-height: 1.2;">🏆 Champions League</h3>
+                    <div style="font-size: 28px; font-weight: 800; margin-bottom: 8px; line-height: 1;">159₴<span style="font-size: 14px; font-weight: 400;">/місяць</span></div>
+                    <ul style="list-style: none; padding: 0; margin: 0 0 15px 0;">
+                        <li style="margin-bottom: 6px; font-size: 14px; line-height: 1.3;">✅ Видимий рейтинг</li>
+                        <li style="margin-bottom: 6px; font-size: 14px; line-height: 1.3;">✅ Безлімітні челенджі</li>
+                        <li style="margin-bottom: 6px; font-size: 14px; line-height: 1.3;">✅ +100 монет щомісяця</li>
+                        <li style="margin-bottom: 6px; font-size: 14px; line-height: 1.3;">✅ Ексклюзивні значки</li>
+                    </ul>
+                    <button onclick="buySubscription('champions')" style="width: 100%; padding: 10px; background: rgba(255,255,255,0.25); color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; backdrop-filter: blur(10px); font-size: 14px; transition: all 0.3s;">Підписатися</button>
+                </div>
+            </div>
+
+            <!-- Coins Tab -->
+            <div id="store-coins" class="store-tab-content" style="display: none;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px;">
+                    <div onclick="buyCoins(10, 10)" style="background: linear-gradient(135deg, #ffd700, #ffb300); border-radius: 12px; padding: 15px; text-align: center; cursor: pointer; transition: all 0.3s; color: white; box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);">
+                        <div style="font-size: 20px; margin-bottom: 6px;">🪙</div>
+                        <div style="font-size: 15px; font-weight: 700; margin-bottom: 2px;">10 монет</div>
+                        <div style="font-size: 14px; opacity: 0.9;">10₴</div>
+                    </div>
+                    <div onclick="buyCoins(50, 45)" style="background: linear-gradient(135deg, #ffd700, #ffb300); border-radius: 12px; padding: 15px; text-align: center; cursor: pointer; transition: all 0.3s; color: white; box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);">
+                        <div style="font-size: 20px; margin-bottom: 6px;">🪙</div>
+                        <div style="font-size: 15px; font-weight: 700; margin-bottom: 2px;">50 монет</div>
+                        <div style="font-size: 14px; opacity: 0.9;">45₴</div>
+                    </div>
+                    <div onclick="buyCoins(100, 90)" style="background: linear-gradient(135deg, #ffd700, #ffb300); border-radius: 12px; padding: 15px; text-align: center; cursor: pointer; transition: all 0.3s; color: white; box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);">
+                        <div style="font-size: 20px; margin-bottom: 6px;">🪙</div>
+                        <div style="font-size: 15px; font-weight: 700; margin-bottom: 2px;">100 монет</div>
+                        <div style="font-size: 14px; opacity: 0.9;">90₴</div>
+                    </div>
+                    <div onclick="buyCoins(500, 400)" style="background: linear-gradient(135deg, #ffd700, #ffb300); border-radius: 12px; padding: 15px; text-align: center; cursor: pointer; transition: all 0.3s; color: white; box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);">
+                        <div style="font-size: 20px; margin-bottom: 6px;">🪙</div>
+                        <div style="font-size: 15px; font-weight: 700; margin-bottom: 2px;">500 монет</div>
+                        <div style="font-size: 14px; opacity: 0.9;">400₴</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Badges Tab -->
+            <div id="store-badges" class="store-tab-content" style="display: none;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px;">
+                    <div onclick="buyBadge('rookie', 50)" style="background: linear-gradient(135deg, #28a745, #20c997); border-radius: 12px; padding: 15px; text-align: center; cursor: pointer; transition: all 0.3s; color: white; box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);">
+                        <div style="font-size: 20px; margin-bottom: 6px;">🌟</div>
+                        <div style="font-size: 14px; font-weight: 700; margin-bottom: 2px;">Новачок</div>
+                        <div style="font-size: 12px; opacity: 0.9;">50 монет</div>
+                    </div>
+                    <div onclick="buyBadge('striker', 100)" style="background: linear-gradient(135deg, #ff6b35, #f7931e); border-radius: 12px; padding: 15px; text-align: center; cursor: pointer; transition: all 0.3s; color: white; box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);">
+                        <div style="font-size: 20px; margin-bottom: 6px;">⚽</div>
+                        <div style="font-size: 14px; font-weight: 700; margin-bottom: 2px;">Бомбардир</div>
+                        <div style="font-size: 12px; opacity: 0.9;">100 монет</div>
+                    </div>
+                    <div onclick="buyBadge('defender', 75)" style="background: linear-gradient(135deg, #6f42c1, #e83e8c); border-radius: 12px; padding: 15px; text-align: center; cursor: pointer; transition: all 0.3s; color: white; box-shadow: 0 4px 12px rgba(111, 66, 193, 0.3);">
+                        <div style="font-size: 20px; margin-bottom: 6px;">🛡️</div>
+                        <div style="font-size: 14px; font-weight: 700; margin-bottom: 2px;">Захисник</div>
+                        <div style="font-size: 12px; opacity: 0.9;">75 монет</div>
+                    </div>
+                    <div onclick="buyBadge('playmaker', 120)" style="background: linear-gradient(135deg, #17a2b8, #6610f2); border-radius: 12px; padding: 15px; text-align: center; cursor: pointer; transition: all 0.3s; color: white; box-shadow: 0 4px 12px rgba(23, 162, 184, 0.3);">
+                        <div style="font-size: 20px; margin-bottom: 6px;">🎯</div>
+                        <div style="font-size: 14px; font-weight: 700; margin-bottom: 2px;">Плеймейкер</div>
+                        <div style="font-size: 12px; opacity: 0.9;">120 монет</div>
+                    </div>
+                    <div onclick="buyBadge('legend', 200)" style="background: linear-gradient(135deg, #ffd700, #ff8c00); border-radius: 12px; padding: 15px; text-align: center; cursor: pointer; transition: all 0.3s; color: white; box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);">
+                        <div style="font-size: 20px; margin-bottom: 6px;">👑</div>
+                        <div style="font-size: 14px; font-weight: 700; margin-bottom: 2px;">Легенда</div>
+                        <div style="font-size: 12px; opacity: 0.9;">200 монет</div>
+                    </div>
+                    <div onclick="buyBadge('champion', 300)" style="background: linear-gradient(135deg, #dc3545, #fd7e14); border-radius: 12px; padding: 15px; text-align: center; cursor: pointer; transition: all 0.3s; color: white; box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);">
+                        <div style="font-size: 20px; margin-bottom: 6px;">🏆</div>
+                        <div style="font-size: 14px; font-weight: 700; margin-bottom: 2px;">Чемпіон</div>
+                        <div style="font-size: 12px; opacity: 0.9;">300 монет</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Expert Tab -->
+            <div id="store-expert" class="store-tab-content" style="display: none;">
+                <div style="text-align: center; padding: 30px 15px;">
+                    <div style="font-size: 48px; margin-bottom: 15px;">🔬</div>
+                    <h3 style="margin-bottom: 12px; color: #1a1a1a; font-size: 18px; font-weight: 700;">Експерт огляд</h3>
+                    <p style="color: #666; margin-bottom: 15px; font-size: 14px; line-height: 1.4;">Професійний аналіз ваших відео від тренерів</p>
+                    <div style="background: linear-gradient(135deg, #f8f9fa, #e9ecef); border-radius: 12px; padding: 20px; border: 2px dashed #dee2e6;">
+                        <div style="font-size: 16px; font-weight: 600; color: #ff9800; margin-bottom: 8px;">⏳ Незабаром...</div>
+                        <div style="font-size: 12px; color: #6c757d;">Ця функція буде доступна в наступних оновленнях</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>
