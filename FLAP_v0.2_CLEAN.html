@@ -32,9 +32,9 @@
                 repeating-linear-gradient(0deg, transparent, transparent 45px, rgba(255,255,255,0.1) 45px, rgba(255,255,255,0.1) 47px);
         }
 
-        /* Modern screen system */
+        /* Modern screen system - FIXED */
         .screen {
-            display: none;
+            display: none !important;
             position: fixed;
             top: 0;
             left: 0;
@@ -44,11 +44,19 @@
             width: 100%;
             background: linear-gradient(180deg, #1e7d32 0%, #2e7d32 100%);
             overflow-y: auto;
+            z-index: 1000;
         }
 
         .screen.active {
-            display: block;
+            display: block !important;
             animation: slideIn 0.3s ease;
+            z-index: 1001;
+        }
+        
+        /* Force hide inactive screens */
+        .screen:not(.active) {
+            display: none !important;
+            visibility: hidden !important;
         }
 
         /* Fix for modal scrolling */
@@ -3588,13 +3596,27 @@
             setTimeout(() => {
                 // Hide auth screen
                 const authScreen = document.getElementById('authScreen');
-                authScreen.style.display = 'none';
-                authScreen.classList.remove('active');
-                
-                // Show main screen
                 const mainScreen = document.getElementById('mainScreen');
-                mainScreen.style.display = 'block';
-                mainScreen.classList.add('active');
+                
+                console.log('🔍 Elements found:', {
+                    authScreen: !!authScreen,
+                    mainScreen: !!mainScreen
+                });
+                
+                if (authScreen) {
+                    authScreen.style.display = 'none !important';
+                    authScreen.classList.remove('active');
+                    authScreen.classList.remove('welcome-screen');
+                    console.log('✅ Auth screen hidden');
+                }
+                
+                if (mainScreen) {
+                    mainScreen.style.display = 'block !important';
+                    mainScreen.classList.add('active');
+                    console.log('✅ Main screen shown');
+                } else {
+                    console.error('❌ mainScreen not found!');
+                }
                 
                 console.log('✅ Navigation completed: Google login -> mainScreen');
             }, 1000);
@@ -3606,13 +3628,27 @@
             setTimeout(() => {
                 // Hide auth screen
                 const authScreen = document.getElementById('authScreen');
-                authScreen.style.display = 'none';
-                authScreen.classList.remove('active');
-                
-                // Show main screen
                 const mainScreen = document.getElementById('mainScreen');
-                mainScreen.style.display = 'block';
-                mainScreen.classList.add('active');
+                
+                console.log('🔍 Elements found:', {
+                    authScreen: !!authScreen,
+                    mainScreen: !!mainScreen
+                });
+                
+                if (authScreen) {
+                    authScreen.style.display = 'none !important';
+                    authScreen.classList.remove('active');
+                    authScreen.classList.remove('welcome-screen');
+                    console.log('✅ Auth screen hidden');
+                }
+                
+                if (mainScreen) {
+                    mainScreen.style.display = 'block !important';
+                    mainScreen.classList.add('active');
+                    console.log('✅ Main screen shown');
+                } else {
+                    console.error('❌ mainScreen not found!');
+                }
                 
                 console.log('✅ Navigation completed: Facebook login -> mainScreen');
             }, 1000);
@@ -5390,6 +5426,33 @@
         document.addEventListener('DOMContentLoaded', function() {
             console.log('✅ FLAP Testing Version Loaded Successfully!');
             showToast('FLAP Testing Version готова до тестування!', 'success');
+            
+            // FORCE CORRECT INITIAL SCREEN STATE
+            const authScreen = document.getElementById('authScreen');
+            const mainScreen = document.getElementById('mainScreen');
+            const profileScreen = document.getElementById('profileCreationScreen');
+            
+            console.log('🔧 Forcing initial screen state...');
+            
+            // Hide all screens first
+            if (mainScreen) {
+                mainScreen.style.display = 'none !important';
+                mainScreen.classList.remove('active');
+                console.log('✅ Main screen hidden');
+            }
+            
+            if (profileScreen) {
+                profileScreen.style.display = 'none !important';
+                profileScreen.classList.remove('active');
+                console.log('✅ Profile screen hidden');
+            }
+            
+            // Show only auth screen
+            if (authScreen) {
+                authScreen.style.display = 'block !important';
+                authScreen.classList.add('active');
+                console.log('✅ Auth screen shown');
+            }
             
             // Initialize notification badge
             updateNotificationBadge();
