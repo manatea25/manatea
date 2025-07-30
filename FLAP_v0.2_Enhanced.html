@@ -686,10 +686,209 @@
         }
 
         .video-voting {
-            padding: 15px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255,255,255,0.05);
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .video-voting-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .video-rating-display {
+            background: rgba(255,152,0,0.2);
+            padding: 6px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #ff9800;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            min-width: 60px;
+            justify-content: center;
+        }
+
+        .vote-slider-enhanced {
+            flex: 1;
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(255,255,255,0.3);
+            outline: none;
+            -webkit-appearance: none;
+            min-width: 80px;
+        }
+
+        .vote-value-display {
+            font-weight: 700;
+            color: #ff9800;
+            min-width: 40px;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        .vote-button-enhanced {
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            border: none;
+            border-radius: 16px;
+            padding: 8px 14px;
+            color: white;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            min-width: 60px;
+        }
+
+        .vote-button-enhanced:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(76,175,80,0.4);
+        }
+
+        /* Enhanced Comments System */
+        .comments-section {
+            background: rgba(255,255,255,0.05);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding: 16px;
+        }
+
+        .comments-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .comments-count {
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .toggle-comments {
+            background: rgba(76,175,80,0.2);
+            border: none;
+            color: #4caf50;
+            font-size: 12px;
+            padding: 6px 12px;
+            border-radius: 16px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-comments:hover {
+            background: rgba(76,175,80,0.3);
+        }
+
+        .comments-list {
+            max-height: 200px;
+            overflow-y: auto;
+            margin-bottom: 16px;
+        }
+
+        .comment-item {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+            padding: 12px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .comment-item:hover {
+            background: rgba(255,255,255,0.08);
+        }
+
+        .comment-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+
+        .comment-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .comment-author {
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: #4caf50;
+        }
+
+        .comment-text {
+            font-size: 12px;
+            opacity: 0.9;
+            line-height: 1.4;
+            color: white;
+            word-wrap: break-word;
+        }
+
+        .comment-time {
+            font-size: 10px;
+            opacity: 0.6;
+            margin-top: 4px;
+            color: rgba(255,255,255,0.6);
+        }
+
+        .add-comment {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .comment-input {
+            flex: 1;
+            padding: 10px 14px;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 20px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-size: 12px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .comment-input:focus {
+            border-color: #4caf50;
+            background: rgba(255,255,255,0.15);
+        }
+
+        .comment-input::placeholder {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .send-comment {
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            border: none;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .send-comment:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(76,175,80,0.4);
         }
 
         .vote-buttons {
@@ -1386,17 +1585,71 @@
                         </div>
                     </div>
                     <div class="video-voting">
-                        <div style="display: flex; align-items: center; gap: 10px; flex: 1;">
-                            <span style="font-weight: 600; font-size: 14px;">Ваша оцінка:</span>
-                            <input type="range" id="slider_challenge1_video1" min="0" max="5" step="0.01" value="0" onchange="updateVoteValue('challenge1_video1', this.value)" style="flex: 1; height: 6px; border-radius: 5px; background: #ddd; outline: none; -webkit-appearance: none;">
-                            <span id="vote_challenge1_video1" style="font-weight: 700; color: #ff9800; min-width: 35px;">0.0</span>
-                            <button onclick="voteForVideo('challenge1_video1', event)" style="padding: 6px 12px; background: #4caf50; color: white; border: none; border-radius: 12px; font-size: 12px; font-weight: 600; cursor: pointer; margin-left: 5px;">Голос</button>
+                        <div class="video-voting-controls">
+                            <span style="font-weight: 600; font-size: 12px; color: white;">Оцінка:</span>
+                            <input type="range" id="slider_challenge1_video1" min="0" max="5" step="0.01" value="0" onchange="updateVoteValue('challenge1_video1', this.value)" class="vote-slider-enhanced">
+                            <span id="vote_challenge1_video1" class="vote-value-display">0.0</span>
+                            <button onclick="voteForVideo('challenge1_video1', event)" class="vote-button-enhanced">Голос</button>
                         </div>
-                        <div class="video-score">⭐ 4.1</div>
+                        <div class="video-rating-display">
+                            <i class="fas fa-star"></i>
+                            <span>4.1</span>
+                        </div>
                     </div>
-                    <div style="padding: 0 15px 15px; color: #333;">
-                        <strong class="video-author" onclick="showPlayerProfile('andriy_k')">Андрій Коваленко</strong> • Півзахисник • Київ<br>
-                        <small style="color: #666;">2 години тому • Гідропарк</small>
+                    <div style="padding: 16px; background: rgba(255,255,255,0.05); color: white;">
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face" alt="Андрій Коваленко" class="avatar avatar-sm" onclick="showPlayerProfile('andriy_k')" style="cursor: pointer;">
+                            <div>
+                                <strong class="video-author" onclick="showPlayerProfile('andriy_k')" style="cursor: pointer; color: #4caf50; font-size: 14px;">Андрій Коваленко</strong>
+                                <div style="font-size: 12px; opacity: 0.8; color: rgba(255,255,255,0.8);">Півзахисник • Київ</div>
+                            </div>
+                        </div>
+                        <div style="font-size: 11px; opacity: 0.6; color: rgba(255,255,255,0.6);">2 години тому • Гідропарк</div>
+                        
+                        <!-- Action buttons for challenge video -->
+                        <div style="display: flex; gap: 8px; margin-top: 12px;">
+                            <button onclick="shareVideo('challenge1_video1')" style="flex: 1; padding: 8px; background: #ff9800; color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; font-size: 11px;">
+                                📤 Поділитися
+                            </button>
+                            <button onclick="toggleComments('challenge1_video1')" style="flex: 1; padding: 8px; background: #4caf50; color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; font-size: 11px;">
+                                💬 Коментарі
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Comments Section for Challenge Video -->
+                    <div id="comments_challenge1_video1" class="comments-section" style="display: none;">
+                        <div class="comments-header">
+                            <div class="comments-count">💬 Коментарі (5)</div>
+                            <button onclick="toggleComments('challenge1_video1')" class="toggle-comments">Згорнути</button>
+                        </div>
+                        
+                        <div class="comments-list">
+                            <div class="comment-item">
+                                <img src="https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=150&h=150&fit=crop&crop=face" alt="Дмитро" class="comment-avatar">
+                                <div class="comment-content">
+                                    <div class="comment-author">Дмитро Шевченко</div>
+                                    <div class="comment-text">Круто! Такий фінт я ще не бачив 🔥</div>
+                                    <div class="comment-time">1 година тому</div>
+                                </div>
+                            </div>
+                            
+                            <div class="comment-item">
+                                <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&h=150&fit=crop&crop=face" alt="Андрій" class="comment-avatar">
+                                <div class="comment-content">
+                                    <div class="comment-author">Андрій Мельник</div>
+                                    <div class="comment-text">Респект! Треба буде спробувати</div>
+                                    <div class="comment-time">30 хвилин тому</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="add-comment">
+                            <input type="text" class="comment-input" placeholder="Додати коментар..." id="comment_input_challenge1_video1">
+                            <button onclick="addComment('challenge1_video1')" class="send-comment">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -1430,22 +1683,70 @@
                                 <span style="background: #f3e5f5; color: #7b1fa2; padding: 3px 8px; border-radius: 12px; font-size: 11px; font-weight: 600;">#майстерність</span>
                             </div>
                         </div>
-                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-                            <span style="color: #666; font-size: 14px;">Ваша оцінка:</span>
+                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px; padding: 12px; background: rgba(255,255,255,0.05); border-radius: 12px;">
+                            <span style="color: #666; font-size: 12px; font-weight: 600;">Оцінка:</span>
                             <input type="range" id="slider_video4" min="0" max="5" step="0.01" value="0" 
                                    onchange="updateVoteValue('video4', this.value)"
-                                   style="flex: 1; height: 6px; border-radius: 3px; background: #ddd; outline: none;">
-                            <span id="vote_video4" style="min-width: 35px; font-weight: 600; font-size: 14px; color: #333;">0.00</span>
-                            <button onclick="voteForVideo('video4')" style="padding: 6px 12px; background: #4caf50; color: white; border: none; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer;">
+                                   style="flex: 1; height: 6px; border-radius: 3px; background: rgba(255,255,255,0.3); outline: none; min-width: 80px;">
+                            <span id="vote_video4" style="min-width: 40px; font-weight: 700; font-size: 12px; color: #ff9800; text-align: center;">0.00</span>
+                            <button onclick="voteForVideo('video4')" style="padding: 8px 14px; background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; border: none; border-radius: 16px; font-size: 11px; font-weight: 600; cursor: pointer; min-width: 60px; white-space: nowrap;">
                                 Голос
                             </button>
+                            <div style="background: rgba(255,152,0,0.2); padding: 6px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; color: #ff9800; display: flex; align-items: center; gap: 4px;">
+                                <i class="fas fa-star"></i>
+                                <span>4.7</span>
+                            </div>
                         </div>
                         <div style="display: flex; gap: 8px;">
                             <button onclick="shareVideo('video4')" style="flex: 1; padding: 8px; background: #ff9800; color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; font-size: 12px;">
                                 📤 Поділитися
                             </button>
-                            <button onclick="addComment('video4')" style="flex: 1; padding: 8px; background: #4caf50; color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; font-size: 12px;">
-                                💬 Коментар
+                            <button onclick="toggleComments('video4')" style="flex: 1; padding: 8px; background: #4caf50; color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; font-size: 12px;">
+                                💬 Коментарі
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Comments Section -->
+                    <div id="comments_video4" class="comments-section" style="display: none;">
+                        <div class="comments-header">
+                            <div class="comments-count">💬 Коментарі (8)</div>
+                            <button onclick="toggleComments('video4')" class="toggle-comments">Згорнути</button>
+                        </div>
+                        
+                        <div class="comments-list">
+                            <div class="comment-item">
+                                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face" alt="Віталій" class="comment-avatar">
+                                <div class="comment-content">
+                                    <div class="comment-author">Віталій Коваленко</div>
+                                    <div class="comment-text">Неймовірний фінт! 🔥 Треба буде спробувати на тренуванні</div>
+                                    <div class="comment-time">2 години тому</div>
+                                </div>
+                            </div>
+                            
+                            <div class="comment-item">
+                                <img src="https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=150&h=150&fit=crop&crop=face" alt="Дмитро" class="comment-avatar">
+                                <div class="comment-content">
+                                    <div class="comment-author">Дмитро Шевченко</div>
+                                    <div class="comment-text">Класна техніка! А можеш показати в повільному повторі?</div>
+                                    <div class="comment-time">1 година тому</div>
+                                </div>
+                            </div>
+                            
+                            <div class="comment-item">
+                                <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&h=150&fit=crop&crop=face" alt="Андрій" class="comment-avatar">
+                                <div class="comment-content">
+                                    <div class="comment-author">Андрій Мельник</div>
+                                    <div class="comment-text">Роман, ти як завжди на висоті! 👏</div>
+                                    <div class="comment-time">45 хвилин тому</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="add-comment">
+                            <input type="text" class="comment-input" placeholder="Додати коментар..." id="comment_input_video4">
+                            <button onclick="addComment('video4')" class="send-comment">
+                                <i class="fas fa-paper-plane"></i>
                             </button>
                         </div>
                     </div>
@@ -3774,70 +4075,107 @@
             const modal = document.createElement('div');
             modal.className = 'rating-modal show';
             modal.innerHTML = `
-                <div class="rating-content" style="max-width: 500px; max-height: 90vh; overflow-y: auto;">
-                    <div class="rating-title">📋 Деталі матчу</div>
-                    
-                    <div style="background: rgba(255,255,255,0.1); border-radius: 15px; padding: 20px; margin-bottom: 20px;">
-                        <h3 style="margin: 0 0 15px 0; color: white;">${match.title}</h3>
+                <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); display: flex; align-items: center; justify-content: center; z-index: 1000; backdrop-filter: blur(10px); overflow-y: auto; padding: 20px;">
+                    <div style="background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05)); border-radius: 24px; max-width: 420px; width: 100%; backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.2); box-shadow: 0 20px 40px rgba(0,0,0,0.3); overflow: hidden; max-height: 90vh; display: flex; flex-direction: column;">
                         
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
-                            <div>
-                                <div style="color: rgba(255,255,255,0.8); font-size: 12px; margin-bottom: 3px;">📅 Дата і час</div>
-                                <div style="color: white; font-weight: 600;">${match.date} о ${match.time}</div>
+                        <!-- Match Header -->
+                        <div style="background: linear-gradient(135deg, #4caf50, #66bb6a); padding: 24px; text-align: center; position: relative;">
+                            <button onclick="closeModal(this)" style="position: absolute; top: 16px; right: 16px; background: rgba(255,255,255,0.2); border: none; border-radius: 50%; width: 32px; height: 32px; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-times"></i>
+                            </button>
+                            <div style="font-size: 24px; margin-bottom: 8px;">⚽</div>
+                            <h3 style="margin: 0; color: white; font-size: 18px; font-weight: 700; line-height: 1.3;">${match.title}</h3>
+                            <div style="margin-top: 8px; opacity: 0.9; font-size: 14px;">${match.date} о ${match.time}</div>
+                        </div>
+                        
+                        <div style="flex: 1; overflow-y: auto; padding: 20px;">
+                            <!-- Match Info Grid -->
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px;">
+                                <div style="background: rgba(255,255,255,0.05); padding: 16px; border-radius: 16px; text-align: center;">
+                                    <div style="font-size: 20px; color: #4caf50; margin-bottom: 8px;">📍</div>
+                                    <div style="font-size: 11px; opacity: 0.8; margin-bottom: 4px; color: rgba(255,255,255,0.8);">МІСЦЕ</div>
+                                    <div style="font-size: 13px; font-weight: 600; color: white;">${match.city}</div>
+                                </div>
+                                <div style="background: rgba(255,255,255,0.05); padding: 16px; border-radius: 16px; text-align: center;">
+                                    <div style="font-size: 20px; color: #ff9800; margin-bottom: 8px;">⚽</div>
+                                    <div style="font-size: 11px; opacity: 0.8; margin-bottom: 4px; color: rgba(255,255,255,0.8);">ФОРМАТ</div>
+                                    <div style="font-size: 13px; font-weight: 600; color: white;">${match.format}</div>
+                                </div>
+                                <div style="background: rgba(255,255,255,0.05); padding: 16px; border-radius: 16px; text-align: center;">
+                                    <div style="font-size: 20px; color: #2196f3; margin-bottom: 8px;">💰</div>
+                                    <div style="font-size: 11px; opacity: 0.8; margin-bottom: 4px; color: rgba(255,255,255,0.8);">ЦІНА</div>
+                                    <div style="font-size: 13px; font-weight: 600; color: white;">${match.price}</div>
+                                </div>
+                                <div style="background: rgba(255,255,255,0.05); padding: 16px; border-radius: 16px; text-align: center;">
+                                    <div style="font-size: 20px; color: #9c27b0; margin-bottom: 8px;">🎯</div>
+                                    <div style="font-size: 11px; opacity: 0.8; margin-bottom: 4px; color: rgba(255,255,255,0.8);">РІВЕНЬ</div>
+                                    <div style="font-size: 13px; font-weight: 600; color: white;">${match.level}</div>
+                                </div>
                             </div>
-                            <div>
-                                <div style="color: rgba(255,255,255,0.8); font-size: 12px; margin-bottom: 3px;">📍 Місце</div>
-                                <div style="color: white; font-weight: 600;">${match.city}</div>
+                            
+                            <!-- Location Details -->
+                            <div style="background: rgba(255,255,255,0.05); padding: 16px; border-radius: 16px; margin-bottom: 24px;">
+                                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                                    <div style="width: 32px; height: 32px; background: rgba(76,175,80,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                        <i class="fas fa-map-marker-alt" style="color: #4caf50; font-size: 14px;"></i>
+                                    </div>
+                                    <div style="font-size: 14px; font-weight: 600; color: white;">Адреса</div>
+                                </div>
+                                <div style="font-size: 13px; color: rgba(255,255,255,0.9); line-height: 1.4; margin-left: 44px;">${match.location}</div>
                             </div>
-                            <div>
-                                <div style="color: rgba(255,255,255,0.8); font-size: 12px; margin-bottom: 3px;">⚽ Формат</div>
-                                <div style="color: white; font-weight: 600;">${match.format}</div>
+                            
+                            <!-- Players Progress -->
+                            <div style="background: rgba(255,255,255,0.05); padding: 16px; border-radius: 16px; margin-bottom: 24px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                                    <div style="font-size: 14px; font-weight: 600; color: white;">👥 Гравці</div>
+                                    <div style="font-size: 14px; font-weight: 700; color: #4caf50;">${match.currentPlayers}/${match.maxPlayers}</div>
+                                </div>
+                                <div style="background: rgba(255,255,255,0.1); height: 8px; border-radius: 4px; overflow: hidden;">
+                                    <div style="background: linear-gradient(90deg, #4caf50, #66bb6a); height: 100%; width: ${(match.currentPlayers / match.maxPlayers) * 100}%; border-radius: 4px; transition: width 0.3s ease;"></div>
+                                </div>
+                                <div style="font-size: 11px; opacity: 0.8; margin-top: 8px; color: rgba(255,255,255,0.8);">
+                                    ${match.maxPlayers - match.currentPlayers > 0 ? `Залишилось ${match.maxPlayers - match.currentPlayers} місць` : 'Матч заповнений'}
+                                </div>
                             </div>
-                            <div>
-                                <div style="color: rgba(255,255,255,0.8); font-size: 12px; margin-bottom: 3px;">💰 Ціна</div>
-                                <div style="color: white; font-weight: 600;">${match.price}</div>
+                            
+                            <!-- Participants -->
+                            <div style="margin-bottom: 24px;">
+                                <div style="font-size: 14px; font-weight: 600; color: white; margin-bottom: 16px;">👥 Учасники (${match.participants.length})</div>
+                                <div style="max-height: 200px; overflow-y: auto;">
+                                    ${match.participants.map((participant, index) => {
+                                        const playerIds = Object.keys(playersDatabase);
+                                        const playerId = playerIds[index % playerIds.length];
+                                        const player = getPlayer(playerId);
+                                        return `
+                                        <div style="display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 12px; margin-bottom: 8px; background: rgba(255,255,255,0.05); cursor: pointer; transition: all 0.3s ease;" onclick="showPlayerProfile('${playerId}')" onmouseover="this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">
+                                            <img src="${player.avatar}" alt="${participant.name}" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.2);">
+                                            <div style="flex: 1; min-width: 0;">
+                                                <div style="font-weight: 600; color: white; font-size: 13px; margin-bottom: 2px;">${participant.name}</div>
+                                                <div style="font-size: 11px; color: rgba(255,255,255,0.7);">${participant.position === 'Організатор' ? '👑 Організатор' : '⚽ Гравець'}</div>
+                                            </div>
+                                            <div style="text-align: right;">
+                                                <div style="background: rgba(255,152,0,0.2); padding: 4px 8px; border-radius: 8px; display: inline-flex; align-items: center; gap: 4px;">
+                                                    <i class="fas fa-star" style="color: #ff9800; font-size: 10px;"></i>
+                                                    <span style="color: #ff9800; font-weight: 700; font-size: 12px;">${participant.rating}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    `}).join('')}
+                                </div>
                             </div>
                         </div>
                         
-                        <div style="margin-bottom: 15px;">
-                            <div style="color: rgba(255,255,255,0.8); font-size: 12px; margin-bottom: 8px;">📍 Адреса</div>
-                            <div style="color: white; font-weight: 600;">${match.location}</div>
-                        </div>
-                        
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                            <div>
-                                <div style="color: rgba(255,255,255,0.8); font-size: 12px;">👥 Гравці</div>
-                                <div style="color: white; font-weight: 600;">${match.currentPlayers}/${match.maxPlayers}</div>
-                            </div>
-                            <div>
-                                <div style="color: rgba(255,255,255,0.8); font-size: 12px;">🎯 Рівень</div>
-                                <div style="color: white; font-weight: 600;">${match.level}</div>
+                        <!-- Action Buttons -->
+                        <div style="padding: 20px; border-top: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.02);">
+                            <div style="display: flex; gap: 12px;">
+                                <button onclick="closeModal(this)" style="flex: 1; padding: 14px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white; border-radius: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">
+                                    Закрити
+                                </button>
+                                <button onclick="joinMatch('${matchId}'); closeModal(this);" style="flex: 2; padding: 14px; background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(76,175,80,0.3);">
+                                    ⚽ Приєднатися
+                                </button>
                             </div>
                         </div>
-                    </div>
-                    
-                    <div style="background: rgba(255,255,255,0.1); border-radius: 15px; padding: 20px; margin-bottom: 20px;">
-                        <h4 style="margin: 0 0 15px 0; color: white;">👥 Учасники (${match.participants.length})</h4>
-                        
-                        ${match.participants.map((participant, index) => `
-                            <div style="display: flex; align-items: center; gap: 15px; padding: 10px; border-radius: 10px; margin-bottom: 8px; background: rgba(255,255,255,0.05); cursor: pointer;" onclick="showPlayerProfile('player${index + 1}')">
-                                <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #4caf50, #2e7d32); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 14px; font-weight: 700;">
-                                    ${participant.name.split(' ').map(n => n[0]).join('')}
-                                </div>
-                                <div style="flex: 1;">
-                                    <div style="font-weight: 600; color: white; font-size: 14px;">${participant.name}</div>
-                                    <div style="font-size: 12px; color: rgba(255,255,255,0.7);">${participant.position}</div>
-                                </div>
-                                <div style="text-align: right;">
-                                    <div style="color: #ff9800; font-weight: 700; font-size: 14px;">⭐ ${participant.rating}</div>
-                                </div>
-                            </div>
-                        `).join('')}
-                    </div>
-                    
-                    <div class="rating-buttons">
-                        <button onclick="closeModal(this)" class="rating-btn skip">Закрити</button>
-                        <button onclick="joinMatch('${matchId}'); closeModal(this);" class="rating-btn submit">Приєднатися</button>
                     </div>
                 </div>
             `;
@@ -4773,13 +5111,65 @@
             }, 1000);
         }
         
-        function addComment(videoId) {
-            const comment = prompt('Додайте коментар до відео:');
-            if (comment && comment.trim()) {
-                showToast(`💬 Коментар додано до ${videoId}!`, 'success');
-                // В реальному додатку тут би був запит до сервера
+        // Enhanced Comments Functions
+        function toggleComments(videoId) {
+            console.log('💬 Toggle comments for video:', videoId);
+            const commentsSection = document.getElementById(`comments_${videoId}`);
+            if (commentsSection) {
+                if (commentsSection.style.display === 'none') {
+                    commentsSection.style.display = 'block';
+                    commentsSection.style.animation = 'slideDown 0.3s ease';
+                } else {
+                    commentsSection.style.display = 'none';
+                }
             }
         }
+
+        function addComment(videoId) {
+            console.log('💬 Add comment to video:', videoId);
+            const input = document.getElementById(`comment_input_${videoId}`);
+            if (input && input.value.trim()) {
+                const commentText = input.value.trim();
+                const commentsList = document.querySelector(`#comments_${videoId} .comments-list`);
+                
+                if (commentsList) {
+                    const newComment = document.createElement('div');
+                    newComment.className = 'comment-item';
+                    newComment.innerHTML = `
+                        <img src="${currentUser.avatar}" alt="${currentUser.name}" class="comment-avatar">
+                        <div class="comment-content">
+                            <div class="comment-author">${currentUser.name}</div>
+                            <div class="comment-text">${commentText}</div>
+                            <div class="comment-time">щойно</div>
+                        </div>
+                    `;
+                    
+                    commentsList.insertBefore(newComment, commentsList.firstChild);
+                    input.value = '';
+                    
+                    // Update comments count
+                    const countElement = document.querySelector(`#comments_${videoId} .comments-count`);
+                    if (countElement) {
+                        const currentCount = parseInt(countElement.textContent.match(/\d+/)[0]);
+                        countElement.textContent = `💬 Коментарі (${currentCount + 1})`;
+                    }
+                    
+                    showToast('💬 Коментар додано!', 'success');
+                }
+            } else {
+                showToast('❌ Введіть текст коментаря', 'error');
+            }
+        }
+
+        // Add slideDown animation
+        const commentStyle = document.createElement('style');
+        commentStyle.textContent = `
+            @keyframes slideDown {
+                from { opacity: 0; transform: translateY(-10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+        `;
+        document.head.appendChild(commentStyle);
         
         // REMOVED DUPLICATE showStore function
         
