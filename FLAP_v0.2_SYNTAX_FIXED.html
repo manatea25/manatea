@@ -4798,55 +4798,6 @@
                 }
             ];
             
-            const randomPlayer = players[Math.floor(Math.random() * players.length)];
-            
-            // Заповнюємо дані в модальне вікно
-            const modal = document.getElementById('playerProfileModal');
-            if (modal) {
-                document.getElementById('profileAvatar').textContent = randomPlayer.avatar;
-                document.getElementById('profileAvatar').style.background = randomPlayer.avatarColor;
-                document.getElementById('profileName').textContent = randomPlayer.name;
-                document.getElementById('profileCity').textContent = randomPlayer.city;
-                document.getElementById('profileRating').textContent = randomPlayer.rating;
-                document.getElementById('profileMatches').textContent = randomPlayer.matches;
-                document.getElementById('profileWins').textContent = randomPlayer.wins;
-                document.getElementById('profilePosition').textContent = randomPlayer.position;
-                document.getElementById('profilePhone').textContent = randomPlayer.phone;
-                document.getElementById('profileTelegram').textContent = randomPlayer.telegram;
-                document.getElementById('profileInstagram').textContent = randomPlayer.instagram;
-                
-                modal.classList.add('show');
-            } else {
-                showToast('❌ Модаль профілю не знайдено', 'error');
-            }
-        }
-        
-        function closePlayerProfile() {
-            console.log('❌ Close player profile modal');
-            const modal = document.getElementById('playerProfileModal');
-            if (modal) {
-                modal.classList.remove('show');
-            }
-        }
-        
-        function copyContact(type) {
-            console.log('📋 Copy contact:', type);
-            let text = '';
-            
-            switch(type) {
-                case 'phone':
-                    text = document.getElementById('profilePhone').textContent;
-                    break;
-                case 'telegram':
-                    text = document.getElementById('profileTelegram').textContent;
-                    break;
-                case 'instagram':
-                    text = document.getElementById('profileInstagram').textContent;
-                    break;
-            }
-            
-            if (text) {
-                navigator.clipboard.writeText(text).then(() => {
                     showToast(`📋 ${text} скопійовано!`, 'success');
                 }).catch(() => {
                     showToast('❌ Не вдалося скопіювати', 'error');
