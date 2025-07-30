@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLAP - Feel Like A Pro v0.2 Enhanced</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(180deg, #1e7d32 0%, #2e7d32 100%);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Modern screen system - FIXED */
+        .screen {
+            display: none !important;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            min-height: 100vh;
+            width: 100%;
+            background: linear-gradient(180deg, #1e7d32 0%, #2e7d32 100%);
+            overflow-y: auto;
+            z-index: 1000;
+        }
+
+        .screen.active {
+            display: block !important;
+            animation: slideIn 0.3s ease;
+            z-index: 1001;
+        }
+        
+        /* Force hide inactive screens */
+        .screen:not(.active) {
+            display: none !important;
+            visibility: hidden !important;
+        }
+
+        /* Welcome Screen */
+        .welcome-screen {
+            background: linear-gradient(135deg, #1e7d32 0%, #388e3c 50%, #4caf50 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-logo {
+            width: 120px;
+            height: 120px;
+            background: url('manatea/Bold Graphic Design With Dynamic Logo On Green Background.png.jpg') center/cover;
+            border-radius: 20px;
+            margin: 0 auto 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .welcome-title {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #ffffff, #e8f5e8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .welcome-subtitle {
+            font-size: 18px;
+            font-weight: 400;
+            line-height: 1.6;
+            margin-bottom: 50px;
+            opacity: 0.9;
+        }
+
+        @keyframes slideIn {
+            from { 
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to { 
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Modern Auth Screen -->
+    <div class="screen welcome-screen active" id="authScreen">
+        <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; padding: 40px 20px; text-align: center;">
+            <div class="welcome-logo"></div>
+            <h1 class="welcome-title">FLAP</h1>
+            <p class="welcome-subtitle">Feel Like A Pro<br>Покажи свої футбольні навички<br>і стань професіоналом!</p>
+            
+            <div style="width: 100%; max-width: 400px;">
+                <!-- Auth Tabs -->
+                <div style="display: flex; border-radius: 25px; background: rgba(255,255,255,0.1); padding: 5px; margin-bottom: 30px;">
+                    <button id="loginTab" onclick="switchAuthMode('login')" style="flex: 1; padding: 12px; border: none; border-radius: 20px; background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; font-weight: 600; cursor: pointer;">
+                        Увійти
+                    </button>
+                    <button id="registerTab" onclick="switchAuthMode('register')" style="flex: 1; padding: 12px; border: none; border-radius: 20px; background: transparent; color: rgba(255,255,255,0.8); font-weight: 600; cursor: pointer;">
+                        Реєстрація
+                    </button>
+                </div>
+
+                <!-- Login Form -->
+                <div id="loginForm">
+                    <div style="margin-bottom: 20px;">
+                        <input type="text" placeholder="Email або телефон" style="width: 100%; padding: 15px; border: 2px solid rgba(255,255,255,0.4); border-radius: 15px; background: rgba(255,255,255,0.15); color: white; font-size: 16px; margin-bottom: 15px; font-weight: 500;">
+                        <input type="password" placeholder="Пароль" style="width: 100%; padding: 15px; border: 2px solid rgba(255,255,255,0.4); border-radius: 15px; background: rgba(255,255,255,0.15); color: white; font-size: 16px; font-weight: 500;">
+                    </div>
+                    <button onclick="handleQuickLogin()" style="width: 100%; padding: 15px; border: none; border-radius: 25px; background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; font-size: 16px; font-weight: 700; cursor: pointer; margin-bottom: 20px;">
+                        Увійти
+                    </button>
+                </div>
+
+                <!-- Register Form -->
+                <div id="registerForm" style="display: none;">
+                    <div style="margin-bottom: 20px;">
+                        <input type="text" placeholder="Ім'я та прізвище" style="width: 100%; padding: 15px; border: 2px solid rgba(255,255,255,0.4); border-radius: 15px; background: rgba(255,255,255,0.15); color: white; font-size: 16px; margin-bottom: 15px; font-weight: 500;">
+                        <input type="email" placeholder="Email" style="width: 100%; padding: 15px; border: 2px solid rgba(255,255,255,0.4); border-radius: 15px; background: rgba(255,255,255,0.15); color: white; font-size: 16px; margin-bottom: 15px; font-weight: 500;">
+                        <input type="password" placeholder="Пароль" style="width: 100%; padding: 15px; border: 2px solid rgba(255,255,255,0.4); border-radius: 15px; background: rgba(255,255,255,0.15); color: white; font-size: 16px; font-weight: 500;">
+                    </div>
+                    <button onclick="handleQuickRegister()" style="width: 100%; padding: 15px; border: none; border-radius: 25px; background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; font-size: 16px; font-weight: 700; cursor: pointer; margin-bottom: 20px;">
+                        Створити акаунт
+                    </button>
+                </div>
+
+                <!-- Social Login -->
+                <div style="margin: 20px 0; text-align: center; color: rgba(255,255,255,0.6);">або</div>
+                
+                <button onclick="loginWithGoogle()" style="width: 100%; padding: 15px; border: 2px solid rgba(255,255,255,0.3); border-radius: 25px; background: rgba(255,255,255,0.1); color: white; font-size: 16px; font-weight: 600; cursor: pointer; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                    <div style="width: 20px; height: 20px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #db4437; font-weight: 700; font-size: 12px;">G</div>
+                    Google
+                </button>
+                
+                <button onclick="loginWithFacebook()" style="width: 100%; padding: 15px; border: 2px solid rgba(255,255,255,0.3); border-radius: 25px; background: rgba(255,255,255,0.1); color: white; font-size: 16px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                    <div style="width: 20px; height: 20px; background: #1877f2; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 12px;">f</div>
+                    Facebook
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App Screen -->
+    <div class="screen" id="mainScreen">
+        <h1 style="text-align: center; padding: 20px;">FLAP - Main App</h1>
+        <p style="text-align: center; padding: 20px;">Головний екран додатку. Навігація працює!</p>
+    </div>
+
+    <!-- Profile Creation Screen -->
+    <div class="screen" id="profileCreationScreen">
+        <h1 style="text-align: center; padding: 20px;">Створення профілю</h1>
+        <p style="text-align: center; padding: 20px;">Екран створення профілю</p>
+    </div>
+
+    <script>
+        console.log('🚀 FLAP Testing Version Loading...');
+
+        // Authentication functions
+        function switchAuthMode(mode) {
+            console.log('🔄 Switching auth mode to:', mode);
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            const loginTab = document.getElementById('loginTab');
+            const registerTab = document.getElementById('registerTab');
+            
+            if (mode === 'login') {
+                loginForm.style.display = 'block';
+                registerForm.style.display = 'none';
+                loginTab.style.background = 'linear-gradient(135deg, #4caf50, #66bb6a)';
+                registerTab.style.background = 'transparent';
+            } else {
+                loginForm.style.display = 'none';
+                registerForm.style.display = 'block';
+                loginTab.style.background = 'transparent';
+                registerTab.style.background = 'linear-gradient(135deg, #4caf50, #66bb6a)';
+            }
+        }
+
+        function handleQuickLogin() {
+            console.log('🔑 Quick login initiated');
+            showToast('Вхід виконано успішно!', 'success');
+            setTimeout(() => {
+                const authScreen = document.getElementById('authScreen');
+                const mainScreen = document.getElementById('mainScreen');
+                
+                console.log('🔍 Elements found:', {
+                    authScreen: !!authScreen,
+                    mainScreen: !!mainScreen
+                });
+                
+                if (authScreen) {
+                    authScreen.style.display = 'none !important';
+                    authScreen.classList.remove('active');
+                    authScreen.classList.remove('welcome-screen');
+                    console.log('✅ Auth screen hidden');
+                }
+                
+                if (mainScreen) {
+                    mainScreen.style.display = 'block !important';
+                    mainScreen.classList.add('active');
+                    console.log('✅ Main screen shown');
+                } else {
+                    console.error('❌ mainScreen not found!');
+                }
+                
+                console.log('✅ Navigation completed: authScreen -> mainScreen');
+            }, 1000);
+        }
+
+        function handleQuickRegister() {
+            console.log('📝 Quick registration initiated');
+            showToast('Реєстрація виконана!', 'success');
+            setTimeout(() => {
+                const authScreen = document.getElementById('authScreen');
+                const profileScreen = document.getElementById('profileCreationScreen');
+                
+                if (authScreen) {
+                    authScreen.style.display = 'none !important';
+                    authScreen.classList.remove('active');
+                    authScreen.classList.remove('welcome-screen');
+                    console.log('✅ Auth screen hidden');
+                }
+                
+                if (profileScreen) {
+                    profileScreen.style.display = 'block !important';
+                    profileScreen.classList.add('active');
+                    console.log('✅ Profile screen shown');
+                } else {
+                    console.error('❌ profileCreationScreen not found!');
+                }
+                
+                console.log('✅ Navigation completed: authScreen -> profileCreationScreen');
+            }, 1000);
+        }
+
+        function loginWithGoogle() {
+            console.log('🔍 Google login initiated');
+            showToast('Вхід через Google успішний!', 'success');
+            setTimeout(() => {
+                const authScreen = document.getElementById('authScreen');
+                const mainScreen = document.getElementById('mainScreen');
+                
+                console.log('🔍 Elements found:', {
+                    authScreen: !!authScreen,
+                    mainScreen: !!mainScreen
+                });
+                
+                if (authScreen) {
+                    authScreen.style.display = 'none !important';
+                    authScreen.classList.remove('active');
+                    authScreen.classList.remove('welcome-screen');
+                    console.log('✅ Auth screen hidden');
+                }
+                
+                if (mainScreen) {
+                    mainScreen.style.display = 'block !important';
+                    mainScreen.classList.add('active');
+                    console.log('✅ Main screen shown');
+                } else {
+                    console.error('❌ mainScreen not found!');
+                }
+                
+                console.log('✅ Navigation completed: Google login -> mainScreen');
+            }, 1000);
+        }
+
+        function loginWithFacebook() {
+            console.log('📘 Facebook login initiated');
+            showToast('Вхід через Facebook успішний!', 'success');
+            setTimeout(() => {
+                const authScreen = document.getElementById('authScreen');
+                const mainScreen = document.getElementById('mainScreen');
+                
+                console.log('🔍 Elements found:', {
+                    authScreen: !!authScreen,
+                    mainScreen: !!mainScreen
+                });
+                
+                if (authScreen) {
+                    authScreen.style.display = 'none !important';
+                    authScreen.classList.remove('active');
+                    authScreen.classList.remove('welcome-screen');
+                    console.log('✅ Auth screen hidden');
+                }
+                
+                if (mainScreen) {
+                    mainScreen.style.display = 'block !important';
+                    mainScreen.classList.add('active');
+                    console.log('✅ Main screen shown');
+                } else {
+                    console.error('❌ mainScreen not found!');
+                }
+                
+                console.log('✅ Navigation completed: Facebook login -> mainScreen');
+            }, 1000);
+        }
+
+        function showToast(message, type = 'info') {
+            console.log(`📢 Toast: ${message} (${type})`);
+            // Simple toast implementation
+            const toast = document.createElement('div');
+            toast.textContent = message;
+            toast.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#4caf50' : type === 'error' ? '#f44336' : '#2196f3'};
+                color: white;
+                padding: 15px 20px;
+                border-radius: 10px;
+                z-index: 10000;
+                font-weight: 600;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            `;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                if (toast.parentNode) {
+                    toast.parentNode.removeChild(toast);
+                }
+            }, 3000);
+        }
+
+        // COMBINED DOMContentLoaded - NO DUPLICATES
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('✅ FLAP Testing Version Loaded Successfully!');
+            showToast('FLAP Testing Version готова до тестування!', 'success');
+            
+            // FORCE CORRECT INITIAL SCREEN STATE
+            const authScreen = document.getElementById('authScreen');
+            const mainScreen = document.getElementById('mainScreen');
+            const profileScreen = document.getElementById('profileCreationScreen');
+            
+            console.log('🔧 Forcing initial screen state...');
+            
+            // Hide all screens first
+            if (mainScreen) {
+                mainScreen.style.display = 'none !important';
+                mainScreen.classList.remove('active');
+                console.log('✅ Main screen hidden');
+            }
+            
+            if (profileScreen) {
+                profileScreen.style.display = 'none !important';
+                profileScreen.classList.remove('active');
+                console.log('✅ Profile screen hidden');
+            }
+            
+            // Show only auth screen
+            if (authScreen) {
+                authScreen.style.display = 'block !important';
+                authScreen.classList.add('active');
+                console.log('✅ Auth screen shown');
+            }
+            
+            console.log('🎉 All initialization completed successfully!');
+        });
+
+    </script>
+
+</body>
+</html>
