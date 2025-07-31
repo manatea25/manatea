@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLAP - Варіанти стартових сторінок</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .variant {
+            display: none;
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        .variant.active {
+            display: block;
+        }
+        
+        .variant-indicator {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.9);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            color: #333;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .next-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-weight: 700;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(76,175,80,0.4);
+            transition: all 0.3s ease;
+        }
+        
+        .next-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(76,175,80,0.5);
+        }
+        
+        /* ВАРІАНТ 1: КАРТКИ ВИБОРУ */
+        .variant-1 {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .welcome-header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+        
+        .user-greeting {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .user-rating {
+            font-size: 16px;
+            opacity: 0.9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        
+        .mode-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+            max-width: 350px;
+        }
+        
+        .mode-card {
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 30px 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid transparent;
+        }
+        
+        .mode-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            border-color: rgba(76,175,80,0.3);
+        }
+        
+        .mode-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .mode-title {
+            font-size: 20px;
+            font-weight: 800;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        
+        .mode-description {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.4;
+        }
+        
+        /* ВАРІАНТ 2: ТАБОВАНА НАВІГАЦІЯ */
+        .variant-2 {
+            background: white;
+        }
+        
+        .top-header {
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            padding: 40px 20px 30px;
+            color: white;
+            text-align: center;
+        }
+        
+        .app-logo {
+            width: 60px;
+            height: 60px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 800;
+            margin: 0 auto 16px;
+        }
+        
+        .welcome-text {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        
+        .rating-display {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .mode-tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-radius: 0;
+        }
+        
+        .mode-tab {
+            flex: 1;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+            border: none;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .mode-tab.active {
+            background: white;
+            border-bottom-color: #4caf50;
+        }
+        
+        .tab-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+            color: #666;
+        }
+        
+        .mode-tab.active .tab-icon {
+            color: #4caf50;
+        }
+        
+        .tab-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #333;
+        }
+        
+        .mode-content {
+            padding: 30px 20px;
+            text-align: center;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .content-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            color: #4caf50;
+        }
+        
+        .content-title {
+            font-size: 24px;
+            font-weight: 800;
+            color: #333;
+            margin-bottom: 12px;
+        }
+        
+        .content-description {
+            font-size: 16px;
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 30px;
+        }
+        
+        .start-btn {
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(76,175,80,0.3);
+        }
+        
+        .start-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(76,175,80,0.4);
+        }
+        
+        /* ВАРІАНТ 3: ПОВНОЕКРАННИЙ ВИБІР */
+        .variant-3 {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .split-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .split-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .split-section:hover::before {
+            background: rgba(0,0,0,0);
+        }
+        
+        .video-section {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+        }
+        
+        .match-section {
+            background: linear-gradient(135deg, #4caf50, #2e7d32);
+        }
+        
+        .split-content {
+            text-align: center;
+            color: white;
+            z-index: 2;
+            position: relative;
+        }
+        
+        .split-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        
+        .split-title {
+            font-size: 32px;
+            font-weight: 900;
+            margin-bottom: 12px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .split-description {
+            font-size: 16px;
+            opacity: 0.9;
+            line-height: 1.4;
+        }
+        
+        .split-section:hover {
+            flex: 1.1;
+        }
+        
+        .user-info-overlay {
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255,255,255,0.9);
+            padding: 12px 20px;
+            border-radius: 20px;
+            color: #333;
+            font-weight: 700;
+            z-index: 10;
+            backdrop-filter: blur(10px);
+        }
+        
+        /* ВАРІАНТ 4: КАРУСЕЛЬ РЕЖИМІВ */
+        .variant-4 {
+            background: #1a1a1a;
+            color: white;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .dark-header {
+            padding: 40px 20px 20px;
+            text-align: center;
+            background: linear-gradient(135deg, #2c2c2c, #1a1a1a);
+        }
+        
+        .dark-logo {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 800;
+            margin: 0 auto 16px;
+            color: white;
+        }
+        
+        .dark-welcome {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        
+        .dark-rating {
+            font-size: 14px;
+            opacity: 0.7;
+        }
+        
+        .carousel-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            position: relative;
+        }
+        
+        .mode-carousel {
+            width: 280px;
+            height: 400px;
+            position: relative;
+            perspective: 1000px;
+        }
+        
+        .carousel-item {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #333, #444);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.5s ease;
+            cursor: pointer;
+            border: 2px solid #555;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .carousel-item.active {
+            transform: translateZ(0);
+            border-color: #4caf50;
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+        }
+        
+        .carousel-item:not(.active) {
+            transform: translateZ(-100px) scale(0.8);
+            opacity: 0.5;
+        }
+        
+        .carousel-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+        
+        .carousel-title {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+        
+        .carousel-desc {
+            font-size: 14px;
+            opacity: 0.9;
+            line-height: 1.4;
+            margin-bottom: 30px;
+        }
+        
+        .carousel-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            padding: 12px 24px;
+            border-radius: 20px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .carousel-item.active .carousel-btn {
+            background: white;
+            color: #4caf50;
+            border-color: white;
+        }
+        
+        .carousel-nav {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 30px;
+        }
+        
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #555;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-dot.active {
+            background: #4caf50;
+            transform: scale(1.2);
+        }
+        
+        /* ВАРІАНТ 5: ІНТЕРАКТИВНА АНІМАЦІЯ */
+        .variant-5 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .animated-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.1;
+            z-index: 1;
+        }
+        
+        .floating-icon {
+            position: absolute;
+            font-size: 24px;
+            color: rgba(255,255,255,0.3);
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .floating-icon:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+        .floating-icon:nth-child(2) { top: 20%; right: 15%; animation-delay: 1s; }
+        .floating-icon:nth-child(3) { bottom: 30%; left: 20%; animation-delay: 2s; }
+        .floating-icon:nth-child(4) { bottom: 20%; right: 10%; animation-delay: 3s; }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .central-content {
+            z-index: 10;
+            text-align: center;
+            color: white;
+        }
+        
+        .animated-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 800;
+            margin: 0 auto 20px;
+            animation: pulse 2s ease-in-out infinite;
+            box-shadow: 0 0 30px rgba(76,175,80,0.4);
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .animated-greeting {
+            font-size: 26px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .animated-subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-bottom: 40px;
+        }
+        
+        .interactive-modes {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .interactive-mode {
+            width: 120px;
+            height: 120px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .interactive-mode::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+            opacity: 0;
+        }
+        
+        .interactive-mode:hover::before {
+            animation: shine 0.6s ease-in-out;
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); opacity: 0; }
+        }
+        
+        .interactive-mode:hover {
+            transform: translateY(-10px) scale(1.05);
+            background: rgba(255,255,255,0.2);
+            border-color: rgba(255,255,255,0.4);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .interactive-icon {
+            font-size: 36px;
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .interactive-mode:hover .interactive-icon {
+            transform: scale(1.2);
+        }
+        
+        .interactive-title {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .mode-cards {
+                max-width: 300px;
+            }
+            
+            .variant-3 {
+                flex-direction: column;
+            }
+            
+            .split-section {
+                min-height: 50vh;
+            }
+            
+            .interactive-modes {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .interactive-mode {
+                width: 200px;
+                height: 80px;
+                flex-direction: row;
+                gap: 12px;
+            }
+            
+            .interactive-icon {
+                font-size: 24px;
+                margin-bottom: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="variant-indicator" id="variantIndicator">Варіант 1 з 5</div>
+    <button class="next-btn" onclick="nextVariant()">Наступний варіант</button>
+
+    <!-- ВАРІАНТ 1: КАРТКИ ВИБОРУ -->
+    <div class="variant variant-1 active" id="variant1">
+        <div class="welcome-header">
+            <div class="user-greeting">Привіт, Олександр! 👋</div>
+            <div class="user-rating">
+                <i class="fas fa-star" style="color: #ffc107;"></i>
+                <span>Рейтинг: 4.2</span>
+                <span style="opacity: 0.7;">• 45 матчів</span>
+            </div>
+        </div>
+        
+        <div class="mode-cards">
+            <div class="mode-card" onclick="selectMode('video')">
+                <div class="mode-icon">🎥</div>
+                <div class="mode-title">ВІДЕО ЧЕЛЕНДЖІ</div>
+                <div class="mode-description">Покажи свої навички, приймай виклики та голосуй за інших гравців</div>
+            </div>
+            
+            <div class="mode-card" onclick="selectMode('match')">
+                <div class="mode-icon">⚽</div>
+                <div class="mode-title">МАТЧІ</div>
+                <div class="mode-description">Знаходь гравців, створюй команди та грай у футбол поруч</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ВАРІАНТ 2: ТАБОВАНА НАВІГАЦІЯ -->
+    <div class="variant variant-2" id="variant2">
+        <div class="top-header">
+            <div class="app-logo">F</div>
+            <div class="welcome-text">Привіт, Олександр!</div>
+            <div class="rating-display">⭐ Рейтинг: 4.2 • 45 матчів</div>
+        </div>
+        
+        <div class="mode-tabs">
+            <button class="mode-tab active" onclick="switchTab('video', this)">
+                <div class="tab-icon">🎥</div>
+                <div class="tab-title">ВІДЕО</div>
+            </button>
+            <button class="mode-tab" onclick="switchTab('match', this)">
+                <div class="tab-icon">⚽</div>
+                <div class="tab-title">МАТЧІ</div>
+            </button>
+        </div>
+        
+        <div class="mode-content" id="videoContent">
+            <div class="content-icon">🎬</div>
+            <div class="content-title">Відео Челенджі</div>
+            <div class="content-description">
+                Створюй крутий контент, приймай виклики від інших гравців та покажи всім свої найкращі навички на полі!
+            </div>
+            <button class="start-btn" onclick="selectMode('video')">Почати зйомку</button>
+        </div>
+        
+        <div class="mode-content" id="matchContent" style="display: none;">
+            <div class="content-icon">🏟️</div>
+            <div class="content-title">Пошук Матчів</div>
+            <div class="content-description">
+                Знаходь футбольні матчі поруч, створюй власні ігри та зустрічайся з однодумцями для активного відпочинку!
+            </div>
+            <button class="start-btn" onclick="selectMode('match')">Знайти гру</button>
+        </div>
+    </div>
+
+    <!-- ВАРІАНТ 3: ПОВНОЕКРАННИЙ ВИБІР -->
+    <div class="variant variant-3" id="variant3">
+        <div class="user-info-overlay">
+            <span>👋 Олександр • ⭐ 4.2 • 45 матчів</span>
+        </div>
+        
+        <div class="split-section video-section" onclick="selectMode('video')">
+            <div class="split-content">
+                <div class="split-icon">🎥</div>
+                <div class="split-title">ВІДЕО</div>
+                <div class="split-description">
+                    Челенджі<br>
+                    Контент<br>
+                    Голосування
+                </div>
+            </div>
+        </div>
+        
+        <div class="split-section match-section" onclick="selectMode('match')">
+            <div class="split-content">
+                <div class="split-icon">⚽</div>
+                <div class="split-title">МАТЧІ</div>
+                <div class="split-description">
+                    Пошук гри<br>
+                    Команди<br>
+                    Турніри
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ВАРІАНТ 4: КАРУСЕЛЬ РЕЖИМІВ -->
+    <div class="variant variant-4" id="variant4">
+        <div class="dark-header">
+            <div class="dark-logo">F</div>
+            <div class="dark-welcome">Привіт, Олександр!</div>
+            <div class="dark-rating">⭐ Рейтинг: 4.2 • 45 матчів</div>
+        </div>
+        
+        <div class="carousel-container">
+            <div class="mode-carousel">
+                <div class="carousel-item active" data-mode="video">
+                    <div class="carousel-icon">🎥</div>
+                    <div class="carousel-title">ВІДЕО ЧЕЛЕНДЖІ</div>
+                    <div class="carousel-desc">
+                        Створюй контент, приймай виклики та показуй свої найкращі моменти
+                    </div>
+                    <button class="carousel-btn" onclick="selectMode('video')">Почати</button>
+                </div>
+                
+                <div class="carousel-item" data-mode="match">
+                    <div class="carousel-icon">⚽</div>
+                    <div class="carousel-title">ПОШУК МАТЧІВ</div>
+                    <div class="carousel-desc">
+                        Знаходь гравців поруч, створюй команди та грай у футбол
+                    </div>
+                    <button class="carousel-btn" onclick="selectMode('match')">Знайти гру</button>
+                </div>
+            </div>
+            
+            <div class="carousel-nav">
+                <div class="nav-dot active" onclick="switchCarousel(0)"></div>
+                <div class="nav-dot" onclick="switchCarousel(1)"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ВАРІАНТ 5: ІНТЕРАКТИВНА АНІМАЦІЯ -->
+    <div class="variant variant-5" id="variant5">
+        <div class="animated-bg">
+            <div class="floating-icon">⚽</div>
+            <div class="floating-icon">🎥</div>
+            <div class="floating-icon">🏆</div>
+            <div class="floating-icon">⭐</div>
+        </div>
+        
+        <div class="central-content">
+            <div class="animated-avatar">О</div>
+            <div class="animated-greeting">Вітаємо, Олександр!</div>
+            <div class="animated-subtitle">⭐ Рейтинг: 4.2 • 45 матчів • 150 монет</div>
+            
+            <div style="font-size: 18px; font-weight: 600; margin-bottom: 20px; opacity: 0.9;">
+                Оберіть режим роботи:
+            </div>
+            
+            <div class="interactive-modes">
+                <div class="interactive-mode" onclick="selectMode('video')">
+                    <div class="interactive-icon">🎥</div>
+                    <div class="interactive-title">ВІДЕО</div>
+                </div>
+                
+                <div class="interactive-mode" onclick="selectMode('match')">
+                    <div class="interactive-icon">⚽</div>
+                    <div class="interactive-title">МАТЧІ</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentVariant = 1;
+        const totalVariants = 5;
+
+        function nextVariant() {
+            // Hide current variant
+            document.getElementById(`variant${currentVariant}`).classList.remove('active');
+            
+            // Move to next variant
+            currentVariant = currentVariant === totalVariants ? 1 : currentVariant + 1;
+            
+            // Show next variant
+            document.getElementById(`variant${currentVariant}`).classList.add('active');
+            
+            // Update indicator
+            document.getElementById('variantIndicator').textContent = `Варіант ${currentVariant} з ${totalVariants}`;
+        }
+
+        function selectMode(mode) {
+            if (mode === 'video') {
+                showToast('🎥 Переходимо до відео режиму!');
+            } else {
+                showToast('⚽ Переходимо до матчів!');
+            }
+        }
+
+        function switchTab(mode, element) {
+            // Remove active class from all tabs
+            document.querySelectorAll('.mode-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Add active class to clicked tab
+            element.classList.add('active');
+            
+            // Hide all content
+            document.getElementById('videoContent').style.display = 'none';
+            document.getElementById('matchContent').style.display = 'none';
+            
+            // Show selected content
+            if (mode === 'video') {
+                document.getElementById('videoContent').style.display = 'block';
+            } else {
+                document.getElementById('matchContent').style.display = 'block';
+            }
+        }
+
+        let currentCarouselIndex = 0;
+
+        function switchCarousel(index) {
+            const items = document.querySelectorAll('.carousel-item');
+            const dots = document.querySelectorAll('.nav-dot');
+            
+            // Remove active classes
+            items.forEach(item => item.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            // Add active classes
+            items[index].classList.add('active');
+            dots[index].classList.add('active');
+            
+            currentCarouselIndex = index;
+        }
+
+        function showToast(message) {
+            // Create toast element
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 30px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: rgba(0,0,0,0.9);
+                color: white;
+                padding: 12px 24px;
+                border-radius: 25px;
+                z-index: 9999;
+                font-weight: 600;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            `;
+            toast.textContent = message;
+            
+            document.body.appendChild(toast);
+            
+            // Remove toast after 3 seconds
+            setTimeout(() => {
+                document.body.removeChild(toast);
+            }, 3000);
+        }
+
+        // Auto-rotate carousel in variant 4
+        setInterval(() => {
+            if (currentVariant === 4) {
+                switchCarousel(currentCarouselIndex === 0 ? 1 : 0);
+            }
+        }, 4000);
+    </script>
+</body>
+</html>
