@@ -778,6 +778,28 @@
             <button class="video-nav-tab" onclick="showVideoSection('trending')">Тренди</button>
         </div>
 
+        <!-- Video Categories -->
+        <div class="video-categories" style="padding: 10px 15px; display: flex; gap: 8px; overflow-x: auto;">
+            <button class="category-btn active" onclick="filterByCategory('all')" style="background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; border: none; padding: 6px 12px; border-radius: 16px; font-size: 11px; cursor: pointer; white-space: nowrap; font-weight: 600;">
+                Всі відео
+            </button>
+            <button class="category-btn" onclick="filterByCategory('goals')" style="background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.8); border: 1px solid rgba(255,255,255,0.2); padding: 6px 12px; border-radius: 16px; font-size: 11px; cursor: pointer; white-space: nowrap; font-weight: 600;">
+                ⚽ Голи
+            </button>
+            <button class="category-btn" onclick="filterByCategory('skills')" style="background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.8); border: 1px solid rgba(255,255,255,0.2); padding: 6px 12px; border-radius: 16px; font-size: 11px; cursor: pointer; white-space: nowrap; font-weight: 600;">
+                🎪 Навички
+            </button>
+            <button class="category-btn" onclick="filterByCategory('saves')" style="background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.8); border: 1px solid rgba(255,255,255,0.2); padding: 6px 12px; border-radius: 16px; font-size: 11px; cursor: pointer; white-space: nowrap; font-weight: 600;">
+                🥅 Сейви
+            </button>
+            <button class="category-btn" onclick="filterByCategory('training')" style="background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.8); border: 1px solid rgba(255,255,255,0.2); padding: 6px 12px; border-radius: 16px; font-size: 11px; cursor: pointer; white-space: nowrap; font-weight: 600;">
+                💪 Тренування
+            </button>
+            <button class="category-btn" onclick="filterByCategory('freestyle')" style="background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.8); border: 1px solid rgba(255,255,255,0.2); padding: 6px 12px; border-radius: 16px; font-size: 11px; cursor: pointer; white-space: nowrap; font-weight: 600;">
+                🎨 Фрістайл
+            </button>
+        </div>
+
         <!-- Filters Section -->
         <div class="filters-section" style="padding: 15px; background: rgba(255,255,255,0.05); margin: 0 15px; border-radius: 12px; margin-top: 12px;">
             <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
@@ -904,12 +926,42 @@
                     </div>
                     <div style="margin-bottom: 16px;">
                         <label style="display: block; margin-bottom: 6px; font-weight: 600; color: white; font-size: 13px;">Кому кидаєте виклик?</label>
-                        <select id="challengeAudience" style="width: 100%; padding: 8px 12px; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; background: rgba(255,255,255,0.1); color: white; font-size: 14px;">
+                        <select id="challengeAudience" onchange="toggleFriendsSelection()" style="width: 100%; padding: 8px 12px; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; background: rgba(255,255,255,0.1); color: white; font-size: 14px;">
                             <option value="friends">Моїм друзям</option>
                             <option value="city">Моєму місту (Київ)</option>
                             <option value="country">Моїй країні (Україна)</option>
                             <option value="world">Усьому світу</option>
                         </select>
+                    </div>
+                    <div id="friendsSelection" style="margin-bottom: 16px; display: block;">
+                        <label style="display: block; margin-bottom: 6px; font-weight: 600; color: white; font-size: 13px;">Оберіть друзів:</label>
+                        <div style="max-height: 120px; overflow-y: auto; background: rgba(255,255,255,0.05); border-radius: 8px; padding: 8px;">
+                            <label style="display: flex; align-items: center; gap: 8px; padding: 4px; cursor: pointer; font-size: 12px; color: rgba(255,255,255,0.8);">
+                                <input type="checkbox" value="player1" style="accent-color: #4caf50;">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=24&h=24&fit=crop&crop=face" style="width: 20px; height: 20px; border-radius: 50%;">
+                                Олександр Петренко
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; padding: 4px; cursor: pointer; font-size: 12px; color: rgba(255,255,255,0.8);">
+                                <input type="checkbox" value="player2" style="accent-color: #4caf50;">
+                                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=24&h=24&fit=crop&crop=face" style="width: 20px; height: 20px; border-radius: 50%;">
+                                Віталій Коваленко
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; padding: 4px; cursor: pointer; font-size: 12px; color: rgba(255,255,255,0.8);">
+                                <input type="checkbox" value="player3" style="accent-color: #4caf50;">
+                                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=24&h=24&fit=crop&crop=face" style="width: 20px; height: 20px; border-radius: 50%;">
+                                Дмитро Сидоренко
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; padding: 4px; cursor: pointer; font-size: 12px; color: rgba(255,255,255,0.8);">
+                                <input type="checkbox" value="player4" style="accent-color: #4caf50;">
+                                <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=24&h=24&fit=crop&crop=face" style="width: 20px; height: 20px; border-radius: 50%;">
+                                Андрій Шевченко
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; padding: 4px; cursor: pointer; font-size: 12px; color: rgba(255,255,255,0.8);">
+                                <input type="checkbox" value="player5" style="accent-color: #4caf50;">
+                                <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=24&h=24&fit=crop&crop=face" style="width: 20px; height: 20px; border-radius: 50%;">
+                                Максим Ковальчук
+                            </label>
+                        </div>
                     </div>
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
                         <div>
@@ -1296,7 +1348,8 @@
                     views: '456',
                     time: '3 дні тому',
                     icon: 'fas fa-futbol',
-                    status: 'Опубліковано'
+                    status: 'Опубліковано',
+                    category: 'goals'
                 },
                 {
                     id: 'myvideo2',
@@ -1306,7 +1359,41 @@
                     views: '234',
                     time: '1 тиждень тому',
                     icon: 'fas fa-running',
-                    status: 'Опубліковано'
+                    status: 'Опубліковано',
+                    category: 'training'
+                },
+                {
+                    id: 'myvideo3',
+                    title: 'Навчився робити "радугу" 🌈',
+                    rating: 4.6,
+                    votes: 31,
+                    views: '678',
+                    time: '5 днів тому',
+                    icon: 'fas fa-magic',
+                    status: 'Опубліковано',
+                    category: 'skills'
+                },
+                {
+                    id: 'myvideo4',
+                    title: 'Мій кращий сейв на тренуванні 🥅',
+                    rating: 4.2,
+                    votes: 19,
+                    views: '345',
+                    time: '1 тиждень тому',
+                    icon: 'fas fa-hand-paper',
+                    status: 'Опубліковано',
+                    category: 'saves'
+                },
+                {
+                    id: 'myvideo5',
+                    title: 'Фрістайл з м\'ячем на вулиці 🎪',
+                    rating: 4.4,
+                    votes: 27,
+                    views: '523',
+                    time: '2 дні тому',
+                    icon: 'fas fa-star',
+                    status: 'Опубліковано',
+                    category: 'freestyle'
                 }
             ];
             
@@ -1448,6 +1535,14 @@
                                 <span class="rating-value">${video.rating}</span>
                                 <span style="color: rgba(255,255,255,0.5); font-size: 12px; margin-left: 6px;">(${video.votes} оцінок)</span>
                             </div>
+                            <div class="voting-section">
+                                <div class="voting-controls">
+                                    <span class="vote-label">Ваша оцінка:</span>
+                                    <input type="range" class="vote-slider" min="0" max="5" step="0.01" value="0" id="trendSlider${video.id}" oninput="document.getElementById('trendValue${video.id}').textContent = this.value">
+                                    <span class="vote-value" id="trendValue${video.id}">0</span>
+                                    <button class="vote-btn" onclick="submitVote('${video.id}', document.getElementById('trendSlider${video.id}').value)">Голос</button>
+                                </div>
+                            </div>
                             <div class="video-actions">
                                 <button class="action-btn" onclick="playVideo('${video.id}')">
                                     <i class="fas fa-play"></i>
@@ -1460,6 +1555,10 @@
                                 <button class="action-btn" onclick="saveVideo('${video.id}')">
                                     <i class="fas fa-bookmark"></i>
                                     Зберегти
+                                </button>
+                                <button class="action-btn" onclick="boostVideo('${video.id}')">
+                                    <i class="fas fa-rocket"></i>
+                                    Буст
                                 </button>
                             </div>
                         </div>
@@ -1682,9 +1781,14 @@
                                 <option value="votes">За кількістю голосів</option>
                                 <option value="newest">Найновіші</option>
                             </select>
-                            <button id="claimCoinsBtn" onclick="claimVotingReward()" style="background: linear-gradient(135deg, #ffc107, #ff9800); color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 11px; cursor: pointer; display: none;">
-                                💰 +5 монет за голосування
-                            </button>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <div id="votingProgress" style="font-size: 11px; color: rgba(255,255,255,0.7);">
+                                    Проголосовано: <span id="votedCount">0</span>/<span id="totalCount">0</span>
+                                </div>
+                                <button id="claimCoinsBtn" onclick="claimVotingReward()" style="background: linear-gradient(135deg, #ffc107, #ff9800); color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 11px; cursor: pointer; display: none;">
+                                    💰 +5 монет за голосування
+                                </button>
+                            </div>
                         </div>
                 `;
                 
@@ -1725,6 +1829,19 @@
                 
                 videosHTML += `</div>`;
                 content.innerHTML = videosHTML;
+                
+                // Initialize progress counter
+                setTimeout(() => {
+                    const totalCountSpan = document.getElementById('totalCount');
+                    if (totalCountSpan) {
+                        totalCountSpan.textContent = challengeVideos.length;
+                    }
+                    const votedCountSpan = document.getElementById('votedCount');
+                    if (votedCountSpan) {
+                        votedCountSpan.textContent = '0';
+                    }
+                }, 100);
+                
                 modal.classList.add('show');
             }
         }
@@ -1772,7 +1889,15 @@
                 const videoButtons = document.querySelectorAll('[id^="voteBtn_"]');
                 const totalVideos = videoButtons.length;
                 
-                if (votedVideos.size >= totalVideos) {
+                // Update progress counter
+                const votedCountSpan = document.getElementById('votedCount');
+                const totalCountSpan = document.getElementById('totalCount');
+                if (votedCountSpan && totalCountSpan) {
+                    votedCountSpan.textContent = votedVideos.size;
+                    totalCountSpan.textContent = totalVideos;
+                }
+                
+                if (votedVideos.size >= totalVideos && totalVideos > 0) {
                     // Show claim button
                     const claimBtn = document.getElementById('claimCoinsBtn');
                     if (claimBtn) {
@@ -1967,6 +2092,52 @@
                 hideFabMenu();
             }
         });
+
+        // Category Functions
+        function filterByCategory(category) {
+            console.log('📂 Filter by category:', category);
+            
+            // Update category buttons
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('active');
+                btn.style.background = 'rgba(255,255,255,0.1)';
+                btn.style.color = 'rgba(255,255,255,0.8)';
+                btn.style.border = '1px solid rgba(255,255,255,0.2)';
+            });
+            
+            event.currentTarget.classList.add('active');
+            event.currentTarget.style.background = 'linear-gradient(135deg, #4caf50, #66bb6a)';
+            event.currentTarget.style.color = 'white';
+            event.currentTarget.style.border = 'none';
+            
+            showToast(`📂 Фільтр: ${getCategoryName(category)}`, 'success');
+        }
+
+        function getCategoryName(category) {
+            const names = {
+                'all': 'Всі відео',
+                'goals': 'Голи',
+                'skills': 'Навички', 
+                'saves': 'Сейви',
+                'training': 'Тренування',
+                'freestyle': 'Фрістайл'
+            };
+            return names[category] || 'Всі відео';
+        }
+
+        // Friends Selection Function
+        function toggleFriendsSelection() {
+            const audience = document.getElementById('challengeAudience').value;
+            const friendsDiv = document.getElementById('friendsSelection');
+            
+            if (friendsDiv) {
+                if (audience === 'friends') {
+                    friendsDiv.style.display = 'block';
+                } else {
+                    friendsDiv.style.display = 'none';
+                }
+            }
+        }
 
         // Toast System
         function showToast(message, type = 'success') {
