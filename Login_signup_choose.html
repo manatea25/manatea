@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLAP - Feel Like A Pro MVP Step 1</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(180deg, #1e7d32 0%, #2e7d32 100%);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Screen Management System */
+        .screen {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            min-height: 100vh;
+            width: 100%;
+            background: linear-gradient(180deg, #1e7d32 0%, #2e7d32 100%);
+            overflow-y: auto;
+        }
+
+        .screen.active {
+            display: block !important;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Welcome Screen */
+        .welcome-screen {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            text-align: center;
+            min-height: 100vh;
+        }
+
+        .welcome-logo {
+            width: 120px;
+            height: 120px;
+            background: url('https://raw.githubusercontent.com/manatea25/manatea/design-options/Bold%20Graphic%20Design%20With%20Dynamic%20Logo%20On%20Green%20Background.png.jpg') center/cover;
+            border-radius: 30px;
+            border: 4px solid #fff;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            margin-bottom: 30px;
+            animation: logoBounce 2s infinite;
+        }
+
+        @keyframes logoBounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .welcome-title {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .welcome-subtitle {
+            font-size: 18px;
+            opacity: 0.9;
+            margin-bottom: 40px;
+            line-height: 1.5;
+        }
+
+        .auth-buttons {
+            width: 100%;
+            max-width: 300px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .auth-btn {
+            padding: 15px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .auth-btn.primary {
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            color: white;
+            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+        }
+
+        .auth-btn.secondary {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.5);
+        }
+
+        .auth-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(76, 175, 80, 0.6);
+        }
+
+        /* Auth Forms */
+        .auth-form {
+            padding: 40px 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .form-subtitle {
+            opacity: 0.8;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 15px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #4caf50;
+            background: rgba(255,255,255,0.2);
+            box-shadow: 0 0 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .form-input::placeholder {
+            color: rgba(255,255,255,0.7);
+            font-weight: 400;
+        }
+
+        .position-select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 15px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-size: 16px;
+        }
+
+        .position-select option {
+            background: #2e7d32;
+            color: white;
+        }
+
+        .form-submit {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 25px;
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .form-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.6);
+        }
+
+        .back-to-welcome {
+            background: none;
+            border: none;
+            color: rgba(255,255,255,0.8);
+            padding: 10px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .social-login {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 15px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .social-btn:hover {
+            background: rgba(255,255,255,0.2);
+            border-color: rgba(255,255,255,0.5);
+        }
+
+        /* Profile Creation */
+        .avatar-upload {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .avatar-preview {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            font-weight: 800;
+            color: white;
+            margin: 0 auto 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 4px solid rgba(255,255,255,0.3);
+        }
+
+        .avatar-preview:hover {
+            transform: scale(1.05);
+            border-color: rgba(255,255,255,0.5);
+        }
+
+        .upload-btn {
+            background: rgba(255,255,255,0.2);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .upload-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* Mode Selection Screen (NEW) */
+        .mode-selection-screen {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .welcome-header {
+            background: linear-gradient(135deg, rgba(76,175,80,0.15), rgba(46,125,50,0.1));
+            backdrop-filter: blur(20px);
+            padding: 16px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+            z-index: 10;
+        }
+
+        .welcome-content {
+            flex: 1;
+        }
+
+        .greeting-text {
+            font-size: 22px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 4px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .rating-text {
+            font-size: 14px;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .mode-instruction {
+            font-size: 16px;
+            font-weight: 600;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .user-avatar-header {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 800;
+            color: white;
+            border: 3px solid rgba(255,255,255,0.2);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .user-avatar-header:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.3);
+        }
+
+        /* Mode Selection */
+        .modes-container {
+            display: flex;
+            min-height: calc(100vh - 100px);
+        }
+
+        .mode-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 30px;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mode-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .mode-section:hover::before {
+            background: rgba(0,0,0,0);
+        }
+
+        .video-mode {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+        }
+
+        .match-mode {
+            background: linear-gradient(135deg, #4caf50, #2e7d32);
+        }
+
+        .mode-content {
+            text-align: center;
+            color: white;
+            z-index: 2;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .mode-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            text-shadow: 0 6px 25px rgba(0,0,0,0.4);
+            transition: all 0.3s ease;
+        }
+
+        .mode-title {
+            font-size: 32px;
+            font-weight: 900;
+            margin-bottom: 16px;
+            text-shadow: 0 3px 15px rgba(0,0,0,0.4);
+            letter-spacing: 1px;
+        }
+
+        .mode-description {
+            font-size: 16px;
+            opacity: 0.95;
+            line-height: 1.5;
+            max-width: 300px;
+            margin: 0 auto 20px;
+        }
+
+        /* Function Icons Display */
+        .functions-icons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        .function-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            min-width: 60px;
+        }
+
+        .function-icon {
+            font-size: 20px;
+            opacity: 0.9;
+        }
+
+        .function-label {
+            font-size: 11px;
+            opacity: 0.8;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        .mode-section:hover {
+            flex: 1.15;
+        }
+
+        .mode-section:hover .mode-content {
+            transform: translateY(-5px);
+        }
+
+        .mode-section:hover .mode-icon {
+            transform: scale(1.05);
+        }
+
+        /* Controls */
+        .controls {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .control-btn {
+            background: rgba(255,255,255,0.9);
+            border: none;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-weight: 600;
+            color: #333;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+            font-size: 12px;
+        }
+
+        .control-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        /* Toast Notifications */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.9);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            z-index: 9999;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            font-size: 14px;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .toast.success {
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+        }
+
+        .toast.error {
+            background: linear-gradient(135deg, #f44336, #e57373);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .welcome-header {
+                flex-direction: row;
+                text-align: left;
+                padding: 14px 20px;
+                gap: 16px;
+            }
+            
+            .greeting-text {
+                font-size: 18px;
+            }
+            
+            .rating-text {
+                font-size: 12px;
+            }
+            
+            .mode-instruction {
+                font-size: 14px;
+            }
+            
+            .user-avatar-header {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
+            
+            .modes-container {
+                flex-direction: column;
+                min-height: calc(100vh - 80px);
+            }
+            
+            .mode-section {
+                min-height: 50vh;
+                padding: 25px 20px;
+            }
+            
+            .mode-icon {
+                font-size: 50px;
+            }
+            
+            .mode-title {
+                font-size: 20px;
+                margin-bottom: 12px;
+            }
+            
+            .mode-description {
+                font-size: 14px;
+                margin-bottom: 16px;
+            }
+            
+            .functions-icons {
+                gap: 12px;
+            }
+            
+            .function-item {
+                min-width: 45px;
+            }
+            
+            .function-icon {
+                font-size: 16px;
+            }
+            
+            .function-label {
+                font-size: 10px;
+            }
+            
+            .controls {
+                right: 20px;
+                left: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Welcome Screen -->
+    <div id="welcomeScreen" class="screen active">
+        <div class="welcome-screen">
+            <div class="welcome-logo"></div>
+            <h1 class="welcome-title">FLAP</h1>
+            <p class="welcome-subtitle">Feel Like A Pro<br>Твоя футбольна соціальна мережа</p>
+            
+            <div class="auth-buttons">
+                <button class="auth-btn primary" onclick="showScreen('loginScreen')">Увійти</button>
+                <button class="auth-btn secondary" onclick="showScreen('registerScreen')">Реєстрація</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Screen -->
+    <div id="loginScreen" class="screen">
+        <div class="auth-form">
+            <button class="back-to-welcome" onclick="showScreen('welcomeScreen')">
+                <i class="fas fa-arrow-left"></i> Назад
+            </button>
+            
+            <div class="form-header">
+                <h2 class="form-title">Вхід до FLAP</h2>
+                <p class="form-subtitle">Увійдіть до своєї футбольної спільноти</p>
+            </div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label class="form-label">Email або телефон</label>
+                    <input type="text" class="form-input" placeholder="Введіть email або номер телефону" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Пароль</label>
+                    <input type="password" class="form-input" placeholder="Введіть пароль" required>
+                </div>
+
+                <button type="submit" class="form-submit">Увійти</button>
+            </form>
+
+            <div class="social-login">
+                <button class="social-btn" onclick="loginWithGoogle()">
+                    <i class="fab fa-google"></i>
+                    Увійти через Google
+                </button>
+                <button class="social-btn" onclick="loginWithFacebook()">
+                    <i class="fab fa-facebook-f"></i>
+                    Увійти через Facebook
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Screen -->
+    <div id="registerScreen" class="screen">
+        <div class="auth-form">
+            <button class="back-to-welcome" onclick="showScreen('welcomeScreen')">
+                <i class="fas fa-arrow-left"></i> Назад
+            </button>
+            
+            <div class="form-header">
+                <h2 class="form-title">Реєстрація</h2>
+                <p class="form-subtitle">Приєднуйтесь до футбольної спільноти</p>
+            </div>
+
+            <form id="registerForm">
+                <div class="form-group">
+                    <label class="form-label">Ім'я</label>
+                    <input type="text" class="form-input" placeholder="Ваше повне ім'я" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" placeholder="your@email.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Телефон</label>
+                    <input type="tel" class="form-input" placeholder="+380 XX XXX XX XX" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Пароль</label>
+                    <input type="password" class="form-input" placeholder="Створіть надійний пароль" required>
+                </div>
+
+                <button type="submit" class="form-submit">Зареєструватися</button>
+            </form>
+
+            <div class="social-login">
+                <button class="social-btn" onclick="registerWithGoogle()">
+                    <i class="fab fa-google"></i>
+                    Реєстрація через Google
+                </button>
+                <button class="social-btn" onclick="registerWithFacebook()">
+                    <i class="fab fa-facebook-f"></i>
+                    Реєстрація через Facebook
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Creation Screen -->
+    <div id="profileScreen" class="screen">
+        <div class="auth-form">
+            <div class="form-header">
+                <h2 class="form-title">Створення профілю</h2>
+                <p class="form-subtitle">Розкажіть про себе футбольній спільноті</p>
+            </div>
+
+            <div class="avatar-upload">
+                <div class="avatar-preview" id="avatarPreview">
+                    <i class="fas fa-camera"></i>
+                </div>
+                <input type="file" id="avatarInput" accept="image/*" style="display: none;">
+                <button class="upload-btn" onclick="document.getElementById('avatarInput').click()">
+                    <i class="fas fa-upload"></i> Завантажити фото
+                </button>
+            </div>
+
+            <form id="profileForm">
+                <div class="form-group">
+                    <label class="form-label">Місто</label>
+                    <input type="text" class="form-input" placeholder="Ваше місто" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Позиція на полі</label>
+                    <select class="position-select" required>
+                        <option value="">Оберіть позицію</option>
+                        <option value="goalkeeper">Воротар</option>
+                        <option value="defender">Захисник</option>
+                        <option value="midfielder">Півзахисник</option>
+                        <option value="forward">Нападник</option>
+                        <option value="universal">Універсал</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Досвід гри</label>
+                    <select class="position-select" required>
+                        <option value="">Оберіть рівень</option>
+                        <option value="beginner">Новачок (0-1 рік)</option>
+                        <option value="amateur">Аматор (1-3 роки)</option>
+                        <option value="experienced">Досвідчений (3-7 років)</option>
+                        <option value="advanced">Просунутий (7+ років)</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="form-submit">Створити профіль</button>
+                <button type="button" class="form-submit" style="background: rgba(255,255,255,0.2); margin-top: 10px;" onclick="skipProfile()">
+                    Поки що пропустити
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Mode Selection Screen -->
+    <div id="modeSelectionScreen" class="screen">
+        <div class="mode-selection-screen">
+            <div class="controls">
+                <button class="control-btn" onclick="generateNewGreeting()">Нове привітання</button>
+            </div>
+
+            <!-- Welcome Header -->
+            <div class="welcome-header">
+                <div class="welcome-content">
+                    <div class="greeting-text" id="greetingText">Завантаження...</div>
+                    <div class="rating-text" id="ratingText">
+                        <i class="fas fa-star" style="color: #ffc107;"></i>
+                        <span>Завантаження...</span>
+                    </div>
+                    <div class="mode-instruction" id="instructionText">Завантаження...</div>
+                </div>
+                
+                <div class="user-avatar-header" onclick="generateNewGreeting()" title="Клікни для нового привітання">О</div>
+            </div>
+
+            <!-- Mode Selection -->
+            <div class="modes-container">
+                <div class="mode-section video-mode" onclick="selectMode('video')">
+                    <div class="mode-content">
+                        <div class="mode-icon">🎥</div>
+                        <div class="mode-title">ВІДЕО</div>
+                        <div class="mode-description">Створюй контент, приймай челенджі та показуй свої навички</div>
+                        
+                        <div class="functions-icons">
+                            <div class="function-item">
+                                <div class="function-icon">📤</div>
+                                <div class="function-label">Завантаження</div>
+                            </div>
+                            <div class="function-item">
+                                <div class="function-icon">🏆</div>
+                                <div class="function-label">Челенджі</div>
+                            </div>
+                            <div class="function-item">
+                                <div class="function-icon">👍</div>
+                                <div class="function-label">Голосування</div>
+                            </div>
+                            <div class="function-item">
+                                <div class="function-icon">💬</div>
+                                <div class="function-label">Коментарі</div>
+                            </div>
+                            <div class="function-item">
+                                <div class="function-icon">⭐</div>
+                                <div class="function-label">Рейтинг</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mode-section match-mode" onclick="selectMode('match')">
+                    <div class="mode-content">
+                        <div class="mode-icon">⚽</div>
+                        <div class="mode-title">МАТЧІ</div>
+                        <div class="mode-description">Знаходь гравців, створюй команди та грай у живому футболі</div>
+                        
+                        <div class="functions-icons">
+                            <div class="function-item">
+                                <div class="function-icon">🔍</div>
+                                <div class="function-label">Пошук</div>
+                            </div>
+                            <div class="function-item">
+                                <div class="function-icon">➕</div>
+                                <div class="function-label">Створення</div>
+                            </div>
+                            <div class="function-item">
+                                <div class="function-icon">⚖️</div>
+                                <div class="function-label">Баланс</div>
+                            </div>
+                            <div class="function-item">
+                                <div class="function-icon">📊</div>
+                                <div class="function-label">Рейтинг</div>
+                            </div>
+                            <div class="function-item">
+                                <div class="function-icon">👥</div>
+                                <div class="function-label">Друзі</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        console.log('🚀 FLAP MVP Step 1 Loading...');
+
+        // Random Greetings Database (25+ variants)
+        const greetings = [
+            {
+                greeting: "Вітаю, Олександр! 👋",
+                rating: "Ваш рейтинг: <strong>4.2</strong> • 45 матчів зіграно",
+                instruction: "Оберіть режим роботи для початку гри",
+                icon: "fas fa-star"
+            },
+            {
+                greeting: "Готовий до нових викликів, Олександр? 🔥",
+                rating: "Твій рейтинг: <strong>4.2</strong> • Відмінний результат!",
+                instruction: "Обери свій шлях до перемоги",
+                icon: "fas fa-trophy"
+            },
+            {
+                greeting: "Привіт, чемпіоне! 🏆",
+                rating: "Рейтинг: <strong>4.2</strong> з 5.0 • Продовжуй у тому ж дусі!",
+                instruction: "Що сьогодні будемо робити?",
+                icon: "fas fa-medal"
+            },
+            {
+                greeting: "Доброго дня, майстре! ⚡",
+                rating: "Твої досягнення: <strong>4.2</strong> • Ти на правильному шляху",
+                instruction: "Вибери напрямок для розвитку",
+                icon: "fas fa-bolt"
+            },
+            {
+                greeting: "З поверненням, легендо! 🌟",
+                rating: "Статистика: <strong>4.2</strong> рейтинг • 45 ігор",
+                instruction: "Куди спрямуємо твою енергію?",
+                icon: "fas fa-star"
+            },
+            {
+                greeting: "Вітаємо знову, Олександр! 🎯",
+                rating: "Поточний рівень: <strong>4.2</strong> • Стабільний ріст",
+                instruction: "Обирай режим для нових досягнень",
+                icon: "fas fa-bullseye"
+            },
+            {
+                greeting: "Привіт, футбольний ас! ⚽",
+                rating: "Твій скіл: <strong>4.2</strong> • Чудовий прогрес",
+                instruction: "Що плануємо покорювати сьогодні?",
+                icon: "fas fa-futbol"
+            },
+            {
+                greeting: "Доброго ранку, зірко! 🌅",
+                rating: "Рейтинг майстерності: <strong>4.2</strong> • 45 матчів",
+                instruction: "Новий день - нові можливості!",
+                icon: "fas fa-sun"
+            },
+            {
+                greeting: "Вечір добрий, чемп! 🌙",
+                rating: "Твої показники: <strong>4.2</strong> • Топ гравець",
+                instruction: "Час для вечірніх тренувань?",
+                icon: "fas fa-moon"
+            },
+            {
+                greeting: "Хей, суперстар! 🎬",
+                rating: "Популярність: <strong>4.2</strong> • Ти на піку форми",
+                instruction: "Створюємо новий контент?",
+                icon: "fas fa-video"
+            },
+            {
+                greeting: "Салют, воїне поля! ⚔️",
+                rating: "Бойовий рейтинг: <strong>4.2</strong> • Готовий до битви",
+                instruction: "Вибирай поле бою!",
+                icon: "fas fa-sword"
+            },
+            {
+                greeting: "Привіт, рекордсмене! 📈",
+                rating: "Статус: <strong>4.2</strong> • Постійне зростання",
+                instruction: "Встановлюємо нові рекорди?",
+                icon: "fas fa-chart-line"
+            },
+            {
+                greeting: "Вітання, талант! 🎨",
+                rating: "Творчий рейтинг: <strong>4.2</strong> • Унікальний стиль",
+                instruction: "Де проявимо креативність?",
+                icon: "fas fa-palette"
+            },
+            {
+                greeting: "З прибуттям, лідер! 👑",
+                rating: "Лідерський рейтинг: <strong>4.2</strong> • Команда за тобою",
+                instruction: "Веди нас до перемоги!",
+                icon: "fas fa-crown"
+            },
+            {
+                greeting: "Привіт, інноватор! 🚀",
+                rating: "Рівень інновацій: <strong>4.2</strong> • Ти змінюєш гру",
+                instruction: "Що нового покажемо світу?",
+                icon: "fas fa-rocket"
+            },
+            {
+                greeting: "Вітаю, стратег! 🧠",
+                rating: "IQ гри: <strong>4.2</strong> • Розумний підхід",
+                instruction: "Плануємо наступний хід?",
+                icon: "fas fa-brain"
+            },
+            {
+                greeting: "Доброго дня, амбасадор! 🌍",
+                rating: "Глобальний рейтинг: <strong>4.2</strong> • Світове визнання",
+                instruction: "Представляємо Україну гідно!",
+                icon: "fas fa-globe"
+            },
+            {
+                greeting: "Привіт, майстер техніки! 🎪",
+                rating: "Технічний рівень: <strong>4.2</strong> • Віртуозність",
+                instruction: "Демонструємо майстерність?",
+                icon: "fas fa-magic"
+            },
+            {
+                greeting: "Вітання, спідстер! 💨",
+                rating: "Швидкість реакції: <strong>4.2</strong> • Блискавично",
+                instruction: "Час показати швидкість!",
+                icon: "fas fa-tachometer-alt"
+            },
+            {
+                greeting: "З поверненням, герой! 🦸",
+                rating: "Героїчний рейтинг: <strong>4.2</strong> • Справжній герой",
+                instruction: "Рятуємо день знову?",
+                icon: "fas fa-mask"
+            },
+            {
+                greeting: "Привіт, дослідник! 🔬",
+                rating: "Рівень досліджень: <strong>4.2</strong> • Відкриваєш нове",
+                instruction: "Досліджуємо нові горизонти?",
+                icon: "fas fa-microscope"
+            },
+            {
+                greeting: "Вітаю, артист! 🎭",
+                rating: "Артистичність: <strong>4.2</strong> • Справжнє шоу",
+                instruction: "Влаштовуємо видовище?",
+                icon: "fas fa-theater-masks"
+            },
+            {
+                greeting: "Доброго дня, архітектор! 🏗️",
+                rating: "Будівельний рейтинг: <strong>4.2</strong> • Будуєш майбутнє",
+                instruction: "Створюємо щось грандіозне?",
+                icon: "fas fa-drafting-compass"
+            },
+            {
+                greeting: "Привіт, навігатор! 🧭",
+                rating: "Навігаційні навички: <strong>4.2</strong> • Знаєш шлях",
+                instruction: "Куди прямуємо сьогодні?",
+                icon: "fas fa-compass"
+            },
+            {
+                greeting: "Вітання, колекціонер! 💎",
+                rating: "Колекція досягнень: <strong>4.2</strong> • Рідкісні трофеї",
+                instruction: "Додаємо нові експонати?",
+                icon: "fas fa-gem"
+            }
+        ];
+
+        let lastGreetingIndex = -1;
+
+        // Screen Management
+        function showScreen(screenId) {
+            console.log('🔄 Switching to screen:', screenId);
+            
+            // Hide all screens
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            
+            // Show target screen
+            const targetScreen = document.getElementById(screenId);
+            if (targetScreen) {
+                targetScreen.classList.add('active');
+                
+                // Special handling for mode selection screen
+                if (screenId === 'modeSelectionScreen') {
+                    loadGreeting();
+                }
+            } else {
+                console.error('Screen not found:', screenId);
+            }
+        }
+
+        // Random Greeting System
+        function generateRandomGreeting() {
+            let randomIndex;
+            do {
+                randomIndex = Math.floor(Math.random() * greetings.length);
+            } while (randomIndex === lastGreetingIndex && greetings.length > 1);
+            
+            lastGreetingIndex = randomIndex;
+            return greetings[randomIndex];
+        }
+
+        function updateGreeting() {
+            const greeting = generateRandomGreeting();
+            
+            document.getElementById('greetingText').innerHTML = greeting.greeting;
+            document.getElementById('ratingText').innerHTML = `
+                <i class="${greeting.icon}" style="color: #ffc107;"></i>
+                <span>${greeting.rating}</span>
+            `;
+            document.getElementById('instructionText').innerHTML = greeting.instruction;
+        }
+
+        function generateNewGreeting() {
+            updateGreeting();
+            showToast('🎲 Нове привітання згенеровано!', 'success');
+        }
+
+        function loadGreeting() {
+            const savedIndex = localStorage.getItem('lastFLAPGreeting');
+            const savedTime = localStorage.getItem('lastFLAPGreetingTime');
+            
+            // If more than 4 hours passed, show new greeting
+            const fourHours = 4 * 60 * 60 * 1000;
+            const now = Date.now();
+            
+            if (savedIndex && savedTime && (now - parseInt(savedTime)) < fourHours) {
+                lastGreetingIndex = parseInt(savedIndex);
+                const greeting = greetings[lastGreetingIndex];
+                
+                document.getElementById('greetingText').innerHTML = greeting.greeting;
+                document.getElementById('ratingText').innerHTML = `
+                    <i class="${greeting.icon}" style="color: #ffc107;"></i>
+                    <span>${greeting.rating}</span>
+                `;
+                document.getElementById('instructionText').innerHTML = greeting.instruction;
+            } else {
+                updateGreeting();
+                saveGreeting();
+            }
+        }
+
+        function saveGreeting() {
+            localStorage.setItem('lastFLAPGreeting', lastGreetingIndex.toString());
+            localStorage.setItem('lastFLAPGreetingTime', Date.now().toString());
+        }
+
+        // Auth Functions
+        function loginWithGoogle() {
+            console.log('🔍 Google login');
+            showToast('🔍 Вхід через Google...', 'success');
+            setTimeout(() => {
+                showScreen('modeSelectionScreen');
+            }, 1500);
+        }
+
+        function loginWithFacebook() {
+            console.log('📘 Facebook login');
+            showToast('📘 Вхід через Facebook...', 'success');
+            setTimeout(() => {
+                showScreen('modeSelectionScreen');
+            }, 1500);
+        }
+
+        function registerWithGoogle() {
+            console.log('🔍 Google register');
+            showToast('🔍 Реєстрація через Google...', 'success');
+            setTimeout(() => {
+                showScreen('profileScreen');
+            }, 1500);
+        }
+
+        function registerWithFacebook() {
+            console.log('📘 Facebook register');
+            showToast('📘 Реєстрація через Facebook...', 'success');
+            setTimeout(() => {
+                showScreen('profileScreen');
+            }, 1500);
+        }
+
+        function skipProfile() {
+            showToast('✅ Профіль можна заповнити пізніше', 'success');
+            setTimeout(() => {
+                showScreen('modeSelectionScreen');
+            }, 1000);
+        }
+
+        // Mode Selection
+        function selectMode(mode) {
+            if (mode === 'video') {
+                showToast('🎥 Переходимо до відео режиму!', 'success');
+                // TODO: Navigate to video mode
+            } else {
+                showToast('⚽ Переходимо до пошуку матчів!', 'success');
+                // TODO: Navigate to match mode
+            }
+        }
+
+        // Toast System
+        function showToast(message, type = 'success') {
+            // Remove existing toast
+            const existingToast = document.querySelector('.toast');
+            if (existingToast) {
+                existingToast.remove();
+            }
+
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            
+            document.body.appendChild(toast);
+            
+            // Show toast
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 100);
+            
+            // Hide toast
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    if (document.body.contains(toast)) {
+                        document.body.removeChild(toast);
+                    }
+                }, 300);
+            }, 3000);
+        }
+
+        // Avatar Upload
+        document.getElementById('avatarInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const avatarPreview = document.getElementById('avatarPreview');
+                    avatarPreview.style.backgroundImage = `url(${e.target.result})`;
+                    avatarPreview.style.backgroundSize = 'cover';
+                    avatarPreview.style.backgroundPosition = 'center';
+                    avatarPreview.innerHTML = '';
+                };
+                reader.readAsDataURL(file);
+                showToast('📷 Фото завантажено!', 'success');
+            }
+        });
+
+        // Form Handlers
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            showToast('✅ Успішний вхід!', 'success');
+            setTimeout(() => {
+                showScreen('modeSelectionScreen');
+            }, 1000);
+        });
+
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            showToast('✅ Реєстрація успішна!', 'success');
+            setTimeout(() => {
+                showScreen('profileScreen');
+            }, 1000);
+        });
+
+        document.getElementById('profileForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            showToast('✅ Профіль створено!', 'success');
+            setTimeout(() => {
+                showScreen('modeSelectionScreen');
+            }, 1000);
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 FLAP MVP Step 1 Initialized');
+            showToast('🚀 FLAP завантажено!', 'success');
+            
+            // Auto-update greeting periodically (for demo)
+            setInterval(() => {
+                if (document.getElementById('modeSelectionScreen').classList.contains('active')) {
+                    if (Math.random() < 0.05) { // 5% chance every 30 seconds
+                        updateGreeting();
+                    }
+                }
+            }, 30000);
+        });
+
+        console.log('✅ FLAP MVP Step 1 - All systems ready!');
+    </script>
+</body>
+</html>
