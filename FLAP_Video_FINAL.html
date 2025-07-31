@@ -2583,7 +2583,8 @@
 
     <!-- ВИПРАВЛЕННЯ: Coins Menu Modal -->
     <div id="coinsModal" onclick="closeCoinsMenu()" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); display: none; justify-content: center; align-items: center; z-index: 2000;">
-        <div onclick="event.stopPropagation()" style="background: linear-gradient(135deg, #1a1a2e, #16213e); border-radius: 20px; padding: 30px; max-width: 400px; width: 90%; box-shadow: 0 20px 60px rgba(0,0,0,0.5); border: 1px solid rgba(255,215,0,0.2);">
+                    <div onclick="event.stopPropagation()" style="background: linear-gradient(135deg, #1a1a2e, #16213e); border-radius: 20px; padding: 30px; max-width: 400px; width: 90%; box-shadow: 0 20px 60px rgba(0,0,0,0.5); border: 1px solid rgba(255,215,0,0.2); position: relative;">
+            <button onclick="closeCoinsMenu()" style="position: absolute; top: 15px; right: 15px; background: rgba(255,255,255,0.1); border: none; color: rgba(255,255,255,0.7); width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px;">✕</button>
             <h2 style="color: #ffd700; text-align: center; margin-bottom: 20px; font-size: 24px;"><i class="fas fa-coins" style="color: #ffd700;"></i> Монети</h2>
             
             <div style="text-align: center; margin-bottom: 30px; padding: 20px; background: rgba(255,215,0,0.1); border-radius: 15px; border: 1px solid rgba(255,215,0,0.3);">
@@ -2620,9 +2621,25 @@
             <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; margin-bottom: 10px; background: rgba(255,255,255,0.05); border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
                 <div style="color: white; font-weight: 500;">
                     <div>Переможець челенджу</div>
-                    <div style="font-size: 12px; color: rgba(255,255,255,0.6);">1-е місце</div>
+                    <div style="font-size: 12px; color: rgba(255,255,255,0.6);">50% банку челенджу</div>
                 </div>
-                <div style="color: #ffd700; font-weight: bold; font-size: 16px;">+50 монет</div>
+                <div style="color: #ffd700; font-weight: bold; font-size: 16px;">50% банку</div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; margin-bottom: 10px; background: rgba(255,255,255,0.05); border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
+                <div style="color: white; font-weight: 500;">
+                    <div>2-е місце в челенджі</div>
+                    <div style="font-size: 12px; color: rgba(255,255,255,0.6);">30% банку челенджу</div>
+                </div>
+                <div style="color: #ffd700; font-weight: bold; font-size: 16px;">30% банку</div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; margin-bottom: 10px; background: rgba(255,255,255,0.05); border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
+                <div style="color: white; font-weight: 500;">
+                    <div>3-є місце в челенджі</div>
+                    <div style="font-size: 12px; color: rgba(255,255,255,0.6);">20% банку челенджу</div>
+                </div>
+                <div style="color: #ffd700; font-weight: bold; font-size: 16px;">20% банку</div>
             </div>
 
             <h3 style="color: white; margin: 20px 0 15px 0; font-size: 18px;">🛒 Купити монети:</h3>
