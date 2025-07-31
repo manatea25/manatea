@@ -1121,57 +1121,132 @@
             }
         }
 
+        // Global videos database for filtering
+        const allVideos = [
+            {
+                id: 'video1',
+                title: 'Неймовірний гол з 30 метрів! 🚀',
+                author: 'player1',
+                rating: 4.8,
+                votes: 127,
+                views: '2.1K',
+                time: '2 дні тому',
+                icon: 'fas fa-futbol',
+                category: 'goals'
+            },
+            {
+                id: 'video2',
+                title: 'Технічний дриблінг у штрафній ⚡',
+                author: 'player3',
+                rating: 4.5,
+                votes: 89,
+                views: '1.8K',
+                time: '1 день тому',
+                icon: 'fas fa-running',
+                category: 'skills'
+            },
+            {
+                id: 'video3',
+                title: 'Фантастичний сейв воротаря 🥅',
+                author: 'player5',
+                rating: 4.9,
+                votes: 156,
+                views: '3.2K',
+                time: '3 дні тому',
+                icon: 'fas fa-hand-paper',
+                category: 'saves'
+            },
+            {
+                id: 'video4',
+                title: 'Майстерний фрістайл з м\'ячем 🎪',
+                author: 'player4',
+                rating: 4.7,
+                votes: 203,
+                views: '4.5K',
+                time: '1 тиждень тому',
+                icon: 'fas fa-magic',
+                category: 'freestyle'
+            },
+            {
+                id: 'video5',
+                title: 'Тренування ударів по воротах 💪',
+                author: 'player2',
+                rating: 4.2,
+                votes: 67,
+                views: '1.2K',
+                time: '4 дні тому',
+                icon: 'fas fa-dumbbell',
+                category: 'training'
+            },
+            {
+                id: 'video6',
+                title: 'Гол ножицями у падінні ⚽',
+                author: 'player1',
+                rating: 4.6,
+                votes: 134,
+                views: '2.8K',
+                time: '1 день тому',
+                icon: 'fas fa-futbol',
+                category: 'goals'
+            }
+        ];
+
+        let currentCategory = 'all';
+        let currentCityFilter = '';
+        let currentRatingFilter = '';
+        let currentSearchFilter = '';
+
         // Video Feed Generation
         function generateVideoFeed() {
             const container = document.getElementById('feedContent');
             if (!container) return;
             
-            const videos = [
-                {
-                    id: 'video1',
-                    title: 'Неймовірний гол з 30 метрів! 🚀',
-                    author: 'player1',
-                    rating: 4.8,
-                    votes: 127,
-                    views: '2.1K',
-                    time: '2 дні тому',
-                    icon: 'fas fa-futbol'
-                },
-                {
-                    id: 'video2',
-                    title: 'Технічний дриблінг у штрафній ⚡',
-                    author: 'player3',
-                    rating: 4.5,
-                    votes: 89,
-                    views: '1.8K',
-                    time: '1 день тому',
-                    icon: 'fas fa-running'
-                },
-                {
-                    id: 'video3',
-                    title: 'Фантастичний сейв воротаря 🥅',
-                    author: 'player5',
-                    rating: 4.9,
-                    votes: 156,
-                    views: '3.2K',
-                    time: '3 дні тому',
-                    icon: 'fas fa-hand-paper'
-                },
-                {
-                    id: 'video4',
-                    title: 'Майстерний фрістайл з м\'ячем 🎪',
-                    author: 'player4',
-                    rating: 4.7,
-                    votes: 203,
-                    views: '4.5K',
-                    time: '1 тиждень тому',
-                    icon: 'fas fa-magic'
+            // Filter videos based on current filters
+            let filteredVideos = allVideos.filter(video => {
+                // Category filter
+                if (currentCategory !== 'all' && video.category !== currentCategory) {
+                    return false;
                 }
-            ];
+                
+                // City filter
+                if (currentCityFilter) {
+                    const player = getPlayer(video.author);
+                    if (player.city !== currentCityFilter) {
+                        return false;
+                    }
+                }
+                
+                // Rating filter
+                if (currentRatingFilter) {
+                    const minRating = parseFloat(currentRatingFilter);
+                    if (video.rating < minRating) {
+                        return false;
+                    }
+                }
+                
+                // Search filter
+                if (currentSearchFilter) {
+                    const searchLower = currentSearchFilter.toLowerCase();
+                    if (!video.title.toLowerCase().includes(searchLower)) {
+                        return false;
+                    }
+                }
+                
+                return true;
+            });
             
             let videoHTML = '';
             
-            videos.forEach(video => {
+            if (filteredVideos.length === 0) {
+                videoHTML = `
+                    <div style="text-align: center; padding: 40px 20px; color: rgba(255,255,255,0.6);">
+                        <div style="font-size: 48px; margin-bottom: 16px;">🔍</div>
+                        <h3 style="margin-bottom: 12px; color: white;">Відео не знайдено</h3>
+                        <p style="font-size: 14px;">Спробуйте змінити фільтри або категорію</p>
+                    </div>
+                `;
+            } else {
+                filteredVideos.forEach(video => {
                 const player = getPlayer(video.author);
                 const stars = generateStars(video.rating);
                 
@@ -1242,7 +1317,8 @@
                         </div>
                     </div>
                 `;
-            });
+                });
+            }
             
             container.innerHTML = videoHTML;
         }
@@ -1920,16 +1996,25 @@
 
         // Filter Functions
         function applyFilters() {
-            const cityFilter = document.getElementById('cityFilter').value;
-            const ratingFilter = document.getElementById('ratingFilter').value;
-            const searchFilter = document.getElementById('searchFilter').value.toLowerCase();
+            currentCityFilter = document.getElementById('cityFilter').value;
+            currentRatingFilter = document.getElementById('ratingFilter').value;
+            currentSearchFilter = document.getElementById('searchFilter').value.toLowerCase();
             
-            console.log('🔍 Applying filters:', { cityFilter, ratingFilter, searchFilter });
+            console.log('🔍 Applying filters:', { currentCityFilter, currentRatingFilter, currentSearchFilter });
+            
+            // Regenerate current section
+            const activeSection = document.querySelector('.video-nav-tab.active');
+            if (activeSection) {
+                const sectionName = activeSection.textContent.toLowerCase();
+                if (sectionName.includes('стрічка')) {
+                    generateVideoFeed();
+                }
+            }
             
             let filterText = 'Фільтри застосовано';
-            if (cityFilter) filterText += ` • Місто: ${cityFilter}`;
-            if (ratingFilter) filterText += ` • Рейтинг: ${ratingFilter}+`;
-            if (searchFilter) filterText += ` • Пошук: ${searchFilter}`;
+            if (currentCityFilter) filterText += ` • Місто: ${currentCityFilter}`;
+            if (currentRatingFilter) filterText += ` • Рейтинг: ${currentRatingFilter}+`;
+            if (currentSearchFilter) filterText += ` • Пошук: ${currentSearchFilter}`;
             
             showToast(`🔍 ${filterText}`, 'success');
         }
@@ -1938,6 +2023,20 @@
             document.getElementById('cityFilter').value = '';
             document.getElementById('ratingFilter').value = '';
             document.getElementById('searchFilter').value = '';
+            
+            currentCityFilter = '';
+            currentRatingFilter = '';
+            currentSearchFilter = '';
+            
+            // Regenerate current section
+            const activeSection = document.querySelector('.video-nav-tab.active');
+            if (activeSection) {
+                const sectionName = activeSection.textContent.toLowerCase();
+                if (sectionName.includes('стрічка')) {
+                    generateVideoFeed();
+                }
+            }
+            
             showToast('🧹 Фільтри очищено!', 'success');
         }
 
@@ -2094,6 +2193,8 @@
         function filterByCategory(category) {
             console.log('📂 Filter by category:', category);
             
+            currentCategory = category;
+            
             // Update category buttons
             document.querySelectorAll('.category-btn').forEach(btn => {
                 btn.classList.remove('active');
@@ -2106,6 +2207,15 @@
             event.currentTarget.style.background = 'linear-gradient(135deg, #4caf50, #66bb6a)';
             event.currentTarget.style.color = 'white';
             event.currentTarget.style.border = 'none';
+            
+            // Regenerate current section
+            const activeSection = document.querySelector('.video-nav-tab.active');
+            if (activeSection) {
+                const sectionName = activeSection.textContent.toLowerCase();
+                if (sectionName.includes('стрічка')) {
+                    generateVideoFeed();
+                }
+            }
             
             showToast(`📂 Фільтр: ${getCategoryName(category)}`, 'success');
         }
@@ -2170,6 +2280,12 @@
         document.addEventListener('DOMContentLoaded', function() {
             console.log('🎥 FLAP Video Section Initialized');
             generateVideoFeed(); // Load initial content
+            
+            // Pre-generate all sections for faster switching
+            generateMyVideos();
+            generateChallenges();
+            generateTrendingVideos();
+            
             showToast('🎥 Відео секція завантажена!', 'success');
         });
 
