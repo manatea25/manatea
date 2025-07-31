@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLAP - Варіант 3 з окремим заголовком</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        /* ЗАГОЛОВОК З ПРИВІТАННЯМ */
+        .welcome-header {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
+            padding: 20px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            position: relative;
+            z-index: 10;
+        }
+        
+        .welcome-content {
+            flex: 1;
+        }
+        
+        .greeting-text {
+            font-size: 24px;
+            font-weight: 800;
+            color: #333;
+            margin-bottom: 6px;
+            background: linear-gradient(135deg, #4caf50, #2e7d32);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .rating-text {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .mode-instruction {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            opacity: 0.8;
+        }
+        
+        .user-avatar-header {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: 800;
+            color: white;
+            border: 3px solid rgba(76,175,80,0.2);
+            box-shadow: 0 8px 25px rgba(76,175,80,0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .user-avatar-header:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 35px rgba(76,175,80,0.4);
+        }
+        
+        /* РЕЖИМИ ВИБОРУ */
+        .modes-container {
+            display: flex;
+            min-height: calc(100vh - 120px);
+        }
+        
+        .mode-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 40px;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .mode-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .mode-section:hover::before {
+            background: rgba(0,0,0,0);
+        }
+        
+        .video-mode {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+        }
+        
+        .match-mode {
+            background: linear-gradient(135deg, #4caf50, #2e7d32);
+        }
+        
+        .mode-content {
+            text-align: center;
+            color: white;
+            z-index: 2;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .mode-icon {
+            font-size: 100px;
+            margin-bottom: 30px;
+            text-shadow: 0 6px 25px rgba(0,0,0,0.4);
+            transition: all 0.3s ease;
+        }
+        
+        .mode-title {
+            font-size: 36px;
+            font-weight: 900;
+            margin-bottom: 16px;
+            text-shadow: 0 3px 15px rgba(0,0,0,0.4);
+            letter-spacing: 1px;
+        }
+        
+        .mode-description {
+            font-size: 18px;
+            opacity: 0.95;
+            line-height: 1.6;
+            max-width: 280px;
+            margin: 0 auto;
+        }
+        
+        .mode-section:hover {
+            flex: 1.15;
+        }
+        
+        .mode-section:hover .mode-content {
+            transform: translateY(-10px);
+        }
+        
+        .mode-section:hover .mode-icon {
+            transform: scale(1.1);
+        }
+        
+        /* ВАРІАНТИ ТЕКСТУ */
+        .text-variant {
+            display: none;
+        }
+        
+        .text-variant.active {
+            display: block;
+        }
+        
+        /* КНОПКИ ПЕРЕМИКАННЯ */
+        .controls {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .control-btn {
+            background: rgba(255,255,255,0.9);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            color: #333;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+        }
+        
+        .control-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+        
+        .control-btn.active {
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            color: white;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .welcome-header {
+                flex-direction: column;
+                text-align: center;
+                padding: 20px;
+                gap: 16px;
+            }
+            
+            .greeting-text {
+                font-size: 20px;
+            }
+            
+            .rating-text {
+                font-size: 14px;
+                justify-content: center;
+            }
+            
+            .mode-instruction {
+                font-size: 16px;
+            }
+            
+            .user-avatar-header {
+                width: 60px;
+                height: 60px;
+                font-size: 24px;
+            }
+            
+            .modes-container {
+                flex-direction: column;
+                min-height: calc(100vh - 140px);
+            }
+            
+            .mode-section {
+                min-height: 50vh;
+                padding: 40px 20px;
+            }
+            
+            .mode-icon {
+                font-size: 70px;
+            }
+            
+            .mode-title {
+                font-size: 28px;
+            }
+            
+            .mode-description {
+                font-size: 16px;
+            }
+            
+            .controls {
+                flex-direction: column;
+                right: 20px;
+                left: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="controls">
+        <button class="control-btn active" onclick="switchTextVariant(1)">Варіант 1</button>
+        <button class="control-btn" onclick="switchTextVariant(2)">Варіант 2</button>
+        <button class="control-btn" onclick="switchTextVariant(3)">Варіант 3</button>
+    </div>
+
+    <!-- ЗАГОЛОВОК З ПРИВІТАННЯМ -->
+    <div class="welcome-header">
+        <div class="welcome-content">
+            <!-- ВАРІАНТ 1: КЛАСИЧНИЙ -->
+            <div class="text-variant active" id="variant1">
+                <div class="greeting-text">Вітаю, Олександр! 👋</div>
+                <div class="rating-text">
+                    <i class="fas fa-star" style="color: #ffc107;"></i>
+                    <span>Ваш рейтинг: <strong>4.2</strong> • 45 матчів зіграно</span>
+                </div>
+                <div class="mode-instruction">Оберіть режим роботи для початку гри</div>
+            </div>
+            
+            <!-- ВАРІАНТ 2: МОТИВАЦІЙНИЙ -->
+            <div class="text-variant" id="variant2">
+                <div class="greeting-text">Готовий до нових викликів, Олександр? 🔥</div>
+                <div class="rating-text">
+                    <i class="fas fa-trophy" style="color: #ffc107;"></i>
+                    <span>Твій рейтинг: <strong>4.2</strong> • Відмінний результат!</span>
+                </div>
+                <div class="mode-instruction">Обери свій шлях до перемоги</div>
+            </div>
+            
+            <!-- ВАРІАНТ 3: ДРУЖНІЙ -->
+            <div class="text-variant" id="variant3">
+                <div class="greeting-text">Привіт, чемпіоне! 🏆</div>
+                <div class="rating-text">
+                    <i class="fas fa-medal" style="color: #ffc107;"></i>
+                    <span>Рейтинг: <strong>4.2</strong> з 5.0 • Продовжуй у тому ж дусі!</span>
+                </div>
+                <div class="mode-instruction">Що сьогодні будемо робити?</div>
+            </div>
+        </div>
+        
+        <div class="user-avatar-header">О</div>
+    </div>
+
+    <!-- РЕЖИМИ ВИБОРУ -->
+    <div class="modes-container">
+        <div class="mode-section video-mode" onclick="selectMode('video')">
+            <div class="mode-content">
+                <div class="mode-icon">🎥</div>
+                <div class="mode-title">ВІДЕО</div>
+                <div class="mode-description">
+                    Створюй крутий контент,<br>
+                    приймай челенджі та<br>
+                    показуй свої навички
+                </div>
+            </div>
+        </div>
+        
+        <div class="mode-section match-mode" onclick="selectMode('match')">
+            <div class="mode-content">
+                <div class="mode-icon">⚽</div>
+                <div class="mode-title">МАТЧІ</div>
+                <div class="mode-description">
+                    Знаходь гравців поруч,<br>
+                    створюй команди та<br>
+                    грай у живому футболі
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentVariant = 1;
+
+        function switchTextVariant(variantNumber) {
+            // Hide all variants
+            document.querySelectorAll('.text-variant').forEach(variant => {
+                variant.classList.remove('active');
+            });
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.control-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected variant
+            document.getElementById(`variant${variantNumber}`).classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+            
+            currentVariant = variantNumber;
+        }
+
+        function selectMode(mode) {
+            if (mode === 'video') {
+                showToast('🎥 Переходимо до відео режиму!');
+            } else {
+                showToast('⚽ Переходимо до пошуку матчів!');
+            }
+        }
+
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 30px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: rgba(0,0,0,0.9);
+                color: white;
+                padding: 12px 24px;
+                border-radius: 25px;
+                z-index: 9999;
+                font-weight: 600;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            `;
+            toast.textContent = message;
+            
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                if (document.body.contains(toast)) {
+                    document.body.removeChild(toast);
+                }
+            }, 3000);
+        }
+
+        // Auto-cycle through text variants every 8 seconds
+        setInterval(() => {
+            const nextVariant = currentVariant === 3 ? 1 : currentVariant + 1;
+            document.querySelector(`.control-btn:nth-child(${nextVariant})`).click();
+        }, 8000);
+    </script>
+</body>
+</html>
