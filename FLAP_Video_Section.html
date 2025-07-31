@@ -52,7 +52,7 @@
         .video-logo {
             width: 36px;
             height: 36px;
-            background: linear-gradient(135deg, #ff4458, #ff6b6b);
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
             border-radius: 8px;
             display: flex;
             align-items: center;
@@ -60,7 +60,7 @@
             color: white;
             font-size: 18px;
             font-weight: 800;
-            box-shadow: 0 4px 15px rgba(255,68,88,0.3);
+            box-shadow: 0 4px 15px rgba(76,175,80,0.3);
         }
 
         .video-brand {
@@ -70,7 +70,7 @@
         .video-brand-name {
             font-size: 16px;
             font-weight: 800;
-            background: linear-gradient(135deg, #ff4458, #ff6b6b);
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -109,12 +109,12 @@
         }
 
         .upload-btn {
-            background: linear-gradient(135deg, #ff4458, #ff6b6b);
-            box-shadow: 0 4px 15px rgba(255,68,88,0.3);
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            box-shadow: 0 4px 15px rgba(76,175,80,0.3);
         }
 
         .upload-btn:hover {
-            box-shadow: 0 6px 20px rgba(255,68,88,0.4);
+            box-shadow: 0 6px 20px rgba(76,175,80,0.4);
             transform: scale(1.05);
         }
 
@@ -159,9 +159,9 @@
         }
 
         .video-nav-tab.active {
-            background: linear-gradient(135deg, #ff4458, #ff6b6b);
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
             color: white;
-            box-shadow: 0 2px 10px rgba(255,68,88,0.3);
+            box-shadow: 0 2px 10px rgba(76,175,80,0.3);
         }
 
         /* Content Sections */
@@ -188,13 +188,13 @@
         .video-item:hover {
             transform: translateY(-2px);
             box-shadow: 0 12px 35px rgba(0,0,0,0.3);
-            border-color: rgba(255,68,88,0.3);
+            border-color: rgba(76,175,80,0.3);
         }
 
         .video-thumbnail {
             width: 100%;
             height: 200px;
-            background: linear-gradient(135deg, #ff4458, #ff6b6b, #ffa726);
+            background: linear-gradient(135deg, #4caf50, #66bb6a, #8bc34a);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -213,9 +213,9 @@
             right: 0;
             bottom: 0;
             background: linear-gradient(45deg, 
-                rgba(255,68,88,0.8) 0%, 
-                rgba(255,107,107,0.6) 50%, 
-                rgba(255,167,38,0.8) 100%);
+                rgba(76,175,80,0.8) 0%, 
+                rgba(102,187,106,0.6) 50%, 
+                rgba(139,195,74,0.8) 100%);
             z-index: 1;
         }
 
@@ -233,7 +233,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #ff4458;
+            color: #4caf50;
             font-size: 24px;
             transition: all 0.3s ease;
             z-index: 3;
@@ -273,7 +273,7 @@
         }
 
         .video-author-name {
-            color: #ff6b6b;
+            color: #66bb6a;
             font-weight: 600;
             font-size: 13px;
         }
@@ -333,19 +333,19 @@
         .vote-slider {
             flex: 1;
             min-width: 100px;
-            accent-color: #ff4458;
+            accent-color: #4caf50;
         }
 
         .vote-value {
             font-size: 14px;
             font-weight: 700;
-            color: #ff6b6b;
+            color: #66bb6a;
             min-width: 30px;
             text-align: center;
         }
 
         .vote-btn {
-            background: linear-gradient(135deg, #ff4458, #ff6b6b);
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
             color: white;
             border: none;
             padding: 6px 12px;
@@ -359,7 +359,7 @@
 
         .vote-btn:hover {
             transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(255,68,88,0.4);
+            box-shadow: 0 4px 12px rgba(76,175,80,0.4);
         }
 
         .vote-btn:disabled {
@@ -766,6 +766,29 @@
             <button class="video-nav-tab" onclick="showVideoSection('trending')">Тренди</button>
         </div>
 
+        <!-- Filters Section -->
+        <div class="filters-section" style="padding: 15px; background: rgba(255,255,255,0.05); margin: 0 15px; border-radius: 12px; margin-top: 12px;">
+            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                <span style="font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.8); white-space: nowrap;">Фільтри:</span>
+                <select id="cityFilter" onchange="applyFilters()" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; padding: 4px 8px; color: white; font-size: 11px;">
+                    <option value="">Всі міста</option>
+                    <option value="Київ">Київ</option>
+                    <option value="Львів">Львів</option>
+                    <option value="Одеса">Одеса</option>
+                    <option value="Харків">Харків</option>
+                    <option value="Дніпро">Дніпро</option>
+                </select>
+                <select id="ratingFilter" onchange="applyFilters()" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; padding: 4px 8px; color: white; font-size: 11px;">
+                    <option value="">Всі рейтинги</option>
+                    <option value="4.5">4.5+ зірок</option>
+                    <option value="4.0">4.0+ зірок</option>
+                    <option value="3.5">3.5+ зірок</option>
+                </select>
+                <input type="text" id="searchFilter" placeholder="Пошук відео..." onkeyup="applyFilters()" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; padding: 4px 8px; color: white; font-size: 11px; flex: 1; min-width: 120px;">
+                <button onclick="clearFilters()" style="background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; border: none; padding: 4px 8px; border-radius: 6px; font-size: 11px; cursor: pointer;">Очистити</button>
+            </div>
+        </div>
+
         <!-- Video Feed Section -->
         <div id="feedContent" class="video-content-section active">
             <!-- Video items will be generated here -->
@@ -827,6 +850,56 @@
         <div class="video-modal" id="challengeModal">
             <div class="video-modal-content" id="challengeContent">
                 <!-- Challenge details will be generated here -->
+            </div>
+        </div>
+
+        <!-- Challenge Videos Modal -->
+        <div class="video-modal" id="challengeVideosModal">
+            <div class="video-modal-content" id="challengeVideosContent">
+                <!-- Challenge videos will be generated here -->
+            </div>
+        </div>
+
+        <!-- Create Challenge Modal -->
+        <div class="video-modal" id="createChallengeModal">
+            <div class="video-modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">🏆 Створити челендж</h3>
+                    <button class="modal-close" onclick="closeCreateChallengeModal()">×</button>
+                </div>
+                <div class="modal-body">
+                    <div style="margin-bottom: 16px;">
+                        <label style="display: block; margin-bottom: 6px; font-weight: 600; color: white; font-size: 13px;">Назва челенджу</label>
+                        <input type="text" id="challengeTitle" placeholder="Наприклад: Точність ударів" style="width: 100%; padding: 8px 12px; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; background: rgba(255,255,255,0.1); color: white; font-size: 14px;">
+                    </div>
+                    <div style="margin-bottom: 16px;">
+                        <label style="display: block; margin-bottom: 6px; font-weight: 600; color: white; font-size: 13px;">Опис</label>
+                        <textarea id="challengeDescription" placeholder="Опишіть правила та умови челенджу..." style="width: 100%; height: 80px; padding: 8px 12px; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; background: rgba(255,255,255,0.1); color: white; font-size: 14px; resize: vertical;"></textarea>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
+                        <div>
+                            <label style="display: block; margin-bottom: 6px; font-weight: 600; color: white; font-size: 13px;">Тривалість</label>
+                            <select id="challengeDuration" style="width: 100%; padding: 8px 12px; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; background: rgba(255,255,255,0.1); color: white; font-size: 14px;">
+                                <option value="3">3 дні</option>
+                                <option value="7">1 тиждень</option>
+                                <option value="14">2 тижні</option>
+                                <option value="30">1 місяць</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label style="display: block; margin-bottom: 6px; font-weight: 600; color: white; font-size: 13px;">Винагорода</label>
+                            <select id="challengePrize" style="width: 100%; padding: 8px 12px; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; background: rgba(255,255,255,0.1); color: white; font-size: 14px;">
+                                <option value="50">50 монет</option>
+                                <option value="100">100 монет</option>
+                                <option value="150">150 монет</option>
+                                <option value="200">200 монет</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button onclick="createChallenge()" style="background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; width: 100%; font-size: 14px;">
+                        <i class="fas fa-plus"></i> Створити челендж
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -1095,7 +1168,8 @@
                     participants: 127,
                     timeLeft: '2 дні',
                     prize: '100 монет',
-                    difficulty: 'Середній'
+                    difficulty: 'Середній',
+                    videos: 45
                 },
                 {
                     id: 'challenge2',
@@ -1104,7 +1178,8 @@
                     participants: 89,
                     timeLeft: '5 днів',
                     prize: '150 монет',
-                    difficulty: 'Важкий'
+                    difficulty: 'Важкий',
+                    videos: 32
                 },
                 {
                     id: 'challenge3',
@@ -1113,11 +1188,19 @@
                     participants: 203,
                     timeLeft: '1 тиждень',
                     prize: '200 монет',
-                    difficulty: 'Експертний'
+                    difficulty: 'Експертний',
+                    videos: 78
                 }
             ];
             
-            let challengeHTML = '<h2 style="color: white; margin-bottom: 20px; font-size: 20px;">🏆 Активні челенджі</h2>';
+            let challengeHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2 style="color: white; font-size: 20px; margin: 0;">🏆 Активні челенджі</h2>
+                    <button onclick="showCreateChallengeModal()" style="background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 12px;">
+                        <i class="fas fa-plus"></i> Створити
+                    </button>
+                </div>
+            `;
             
             challenges.forEach(challenge => {
                 challengeHTML += `
@@ -1133,11 +1216,16 @@
                         </div>
                         <div class="challenge-content">
                             <div style="margin-bottom: 12px; font-size: 12px; color: rgba(255,255,255,0.7);">
-                                <strong>Складність:</strong> ${challenge.difficulty}
+                                <strong>Складність:</strong> ${challenge.difficulty} • <strong>Відео:</strong> ${challenge.videos}
                             </div>
-                            <button class="challenge-btn" onclick="joinChallenge('${challenge.id}')">
-                                Прийняти виклик
-                            </button>
+                            <div style="display: flex; gap: 8px;">
+                                <button class="challenge-btn" onclick="joinChallenge('${challenge.id}')" style="flex: 1;">
+                                    Прийняти виклик
+                                </button>
+                                <button onclick="showChallengeVideos('${challenge.id}')" style="background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 12px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 14px;">
+                                    📹 Переглянути відео
+                                </button>
+                            </div>
                         </div>
                     </div>
                 `;
@@ -1151,17 +1239,78 @@
             const container = document.getElementById('myVideosContent');
             if (!container) return;
             
-            container.innerHTML = `
-                <h2 style="color: white; margin-bottom: 20px; font-size: 20px;">📹 Мої відео</h2>
-                <div style="text-align: center; padding: 40px 20px; color: rgba(255,255,255,0.6);">
-                    <div style="font-size: 48px; margin-bottom: 16px;">🎬</div>
-                    <h3 style="margin-bottom: 12px; color: white;">Поки що немає відео</h3>
-                    <p style="margin-bottom: 20px; font-size: 14px;">Завантажте своє перше відео та покажіть свої навички!</p>
-                    <button onclick="showUploadModal()" style="background: linear-gradient(135deg, #ff4458, #ff6b6b); color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer;">
-                        <i class="fas fa-plus"></i> Завантажити відео
+            const myVideos = [
+                {
+                    id: 'myvideo1',
+                    title: 'Мій перший гол з штрафного ⚽',
+                    rating: 4.3,
+                    votes: 23,
+                    views: '456',
+                    time: '3 дні тому',
+                    icon: 'fas fa-futbol',
+                    status: 'Опубліковано'
+                },
+                {
+                    id: 'myvideo2',
+                    title: 'Тренування дриблінгу вдома 🏠',
+                    rating: 4.1,
+                    votes: 18,
+                    views: '234',
+                    time: '1 тиждень тому',
+                    icon: 'fas fa-running',
+                    status: 'Опубліковано'
+                }
+            ];
+            
+            let myVideosHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2 style="color: white; font-size: 20px; margin: 0;">📹 Мої відео</h2>
+                    <button onclick="showUploadModal()" style="background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 12px;">
+                        <i class="fas fa-plus"></i> Додати відео
                     </button>
                 </div>
             `;
+            
+            myVideos.forEach(video => {
+                const stars = generateStars(video.rating);
+                myVideosHTML += `
+                    <div class="video-item">
+                        <div class="video-thumbnail" onclick="playVideo('${video.id}')">
+                            <i class="${video.icon}"></i>
+                            <div class="play-button">
+                                <i class="fas fa-play"></i>
+                            </div>
+                        </div>
+                        <div class="video-info">
+                            <h3 class="video-title">${video.title}</h3>
+                            <div class="video-meta">
+                                ${video.views} переглядів • ${video.time} • <span style="color: #66bb6a;">${video.status}</span>
+                            </div>
+                            <div class="video-rating">
+                                <div class="star-rating">${stars}</div>
+                                <span class="rating-value">${video.rating}</span>
+                                <span style="color: rgba(255,255,255,0.5); font-size: 12px; margin-left: 6px;">(${video.votes} оцінок)</span>
+                            </div>
+                            <div class="video-actions">
+                                <button class="action-btn" onclick="editVideo('${video.id}')">
+                                    <i class="fas fa-edit"></i>
+                                    Редагувати
+                                </button>
+                                <button class="action-btn" onclick="shareVideo('${video.id}')">
+                                    <i class="fas fa-share"></i>
+                                    Поділитися
+                                </button>
+                                <button class="action-btn" onclick="deleteVideo('${video.id}')">
+                                    <i class="fas fa-trash"></i>
+                                    Видалити
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = myVideosHTML;
         }
 
         // Trending Videos Generation
@@ -1169,14 +1318,104 @@
             const container = document.getElementById('trendingContent');
             if (!container) return;
             
-            container.innerHTML = `
-                <h2 style="color: white; margin-bottom: 20px; font-size: 20px;">🔥 Тренди тижня</h2>
-                <div style="text-align: center; padding: 40px 20px; color: rgba(255,255,255,0.6);">
-                    <div style="font-size: 48px; margin-bottom: 16px;">📈</div>
-                    <h3 style="margin-bottom: 12px; color: white;">Завантажуємо тренди...</h3>
-                    <p style="margin-bottom: 20px; font-size: 14px;">Найпопулярніші відео цього тижня з'являться тут незабаром!</p>
-                </div>
-            `;
+            const trendingVideos = [
+                {
+                    id: 'trending1',
+                    title: 'ВІРУСНИЙ ГОЛ ТИЖНЯ! Неймовірний удар 🚀',
+                    author: 'player4',
+                    rating: 4.9,
+                    votes: 1247,
+                    views: '25.3K',
+                    time: '2 дні тому',
+                    icon: 'fas fa-fire',
+                    trending: '#1'
+                },
+                {
+                    id: 'trending2',
+                    title: 'Топ-10 трюків від українських футболістів 🇺🇦',
+                    author: 'player1',
+                    rating: 4.8,
+                    votes: 892,
+                    views: '18.7K',
+                    time: '4 дні тому',
+                    icon: 'fas fa-star',
+                    trending: '#2'
+                },
+                {
+                    id: 'trending3',
+                    title: 'Дриблінг рівня Месі! Молодий талант 💫',
+                    author: 'player3',
+                    rating: 4.7,
+                    votes: 634,
+                    views: '12.1K',
+                    time: '1 день тому',
+                    icon: 'fas fa-magic',
+                    trending: '#3'
+                },
+                {
+                    id: 'trending4',
+                    title: 'Воротар року! Неймовірні сейви 🥅',
+                    author: 'player5',
+                    rating: 4.8,
+                    votes: 567,
+                    views: '9.8K',
+                    time: '3 дні тому',
+                    icon: 'fas fa-hand-paper',
+                    trending: '#4'
+                }
+            ];
+            
+            let trendingHTML = '<h2 style="color: white; margin-bottom: 20px; font-size: 20px;">🔥 Тренди тижня</h2>';
+            
+            trendingVideos.forEach(video => {
+                const player = getPlayer(video.author);
+                const stars = generateStars(video.rating);
+                
+                trendingHTML += `
+                    <div class="video-item" style="border: 2px solid #ffc107; position: relative;">
+                        <div style="position: absolute; top: 8px; left: 8px; background: linear-gradient(135deg, #ffc107, #ff9800); color: white; padding: 4px 8px; border-radius: 12px; font-size: 10px; font-weight: 800; z-index: 4;">
+                            ${video.trending} ТРЕНД
+                        </div>
+                        <div class="video-thumbnail" onclick="playVideo('${video.id}')">
+                            <i class="${video.icon}"></i>
+                            <div class="play-button">
+                                <i class="fas fa-play"></i>
+                            </div>
+                        </div>
+                        <div class="video-info">
+                            <h3 class="video-title">${video.title}</h3>
+                            <div class="video-author" onclick="showPlayerProfile('${video.author}')">
+                                <img src="${player.avatar}" alt="${player.name}" class="video-author-avatar">
+                                <span class="video-author-name">${player.name}</span>
+                            </div>
+                            <div class="video-meta">
+                                ${video.views} переглядів • ${video.time} • ${player.city} • <span style="color: #ffc107;">🔥 ТРЕНД</span>
+                            </div>
+                            <div class="video-rating">
+                                <div class="star-rating">${stars}</div>
+                                <span class="rating-value">${video.rating}</span>
+                                <span style="color: rgba(255,255,255,0.5); font-size: 12px; margin-left: 6px;">(${video.votes} оцінок)</span>
+                            </div>
+                            <div class="video-actions">
+                                <button class="action-btn" onclick="playVideo('${video.id}')">
+                                    <i class="fas fa-play"></i>
+                                    Дивитися
+                                </button>
+                                <button class="action-btn" onclick="shareVideo('${video.id}')">
+                                    <i class="fas fa-share"></i>
+                                    Поділитися
+                                </button>
+                                <button class="action-btn" onclick="saveVideo('${video.id}')">
+                                    <i class="fas fa-bookmark"></i>
+                                    Зберегти
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = trendingHTML;
         }
 
         // Helper Functions
@@ -1302,6 +1541,176 @@
         function joinChallenge(challengeId) {
             console.log('🏆 Join challenge:', challengeId);
             showToast('🏆 Ви приєдналися до челенджу!', 'success');
+        }
+
+        // Challenge Functions
+        function showCreateChallengeModal() {
+            const modal = document.getElementById('createChallengeModal');
+            if (modal) modal.classList.add('show');
+        }
+
+        function closeCreateChallengeModal() {
+            const modal = document.getElementById('createChallengeModal');
+            if (modal) modal.classList.remove('show');
+        }
+
+        function createChallenge() {
+            const title = document.getElementById('challengeTitle').value;
+            const description = document.getElementById('challengeDescription').value;
+            const duration = document.getElementById('challengeDuration').value;
+            const prize = document.getElementById('challengePrize').value;
+            
+            if (title && description) {
+                showToast(`🏆 Челендж "${title}" створено!`, 'success');
+                closeCreateChallengeModal();
+                // Clear form
+                document.getElementById('challengeTitle').value = '';
+                document.getElementById('challengeDescription').value = '';
+            } else {
+                showToast('❌ Заповніть всі поля!', 'error');
+            }
+        }
+
+        function showChallengeVideos(challengeId) {
+            console.log('📹 Show challenge videos:', challengeId);
+            const modal = document.getElementById('challengeVideosModal');
+            const content = document.getElementById('challengeVideosContent');
+            
+            if (modal && content) {
+                // Generate challenge videos
+                const challengeVideos = [
+                    {
+                        id: 'chvideo1',
+                        title: 'Точний удар з 25 метрів',
+                        author: 'player1',
+                        rating: 4.6,
+                        votes: 34
+                    },
+                    {
+                        id: 'chvideo2',
+                        title: 'Влучення у дев\'ятку',
+                        author: 'player3',
+                        rating: 4.8,
+                        votes: 28
+                    },
+                    {
+                        id: 'chvideo3',
+                        title: 'Точність з різних кутів',
+                        author: 'player4',
+                        rating: 4.4,
+                        votes: 19
+                    }
+                ];
+                
+                let videosHTML = `
+                    <div class="modal-header">
+                        <h3 class="modal-title">🎯 Відео челенджу: Точність ударів</h3>
+                        <button class="modal-close" onclick="closeChallengeVideos()">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <div style="margin-bottom: 16px;">
+                            <select onchange="sortChallengeVideos(this.value)" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; padding: 6px 12px; color: white; font-size: 12px;">
+                                <option value="rating">За рейтингом</option>
+                                <option value="votes">За кількістю голосів</option>
+                                <option value="newest">Найновіші</option>
+                            </select>
+                        </div>
+                `;
+                
+                challengeVideos.forEach(video => {
+                    const player = getPlayer(video.author);
+                    const stars = generateStars(video.rating);
+                    
+                    videosHTML += `
+                        <div style="background: rgba(255,255,255,0.05); border-radius: 12px; padding: 12px; margin-bottom: 12px; border: 1px solid rgba(255,255,255,0.1);">
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                                <img src="${player.avatar}" alt="${player.name}" style="width: 32px; height: 32px; border-radius: 50%;">
+                                <div>
+                                    <div style="font-weight: 600; color: white; font-size: 13px;">${video.title}</div>
+                                    <div style="font-size: 11px; color: #66bb6a;">${player.name}</div>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <div class="star-rating">${stars}</div>
+                                    <span style="color: white; font-weight: 700; font-size: 13px;">${video.rating}</span>
+                                    <span style="color: rgba(255,255,255,0.5); font-size: 11px;">(${video.votes})</span>
+                                </div>
+                                <button onclick="playVideo('${video.id}')" style="background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; border: none; padding: 4px 8px; border-radius: 6px; font-size: 11px; cursor: pointer;">
+                                    <i class="fas fa-play"></i> Дивитися
+                                </button>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span style="font-size: 11px; color: rgba(255,255,255,0.7);">Ваша оцінка:</span>
+                                <input type="range" min="0" max="5" step="0.1" value="0" style="flex: 1; accent-color: #4caf50;" onchange="updateChallengeVoteValue('${video.id}', this.value)">
+                                <span id="voteValue_${video.id}" style="font-size: 11px; color: #66bb6a; font-weight: 700; min-width: 20px;">0</span>
+                                <button onclick="voteForChallengeVideo('${video.id}')" style="background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; border: none; padding: 4px 8px; border-radius: 6px; font-size: 11px; cursor: pointer;">
+                                    Голос
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                videosHTML += `</div>`;
+                content.innerHTML = videosHTML;
+                modal.classList.add('show');
+            }
+        }
+
+        function closeChallengeVideos() {
+            const modal = document.getElementById('challengeVideosModal');
+            if (modal) modal.classList.remove('show');
+        }
+
+        function sortChallengeVideos(sortBy) {
+            console.log('🔄 Sort challenge videos by:', sortBy);
+            showToast(`📊 Сортування за: ${sortBy}`, 'success');
+        }
+
+        function updateChallengeVoteValue(videoId, value) {
+            document.getElementById(`voteValue_${videoId}`).textContent = value;
+        }
+
+        function voteForChallengeVideo(videoId) {
+            console.log('🗳️ Vote for challenge video:', videoId);
+            showToast('✅ Ваш голос зараховано!', 'success');
+        }
+
+        // Filter Functions
+        function applyFilters() {
+            const cityFilter = document.getElementById('cityFilter').value;
+            const ratingFilter = document.getElementById('ratingFilter').value;
+            const searchFilter = document.getElementById('searchFilter').value.toLowerCase();
+            
+            console.log('🔍 Applying filters:', { cityFilter, ratingFilter, searchFilter });
+            
+            let filterText = 'Фільтри застосовано';
+            if (cityFilter) filterText += ` • Місто: ${cityFilter}`;
+            if (ratingFilter) filterText += ` • Рейтинг: ${ratingFilter}+`;
+            if (searchFilter) filterText += ` • Пошук: ${searchFilter}`;
+            
+            showToast(`🔍 ${filterText}`, 'success');
+        }
+
+        function clearFilters() {
+            document.getElementById('cityFilter').value = '';
+            document.getElementById('ratingFilter').value = '';
+            document.getElementById('searchFilter').value = '';
+            showToast('🧹 Фільтри очищено!', 'success');
+        }
+
+        // My Videos Functions
+        function editVideo(videoId) {
+            console.log('✏️ Edit video:', videoId);
+            showToast('✏️ Редагування відео...', 'success');
+        }
+
+        function deleteVideo(videoId) {
+            console.log('🗑️ Delete video:', videoId);
+            if (confirm('Ви впевнені, що хочете видалити це відео?')) {
+                showToast('🗑️ Відео видалено!', 'success');
+            }
         }
 
         // Player Profile Functions
