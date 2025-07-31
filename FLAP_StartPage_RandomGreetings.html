@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLAP - Випадкові привітання та описи функцій</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        /* ЗАГОЛОВОК З ПРИВІТАННЯМ */
+        .welcome-header {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
+            padding: 20px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            position: relative;
+            z-index: 10;
+        }
+        
+        .welcome-content {
+            flex: 1;
+        }
+        
+        .greeting-text {
+            font-size: 24px;
+            font-weight: 800;
+            color: #333;
+            margin-bottom: 6px;
+            background: linear-gradient(135deg, #4caf50, #2e7d32);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .rating-text {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .mode-instruction {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            opacity: 0.8;
+        }
+        
+        .user-avatar-header {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: 800;
+            color: white;
+            border: 3px solid rgba(76,175,80,0.2);
+            box-shadow: 0 8px 25px rgba(76,175,80,0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .user-avatar-header:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 35px rgba(76,175,80,0.4);
+        }
+        
+        /* РЕЖИМИ ВИБОРУ */
+        .modes-container {
+            display: flex;
+            min-height: calc(100vh - 120px);
+        }
+        
+        .mode-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 30px;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .mode-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .mode-section:hover::before {
+            background: rgba(0,0,0,0);
+        }
+        
+        .video-mode {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+        }
+        
+        .match-mode {
+            background: linear-gradient(135deg, #4caf50, #2e7d32);
+        }
+        
+        .mode-content {
+            text-align: center;
+            color: white;
+            z-index: 2;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .mode-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            text-shadow: 0 6px 25px rgba(0,0,0,0.4);
+            transition: all 0.3s ease;
+        }
+        
+        .mode-title {
+            font-size: 32px;
+            font-weight: 900;
+            margin-bottom: 16px;
+            text-shadow: 0 3px 15px rgba(0,0,0,0.4);
+            letter-spacing: 1px;
+        }
+        
+        .mode-description {
+            font-size: 16px;
+            opacity: 0.95;
+            line-height: 1.5;
+            max-width: 300px;
+            margin: 0 auto 20px;
+        }
+        
+        /* ФУНКЦІЇ - ВАРІАНТ 1: СПИСОК */
+        .functions-list {
+            display: none;
+        }
+        
+        .functions-list.active {
+            display: block;
+        }
+        
+        .functions-list ul {
+            list-style: none;
+            text-align: left;
+            max-width: 280px;
+            margin: 0 auto;
+        }
+        
+        .functions-list li {
+            font-size: 14px;
+            margin-bottom: 8px;
+            opacity: 0.9;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .functions-list li::before {
+            content: '•';
+            font-size: 16px;
+            font-weight: 900;
+        }
+        
+        /* ФУНКЦІЇ - ВАРІАНТ 2: ІКОНКИ */
+        .functions-icons {
+            display: none;
+        }
+        
+        .functions-icons.active {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+        
+        .function-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            min-width: 60px;
+        }
+        
+        .function-icon {
+            font-size: 20px;
+            opacity: 0.9;
+        }
+        
+        .function-label {
+            font-size: 11px;
+            opacity: 0.8;
+            text-align: center;
+            line-height: 1.2;
+        }
+        
+        /* ФУНКЦІЇ - ВАРІАНТ 3: КОМПАКТНИЙ ТЕКСТ */
+        .functions-compact {
+            display: none;
+        }
+        
+        .functions-compact.active {
+            display: block;
+            font-size: 14px;
+            opacity: 0.9;
+            line-height: 1.4;
+            max-width: 280px;
+            margin: 0 auto;
+        }
+        
+        .mode-section:hover {
+            flex: 1.15;
+        }
+        
+        .mode-section:hover .mode-content {
+            transform: translateY(-5px);
+        }
+        
+        .mode-section:hover .mode-icon {
+            transform: scale(1.05);
+        }
+        
+        /* КНОПКИ УПРАВЛІННЯ */
+        .controls {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .control-btn {
+            background: rgba(255,255,255,0.9);
+            border: none;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-weight: 600;
+            color: #333;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+            font-size: 12px;
+        }
+        
+        .control-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        .control-btn.active {
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            color: white;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .welcome-header {
+                flex-direction: column;
+                text-align: center;
+                padding: 20px;
+                gap: 16px;
+            }
+            
+            .greeting-text {
+                font-size: 20px;
+            }
+            
+            .rating-text {
+                font-size: 14px;
+                justify-content: center;
+            }
+            
+            .mode-instruction {
+                font-size: 16px;
+            }
+            
+            .user-avatar-header {
+                width: 60px;
+                height: 60px;
+                font-size: 24px;
+            }
+            
+            .modes-container {
+                flex-direction: column;
+                min-height: calc(100vh - 140px);
+            }
+            
+            .mode-section {
+                min-height: 50vh;
+                padding: 30px 20px;
+            }
+            
+            .mode-icon {
+                font-size: 60px;
+            }
+            
+            .mode-title {
+                font-size: 24px;
+            }
+            
+            .functions-icons {
+                gap: 15px;
+            }
+            
+            .function-item {
+                min-width: 50px;
+            }
+            
+            .controls {
+                right: 20px;
+                left: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="controls">
+        <button class="control-btn" onclick="generateNewGreeting()">Нове привітання</button>
+        <button class="control-btn active" onclick="switchFunctionStyle(1)">Список</button>
+        <button class="control-btn" onclick="switchFunctionStyle(2)">Іконки</button>
+        <button class="control-btn" onclick="switchFunctionStyle(3)">Компактно</button>
+    </div>
+
+    <!-- ЗАГОЛОВОК З ПРИВІТАННЯМ -->
+    <div class="welcome-header">
+        <div class="welcome-content">
+            <div class="greeting-text" id="greetingText">Завантаження...</div>
+            <div class="rating-text" id="ratingText">
+                <i class="fas fa-star" style="color: #ffc107;"></i>
+                <span>Завантаження...</span>
+            </div>
+            <div class="mode-instruction" id="instructionText">Завантаження...</div>
+        </div>
+        
+        <div class="user-avatar-header" onclick="generateNewGreeting()" title="Клікни для нового привітання">О</div>
+    </div>
+
+    <!-- РЕЖИМИ ВИБОРУ -->
+    <div class="modes-container">
+        <div class="mode-section video-mode" onclick="selectMode('video')">
+            <div class="mode-content">
+                <div class="mode-icon">🎥</div>
+                <div class="mode-title">ВІДЕО</div>
+                <div class="mode-description">Створюй контент, приймай челенджі та показуй свої навички</div>
+                
+                <!-- ВАРІАНТ 1: СПИСОК -->
+                <div class="functions-list active" id="videoFunctionsList">
+                    <ul>
+                        <li>Завантаження відео</li>
+                        <li>Участь у челенджах</li>
+                        <li>Голосування за інших</li>
+                        <li>Коментарі та лайки</li>
+                        <li>Рейтинг навичок</li>
+                    </ul>
+                </div>
+                
+                <!-- ВАРІАНТ 2: ІКОНКИ -->
+                <div class="functions-icons" id="videoFunctionsIcons">
+                    <div class="function-item">
+                        <div class="function-icon">📤</div>
+                        <div class="function-label">Завантаження</div>
+                    </div>
+                    <div class="function-item">
+                        <div class="function-icon">🏆</div>
+                        <div class="function-label">Челенджі</div>
+                    </div>
+                    <div class="function-item">
+                        <div class="function-icon">👍</div>
+                        <div class="function-label">Голосування</div>
+                    </div>
+                    <div class="function-item">
+                        <div class="function-icon">💬</div>
+                        <div class="function-label">Коментарі</div>
+                    </div>
+                    <div class="function-item">
+                        <div class="function-icon">⭐</div>
+                        <div class="function-label">Рейтинг</div>
+                    </div>
+                </div>
+                
+                <!-- ВАРІАНТ 3: КОМПАКТНИЙ -->
+                <div class="functions-compact" id="videoFunctionsCompact">
+                    Завантажуй відео своїх найкращих моментів, бери участь у челенджах від інших гравців, голосуй та коментуй, підвищуй свій рейтинг навичок.
+                </div>
+            </div>
+        </div>
+        
+        <div class="mode-section match-mode" onclick="selectMode('match')">
+            <div class="mode-content">
+                <div class="mode-icon">⚽</div>
+                <div class="mode-title">МАТЧІ</div>
+                <div class="mode-description">Знаходь гравців, створюй команди та грай у живому футболі</div>
+                
+                <!-- ВАРІАНТ 1: СПИСОК -->
+                <div class="functions-list active" id="matchFunctionsList">
+                    <ul>
+                        <li>Пошук матчів поруч</li>
+                        <li>Створення власних ігор</li>
+                        <li>Автобаланс команд</li>
+                        <li>Рейтинг після гри</li>
+                        <li>Друзі та запрошення</li>
+                    </ul>
+                </div>
+                
+                <!-- ВАРІАНТ 2: ІКОНКИ -->
+                <div class="functions-icons" id="matchFunctionsIcons">
+                    <div class="function-item">
+                        <div class="function-icon">🔍</div>
+                        <div class="function-label">Пошук</div>
+                    </div>
+                    <div class="function-item">
+                        <div class="function-icon">➕</div>
+                        <div class="function-label">Створення</div>
+                    </div>
+                    <div class="function-item">
+                        <div class="function-icon">⚖️</div>
+                        <div class="function-label">Баланс</div>
+                    </div>
+                    <div class="function-item">
+                        <div class="function-icon">📊</div>
+                        <div class="function-label">Рейтинг</div>
+                    </div>
+                    <div class="function-item">
+                        <div class="function-icon">👥</div>
+                        <div class="function-label">Друзі</div>
+                    </div>
+                </div>
+                
+                <!-- ВАРІАНТ 3: КОМПАКТНИЙ -->
+                <div class="functions-compact" id="matchFunctionsCompact">
+                    Шукай футбольні матчі поруч з тобою, створюй власні ігри, система автоматично збалансує команди, оцінюй гравців після матчу.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Масив з привітаннями (25+ варіантів)
+        const greetings = [
+            {
+                greeting: "Вітаю, Олександр! 👋",
+                rating: "Ваш рейтинг: <strong>4.2</strong> • 45 матчів зіграно",
+                instruction: "Оберіть режим роботи для початку гри",
+                icon: "fas fa-star"
+            },
+            {
+                greeting: "Готовий до нових викликів, Олександр? 🔥",
+                rating: "Твій рейтинг: <strong>4.2</strong> • Відмінний результат!",
+                instruction: "Обери свій шлях до перемоги",
+                icon: "fas fa-trophy"
+            },
+            {
+                greeting: "Привіт, чемпіоне! 🏆",
+                rating: "Рейтинг: <strong>4.2</strong> з 5.0 • Продовжуй у тому ж дусі!",
+                instruction: "Що сьогодні будемо робити?",
+                icon: "fas fa-medal"
+            },
+            {
+                greeting: "Доброго дня, майстре! ⚡",
+                rating: "Твої досягнення: <strong>4.2</strong> • Ти на правильному шляху",
+                instruction: "Вибери напрямок для розвитку",
+                icon: "fas fa-bolt"
+            },
+            {
+                greeting: "З поверненням, легендо! 🌟",
+                rating: "Статистика: <strong>4.2</strong> рейтинг • 45 ігор",
+                instruction: "Куди спрямуємо твою енергію?",
+                icon: "fas fa-star"
+            },
+            {
+                greeting: "Вітаємо знову, Олександр! 🎯",
+                rating: "Поточний рівень: <strong>4.2</strong> • Стабільний ріст",
+                instruction: "Обирай режим для нових досягнень",
+                icon: "fas fa-bullseye"
+            },
+            {
+                greeting: "Привіт, футбольний ас! ⚽",
+                rating: "Твій скіл: <strong>4.2</strong> • Чудовий прогрес",
+                instruction: "Що плануємо покорювати сьогодні?",
+                icon: "fas fa-futbol"
+            },
+            {
+                greeting: "Доброго ранку, зірко! 🌅",
+                rating: "Рейтинг майстерності: <strong>4.2</strong> • 45 матчів",
+                instruction: "Новий день - нові можливості!",
+                icon: "fas fa-sun"
+            },
+            {
+                greeting: "Вечір добрий, чемп! 🌙",
+                rating: "Твої показники: <strong>4.2</strong> • Топ гравець",
+                instruction: "Час для вечірніх тренувань?",
+                icon: "fas fa-moon"
+            },
+            {
+                greeting: "Хей, суперстар! 🎬",
+                rating: "Популярність: <strong>4.2</strong> • Ти на піку форми",
+                instruction: "Створюємо новий контент?",
+                icon: "fas fa-video"
+            },
+            {
+                greeting: "Салют, воїне поля! ⚔️",
+                rating: "Бойовий рейтинг: <strong>4.2</strong> • Готовий до битви",
+                instruction: "Вибирай поле бою!",
+                icon: "fas fa-sword"
+            },
+            {
+                greeting: "Привіт, рекордсмене! 📈",
+                rating: "Статус: <strong>4.2</strong> • Постійне зростання",
+                instruction: "Встановлюємо нові рекорди?",
+                icon: "fas fa-chart-line"
+            },
+            {
+                greeting: "Вітання, талант! 🎨",
+                rating: "Творчий рейтинг: <strong>4.2</strong> • Унікальний стиль",
+                instruction: "Де проявимо креативність?",
+                icon: "fas fa-palette"
+            },
+            {
+                greeting: "З прибуттям, лідер! 👑",
+                rating: "Лідерський рейтинг: <strong>4.2</strong> • Команда за тобою",
+                instruction: "Веди нас до перемоги!",
+                icon: "fas fa-crown"
+            },
+            {
+                greeting: "Привіт, інноватор! 🚀",
+                rating: "Рівень інновацій: <strong>4.2</strong> • Ти змінюєш гру",
+                instruction: "Що нового покажемо світу?",
+                icon: "fas fa-rocket"
+            },
+            {
+                greeting: "Вітаю, стратег! 🧠",
+                rating: "IQ гри: <strong>4.2</strong> • Розумний підхід",
+                instruction: "Плануємо наступний хід?",
+                icon: "fas fa-brain"
+            },
+            {
+                greeting: "Доброго дня, амбасадор! 🌍",
+                rating: "Глобальний рейтинг: <strong>4.2</strong> • Світове визнання",
+                instruction: "Представляємо Україну гідно!",
+                icon: "fas fa-globe"
+            },
+            {
+                greeting: "Привіт, майстер техніки! 🎪",
+                rating: "Технічний рівень: <strong>4.2</strong> • Віртуозність",
+                instruction: "Демонструємо майстерність?",
+                icon: "fas fa-magic"
+            },
+            {
+                greeting: "Вітання, спідстер! 💨",
+                rating: "Швидкість реакції: <strong>4.2</strong> • Блискавично",
+                instruction: "Час показати швидкість!",
+                icon: "fas fa-tachometer-alt"
+            },
+            {
+                greeting: "З поверненням, герой! 🦸",
+                rating: "Героїчний рейтинг: <strong>4.2</strong> • Справжній герой",
+                instruction: "Рятуємо день знову?",
+                icon: "fas fa-mask"
+            },
+            {
+                greeting: "Привіт, дослідник! 🔬",
+                rating: "Рівень досліджень: <strong>4.2</strong> • Відкриваєш нове",
+                instruction: "Досліджуємо нові горизонти?",
+                icon: "fas fa-microscope"
+            },
+            {
+                greeting: "Вітаю, артист! 🎭",
+                rating: "Артистичність: <strong>4.2</strong> • Справжнє шоу",
+                instruction: "Влаштовуємо видовище?",
+                icon: "fas fa-theater-masks"
+            },
+            {
+                greeting: "Доброго дня, архітектор! 🏗️",
+                rating: "Будівельний рейтинг: <strong>4.2</strong> • Будуєш майбутнє",
+                instruction: "Створюємо щось грандіозне?",
+                icon: "fas fa-drafting-compass"
+            },
+            {
+                greeting: "Привіт, навігатор! 🧭",
+                rating: "Навігаційні навички: <strong>4.2</strong> • Знаєш шлях",
+                instruction: "Куди прямуємо сьогодні?",
+                icon: "fas fa-compass"
+            },
+            {
+                greeting: "Вітання, колекціонер! 💎",
+                rating: "Колекція досягнень: <strong>4.2</strong> • Рідкісні трофеї",
+                instruction: "Додаємо нові експонати?",
+                icon: "fas fa-gem"
+            }
+        ];
+
+        let currentFunctionStyle = 1;
+        let lastGreetingIndex = -1;
+
+        // Генерація випадкового привітання
+        function generateRandomGreeting() {
+            let randomIndex;
+            do {
+                randomIndex = Math.floor(Math.random() * greetings.length);
+            } while (randomIndex === lastGreetingIndex && greetings.length > 1);
+            
+            lastGreetingIndex = randomIndex;
+            return greetings[randomIndex];
+        }
+
+        // Оновлення привітання на сторінці
+        function updateGreeting() {
+            const greeting = generateRandomGreeting();
+            
+            document.getElementById('greetingText').innerHTML = greeting.greeting;
+            document.getElementById('ratingText').innerHTML = `
+                <i class="${greeting.icon}" style="color: #ffc107;"></i>
+                <span>${greeting.rating}</span>
+            `;
+            document.getElementById('instructionText').innerHTML = greeting.instruction;
+        }
+
+        // Генерація нового привітання по кліку
+        function generateNewGreeting() {
+            updateGreeting();
+            showToast('🎲 Нове привітання згенеровано!');
+        }
+
+        // Перемикання стилю відображення функцій
+        function switchFunctionStyle(style) {
+            currentFunctionStyle = style;
+            
+            // Оновлення кнопок
+            document.querySelectorAll('.control-btn').forEach((btn, index) => {
+                if (index === 0) return; // Пропускаємо кнопку "Нове привітання"
+                btn.classList.remove('active');
+            });
+            
+            event.target.classList.add('active');
+            
+            // Приховати всі варіанти
+            document.querySelectorAll('.functions-list, .functions-icons, .functions-compact').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            // Показати обраний стиль
+            const styleClasses = ['functions-list', 'functions-icons', 'functions-compact'];
+            const targetClass = styleClasses[style - 1];
+            
+            document.querySelectorAll(`.${targetClass}`).forEach(el => {
+                el.classList.add('active');
+            });
+            
+            const styleNames = ['Список', 'Іконки', 'Компактно'];
+            showToast(`📋 Стиль змінено на: ${styleNames[style - 1]}`);
+        }
+
+        // Вибір режиму
+        function selectMode(mode) {
+            if (mode === 'video') {
+                showToast('🎥 Переходимо до відео режиму!');
+            } else {
+                showToast('⚽ Переходимо до пошуку матчів!');
+            }
+        }
+
+        // Показ toast повідомлення
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 30px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: rgba(0,0,0,0.9);
+                color: white;
+                padding: 12px 24px;
+                border-radius: 25px;
+                z-index: 9999;
+                font-weight: 600;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+                font-size: 14px;
+            `;
+            toast.textContent = message;
+            
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                if (document.body.contains(toast)) {
+                    document.body.removeChild(toast);
+                }
+            }, 3000);
+        }
+
+        // Збереження останнього привітання в localStorage
+        function saveLastGreeting() {
+            localStorage.setItem('lastFLAPGreeting', lastGreetingIndex.toString());
+            localStorage.setItem('lastFLAPGreetingTime', Date.now().toString());
+        }
+
+        // Завантаження останнього привітання
+        function loadLastGreeting() {
+            const savedIndex = localStorage.getItem('lastFLAPGreeting');
+            const savedTime = localStorage.getItem('lastFLAPGreetingTime');
+            
+            // Якщо пройшло більше 4 годин, показати нове привітання
+            const fourHours = 4 * 60 * 60 * 1000;
+            const now = Date.now();
+            
+            if (savedIndex && savedTime && (now - parseInt(savedTime)) < fourHours) {
+                lastGreetingIndex = parseInt(savedIndex);
+                const greeting = greetings[lastGreetingIndex];
+                
+                document.getElementById('greetingText').innerHTML = greeting.greeting;
+                document.getElementById('ratingText').innerHTML = `
+                    <i class="${greeting.icon}" style="color: #ffc107;"></i>
+                    <span>${greeting.rating}</span>
+                `;
+                document.getElementById('instructionText').innerHTML = greeting.instruction;
+            } else {
+                updateGreeting();
+                saveLastGreeting();
+            }
+        }
+
+        // Ініціалізація при завантаженні сторінки
+        document.addEventListener('DOMContentLoaded', function() {
+            loadLastGreeting();
+            
+            // Зберігати привітання при зміні
+            const originalUpdateGreeting = updateGreeting;
+            updateGreeting = function() {
+                originalUpdateGreeting();
+                saveLastGreeting();
+            };
+            
+            showToast('🚀 FLAP завантажено з випадковими привітаннями!');
+        });
+
+        // Автоматична зміна привітання кожні 30 секунд (для демонстрації)
+        setInterval(() => {
+            if (Math.random() < 0.1) { // 10% шанс
+                updateGreeting();
+            }
+        }, 30000);
+    </script>
+</body>
+</html>
