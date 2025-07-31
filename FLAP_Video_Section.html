@@ -1,0 +1,1450 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLAP Video - Feel Like A Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(180deg, #0f0f23 0%, #1a1a2e 100%);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Video App Theme - Dark YouTube-like */
+        .video-app {
+            background: linear-gradient(180deg, #0f0f23 0%, #1a1a2e 100%);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .video-header {
+            background: rgba(15,15,35,0.95);
+            backdrop-filter: blur(20px);
+            padding: 12px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .video-logo-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .video-logo {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #ff4458, #ff6b6b);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            font-weight: 800;
+            box-shadow: 0 4px 15px rgba(255,68,88,0.3);
+        }
+
+        .video-brand {
+            color: white;
+        }
+
+        .video-brand-name {
+            font-size: 16px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff4458, #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .video-brand-tagline {
+            font-size: 9px;
+            opacity: 0.7;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .search-btn, .upload-btn {
+            background: rgba(255,255,255,0.1);
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .search-btn:hover, .upload-btn:hover {
+            background: rgba(255,255,255,0.2);
+            transform: scale(1.1);
+        }
+
+        .upload-btn {
+            background: linear-gradient(135deg, #ff4458, #ff6b6b);
+            box-shadow: 0 4px 15px rgba(255,68,88,0.3);
+        }
+
+        .upload-btn:hover {
+            box-shadow: 0 6px 20px rgba(255,68,88,0.4);
+            transform: scale(1.05);
+        }
+
+        .user-avatar-video {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 800;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        /* Navigation Tabs */
+        .video-nav-tabs {
+            display: flex;
+            background: rgba(255,255,255,0.05);
+            margin: 0 15px;
+            border-radius: 12px;
+            padding: 4px;
+            margin-top: 12px;
+            backdrop-filter: blur(10px);
+        }
+
+        .video-nav-tab {
+            flex: 1;
+            padding: 8px 4px;
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 11px;
+            border: none;
+            background: none;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .video-nav-tab.active {
+            background: linear-gradient(135deg, #ff4458, #ff6b6b);
+            color: white;
+            box-shadow: 0 2px 10px rgba(255,68,88,0.3);
+        }
+
+        /* Content Sections */
+        .video-content-section {
+            display: none;
+            padding: 15px;
+        }
+
+        .video-content-section.active {
+            display: block !important;
+        }
+
+        /* Video Items */
+        .video-item {
+            background: rgba(255,255,255,0.08);
+            border-radius: 16px;
+            margin-bottom: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .video-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.3);
+            border-color: rgba(255,68,88,0.3);
+        }
+
+        .video-thumbnail {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #ff4458, #ff6b6b, #ffa726);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 50px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-thumbnail::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, 
+                rgba(255,68,88,0.8) 0%, 
+                rgba(255,107,107,0.6) 50%, 
+                rgba(255,167,38,0.8) 100%);
+            z-index: 1;
+        }
+
+        .video-thumbnail i {
+            z-index: 2;
+            position: relative;
+        }
+
+        .play-button {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: rgba(255,255,255,0.95);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ff4458;
+            font-size: 24px;
+            transition: all 0.3s ease;
+            z-index: 3;
+            cursor: pointer;
+        }
+
+        .play-button:hover {
+            transform: scale(1.1);
+            background: white;
+        }
+
+        .video-info {
+            padding: 16px;
+        }
+
+        .video-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .video-author {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+
+        .video-author-avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .video-author-name {
+            color: #ff6b6b;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .video-meta {
+            font-size: 12px;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 12px;
+        }
+
+        /* Video Rating & Voting */
+        .video-rating {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .star-rating {
+            display: flex;
+            gap: 2px;
+        }
+
+        .star {
+            color: #ffc107;
+            font-size: 14px;
+        }
+
+        .rating-value {
+            font-weight: 700;
+            color: white;
+            margin-left: 6px;
+        }
+
+        .voting-section {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 12px;
+            margin: 12px 0;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .voting-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .vote-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: rgba(255,255,255,0.8);
+            white-space: nowrap;
+        }
+
+        .vote-slider {
+            flex: 1;
+            min-width: 100px;
+            accent-color: #ff4458;
+        }
+
+        .vote-value {
+            font-size: 14px;
+            font-weight: 700;
+            color: #ff6b6b;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .vote-btn {
+            background: linear-gradient(135deg, #ff4458, #ff6b6b);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .vote-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(255,68,88,0.4);
+        }
+
+        .vote-btn:disabled {
+            background: rgba(255,255,255,0.2);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Comments System */
+        .comments-section {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            margin: 12px 0;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .comments-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px;
+            background: rgba(255,68,88,0.1);
+        }
+
+        .comments-count {
+            font-weight: 600;
+            color: white;
+            font-size: 13px;
+        }
+
+        .toggle-comments {
+            background: linear-gradient(135deg, #ff4458, #ff6b6b);
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-comments:hover {
+            transform: scale(1.05);
+        }
+
+        .comments-list {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .comments-list.show {
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        .comment-item {
+            display: flex;
+            gap: 8px;
+            padding: 8px 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .comment-avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .comment-content {
+            flex: 1;
+        }
+
+        .comment-author {
+            font-weight: 600;
+            color: #ff6b6b;
+            font-size: 12px;
+            margin-bottom: 2px;
+        }
+
+        .comment-text {
+            color: rgba(255,255,255,0.8);
+            font-size: 12px;
+            line-height: 1.3;
+            margin-bottom: 2px;
+        }
+
+        .comment-time {
+            font-size: 10px;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .add-comment {
+            display: flex;
+            gap: 8px;
+            padding: 12px;
+            background: rgba(255,255,255,0.03);
+        }
+
+        .comment-input {
+            flex: 1;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 16px;
+            padding: 6px 12px;
+            font-size: 12px;
+            outline: none;
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+
+        .comment-input::placeholder {
+            color: rgba(255,255,255,0.5);
+        }
+
+        .send-comment {
+            background: linear-gradient(135deg, #ff4458, #ff6b6b);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .send-comment:hover {
+            transform: scale(1.1);
+        }
+
+        /* Video Actions */
+        .video-actions {
+            display: flex;
+            gap: 6px;
+            margin-top: 12px;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 6px 8px;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 6px;
+            background: rgba(255,255,255,0.05);
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+            color: rgba(255,255,255,0.8);
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover {
+            border-color: #ff4458;
+            color: #ff6b6b;
+            background: rgba(255,68,88,0.1);
+        }
+
+        /* Challenge Section */
+        .challenge-item {
+            background: linear-gradient(135deg, rgba(255,68,88,0.1), rgba(255,107,107,0.05));
+            border-radius: 16px;
+            margin-bottom: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,68,88,0.2);
+        }
+
+        .challenge-header {
+            padding: 16px;
+            background: linear-gradient(135deg, #ff4458, #ff6b6b);
+            color: white;
+        }
+
+        .challenge-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .challenge-description {
+            font-size: 13px;
+            opacity: 0.9;
+            margin-bottom: 8px;
+        }
+
+        .challenge-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            opacity: 0.8;
+        }
+
+        .challenge-content {
+            padding: 16px;
+        }
+
+        .challenge-btn {
+            background: linear-gradient(135deg, #ff4458, #ff6b6b);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .challenge-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255,68,88,0.4);
+        }
+
+        /* FAB Button */
+        .video-fab {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #ff4458, #ff6b6b);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(255,68,88,0.4);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .video-fab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 35px rgba(255,68,88,0.5);
+        }
+
+        /* Modals */
+        .video-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 3000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .video-modal.show {
+            display: flex;
+            animation: modalIn 0.4s ease;
+        }
+
+        @keyframes modalIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .video-modal-content {
+            background: linear-gradient(145deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 400px;
+            max-height: 80vh;
+            overflow-y: auto;
+            color: white;
+            position: relative;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: rgba(255,68,88,0.2);
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        /* Toast Notifications */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.9);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            z-index: 9999;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            font-size: 14px;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .toast.success {
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+        }
+
+        .toast.error {
+            background: linear-gradient(135deg, #f44336, #e57373);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .voting-controls {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+            }
+            
+            .vote-slider {
+                min-width: auto;
+            }
+            
+            .video-actions {
+                flex-wrap: wrap;
+            }
+            
+            .action-btn {
+                min-width: calc(50% - 3px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="video-app">
+        <!-- Header -->
+        <div class="video-header">
+            <div class="header-content">
+                <div class="video-logo-section">
+                    <div class="video-logo">🎥</div>
+                    <div class="video-brand">
+                        <div class="video-brand-name">FLAP Video</div>
+                        <div class="video-brand-tagline">FEEL LIKE A PRO</div>
+                    </div>
+                </div>
+                
+                <div class="header-actions">
+                    <button class="search-btn" onclick="showSearch()">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <button class="upload-btn" onclick="showUploadModal()">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                    <div class="user-avatar-video" onclick="showProfile()">О</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="video-nav-tabs">
+            <button class="video-nav-tab active" onclick="showVideoSection('feed')">Стрічка</button>
+            <button class="video-nav-tab" onclick="showVideoSection('challenges')">Челенджі</button>
+            <button class="video-nav-tab" onclick="showVideoSection('my-videos')">Мої відео</button>
+            <button class="video-nav-tab" onclick="showVideoSection('trending')">Тренди</button>
+        </div>
+
+        <!-- Video Feed Section -->
+        <div id="feedContent" class="video-content-section active">
+            <!-- Video items will be generated here -->
+        </div>
+
+        <!-- Challenges Section -->
+        <div id="challengesContent" class="video-content-section">
+            <!-- Challenge items will be generated here -->
+        </div>
+
+        <!-- My Videos Section -->
+        <div id="myVideosContent" class="video-content-section">
+            <!-- User's videos will be generated here -->
+        </div>
+
+        <!-- Trending Section -->
+        <div id="trendingContent" class="video-content-section">
+            <!-- Trending videos will be generated here -->
+        </div>
+
+        <!-- FAB Button -->
+        <button class="video-fab" onclick="showUploadModal()">
+            <i class="fas fa-plus"></i>
+        </button>
+
+        <!-- Upload Modal -->
+        <div class="video-modal" id="uploadModal">
+            <div class="video-modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">📤 Завантажити відео</h3>
+                    <button class="modal-close" onclick="closeUploadModal()">×</button>
+                </div>
+                <div class="modal-body">
+                    <div style="text-align: center; padding: 20px;">
+                        <div style="font-size: 48px; margin-bottom: 16px; color: #ff6b6b;">🎬</div>
+                        <h4 style="margin-bottom: 12px;">Поділіться своїми навичками!</h4>
+                        <p style="color: rgba(255,255,255,0.7); margin-bottom: 20px; font-size: 14px;">
+                            Завантажте відео зі своїми футбольними трюками та отримайте оцінки від спільноти.
+                        </p>
+                        <button onclick="uploadVideo()" style="background: linear-gradient(135deg, #ff4458, #ff6b6b); color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; width: 100%; margin-bottom: 10px;">
+                            <i class="fas fa-upload"></i> Обрати відео
+                        </button>
+                        <button onclick="recordVideo()" style="background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; width: 100%;">
+                            <i class="fas fa-video"></i> Записати зараз
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Player Profile Modal -->
+        <div class="video-modal" id="playerProfileModal">
+            <div class="video-modal-content" id="playerProfileContent">
+                <!-- Player profile will be generated here -->
+            </div>
+        </div>
+
+        <!-- Challenge Details Modal -->
+        <div class="video-modal" id="challengeModal">
+            <div class="video-modal-content" id="challengeContent">
+                <!-- Challenge details will be generated here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        console.log('🎥 FLAP Video Section Loading...');
+
+        // Player Database
+        const playersDatabase = {
+            player1: {
+                name: 'Олександр Петренко',
+                position: 'Нападник',
+                city: 'Київ',
+                rating: '4.8',
+                avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
+                phone: '+380 67 123 45 67',
+                telegram: '@alex_football',
+                instagram: '@alex.striker',
+                matches: 45,
+                goals: 32,
+                assists: 18
+            },
+            player2: {
+                name: 'Віталій Коваленко',
+                position: 'Захисник',
+                city: 'Львів',
+                rating: '4.5',
+                avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
+                phone: '+380 67 234 56 78',
+                telegram: '@vitaly_defender',
+                instagram: '@vitaly.defense',
+                matches: 38,
+                goals: 5,
+                assists: 12
+            },
+            player3: {
+                name: 'Дмитро Сидоренко',
+                position: 'Півзахисник',
+                city: 'Одеса',
+                rating: '4.3',
+                avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face',
+                phone: '+380 67 345 67 89',
+                telegram: '@dimka_midfielder',
+                instagram: '@dmitro.mid',
+                matches: 29,
+                goals: 15,
+                assists: 22
+            },
+            player4: {
+                name: 'Андрій Шевченко',
+                position: 'Нападник',
+                city: 'Харків',
+                rating: '4.9',
+                avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop&crop=face',
+                phone: '+380 67 456 78 90',
+                telegram: '@andriy_sheva',
+                instagram: '@sheva.goal',
+                matches: 52,
+                goals: 48,
+                assists: 15
+            },
+            player5: {
+                name: 'Максим Ковальчук',
+                position: 'Воротар',
+                city: 'Дніпро',
+                rating: '4.6',
+                avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&h=150&fit=crop&crop=face',
+                phone: '+380 67 567 89 01',
+                telegram: '@max_keeper',
+                instagram: '@max.saves',
+                matches: 41,
+                goals: 0,
+                assists: 3
+            }
+        };
+
+        function getPlayer(playerId) {
+            return playersDatabase[playerId] || {
+                name: 'Невідомий гравець',
+                position: 'Невідома',
+                city: 'Невідоме',
+                rating: '0.0',
+                avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
+                phone: '+380 XX XXX XX XX',
+                telegram: '@unknown',
+                instagram: '@unknown',
+                matches: 0,
+                goals: 0,
+                assists: 0
+            };
+        }
+
+        // Section Management
+        function showVideoSection(sectionName) {
+            console.log('📱 Show video section:', sectionName);
+            
+            // Update navigation
+            document.querySelectorAll('.video-nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            
+            // Update content
+            document.querySelectorAll('.video-content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            const targetSection = document.getElementById(sectionName + 'Content');
+            if (targetSection) {
+                targetSection.classList.add('active');
+                
+                // Generate content based on section
+                switch(sectionName) {
+                    case 'feed':
+                        generateVideoFeed();
+                        break;
+                    case 'challenges':
+                        generateChallenges();
+                        break;
+                    case 'my-videos':
+                        generateMyVideos();
+                        break;
+                    case 'trending':
+                        generateTrendingVideos();
+                        break;
+                }
+            }
+        }
+
+        // Video Feed Generation
+        function generateVideoFeed() {
+            const container = document.getElementById('feedContent');
+            if (!container) return;
+            
+            const videos = [
+                {
+                    id: 'video1',
+                    title: 'Неймовірний гол з 30 метрів! 🚀',
+                    author: 'player1',
+                    rating: 4.8,
+                    votes: 127,
+                    views: '2.1K',
+                    time: '2 дні тому',
+                    icon: 'fas fa-futbol'
+                },
+                {
+                    id: 'video2',
+                    title: 'Технічний дриблінг у штрафній ⚡',
+                    author: 'player3',
+                    rating: 4.5,
+                    votes: 89,
+                    views: '1.8K',
+                    time: '1 день тому',
+                    icon: 'fas fa-running'
+                },
+                {
+                    id: 'video3',
+                    title: 'Фантастичний сейв воротаря 🥅',
+                    author: 'player5',
+                    rating: 4.9,
+                    votes: 156,
+                    views: '3.2K',
+                    time: '3 дні тому',
+                    icon: 'fas fa-hand-paper'
+                },
+                {
+                    id: 'video4',
+                    title: 'Майстерний фрістайл з м\'ячем 🎪',
+                    author: 'player4',
+                    rating: 4.7,
+                    votes: 203,
+                    views: '4.5K',
+                    time: '1 тиждень тому',
+                    icon: 'fas fa-magic'
+                }
+            ];
+            
+            let videoHTML = '';
+            
+            videos.forEach(video => {
+                const player = getPlayer(video.author);
+                const stars = generateStars(video.rating);
+                
+                videoHTML += `
+                    <div class="video-item">
+                        <div class="video-thumbnail" onclick="playVideo('${video.id}')">
+                            <i class="${video.icon}"></i>
+                            <div class="play-button">
+                                <i class="fas fa-play"></i>
+                            </div>
+                        </div>
+                        <div class="video-info">
+                            <h3 class="video-title">${video.title}</h3>
+                            <div class="video-author" onclick="showPlayerProfile('${video.author}')">
+                                <img src="${player.avatar}" alt="${player.name}" class="video-author-avatar">
+                                <span class="video-author-name">${player.name}</span>
+                            </div>
+                            <div class="video-meta">
+                                ${video.views} переглядів • ${video.time} • ${player.city}
+                            </div>
+                            <div class="video-rating">
+                                <div class="star-rating">${stars}</div>
+                                <span class="rating-value">${video.rating}</span>
+                                <span style="color: rgba(255,255,255,0.5); font-size: 12px; margin-left: 6px;">(${video.votes} оцінок)</span>
+                            </div>
+                            <div class="voting-section">
+                                <div class="voting-controls">
+                                    <span class="vote-label">Ваша оцінка:</span>
+                                    <input type="range" class="vote-slider" min="0" max="5" step="0.01" value="0" id="voteSlider${video.id}" oninput="document.getElementById('voteValue${video.id}').textContent = this.value">
+                                    <span class="vote-value" id="voteValue${video.id}">0</span>
+                                    <button class="vote-btn" onclick="submitVote('${video.id}', document.getElementById('voteSlider${video.id}').value)">Голос</button>
+                                </div>
+                            </div>
+                            <div id="comments_${video.id}" class="comments-section">
+                                <div class="comments-header">
+                                    <div class="comments-count">💬 Коментарі (${Math.floor(Math.random() * 25) + 5})</div>
+                                    <button class="toggle-comments" onclick="toggleComments('${video.id}')">Показати</button>
+                                </div>
+                                <div class="comments-list" id="commentsList_${video.id}">
+                                    ${generateComments(video.id)}
+                                </div>
+                                <div class="add-comment">
+                                    <img src="${playersDatabase.player1.avatar}" alt="Ви" class="comment-avatar">
+                                    <input type="text" class="comment-input" placeholder="Додайте коментар..." id="commentInput_${video.id}">
+                                    <button class="send-comment" onclick="addComment('${video.id}')">
+                                        <i class="fas fa-paper-plane"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="video-actions">
+                                <button class="action-btn" onclick="toggleComments('${video.id}')">
+                                    <i class="fas fa-comment"></i>
+                                    Коментарі
+                                </button>
+                                <button class="action-btn" onclick="shareVideo('${video.id}')">
+                                    <i class="fas fa-share"></i>
+                                    Поділитися
+                                </button>
+                                <button class="action-btn" onclick="saveVideo('${video.id}')">
+                                    <i class="fas fa-bookmark"></i>
+                                    Зберегти
+                                </button>
+                                <button class="action-btn" onclick="reportVideo('${video.id}')">
+                                    <i class="fas fa-flag"></i>
+                                    Скарга
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = videoHTML;
+        }
+
+        // Challenges Generation
+        function generateChallenges() {
+            const container = document.getElementById('challengesContent');
+            if (!container) return;
+            
+            const challenges = [
+                {
+                    id: 'challenge1',
+                    title: '🎯 Точність ударів',
+                    description: 'Покажіть свою точність! Влучте у ворота з різних позицій.',
+                    participants: 127,
+                    timeLeft: '2 дні',
+                    prize: '100 монет',
+                    difficulty: 'Середній'
+                },
+                {
+                    id: 'challenge2',
+                    title: '🚀 Швидкість дриблінгу',
+                    description: 'Пройдіть через конуси якнайшвидше з м\'ячем.',
+                    participants: 89,
+                    timeLeft: '5 днів',
+                    prize: '150 монет',
+                    difficulty: 'Важкий'
+                },
+                {
+                    id: 'challenge3',
+                    title: '🎪 Фрістайл трюки',
+                    description: 'Покажіть найкрутіші трюки з м\'ячем!',
+                    participants: 203,
+                    timeLeft: '1 тиждень',
+                    prize: '200 монет',
+                    difficulty: 'Експертний'
+                }
+            ];
+            
+            let challengeHTML = '<h2 style="color: white; margin-bottom: 20px; font-size: 20px;">🏆 Активні челенджі</h2>';
+            
+            challenges.forEach(challenge => {
+                challengeHTML += `
+                    <div class="challenge-item">
+                        <div class="challenge-header">
+                            <div class="challenge-title">${challenge.title}</div>
+                            <div class="challenge-description">${challenge.description}</div>
+                            <div class="challenge-meta">
+                                <span>👥 ${challenge.participants} учасників</span>
+                                <span>⏰ ${challenge.timeLeft}</span>
+                                <span>🏆 ${challenge.prize}</span>
+                            </div>
+                        </div>
+                        <div class="challenge-content">
+                            <div style="margin-bottom: 12px; font-size: 12px; color: rgba(255,255,255,0.7);">
+                                <strong>Складність:</strong> ${challenge.difficulty}
+                            </div>
+                            <button class="challenge-btn" onclick="joinChallenge('${challenge.id}')">
+                                Прийняти виклик
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = challengeHTML;
+        }
+
+        // My Videos Generation
+        function generateMyVideos() {
+            const container = document.getElementById('myVideosContent');
+            if (!container) return;
+            
+            container.innerHTML = `
+                <h2 style="color: white; margin-bottom: 20px; font-size: 20px;">📹 Мої відео</h2>
+                <div style="text-align: center; padding: 40px 20px; color: rgba(255,255,255,0.6);">
+                    <div style="font-size: 48px; margin-bottom: 16px;">🎬</div>
+                    <h3 style="margin-bottom: 12px; color: white;">Поки що немає відео</h3>
+                    <p style="margin-bottom: 20px; font-size: 14px;">Завантажте своє перше відео та покажіть свої навички!</p>
+                    <button onclick="showUploadModal()" style="background: linear-gradient(135deg, #ff4458, #ff6b6b); color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                        <i class="fas fa-plus"></i> Завантажити відео
+                    </button>
+                </div>
+            `;
+        }
+
+        // Trending Videos Generation
+        function generateTrendingVideos() {
+            const container = document.getElementById('trendingContent');
+            if (!container) return;
+            
+            container.innerHTML = `
+                <h2 style="color: white; margin-bottom: 20px; font-size: 20px;">🔥 Тренди тижня</h2>
+                <div style="text-align: center; padding: 40px 20px; color: rgba(255,255,255,0.6);">
+                    <div style="font-size: 48px; margin-bottom: 16px;">📈</div>
+                    <h3 style="margin-bottom: 12px; color: white;">Завантажуємо тренди...</h3>
+                    <p style="margin-bottom: 20px; font-size: 14px;">Найпопулярніші відео цього тижня з'являться тут незабаром!</p>
+                </div>
+            `;
+        }
+
+        // Helper Functions
+        function generateStars(rating) {
+            let stars = '';
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 !== 0;
+            
+            for (let i = 0; i < fullStars; i++) {
+                stars += '<i class="fas fa-star star"></i>';
+            }
+            
+            if (hasHalfStar) {
+                stars += '<i class="fas fa-star-half-alt star"></i>';
+            }
+            
+            const emptyStars = 5 - Math.ceil(rating);
+            for (let i = 0; i < emptyStars; i++) {
+                stars += '<i class="far fa-star star"></i>';
+            }
+            
+            return stars;
+        }
+
+        function generateComments(videoId) {
+            const comments = [
+                { author: 'player2', text: 'Неймовірний удар! 🔥', time: '2 години тому' },
+                { author: 'player3', text: 'Воротар навіть не встиг зреагувати 😱', time: '1 година тому' },
+                { author: 'player4', text: 'Техніка на найвищому рівні! 💪', time: '45 хвилин тому' }
+            ];
+            
+            let commentsHTML = '';
+            
+            comments.forEach(comment => {
+                const author = getPlayer(comment.author);
+                commentsHTML += `
+                    <div class="comment-item">
+                        <img src="${author.avatar}" alt="${author.name}" class="comment-avatar">
+                        <div class="comment-content">
+                            <div class="comment-author">${author.name}</div>
+                            <div class="comment-text">${comment.text}</div>
+                            <div class="comment-time">${comment.time}</div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            return commentsHTML;
+        }
+
+        // Video Functions
+        function submitVote(videoId, rating) {
+            console.log('🗳️ Vote submitted:', videoId, rating);
+            showToast(`✅ Ваша оцінка ${rating} збережена!`, 'success');
+            
+            const button = document.querySelector(`button[onclick*="submitVote('${videoId}'"]`);
+            if (button) {
+                button.textContent = 'Проголосовано';
+                button.disabled = true;
+            }
+        }
+
+        function toggleComments(videoId) {
+            console.log('💬 Toggle comments:', videoId);
+            const commentsList = document.getElementById(`commentsList_${videoId}`);
+            const toggleButton = document.querySelector(`#comments_${videoId} .toggle-comments`);
+            
+            if (commentsList && toggleButton) {
+                if (commentsList.classList.contains('show')) {
+                    commentsList.classList.remove('show');
+                    toggleButton.textContent = 'Показати';
+                } else {
+                    commentsList.classList.add('show');
+                    toggleButton.textContent = 'Сховати';
+                }
+            }
+        }
+
+        function addComment(videoId) {
+            console.log('💬 Add comment:', videoId);
+            const input = document.getElementById(`commentInput_${videoId}`);
+            const commentsList = document.getElementById(`commentsList_${videoId}`);
+            
+            if (input && commentsList && input.value.trim()) {
+                const newComment = `
+                    <div class="comment-item">
+                        <img src="${playersDatabase.player1.avatar}" alt="Ви" class="comment-avatar">
+                        <div class="comment-content">
+                            <div class="comment-author">Ви</div>
+                            <div class="comment-text">${input.value}</div>
+                            <div class="comment-time">Щойно</div>
+                        </div>
+                    </div>
+                `;
+                
+                commentsList.insertAdjacentHTML('afterbegin', newComment);
+                input.value = '';
+                
+                showToast('✅ Коментар додано!', 'success');
+            }
+        }
+
+        function playVideo(videoId) {
+            console.log('▶️ Play video:', videoId);
+            showToast('▶️ Відтворення відео...', 'success');
+        }
+
+        function shareVideo(videoId) {
+            console.log('📤 Share video:', videoId);
+            showToast('📤 Посилання скопійовано!', 'success');
+        }
+
+        function saveVideo(videoId) {
+            console.log('🔖 Save video:', videoId);
+            showToast('🔖 Відео збережено!', 'success');
+        }
+
+        function reportVideo(videoId) {
+            console.log('🚩 Report video:', videoId);
+            showToast('🚩 Скаргу надіслано!', 'success');
+        }
+
+        function joinChallenge(challengeId) {
+            console.log('🏆 Join challenge:', challengeId);
+            showToast('🏆 Ви приєдналися до челенджу!', 'success');
+        }
+
+        // Player Profile Functions
+        function showPlayerProfile(playerId) {
+            console.log('👤 Show player profile:', playerId);
+            const player = getPlayer(playerId);
+            
+            const modal = document.getElementById('playerProfileModal');
+            const content = document.getElementById('playerProfileContent');
+            
+            if (modal && content) {
+                content.innerHTML = `
+                    <div class="modal-header">
+                        <h3 class="modal-title">👤 Профіль гравця</h3>
+                        <button class="modal-close" onclick="closePlayerProfile()">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <div style="text-align: center; margin-bottom: 20px;">
+                            <img src="${player.avatar}" alt="${player.name}" style="width: 80px; height: 80px; border-radius: 50%; margin-bottom: 12px; border: 3px solid #ff6b6b;">
+                            <h4 style="margin-bottom: 4px; color: white;">${player.name}</h4>
+                            <div style="color: #ff6b6b; font-weight: 600; margin-bottom: 4px;">${player.position}</div>
+                            <div style="color: rgba(255,255,255,0.6); font-size: 13px; margin-bottom: 8px;">${player.city}</div>
+                            <div style="display: flex; align-items: center; justify-content: center; gap: 6px; color: #ffc107;">
+                                <i class="fas fa-star"></i>
+                                <span style="font-size: 16px; font-weight: 700; color: white;">${player.rating}</span>
+                            </div>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px;">
+                            <div style="text-align: center; padding: 12px; background: rgba(255,255,255,0.05); border-radius: 8px;">
+                                <div style="font-size: 18px; font-weight: 800; color: #4caf50; margin-bottom: 4px;">${player.matches}</div>
+                                <div style="font-size: 10px; color: rgba(255,255,255,0.6); text-transform: uppercase; font-weight: 600;">Матчі</div>
+                            </div>
+                            <div style="text-align: center; padding: 12px; background: rgba(255,255,255,0.05); border-radius: 8px;">
+                                <div style="font-size: 18px; font-weight: 800; color: #ff9800; margin-bottom: 4px;">${player.goals}</div>
+                                <div style="font-size: 10px; color: rgba(255,255,255,0.6); text-transform: uppercase; font-weight: 600;">Голи</div>
+                            </div>
+                            <div style="text-align: center; padding: 12px; background: rgba(255,255,255,0.05); border-radius: 8px;">
+                                <div style="font-size: 18px; font-weight: 800; color: #2196f3; margin-bottom: 4px;">${player.assists}</div>
+                                <div style="font-size: 10px; color: rgba(255,255,255,0.6); text-transform: uppercase; font-weight: 600;">Паси</div>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; gap: 8px;">
+                            <button onclick="addFriend('${playerId}')" style="flex: 1; background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; border: none; padding: 10px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 12px;">
+                                <i class="fas fa-user-plus"></i> Додати в друзі
+                            </button>
+                            <button onclick="sendMessage('${playerId}')" style="flex: 1; background: linear-gradient(135deg, #ff4458, #ff6b6b); color: white; border: none; padding: 10px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 12px;">
+                                <i class="fas fa-envelope"></i> Написати
+                            </button>
+                        </div>
+                    </div>
+                `;
+                modal.classList.add('show');
+            }
+        }
+
+        function closePlayerProfile() {
+            const modal = document.getElementById('playerProfileModal');
+            if (modal) modal.classList.remove('show');
+        }
+
+        function addFriend(playerId) {
+            console.log('👥 Add friend:', playerId);
+            const player = getPlayer(playerId);
+            showToast(`✅ ${player.name} додано в друзі!`, 'success');
+            closePlayerProfile();
+        }
+
+        function sendMessage(playerId) {
+            console.log('📧 Send message:', playerId);
+            const player = getPlayer(playerId);
+            showToast(`📧 Повідомлення надіслано ${player.name}!`, 'success');
+            closePlayerProfile();
+        }
+
+        // Modal Functions
+        function showUploadModal() {
+            const modal = document.getElementById('uploadModal');
+            if (modal) modal.classList.add('show');
+        }
+
+        function closeUploadModal() {
+            const modal = document.getElementById('uploadModal');
+            if (modal) modal.classList.remove('show');
+        }
+
+        function uploadVideo() {
+            showToast('📤 Завантаження відео...', 'success');
+            closeUploadModal();
+        }
+
+        function recordVideo() {
+            showToast('🎥 Запуск камери...', 'success');
+            closeUploadModal();
+        }
+
+        function showSearch() {
+            showToast('🔍 Пошук відео...', 'success');
+        }
+
+        function showProfile() {
+            showToast('👤 Відкриття профілю...', 'success');
+        }
+
+        // Toast System
+        function showToast(message, type = 'success') {
+            // Remove existing toast
+            const existingToast = document.querySelector('.toast');
+            if (existingToast) {
+                existingToast.remove();
+            }
+
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            
+            document.body.appendChild(toast);
+            
+            // Show toast
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 100);
+            
+            // Hide toast
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    if (document.body.contains(toast)) {
+                        document.body.removeChild(toast);
+                    }
+                }, 300);
+            }, 3000);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🎥 FLAP Video Section Initialized');
+            generateVideoFeed(); // Load initial content
+            showToast('🎥 Відео секція завантажена!', 'success');
+        });
+
+        console.log('✅ FLAP Video Section - All systems ready!');
+    </script>
+</body>
+</html>
