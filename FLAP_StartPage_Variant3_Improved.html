@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLAP - Варіант 3 покращений</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            overflow-x: hidden;
+        }
+        
+        .variant {
+            display: none;
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        .variant.active {
+            display: block;
+        }
+        
+        .variant-indicator {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.9);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            color: #333;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .next-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-weight: 700;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(76,175,80,0.4);
+            transition: all 0.3s ease;
+        }
+        
+        /* ПОВНОЕКРАННИЙ ВИБІР - ПОКРАЩЕНИЙ */
+        .variant-3 {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .split-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .split-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .split-section:hover::before {
+            background: rgba(0,0,0,0);
+        }
+        
+        .video-section {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+        }
+        
+        .match-section {
+            background: linear-gradient(135deg, #4caf50, #2e7d32);
+        }
+        
+        .split-content {
+            text-align: center;
+            color: white;
+            z-index: 2;
+            position: relative;
+        }
+        
+        .split-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        
+        .split-title {
+            font-size: 32px;
+            font-weight: 900;
+            margin-bottom: 12px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .split-description {
+            font-size: 16px;
+            opacity: 0.9;
+            line-height: 1.4;
+        }
+        
+        .split-section:hover {
+            flex: 1.1;
+        }
+        
+        /* ВАРІАНТ 1: ЗЛІВА ЗНИЗУ */
+        .user-info-bottom-left {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(15px);
+            padding: 16px 20px;
+            border-radius: 20px;
+            color: white;
+            z-index: 10;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+        
+        .user-info-bottom-left .user-name {
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .user-info-bottom-left .user-rating {
+            font-size: 14px;
+            opacity: 0.9;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        /* ВАРІАНТ 2: СПРАВА ЗВЕРХУ */
+        .user-info-top-right {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(15px);
+            padding: 12px 18px;
+            border-radius: 25px;
+            color: white;
+            z-index: 10;
+            border: 1px solid rgba(255,255,255,0.2);
+            text-align: right;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .user-info-top-right .user-name {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+        
+        .user-info-top-right .user-rating {
+            font-size: 12px;
+            opacity: 0.9;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 4px;
+        }
+        
+        /* ВАРІАНТ 3: ЦЕНТР ЗВЕРХУ (КОМПАКТНИЙ) */
+        .user-info-top-center {
+            position: absolute;
+            top: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(20px);
+            padding: 10px 20px;
+            border-radius: 30px;
+            color: white;
+            z-index: 10;
+            border: 1px solid rgba(255,255,255,0.15);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+        }
+        
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 800;
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        
+        .user-info-top-center .user-details {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        
+        .user-info-top-center .user-name {
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 2px;
+        }
+        
+        .user-info-top-center .user-rating {
+            font-size: 11px;
+            opacity: 0.9;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            line-height: 1;
+        }
+        
+        /* ВАРІАНТ 4: ПЛАВАЮЧИЙ ЗНИЗУ ПО ЦЕНТРУ */
+        .user-info-bottom-center {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(15px);
+            padding: 16px 24px;
+            border-radius: 25px;
+            color: #333;
+            z-index: 10;
+            border: 1px solid rgba(255,255,255,0.3);
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            min-width: 200px;
+        }
+        
+        .user-info-bottom-center .user-name {
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 6px;
+            color: #333;
+        }
+        
+        .user-info-bottom-center .user-rating {
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            color: #4caf50;
+            font-weight: 600;
+        }
+        
+        /* ВАРІАНТ 5: ВЕРТИКАЛЬНО ЗЛІВА */
+        .user-info-left-vertical {
+            position: absolute;
+            left: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(15px);
+            padding: 20px 16px;
+            border-radius: 20px;
+            color: white;
+            z-index: 10;
+            border: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+        }
+        
+        .user-info-left-vertical .user-name {
+            font-size: 16px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            writing-mode: horizontal-tb;
+        }
+        
+        .user-info-left-vertical .user-rating {
+            font-size: 12px;
+            opacity: 0.9;
+            writing-mode: horizontal-tb;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .variant-3 {
+                flex-direction: column;
+            }
+            
+            .split-section {
+                min-height: 50vh;
+            }
+            
+            .user-info-bottom-left,
+            .user-info-top-right {
+                left: 20px;
+                right: 20px;
+                text-align: center;
+            }
+            
+            .user-info-left-vertical {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="variant-indicator" id="variantIndicator">Позиція 1 з 5</div>
+    <button class="next-btn" onclick="nextPosition()">Наступна позиція</button>
+
+    <!-- ПОЗИЦІЯ 1: ЗЛІВА ЗНИЗУ -->
+    <div class="variant variant-3 active" id="position1">
+        <div class="user-info-bottom-left">
+            <div class="user-name">
+                👋 Олександр
+            </div>
+            <div class="user-rating">
+                <i class="fas fa-star" style="color: #ffc107;"></i>
+                <span>4.2</span>
+                <span style="opacity: 0.7;">• 45 матчів</span>
+            </div>
+        </div>
+        
+        <div class="split-section video-section" onclick="selectMode('video')">
+            <div class="split-content">
+                <div class="split-icon">🎥</div>
+                <div class="split-title">ВІДЕО</div>
+                <div class="split-description">
+                    Челенджі<br>
+                    Контент<br>
+                    Голосування
+                </div>
+            </div>
+        </div>
+        
+        <div class="split-section match-section" onclick="selectMode('match')">
+            <div class="split-content">
+                <div class="split-icon">⚽</div>
+                <div class="split-title">МАТЧІ</div>
+                <div class="split-description">
+                    Пошук гри<br>
+                    Команди<br>
+                    Турніри
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ПОЗИЦІЯ 2: СПРАВА ЗВЕРХУ -->
+    <div class="variant variant-3" id="position2">
+        <div class="user-info-top-right">
+            <div class="user-name">Олександр 👋</div>
+            <div class="user-rating">
+                <i class="fas fa-star" style="color: #ffc107;"></i>
+                <span>4.2 • 45 матчів</span>
+            </div>
+        </div>
+        
+        <div class="split-section video-section" onclick="selectMode('video')">
+            <div class="split-content">
+                <div class="split-icon">🎥</div>
+                <div class="split-title">ВІДЕО</div>
+                <div class="split-description">
+                    Челенджі<br>
+                    Контент<br>
+                    Голосування
+                </div>
+            </div>
+        </div>
+        
+        <div class="split-section match-section" onclick="selectMode('match')">
+            <div class="split-content">
+                <div class="split-icon">⚽</div>
+                <div class="split-title">МАТЧІ</div>
+                <div class="split-description">
+                    Пошук гри<br>
+                    Команди<br>
+                    Турніри
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ПОЗИЦІЯ 3: ЦЕНТР ЗВЕРХУ (КОМПАКТНИЙ З АВАТАРОМ) -->
+    <div class="variant variant-3" id="position3">
+        <div class="user-info-top-center">
+            <div class="user-avatar">О</div>
+            <div class="user-details">
+                <div class="user-name">Олександр</div>
+                <div class="user-rating">
+                    <i class="fas fa-star" style="color: #ffc107;"></i>
+                    <span>4.2 • 45 матчів</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="split-section video-section" onclick="selectMode('video')">
+            <div class="split-content">
+                <div class="split-icon">🎥</div>
+                <div class="split-title">ВІДЕО</div>
+                <div class="split-description">
+                    Челенджі<br>
+                    Контент<br>
+                    Голосування
+                </div>
+            </div>
+        </div>
+        
+        <div class="split-section match-section" onclick="selectMode('match')">
+            <div class="split-content">
+                <div class="split-icon">⚽</div>
+                <div class="split-title">МАТЧІ</div>
+                <div class="split-description">
+                    Пошук гри<br>
+                    Команди<br>
+                    Турніри
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ПОЗИЦІЯ 4: ПЛАВАЮЧИЙ ЗНИЗУ ПО ЦЕНТРУ -->
+    <div class="variant variant-3" id="position4">
+        <div class="user-info-bottom-center">
+            <div class="user-name">👋 Олександр</div>
+            <div class="user-rating">
+                <i class="fas fa-star" style="color: #ffc107;"></i>
+                <span>Рейтинг: 4.2</span>
+                <span style="opacity: 0.7;">• 45 матчів</span>
+            </div>
+        </div>
+        
+        <div class="split-section video-section" onclick="selectMode('video')">
+            <div class="split-content">
+                <div class="split-icon">🎥</div>
+                <div class="split-title">ВІДЕО</div>
+                <div class="split-description">
+                    Челенджі<br>
+                    Контент<br>
+                    Голосування
+                </div>
+            </div>
+        </div>
+        
+        <div class="split-section match-section" onclick="selectMode('match')">
+            <div class="split-content">
+                <div class="split-icon">⚽</div>
+                <div class="split-title">МАТЧІ</div>
+                <div class="split-description">
+                    Пошук гри<br>
+                    Команди<br>
+                    Турніри
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ПОЗИЦІЯ 5: ВЕРТИКАЛЬНО ЗЛІВА -->
+    <div class="variant variant-3" id="position5">
+        <div class="user-info-left-vertical">
+            <div class="user-name">Олександр</div>
+            <div class="user-rating">
+                <i class="fas fa-star" style="color: #ffc107;"></i>
+                <span>4.2</span>
+                <span>45 матчів</span>
+            </div>
+        </div>
+        
+        <div class="split-section video-section" onclick="selectMode('video')">
+            <div class="split-content">
+                <div class="split-icon">🎥</div>
+                <div class="split-title">ВІДЕО</div>
+                <div class="split-description">
+                    Челенджі<br>
+                    Контент<br>
+                    Голосування
+                </div>
+            </div>
+        </div>
+        
+        <div class="split-section match-section" onclick="selectMode('match')">
+            <div class="split-content">
+                <div class="split-icon">⚽</div>
+                <div class="split-title">МАТЧІ</div>
+                <div class="split-description">
+                    Пошук гри<br>
+                    Команди<br>
+                    Турніри
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentPosition = 1;
+        const totalPositions = 5;
+
+        function nextPosition() {
+            // Hide current position
+            document.getElementById(`position${currentPosition}`).classList.remove('active');
+            
+            // Move to next position
+            currentPosition = currentPosition === totalPositions ? 1 : currentPosition + 1;
+            
+            // Show next position
+            document.getElementById(`position${currentPosition}`).classList.add('active');
+            
+            // Update indicator
+            document.getElementById('variantIndicator').textContent = `Позиція ${currentPosition} з ${totalPositions}`;
+        }
+
+        function selectMode(mode) {
+            if (mode === 'video') {
+                showToast('🎥 Переходимо до відео режиму!');
+            } else {
+                showToast('⚽ Переходимо до матчів!');
+            }
+        }
+
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 30px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: rgba(0,0,0,0.9);
+                color: white;
+                padding: 12px 24px;
+                border-radius: 25px;
+                z-index: 9999;
+                font-weight: 600;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            `;
+            toast.textContent = message;
+            
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                document.body.removeChild(toast);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
