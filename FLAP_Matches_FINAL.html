@@ -750,7 +750,7 @@
                     <button class="upload-btn" onclick="showCreateMatchModal()">
                         <i class="fas fa-plus"></i>
                     </button>
-                    <div class="user-avatar-matches" onclick="showProfile()">М</div>
+                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face" alt="Profile" class="user-avatar-matches" onclick="showProfile()" style="object-fit: cover;">
                 </div>
             </div>
         </div>
@@ -1416,7 +1416,7 @@
                                     <i class="fas fa-cog"></i> Управління
                                 </button>
                             ` : ''}
-                            <button class="match-btn secondary" onclick="showMatchDetails('${match.id}')">
+                            <button class="match-btn secondary" onclick="showMyMatchDetails('${match.id}')">
                                 <i class="fas fa-info-circle"></i> Деталі
                             </button>
                         </div>
@@ -1440,7 +1440,14 @@
                     result: 'W',
                     score: '3-1',
                     rating: 4.2,
-                    team: 'Команда А'
+                    myTeam: 'Веселі Бджілки',
+                    opponentTeam: 'Швидкі Їжаки',
+                    myTeamPlayers: ['currentUser', 'player1', 'player3', 'player5', 'player7'],
+                    opponentTeamPlayers: ['player2', 'player4', 'player6', 'player8', 'player9'],
+                    averageRatings: {
+                        myTeam: 4.1,
+                        opponentTeam: 3.9
+                    }
                 },
                 {
                     id: 'history2',
@@ -1449,7 +1456,14 @@
                     result: 'L',
                     score: '1-2',
                     rating: 3.8,
-                    team: 'Команда Б'
+                    myTeam: 'Граційні Леопарди',
+                    opponentTeam: 'Сильні Ведмеді',
+                    myTeamPlayers: ['currentUser', 'player2', 'player4', 'player6', 'player8'],
+                    opponentTeamPlayers: ['player1', 'player3', 'player5', 'player7', 'player9'],
+                    averageRatings: {
+                        myTeam: 3.7,
+                        opponentTeam: 4.3
+                    }
                 },
                 {
                     id: 'history3',
@@ -1458,7 +1472,14 @@
                     result: 'D',
                     score: '2-2',
                     rating: 4.0,
-                    team: 'Команда А'
+                    myTeam: 'Розумні Сови',
+                    opponentTeam: 'Енергійні Кенгуру',
+                    myTeamPlayers: ['currentUser', 'player1', 'player2', 'player10', 'player11'],
+                    opponentTeamPlayers: ['player3', 'player4', 'player5', 'player12', 'player13'],
+                    averageRatings: {
+                        myTeam: 4.0,
+                        opponentTeam: 4.0
+                    }
                 }
             ];
             
@@ -1479,7 +1500,7 @@
                                 <div class="match-title">${match.title}</div>
                                 <div class="match-meta">
                                     <span><i class="fas fa-calendar"></i> ${match.date}</span>
-                                    <span><i class="fas fa-users"></i> ${match.team}</span>
+                                    <span><i class="fas fa-users"></i> ${match.myTeam} vs ${match.opponentTeam}</span>
                                     <span><i class="fas fa-star"></i> ${match.rating}</span>
                                 </div>
                             </div>
@@ -1491,7 +1512,7 @@
                         
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
                             <div style="color: rgba(255,255,255,0.8);">${resultText}</div>
-                            <button class="match-btn secondary" onclick="showMatchDetails('${match.id}')">
+                            <button class="match-btn secondary" onclick="showHistoryMatchDetails('${match.id}')">
                                 <i class="fas fa-eye"></i> Переглянути
                             </button>
                         </div>
@@ -1500,6 +1521,139 @@
             });
             
             container.innerHTML = historyHTML;
+        }
+
+        function showHistoryMatchDetails(matchId) {
+            const modal = document.getElementById('matchDetailsModal');
+            const content = document.getElementById('matchDetailsContent');
+            
+            const matchHistory = [
+                {
+                    id: 'history1',
+                    title: 'Футбол на Оболоні',
+                    date: '2024-02-10',
+                    result: 'W',
+                    score: '3-1',
+                    rating: 4.2,
+                    myTeam: 'Веселі Бджілки',
+                    opponentTeam: 'Швидкі Їжаки',
+                    myTeamPlayers: ['currentUser', 'player1', 'player3', 'player5', 'player7'],
+                    opponentTeamPlayers: ['player2', 'player4', 'player6', 'player8', 'player9'],
+                    averageRatings: {
+                        myTeam: 4.1,
+                        opponentTeam: 3.9
+                    }
+                },
+                {
+                    id: 'history2',
+                    title: 'Вечірній матч',
+                    date: '2024-02-05',
+                    result: 'L',
+                    score: '1-2',
+                    rating: 3.8,
+                    myTeam: 'Граційні Леопарди',
+                    opponentTeam: 'Сильні Ведмеді',
+                    myTeamPlayers: ['currentUser', 'player2', 'player4', 'player6', 'player8'],
+                    opponentTeamPlayers: ['player1', 'player3', 'player5', 'player7', 'player9'],
+                    averageRatings: {
+                        myTeam: 3.7,
+                        opponentTeam: 4.3
+                    }
+                },
+                {
+                    id: 'history3',
+                    title: 'Ранковий футбол',
+                    date: '2024-02-01',
+                    result: 'D',
+                    score: '2-2',
+                    rating: 4.0,
+                    myTeam: 'Розумні Сови',
+                    opponentTeam: 'Енергійні Кенгуру',
+                    myTeamPlayers: ['currentUser', 'player1', 'player2', 'player10', 'player11'],
+                    opponentTeamPlayers: ['player3', 'player4', 'player5', 'player12', 'player13'],
+                    averageRatings: {
+                        myTeam: 4.0,
+                        opponentTeam: 4.0
+                    }
+                }
+            ];
+            
+            const match = matchHistory.find(m => m.id === matchId);
+            if (!match) return;
+            
+            const resultClass = match.result === 'W' ? 'W' : match.result === 'L' ? 'L' : 'D';
+            const resultText = match.result === 'W' ? 'Перемога' : match.result === 'L' ? 'Поразка' : 'Нічия';
+            const resultColor = match.result === 'W' ? '#4CAF50' : match.result === 'L' ? '#f44336' : '#FFC107';
+            
+            content.innerHTML = `
+                <div style="margin-bottom: 20px;">
+                    <h2 style="color: white; font-size: 20px; margin-bottom: 8px;">${match.title}</h2>
+                    <div style="color: rgba(255,255,255,0.7); margin-bottom: 15px;">
+                        📅 ${match.date} • 🏁 Завершено
+                    </div>
+                    
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 20px; margin: 20px 0; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 12px;">
+                        <div style="text-align: center;">
+                            <div style="color: #2196F3; font-weight: 700; font-size: 14px; margin-bottom: 8px;">${match.myTeam}</div>
+                            <div style="color: rgba(255,255,255,0.6); font-size: 12px;">⭐ ${match.averageRatings.myTeam}</div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <div style="font-size: 28px; font-weight: bold; color: white;">${match.score}</div>
+                            <div style="background: ${resultColor}; color: white; padding: 4px 8px; border-radius: 6px; font-size: 12px; font-weight: 600;">${resultText}</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="color: #f44336; font-weight: 700; font-size: 14px; margin-bottom: 8px;">${match.opponentTeam}</div>
+                            <div style="color: rgba(255,255,255,0.6); font-size: 12px;">⭐ ${match.averageRatings.opponentTeam}</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                    <div>
+                        <h3 style="color: #2196F3; font-size: 16px; margin-bottom: 12px; text-align: center;">${match.myTeam}</h3>
+                        <div style="display: flex; flex-direction: column; gap: 8px;">
+                            ${match.myTeamPlayers.map(playerId => {
+                                const player = getPlayer(playerId);
+                                return `
+                                    <div onclick="showProfile()" style="display: flex; align-items: center; gap: 10px; padding: 8px; background: rgba(33,150,243,0.1); border-radius: 8px; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='rgba(33,150,243,0.2)'" onmouseout="this.style.background='rgba(33,150,243,0.1)'">
+                                        <img src="${player.avatar}" alt="${player.name}" style="width: 28px; height: 28px; border-radius: 50%;">
+                                        <div style="flex: 1;">
+                                            <div style="font-weight: 600; color: white; font-size: 12px;">${player.name}</div>
+                                            <div style="font-size: 10px; color: rgba(255,255,255,0.6);">${player.position} • ⭐ ${player.rating}</div>
+                                        </div>
+                                        ${playerId === 'currentUser' ? '<div style="color: #ffd700; font-size: 10px;">👤</div>' : ''}
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 style="color: #f44336; font-size: 16px; margin-bottom: 12px; text-align: center;">${match.opponentTeam}</h3>
+                        <div style="display: flex; flex-direction: column; gap: 8px;">
+                            ${match.opponentTeamPlayers.map(playerId => {
+                                const player = getPlayer(playerId);
+                                return `
+                                    <div onclick="showProfile()" style="display: flex; align-items: center; gap: 10px; padding: 8px; background: rgba(244,67,54,0.1); border-radius: 8px; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='rgba(244,67,54,0.2)'" onmouseout="this.style.background='rgba(244,67,54,0.1)'">
+                                        <img src="${player.avatar}" alt="${player.name}" style="width: 28px; height: 28px; border-radius: 50%;">
+                                        <div style="flex: 1;">
+                                            <div style="font-weight: 600; color: white; font-size: 12px;">${player.name}</div>
+                                            <div style="font-size: 10px; color: rgba(255,255,255,0.6);">${player.position} • ⭐ ${player.rating}</div>
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 8px;">
+                    <div style="color: rgba(255,255,255,0.7); font-size: 12px; margin-bottom: 5px;">Ваша оцінка за матч</div>
+                    <div style="color: #4CAF50; font-size: 18px; font-weight: bold;">⭐ ${match.rating}</div>
+                </div>
+            `;
+            
+            modal.classList.add('show');
         }
 
         // Ratings Generation
@@ -1626,6 +1780,102 @@
                 match.players++;
             }
             generateMatchFeed();
+        }
+
+        function showMyMatchDetails(matchId) {
+            const modal = document.getElementById('matchDetailsModal');
+            const content = document.getElementById('matchDetailsContent');
+            
+            // Find match in myMatches or allMatches
+            const myMatches = [
+                {
+                    id: 'mymatch1',
+                    title: 'Мій матч на Печерську',
+                    date: '2024-02-20',
+                    time: '18:00',  
+                    location: 'Стадіон "Арена Сіті", Київ',
+                    players: 8,
+                    maxPlayers: 12,
+                    status: 'open',
+                    role: 'organizer',
+                    participants: ['currentUser', 'player1', 'player2', 'player3', 'player4', 'player5', 'player6', 'player7'],
+                    level: 'Середній',
+                    cost: '100 грн',
+                    description: 'Граємо кожного вівторка на Печерську. Приходьте з гарним настроєм!'
+                },
+                {
+                    id: 'mymatch2', 
+                    title: 'Вечірній футбол',
+                    date: '2024-02-18',
+                    time: '19:30',
+                    location: 'Спорткомплекс, Київ',
+                    players: 10,
+                    maxPlayers: 10,
+                    status: 'full',
+                    role: 'participant',
+                    participants: ['player1', 'player2', 'player3', 'player4', 'player5', 'player6', 'player7', 'player8', 'player9', 'currentUser'],
+                    level: 'Високий',
+                    cost: '150 грн',
+                    description: 'Серйозний матч для досвідчених гравців.'
+                }
+            ];
+            
+            const match = myMatches.find(m => m.id === matchId) || allMatches.find(m => m.id === matchId);
+            if (!match) return;
+            
+            const organizer = getPlayer(match.organizer || 'currentUser');
+            
+            content.innerHTML = `
+                <div style="margin-bottom: 20px;">
+                    <h2 style="color: white; font-size: 20px; margin-bottom: 8px;">${match.title}</h2>
+                    <div style="color: rgba(255,255,255,0.7); margin-bottom: 15px;">
+                        📅 ${match.date} • ⏰ ${match.time} • 📍 ${match.location}
+                    </div>
+                    <div style="color: rgba(255,255,255,0.8); font-size: 14px; margin-bottom: 15px;">
+                        ${match.description}
+                    </div>
+                    <div style="font-size: 12px; color: rgba(255,255,255,0.6); margin-bottom: 15px;">
+                        Організатор: <span onclick="showProfile()" style="color: #4CAF50; cursor: pointer;">${organizer.name}</span>
+                        ${match.role ? ` • Ваша роль: <span style="color: #ffd700;">${match.role === 'organizer' ? 'Організатор' : 'Учасник'}</span>` : ''}
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <h3 style="color: white; font-size: 16px; margin-bottom: 12px;">👥 Учасники (${match.participants.length}/${match.maxPlayers})</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px;">
+                        ${match.participants.map(playerId => {
+                            const player = getPlayer(playerId);
+                            return `
+                                <div onclick="showProfile()" style="display: flex; align-items: center; gap: 10px; padding: 8px; background: rgba(255,255,255,0.05); border-radius: 8px; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">
+                                    <img src="${player.avatar}" alt="${player.name}" style="width: 32px; height: 32px; border-radius: 50%;">
+                                    <div style="flex: 1;">
+                                        <div style="font-weight: 600; color: white; font-size: 13px;">${player.name}</div>
+                                        <div style="font-size: 11px; color: rgba(255,255,255,0.6);">${player.position} • ⭐ ${player.rating}</div>
+                                    </div>
+                                    ${playerId === match.organizer ? '<div style="color: #ffd700; font-size: 12px;">👑</div>' : ''}
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 15px; margin-bottom: 20px;">
+                    <div style="text-align: center; padding: 10px; background: rgba(33,150,243,0.1); border-radius: 8px;">
+                        <div style="color: #2196F3; font-weight: 700; font-size: 16px;">${match.players}/${match.maxPlayers}</div>
+                        <div style="color: rgba(255,255,255,0.6); font-size: 12px;">Гравці</div>
+                    </div>
+                    <div style="text-align: center; padding: 10px; background: rgba(76,175,80,0.1); border-radius: 8px;">
+                        <div style="color: #4CAF50; font-weight: 700; font-size: 16px;">${match.cost}</div>
+                        <div style="color: rgba(255,255,255,0.6); font-size: 12px;">Вартість</div>
+                    </div>
+                    <div style="text-align: center; padding: 10px; background: rgba(255,193,7,0.1); border-radius: 8px;">
+                        <div style="color: #FFC107; font-weight: 700; font-size: 16px;">${match.level}</div>
+                        <div style="color: rgba(255,255,255,0.6); font-size: 12px;">Рівень</div>
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.add('show');
         }
 
         function showMatchDetails(matchId) {
@@ -1828,9 +2078,6 @@
                 <div>
                     <h3 style="color: white; font-size: 16px; margin-bottom: 12px;">⚙️ Управління матчем</h3>
                     <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                        <button onclick="startMatch('${match.id}')" style="background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; border: none; padding: 10px 16px; border-radius: 8px; cursor: pointer; font-weight: 600;">
-                            ▶️ Почати матч
-                        </button>
                         <button onclick="finishMatch('${match.id}')" style="background: linear-gradient(135deg, #ff9800, #ffc107); color: white; border: none; padding: 10px 16px; border-radius: 8px; cursor: pointer; font-weight: 600;">
                             🏁 Завершити матч
                         </button>
@@ -1918,14 +2165,12 @@
                                                 <div style="font-weight: 600; color: white; font-size: 14px;">${player.name}</div>
                                                 <div style="font-size: 12px; color: rgba(255,255,255,0.6);">${player.position}</div>
                                             </div>
-                                            <div style="display: flex; gap: 4px;">
-                                                ${[1,2,3,4,5].map(star => `
-                                                    <span onclick="ratePlayer('${playerId}', ${star})" style="cursor: pointer; font-size: 18px; color: rgba(255,215,0,0.3); transition: color 0.2s;" 
-                                                          onmouseover="highlightStars('${playerId}', ${star})" 
-                                                          onmouseout="resetStars('${playerId}')" 
-                                                          id="star_${playerId}_${star}">⭐</span>
-                                                `).join('')}
-                                            </div>
+                                                                                         <div style="display: flex; align-items: center; gap: 10px;">
+                                                 <input type="range" min="0" max="5" step="0.01" value="0" 
+                                                        onchange="ratePlayer('${playerId}', this.value)" 
+                                                        style="flex: 1; height: 6px; background: linear-gradient(to right, #4CAF50, #8BC34A, #CDDC39, #FFC107, #FF5722); border-radius: 3px; outline: none; cursor: pointer;">
+                                                 <span id="rating_${playerId}" style="color: #4CAF50; font-weight: bold; min-width: 35px; text-align: center;">0.00</span>
+                                             </div>
                                         </div>
                                     `;
                                 }).join('')}
@@ -1953,33 +2198,19 @@
         const playerRatings = {};
 
         function ratePlayer(playerId, rating) {
-            playerRatings[playerId] = rating;
+            playerRatings[playerId] = parseFloat(rating);
             
-            // Update star display
-            for (let i = 1; i <= 5; i++) {
-                const star = document.getElementById(`star_${playerId}_${i}`);
-                if (star) {
-                    star.style.color = i <= rating ? '#ffd700' : 'rgba(255,215,0,0.3)';
-                }
-            }
-        }
-
-        function highlightStars(playerId, rating) {
-            for (let i = 1; i <= 5; i++) {
-                const star = document.getElementById(`star_${playerId}_${i}`);
-                if (star) {
-                    star.style.color = i <= rating ? '#ffd700' : 'rgba(255,215,0,0.3)';
-                }
-            }
-        }
-
-        function resetStars(playerId) {
-            const currentRating = playerRatings[playerId] || 0;
-            for (let i = 1; i <= 5; i++) {
-                const star = document.getElementById(`star_${playerId}_${i}`);
-                if (star) {
-                    star.style.color = i <= currentRating ? '#ffd700' : 'rgba(255,215,0,0.3)';
-                }
+            // Update rating display
+            const ratingDisplay = document.getElementById(`rating_${playerId}`);
+            if (ratingDisplay) {
+                ratingDisplay.textContent = parseFloat(rating).toFixed(2);
+                
+                // Update color based on rating
+                if (rating >= 4.5) ratingDisplay.style.color = '#4CAF50';
+                else if (rating >= 3.5) ratingDisplay.style.color = '#8BC34A';
+                else if (rating >= 2.5) ratingDisplay.style.color = '#FFC107';
+                else if (rating >= 1.5) ratingDisplay.style.color = '#FF9800';
+                else ratingDisplay.style.color = '#FF5722';
             }
         }
 
