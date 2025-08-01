@@ -886,7 +886,7 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.8);
-            z-index: 2000;
+            z-index: 15000;
             backdrop-filter: blur(10px);
         }
 
@@ -2573,13 +2573,21 @@
         }
 
         function showProfile() {
-            document.getElementById('profileModal').classList.add('active');
-            document.body.style.overflow = 'hidden';
+            const modal = document.getElementById('profileModal');
+            if (modal) {
+                modal.style.display = 'flex';
+                modal.style.alignItems = 'center';
+                modal.style.justifyContent = 'center';
+                document.body.style.overflow = 'hidden';
+            }
         }
 
         function closeProfile() {
-            document.getElementById('profileModal').classList.remove('active');
-            document.body.style.overflow = 'auto';
+            const modal = document.getElementById('profileModal');
+            if (modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
         }
 
         function addFriend() {
