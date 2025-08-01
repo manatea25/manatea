@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FLAP - Профілі Футболістів (Правильні Дані)</title>
+    <title>FLAP - Профілі Футболістів</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         * {
@@ -59,18 +59,223 @@
         }
 
         .profile-card {
-            background: rgba(255, 255, 255, 0.95);
+            background: linear-gradient(145deg, #2c3e50, #34495e);
+            color: white;
+            border: 3px solid #4CAF50;
             border-radius: 20px;
             margin-bottom: 20px;
             overflow: hidden;
             box-shadow: 0 20px 40px rgba(0,0,0,0.3);
             backdrop-filter: blur(10px);
-            color: #333;
             transition: transform 0.3s ease;
         }
 
         .profile-card:hover {
             transform: translateY(-5px);
+        }
+
+        .card-header {
+            background: linear-gradient(90deg, #4CAF50, #45a049);
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 4px solid white;
+            margin-bottom: 15px;
+            object-fit: cover;
+        }
+
+        .player-name {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .position {
+            background: rgba(255,255,255,0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .city {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .rating-section {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .rating-value {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #4CAF50;
+            text-shadow: 0 2px 10px rgba(76, 175, 80, 0.5);
+        }
+
+        .rating-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            padding: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        .recent-matches {
+            padding: 20px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .matches-title {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .match-results {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .match-result {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .match-result.W {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .match-result.L {
+            background: #f44336;
+            color: white;
+        }
+
+        .match-result.D {
+            background: #FFC107;
+            color: #333;
+        }
+
+        .win-rate {
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .win-rate-value {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+
+        .badges-section {
+            padding: 20px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .badges-title {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .badges-list {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: linear-gradient(45deg, #FFD700, #FFA000);
+            color: #333;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .actions {
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .action-btn {
+            padding: 12px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            text-decoration: none;
+        }
+
+        .action-btn:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        .action-btn.primary {
+            background: #4CAF50;
+            border-color: #4CAF50;
+        }
+
+        .action-btn.primary:hover {
+            background: #45a049;
+        }
+
+        .action-btn.full-width {
+            grid-column: 1 / -1;
         }
 
         .next-btn {
@@ -95,999 +300,157 @@
             box-shadow: 0 15px 35px rgba(76, 175, 80, 0.6);
         }
 
-        /* ВАРІАНТ 1: КЛАСИЧНА КАРТКА */
-        .variant-1 .profile-card {
-            background: linear-gradient(145deg, #2c3e50, #34495e);
-            color: white;
-            border: 3px solid #4CAF50;
-        }
-
-        .variant-1 .card-header {
-            background: linear-gradient(90deg, #4CAF50, #45a049);
-            padding: 20px;
-            text-align: center;
-            position: relative;
-        }
-
-        .variant-1 .avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            border: 4px solid white;
-            margin-bottom: 15px;
-            object-fit: cover;
-        }
-
-        .variant-1 .player-name {
-            font-size: 1.4rem;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        .variant-1 .position {
-            background: rgba(255,255,255,0.2);
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            display: inline-block;
-            margin-bottom: 10px;
-        }
-
-        .variant-1 .team {
-            font-size: 1rem;
-            opacity: 0.9;
-        }
-
-        .variant-1 .rating-section {
-            text-align: center;
-            padding: 20px;
-            background: rgba(255,255,255,0.1);
-        }
-
-        .variant-1 .rating-value {
-            font-size: 3rem;
-            font-weight: bold;
-            color: #4CAF50;
-            text-shadow: 0 2px 10px rgba(76, 175, 80, 0.5);
-        }
-
-        .variant-1 .rating-label {
-            font-size: 0.9rem;
-            opacity: 0.8;
-            margin-top: 5px;
-        }
-
-        .variant-1 .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            padding: 20px;
-        }
-
-        .variant-1 .stat-item {
-            text-align: center;
-            background: rgba(255,255,255,0.1);
-            padding: 15px;
-            border-radius: 10px;
-        }
-
-        .variant-1 .stat-value {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #4CAF50;
-        }
-
-        .variant-1 .stat-label {
-            font-size: 0.8rem;
-            opacity: 0.8;
-            margin-top: 5px;
-        }
-
-        .variant-1 .recent-matches {
-            padding: 20px;
-            border-top: 1px solid rgba(255,255,255,0.2);
-        }
-
-        .variant-1 .matches-title {
-            font-size: 1.1rem;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-
-        .variant-1 .match-results {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-bottom: 15px;
-        }
-
-        .variant-1 .match-result {
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 0.9rem;
-        }
-
-        .variant-1 .match-result.W {
-            background: #4CAF50;
-            color: white;
-        }
-
-        .variant-1 .match-result.L {
-            background: #f44336;
-            color: white;
-        }
-
-        .variant-1 .match-result.D {
-            background: #FFC107;
-            color: #333;
-        }
-
-        .variant-1 .win-rate {
-            text-align: center;
-            font-size: 1.1rem;
-        }
-
-        .variant-1 .win-rate-value {
-            color: #4CAF50;
-            font-weight: bold;
-        }
-
-        .variant-1 .contacts {
-            padding: 20px;
-            display: flex;
-            gap: 10px;
-            border-top: 1px solid rgba(255,255,255,0.2);
-        }
-
-        .variant-1 .contact-btn {
-            flex: 1;
-            padding: 12px;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.3);
-            color: white;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            font-size: 0.9rem;
-        }
-
-        .variant-1 .contact-btn:hover {
-            background: rgba(255,255,255,0.2);
-        }
-
-        /* ВАРІАНТ 2: МІНІМАЛІСТИЧНА КАРТКА */
-        .variant-2 .profile-card {
-            background: white;
-            color: #333;
-            border-left: 5px solid #4CAF50;
-        }
-
-        .variant-2 .card-content {
-            padding: 25px;
-        }
-
-        .variant-2 .header-section {
-            display: flex;
-            align-items: center;
-            margin-bottom: 25px;
-        }
-
-        .variant-2 .avatar {
-            width: 70px;
-            height: 70px;
-            border-radius: 15px;
-            margin-right: 20px;
-            object-fit: cover;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        .variant-2 .player-info h3 {
-            font-size: 1.3rem;
-            margin-bottom: 5px;
-            color: #2c3e50;
-        }
-
-        .variant-2 .position {
-            color: #4CAF50;
-            font-weight: 600;
-            margin-bottom: 3px;
-        }
-
-        .variant-2 .team {
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        .variant-2 .rating-display {
-            background: linear-gradient(45deg, #4CAF50, #45a049);
-            color: white;
-            padding: 15px;
-            border-radius: 15px;
-            text-align: center;
-            margin-bottom: 25px;
-        }
-
-        .variant-2 .rating-number {
-            font-size: 2.5rem;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        .variant-2 .rating-stars {
-            display: flex;
-            justify-content: center;
-            gap: 3px;
-            margin-bottom: 5px;
-        }
-
-        .variant-2 .star {
-            color: #FFD700;
-            font-size: 1.2rem;
-        }
-
-        .variant-2 .stats-section {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-
-        .variant-2 .stat-box {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 10px;
-            text-align: center;
-            border: 1px solid #e9ecef;
-        }
-
-        .variant-2 .stat-number {
-            font-size: 1.4rem;
-            font-weight: bold;
-            color: #4CAF50;
-            margin-bottom: 5px;
-        }
-
-        .variant-2 .stat-text {
-            font-size: 0.9rem;
-            color: #666;
-        }
-
-        .variant-2 .matches-section {
-            margin-bottom: 25px;
-        }
-
-        .variant-2 .section-title {
-            font-size: 1.1rem;
-            font-weight: bold;
-            margin-bottom: 15px;
-            color: #2c3e50;
-        }
-
-        .variant-2 .match-history {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .variant-2 .match-sequence {
-            display: flex;
-            gap: 5px;
-        }
-
-        .variant-2 .match-dot {
-            width: 25px;
-            height: 25px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            font-weight: bold;
-        }
-
-        .variant-2 .match-dot.W {
-            background: #4CAF50;
-            color: white;
-        }
-
-        .variant-2 .match-dot.L {
-            background: #f44336;
-            color: white;
-        }
-
-        .variant-2 .match-dot.D {
-            background: #FFC107;
-            color: #333;
-        }
-
-        .variant-2 .win-percentage {
-            font-weight: bold;
-            color: #4CAF50;
-        }
-
-        .variant-2 .contact-section {
-            display: flex;
-            gap: 10px;
-        }
-
-        .variant-2 .contact-item {
-            flex: 1;
-            padding: 10px;
-            background: #f8f9fa;
-            border: 1px solid #e9ecef;
-            border-radius: 8px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .variant-2 .contact-item:hover {
-            background: #4CAF50;
-            color: white;
-        }
-
-        /* ВАРІАНТ 3: ГЕЙМЕРСЬКА КАРТКА */
-        .variant-3 .profile-card {
-            background: linear-gradient(145deg, #1a1a2e, #16213e);
-            color: white;
-            border: 2px solid #0f3460;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .variant-3 .profile-card::before {
-            content: '';
-            position: absolute;
+        /* МОДАЛЬНІ ВІКНА */
+        .modal {
+            display: none;
+            position: fixed;
             top: 0;
-            left: -100%;
+            left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(76, 175, 80, 0.2), transparent);
-            animation: shimmer 3s infinite;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            backdrop-filter: blur(10px);
         }
 
-        @keyframes shimmer {
-            0% { left: -100%; }
-            100% { left: 100%; }
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .variant-3 .card-header {
-            background: linear-gradient(45deg, #0f3460, #533483);
-            padding: 20px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .variant-3 .level-badge {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: #4CAF50;
+        .modal-content {
+            background: linear-gradient(145deg, #2c3e50, #34495e);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 350px;
+            width: 90%;
             color: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: bold;
+            position: relative;
+            max-height: 80vh;
+            overflow-y: auto;
         }
 
-        .variant-3 .player-section {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .variant-3 .avatar {
-            width: 75px;
-            height: 75px;
-            border-radius: 15px;
-            border: 3px solid #4CAF50;
-            margin-right: 20px;
-            object-fit: cover;
-            box-shadow: 0 0 20px rgba(76, 175, 80, 0.3);
-        }
-
-        .variant-3 .player-details h3 {
-            font-size: 1.4rem;
-            margin-bottom: 5px;
-            color: #4CAF50;
-        }
-
-        .variant-3 .position-team {
-            font-size: 0.9rem;
-            opacity: 0.8;
-        }
-
-        .variant-3 .xp-bar {
-            background: rgba(255,255,255,0.1);
-            height: 8px;
-            border-radius: 4px;
-            overflow: hidden;
-            margin-top: 10px;
-        }
-
-        .variant-3 .xp-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #4CAF50, #45a049);
-            border-radius: 4px;
-            transition: width 1s ease;
-        }
-
-        .variant-3 .rating-section {
+        .modal-header {
             text-align: center;
-            padding: 20px;
-            background: rgba(255,255,255,0.05);
-            position: relative;
-            z-index: 1;
-        }
-
-        .variant-3 .rating-circle {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            background: conic-gradient(#4CAF50 0deg, #4CAF50 288deg, rgba(255,255,255,0.2) 288deg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 15px;
-            position: relative;
-        }
-
-        .variant-3 .rating-circle::before {
-            content: '';
-            position: absolute;
-            inset: 8px;
-            background: #1a1a2e;
-            border-radius: 50%;
-        }
-
-        .variant-3 .rating-text {
-            position: relative;
-            z-index: 1;
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #4CAF50;
-        }
-
-        .variant-3 .skills-section {
-            padding: 20px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .variant-3 .skills-title {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #4CAF50;
-            font-weight: bold;
-        }
-
-        .variant-3 .skill-item {
-            margin-bottom: 15px;
-        }
-
-        .variant-3 .skill-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 5px;
-            font-size: 0.9rem;
-        }
-
-        .variant-3 .skill-bar {
-            background: rgba(255,255,255,0.1);
-            height: 6px;
-            border-radius: 3px;
-            overflow: hidden;
-        }
-
-        .variant-3 .skill-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #4CAF50, #45a049);
-            border-radius: 3px;
-            transition: width 1.5s ease;
-        }
-
-        .variant-3 .achievements {
-            padding: 20px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            position: relative;
-            z-index: 1;
-        }
-
-        .variant-3 .achievements-title {
-            text-align: center;
-            margin-bottom: 15px;
-            color: #4CAF50;
-            font-weight: bold;
-        }
-
-        .variant-3 .achievement-badges {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .variant-3 .achievement-badge {
-            background: linear-gradient(45deg, #FFD700, #FFA000);
-            color: #333;
-            padding: 8px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: bold;
-        }
-
-        .variant-3 .social-links {
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            position: relative;
-            z-index: 1;
-        }
-
-        .variant-3 .social-btn {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.1);
-            border: 2px solid rgba(76, 175, 80, 0.5);
-            color: #4CAF50;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .variant-3 .social-btn:hover {
-            background: #4CAF50;
-            color: white;
-            transform: scale(1.1);
-        }
-
-        /* ВАРІАНТ 4: СПОРТИВНА КАРТКА */
-        .variant-4 .profile-card {
-            background: white;
-            color: #333;
-            border-radius: 25px;
-            overflow: hidden;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
-        }
-
-        .variant-4 .cover-section {
-            height: 120px;
-            background: linear-gradient(135deg, #4CAF50, #45a049);
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .variant-4 .cover-pattern {
-            position: absolute;
-            inset: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="white" opacity="0.1"/><circle cx="80" cy="20" r="1.5" fill="white" opacity="0.1"/><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/><circle cx="20" cy="80" r="1.5" fill="white" opacity="0.1"/><circle cx="80" cy="80" r="2" fill="white" opacity="0.1"/></svg>');
-        }
-
-        .variant-4 .cover-icon {
-            font-size: 3rem;
-            color: rgba(255,255,255,0.8);
-            z-index: 1;
-        }
-
-        .variant-4 .profile-section {
-            padding: 0 25px;
-            margin-top: -40px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .variant-4 .avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 20px;
-            border: 4px solid white;
-            margin-bottom: 15px;
-            object-fit: cover;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        }
-
-        .variant-4 .player-info h3 {
-            font-size: 1.5rem;
-            margin-bottom: 5px;
-            color: #2c3e50;
-        }
-
-        .variant-4 .position-info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .variant-4 .position {
-            background: #4CAF50;
-            color: white;
-            padding: 6px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
-
-        .variant-4 .team {
-            color: #666;
-            font-weight: 500;
-        }
-
-        .variant-4 .rating-showcase {
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 25px;
-            text-align: center;
-        }
-
-        .variant-4 .rating-number {
-            font-size: 3.5rem;
-            font-weight: bold;
-            color: #4CAF50;
-            margin-bottom: 5px;
-            text-shadow: 0 2px 10px rgba(76, 175, 80, 0.3);
-        }
-
-        .variant-4 .rating-subtitle {
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        .variant-4 .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
             margin-bottom: 25px;
         }
 
-        .variant-4 .stat-card {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 15px;
-            text-align: center;
-            border: 1px solid #e9ecef;
-            transition: all 0.3s ease;
-        }
-
-        .variant-4 .stat-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-        }
-
-        .variant-4 .stat-value {
-            font-size: 1.8rem;
+        .modal-title {
+            font-size: 1.3rem;
             font-weight: bold;
             color: #4CAF50;
-            margin-bottom: 5px;
-        }
-
-        .variant-4 .stat-label {
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        .variant-4 .performance-section {
-            margin-bottom: 25px;
-        }
-
-        .variant-4 .section-header {
-            font-size: 1.2rem;
-            font-weight: bold;
-            margin-bottom: 15px;
-            color: #2c3e50;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .variant-4 .match-timeline {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 10px;
             margin-bottom: 10px;
         }
 
-        .variant-4 .timeline-results {
-            display: flex;
-            gap: 8px;
-        }
-
-        .variant-4 .result-dot {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 0.9rem;
-        }
-
-        .variant-4 .result-dot.W {
-            background: #4CAF50;
-            color: white;
-        }
-
-        .variant-4 .result-dot.L {
-            background: #f44336;
-            color: white;
-        }
-
-        .variant-4 .result-dot.D {
-            background: #FFC107;
-            color: #333;
-        }
-
-        .variant-4 .win-stats {
-            font-weight: bold;
-            color: #4CAF50;
-        }
-
-        .variant-4 .contact-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            padding-bottom: 25px;
-        }
-
-        .variant-4 .contact-button {
-            padding: 12px;
-            background: white;
-            border: 2px solid #4CAF50;
-            color: #4CAF50;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
-            font-weight: 600;
-        }
-
-        .variant-4 .contact-button:hover {
-            background: #4CAF50;
-            color: white;
-        }
-
-        /* ВАРІАНТ 5: ПРЕМІУМ КАРТКА */
-        .variant-5 .profile-card {
-            background: linear-gradient(145deg, #1e1e1e, #2d2d2d);
-            color: white;
-            border: 2px solid #FFD700;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .variant-5 .premium-badge {
+        .close-btn {
             position: absolute;
             top: 15px;
             right: 15px;
-            background: linear-gradient(45deg, #FFD700, #FFA000);
-            color: #333;
-            padding: 8px 15px;
-            border-radius: 25px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .close-btn:hover {
+            opacity: 1;
+        }
+
+        .challenge-item {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .challenge-item:hover {
+            background: rgba(255,255,255,0.2);
+            border-color: #4CAF50;
+        }
+
+        .challenge-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #4CAF50;
+        }
+
+        .challenge-details {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 10px;
+        }
+
+        .challenge-prize {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4CAF50;
+            padding: 5px 10px;
+            border-radius: 10px;
             font-size: 0.8rem;
             font-weight: bold;
-            z-index: 3;
-        }
-
-        .variant-5 .card-header {
-            padding: 25px;
-            background: linear-gradient(135deg, #2d2d2d, #1e1e1e);
-            position: relative;
-        }
-
-        .variant-5 .header-content {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .variant-5 .avatar {
-            width: 90px;
-            height: 90px;
-            border-radius: 20px;
-            border: 3px solid #FFD700;
-            margin-right: 25px;
-            object-fit: cover;
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
-        }
-
-        .variant-5 .player-details h3 {
-            font-size: 1.6rem;
-            margin-bottom: 8px;
-            color: #FFD700;
-        }
-
-        .variant-5 .position {
-            background: linear-gradient(45deg, #4CAF50, #45a049);
-            color: white;
-            padding: 6px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 5px;
             display: inline-block;
         }
 
-        .variant-5 .team {
-            color: #ccc;
-            font-size: 1rem;
-        }
-
-        .variant-5 .rating-premium {
-            text-align: center;
-            background: rgba(255, 215, 0, 0.1);
-            padding: 20px;
-            border-radius: 15px;
-            border: 1px solid rgba(255, 215, 0, 0.3);
-        }
-
-        .variant-5 .rating-value {
-            font-size: 4rem;
-            font-weight: bold;
-            background: linear-gradient(45deg, #FFD700, #FFA000);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 10px;
-        }
-
-        .variant-5 .rating-description {
-            color: #ccc;
-            font-size: 0.9rem;
-        }
-
-        .variant-5 .metrics-section {
-            padding: 25px;
-        }
-
-        .variant-5 .metrics-title {
-            font-size: 1.3rem;
-            margin-bottom: 20px;
-            color: #FFD700;
-            text-align: center;
-        }
-
-        .variant-5 .metrics-grid {
+        .video-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: 1fr;
             gap: 15px;
-            margin-bottom: 25px;
         }
 
-        .variant-5 .metric-box {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 20px;
+        .video-item {
+            background: rgba(255,255,255,0.1);
             border-radius: 15px;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
         }
 
-        .variant-5 .metric-number {
-            font-size: 1.8rem;
+        .video-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        .video-thumbnail {
+            width: 100%;
+            height: 120px;
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .video-info {
+            padding: 15px;
+        }
+
+        .video-title {
+            font-size: 1rem;
             font-weight: bold;
-            color: #4CAF50;
             margin-bottom: 5px;
         }
 
-        .variant-5 .metric-label {
-            color: #ccc;
-            font-size: 0.9rem;
-        }
-
-        .variant-5 .performance-premium {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 25px;
-        }
-
-        .variant-5 .performance-header {
+        .video-stats {
+            font-size: 0.8rem;
+            opacity: 0.8;
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
         }
 
-        .variant-5 .performance-title {
-            color: #FFD700;
-            font-weight: bold;
-        }
-
-        .variant-5 .win-rate-premium {
+        .success-message {
+            text-align: center;
+            padding: 20px;
+            background: rgba(76, 175, 80, 0.2);
+            border-radius: 15px;
             color: #4CAF50;
             font-weight: bold;
-            font-size: 1.1rem;
-        }
-
-        .variant-5 .match-history-premium {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .variant-5 .match-premium {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 1rem;
-        }
-
-        .variant-5 .match-premium.W {
-            background: linear-gradient(45deg, #4CAF50, #45a049);
-            color: white;
-        }
-
-        .variant-5 .match-premium.L {
-            background: linear-gradient(45deg, #f44336, #d32f2f);
-            color: white;
-        }
-
-        .variant-5 .match-premium.D {
-            background: linear-gradient(45deg, #FFC107, #FF9800);
-            color: #333;
-        }
-
-        .variant-5 .contact-premium {
-            padding: 25px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .variant-5 .contact-title {
-            text-align: center;
-            color: #FFD700;
-            margin-bottom: 15px;
-            font-weight: bold;
-        }
-
-        .variant-5 .contact-buttons {
-            display: flex;
-            gap: 12px;
-        }
-
-        .variant-5 .contact-premium-btn {
-            flex: 1;
-            padding: 15px;
-            background: linear-gradient(45deg, #FFD700, #FFA000);
-            color: #333;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .variant-5 .contact-premium-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.4);
         }
     </style>
 </head>
@@ -1097,802 +460,312 @@
         
         <!-- ВАРІАНТ 1: КЛАСИЧНА КАРТКА -->
         <div class="variants-container active" id="variant-1">
-            <div class="variant-1">
-                <div class="profile-card">
-                    <div class="card-header">
-                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face" alt="Avatar" class="avatar">
-                        <div class="player-name">Максим Коваленко</div>
-                        <div class="position">⚽ Центральний півзахисник</div>
-                        <div class="team">🏆 Барселона</div>
-                    </div>
-                    
-                    <div class="rating-section">
-                        <div class="rating-value">4.2</div>
-                        <div class="rating-label">Загальний рейтинг</div>
-                    </div>
+            <div class="profile-card">
+                <div class="card-header">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face" alt="Avatar" class="avatar">
+                    <div class="player-name">Максим Коваленко</div>
+                    <div class="position">⚽ Центральний півзахисник</div>
+                    <div class="city">📍 Київ</div>
+                </div>
+                
+                <div class="rating-section">
+                    <div class="rating-value">4.2</div>
+                    <div class="rating-label">Загальний рейтинг</div>
+                </div>
 
-                    <div class="stats-grid">
-                        <div class="stat-item">
-                            <div class="stat-value">12</div>
-                            <div class="stat-label">Голи</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value">8</div>
-                            <div class="stat-label">Асисти</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value">23</div>
-                            <div class="stat-label">Матчі</div>
-                        </div>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value">23</div>
+                        <div class="stat-label">Матчі зіграно</div>
                     </div>
-
-                    <div class="recent-matches">
-                        <div class="matches-title">🏆 Останні матчі</div>
-                        <div class="match-results">
-                            <div class="match-result W">W</div>
-                            <div class="match-result L">L</div>
-                            <div class="match-result W">W</div>
-                            <div class="match-result W">W</div>
-                            <div class="match-result L">L</div>
-                        </div>
-                        <div class="win-rate">
-                            Win Rate: <span class="win-rate-value">65%</span>
-                        </div>
+                    <div class="stat-item">
+                        <div class="stat-value">65%</div>
+                        <div class="stat-label">Win Rate</div>
                     </div>
-
-                    <div class="contacts">
-                        <button class="contact-btn">
-                            <i class="fas fa-phone"></i>
-                            +380501234567
-                        </button>
-                        <button class="contact-btn">
-                            <i class="fab fa-telegram"></i>
-                            @maxkoval
-                        </button>
-                        <button class="contact-btn">
-                            <i class="fab fa-instagram"></i>
-                            @max_football
-                        </button>
+                    <div class="stat-item">
+                        <div class="stat-value">3</div>
+                        <div class="stat-label">MVP нагород</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">4.1</div>
+                        <div class="stat-label">Середня оцінка</div>
                     </div>
                 </div>
 
-                <div class="profile-card">
-                    <div class="card-header">
-                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face" alt="Avatar" class="avatar">
-                        <div class="player-name">Олексій Петренко</div>
-                        <div class="position">🥅 Воротар</div>
-                        <div class="team">🏆 Реал Мадрид</div>
+                <div class="recent-matches">
+                    <div class="matches-title">🏆 Останні матчі</div>
+                    <div class="match-results">
+                        <div class="match-result W">W</div>
+                        <div class="match-result L">L</div>
+                        <div class="match-result W">W</div>
+                        <div class="match-result W">W</div>
+                        <div class="match-result L">L</div>
                     </div>
-                    
-                    <div class="rating-section">
-                        <div class="rating-value">3.8</div>
-                        <div class="rating-label">Загальний рейтинг</div>
+                    <div class="win-rate">
+                        Win Rate: <span class="win-rate-value">65%</span>
                     </div>
+                </div>
 
-                    <div class="stats-grid">
-                        <div class="stat-item">
-                            <div class="stat-value">45</div>
-                            <div class="stat-label">Сейви</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value">12</div>
-                            <div class="stat-label">Чисті аркуші</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value">18</div>
-                            <div class="stat-label">Матчі</div>
-                        </div>
+                <div class="badges-section">
+                    <div class="badges-title">🏆 Бейджі</div>
+                    <div class="badges-list">
+                        <div class="badge">🌟 Rookie</div>
+                        <div class="badge">⚽ Striker</div>
+                        <div class="badge">🎯 Playmaker</div>
                     </div>
+                </div>
 
-                    <div class="recent-matches">
-                        <div class="matches-title">🏆 Останні матчі</div>
-                        <div class="match-results">
-                            <div class="match-result W">W</div>
-                            <div class="match-result W">W</div>
-                            <div class="match-result D">D</div>
-                            <div class="match-result L">L</div>
-                            <div class="match-result W">W</div>
-                        </div>
-                        <div class="win-rate">
-                            Win Rate: <span class="win-rate-value">72%</span>
-                        </div>
-                    </div>
-
-                    <div class="contacts">
-                        <button class="contact-btn">
-                            <i class="fas fa-phone"></i>
-                            +380671234567
-                        </button>
-                        <button class="contact-btn">
-                            <i class="fab fa-telegram"></i>
-                            @alexgoal
-                        </button>
-                        <button class="contact-btn">
-                            <i class="fab fa-instagram"></i>
-                            @alex_keeper
-                        </button>
-                    </div>
+                <div class="actions">
+                    <button class="action-btn primary" onclick="addFriend('Максим Коваленко')">
+                        <i class="fas fa-user-plus"></i>
+                        Додати в друзі
+                    </button>
+                    <button class="action-btn" onclick="showUserVideos('Максим Коваленко')">
+                        <i class="fas fa-video"></i>
+                        Відео
+                    </button>
+                    <button class="action-btn full-width" onclick="showChallengeInvite('Максим Коваленко')">
+                        <i class="fas fa-trophy"></i>
+                        Запросити на челендж
+                    </button>
                 </div>
             </div>
-        </div>
 
-        <!-- ВАРІАНТ 2: МІНІМАЛІСТИЧНА КАРТКА -->
-        <div class="variants-container" id="variant-2">
-            <div class="variant-2">
-                <div class="profile-card">
-                    <div class="card-content">
-                        <div class="header-section">
-                            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face" alt="Avatar" class="avatar">
-                            <div class="player-info">
-                                <h3>Андрій Шевченко</h3>
-                                <div class="position">⚽ Нападник</div>
-                                <div class="team">🏆 Ліверпуль</div>
-                            </div>
-                        </div>
+            <div class="profile-card">
+                <div class="card-header">
+                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face" alt="Avatar" class="avatar">
+                    <div class="player-name">Олексій Петренко</div>
+                    <div class="position">🥅 Воротар</div>
+                    <div class="city">📍 Харків</div>
+                </div>
+                
+                <div class="rating-section">
+                    <div class="rating-value">3.8</div>
+                    <div class="rating-label">Загальний рейтинг</div>
+                </div>
 
-                        <div class="rating-display">
-                            <div class="rating-number">4.7</div>
-                            <div class="rating-stars">
-                                <span class="star">★</span>
-                                <span class="star">★</span>
-                                <span class="star">★</span>
-                                <span class="star">★</span>
-                                <span class="star">★</span>
-                            </div>
-                            <div>Професійний рівень</div>
-                        </div>
-
-                        <div class="stats-section">
-                            <div class="stat-box">
-                                <div class="stat-number">28</div>
-                                <div class="stat-text">Голи</div>
-                            </div>
-                            <div class="stat-box">
-                                <div class="stat-number">15</div>
-                                <div class="stat-text">Асисти</div>
-                            </div>
-                            <div class="stat-box">
-                                <div class="stat-number">35</div>
-                                <div class="stat-text">Матчі</div>
-                            </div>
-                            <div class="stat-box">
-                                <div class="stat-number">89%</div>
-                                <div class="stat-text">Точність пасів</div>
-                            </div>
-                        </div>
-
-                        <div class="matches-section">
-                            <div class="section-title">📊 Результати матчів</div>
-                            <div class="match-history">
-                                <div class="match-sequence">
-                                    <div class="match-dot W">W</div>
-                                    <div class="match-dot W">W</div>
-                                    <div class="match-dot W">W</div>
-                                    <div class="match-dot D">D</div>
-                                    <div class="match-dot W">W</div>
-                                </div>
-                                <div class="win-percentage">80% перемог</div>
-                            </div>
-                        </div>
-
-                        <div class="contact-section">
-                            <div class="contact-item">
-                                <i class="fas fa-phone"></i><br>
-                                <small>+380501234567</small>
-                            </div>
-                            <div class="contact-item">
-                                <i class="fab fa-telegram"></i><br>
-                                <small>@andriy_sheva</small>
-                            </div>
-                            <div class="contact-item">
-                                <i class="fab fa-instagram"></i><br>
-                                <small>@sheva_football</small>
-                            </div>
-                        </div>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value">18</div>
+                        <div class="stat-label">Матчі зіграно</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">72%</div>
+                        <div class="stat-label">Win Rate</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">12</div>
+                        <div class="stat-label">Чисті аркуші</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">3.9</div>
+                        <div class="stat-label">Середня оцінка</div>
                     </div>
                 </div>
 
-                <div class="profile-card">
-                    <div class="card-content">
-                        <div class="header-section">
-                            <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop&crop=face" alt="Avatar" class="avatar">
-                            <div class="player-info">
-                                <h3>Віталій Миколенко</h3>
-                                <div class="position">🛡️ Лівий захисник</div>
-                                <div class="team">🏆 Манчестер Сіті</div>
-                            </div>
-                        </div>
-
-                        <div class="rating-display">
-                            <div class="rating-number">3.6</div>
-                            <div class="rating-stars">
-                                <span class="star">★</span>
-                                <span class="star">★</span>
-                                <span class="star">★</span>
-                                <span class="star">★</span>
-                                <span class="star" style="opacity: 0.3;">★</span>
-                            </div>
-                            <div>Високий рівень</div>
-                        </div>
-
-                        <div class="stats-section">
-                            <div class="stat-box">
-                                <div class="stat-number">3</div>
-                                <div class="stat-text">Голи</div>
-                            </div>
-                            <div class="stat-box">
-                                <div class="stat-number">12</div>
-                                <div class="stat-text">Асисти</div>
-                            </div>
-                            <div class="stat-box">
-                                <div class="stat-number">29</div>
-                                <div class="stat-text">Матчі</div>
-                            </div>
-                            <div class="stat-box">
-                                <div class="stat-number">76</div>
-                                <div class="stat-text">Відбори</div>
-                            </div>
-                        </div>
-
-                        <div class="matches-section">
-                            <div class="section-title">📊 Результати матчів</div>
-                            <div class="match-history">
-                                <div class="match-sequence">
-                                    <div class="match-dot L">L</div>
-                                    <div class="match-dot W">W</div>
-                                    <div class="match-dot D">D</div>
-                                    <div class="match-dot W">W</div>
-                                    <div class="match-dot W">W</div>
-                                </div>
-                                <div class="win-percentage">62% перемог</div>
-                            </div>
-                        </div>
-
-                        <div class="contact-section">
-                            <div class="contact-item">
-                                <i class="fas fa-phone"></i><br>
-                                <small>+380671234567</small>
-                            </div>
-                            <div class="contact-item">
-                                <i class="fab fa-telegram"></i><br>
-                                <small>@vitaliy_defense</small>
-                            </div>
-                            <div class="contact-item">
-                                <i class="fab fa-instagram"></i><br>
-                                <small>@vitaliy_lb</small>
-                            </div>
-                        </div>
+                <div class="recent-matches">
+                    <div class="matches-title">🏆 Останні матчі</div>
+                    <div class="match-results">
+                        <div class="match-result W">W</div>
+                        <div class="match-result W">W</div>
+                        <div class="match-result D">D</div>
+                        <div class="match-result L">L</div>
+                        <div class="match-result W">W</div>
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ВАРІАНТ 3: ГЕЙМЕРСЬКА КАРТКА -->
-        <div class="variants-container" id="variant-3">
-            <div class="variant-3">
-                <div class="profile-card">
-                    <div class="card-header">
-                        <div class="level-badge">LVL 47</div>
-                        <div class="player-section">
-                            <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&h=150&fit=crop&crop=face" alt="Avatar" class="avatar">
-                            <div class="player-details">
-                                <h3>Олександр Зінченко</h3>
-                                <div class="position-team">⚽ Центральний півзахисник • 🏆 Баварія</div>
-                            </div>
-                        </div>
-                        <div class="xp-bar">
-                            <div class="xp-fill" style="width: 73%;"></div>
-                        </div>
-                    </div>
-
-                    <div class="rating-section">
-                        <div class="rating-circle">
-                            <div class="rating-text">4.4</div>
-                        </div>
-                        <div>Високий рівень гравця</div>
-                    </div>
-
-                    <div class="skills-section">
-                        <div class="skills-title">⚡ НАВИЧКИ</div>
-                        <div class="skill-item">
-                            <div class="skill-header">
-                                <span>Швидкість</span>
-                                <span>88%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-fill" style="width: 88%;"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-header">
-                                <span>Удар</span>
-                                <span>92%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-fill" style="width: 92%;"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-header">
-                                <span>Дриблінг</span>
-                                <span>85%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-fill" style="width: 85%;"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-header">
-                                <span>Пас</span>
-                                <span>94%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-fill" style="width: 94%;"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="achievements">
-                        <div class="achievements-title">🏆 ДОСЯГНЕННЯ</div>
-                        <div class="achievement-badges">
-                            <div class="achievement-badge">🌟 MVP</div>
-                            <div class="achievement-badge">⚽ Бомбардир</div>
-                            <div class="achievement-badge">🎯 Снайпер</div>
-                        </div>
-                    </div>
-
-                    <div class="social-links">
-                        <button class="social-btn">
-                            <i class="fas fa-phone"></i>
-                        </button>
-                        <button class="social-btn">
-                            <i class="fab fa-telegram"></i>
-                        </button>
-                        <button class="social-btn">
-                            <i class="fab fa-instagram"></i>
-                        </button>
-                        <button class="social-btn">
-                            <i class="fab fa-youtube"></i>
-                        </button>
+                    <div class="win-rate">
+                        Win Rate: <span class="win-rate-value">72%</span>
                     </div>
                 </div>
 
-                <div class="profile-card">
-                    <div class="card-header">
-                        <div class="level-badge">LVL 32</div>
-                        <div class="player-section">
-                            <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?w=150&h=150&fit=crop&crop=face" alt="Avatar" class="avatar">
-                            <div class="player-details">
-                                <h3>Дмитро Ризик</h3>
-                                <div class="position-team">🥅 Воротар • 🏆 ПСЖ</div>
-                            </div>
-                        </div>
-                        <div class="xp-bar">
-                            <div class="xp-fill" style="width: 64%;"></div>
-                        </div>
-                    </div>
-
-                    <div class="rating-section">
-                        <div class="rating-circle">
-                            <div class="rating-text">3.9</div>
-                        </div>
-                        <div>Високий рівень гравця</div>
-                    </div>
-
-                    <div class="skills-section">
-                        <div class="skills-title">⚡ НАВИЧКИ</div>
-                        <div class="skill-item">
-                            <div class="skill-header">
-                                <span>Рефлекси</span>
-                                <span>91%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-fill" style="width: 91%;"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-header">
-                                <span>Позиціонування</span>
-                                <span>87%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-fill" style="width: 87%;"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-header">
-                                <span>Робота ногами</span>
-                                <span>78%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-fill" style="width: 78%;"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-header">
-                                <span>Лідерство</span>
-                                <span>83%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-fill" style="width: 83%;"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="achievements">
-                        <div class="achievements-title">🏆 ДОСЯГНЕННЯ</div>
-                        <div class="achievement-badges">
-                            <div class="achievement-badge">🥅 Стіна</div>
-                            <div class="achievement-badge">🛡️ Захисник</div>
-                            <div class="achievement-badge">🏆 Чемпіон</div>
-                        </div>
-                    </div>
-
-                    <div class="social-links">
-                        <button class="social-btn">
-                            <i class="fas fa-phone"></i>
-                        </button>
-                        <button class="social-btn">
-                            <i class="fab fa-telegram"></i>
-                        </button>
-                        <button class="social-btn">
-                            <i class="fab fa-instagram"></i>
-                        </button>
-                        <button class="social-btn">
-                            <i class="fab fa-twitter"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ВАРІАНТ 4: СПОРТИВНА КАРТКА -->
-        <div class="variants-container" id="variant-4">
-            <div class="variant-4">
-                <div class="profile-card">
-                    <div class="cover-section">
-                        <div class="cover-pattern"></div>
-                        <div class="cover-icon">⚽</div>
-                    </div>
-
-                    <div class="profile-section">
-                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face" alt="Avatar" class="avatar">
-                        
-                        <div class="player-info">
-                            <h3>Марія Шевчук</h3>
-                            <div class="position-info">
-                                <div class="position">⚽ Правий вінгер</div>
-                                <div class="team">🏆 Ювентус</div>
-                            </div>
-                        </div>
-
-                        <div class="rating-showcase">
-                            <div class="rating-number">4.1</div>
-                            <div class="rating-subtitle">Високий рівень</div>
-                        </div>
-
-                        <div class="stats-grid">
-                            <div class="stat-card">
-                                <div class="stat-value">18</div>
-                                <div class="stat-label">Голи</div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-value">22</div>
-                                <div class="stat-label">Асисти</div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-value">31</div>
-                                <div class="stat-label">Матчі</div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-value">87%</div>
-                                <div class="stat-label">Точність</div>
-                            </div>
-                        </div>
-
-                        <div class="performance-section">
-                            <div class="section-header">
-                                <i class="fas fa-chart-line"></i>
-                                Результативність
-                            </div>
-                            <div class="match-timeline">
-                                <div class="timeline-results">
-                                    <div class="result-dot W">W</div>
-                                    <div class="result-dot W">W</div>
-                                    <div class="result-dot L">L</div>
-                                    <div class="result-dot W">W</div>
-                                    <div class="result-dot D">D</div>
-                                </div>
-                                <div class="win-stats">74% перемог</div>
-                            </div>
-                        </div>
-
-                        <div class="contact-grid">
-                            <button class="contact-button">
-                                <i class="fas fa-phone"></i>
-                            </button>
-                            <button class="contact-button">
-                                <i class="fab fa-telegram"></i>
-                            </button>
-                            <button class="contact-button">
-                                <i class="fab fa-instagram"></i>
-                            </button>
-                        </div>
+                <div class="badges-section">
+                    <div class="badges-title">🏆 Бейджі</div>
+                    <div class="badges-list">
+                        <div class="badge">🛡️ Defender</div>
+                        <div class="badge">🥅 Keeper</div>
                     </div>
                 </div>
 
-                <div class="profile-card">
-                    <div class="cover-section">
-                        <div class="cover-pattern"></div>
-                        <div class="cover-icon">🥅</div>
-                    </div>
-
-                    <div class="profile-section">
-                        <img src="https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=150&h=150&fit=crop&crop=face" alt="Avatar" class="avatar">
-                        
-                        <div class="player-info">
-                            <h3>Ігор Суркіс</h3>
-                            <div class="position-info">
-                                <div class="position">🛡️ Центральний захисник</div>
-                                <div class="team">🏆 Челсі</div>
-                            </div>
-                        </div>
-
-                        <div class="rating-showcase">
-                            <div class="rating-number">3.4</div>
-                            <div class="rating-subtitle">Середній рівень</div>
-                        </div>
-
-                        <div class="stats-grid">
-                            <div class="stat-card">
-                                <div class="stat-value">2</div>
-                                <div class="stat-label">Голи</div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-value">5</div>
-                                <div class="stat-label">Асисти</div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-value">26</div>
-                                <div class="stat-label">Матчі</div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-value">94</div>
-                                <div class="stat-label">Відбори</div>
-                            </div>
-                        </div>
-
-                        <div class="performance-section">
-                            <div class="section-header">
-                                <i class="fas fa-shield-alt"></i>
-                                Оборона
-                            </div>
-                            <div class="match-timeline">
-                                <div class="timeline-results">
-                                    <div class="result-dot D">D</div>
-                                    <div class="result-dot L">L</div>
-                                    <div class="result-dot W">W</div>
-                                    <div class="result-dot W">W</div>
-                                    <div class="result-dot D">D</div>
-                                </div>
-                                <div class="win-stats">58% перемог</div>
-                            </div>
-                        </div>
-
-                        <div class="contact-grid">
-                            <button class="contact-button">
-                                <i class="fas fa-phone"></i>
-                            </button>
-                            <button class="contact-button">
-                                <i class="fab fa-telegram"></i>
-                            </button>
-                            <button class="contact-button">
-                                <i class="fab fa-instagram"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ВАРІАНТ 5: ПРЕМІУМ КАРТКА -->
-        <div class="variants-container" id="variant-5">
-            <div class="variant-5">
-                <div class="profile-card">
-                    <div class="premium-badge">⭐ PRO</div>
-                    
-                    <div class="card-header">
-                        <div class="header-content">
-                            <img src="https://images.unsplash.com/photo-1566492031773-4f4e44671d66?w=150&h=150&fit=crop&crop=face" alt="Avatar" class="avatar">
-                            <div class="player-details">
-                                <h3>Роман Яремчук</h3>
-                                <div class="position">⚽ Центральний нападник</div>
-                                <div class="team">🏆 Арсенал</div>
-                            </div>
-                        </div>
-
-                        <div class="rating-premium">
-                            <div class="rating-value">4.8</div>
-                            <div class="rating-description">Професійний рівень</div>
-                        </div>
-                    </div>
-
-                    <div class="metrics-section">
-                        <div class="metrics-title">📊 КЛЮЧОВІ ПОКАЗНИКИ</div>
-                        <div class="metrics-grid">
-                            <div class="metric-box">
-                                <div class="metric-number">34</div>
-                                <div class="metric-label">Голи</div>
-                            </div>
-                            <div class="metric-box">
-                                <div class="metric-number">19</div>
-                                <div class="metric-label">Асисти</div>
-                            </div>
-                            <div class="metric-box">
-                                <div class="metric-number">42</div>
-                                <div class="metric-label">Матчі</div>
-                            </div>
-                            <div class="metric-box">
-                                <div class="metric-number">91%</div>
-                                <div class="metric-label">Ефективність</div>
-                            </div>
-                        </div>
-
-                        <div class="performance-premium">
-                            <div class="performance-header">
-                                <div class="performance-title">🏆 Форма гравця</div>
-                                <div class="win-rate-premium">83% перемог</div>
-                            </div>
-                            <div class="match-history-premium">
-                                <div class="match-premium W">W</div>
-                                <div class="match-premium W">W</div>
-                                <div class="match-premium W">W</div>
-                                <div class="match-premium L">L</div>
-                                <div class="match-premium W">W</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="contact-premium">
-                        <div class="contact-title">💎 ПРЕМІУМ КОНТАКТ</div>
-                        <div class="contact-buttons">
-                            <button class="contact-premium-btn">
-                                <i class="fas fa-phone"></i>
-                                +380501234567
-                            </button>
-                            <button class="contact-premium-btn">
-                                <i class="fab fa-telegram"></i>
-                                @roman_pro
-                            </button>
-                            <button class="contact-premium-btn">
-                                <i class="fab fa-instagram"></i>
-                                @yaremchuk_pro
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="profile-card">
-                    <div class="premium-badge">⭐ VIP</div>
-                    
-                    <div class="card-header">
-                        <div class="header-content">
-                            <img src="https://images.unsplash.com/photo-1494790108755-2616c9c7d0a5?w=150&h=150&fit=crop&crop=face" alt="Avatar" class="avatar">
-                            <div class="player-details">
-                                <h3>Анна Коваль</h3>
-                                <div class="position">⚽ Атакуючий півзахисник</div>
-                                <div class="team">🏆 Тоттенхем</div>
-                            </div>
-                        </div>
-
-                        <div class="rating-premium">
-                            <div class="rating-value">4.5</div>
-                            <div class="rating-description">Професійний рівень</div>
-                        </div>
-                    </div>
-
-                    <div class="metrics-section">
-                        <div class="metrics-title">📊 КЛЮЧОВІ ПОКАЗНИКИ</div>
-                        <div class="metrics-grid">
-                            <div class="metric-box">
-                                <div class="metric-number">21</div>
-                                <div class="metric-label">Голи</div>
-                            </div>
-                            <div class="metric-box">
-                                <div class="metric-number">28</div>
-                                <div class="metric-label">Асисти</div>
-                            </div>
-                            <div class="metric-box">
-                                <div class="metric-number">38</div>
-                                <div class="metric-label">Матчі</div>
-                            </div>
-                            <div class="metric-box">
-                                <div class="metric-number">94%</div>
-                                <div class="metric-label">Пасів точно</div>
-                            </div>
-                        </div>
-
-                        <div class="performance-premium">
-                            <div class="performance-header">
-                                <div class="performance-title">🏆 Форма гравця</div>
-                                <div class="win-rate-premium">79% перемог</div>
-                            </div>
-                            <div class="match-history-premium">
-                                <div class="match-premium W">W</div>
-                                <div class="match-premium D">D</div>
-                                <div class="match-premium W">W</div>
-                                <div class="match-premium W">W</div>
-                                <div class="match-premium L">L</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="contact-premium">
-                        <div class="contact-title">💎 VIP КОНТАКТ</div>
-                        <div class="contact-buttons">
-                            <button class="contact-premium-btn">
-                                <i class="fas fa-phone"></i>
-                                +380671234567
-                            </button>
-                            <button class="contact-premium-btn">
-                                <i class="fab fa-telegram"></i>
-                                @anna_midfielder
-                            </button>
-                            <button class="contact-premium-btn">
-                                <i class="fab fa-instagram"></i>
-                                @anna_football_pro
-                            </button>
-                        </div>
-                    </div>
+                <div class="actions">
+                    <button class="action-btn primary" onclick="addFriend('Олексій Петренко')">
+                        <i class="fas fa-user-plus"></i>
+                        Додати в друзі
+                    </button>
+                    <button class="action-btn" onclick="showUserVideos('Олексій Петренко')">
+                        <i class="fas fa-video"></i>
+                        Відео
+                    </button>
+                    <button class="action-btn full-width" onclick="showChallengeInvite('Олексій Петренко')">
+                        <i class="fas fa-trophy"></i>
+                        Запросити на челендж
+                    </button>
                 </div>
             </div>
         </div>
 
         <button class="next-btn" onclick="nextVariant()">
-            Варіант 1 з 5 →
+            Варіант 1 з 1 →
         </button>
+    </div>
+
+    <!-- МОДАЛЬНЕ ВІКНО: ВІДЕО КОРИСТУВАЧА -->
+    <div class="modal" id="videosModal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('videosModal')">&times;</button>
+            <div class="modal-header">
+                <div class="modal-title">📹 Відео користувача</div>
+                <div id="videosUserName"></div>
+            </div>
+            <div class="video-grid" id="userVideos">
+                <!-- Відео будуть додані динамічно -->
+            </div>
+        </div>
+    </div>
+
+    <!-- МОДАЛЬНЕ ВІКНО: ЗАПРОШЕННЯ НА ЧЕЛЕНДЖ -->
+    <div class="modal" id="challengeModal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('challengeModal')">&times;</button>
+            <div class="modal-header">
+                <div class="modal-title">🏆 Запросити на челендж</div>
+                <div>Оберіть челендж для запрошення</div>
+            </div>
+            <div id="challengesList">
+                <div class="challenge-item" onclick="inviteToChallenge('Точність ударів')">
+                    <div class="challenge-title">🎯 Точність ударів</div>
+                    <div class="challenge-details">10 ударів по воротах з різних позицій</div>
+                    <div class="challenge-prize">Призовий фонд: 150 монет</div>
+                </div>
+                <div class="challenge-item" onclick="inviteToChallenge('Жонглювання м\'ячем')">
+                    <div class="challenge-title">⚽ Жонглювання м'ячем</div>
+                    <div class="challenge-details">Максимальна кількість торкань без падіння</div>
+                    <div class="challenge-prize">Призовий фонд: 200 монет</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- МОДАЛЬНЕ ВІКНО: УСПІШНА ОПЕРАЦІЯ -->
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('successModal')">&times;</button>
+            <div class="success-message" id="successMessage">
+                <!-- Повідомлення буде додано динамічно -->
+            </div>
+        </div>
     </div>
 
     <script>
         let currentVariant = 1;
-        const totalVariants = 5;
+        const totalVariants = 1;
 
         function nextVariant() {
-            // Приховуємо поточний варіант
-            document.getElementById(`variant-${currentVariant}`).classList.remove('active');
-            
-            // Переходимо до наступного варіанту
-            currentVariant = currentVariant >= totalVariants ? 1 : currentVariant + 1;
-            
-            // Показуємо новий варіант
-            document.getElementById(`variant-${currentVariant}`).classList.add('active');
-            
-            // Оновлюємо текст кнопки
-            const btn = document.querySelector('.next-btn');
-            btn.textContent = `Варіант ${currentVariant} з ${totalVariants} →`;
+            // Поки що тільки один варіант
+            console.log('Наразі доступний тільки один варіант дизайну');
         }
 
-        // Анімація заповнення прогрес-барів при завантаженні
-        document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(() => {
-                // Анімація для XP барів
-                document.querySelectorAll('.xp-fill').forEach(fill => {
-                    const width = fill.style.width;
-                    fill.style.width = '0%';
-                    setTimeout(() => {
-                        fill.style.width = width;
-                    }, 200);
-                });
+        // Додати в друзі
+        function addFriend(userName) {
+            document.getElementById('successMessage').innerHTML = `
+                <i class="fas fa-user-plus" style="font-size: 2rem; margin-bottom: 15px;"></i>
+                <div>Запрошення в друзі надіслано!</div>
+                <div style="opacity: 0.8; margin-top: 10px;">${userName} отримає сповіщення</div>
+            `;
+            showModal('successModal');
+        }
 
-                // Анімація для skill барів
-                document.querySelectorAll('.skill-fill').forEach(fill => {
-                    const width = fill.style.width;
-                    fill.style.width = '0%';
-                    setTimeout(() => {
-                        fill.style.width = width;
-                    }, 300);
-                });
-            }, 500);
+        // Показати відео користувача
+        function showUserVideos(userName) {
+            document.getElementById('videosUserName').textContent = userName;
+            
+            const videosContainer = document.getElementById('userVideos');
+            videosContainer.innerHTML = '';
+
+            // Приклади відео для користувача
+            const userVideos = [
+                {
+                    title: 'Мій дриблінг через конуси',
+                    rating: '4.3',
+                    views: '127',
+                    icon: '🤹'
+                },
+                {
+                    title: 'Удар з 25 метрів',
+                    rating: '4.7',
+                    views: '89',
+                    icon: '⚽'
+                },
+                {
+                    title: 'Техніка передач',
+                    rating: '4.1',
+                    views: '156',
+                    icon: '🎯'
+                }
+            ];
+
+            userVideos.forEach(video => {
+                const videoElement = document.createElement('div');
+                videoElement.className = 'video-item';
+                videoElement.innerHTML = `
+                    <div class="video-thumbnail">
+                        ${video.icon}
+                    </div>
+                    <div class="video-info">
+                        <div class="video-title">${video.title}</div>
+                        <div class="video-stats">
+                            <span>⭐ ${video.rating}</span>
+                            <span>👀 ${video.views}</span>
+                        </div>
+                    </div>
+                `;
+                videosContainer.appendChild(videoElement);
+            });
+
+            showModal('videosModal');
+        }
+
+        // Показати запрошення на челендж
+        function showChallengeInvite(userName) {
+            showModal('challengeModal');
+        }
+
+        // Запросити на конкретний челендж
+        function inviteToChallenge(challengeName) {
+            closeModal('challengeModal');
+            document.getElementById('successMessage').innerHTML = `
+                <i class="fas fa-trophy" style="font-size: 2rem; margin-bottom: 15px;"></i>
+                <div>Запрошення на челендж надіслано!</div>
+                <div style="opacity: 0.8; margin-top: 10px;">"${challengeName}"</div>
+            `;
+            showModal('successModal');
+        }
+
+        // Показати модальне вікно
+        function showModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Закрити модальне вікно
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Закрити модальне вікно при кліку поза ним
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal')) {
+                closeModal(e.target.id);
+            }
+        });
+
+        // Закрити модальне вікно при натисканні Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const activeModal = document.querySelector('.modal.active');
+                if (activeModal) {
+                    closeModal(activeModal.id);
+                }
+            }
         });
     </script>
 </body>
