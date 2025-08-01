@@ -899,6 +899,15 @@
                         <label style="display: block; margin-bottom: 5px; color: white; font-weight: 600;">Опис</label>
                         <textarea id="matchDescription" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white; min-height: 80px; resize: vertical;" placeholder="Додаткова інформація про матч..."></textarea>
                     </div>
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 5px; color: white; font-weight: 600;">Запросити друзів</label>
+                        <div style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 10px; max-height: 120px; overflow-y: auto;">
+                            <div id="friendsInviteList" style="display: flex; flex-direction: column; gap: 8px;">
+                                <!-- Friends list will be generated here -->
+                            </div>
+                        </div>
+                        <small style="color: rgba(255,255,255,0.6);">Оберіть друзів, яких хочете запросити</small>
+                    </div>
                     <div style="display: flex; gap: 10px; margin-bottom: 20px;">
                         <label style="display: flex; align-items: center; gap: 8px; color: white; cursor: pointer;">
                             <input type="checkbox" id="autoBalance" style="transform: scale(1.2);">
@@ -1009,7 +1018,7 @@
                 status: 'open',
                 city: 'Київ',
                 description: 'Граємо кожен вівторок. Приходьте з гарним настроєм!',
-                participants: ['player1', 'player2', 'player3', 'player4', 'player5']
+                participants: ['player1', 'player2', 'player3', 'player4', 'player5', 'player6', 'player7', 'player8', 'player9', 'player10', 'player11', 'player12']
             },
             {
                 id: 'match2',
@@ -1025,7 +1034,7 @@
                 status: 'full',
                 city: 'Київ',
                 description: 'Потрібні досвідчені гравці. Рівень гри високий.',
-                participants: ['player2', 'player3', 'player4', 'player5', 'player1']
+                participants: ['player2', 'player3', 'player4', 'player5', 'player1', 'player6', 'player7', 'player8', 'player9', 'player10']
             },
             {
                 id: 'match3',
@@ -1041,62 +1050,118 @@
                 status: 'open',
                 city: 'Харків',
                 description: 'Граємо для здоров\'я та гарного настрою.',
-                participants: ['player3', 'player4', 'player1', 'player2']
+                participants: ['player3', 'player4', 'player1', 'player2', 'player5', 'player6', 'player7', 'player8']
+            },
+            {
+                id: 'match4',
+                title: 'Футбол на Печерську',
+                organizer: 'player4',
+                date: '2024-02-18',
+                time: '17:00',
+                location: 'Парк "Слави", Київ',
+                players: 6,
+                maxPlayers: 12,
+                level: 'Середній',
+                cost: '75 грн',
+                status: 'open',
+                city: 'Київ',
+                description: 'Граємо в парку, приходьте з друзями!',
+                participants: ['player4', 'player5', 'player1', 'player2', 'player3', 'player6']
+            },
+            {
+                id: 'match5',
+                title: 'Великий матч 11х11',
+                organizer: 'player5',
+                date: '2024-02-19',
+                time: '15:00',
+                location: 'Стадіон "Металіст", Харків',
+                players: 18,
+                maxPlayers: 22,
+                level: 'Професійний',
+                cost: '200 грн',
+                status: 'open',
+                city: 'Харків',
+                description: 'Серйозний матч для досвідчених гравців. Суддя включений.',
+                participants: ['player5', 'player1', 'player2', 'player3', 'player4', 'player6', 'player7', 'player8', 'player9', 'player10', 'player11', 'player12', 'player13', 'player14', 'player15', 'player16', 'player17', 'player18']
+            },
+            {
+                id: 'match6',
+                title: 'Жіночий футбол',
+                organizer: 'player6',
+                date: '2024-02-20',
+                time: '16:00',
+                location: 'Спорткомплекс "Арена", Одеса',
+                players: 14,
+                maxPlayers: 16,
+                level: 'Середній',
+                cost: '120 грн',
+                status: 'open',
+                city: 'Одеса',
+                description: 'Матч серед дівчат. Всі рівні вітаються!',
+                participants: ['player6', 'player7', 'player8', 'player9', 'player10', 'player11', 'player12', 'player13', 'player14', 'player15', 'player16', 'player17', 'player18', 'player1']
+            },
+            {
+                id: 'match7',
+                title: 'Корпоративний турнір',
+                organizer: 'player7',
+                date: '2024-02-21',
+                time: '14:00',
+                location: 'Стадіон "Шахтар", Дніпро',
+                players: 20,
+                maxPlayers: 20,
+                level: 'Високий',
+                cost: 'Безкоштовно',
+                status: 'full',
+                city: 'Дніпро',
+                description: 'Турнір між IT компаніями. Призи для переможців!',
+                participants: ['player7', 'player8', 'player9', 'player10', 'player11', 'player12', 'player13', 'player14', 'player15', 'player16', 'player17', 'player18', 'player1', 'player2', 'player3', 'player4', 'player5', 'player6', 'player19', 'player20']
+            },
+            {
+                id: 'match8',
+                title: 'Вечірка з футболом',
+                organizer: 'player8',
+                date: '2024-02-22',
+                time: '20:00',
+                location: 'Футбольний клуб "Карпати", Львів',
+                players: 16,
+                maxPlayers: 18,
+                level: 'Початковий',
+                cost: '90 грн',
+                status: 'open',
+                city: 'Львів',
+                description: 'Футбол + BBQ після гри. Сімейна атмосфера!',
+                participants: ['player8', 'player9', 'player10', 'player11', 'player12', 'player13', 'player14', 'player15', 'player16', 'player17', 'player18', 'player19', 'player20', 'player1', 'player2', 'player3']
             }
         ];
 
         const players = {
-            'player1': {
-                id: 'player1',
-                name: 'Олексій Петренко',
-                avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
-                rating: 4.2,
-                position: 'Півзахисник',
-                city: 'Київ',
-                matches: 45,
-                avgRating: 4.1
-            },
-            'player2': {
-                id: 'player2',
-                name: 'Максим Коваленко',
-                avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
-                rating: 4.5,
-                position: 'Нападник',
-                city: 'Київ',
-                matches: 38,
-                avgRating: 4.3
-            },
-            'player3': {
-                id: 'player3',
-                name: 'Андрій Шевченко',
-                avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face',
-                rating: 3.8,
-                position: 'Захисник',
-                city: 'Харків',
-                matches: 29,
-                avgRating: 3.9
-            },
-            'player4': {
-                id: 'player4',
-                name: 'Віталій Миколенко',
-                avatar: 'https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=150&h=150&fit=crop&crop=face',
-                rating: 4.0,
-                position: 'Воротар',
-                city: 'Одеса',
-                matches: 33,
-                avgRating: 4.0
-            },
-            'player5': {
-                id: 'player5',
-                name: 'Роман Яремчук',
-                avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&h=150&fit=crop&crop=face',
-                rating: 4.3,
-                position: 'Півзахисник',
-                city: 'Львів',
-                matches: 41,
-                avgRating: 4.2
-            }
+            'player1': { id: 'player1', name: 'Олексій Петренко', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face', rating: 4.2, position: 'Півзахисник', city: 'Київ', matches: 45, avgRating: 4.1 },
+            'player2': { id: 'player2', name: 'Максим Коваленко', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face', rating: 4.5, position: 'Нападник', city: 'Київ', matches: 38, avgRating: 4.3 },
+            'player3': { id: 'player3', name: 'Андрій Шевченко', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face', rating: 3.8, position: 'Захисник', city: 'Харків', matches: 29, avgRating: 3.9 },
+            'player4': { id: 'player4', name: 'Віталій Миколенко', avatar: 'https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=150&h=150&fit=crop&crop=face', rating: 4.0, position: 'Воротар', city: 'Одеса', matches: 33, avgRating: 4.0 },
+            'player5': { id: 'player5', name: 'Роман Яремчук', avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&h=150&fit=crop&crop=face', rating: 4.3, position: 'Півзахисник', city: 'Львів', matches: 41, avgRating: 4.2 },
+            'player6': { id: 'player6', name: 'Дмитро Піщур', avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop&crop=face', rating: 3.9, position: 'Воротар', city: 'Київ', matches: 52, avgRating: 3.8 },
+            'player7': { id: 'player7', name: 'Сергій Малий', avatar: 'https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=150&h=150&fit=crop&crop=face', rating: 4.1, position: 'Захисник', city: 'Харків', matches: 36, avgRating: 4.0 },
+            'player8': { id: 'player8', name: 'Ігор Костюк', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face', rating: 4.4, position: 'Півзахисник', city: 'Одеса', matches: 42, avgRating: 4.2 },
+            'player9': { id: 'player9', name: 'Володимир Шепелев', avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&h=150&fit=crop&crop=face', rating: 3.7, position: 'Нападник', city: 'Дніпро', matches: 28, avgRating: 3.6 },
+            'player10': { id: 'player10', name: 'Павло Шахов', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face', rating: 4.6, position: 'Півзахисник', city: 'Львів', matches: 55, avgRating: 4.4 },
+            'player11': { id: 'player11', name: 'Олександр Зубков', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face', rating: 4.0, position: 'Нападник', city: 'Київ', matches: 31, avgRating: 3.9 },
+            'player12': { id: 'player12', name: 'Євген Селезньов', avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop&crop=face', rating: 3.5, position: 'Захисник', city: 'Харків', matches: 24, avgRating: 3.4 },
+            'player13': { id: 'player13', name: 'Артем Довбик', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face', rating: 4.7, position: 'Нападник', city: 'Одеса', matches: 47, avgRating: 4.5 },
+            'player14': { id: 'player14', name: 'Мирон Маркевич', avatar: 'https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=150&h=150&fit=crop&crop=face', rating: 3.6, position: 'Захисник', city: 'Дніпро', matches: 33, avgRating: 3.5 },
+            'player15': { id: 'player15', name: 'Владислав Кабаєв', avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&h=150&fit=crop&crop=face', rating: 4.2, position: 'Півзахисник', city: 'Львів', matches: 39, avgRating: 4.1 },
+            'player16': { id: 'player16', name: 'Денис Попов', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face', rating: 3.9, position: 'Захисник', city: 'Київ', matches: 27, avgRating: 3.8 },
+            'player17': { id: 'player17', name: 'Назар Волошин', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face', rating: 4.1, position: 'Півзахисник', city: 'Харків', matches: 35, avgRating: 4.0 },
+            'player18': { id: 'player18', name: 'Богдан Михайличенко', avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop&crop=face', rating: 4.3, position: 'Захисник', city: 'Одеса', matches: 44, avgRating: 4.2 },
+            'player19': { id: 'player19', name: 'Тарас Степаненко', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face', rating: 4.4, position: 'Півзахисник', city: 'Дніпро', matches: 51, avgRating: 4.3 },
+            'player20': { id: 'player20', name: 'Руслан Ротань', avatar: 'https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=150&h=150&fit=crop&crop=face', rating: 3.8, position: 'Півзахисник', city: 'Львів', matches: 29, avgRating: 3.7 },
+            'currentUser': { id: 'currentUser', name: 'Ви', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face', rating: 4.2, position: 'Півзахисник', city: 'Київ', matches: 23, avgRating: 4.1 }
         };
+
+        // Friends list for inviting
+        const friendsList = [
+            'player1', 'player2', 'player3', 'player4', 'player5', 'player6', 'player7', 'player8'
+        ];
 
         function getPlayer(playerId) {
             return players[playerId] || {
@@ -1650,9 +1715,9 @@
                                   status: 'open',
                                   role: 'organizer',
                                   applicants: ['player1', 'player2', 'player3', 'player4'],
-                                  accepted: ['player1', 'player2'],
-                                  rejected: ['player3'],
-                                  pending: ['player4']
+                                  accepted: ['player1', 'player2', 'player3', 'player4', 'player5', 'player6', 'player7', 'player8', 'player9', 'player10'],
+                                  rejected: ['player11'],
+                                  pending: ['player12', 'player13']
                               }
                           ].find(m => m.id === matchId);
             
@@ -1661,13 +1726,13 @@
             const modal = document.getElementById('manageMatchModal');
             const content = document.getElementById('manageMatchContent');
             
-            // Generate team names
-            const teamNames = ['Барселона', 'Реал Мадрид', 'Ліверпуль', 'Манчестер Сіті', 'Баварія', 'ПСЖ', 'Ювентус', 'Челсі'];
-            const teamA = teamNames[Math.floor(Math.random() * teamNames.length)];
-            let teamB;
-            do {
-                teamB = teamNames[Math.floor(Math.random() * teamNames.length)];
-            } while (teamB === teamA);
+                         // Generate fun team names
+             const funTeamNames = ['Веселі Бджілки', 'Швидкі Їжаки', 'Хитрі Лисички', 'Сильні Ведмеді', 'Граційні Леопарди', 'Розумні Сови', 'Енергійні Кенгуру', 'Спритні Мавпи', 'Гордовиті Леви', 'Мирні Панди', 'Швидкі Гепарди', 'Кумедні Пінгвіни'];
+             const teamA = funTeamNames[Math.floor(Math.random() * funTeamNames.length)];
+             let teamB;
+             do {
+                 teamB = funTeamNames[Math.floor(Math.random() * funTeamNames.length)];
+             } while (teamB === teamA);
             
             content.innerHTML = `
                 <div style="margin-bottom: 20px;">
@@ -1727,31 +1792,35 @@
                     </div>
                     
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                        <div style="background: rgba(33,150,243,0.1); border: 1px solid rgba(33,150,243,0.3); border-radius: 10px; padding: 15px;">
-                            <h4 style="color: #2196F3; font-size: 14px; margin-bottom: 10px; text-align: center;">${teamA}</h4>
-                            <div style="text-align: center; margin-bottom: 10px;">
-                                <span style="color: white; font-weight: 700;">⭐ 4.1</span>
-                                <span style="color: rgba(255,255,255,0.6); font-size: 12px; margin-left: 5px;">середній рейтинг</span>
-                            </div>
-                            <div style="font-size: 12px; color: rgba(255,255,255,0.8);">
-                                <div>👤 player1 (4.2)</div>
-                                <div>👤 player3 (3.8)</div>
-                                <div>👤 player5 (4.3)</div>
-                            </div>
-                        </div>
-                        
-                        <div style="background: rgba(244,67,54,0.1); border: 1px solid rgba(244,67,54,0.3); border-radius: 10px; padding: 15px;">
-                            <h4 style="color: #f44336; font-size: 14px; margin-bottom: 10px; text-align: center;">${teamB}</h4>
-                            <div style="text-align: center; margin-bottom: 10px;">
-                                <span style="color: white; font-weight: 700;">⭐ 4.0</span>
-                                <span style="color: rgba(255,255,255,0.6); font-size: 12px; margin-left: 5px;">середній рейтинг</span>
-                            </div>
-                            <div style="font-size: 12px; color: rgba(255,255,255,0.8);">
-                                <div>👤 player2 (4.5)</div>
-                                <div>👤 player4 (4.0)</div>
-                                <div>👤 currentUser (4.2)</div>
-                            </div>
-                        </div>
+                                                 <div style="background: rgba(33,150,243,0.1); border: 1px solid rgba(33,150,243,0.3); border-radius: 10px; padding: 15px;">
+                             <h4 style="color: #2196F3; font-size: 14px; margin-bottom: 10px; text-align: center;">${teamA}</h4>
+                             <div style="text-align: center; margin-bottom: 10px;">
+                                 <span style="color: white; font-weight: 700;">⭐ 4.1</span>
+                                 <span style="color: rgba(255,255,255,0.6); font-size: 12px; margin-left: 5px;">середній рейтинг</span>
+                             </div>
+                             <div style="font-size: 12px; color: rgba(255,255,255,0.8);">
+                                 <div onclick="showProfile()" style="cursor: pointer; padding: 2px 0;">👤 ${getPlayer('player1').name} (${getPlayer('player1').rating})</div>
+                                 <div onclick="showProfile()" style="cursor: pointer; padding: 2px 0;">👤 ${getPlayer('player3').name} (${getPlayer('player3').rating})</div>
+                                 <div onclick="showProfile()" style="cursor: pointer; padding: 2px 0;">👤 ${getPlayer('player5').name} (${getPlayer('player5').rating})</div>
+                                 <div onclick="showProfile()" style="cursor: pointer; padding: 2px 0;">👤 ${getPlayer('player7').name} (${getPlayer('player7').rating})</div>
+                                 <div onclick="showProfile()" style="cursor: pointer; padding: 2px 0;">👤 ${getPlayer('player9').name} (${getPlayer('player9').rating})</div>
+                             </div>
+                         </div>
+                         
+                         <div style="background: rgba(244,67,54,0.1); border: 1px solid rgba(244,67,54,0.3); border-radius: 10px; padding: 15px;">
+                             <h4 style="color: #f44336; font-size: 14px; margin-bottom: 10px; text-align: center;">${teamB}</h4>
+                             <div style="text-align: center; margin-bottom: 10px;">
+                                 <span style="color: white; font-weight: 700;">⭐ 4.2</span>
+                                 <span style="color: rgba(255,255,255,0.6); font-size: 12px; margin-left: 5px;">середній рейтинг</span>
+                             </div>
+                             <div style="font-size: 12px; color: rgba(255,255,255,0.8);">
+                                 <div onclick="showProfile()" style="cursor: pointer; padding: 2px 0;">👤 ${getPlayer('player2').name} (${getPlayer('player2').rating})</div>
+                                 <div onclick="showProfile()" style="cursor: pointer; padding: 2px 0;">👤 ${getPlayer('player4').name} (${getPlayer('player4').rating})</div>
+                                 <div onclick="showProfile()" style="cursor: pointer; padding: 2px 0;">👤 ${getPlayer('player6').name} (${getPlayer('player6').rating})</div>
+                                 <div onclick="showProfile()" style="cursor: pointer; padding: 2px 0;">👤 ${getPlayer('player8').name} (${getPlayer('player8').rating})</div>
+                                 <div onclick="showProfile()" style="cursor: pointer; padding: 2px 0;">👤 ${getPlayer('player10').name} (${getPlayer('player10').rating})</div>
+                             </div>
+                         </div>
                     </div>
                 </div>
                 
@@ -1806,8 +1875,136 @@
         }
 
         function finishMatch(matchId) {
-            showToast('🏁 Відкриваємо форму завершення матчу...', 'success');
-            // Open finish match modal with score input and player ratings
+            closeManageMatch();
+            
+            // Create finish match modal
+            const modal = document.createElement('div');
+            modal.id = 'finishMatchModal';
+            modal.className = 'matches-modal show';
+            
+            modal.innerHTML = `
+                <div class="matches-modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">🏁 Завершення матчу</h3>
+                        <button class="modal-close" onclick="closeFinishMatch()">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <div style="margin-bottom: 20px;">
+                            <h3 style="color: white; font-size: 16px; margin-bottom: 12px;">⚽ Рахунок матчу</h3>
+                            <div style="display: flex; align-items: center; gap: 15px; justify-content: center;">
+                                <div style="text-align: center;">
+                                    <div style="color: #2196F3; font-weight: 600; margin-bottom: 8px;">Веселі Бджілки</div>
+                                    <input type="number" id="teamAScore" min="0" max="20" value="0" style="width: 60px; padding: 8px; text-align: center; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white; font-size: 18px; font-weight: bold;">
+                                </div>
+                                <div style="color: white; font-size: 24px; font-weight: bold;">:</div>
+                                <div style="text-align: center;">
+                                    <div style="color: #f44336; font-weight: 600; margin-bottom: 8px;">Швидкі Їжаки</div>
+                                    <input type="number" id="teamBScore" min="0" max="20" value="0" style="width: 60px; padding: 8px; text-align: center; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white; font-size: 18px; font-weight: bold;">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <h3 style="color: white; font-size: 16px; margin-bottom: 12px;">⭐ Оцініть гравців вашої команди</h3>
+                            <div style="color: rgba(255,255,255,0.7); font-size: 12px; margin-bottom: 15px;">Оцініть кожного гравця від 1 до 5 зірок за техніку, фізику, тактику та командну гру</div>
+                            
+                            <div id="playersRatingList" style="display: flex; flex-direction: column; gap: 12px;">
+                                ${['player2', 'player4', 'player6', 'player8', 'player10'].map(playerId => {
+                                    const player = getPlayer(playerId);
+                                    return `
+                                        <div style="display: flex; align-items: center; gap: 12px; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 8px;">
+                                            <img src="${player.avatar}" alt="${player.name}" style="width: 32px; height: 32px; border-radius: 50%;">
+                                            <div style="flex: 1;">
+                                                <div style="font-weight: 600; color: white; font-size: 14px;">${player.name}</div>
+                                                <div style="font-size: 12px; color: rgba(255,255,255,0.6);">${player.position}</div>
+                                            </div>
+                                            <div style="display: flex; gap: 4px;">
+                                                ${[1,2,3,4,5].map(star => `
+                                                    <span onclick="ratePlayer('${playerId}', ${star})" style="cursor: pointer; font-size: 18px; color: rgba(255,215,0,0.3); transition: color 0.2s;" 
+                                                          onmouseover="highlightStars('${playerId}', ${star})" 
+                                                          onmouseout="resetStars('${playerId}')" 
+                                                          id="star_${playerId}_${star}">⭐</span>
+                                                `).join('')}
+                                            </div>
+                                        </div>
+                                    `;
+                                }).join('')}
+                            </div>
+                        </div>
+                        
+                        <button onclick="submitMatchResult('${matchId}')" style="width: 100%; background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 16px;">
+                            🏁 Завершити матч
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+
+        function closeFinishMatch() {
+            const modal = document.getElementById('finishMatchModal');
+            if (modal) {
+                modal.remove();
+            }
+        }
+
+        // Player rating system
+        const playerRatings = {};
+
+        function ratePlayer(playerId, rating) {
+            playerRatings[playerId] = rating;
+            
+            // Update star display
+            for (let i = 1; i <= 5; i++) {
+                const star = document.getElementById(`star_${playerId}_${i}`);
+                if (star) {
+                    star.style.color = i <= rating ? '#ffd700' : 'rgba(255,215,0,0.3)';
+                }
+            }
+        }
+
+        function highlightStars(playerId, rating) {
+            for (let i = 1; i <= 5; i++) {
+                const star = document.getElementById(`star_${playerId}_${i}`);
+                if (star) {
+                    star.style.color = i <= rating ? '#ffd700' : 'rgba(255,215,0,0.3)';
+                }
+            }
+        }
+
+        function resetStars(playerId) {
+            const currentRating = playerRatings[playerId] || 0;
+            for (let i = 1; i <= 5; i++) {
+                const star = document.getElementById(`star_${playerId}_${i}`);
+                if (star) {
+                    star.style.color = i <= currentRating ? '#ffd700' : 'rgba(255,215,0,0.3)';
+                }
+            }
+        }
+
+        function submitMatchResult(matchId) {
+            const teamAScore = document.getElementById('teamAScore').value;
+            const teamBScore = document.getElementById('teamBScore').value;
+            
+            // Check if all players are rated
+            const requiredRatings = ['player2', 'player4', 'player6', 'player8', 'player10'];
+            const missingRatings = requiredRatings.filter(playerId => !playerRatings[playerId]);
+            
+            if (missingRatings.length > 0) {
+                showToast('⚠️ Будь ласка, оцініть всіх гравців!', 'error');
+                return;
+            }
+            
+            // Submit results
+            showToast(`🎉 Матч завершено! Рахунок ${teamAScore}:${teamBScore}. Рейтинги оновлено!`, 'success');
+            closeFinishMatch();
+            
+            // Add coins reward
+            showToast('💰 +30 монет за завершення матчу!', 'success');
+            
+            // Clear ratings for next match
+            Object.keys(playerRatings).forEach(key => delete playerRatings[key]);
         }
 
         function cancelMatch(matchId) {
@@ -1824,6 +2021,22 @@
             // Set default date to today
             const today = new Date();
             document.getElementById('matchDate').value = today.toISOString().split('T')[0];
+            
+            // Generate friends list
+            const friendsContainer = document.getElementById('friendsInviteList');
+            friendsContainer.innerHTML = friendsList.map(friendId => {
+                const friend = getPlayer(friendId);
+                return `
+                    <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; padding: 5px; border-radius: 6px; transition: background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.background='transparent'">
+                        <input type="checkbox" name="inviteFriends" value="${friendId}" style="transform: scale(1.2);">
+                        <img src="${friend.avatar}" alt="${friend.name}" style="width: 24px; height: 24px; border-radius: 50%;">
+                        <div style="flex: 1;">
+                            <div style="color: white; font-size: 13px; font-weight: 600;">${friend.name}</div>
+                            <div style="color: rgba(255,255,255,0.6); font-size: 11px;">${friend.position} • ⭐ ${friend.rating}</div>
+                        </div>
+                    </label>
+                `;
+            }).join('');
         }
 
         function closeCreateMatch() {
