@@ -1673,7 +1673,7 @@
                         </div>
                         <div class="video-info">
                             <h3 class="video-title">${video.title}</h3>
-                            <div class="video-author" onclick="showPlayerProfile('${video.author}')">
+                            <div class="video-author" onclick="showProfile()">
                                 <img src="${player.avatar}" alt="${player.name}" class="video-author-avatar">
                                 <span class="video-author-name">${player.name}</span>
                             </div>
@@ -2012,7 +2012,7 @@
                         </div>
                         <div class="video-info">
                             <h3 class="video-title">${video.title}</h3>
-                            <div class="video-author" onclick="showPlayerProfile('${video.author}')">
+                            <div class="video-author" onclick="showProfile()">
                                 <img src="${player.avatar}" alt="${player.name}" class="video-author-avatar">
                                 <span class="video-author-name">${player.name}</span>
                             </div>
@@ -2090,9 +2090,9 @@
                 const author = getPlayer(comment.author);
                 commentsHTML += `
                     <div class="comment-item">
-                        <img src="${author.avatar}" alt="${author.name}" class="comment-avatar">
+                        <img src="${author.avatar}" alt="${author.name}" class="comment-avatar" onclick="showProfile()" style="cursor: pointer;">
                         <div class="comment-content">
-                            <div class="comment-author">${author.name}</div>
+                            <div class="comment-author" onclick="showProfile()" style="cursor: pointer;">${author.name}</div>
                             <div class="comment-text">${comment.text}</div>
                             <div class="comment-time">${comment.time}</div>
                         </div>
