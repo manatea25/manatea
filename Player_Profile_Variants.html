@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLAP - Варіанти Профілів Гравців</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .variants-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .variant-container {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .variant-title {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        /* Variant 1: Modern Card */
+        .profile-card-1 {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            border-radius: 20px;
+            padding: 25px;
+            color: white;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-card-1::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+        }
+
+        .profile-header-1 {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .avatar-1 {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            margin-right: 15px;
+            border: 3px solid rgba(255,255,255,0.3);
+            object-fit: cover;
+        }
+
+        .player-info-1 h3 {
+            font-size: 1.4rem;
+            margin-bottom: 5px;
+        }
+
+        .position-1 {
+            background: rgba(255,255,255,0.2);
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            display: inline-block;
+        }
+
+        .stats-grid-1 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-item-1 {
+            text-align: center;
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 12px;
+        }
+
+        .stat-value-1 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        /* Variant 2: Compact Card */
+        .profile-card-2 {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-left: 5px solid #4CAF50;
+        }
+
+        .profile-header-2 {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .avatar-2 {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            object-fit: cover;
+        }
+
+        .rating-badge-2 {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .player-details-2 {
+            color: #333;
+        }
+
+        .player-name-2 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .location-2 {
+            color: #666;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .achievements-2 {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .badge-2 {
+            background: #f0f0f0;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        /* Variant 3: Gaming Style */
+        .profile-card-3 {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border-radius: 15px;
+            padding: 25px;
+            color: white;
+            border: 2px solid #4CAF50;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-card-3::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #4CAF50, #81C784, #4CAF50);
+        }
+
+        .profile-header-3 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .avatar-3 {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid #4CAF50;
+            margin-bottom: 10px;
+            object-fit: cover;
+        }
+
+        .level-badge-3 {
+            background: #4CAF50;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .stats-row-3 {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .stat-3 {
+            text-align: center;
+        }
+
+        .stat-3 .value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        .stat-3 .label {
+            font-size: 0.8rem;
+            color: #aaa;
+        }
+
+        /* Variant 4: Minimal Clean */
+        .profile-card-4 {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            border: 1px solid #f0f0f0;
+        }
+
+        .profile-layout-4 {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .avatar-4 {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .info-section-4 {
+            flex: 1;
+        }
+
+        .name-4 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .meta-4 {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .rating-4 {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .stars-4 {
+            color: #FFD700;
+        }
+
+        .contacts-4 {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .contact-btn-4 {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .contact-btn-4:hover {
+            background: #f5f5f5;
+        }
+
+        /* Variant 5: Premium Card */
+        .profile-card-5 {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            border-radius: 20px;
+            padding: 30px;
+            color: white;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        .premium-badge-5 {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #FFD700;
+            color: #333;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        .profile-content-5 {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .avatar-5 {
+            width: 90px;
+            height: 90px;
+            border-radius: 20px;
+            border: 4px solid rgba(255,255,255,0.3);
+            object-fit: cover;
+        }
+
+        .details-5 h3 {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .position-tag-5 {
+            background: rgba(255,255,255,0.2);
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .metrics-5 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .metric-5 {
+            text-align: center;
+            background: rgba(255,255,255,0.1);
+            padding: 12px;
+            border-radius: 10px;
+        }
+
+        .metric-5 .number {
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        .metric-5 .text {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        .next-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(76,175,80,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .next-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(76,175,80,0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏆 FLAP - Варіанти Профілів Гравців</h1>
+        
+        <div class="variants-grid">
+            <!-- Variant 1: Modern Card -->
+            <div class="variant-container">
+                <h3 class="variant-title">Варіант 1: Сучасна Картка</h3>
+                <div class="profile-card-1">
+                    <div class="profile-header-1">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face" alt="Avatar" class="avatar-1">
+                        <div class="player-info-1">
+                            <h3>Максим Коваль</h3>
+                            <div class="position-1">⚽ Півзахисник</div>
+                        </div>
+                    </div>
+                    <div class="stats-grid-1">
+                        <div class="stat-item-1">
+                            <div class="stat-value-1">4.7</div>
+                            <div>⭐ Рейтинг</div>
+                        </div>
+                        <div class="stat-item-1">
+                            <div class="stat-value-1">23</div>
+                            <div>🏆 Матчі</div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 15px; text-align: center; opacity: 0.8;">
+                        📍 Київ • 💰 150 монет • ☎️ +380501234567
+                    </div>
+                </div>
+            </div>
+
+            <!-- Variant 2: Compact Card -->
+            <div class="variant-container">
+                <h3 class="variant-title">Варіант 2: Компактна Картка</h3>
+                <div class="profile-card-2">
+                    <div class="profile-header-2">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face" alt="Avatar" class="avatar-2">
+                        <div class="rating-badge-2">
+                            <i class="fas fa-star"></i>
+                            4.5
+                        </div>
+                    </div>
+                    <div class="player-details-2">
+                        <div class="player-name-2">Олексій Петренко</div>
+                        <div class="location-2">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Львів
+                        </div>
+                        <div style="margin-top: 10px; color: #666;">
+                            🛡️ Захисник • ☎️ +380501234567
+                        </div>
+                        <div style="margin-top: 8px; color: #666;">
+                            📱 @oleksiy_petrenko • 📸 @oleksiy_football
+                        </div>
+                    </div>
+                    <div class="achievements-2">
+                        <span class="badge-2">🌟 Rookie</span>
+                        <span class="badge-2">⚽ Striker</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Variant 3: Gaming Style -->
+            <div class="variant-container">
+                <h3 class="variant-title">Варіант 3: Геймерський Стиль</h3>
+                <div class="profile-card-3">
+                    <div class="profile-header-3">
+                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face" alt="Avatar" class="avatar-3">
+                        <div class="level-badge-3">LVL 15</div>
+                        <h3>Андрій Шевченко</h3>
+                        <div style="opacity: 0.7;">🎯 Нападник</div>
+                    </div>
+                    <div class="stats-row-3">
+                        <div class="stat-3">
+                            <div class="value">4.9</div>
+                            <div class="label">РЕЙТИНГ</div>
+                        </div>
+                        <div class="stat-3">
+                            <div class="value">12</div>
+                            <div class="label">ГОЛИ</div>
+                        </div>
+                        <div class="stat-3">
+                            <div class="value">8</div>
+                            <div class="label">АСИСТИ</div>
+                        </div>
+                    </div>
+                    <div style="text-align: center; margin-top: 15px; opacity: 0.7;">
+                        📱 @andriy_sheva • 📍 Одеса • 💰 275 монет
+                    </div>
+                </div>
+            </div>
+
+            <!-- Variant 4: Minimal Clean -->
+            <div class="variant-container">
+                <h3 class="variant-title">Варіант 4: Мінімалістичний</h3>
+                <div class="profile-card-4">
+                    <div class="profile-layout-4">
+                        <img src="https://images.unsplash.com/photo-1566492031773-4f4e44671d66?w=150&h=150&fit=crop&crop=face" alt="Avatar" class="avatar-4">
+                        <div class="info-section-4">
+                            <div class="name-4">Дмитро Волков</div>
+                            <div class="meta-4">Воротар • Харків • 💰 120 монет</div>
+                            <div class="rating-4">
+                                <span class="stars-4">★★★★☆</span>
+                                <span>4.2 (19 оцінок)</span>
+                            </div>
+                            <div style="margin-top: 8px; color: #666; font-size: 0.85rem;">
+                                🏆 23 матчі • 🥅 15 перемог • 🎯 MVP: 3 рази
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contacts-4">
+                        <button class="contact-btn-4" title="+380671234567">
+                            <i class="fas fa-phone"></i>
+                        </button>
+                        <button class="contact-btn-4" title="@dmitro_volkov">
+                            <i class="fab fa-telegram"></i>
+                        </button>
+                        <button class="contact-btn-4" title="@dmitro_goalkeeper">
+                            <i class="fab fa-instagram"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Variant 5: Premium Card -->
+            <div class="variant-container">
+                <h3 class="variant-title">Варіант 5: Преміум Картка</h3>
+                <div class="profile-card-5">
+                    <div class="premium-badge-5">PREMIUM</div>
+                    <div class="profile-content-5">
+                        <img src="https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=150&h=150&fit=crop&crop=face" alt="Avatar" class="avatar-5">
+                        <div class="details-5">
+                            <h3>Віталій Миколенко</h3>
+                            <div class="position-tag-5">🚀 Крайній захисник</div>
+                            <div style="opacity: 0.8;">
+                                📍 Дніпро • 💰 275 монет<br>
+                                📱 @vitaliy_myk • 📸 @vitaly_football
+                            </div>
+                        </div>
+                    </div>
+                    <div class="metrics-5">
+                        <div class="metric-5">
+                            <div class="number">4.8</div>
+                            <div class="text">Рейтинг</div>
+                        </div>
+                        <div class="metric-5">
+                            <div class="number">35</div>
+                            <div class="text">Матчі</div>
+                        </div>
+                        <div class="metric-5">
+                            <div class="number">15</div>
+                            <div class="text">Перемоги</div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 15px; text-align: center; opacity: 0.8; font-size: 0.9rem;">
+                        🏆 Бейджі: 🌟 Rookie • 🛡️ Defender • 🎯 Playmaker
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="next-btn" onclick="nextVariant()">
+        Наступний варіант →
+    </button>
+
+    <script>
+        let currentVariant = 1;
+        const totalVariants = 5;
+
+        function nextVariant() {
+            currentVariant = currentVariant >= totalVariants ? 1 : currentVariant + 1;
+            
+            // Hide all variants
+            document.querySelectorAll('.variant-container').forEach(container => {
+                container.style.display = 'none';
+            });
+            
+            // Show current variant
+            document.querySelectorAll('.variant-container')[currentVariant - 1].style.display = 'block';
+            
+            // Update button text
+            const btn = document.querySelector('.next-btn');
+            btn.textContent = `Варіант ${currentVariant} з ${totalVariants} →`;
+        }
+
+        // Initialize - show first variant only
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.variant-container').forEach((container, index) => {
+                container.style.display = index === 0 ? 'block' : 'none';
+            });
+            
+            document.querySelector('.next-btn').textContent = `Варіант 1 з ${totalVariants} →`;
+        });
+    </script>
+</body>
+</html>
