@@ -2285,10 +2285,10 @@
                     videosHTML += `
                         <div style="background: rgba(255,255,255,0.05); border-radius: 12px; padding: 12px; margin-bottom: 12px; border: 1px solid rgba(255,255,255,0.1);">
                             <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
-                                <img src="${player.avatar}" alt="${player.name}" style="width: 32px; height: 32px; border-radius: 50%;">
+                                <img src="${player.avatar}" alt="${player.name}" onclick="showProfile()" style="width: 32px; height: 32px; border-radius: 50%; cursor: pointer;">
                                 <div>
                                     <div style="font-weight: 600; color: white; font-size: 13px;">${video.title}</div>
-                                    <div style="font-size: 11px; color: #66bb6a;">${player.name}</div>
+                                    <div onclick="showProfile()" style="font-size: 11px; color: #66bb6a; cursor: pointer;">${player.name}</div>
                                 </div>
                             </div>
                             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
@@ -2592,9 +2592,9 @@
             showToast('📹 Відкриваємо відео користувача...', 'success');
         }
 
-        function showChallengeInvite() {
+        function writeMessage() {
             closeProfile();
-            showToast('🏆 Відкриваємо запрошення на челендж...', 'success');
+            showToast('✉️ Відкриваємо чат...', 'success');
         }
 
         // FAB Menu Functions
@@ -2891,42 +2891,19 @@
             <div class="profile-stats-grid">
                 <div class="profile-stat-item">
                     <div class="profile-stat-value" id="profileMatches">23</div>
-                    <div class="profile-stat-label">Матчі зіграно</div>
+                    <div class="profile-stat-label">Матчі</div>
                 </div>
                 <div class="profile-stat-item">
-                    <div class="profile-stat-value" id="profileWinRate">65%</div>
-                    <div class="profile-stat-label">Win Rate</div>
+                    <div class="profile-stat-value" id="profileGoals">12</div>
+                    <div class="profile-stat-label">Голи</div>
                 </div>
                 <div class="profile-stat-item">
-                    <div class="profile-stat-value" id="profileMVP">3</div>
-                    <div class="profile-stat-label">MVP нагород</div>
+                    <div class="profile-stat-value" id="profileAssists">8</div>
+                    <div class="profile-stat-label">Асисти</div>
                 </div>
                 <div class="profile-stat-item">
-                    <div class="profile-stat-value" id="profileAvgRating">4.1</div>
-                    <div class="profile-stat-label">Середня оцінка</div>
-                </div>
-            </div>
-
-            <div class="profile-recent-matches">
-                <div class="profile-matches-title">🏆 Останні матчі</div>
-                <div class="profile-match-results" id="profileMatchResults">
-                    <div class="profile-match-result W">W</div>
-                    <div class="profile-match-result L">L</div>
-                    <div class="profile-match-result W">W</div>
-                    <div class="profile-match-result W">W</div>
-                    <div class="profile-match-result L">L</div>
-                </div>
-                <div class="profile-win-rate">
-                    Win Rate: <span class="profile-win-rate-value" id="profileWinRateText">65%</span>
-                </div>
-            </div>
-
-            <div class="profile-badges-section">
-                <div class="profile-badges-title">🏆 Бейджі</div>
-                <div class="profile-badges-list" id="profileBadges">
-                    <div class="profile-badge">🌟 Rookie</div>
-                    <div class="profile-badge">⚽ Striker</div>
-                    <div class="profile-badge">🎯 Playmaker</div>
+                    <div class="profile-stat-value" id="profilePasses">156</div>
+                    <div class="profile-stat-label">Точні паси</div>
                 </div>
             </div>
 
@@ -2935,13 +2912,9 @@
                     <i class="fas fa-user-plus"></i>
                     Додати в друзі
                 </button>
-                <button class="profile-action-btn" onclick="showUserVideos()">
-                    <i class="fas fa-video"></i>
-                    Відео
-                </button>
-                <button class="profile-action-btn full-width" onclick="showChallengeInvite()">
-                    <i class="fas fa-trophy"></i>
-                    Запросити на челендж
+                <button class="profile-action-btn" onclick="writeMessage()">
+                    <i class="fas fa-envelope"></i>
+                    Написати
                 </button>
             </div>
         </div>
