@@ -750,22 +750,318 @@
             margin-top: 10px;
         }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .mode-sections {
-                grid-template-columns: 1fr;
-                gap: 15px;
-            }
-            
-            .mode-section {
-                padding: 20px 15px;
-            }
-            
-            .modal-content {
-                max-width: 95%;
-                padding: 20px;
-            }
-        }
+                 /* Video Cards */
+         .video-grid {
+             display: grid;
+             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+             gap: 20px;
+         }
+
+         .video-card {
+             background: rgba(255,255,255,0.05);
+             border-radius: 15px;
+             overflow: hidden;
+             cursor: pointer;
+             transition: all 0.3s ease;
+             border: 1px solid rgba(255,255,255,0.1);
+         }
+
+         .video-card:hover {
+             transform: translateY(-5px);
+             background: rgba(255,255,255,0.1);
+             box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+         }
+
+         .video-thumbnail {
+             position: relative;
+             width: 100%;
+             height: 180px;
+             overflow: hidden;
+         }
+
+         .video-thumbnail img {
+             width: 100%;
+             height: 100%;
+             object-fit: cover;
+         }
+
+         .video-duration {
+             position: absolute;
+             bottom: 8px;
+             right: 8px;
+             background: rgba(0,0,0,0.8);
+             color: white;
+             padding: 4px 8px;
+             border-radius: 4px;
+             font-size: 12px;
+             font-weight: 600;
+         }
+
+         .video-rating {
+             position: absolute;
+             top: 8px;
+             right: 8px;
+             background: rgba(76,175,80,0.9);
+             color: white;
+             padding: 4px 8px;
+             border-radius: 4px;
+             font-size: 12px;
+             font-weight: 600;
+         }
+
+         .trending-badge {
+             position: absolute;
+             top: 8px;
+             left: 8px;
+             background: linear-gradient(135deg, #FF5722, #FF9800);
+             color: white;
+             padding: 4px 8px;
+             border-radius: 4px;
+             font-size: 10px;
+             font-weight: 700;
+         }
+
+         .video-info {
+             padding: 15px;
+         }
+
+         .video-title {
+             font-size: 16px;
+             font-weight: 600;
+             color: white;
+             margin-bottom: 10px;
+             line-height: 1.3;
+         }
+
+         .video-author {
+             display: flex;
+             align-items: center;
+             gap: 8px;
+             margin-bottom: 8px;
+             cursor: pointer;
+         }
+
+         .video-author-avatar {
+             width: 24px;
+             height: 24px;
+             border-radius: 50%;
+             object-fit: cover;
+         }
+
+         .video-author-name {
+             font-size: 14px;
+             color: rgba(255,255,255,0.8);
+             font-weight: 500;
+         }
+
+         .video-stats {
+             display: flex;
+             gap: 15px;
+             font-size: 12px;
+             color: rgba(255,255,255,0.6);
+         }
+
+         .boost-btn {
+             background: linear-gradient(135deg, #FF9800, #FFB74D);
+             color: white;
+             border: none;
+             padding: 6px 12px;
+             border-radius: 6px;
+             font-size: 12px;
+             font-weight: 600;
+             cursor: pointer;
+             margin-top: 8px;
+             transition: all 0.3s ease;
+         }
+
+         .boost-btn:hover {
+             transform: translateY(-2px);
+             box-shadow: 0 8px 25px rgba(255,152,0,0.4);
+         }
+
+         /* Challenge Cards */
+         .challenges-grid {
+             display: grid;
+             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+             gap: 20px;
+         }
+
+         .challenge-card {
+             background: rgba(255,193,7,0.1);
+             border: 1px solid rgba(255,193,7,0.3);
+             border-radius: 15px;
+             padding: 20px;
+             cursor: pointer;
+             transition: all 0.3s ease;
+         }
+
+         .challenge-card:hover {
+             transform: translateY(-5px);
+             background: rgba(255,193,7,0.15);
+             box-shadow: 0 15px 40px rgba(255,193,7,0.2);
+         }
+
+         .challenge-header {
+             margin-bottom: 15px;
+         }
+
+         .challenge-title {
+             font-size: 18px;
+             font-weight: 700;
+             color: #FFC107;
+             margin-bottom: 5px;
+         }
+
+         .challenge-creator {
+             font-size: 14px;
+             color: rgba(255,255,255,0.7);
+         }
+
+         .challenge-stats {
+             display: flex;
+             justify-content: space-between;
+             margin-bottom: 15px;
+         }
+
+         .challenge-stat {
+             text-align: center;
+         }
+
+         .stat-value {
+             display: block;
+             font-size: 20px;
+             font-weight: 700;
+             color: white;
+         }
+
+         .stat-label {
+             font-size: 12px;
+             color: rgba(255,255,255,0.6);
+         }
+
+         .challenge-videos {
+             display: flex;
+             align-items: center;
+             gap: -5px;
+         }
+
+         .challenge-video-avatar {
+             width: 32px;
+             height: 32px;
+             border-radius: 50%;
+             border: 2px solid #FFC107;
+             margin-left: -5px;
+         }
+
+         .more-videos {
+             background: rgba(255,193,7,0.3);
+             color: #FFC107;
+             width: 32px;
+             height: 32px;
+             border-radius: 50%;
+             display: flex;
+             align-items: center;
+             justify-content: center;
+             font-size: 12px;
+             font-weight: 600;
+             margin-left: 5px;
+         }
+
+         /* Match Cards */
+         .match-grid {
+             display: grid;
+             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+             gap: 20px;
+         }
+
+         .match-card {
+             background: rgba(255,255,255,0.05);
+             border-radius: 15px;
+             padding: 20px;
+             cursor: pointer;
+             transition: all 0.3s ease;
+             border: 1px solid rgba(255,255,255,0.1);
+         }
+
+         .match-card:hover {
+             transform: translateY(-5px);
+             background: rgba(255,255,255,0.1);
+             box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+         }
+
+         .match-header {
+             margin-bottom: 15px;
+         }
+
+         .match-title {
+             font-size: 18px;
+             font-weight: 700;
+             color: white;
+             margin-bottom: 8px;
+         }
+
+         .match-details {
+             font-size: 14px;
+             color: rgba(255,255,255,0.7);
+             margin-bottom: 5px;
+         }
+
+         .match-players {
+             font-size: 14px;
+             color: rgba(255,255,255,0.6);
+         }
+
+         .match-actions {
+             display: flex;
+             gap: 10px;
+             margin-top: 15px;
+         }
+
+         .match-btn {
+             background: linear-gradient(135deg, #4caf50, #66bb6a);
+             color: white;
+             border: none;
+             padding: 8px 16px;
+             border-radius: 8px;
+             font-weight: 600;
+             cursor: pointer;
+             transition: all 0.3s ease;
+             font-size: 12px;
+             display: flex;
+             align-items: center;
+             gap: 6px;
+         }
+
+         .match-btn:hover {
+             transform: translateY(-2px);
+             box-shadow: 0 8px 25px rgba(76,175,80,0.4);
+         }
+
+         .match-btn.secondary {
+             background: rgba(255,255,255,0.1);
+             border: 1px solid rgba(255,255,255,0.2);
+         }
+
+         /* Responsive Design */
+         @media (max-width: 768px) {
+             .mode-sections {
+                 grid-template-columns: 1fr;
+                 gap: 15px;
+             }
+             
+             .mode-section {
+                 padding: 20px 15px;
+             }
+             
+             .modal-content {
+                 max-width: 95%;
+                 padding: 20px;
+             }
+
+             .video-grid, .challenges-grid, .match-grid {
+                 grid-template-columns: 1fr;
+             }
+         }
     </style>
 </head>
 <body>
@@ -1057,16 +1353,16 @@
                 </div>
             </div>
 
-            <div class="profile-actions">
-                <button class="profile-action-btn" onclick="showUserVideos()">
-                    <i class="fas fa-video"></i>
-                    Відео
-                </button>
-                <button class="profile-action-btn full-width" onclick="showChallengeInvite()">
-                    <i class="fas fa-trophy"></i>
-                    Запросити на челендж
-                </button>
-            </div>
+                         <div class="profile-actions">
+                 <button class="profile-action-btn" onclick="showUserVideos()">
+                     <i class="fas fa-video"></i>
+                     Мої відео
+                 </button>
+                 <button class="profile-action-btn" onclick="editProfile()">
+                     <i class="fas fa-edit"></i>
+                     Редагувати
+                 </button>
+             </div>
         </div>
     </div>
 
@@ -1197,99 +1493,579 @@
             }
         }
 
-        // Video Section Functions
-        function showVideoTab(tab) {
-            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            const content = document.getElementById('videoContent');
-            
-            switch(tab) {
-                case 'feed':
-                    content.innerHTML = `
-                        <div style="text-align: center; padding: 40px 20px;">
-                            <i class="fas fa-video" style="font-size: 48px; color: #4CAF50; margin-bottom: 20px;"></i>
-                            <h3 style="color: white; margin-bottom: 10px;">Стрічка відео</h3>
-                            <p style="color: rgba(255,255,255,0.7);">Дивись найкращі відео від спільноти</p>
-                        </div>
-                    `;
-                    break;
-                case 'trending':
-                    content.innerHTML = `
-                        <div style="text-align: center; padding: 40px 20px;">
-                            <i class="fas fa-fire" style="font-size: 48px; color: #FF5722; margin-bottom: 20px;"></i>
-                            <h3 style="color: white; margin-bottom: 10px;">Популярні відео</h3>
-                            <p style="color: rgba(255,255,255,0.7);">Топ відео цього тижня</p>
-                        </div>
-                    `;
-                    break;
-                case 'challenges':
-                    content.innerHTML = `
-                        <div style="text-align: center; padding: 40px 20px;">
-                            <i class="fas fa-trophy" style="font-size: 48px; color: #FFC107; margin-bottom: 20px;"></i>
-                            <h3 style="color: white; margin-bottom: 10px;">Челенджі</h3>
-                            <p style="color: rgba(255,255,255,0.7);">Приймай виклики та створюй свої</p>
-                        </div>
-                    `;
-                    break;
-                case 'myVideos':
-                    content.innerHTML = `
-                        <div style="text-align: center; padding: 40px 20px;">
-                            <i class="fas fa-user-circle" style="font-size: 48px; color: #2196F3; margin-bottom: 20px;"></i>
-                            <h3 style="color: white; margin-bottom: 10px;">Мої відео</h3>
-                            <p style="color: rgba(255,255,255,0.7);">Твої завантажені відео</p>
-                        </div>
-                    `;
-                    break;
-            }
-        }
+                 // Sample Data
+         const sampleVideos = [
+             {
+                 id: 1,
+                 title: "Неймовірний гол з 30 метрів!",
+                 author: "player1",
+                 views: 1250,
+                 rating: 4.8,
+                 thumbnail: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop",
+                 city: "Київ",
+                 category: "goals"
+             },
+             {
+                 id: 2,
+                 title: "Техніка дриблінгу від професіонала",
+                 author: "player2",
+                 views: 890,
+                 rating: 4.6,
+                 thumbnail: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=400&h=300&fit=crop",
+                 city: "Харків",
+                 category: "skills"
+             },
+             {
+                 id: 3,
+                 title: "Найкращі сейви воротаря",
+                 author: "player3",
+                 views: 2100,
+                 rating: 4.9,
+                 thumbnail: "https://images.unsplash.com/photo-1579952363873-27d3bfad9c0d?w=400&h=300&fit=crop",
+                 city: "Одеса",
+                 category: "saves"
+             }
+         ];
 
-        // Matches Section Functions
-        function showMatchTab(tab) {
-            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            const content = document.getElementById('matchContent');
-            
-            switch(tab) {
-                case 'find':
-                    content.innerHTML = `
-                        <div style="text-align: center; padding: 40px 20px;">
-                            <i class="fas fa-search" style="font-size: 48px; color: #4CAF50; margin-bottom: 20px;"></i>
-                            <h3 style="color: white; margin-bottom: 10px;">Знайти матч</h3>
-                            <p style="color: rgba(255,255,255,0.7);">Приєднуйся до існуючих матчів</p>
-                        </div>
-                    `;
-                    break;
-                case 'my':
-                    content.innerHTML = `
-                        <div style="text-align: center; padding: 40px 20px;">
-                            <i class="fas fa-user-friends" style="font-size: 48px; color: #2196F3; margin-bottom: 20px;"></i>
-                            <h3 style="color: white; margin-bottom: 10px;">Мої матчі</h3>
-                            <p style="color: rgba(255,255,255,0.7);">Матчі, які ти створив або в яких береш участь</p>
-                        </div>
-                    `;
-                    break;
-                case 'history':
-                    content.innerHTML = `
-                        <div style="text-align: center; padding: 40px 20px;">
-                            <i class="fas fa-history" style="font-size: 48px; color: #FF9800; margin-bottom: 20px;"></i>
-                            <h3 style="color: white; margin-bottom: 10px;">Історія матчів</h3>
-                            <p style="color: rgba(255,255,255,0.7);">Твої попередні матчі та результати</p>
-                        </div>
-                    `;
-                    break;
-                case 'ratings':
-                    content.innerHTML = `
-                        <div style="text-align: center; padding: 40px 20px;">
-                            <i class="fas fa-star" style="font-size: 48px; color: #FFC107; margin-bottom: 20px;"></i>
-                            <h3 style="color: white; margin-bottom: 10px;">Рейтинги</h3>
-                            <p style="color: rgba(255,255,255,0.7);">Топ гравці та твоя позиція</p>
-                        </div>
-                    `;
-                    break;
-            }
-        }
+         const sampleChallenges = [
+             {
+                 id: 1,
+                 title: "Забий гол з кутового",
+                 creator: "player1",
+                 participants: 12,
+                 prize: 150,
+                 timeLeft: "2 дні",
+                 videos: [
+                     { id: 1, author: "player2", rating: 4.5 },
+                     { id: 2, author: "player3", rating: 4.2 },
+                     { id: 3, author: "player4", rating: 4.7 }
+                 ]
+             },
+             {
+                 id: 2,
+                 title: "Покажи свій дриблінг",
+                 creator: "player2",
+                 participants: 8,
+                 prize: 100,
+                 timeLeft: "5 днів",
+                 videos: [
+                     { id: 4, author: "player1", rating: 4.3 },
+                     { id: 5, author: "player5", rating: 4.6 }
+                 ]
+             }
+         ];
+
+         const players = {
+             'player1': { id: 'player1', name: 'Олексій Петренко', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face', rating: 4.2, position: 'Півзахисник', city: 'Київ', matches: 45, avgRating: 4.1 },
+             'player2': { id: 'player2', name: 'Максим Коваленко', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face', rating: 4.5, position: 'Нападник', city: 'Київ', matches: 38, avgRating: 4.3 },
+             'player3': { id: 'player3', name: 'Андрій Шевченко', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face', rating: 3.8, position: 'Захисник', city: 'Харків', matches: 29, avgRating: 3.9 },
+             'player4': { id: 'player4', name: 'Віталій Миколенко', avatar: 'https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=150&h=150&fit=crop&crop=face', rating: 4.0, position: 'Воротар', city: 'Одеса', matches: 33, avgRating: 4.0 },
+             'player5': { id: 'player5', name: 'Роман Яремчук', avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&h=150&fit=crop&crop=face', rating: 4.3, position: 'Півзахисник', city: 'Львів', matches: 41, avgRating: 4.2 },
+             'currentUser': { id: 'currentUser', name: 'Ви', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face', rating: 4.2, position: 'Півзахисник', city: 'Київ', matches: 23, avgRating: 4.1 }
+         };
+
+         function getPlayer(playerId) {
+             return players[playerId] || {
+                 id: playerId,
+                 name: 'Невідомий гравець',
+                 avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
+                 rating: 3.0,
+                 position: 'Гравець',
+                 city: 'Україна',
+                 matches: 0,
+                 avgRating: 3.0
+             };
+         }
+
+         // Video Section Functions
+         function showVideoTab(tab) {
+             document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+             event.target.classList.add('active');
+             
+             const content = document.getElementById('videoContent');
+             
+             switch(tab) {
+                 case 'feed':
+                     generateVideoFeed(content);
+                     break;
+                 case 'trending':
+                     generateTrendingVideos(content);
+                     break;
+                 case 'challenges':
+                     generateChallenges(content);
+                     break;
+                 case 'myVideos':
+                     generateMyVideos(content);
+                     break;
+             }
+         }
+
+         function generateVideoFeed(container) {
+             container.innerHTML = `
+                 <div class="filters-section" style="margin-bottom: 20px;">
+                     <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 15px;">
+                         <select id="cityFilter" style="padding: 8px; border-radius: 8px; background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2);">
+                             <option value="">Всі міста</option>
+                             <option value="Київ">Київ</option>
+                             <option value="Харків">Харків</option>
+                             <option value="Одеса">Одеса</option>
+                             <option value="Львів">Львів</option>
+                         </select>
+                         <select id="categoryFilter" style="padding: 8px; border-radius: 8px; background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2);">
+                             <option value="">Всі категорії</option>
+                             <option value="goals">Голи</option>
+                             <option value="skills">Навички</option>
+                             <option value="saves">Сейви</option>
+                         </select>
+                         <input type="text" id="searchInput" placeholder="Пошук..." style="padding: 8px; border-radius: 8px; background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); flex: 1; min-width: 200px;">
+                     </div>
+                 </div>
+                 <div id="videoList" class="video-grid">
+                     ${sampleVideos.map(video => {
+                         const author = getPlayer(video.author);
+                         return `
+                             <div class="video-card" onclick="openVideoModal(${video.id})">
+                                 <div class="video-thumbnail">
+                                     <img src="${video.thumbnail}" alt="${video.title}">
+                                     <div class="video-duration">2:15</div>
+                                     <div class="video-rating">⭐ ${video.rating}</div>
+                                 </div>
+                                 <div class="video-info">
+                                     <h3 class="video-title">${video.title}</h3>
+                                     <div class="video-author" onclick="event.stopPropagation(); showProfile()">
+                                         <img src="${author.avatar}" alt="${author.name}" class="video-author-avatar">
+                                         <span class="video-author-name">${author.name}</span>
+                                     </div>
+                                     <div class="video-stats">
+                                         <span>👁️ ${video.views}</span>
+                                         <span>📍 ${video.city}</span>
+                                     </div>
+                                 </div>
+                             </div>
+                         `;
+                     }).join('')}
+                 </div>
+             `;
+         }
+
+         function generateTrendingVideos(container) {
+             const trendingVideos = [...sampleVideos].sort((a, b) => b.views - a.views);
+             container.innerHTML = `
+                 <div style="margin-bottom: 20px;">
+                     <h2 style="color: white; font-size: 20px; margin-bottom: 15px;">🔥 Популярні цього тижня</h2>
+                 </div>
+                 <div class="video-grid">
+                     ${trendingVideos.map(video => {
+                         const author = getPlayer(video.author);
+                         return `
+                             <div class="video-card" onclick="openVideoModal(${video.id})">
+                                 <div class="video-thumbnail">
+                                     <img src="${video.thumbnail}" alt="${video.title}">
+                                     <div class="video-duration">2:15</div>
+                                     <div class="video-rating">⭐ ${video.rating}</div>
+                                     <div class="trending-badge">🔥 TRENDING</div>
+                                 </div>
+                                 <div class="video-info">
+                                     <h3 class="video-title">${video.title}</h3>
+                                     <div class="video-author" onclick="event.stopPropagation(); showProfile()">
+                                         <img src="${author.avatar}" alt="${author.name}" class="video-author-avatar">
+                                         <span class="video-author-name">${author.name}</span>
+                                     </div>
+                                     <div class="video-stats">
+                                         <span>👁️ ${video.views}</span>
+                                         <span>📍 ${video.city}</span>
+                                     </div>
+                                 </div>
+                             </div>
+                         `;
+                     }).join('')}
+                 </div>
+             `;
+         }
+
+         function generateChallenges(container) {
+             container.innerHTML = `
+                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                     <h2 style="color: white; font-size: 20px; margin: 0;">🏆 Активні челенджі</h2>
+                     <button onclick="showCreateChallengeModal()" style="background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 12px;">
+                         <i class="fas fa-plus"></i> Створити
+                     </button>
+                 </div>
+                 <div class="challenges-grid">
+                     ${sampleChallenges.map(challenge => `
+                         <div class="challenge-card" onclick="openChallengeModal(${challenge.id})">
+                             <div class="challenge-header">
+                                 <h3 class="challenge-title">${challenge.title}</h3>
+                                 <div class="challenge-creator">від ${getPlayer(challenge.creator).name}</div>
+                             </div>
+                             <div class="challenge-stats">
+                                 <div class="challenge-stat">
+                                     <span class="stat-value">${challenge.participants}</span>
+                                     <span class="stat-label">учасників</span>
+                                 </div>
+                                 <div class="challenge-stat">
+                                     <span class="stat-value">${challenge.prize}</span>
+                                     <span class="stat-label">монет</span>
+                                 </div>
+                                 <div class="challenge-stat">
+                                     <span class="stat-value">${challenge.timeLeft}</span>
+                                     <span class="stat-label">залишилось</span>
+                                 </div>
+                             </div>
+                             <div class="challenge-videos">
+                                 ${challenge.videos.slice(0, 3).map(video => {
+                                     const author = getPlayer(video.author);
+                                     return `<img src="${author.avatar}" alt="${author.name}" class="challenge-video-avatar">`;
+                                 }).join('')}
+                                 ${challenge.videos.length > 3 ? `<div class="more-videos">+${challenge.videos.length - 3}</div>` : ''}
+                             </div>
+                         </div>
+                     `).join('')}
+                 </div>
+             `;
+         }
+
+         function generateMyVideos(container) {
+             const myVideos = [
+                 {
+                     id: 10,
+                     title: "Мій найкращий гол сезону",
+                     views: 450,
+                     rating: 4.3,
+                     thumbnail: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop",
+                     canBoost: true
+                 },
+                 {
+                     id: 11,
+                     title: "Тренування техніки",
+                     views: 230,
+                     rating: 4.1,
+                     thumbnail: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=400&h=300&fit=crop",
+                     canBoost: true
+                 }
+             ];
+
+             container.innerHTML = `
+                 <div style="margin-bottom: 20px;">
+                     <h2 style="color: white; font-size: 20px; margin: 0;">📹 Мої відео</h2>
+                 </div>
+                 <div class="video-grid">
+                     ${myVideos.map(video => `
+                         <div class="video-card" onclick="openVideoModal(${video.id})">
+                             <div class="video-thumbnail">
+                                 <img src="${video.thumbnail}" alt="${video.title}">
+                                 <div class="video-duration">1:45</div>
+                                 <div class="video-rating">⭐ ${video.rating}</div>
+                             </div>
+                             <div class="video-info">
+                                 <h3 class="video-title">${video.title}</h3>
+                                 <div class="video-stats">
+                                     <span>👁️ ${video.views}</span>
+                                     <span>⭐ ${video.rating}</span>
+                                 </div>
+                                 ${video.canBoost ? `
+                                     <button onclick="event.stopPropagation(); boostVideo(${video.id})" class="boost-btn">
+                                         🚀 Буст (10 монет)
+                                     </button>
+                                 ` : ''}
+                             </div>
+                         </div>
+                     `).join('')}
+                 </div>
+             `;
+         }
+
+                 // Sample Matches Data
+         const sampleMatches = [
+             {
+                 id: 1,
+                 title: 'Вечірній футбол в центрі',
+                 organizer: 'player1',
+                 date: '2024-02-15',
+                 time: '19:00',
+                 location: 'вул. Хрещатик, 1, Київ',
+                 players: 12,
+                 maxPlayers: 16,
+                 level: 'Середній',
+                 cost: '100 грн',
+                 status: 'open',
+                 city: 'Київ',
+                 participants: ['player1', 'player2', 'player3', 'player4', 'player5']
+             },
+             {
+                 id: 2,
+                 title: '5х5 на Оболоні',
+                 organizer: 'player2',
+                 date: '2024-02-16',
+                 time: '18:30',
+                 location: 'Спорткомплекс "Оболонь", Київ',
+                 players: 10,
+                 maxPlayers: 10,
+                 level: 'Високий',
+                 cost: '150 грн',
+                 status: 'full',
+                 city: 'Київ',
+                 participants: ['player2', 'player3', 'player4', 'player5', 'player1']
+             },
+             {
+                 id: 3,
+                 title: 'Ранковий футбол',
+                 organizer: 'player3',
+                 date: '2024-02-17',
+                 time: '09:00',
+                 location: 'Стадіон "Динамо", Харків',
+                 players: 8,
+                 maxPlayers: 14,
+                 level: 'Початковий',
+                 cost: '80 грн',
+                 status: 'open',
+                 city: 'Харків',
+                 participants: ['player3', 'player4', 'player1', 'player2']
+             }
+         ];
+
+         // Matches Section Functions
+         function showMatchTab(tab) {
+             document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+             event.target.classList.add('active');
+             
+             const content = document.getElementById('matchContent');
+             
+             switch(tab) {
+                 case 'find':
+                     generateMatchFeed(content);
+                     break;
+                 case 'my':
+                     generateMyMatches(content);
+                     break;
+                 case 'history':
+                     generateMatchHistory(content);
+                     break;
+                 case 'ratings':
+                     generateRatings(content);
+                     break;
+             }
+         }
+
+         function generateMatchFeed(container) {
+             container.innerHTML = `
+                 <div class="filters-section" style="margin-bottom: 20px;">
+                     <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 15px;">
+                         <select id="matchCityFilter" style="padding: 8px; border-radius: 8px; background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2);">
+                             <option value="">Всі міста</option>
+                             <option value="Київ">Київ</option>
+                             <option value="Харків">Харків</option>
+                             <option value="Одеса">Одеса</option>
+                             <option value="Львів">Львів</option>
+                         </select>
+                         <select id="matchLevelFilter" style="padding: 8px; border-radius: 8px; background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2);">
+                             <option value="">Всі рівні</option>
+                             <option value="Початковий">Початковий</option>
+                             <option value="Середній">Середній</option>
+                             <option value="Високий">Високий</option>
+                         </select>
+                         <input type="text" id="matchSearchInput" placeholder="Пошук матчів..." style="padding: 8px; border-radius: 8px; background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); flex: 1; min-width: 200px;">
+                     </div>
+                 </div>
+                 <div class="match-grid">
+                     ${sampleMatches.map(match => {
+                         const organizer = getPlayer(match.organizer);
+                         const statusColor = match.status === 'open' ? '#4CAF50' : '#FF9800';
+                         const statusText = match.status === 'open' ? 'Відкритий' : 'Заповнений';
+                         
+                         return `
+                             <div class="match-card" onclick="openMatchModal(${match.id})">
+                                 <div class="match-header">
+                                     <div class="match-title">${match.title}</div>
+                                     <div class="match-details">📅 ${match.date} • ⏰ ${match.time}</div>
+                                     <div class="match-details">📍 ${match.location}</div>
+                                     <div class="match-players">👥 ${match.players}/${match.maxPlayers} • 💰 ${match.cost} • ⭐ ${match.level}</div>
+                                 </div>
+                                 
+                                 <div style="display: flex; align-items: center; gap: 10px; margin: 10px 0;">
+                                     <img src="${organizer.avatar}" alt="${organizer.name}" class="video-author-avatar" onclick="event.stopPropagation(); showProfile()">
+                                     <div>
+                                         <div style="font-size: 12px; color: rgba(255,255,255,0.6);">Організатор</div>
+                                         <div style="font-size: 14px; color: white; font-weight: 600;" onclick="event.stopPropagation(); showProfile()">${organizer.name}</div>
+                                     </div>
+                                     <div style="margin-left: auto; background: ${statusColor}; color: white; padding: 4px 8px; border-radius: 6px; font-size: 12px; font-weight: 600;">
+                                         ${statusText}
+                                     </div>
+                                 </div>
+                                 
+                                 <div class="match-actions">
+                                     ${match.status === 'open' ? `
+                                         <button class="match-btn" onclick="event.stopPropagation(); joinMatch(${match.id})">
+                                             <i class="fas fa-plus"></i> Приєднатися
+                                         </button>
+                                     ` : ''}
+                                     <button class="match-btn secondary" onclick="event.stopPropagation(); showMatchDetails(${match.id})">
+                                         <i class="fas fa-info-circle"></i> Деталі
+                                     </button>
+                                 </div>
+                             </div>
+                         `;
+                     }).join('')}
+                 </div>
+             `;
+         }
+
+         function generateMyMatches(container) {
+             const myMatches = sampleMatches.filter(match => 
+                 match.organizer === 'currentUser' || match.participants.includes('currentUser')
+             );
+             
+             container.innerHTML = `
+                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                     <h2 style="color: white; font-size: 20px; margin: 0;">⚽ Мої матчі</h2>
+                     <button onclick="showCreateMatchModal()" style="background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 12px;">
+                         <i class="fas fa-plus"></i> Створити
+                     </button>
+                 </div>
+                 <div class="match-grid">
+                     ${myMatches.length > 0 ? myMatches.map(match => {
+                         const organizer = getPlayer(match.organizer);
+                         const isOrganizer = match.organizer === 'currentUser';
+                         
+                         return `
+                             <div class="match-card">
+                                 <div class="match-header">
+                                     <div class="match-title">${match.title}</div>
+                                     <div class="match-details">📅 ${match.date} • ⏰ ${match.time}</div>
+                                     <div class="match-details">📍 ${match.location}</div>
+                                     <div class="match-players">👥 ${match.players}/${match.maxPlayers} • 💰 ${match.cost}</div>
+                                     <div style="margin-top: 8px;">
+                                         <span style="background: ${isOrganizer ? '#4CAF50' : '#2196F3'}; color: white; padding: 4px 8px; border-radius: 6px; font-size: 12px; font-weight: 600;">
+                                             ${isOrganizer ? '👑 Організатор' : '👤 Учасник'}
+                                         </span>
+                                     </div>
+                                 </div>
+                                 
+                                 <div class="match-actions">
+                                     ${isOrganizer ? `
+                                         <button class="match-btn" onclick="manageMatch(${match.id})">
+                                             <i class="fas fa-cog"></i> Управління
+                                         </button>
+                                     ` : ''}
+                                     <button class="match-btn secondary" onclick="showMyMatchDetails(${match.id})">
+                                         <i class="fas fa-info-circle"></i> Деталі
+                                     </button>
+                                 </div>
+                             </div>
+                         `;
+                     }).join('') : `
+                         <div style="text-align: center; padding: 40px 20px; grid-column: 1 / -1;">
+                             <i class="fas fa-calendar-times" style="font-size: 48px; color: rgba(255,255,255,0.3); margin-bottom: 20px;"></i>
+                             <h3 style="color: white; margin-bottom: 10px;">Поки немає матчів</h3>
+                             <p style="color: rgba(255,255,255,0.7); margin-bottom: 20px;">Створи свій перший матч або приєднайся до існуючих</p>
+                             <button onclick="showCreateMatchModal()" class="match-btn">
+                                 <i class="fas fa-plus"></i> Створити матч
+                             </button>
+                         </div>
+                     `}
+                 </div>
+             `;
+         }
+
+         function generateMatchHistory(container) {
+             const historyMatches = [
+                 {
+                     id: 'h1',
+                     title: 'Футбол на Оболоні',
+                     date: '2024-02-10',
+                     result: 'W',
+                     score: '3-1',
+                     rating: 4.2,
+                     myTeam: 'Веселі Бджілки',
+                     opponentTeam: 'Швидкі Їжаки'
+                 },
+                 {
+                     id: 'h2',
+                     title: 'Вечірній матч',
+                     date: '2024-02-05',
+                     result: 'L',
+                     score: '1-2',
+                     rating: 3.8,
+                     myTeam: 'Граційні Леопарди',
+                     opponentTeam: 'Сильні Ведмеді'
+                 }
+             ];
+
+             container.innerHTML = `
+                 <div style="margin-bottom: 20px;">
+                     <h2 style="color: white; font-size: 20px; margin: 0;">📊 Історія матчів</h2>
+                 </div>
+                 <div class="match-grid">
+                     ${historyMatches.map(match => {
+                         const resultColor = match.result === 'W' ? '#4CAF50' : match.result === 'L' ? '#f44336' : '#FFC107';
+                         const resultText = match.result === 'W' ? 'Перемога' : match.result === 'L' ? 'Поразка' : 'Нічия';
+                         
+                         return `
+                             <div class="match-card">
+                                 <div class="match-header">
+                                     <div class="match-title">${match.title}</div>
+                                     <div class="match-details">📅 ${match.date} • 🏁 Завершено</div>
+                                     <div class="match-details">${match.myTeam} vs ${match.opponentTeam}</div>
+                                 </div>
+                                 
+                                 <div style="display: flex; justify-content: space-between; align-items: center; margin: 15px 0;">
+                                     <div style="text-align: center;">
+                                         <div style="font-size: 24px; font-weight: bold; color: white;">${match.score}</div>
+                                         <div style="background: ${resultColor}; color: white; padding: 4px 8px; border-radius: 6px; font-size: 12px; font-weight: 600; margin-top: 5px;">
+                                             ${resultText}
+                                         </div>
+                                     </div>
+                                     <div style="text-align: center;">
+                                         <div style="color: rgba(255,255,255,0.7); font-size: 12px;">Ваша оцінка</div>
+                                         <div style="color: #4CAF50; font-size: 18px; font-weight: bold;">⭐ ${match.rating}</div>
+                                     </div>
+                                 </div>
+                                 
+                                 <div class="match-actions">
+                                     <button class="match-btn secondary" onclick="showHistoryMatchDetails('${match.id}')">
+                                         <i class="fas fa-eye"></i> Переглянути
+                                     </button>
+                                 </div>
+                             </div>
+                         `;
+                     }).join('')}
+                 </div>
+             `;
+         }
+
+         function generateRatings(container) {
+             const topPlayers = Object.values(players).sort((a, b) => b.rating - a.rating);
+             
+             container.innerHTML = `
+                 <div style="margin-bottom: 20px;">
+                     <h2 style="color: white; font-size: 20px; margin: 0;">🏆 Топ гравці</h2>
+                 </div>
+                 <div style="display: flex; flex-direction: column; gap: 15px;">
+                     ${topPlayers.map((player, index) => {
+                         const position = index + 1;
+                         const medal = position === 1 ? '🥇' : position === 2 ? '🥈' : position === 3 ? '🥉' : `#${position}`;
+                         
+                         return `
+                             <div class="match-card" onclick="showProfile()" style="cursor: pointer;">
+                                 <div style="display: flex; align-items: center; gap: 15px;">
+                                     <div style="font-size: 24px; min-width: 40px; text-align: center;">${medal}</div>
+                                     <img src="${player.avatar}" alt="${player.name}" style="width: 50px; height: 50px; border-radius: 50%;">
+                                     <div style="flex: 1;">
+                                         <div style="font-size: 16px; font-weight: 600; color: white;">${player.name}</div>
+                                         <div style="font-size: 12px; color: rgba(255,255,255,0.6);">${player.position} • ${player.city}</div>
+                                         <div style="font-size: 12px; color: rgba(255,255,255,0.6);">${player.matches} матчів</div>
+                                     </div>
+                                     <div style="text-align: right;">
+                                         <div style="font-size: 20px; font-weight: bold; color: #4CAF50;">⭐ ${player.rating}</div>
+                                         <div style="font-size: 12px; color: rgba(255,255,255,0.6);">рейтинг</div>
+                                     </div>
+                                 </div>
+                             </div>
+                         `;
+                     }).join('')}
+                 </div>
+             `;
+         }
 
         // Profile Functions
         function showProfile() {
@@ -1307,23 +2083,135 @@
             closeProfile();
         }
 
-        function showChallengeInvite() {
-            showToast('Запрошуємо на челендж...', 'success');
-            closeProfile();
-        }
+                 function showChallengeInvite() {
+             showToast('Запрошуємо на челендж...', 'success');
+             closeProfile();
+         }
 
-        // Modal Functions
-        function showUploadModal() {
-            showToast('Відкриваємо завантаження відео...', 'success');
-        }
+         function editProfile() {
+             showToast('Відкриваємо редагування профілю...', 'success');
+             closeProfile();
+         }
 
-        function showCreateMatchModal() {
-            showToast('Відкриваємо створення матчу...', 'success');
-        }
+                 // Modal Functions
+         function openVideoModal(videoId) {
+             showToast('Відкриваємо відео...', 'success');
+         }
 
-        function showCoinsMenu() {
-            showToast('Відкриваємо меню монет...', 'success');
-        }
+         function openChallengeModal(challengeId) {
+             showToast('Відкриваємо челендж...', 'success');
+         }
+
+         function openMatchModal(matchId) {
+             showToast('Відкриваємо матч...', 'success');
+         }
+
+         function showUploadModal() {
+             showToast('Відкриваємо завантаження відео...', 'success');
+         }
+
+         function showCreateChallengeModal() {
+             showToast('Відкриваємо створення челенджу...', 'success');
+         }
+
+         function showCreateMatchModal() {
+             showToast('Відкриваємо створення матчу...', 'success');
+         }
+
+         function showMatchDetails(matchId) {
+             showToast('Відкриваємо деталі матчу...', 'success');
+         }
+
+         function showMyMatchDetails(matchId) {
+             showToast('Відкриваємо деталі мого матчу...', 'success');
+         }
+
+         function showHistoryMatchDetails(matchId) {
+             showToast('Відкриваємо історію матчу...', 'success');
+         }
+
+         function joinMatch(matchId) {
+             showToast('Ви подали заявку на участь! Очікуйте підтвердження.', 'success');
+         }
+
+         function manageMatch(matchId) {
+             showToast('Відкриваємо управління матчем...', 'success');
+         }
+
+         function boostVideo(videoId) {
+             showToast('Відео буде показано більше людей! -10 монет', 'success');
+             // Update coins
+             const coinsElement = document.getElementById('userCoins');
+             if (coinsElement) {
+                 const currentCoins = parseInt(coinsElement.textContent);
+                 coinsElement.textContent = currentCoins - 10;
+             }
+             const coinsElementMatches = document.getElementById('userCoinsMatches');
+             if (coinsElementMatches) {
+                 const currentCoins = parseInt(coinsElementMatches.textContent);
+                 coinsElementMatches.textContent = currentCoins - 10;
+             }
+         }
+
+         function showCoinsMenu() {
+             const modal = document.createElement('div');
+             modal.className = 'modal show';
+             modal.innerHTML = `
+                 <div class="modal-content">
+                     <div class="modal-header">
+                         <h3 class="modal-title">💰 Як заробити монети</h3>
+                         <button class="modal-close" onclick="this.closest('.modal').remove()">×</button>
+                     </div>
+                     <div class="modal-body">
+                         <div style="display: flex; flex-direction: column; gap: 15px;">
+                             <div style="display: flex; align-items: center; gap: 12px; padding: 12px; background: rgba(255,255,255,0.05); border-radius: 8px;">
+                                 <div style="background: #4CAF50; color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px;">🏆</div>
+                                 <div style="flex: 1;">
+                                     <div style="color: white; font-weight: 600; margin-bottom: 4px;">Участь в челенджах</div>
+                                     <div style="color: rgba(255,255,255,0.7); font-size: 14px;">Приз залежить від банку челенджу</div>
+                                 </div>
+                                 <div style="color: #4CAF50; font-weight: bold;">50%/30%/20%</div>
+                             </div>
+                             
+                             <div style="display: flex; align-items: center; gap: 12px; padding: 12px; background: rgba(255,255,255,0.05); border-radius: 8px;">
+                                 <div style="background: #2196F3; color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px;">📹</div>
+                                 <div style="flex: 1;">
+                                     <div style="color: white; font-weight: 600; margin-bottom: 4px;">Завантаження відео</div>
+                                     <div style="color: rgba(255,255,255,0.7); font-size: 14px;">За кожне завантажене відео</div>
+                                 </div>
+                                 <div style="color: #4CAF50; font-weight: bold;">+5</div>
+                             </div>
+                             
+                             <div style="display: flex; align-items: center; gap: 12px; padding: 12px; background: rgba(255,255,255,0.05); border-radius: 8px;">
+                                 <div style="background: #FF9800; color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px;">⚽</div>
+                                 <div style="flex: 1;">
+                                     <div style="color: white; font-weight: 600; margin-bottom: 4px;">Завершення матчу</div>
+                                     <div style="color: rgba(255,255,255,0.7); font-size: 14px;">За участь в матчі</div>
+                                 </div>
+                                 <div style="color: #4CAF50; font-weight: bold;">+30</div>
+                             </div>
+                             
+                             <div style="border-top: 1px solid rgba(255,255,255,0.2); padding-top: 15px; margin-top: 10px;">
+                                 <div style="color: white; font-weight: 600; margin-bottom: 10px;">💳 Купити монети</div>
+                                 <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                                     <button onclick="buyCoins(10)" style="background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; border: none; padding: 8px 16px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 12px;">
+                                         10 монет - 10 грн
+                                     </button>
+                                     <button onclick="buyCoins(100)" style="background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; border: none; padding: 8px 16px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 12px;">
+                                         100 монет - 90 грн
+                                     </button>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+             `;
+             document.body.appendChild(modal);
+         }
+
+         function buyCoins(amount) {
+             showToast(`Купуємо ${amount} монет...`, 'success');
+         }
 
         // Bottom Navigation
         function updateBottomNav(section) {
@@ -1352,10 +2240,23 @@
             }, 3000);
         }
 
-        // Initialize App
-        document.addEventListener('DOMContentLoaded', function() {
-            showWelcome();
-        });
+                 // Initialize App
+         document.addEventListener('DOMContentLoaded', function() {
+             showWelcome();
+             
+             // Initialize video section content when first shown
+             setTimeout(() => {
+                 const videoContent = document.getElementById('videoContent');
+                 if (videoContent && videoContent.innerHTML.trim() === '') {
+                     generateVideoFeed(videoContent);
+                 }
+                 
+                 const matchContent = document.getElementById('matchContent');
+                 if (matchContent && matchContent.innerHTML.trim() === '') {
+                     generateMatchFeed(matchContent);
+                 }
+             }, 100);
+         });
     </script>
 </body>
 </html>
