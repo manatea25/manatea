@@ -1,0 +1,1501 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLAP - Матчі</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Main Container */
+        .matches-container {
+            max-width: 100%;
+            margin: 0 auto;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        }
+
+        /* Header */
+        .matches-header {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            padding: 15px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 900;
+            background: linear-gradient(45deg, #4CAF50, #66bb6a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .coins-btn {
+            background: rgba(255,215,0,0.1);
+            border: 1px solid rgba(255,215,0,0.3);
+            color: #ffd700;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .coins-btn:hover {
+            background: rgba(255,215,0,0.2);
+            transform: translateY(-2px);
+        }
+
+        .upload-btn {
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .upload-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(76,175,80,0.4);
+        }
+
+        .user-avatar-matches {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .user-avatar-matches:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(76,175,80,0.4);
+        }
+
+        /* Navigation Tabs */
+        .matches-nav-tabs {
+            display: flex;
+            background: rgba(255,255,255,0.05);
+            margin: 0 20px;
+            border-radius: 15px;
+            padding: 5px;
+            gap: 5px;
+            margin-top: 20px;
+        }
+
+        .matches-nav-tab {
+            flex: 1;
+            background: transparent;
+            color: rgba(255,255,255,0.6);
+            border: none;
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .matches-nav-tab.active {
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            color: white;
+            box-shadow: 0 4px 15px rgba(76,175,80,0.3);
+        }
+
+        /* Filters */
+        .matches-filters {
+            padding: 20px;
+            background: rgba(255,255,255,0.02);
+            margin: 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .filters-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-select {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            min-width: 120px;
+        }
+
+        .filter-select option {
+            background: #1a1a2e;
+            color: white;
+        }
+
+        .search-input {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .search-input::placeholder {
+            color: rgba(255,255,255,0.5);
+        }
+
+        /* Content Sections */
+        .matches-content-section {
+            display: none;
+            padding: 20px;
+            min-height: 400px;
+        }
+
+        .matches-content-section.active {
+            display: block;
+        }
+
+        /* Match Item */
+        .match-item {
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 16px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .match-item:hover {
+            background: rgba(255,255,255,0.08);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .match-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .match-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        .match-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .match-meta {
+            font-size: 12px;
+            color: rgba(255,255,255,0.6);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .match-status {
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .match-status.open {
+            background: rgba(76,175,80,0.2);
+            color: #4CAF50;
+            border: 1px solid rgba(76,175,80,0.3);
+        }
+
+        .match-status.full {
+            background: rgba(255,193,7,0.2);
+            color: #FFC107;
+            border: 1px solid rgba(255,193,7,0.3);
+        }
+
+        .match-status.finished {
+            background: rgba(158,158,158,0.2);
+            color: #9E9E9E;
+            border: 1px solid rgba(158,158,158,0.3);
+        }
+
+        .match-players {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .players-count {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.1);
+            padding: 8px 12px;
+            border-radius: 8px;
+        }
+
+        .players-avatars {
+            display: flex;
+            gap: -8px;
+        }
+
+        .player-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid #1a1a2e;
+            margin-left: -8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .player-avatar:first-child {
+            margin-left: 0;
+        }
+
+        .player-avatar:hover {
+            transform: scale(1.1);
+            z-index: 10;
+        }
+
+        .match-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .match-btn {
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .match-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76,175,80,0.4);
+        }
+
+        .match-btn.secondary {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .match-btn.secondary:hover {
+            background: rgba(255,255,255,0.2);
+            box-shadow: 0 5px 15px rgba(255,255,255,0.1);
+        }
+
+        /* FAB Button */
+        .matches-fab {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(76,175,80,0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .matches-fab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(76,175,80,0.5);
+        }
+
+        /* Switch to Video Button */
+        .switch-mode-btn {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 48px;
+            height: 48px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 50%;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .switch-mode-btn:hover {
+            background: rgba(255,255,255,0.2);
+            transform: scale(1.1);
+        }
+
+        /* Modals */
+        .matches-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 3000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .matches-modal.show {
+            display: flex;
+            animation: modalIn 0.4s ease;
+        }
+
+        .matches-modal-content {
+            background: linear-gradient(145deg, #1a1a2e, #16213e);
+            border-radius: 20px;
+            padding: 20px;
+            width: 100%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .modal-close {
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* ПРОФІЛІ ГРАВЦІВ */
+        .profile-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 15000;
+            backdrop-filter: blur(10px);
+        }
+
+        .profile-modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-card {
+            background: linear-gradient(145deg, #2c3e50, #34495e);
+            color: white;
+            border: 3px solid #4CAF50;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+            max-width: 350px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .profile-card-header {
+            background: linear-gradient(90deg, #4CAF50, #45a049);
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .profile-close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+            border: 4px solid rgba(255,255,255,0.3);
+        }
+
+        .profile-player-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .profile-position {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .profile-city {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+
+        .profile-rating-section {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .profile-rating-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #4CAF50;
+            margin-bottom: 5px;
+        }
+
+        .profile-rating-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .profile-stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            padding: 20px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .profile-stat-item {
+            text-align: center;
+        }
+
+        .profile-stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #4CAF50;
+            margin-bottom: 5px;
+        }
+
+        .profile-stat-label {
+            font-size: 0.8rem;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        .profile-recent-matches {
+            padding: 20px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .profile-matches-title {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .profile-match-results {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .profile-match-result {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .profile-match-result.W {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .profile-match-result.L {
+            background: #f44336;
+            color: white;
+        }
+
+        .profile-match-result.D {
+            background: #FFC107;
+            color: #333;
+        }
+
+        .profile-actions {
+            padding: 20px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .profile-action-btn {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            padding: 12px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .profile-action-btn.primary {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            border: none;
+        }
+
+        .profile-action-btn:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        .profile-action-btn.primary:hover {
+            background: linear-gradient(135deg, #45a049, #4CAF50);
+        }
+
+        /* Toast Notifications */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            z-index: 10000;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.3s ease;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .toast.error {
+            background: linear-gradient(135deg, #f44336, #ef5350);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .matches-filters {
+                margin: 10px;
+                padding: 15px;
+            }
+
+            .filters-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .filter-select,
+            .search-input {
+                width: 100%;
+            }
+
+            .match-item {
+                margin: 0 10px 16px 10px;
+                padding: 15px;
+            }
+
+            .match-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .match-actions {
+                flex-direction: column;
+            }
+
+            .matches-nav-tabs {
+                margin: 10px;
+            }
+        }
+
+        @keyframes modalIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="matches-container">
+        <!-- Header -->
+        <div class="matches-header">
+            <div class="header-content">
+                <div class="logo">FLAP</div>
+                <div class="header-actions">
+                    <button class="coins-btn" onclick="showCoinsMenu()">
+                        <i class="fas fa-coins" style="color: #ffd700;"></i>
+                        <span id="userCoins">127</span>
+                    </button>
+                    <button class="upload-btn" onclick="showCreateMatchModal()">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                    <div class="user-avatar-matches" onclick="showProfile()">М</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="matches-nav-tabs">
+            <button class="matches-nav-tab active" onclick="showMatchSection('feed')">Стрічка</button>
+            <button class="matches-nav-tab" onclick="showMatchSection('my-matches')">Мої матчі</button>
+            <button class="matches-nav-tab" onclick="showMatchSection('history')">Історія</button>
+            <button class="matches-nav-tab" onclick="showMatchSection('ratings')">Рейтинги</button>
+        </div>
+
+        <!-- Filters -->
+        <div class="matches-filters">
+            <div class="filters-row">
+                <select class="filter-select" id="cityFilter" onchange="applyFilters()">
+                    <option value="">Всі міста</option>
+                    <option value="Київ">Київ</option>
+                    <option value="Харків">Харків</option>
+                    <option value="Одеса">Одеса</option>
+                    <option value="Дніпро">Дніпро</option>
+                    <option value="Львів">Львів</option>
+                </select>
+                <select class="filter-select" id="levelFilter" onchange="applyFilters()">
+                    <option value="">Всі рівні</option>
+                    <option value="Початковий">Початковий</option>
+                    <option value="Середній">Середній</option>
+                    <option value="Високий">Високий</option>
+                    <option value="Професійний">Професійний</option>
+                </select>
+                <select class="filter-select" id="timeFilter" onchange="applyFilters()">
+                    <option value="">Будь-коли</option>
+                    <option value="today">Сьогодні</option>
+                    <option value="tomorrow">Завтра</option>
+                    <option value="week">Цього тижня</option>
+                </select>
+                <input type="text" class="search-input" placeholder="Пошук матчів..." id="searchInput" oninput="applyFilters()">
+            </div>
+        </div>
+
+        <!-- Feed Section -->
+        <div id="feedContent" class="matches-content-section active">
+            <!-- Matches will be generated here -->
+        </div>
+
+        <!-- My Matches Section -->
+        <div id="myMatchesContent" class="matches-content-section">
+            <!-- User's matches will be generated here -->
+        </div>
+
+        <!-- History Section -->
+        <div id="historyContent" class="matches-content-section">
+            <!-- Match history will be generated here -->
+        </div>
+
+        <!-- Ratings Section -->
+        <div id="ratingsContent" class="matches-content-section">
+            <!-- Player ratings will be generated here -->
+        </div>
+
+        <!-- FAB Button -->
+        <button class="matches-fab" onclick="showCreateMatchModal()">
+            <i class="fas fa-plus"></i>
+        </button>
+
+        <!-- Switch to Video Button -->
+        <button class="switch-mode-btn" onclick="switchToVideo()" title="Перейти до відео">
+            📹
+        </button>
+    </div>
+
+    <!-- МОДАЛЬНЕ ВІКНО ПРОФІЛЮ -->
+    <div class="profile-modal" id="profileModal">
+        <div class="profile-card">
+            <div class="profile-card-header">
+                <button class="profile-close-btn" onclick="closeProfile()">&times;</button>
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face" alt="Avatar" class="profile-avatar" id="profileAvatar">
+                <div class="profile-player-name" id="profileName">Максим Коваленко</div>
+                <div class="profile-position" id="profilePosition">⚽ Центральний півзахисник</div>
+                <div class="profile-city" id="profileCity">📍 Київ</div>
+            </div>
+            
+            <div class="profile-rating-section">
+                <div class="profile-rating-value" id="profileRating">4.2</div>
+                <div class="profile-rating-label">Загальний рейтинг</div>
+            </div>
+
+            <div class="profile-stats-grid">
+                <div class="profile-stat-item">
+                    <div class="profile-stat-value" id="profileMatches">23</div>
+                    <div class="profile-stat-label">Матчі зіграно</div>
+                </div>
+                <div class="profile-stat-item">
+                    <div class="profile-stat-value" id="profileAvgRating">4.1</div>
+                    <div class="profile-stat-label">Середня оцінка</div>
+                </div>
+            </div>
+
+            <div class="profile-recent-matches">
+                <div class="profile-matches-title">🏆 Останні матчі</div>
+                <div class="profile-match-results" id="profileMatchResults">
+                    <div class="profile-match-result W">W</div>
+                    <div class="profile-match-result L">L</div>
+                    <div class="profile-match-result D">D</div>
+                    <div class="profile-match-result W">W</div>
+                    <div class="profile-match-result W">W</div>
+                </div>
+            </div>
+
+            <div class="profile-actions">
+                <button class="profile-action-btn primary" onclick="addFriend()">
+                    <i class="fas fa-user-plus"></i>
+                    Додати в друзі
+                </button>
+                <button class="profile-action-btn" onclick="showUserMatches()">
+                    <i class="fas fa-futbol"></i>
+                    Матчі
+                </button>
+                <button class="profile-action-btn" onclick="inviteToMatch()">
+                    <i class="fas fa-paper-plane"></i>
+                    Запросити на матч
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let currentCategory = 'all';
+        let currentCityFilter = '';
+        let currentLevelFilter = '';
+        let currentTimeFilter = '';
+        let currentSearchFilter = '';
+
+        // Sample data
+        const allMatches = [
+            {
+                id: 'match1',
+                title: 'Вечірній футбол в центрі',
+                organizer: 'player1',
+                date: '2024-02-15',
+                time: '19:00',
+                location: 'вул. Хрещатик, 1, Київ',
+                players: 12,
+                maxPlayers: 16,
+                level: 'Середній',
+                cost: '100 грн',
+                status: 'open',
+                city: 'Київ',
+                description: 'Граємо кожен вівторок. Приходьте з гарним настроєм!',
+                participants: ['player1', 'player2', 'player3', 'player4', 'player5']
+            },
+            {
+                id: 'match2',
+                title: '5х5 на Оболоні',
+                organizer: 'player2',
+                date: '2024-02-16',
+                time: '18:30',
+                location: 'Спорткомплекс "Оболонь", Київ',
+                players: 10,
+                maxPlayers: 10,
+                level: 'Високий',
+                cost: '150 грн',
+                status: 'full',
+                city: 'Київ',
+                description: 'Потрібні досвідчені гравці. Рівень гри високий.',
+                participants: ['player2', 'player3', 'player4', 'player5', 'player1']
+            },
+            {
+                id: 'match3',
+                title: 'Ранковий футбол',
+                organizer: 'player3',
+                date: '2024-02-17',
+                time: '09:00',
+                location: 'Стадіон "Динамо", Харків',
+                players: 8,
+                maxPlayers: 14,
+                level: 'Початковий',
+                cost: '80 грн',
+                status: 'open',
+                city: 'Харків',
+                description: 'Граємо для здоров\'я та гарного настрою.',
+                participants: ['player3', 'player4', 'player1', 'player2']
+            }
+        ];
+
+        const players = {
+            'player1': {
+                id: 'player1',
+                name: 'Олексій Петренко',
+                avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
+                rating: 4.2,
+                position: 'Півзахисник',
+                city: 'Київ',
+                matches: 45,
+                avgRating: 4.1
+            },
+            'player2': {
+                id: 'player2',
+                name: 'Максим Коваленко',
+                avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
+                rating: 4.5,
+                position: 'Нападник',
+                city: 'Київ',
+                matches: 38,
+                avgRating: 4.3
+            },
+            'player3': {
+                id: 'player3',
+                name: 'Андрій Шевченко',
+                avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face',
+                rating: 3.8,
+                position: 'Захисник',
+                city: 'Харків',
+                matches: 29,
+                avgRating: 3.9
+            },
+            'player4': {
+                id: 'player4',
+                name: 'Віталій Миколенко',
+                avatar: 'https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=150&h=150&fit=crop&crop=face',
+                rating: 4.0,
+                position: 'Воротар',
+                city: 'Одеса',
+                matches: 33,
+                avgRating: 4.0
+            },
+            'player5': {
+                id: 'player5',
+                name: 'Роман Яремчук',
+                avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&h=150&fit=crop&crop=face',
+                rating: 4.3,
+                position: 'Півзахисник',
+                city: 'Львів',
+                matches: 41,
+                avgRating: 4.2
+            }
+        };
+
+        function getPlayer(playerId) {
+            return players[playerId] || {
+                id: playerId,
+                name: 'Невідомий гравець',
+                avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
+                rating: 3.0,
+                position: 'Гравець',
+                city: 'Київ',
+                matches: 0,
+                avgRating: 3.0
+            };
+        }
+
+        // Navigation
+        function showMatchSection(sectionName) {
+            // Update navigation
+            document.querySelectorAll('.matches-nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            
+            // Update content
+            document.querySelectorAll('.matches-content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            let targetSectionId;
+            switch(sectionName) {
+                case 'feed':
+                    targetSectionId = 'feedContent';
+                    break;
+                case 'my-matches':
+                    targetSectionId = 'myMatchesContent';
+                    break;
+                case 'history':
+                    targetSectionId = 'historyContent';
+                    break;
+                case 'ratings':
+                    targetSectionId = 'ratingsContent';
+                    break;
+                default:
+                    targetSectionId = sectionName + 'Content';
+            }
+            
+            const targetSection = document.getElementById(targetSectionId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+                
+                // Generate content based on section
+                switch(sectionName) {
+                    case 'feed':
+                        generateMatchFeed();
+                        break;
+                    case 'my-matches':
+                        generateMyMatches();
+                        break;
+                    case 'history':
+                        generateMatchHistory();
+                        break;
+                    case 'ratings':
+                        generateRatings();
+                        break;
+                }
+            }
+        }
+
+        // Match Feed Generation
+        function generateMatchFeed() {
+            const container = document.getElementById('feedContent');
+            if (!container) return;
+            
+            // Filter matches based on current filters
+            let filteredMatches = allMatches.filter(match => {
+                // City filter
+                if (currentCityFilter && match.city !== currentCityFilter) {
+                    return false;
+                }
+                
+                // Level filter
+                if (currentLevelFilter && match.level !== currentLevelFilter) {
+                    return false;
+                }
+                
+                // Time filter
+                if (currentTimeFilter) {
+                    const today = new Date().toISOString().split('T')[0];
+                    const tomorrow = new Date(Date.now() + 86400000).toISOString().split('T')[0];
+                    
+                    switch(currentTimeFilter) {
+                        case 'today':
+                            if (match.date !== today) return false;
+                            break;
+                        case 'tomorrow':
+                            if (match.date !== tomorrow) return false;
+                            break;
+                        case 'week':
+                            const weekFromNow = new Date(Date.now() + 7 * 86400000).toISOString().split('T')[0];
+                            if (match.date > weekFromNow) return false;
+                            break;
+                    }
+                }
+                
+                // Search filter
+                if (currentSearchFilter) {
+                    const searchLower = currentSearchFilter.toLowerCase();
+                    if (!match.title.toLowerCase().includes(searchLower) && 
+                        !match.location.toLowerCase().includes(searchLower)) {
+                        return false;
+                    }
+                }
+                
+                return true;
+            });
+            
+            let matchHTML = '';
+            
+            if (filteredMatches.length === 0) {
+                matchHTML = `
+                    <div style="text-align: center; padding: 40px 20px; color: rgba(255,255,255,0.6);">
+                        <div style="font-size: 48px; margin-bottom: 16px;">⚽</div>
+                        <h3 style="margin-bottom: 12px; color: white;">Матчі не знайдено</h3>
+                        <p style="font-size: 14px;">Спробуйте змінити фільтри або створіть новий матч</p>
+                    </div>
+                `;
+            } else {
+                filteredMatches.forEach(match => {
+                    const organizer = getPlayer(match.organizer);
+                    
+                    matchHTML += `
+                        <div class="match-item">
+                            <div class="match-header">
+                                <div class="match-info">
+                                    <div class="match-title">${match.title}</div>
+                                    <div class="match-meta">
+                                        <span><i class="fas fa-calendar"></i> ${match.date} о ${match.time}</span>
+                                        <span><i class="fas fa-map-marker-alt"></i> ${match.location}</span>
+                                        <span><i class="fas fa-coins"></i> ${match.cost}</span>
+                                        <span><i class="fas fa-signal"></i> ${match.level}</span>
+                                    </div>
+                                </div>
+                                <div class="match-status ${match.status}">${getStatusText(match.status)}</div>
+                            </div>
+                            
+                            <div class="match-players">
+                                <div class="players-count">
+                                    <i class="fas fa-users"></i>
+                                    <span>${match.players}/${match.maxPlayers}</span>
+                                </div>
+                                <div class="players-avatars">
+                                    ${match.participants.slice(0, 5).map(playerId => {
+                                        const player = getPlayer(playerId);
+                                        return `<img src="${player.avatar}" alt="${player.name}" class="player-avatar" onclick="showProfile()" title="${player.name}">`;
+                                    }).join('')}
+                                    ${match.participants.length > 5 ? `<div class="player-avatar" style="background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 12px;">+${match.participants.length - 5}</div>` : ''}
+                                </div>
+                            </div>
+                            
+                            <div style="color: rgba(255,255,255,0.8); font-size: 14px; margin-bottom: 15px;">
+                                ${match.description}
+                            </div>
+                            
+                            <div style="font-size: 12px; color: rgba(255,255,255,0.6); margin-bottom: 15px;">
+                                Організатор: <span onclick="showProfile()" style="color: #4CAF50; cursor: pointer;">${organizer.name}</span>
+                            </div>
+                            
+                            <div class="match-actions">
+                                ${match.status === 'open' ? `
+                                    <button class="match-btn" onclick="joinMatch('${match.id}')">
+                                        <i class="fas fa-plus"></i> Приєднатися
+                                    </button>
+                                ` : ''}
+                                <button class="match-btn secondary" onclick="showMatchDetails('${match.id}')">
+                                    <i class="fas fa-info-circle"></i> Деталі
+                                </button>
+                                <button class="match-btn secondary" onclick="shareMatch('${match.id}')">
+                                    <i class="fas fa-share"></i> Поділитися
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+            
+            container.innerHTML = matchHTML;
+        }
+
+        // My Matches Generation
+        function generateMyMatches() {
+            const container = document.getElementById('myMatchesContent');
+            if (!container) return;
+            
+            const myMatches = [
+                {
+                    id: 'mymatch1',
+                    title: 'Мій матч на Печерську',
+                    date: '2024-02-20',
+                    time: '18:00',
+                    location: 'Стадіон "Арена Сіті", Київ',
+                    players: 8,
+                    maxPlayers: 12,
+                    status: 'open',
+                    role: 'organizer'
+                },
+                {
+                    id: 'mymatch2',
+                    title: 'Вечірній футбол',
+                    date: '2024-02-18',
+                    time: '19:30',
+                    location: 'Спорткомплекс, Київ',
+                    players: 10,
+                    maxPlayers: 10,
+                    status: 'full',
+                    role: 'participant'
+                }
+            ];
+            
+            let matchHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2 style="color: white; font-size: 20px; margin: 0;">⚽ Мої матчі</h2>
+                    <button onclick="showCreateMatchModal()" style="background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 12px;">
+                        <i class="fas fa-plus"></i> Створити матч
+                    </button>
+                </div>
+            `;
+            
+            myMatches.forEach(match => {
+                matchHTML += `
+                    <div class="match-item">
+                        <div class="match-header">
+                            <div class="match-info">
+                                <div class="match-title">${match.title}</div>
+                                <div class="match-meta">
+                                    <span><i class="fas fa-calendar"></i> ${match.date} о ${match.time}</span>
+                                    <span><i class="fas fa-map-marker-alt"></i> ${match.location}</span>
+                                    <span><i class="fas fa-crown" style="color: #ffd700;"></i> ${match.role === 'organizer' ? 'Організатор' : 'Учасник'}</span>
+                                </div>
+                            </div>
+                            <div class="match-status ${match.status}">${getStatusText(match.status)}</div>
+                        </div>
+                        
+                        <div class="match-players">
+                            <div class="players-count">
+                                <i class="fas fa-users"></i>
+                                <span>${match.players}/${match.maxPlayers}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="match-actions">
+                            ${match.role === 'organizer' ? `
+                                <button class="match-btn" onclick="manageMatch('${match.id}')">
+                                    <i class="fas fa-cog"></i> Управління
+                                </button>
+                            ` : ''}
+                            <button class="match-btn secondary" onclick="showMatchDetails('${match.id}')">
+                                <i class="fas fa-info-circle"></i> Деталі
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = matchHTML;
+        }
+
+        // Match History Generation
+        function generateMatchHistory() {
+            const container = document.getElementById('historyContent');
+            if (!container) return;
+            
+            const matchHistory = [
+                {
+                    id: 'history1',
+                    title: 'Футбол на Оболоні',
+                    date: '2024-02-10',
+                    result: 'W',
+                    score: '3-1',
+                    rating: 4.2,
+                    team: 'Команда А'
+                },
+                {
+                    id: 'history2',
+                    title: 'Вечірній матч',
+                    date: '2024-02-05',
+                    result: 'L',
+                    score: '1-2',
+                    rating: 3.8,
+                    team: 'Команда Б'
+                },
+                {
+                    id: 'history3',
+                    title: 'Ранковий футбол',
+                    date: '2024-02-01',
+                    result: 'D',
+                    score: '2-2',
+                    rating: 4.0,
+                    team: 'Команда А'
+                }
+            ];
+            
+            let historyHTML = `
+                <div style="margin-bottom: 20px;">
+                    <h2 style="color: white; font-size: 20px; margin: 0;">📊 Історія матчів</h2>
+                </div>
+            `;
+            
+            matchHistory.forEach(match => {
+                const resultClass = match.result === 'W' ? 'W' : match.result === 'L' ? 'L' : 'D';
+                const resultText = match.result === 'W' ? 'Перемога' : match.result === 'L' ? 'Поразка' : 'Нічия';
+                
+                historyHTML += `
+                    <div class="match-item">
+                        <div class="match-header">
+                            <div class="match-info">
+                                <div class="match-title">${match.title}</div>
+                                <div class="match-meta">
+                                    <span><i class="fas fa-calendar"></i> ${match.date}</span>
+                                    <span><i class="fas fa-users"></i> ${match.team}</span>
+                                    <span><i class="fas fa-star"></i> ${match.rating}</span>
+                                </div>
+                            </div>
+                            <div style="text-align: right;">
+                                <div class="profile-match-result ${resultClass}" style="margin-bottom: 5px;">${match.result}</div>
+                                <div style="font-size: 12px; color: rgba(255,255,255,0.6);">${match.score}</div>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
+                            <div style="color: rgba(255,255,255,0.8);">${resultText}</div>
+                            <button class="match-btn secondary" onclick="showMatchDetails('${match.id}')">
+                                <i class="fas fa-eye"></i> Переглянути
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = historyHTML;
+        }
+
+        // Ratings Generation
+        function generateRatings() {
+            const container = document.getElementById('ratingsContent');
+            if (!container) return;
+            
+            const topPlayers = Object.values(players).sort((a, b) => b.rating - a.rating);
+            
+            let ratingsHTML = `
+                <div style="margin-bottom: 20px;">
+                    <h2 style="color: white; font-size: 20px; margin: 0;">🏆 Топ гравці</h2>
+                </div>
+            `;
+            
+            topPlayers.forEach((player, index) => {
+                const position = index + 1;
+                const medal = position === 1 ? '🥇' : position === 2 ? '🥈' : position === 3 ? '🥉' : `#${position}`;
+                
+                ratingsHTML += `
+                    <div class="match-item" onclick="showProfile()">
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <div style="font-size: 24px; min-width: 40px; text-align: center;">${medal}</div>
+                            <img src="${player.avatar}" alt="${player.name}" style="width: 50px; height: 50px; border-radius: 50%; cursor: pointer;">
+                            <div style="flex: 1;">
+                                <div style="font-size: 16px; font-weight: 600; color: white; cursor: pointer;">${player.name}</div>
+                                <div style="font-size: 12px; color: rgba(255,255,255,0.6);">${player.position} • ${player.city}</div>
+                                <div style="font-size: 12px; color: rgba(255,255,255,0.6);">${player.matches} матчів</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="font-size: 20px; font-weight: 700; color: #4CAF50;">${player.rating}</div>
+                                <div style="font-size: 10px; color: rgba(255,255,255,0.5);">РЕЙТИНГ</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = ratingsHTML;
+        }
+
+        // Utility functions
+        function getStatusText(status) {
+            switch(status) {
+                case 'open': return 'Відкрито';
+                case 'full': return 'Заповнено';
+                case 'finished': return 'Завершено';
+                default: return status;
+            }
+        }
+
+        // Filter functions
+        function applyFilters() {
+            currentCityFilter = document.getElementById('cityFilter').value;
+            currentLevelFilter = document.getElementById('levelFilter').value;
+            currentTimeFilter = document.getElementById('timeFilter').value;
+            currentSearchFilter = document.getElementById('searchInput').value;
+            
+            // Regenerate current section
+            const activeTab = document.querySelector('.matches-nav-tab.active');
+            if (activeTab) {
+                const sectionName = activeTab.textContent === 'Стрічка' ? 'feed' : 
+                                  activeTab.textContent === 'Мої матчі' ? 'my-matches' :
+                                  activeTab.textContent === 'Історія' ? 'history' : 'ratings';
+                
+                switch(sectionName) {
+                    case 'feed':
+                        generateMatchFeed();
+                        break;
+                    case 'my-matches':
+                        generateMyMatches();
+                        break;
+                    case 'history':
+                        generateMatchHistory();
+                        break;
+                    case 'ratings':
+                        generateRatings();
+                        break;
+                }
+            }
+        }
+
+        // Profile functions
+        function showProfile() {
+            const modal = document.getElementById('profileModal');
+            if (modal) {
+                modal.style.display = 'flex';
+                modal.style.alignItems = 'center';
+                modal.style.justifyContent = 'center';
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeProfile() {
+            const modal = document.getElementById('profileModal');
+            if (modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        function addFriend() {
+            closeProfile();
+            showToast('✅ Запрошення в друзі надіслано!', 'success');
+        }
+
+        function showUserMatches() {
+            closeProfile();
+            showToast('⚽ Показуємо матчі користувача...', 'success');
+        }
+
+        function inviteToMatch() {
+            closeProfile();
+            showToast('📧 Запрошення на матч надіслано!', 'success');
+        }
+
+        // Match functions
+        function joinMatch(matchId) {
+            showToast('✅ Ви приєдналися до матчу!', 'success');
+            // Update match data and regenerate
+            generateMatchFeed();
+        }
+
+        function showMatchDetails(matchId) {
+            showToast('📋 Показуємо деталі матчу...', 'success');
+        }
+
+        function shareMatch(matchId) {
+            showToast('📤 Матч поділено!', 'success');
+        }
+
+        function manageMatch(matchId) {
+            showToast('⚙️ Відкриваємо управління матчем...', 'success');
+        }
+
+        function showCreateMatchModal() {
+            showToast('➕ Відкриваємо створення матчу...', 'success');
+        }
+
+        // Navigation functions
+        function switchToVideo() {
+            showToast('🎬 Переходимо до відео...', 'success');
+            setTimeout(() => {
+                window.location.href = 'FLAP_Video_FINAL.html';
+            }, 1000);
+        }
+
+        function showCoinsMenu() {
+            showToast('💰 Показуємо меню монет...', 'success');
+        }
+
+        // Toast notification
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => toast.classList.add('show'), 100);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => document.body.removeChild(toast), 300);
+            }, 3000);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            generateMatchFeed();
+        });
+    </script>
+</body>
+</html>

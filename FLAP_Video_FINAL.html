@@ -876,6 +876,261 @@
                 min-width: calc(50% - 3px);
             }
         }
+
+        /* ПРОФІЛІ ГРАВЦІВ */
+        .profile-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 15000;
+            backdrop-filter: blur(10px);
+        }
+
+        .profile-modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-card {
+            background: linear-gradient(145deg, #2c3e50, #34495e);
+            color: white;
+            border: 3px solid #4CAF50;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+            max-width: 350px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .profile-card-header {
+            background: linear-gradient(90deg, #4CAF50, #45a049);
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .profile-close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 4px solid white;
+            margin-bottom: 15px;
+            object-fit: cover;
+        }
+
+        .profile-player-name {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .profile-position {
+            background: rgba(255,255,255,0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .profile-city {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .profile-rating-section {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .profile-rating-value {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #4CAF50;
+            text-shadow: 0 2px 10px rgba(76, 175, 80, 0.5);
+        }
+
+        .profile-rating-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        .profile-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            padding: 20px;
+        }
+
+        .profile-stat-item {
+            text-align: center;
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .profile-stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        .profile-stat-label {
+            font-size: 0.8rem;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        .profile-recent-matches {
+            padding: 20px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .profile-matches-title {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .profile-match-results {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .profile-match-result {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .profile-match-result.W {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .profile-match-result.L {
+            background: #f44336;
+            color: white;
+        }
+
+        .profile-match-result.D {
+            background: #FFC107;
+            color: #333;
+        }
+
+        .profile-win-rate {
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .profile-win-rate-value {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+
+        .profile-badges-section {
+            padding: 20px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .profile-badges-title {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .profile-badges-list {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .profile-badge {
+            background: linear-gradient(45deg, #FFD700, #FFA000);
+            color: #333;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .profile-actions {
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .profile-action-btn {
+            padding: 12px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            text-decoration: none;
+        }
+
+        .profile-action-btn:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        .profile-action-btn.primary {
+            background: #4CAF50;
+            border-color: #4CAF50;
+        }
+
+        .profile-action-btn.primary:hover {
+            background: #45a049;
+        }
+
+        .profile-action-btn.full-width {
+            grid-column: 1 / -1;
+        }
     </style>
 </head>
 <body>
@@ -1418,7 +1673,7 @@
                         </div>
                         <div class="video-info">
                             <h3 class="video-title">${video.title}</h3>
-                            <div class="video-author" onclick="showPlayerProfile('${video.author}')">
+                            <div class="video-author" onclick="showProfile()">
                                 <img src="${player.avatar}" alt="${player.name}" class="video-author-avatar">
                                 <span class="video-author-name">${player.name}</span>
                             </div>
@@ -1757,7 +2012,7 @@
                         </div>
                         <div class="video-info">
                             <h3 class="video-title">${video.title}</h3>
-                            <div class="video-author" onclick="showPlayerProfile('${video.author}')">
+                            <div class="video-author" onclick="showProfile()">
                                 <img src="${player.avatar}" alt="${player.name}" class="video-author-avatar">
                                 <span class="video-author-name">${player.name}</span>
                             </div>
@@ -1835,9 +2090,9 @@
                 const author = getPlayer(comment.author);
                 commentsHTML += `
                     <div class="comment-item">
-                        <img src="${author.avatar}" alt="${author.name}" class="comment-avatar">
+                        <img src="${author.avatar}" alt="${author.name}" class="comment-avatar" onclick="showProfile()" style="cursor: pointer;">
                         <div class="comment-content">
-                            <div class="comment-author">${author.name}</div>
+                            <div class="comment-author" onclick="showProfile()" style="cursor: pointer;">${author.name}</div>
                             <div class="comment-text">${comment.text}</div>
                             <div class="comment-time">${comment.time}</div>
                         </div>
@@ -2030,10 +2285,10 @@
                     videosHTML += `
                         <div style="background: rgba(255,255,255,0.05); border-radius: 12px; padding: 12px; margin-bottom: 12px; border: 1px solid rgba(255,255,255,0.1);">
                             <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
-                                <img src="${player.avatar}" alt="${player.name}" style="width: 32px; height: 32px; border-radius: 50%;">
+                                <img src="${player.avatar}" alt="${player.name}" onclick="showProfile()" style="width: 32px; height: 32px; border-radius: 50%; cursor: pointer;">
                                 <div>
                                     <div style="font-weight: 600; color: white; font-size: 13px;">${video.title}</div>
-                                    <div style="font-size: 11px; color: #66bb6a;">${player.name}</div>
+                                    <div onclick="showProfile()" style="font-size: 11px; color: #66bb6a; cursor: pointer;">${player.name}</div>
                                 </div>
                             </div>
                             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
@@ -2318,7 +2573,176 @@
         }
 
         function showProfile() {
-            showToast('👤 Відкриття профілю...', 'success');
+            const modal = document.getElementById('profileModal');
+            if (modal) {
+                modal.style.display = 'flex';
+                modal.style.alignItems = 'center';
+                modal.style.justifyContent = 'center';
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeProfile() {
+            const modal = document.getElementById('profileModal');
+            if (modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        function addFriend() {
+            closeProfile();
+            showToast('✅ Запрошення в друзі надіслано!', 'success');
+        }
+
+        function showUserVideos() {
+            closeProfile();
+            showToast('📹 Відкриваємо відео користувача...', 'success');
+        }
+
+        function showUserVideos() {
+            closeProfile();
+            
+            // Create modal for user videos
+            const modal = document.createElement('div');
+            modal.id = 'userVideosModal';
+            modal.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center;
+                z-index: 10000; backdrop-filter: blur(10px);
+            `;
+            
+            modal.innerHTML = `
+                <div style="background: linear-gradient(145deg, #1a1a1a, #2d2d2d); border-radius: 20px; padding: 20px; width: 90%; max-width: 500px; max-height: 80vh; overflow-y: auto; border: 2px solid #4CAF50;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h3 style="color: white; margin: 0; font-size: 18px;">📹 Відео користувача</h3>
+                        <button onclick="closeUserVideos()" style="background: rgba(255,255,255,0.1); border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 18px;">×</button>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        <div style="background: rgba(255,255,255,0.05); border-radius: 12px; padding: 12px; border: 1px solid rgba(255,255,255,0.1);">
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                                <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #4caf50, #66bb6a); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px;">⚽</div>
+                                <div>
+                                    <div style="font-weight: 600; color: white; font-size: 14px;">Мій перший гол з штрафного</div>
+                                    <div style="font-size: 12px; color: rgba(255,255,255,0.6);">3 дні тому • 456 переглядів</div>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; justify-content: space-between;">
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <div style="color: #ffd700;">⭐⭐⭐⭐⭐</div>
+                                    <span style="color: white; font-weight: 700;">4.3</span>
+                                    <span style="color: rgba(255,255,255,0.5); font-size: 12px;">(23)</span>
+                                </div>
+                                <button onclick="playVideo('user1')" style="background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer;">▶ Дивитись</button>
+                            </div>
+                        </div>
+                        
+                        <div style="background: rgba(255,255,255,0.05); border-radius: 12px; padding: 12px; border: 1px solid rgba(255,255,255,0.1);">
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                                <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #ff9800, #ffc107); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px;">🏃</div>
+                                <div>
+                                    <div style="font-weight: 600; color: white; font-size: 14px;">Тренування дриблінгу вдома</div>
+                                    <div style="font-size: 12px; color: rgba(255,255,255,0.6);">1 тиждень тому • 234 переглядів</div>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; justify-content: space-between;">
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <div style="color: #ffd700;">⭐⭐⭐⭐☆</div>
+                                    <span style="color: white; font-weight: 700;">4.1</span>
+                                    <span style="color: rgba(255,255,255,0.5); font-size: 12px;">(18)</span>
+                                </div>
+                                <button onclick="playVideo('user2')" style="background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer;">▶ Дивитись</button>
+                            </div>
+                        </div>
+                        
+                        <div style="background: rgba(255,255,255,0.05); border-radius: 12px; padding: 12px; border: 1px solid rgba(255,255,255,0.1);">
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                                <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #9c27b0, #e91e63); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px;">🎯</div>
+                                <div>
+                                    <div style="font-weight: 600; color: white; font-size: 14px;">Точність ударів по воротам</div>
+                                    <div style="font-size: 12px; color: rgba(255,255,255,0.6);">2 тижні тому • 189 переглядів</div>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; justify-content: space-between;">
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <div style="color: #ffd700;">⭐⭐⭐⭐⭐</div>
+                                    <span style="color: white; font-weight: 700;">4.5</span>
+                                    <span style="color: rgba(255,255,255,0.5); font-size: 12px;">(31)</span>
+                                </div>
+                                <button onclick="playVideo('user3')" style="background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer;">▶ Дивитись</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+        
+        function closeUserVideos() {
+            const modal = document.getElementById('userVideosModal');
+            if (modal) {
+                modal.remove();
+            }
+        }
+        
+        function showChallengeInvite() {
+            closeProfile();
+            
+            // Create modal for challenge invite
+            const modal = document.createElement('div');
+            modal.id = 'challengeInviteModal';
+            modal.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center;
+                z-index: 10000; backdrop-filter: blur(10px);
+            `;
+            
+            modal.innerHTML = `
+                <div style="background: linear-gradient(145deg, #1a1a1a, #2d2d2d); border-radius: 20px; padding: 20px; width: 90%; max-width: 500px; max-height: 80vh; overflow-y: auto; border: 2px solid #4CAF50;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h3 style="color: white; margin: 0; font-size: 18px;">🏆 Запросити на челендж</h3>
+                        <button onclick="closeChallengeInvite()" style="background: rgba(255,255,255,0.1); border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 18px;">×</button>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        <div onclick="inviteToChallenge('challenge1')" style="background: rgba(255,255,255,0.05); border-radius: 12px; padding: 15px; border: 1px solid rgba(255,255,255,0.1); cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(76,175,80,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #4caf50, #66bb6a); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px;">🎯</div>
+                                <div style="flex: 1;">
+                                    <div style="font-weight: 600; color: white; font-size: 15px; margin-bottom: 4px;">Крутий гол від поперечки</div>
+                                    <div style="font-size: 12px; color: rgba(255,255,255,0.6);">7 учасників • Банк: 70 монет</div>
+                                    <div style="font-size: 11px; color: #66bb6a; margin-top: 2px;">⏰ Залишилось 2 дні</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div onclick="inviteToChallenge('challenge2')" style="background: rgba(255,255,255,0.05); border-radius: 12px; padding: 15px; border: 1px solid rgba(255,255,255,0.1); cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(76,175,80,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #ff9800, #ffc107); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px;">⚽</div>
+                                <div style="flex: 1;">
+                                    <div style="font-weight: 600; color: white; font-size: 15px; margin-bottom: 4px;">Жонглювання м'ячем</div>
+                                    <div style="font-size: 12px; color: rgba(255,255,255,0.6);">5 учасників • Банк: 75 монет</div>
+                                    <div style="font-size: 11px; color: #66bb6a; margin-top: 2px;">⏰ Залишилось 1 день</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+        
+        function closeChallengeInvite() {
+            const modal = document.getElementById('challengeInviteModal');
+            if (modal) {
+                modal.remove();
+            }
+        }
+        
+        function inviteToChallenge(challengeId) {
+            closeChallengeInvite();
+            showToast('🏆 Запрошення надіслано!', 'success');
         }
 
         // FAB Menu Functions
@@ -2344,6 +2768,12 @@
             
             if (fab && menu && !fab.contains(event.target) && !menu.contains(event.target)) {
                 hideFabMenu();
+            }
+
+            // Close profile modal when clicking outside
+            const profileModal = document.getElementById('profileModal');
+            if (profileModal && event.target === profileModal) {
+                closeProfile();
             }
         });
 
@@ -2524,9 +2954,25 @@
             <div class="earning-option">
                 <div class="earning-description">
                     <div>Переможець челенджу</div>
-                    <div style="font-size: 12px; color: rgba(255,255,255,0.6);">1-е місце</div>
+                    <div style="font-size: 12px; color: rgba(255,255,255,0.6);">50% банку</div>
                 </div>
-                <div class="earning-reward">+50 монет</div>
+                <div class="earning-reward">50% банку</div>
+            </div>
+
+            <div class="earning-option">
+                <div class="earning-description">
+                    <div>2-е місце в челенджі</div>
+                    <div style="font-size: 12px; color: rgba(255,255,255,0.6);">30% банку</div>
+                </div>
+                <div class="earning-reward">30% банку</div>
+            </div>
+
+            <div class="earning-option">
+                <div class="earning-description">
+                    <div>3-є місце в челенджі</div>
+                    <div style="font-size: 12px; color: rgba(255,255,255,0.6);">20% банку</div>
+                </div>
+                <div class="earning-reward">20% банку</div>
             </div>
 
             <div class="earning-option">
@@ -2571,6 +3017,61 @@
             <button onclick="closeCoinsMenu()" style="width: 100%; margin-top: 20px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; padding: 12px; border-radius: 12px; cursor: pointer;">
                 Закрити
             </button>
+        </div>
+    </div>
+
+    <!-- МОДАЛЬНЕ ВІКНО ПРОФІЛЮ -->
+    <div class="profile-modal" id="profileModal">
+        <div class="profile-card">
+            <div class="profile-card-header">
+                <button class="profile-close-btn" onclick="closeProfile()">&times;</button>
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face" alt="Avatar" class="profile-avatar" id="profileAvatar">
+                <div class="profile-player-name" id="profileName">Максим Коваленко</div>
+                <div class="profile-position" id="profilePosition">⚽ Центральний півзахисник</div>
+                <div class="profile-city" id="profileCity">📍 Київ</div>
+            </div>
+            
+            <div class="profile-rating-section">
+                <div class="profile-rating-value" id="profileRating">4.2</div>
+                <div class="profile-rating-label">Загальний рейтинг</div>
+            </div>
+
+            <div class="profile-stats-grid">
+                <div class="profile-stat-item">
+                    <div class="profile-stat-value" id="profileMatches">23</div>
+                    <div class="profile-stat-label">Матчі зіграно</div>
+                </div>
+                <div class="profile-stat-item">
+                    <div class="profile-stat-value" id="profileAvgRating">4.1</div>
+                    <div class="profile-stat-label">Середня оцінка</div>
+                </div>
+            </div>
+
+            <div class="profile-recent-matches">
+                <div class="profile-matches-title">🏆 Останні матчі</div>
+                <div class="profile-match-results" id="profileMatchResults">
+                    <div class="profile-match-result W">W</div>
+                    <div class="profile-match-result L">L</div>
+                    <div class="profile-match-result D">D</div>
+                    <div class="profile-match-result W">W</div>
+                    <div class="profile-match-result W">W</div>
+                </div>
+            </div>
+
+            <div class="profile-actions">
+                <button class="profile-action-btn primary" onclick="addFriend()">
+                    <i class="fas fa-user-plus"></i>
+                    Додати в друзі
+                </button>
+                <button class="profile-action-btn" onclick="showUserVideos()">
+                    <i class="fas fa-video"></i>
+                    Відео
+                </button>
+                <button class="profile-action-btn full-width" onclick="showChallengeInvite()">
+                    <i class="fas fa-trophy"></i>
+                    Запросити на челендж
+                </button>
+            </div>
         </div>
     </div>
 
