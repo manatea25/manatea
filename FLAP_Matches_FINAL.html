@@ -757,7 +757,7 @@
 
         <!-- Navigation Tabs -->
         <div class="matches-nav-tabs">
-            <button class="matches-nav-tab active" onclick="showMatchSection('feed')">Стрічка</button>
+            <button class="matches-nav-tab active" onclick="showMatchSection('feed')">Знайти матч</button>
             <button class="matches-nav-tab" onclick="showMatchSection('my-matches')">Мої матчі</button>
             <button class="matches-nav-tab" onclick="showMatchSection('history')">Історія</button>
             <button class="matches-nav-tab" onclick="showMatchSection('ratings')">Рейтинги</button>
@@ -820,6 +820,114 @@
         <button class="switch-mode-btn" onclick="switchToVideo()" title="Перейти до відео">
             📹
         </button>
+    </div>
+
+    <!-- Match Details Modal -->
+    <div class="matches-modal" id="matchDetailsModal">
+        <div class="matches-modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">⚽ Деталі матчу</h3>
+                <button class="modal-close" onclick="closeMatchDetails()">×</button>
+            </div>
+            <div class="modal-body" id="matchDetailsContent">
+                <!-- Match details will be generated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Match Modal -->
+    <div class="matches-modal" id="createMatchModal">
+        <div class="matches-modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">➕ Створити матч</h3>
+                <button class="modal-close" onclick="closeCreateMatch()">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="createMatchForm">
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 5px; color: white; font-weight: 600;">Назва матчу *</label>
+                        <input type="text" id="matchName" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white;" placeholder="Назва вашого матчу" required>
+                    </div>
+                    <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                        <div style="flex: 1;">
+                            <label style="display: block; margin-bottom: 5px; color: white; font-weight: 600;">Дата *</label>
+                            <input type="date" id="matchDate" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white;" required>
+                        </div>
+                        <div style="flex: 1;">
+                            <label style="display: block; margin-bottom: 5px; color: white; font-weight: 600;">Час *</label>
+                            <input type="time" id="matchTime" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white;" required>
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 5px; color: white; font-weight: 600;">Локація *</label>
+                        <input type="text" id="matchLocation" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white;" placeholder="Адреса або назва майданчика" required>
+                    </div>
+                    <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                        <div style="flex: 1;">
+                            <label style="display: block; margin-bottom: 5px; color: white; font-weight: 600;">Гравці *</label>
+                            <select id="matchPlayers" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white;" required>
+                                <option value="">Оберіть кількість</option>
+                                <option value="4">4 гравці (2v2)</option>
+                                <option value="6">6 гравців (3v3)</option>
+                                <option value="8">8 гравців (4v4)</option>
+                                <option value="10">10 гравців (5v5)</option>
+                                <option value="12">12 гравців (6v6)</option>
+                                <option value="14">14 гравців (7v7)</option>
+                                <option value="16">16 гравців (8v8)</option>
+                                <option value="18">18 гравців (9v9)</option>
+                                <option value="20">20 гравців (10v10)</option>
+                                <option value="22">22 гравці (11v11)</option>
+                            </select>
+                        </div>
+                        <div style="flex: 1;">
+                            <label style="display: block; margin-bottom: 5px; color: white; font-weight: 600;">Рівень *</label>
+                            <select id="matchLevel" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white;" required>
+                                <option value="">Оберіть рівень</option>
+                                <option value="Початковий">Початковий</option>
+                                <option value="Середній">Середній</option>
+                                <option value="Високий">Високий</option>
+                                <option value="Професійний">Професійний</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 5px; color: white; font-weight: 600;">Вартість участі</label>
+                        <input type="number" id="matchCost" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white;" placeholder="0" min="0">
+                        <small style="color: rgba(255,255,255,0.6);">Грн за гравця (0 = безкоштовно)</small>
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 5px; color: white; font-weight: 600;">Опис</label>
+                        <textarea id="matchDescription" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white; min-height: 80px; resize: vertical;" placeholder="Додаткова інформація про матч..."></textarea>
+                    </div>
+                    <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                        <label style="display: flex; align-items: center; gap: 8px; color: white; cursor: pointer;">
+                            <input type="checkbox" id="autoBalance" style="transform: scale(1.2);">
+                            <span>Автобаланс команд</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 8px; color: white; cursor: pointer;">
+                            <input type="checkbox" id="privateMatch" style="transform: scale(1.2);">
+                            <span>Приватний матч</span>
+                        </label>
+                    </div>
+                    <button type="submit" style="width: 100%; background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 16px;">
+                        ➕ Створити матч
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Manage Match Modal -->
+    <div class="matches-modal" id="manageMatchModal">
+        <div class="matches-modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">⚙️ Управління матчем</h3>
+                <button class="modal-close" onclick="closeManageMatch()">×</button>
+            </div>
+            <div class="modal-body" id="manageMatchContent">
+                <!-- Match management content will be generated here -->
+            </div>
+        </div>
     </div>
 
     <!-- МОДАЛЬНЕ ВІКНО ПРОФІЛЮ -->
@@ -1388,7 +1496,7 @@
             // Regenerate current section
             const activeTab = document.querySelector('.matches-nav-tab.active');
             if (activeTab) {
-                const sectionName = activeTab.textContent === 'Стрічка' ? 'feed' : 
+                const sectionName = activeTab.textContent === 'Знайти матч' ? 'feed' : 
                                   activeTab.textContent === 'Мої матчі' ? 'my-matches' :
                                   activeTab.textContent === 'Історія' ? 'history' : 'ratings';
                 
@@ -1445,26 +1553,324 @@
 
         // Match functions
         function joinMatch(matchId) {
-            showToast('✅ Ви приєдналися до матчу!', 'success');
+            showToast('📝 Ви подали заявку на участь! Очікуйте підтвердження організатора.', 'success');
             // Update match data and regenerate
+            const match = allMatches.find(m => m.id === matchId);
+            if (match && !match.participants.includes('currentUser')) {
+                match.participants.push('currentUser');
+                match.players++;
+            }
             generateMatchFeed();
         }
 
         function showMatchDetails(matchId) {
-            showToast('📋 Показуємо деталі матчу...', 'success');
+            const match = allMatches.find(m => m.id === matchId);
+            if (!match) return;
+            
+            const modal = document.getElementById('matchDetailsModal');
+            const content = document.getElementById('matchDetailsContent');
+            
+            const organizer = getPlayer(match.organizer);
+            
+            let participantsHTML = '';
+            match.participants.forEach(playerId => {
+                const player = getPlayer(playerId);
+                participantsHTML += `
+                    <div style="display: flex; align-items: center; gap: 12px; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 8px; margin-bottom: 8px;">
+                        <img src="${player.avatar}" alt="${player.name}" style="width: 40px; height: 40px; border-radius: 50%; cursor: pointer;" onclick="showProfile()">
+                        <div style="flex: 1;">
+                            <div style="font-weight: 600; color: white; cursor: pointer;" onclick="showProfile()">${player.name}</div>
+                            <div style="font-size: 12px; color: rgba(255,255,255,0.6);">${player.position} • ${player.city}</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 18px; font-weight: 700; color: #4CAF50;">${player.rating}</div>
+                            <div style="font-size: 10px; color: rgba(255,255,255,0.5);">РЕЙТИНГ</div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            content.innerHTML = `
+                <div style="margin-bottom: 20px;">
+                    <h2 style="color: white; font-size: 20px; margin-bottom: 10px;">${match.title}</h2>
+                    <div style="display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 15px; font-size: 14px; color: rgba(255,255,255,0.8);">
+                        <span><i class="fas fa-calendar" style="color: #4CAF50;"></i> ${match.date} о ${match.time}</span>
+                        <span><i class="fas fa-map-marker-alt" style="color: #4CAF50;"></i> ${match.location}</span>
+                        <span><i class="fas fa-users" style="color: #4CAF50;"></i> ${match.players}/${match.maxPlayers} гравців</span>
+                        <span><i class="fas fa-signal" style="color: #4CAF50;"></i> ${match.level}</span>
+                        <span><i class="fas fa-coins" style="color: #ffd700;"></i> ${match.cost}</span>
+                    </div>
+                    <div style="color: rgba(255,255,255,0.9); margin-bottom: 15px; line-height: 1.4;">
+                        ${match.description}
+                    </div>
+                    <div style="font-size: 12px; color: rgba(255,255,255,0.6);">
+                        Організатор: <span style="color: #4CAF50; cursor: pointer;" onclick="showProfile()">${organizer.name}</span>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <h3 style="color: white; font-size: 16px; margin-bottom: 12px;">👥 Учасники (${match.participants.length})</h3>
+                    ${participantsHTML}
+                </div>
+                
+                <div style="display: flex; gap: 10px;">
+                    ${match.status === 'open' && !match.participants.includes('currentUser') ? `
+                        <button onclick="joinMatch('${match.id}'); closeMatchDetails();" style="flex: 1; background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                            <i class="fas fa-plus"></i> Приєднатися
+                        </button>
+                    ` : ''}
+                    <button onclick="shareMatch('${match.id}')" style="flex: 1; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; padding: 12px; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                        <i class="fas fa-share"></i> Поділитися
+                    </button>
+                </div>
+            `;
+            
+            modal.classList.add('show');
+        }
+
+        function closeMatchDetails() {
+            document.getElementById('matchDetailsModal').classList.remove('show');
         }
 
         function shareMatch(matchId) {
-            showToast('📤 Матч поділено!', 'success');
+            showToast('📤 Посилання на матч скопійовано!', 'success');
         }
 
         function manageMatch(matchId) {
-            showToast('⚙️ Відкриваємо управління матчем...', 'success');
+            const match = allMatches.find(m => m.id === matchId) || 
+                          [
+                              {
+                                  id: 'mymatch1',
+                                  title: 'Мій матч на Печерську',
+                                  date: '2024-02-20',
+                                  time: '18:00',
+                                  location: 'Стадіон "Арена Сіті", Київ',
+                                  players: 8,
+                                  maxPlayers: 12,
+                                  status: 'open',
+                                  role: 'organizer',
+                                  applicants: ['player1', 'player2', 'player3', 'player4'],
+                                  accepted: ['player1', 'player2'],
+                                  rejected: ['player3'],
+                                  pending: ['player4']
+                              }
+                          ].find(m => m.id === matchId);
+            
+            if (!match) return;
+            
+            const modal = document.getElementById('manageMatchModal');
+            const content = document.getElementById('manageMatchContent');
+            
+            // Generate team names
+            const teamNames = ['Барселона', 'Реал Мадрид', 'Ліверпуль', 'Манчестер Сіті', 'Баварія', 'ПСЖ', 'Ювентус', 'Челсі'];
+            const teamA = teamNames[Math.floor(Math.random() * teamNames.length)];
+            let teamB;
+            do {
+                teamB = teamNames[Math.floor(Math.random() * teamNames.length)];
+            } while (teamB === teamA);
+            
+            content.innerHTML = `
+                <div style="margin-bottom: 20px;">
+                    <h2 style="color: white; font-size: 18px; margin-bottom: 15px;">${match.title}</h2>
+                    <div style="font-size: 14px; color: rgba(255,255,255,0.8); margin-bottom: 15px;">
+                        📅 ${match.date} о ${match.time} • 📍 ${match.location}
+                    </div>
+                </div>
+                
+                <!-- Applications Management -->
+                <div style="margin-bottom: 25px;">
+                    <h3 style="color: white; font-size: 16px; margin-bottom: 12px;">📝 Заявки на участь</h3>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <h4 style="color: #ffc107; font-size: 14px; margin-bottom: 8px;">⏳ Очікуються (${match.pending?.length || 1})</h4>
+                        ${(match.pending || ['player4']).map(playerId => {
+                            const player = getPlayer(playerId);
+                            return `
+                                <div style="display: flex; align-items: center; gap: 12px; padding: 10px; background: rgba(255,193,7,0.1); border-radius: 8px; margin-bottom: 8px; border: 1px solid rgba(255,193,7,0.3);">
+                                    <img src="${player.avatar}" alt="${player.name}" style="width: 32px; height: 32px; border-radius: 50%;">
+                                    <div style="flex: 1;">
+                                        <div style="font-weight: 600; color: white;">${player.name}</div>
+                                        <div style="font-size: 12px; color: rgba(255,255,255,0.6);">${player.position} • ⭐ ${player.rating}</div>
+                                    </div>
+                                    <button onclick="acceptPlayer('${playerId}')" style="background: #4CAF50; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; margin-right: 5px;">✓</button>
+                                    <button onclick="rejectPlayer('${playerId}')" style="background: #f44336; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer;">✗</button>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <h4 style="color: #4CAF50; font-size: 14px; margin-bottom: 8px;">✅ Прийняті (${match.accepted?.length || 2})</h4>
+                        ${(match.accepted || ['player1', 'player2']).map(playerId => {
+                            const player = getPlayer(playerId);
+                            return `
+                                <div style="display: flex; align-items: center; gap: 12px; padding: 10px; background: rgba(76,175,80,0.1); border-radius: 8px; margin-bottom: 8px; border: 1px solid rgba(76,175,80,0.3);">
+                                    <img src="${player.avatar}" alt="${player.name}" style="width: 32px; height: 32px; border-radius: 50%;">
+                                    <div style="flex: 1;">
+                                        <div style="font-weight: 600; color: white;">${player.name}</div>
+                                        <div style="font-size: 12px; color: rgba(255,255,255,0.6);">${player.position} • ⭐ ${player.rating}</div>
+                                    </div>
+                                    <button onclick="removePlayer('${playerId}')" style="background: rgba(244,67,54,0.2); color: #f44336; border: 1px solid rgba(244,67,54,0.3); padding: 6px 12px; border-radius: 6px; cursor: pointer;">Видалити</button>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                </div>
+                
+                <!-- Team Balance -->
+                <div style="margin-bottom: 25px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                        <h3 style="color: white; font-size: 16px; margin: 0;">⚖️ Баланс команд</h3>
+                        <button onclick="shuffleTeams()" style="background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 12px;">
+                            🔄 Перемішати
+                        </button>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div style="background: rgba(33,150,243,0.1); border: 1px solid rgba(33,150,243,0.3); border-radius: 10px; padding: 15px;">
+                            <h4 style="color: #2196F3; font-size: 14px; margin-bottom: 10px; text-align: center;">${teamA}</h4>
+                            <div style="text-align: center; margin-bottom: 10px;">
+                                <span style="color: white; font-weight: 700;">⭐ 4.1</span>
+                                <span style="color: rgba(255,255,255,0.6); font-size: 12px; margin-left: 5px;">середній рейтинг</span>
+                            </div>
+                            <div style="font-size: 12px; color: rgba(255,255,255,0.8);">
+                                <div>👤 player1 (4.2)</div>
+                                <div>👤 player3 (3.8)</div>
+                                <div>👤 player5 (4.3)</div>
+                            </div>
+                        </div>
+                        
+                        <div style="background: rgba(244,67,54,0.1); border: 1px solid rgba(244,67,54,0.3); border-radius: 10px; padding: 15px;">
+                            <h4 style="color: #f44336; font-size: 14px; margin-bottom: 10px; text-align: center;">${teamB}</h4>
+                            <div style="text-align: center; margin-bottom: 10px;">
+                                <span style="color: white; font-weight: 700;">⭐ 4.0</span>
+                                <span style="color: rgba(255,255,255,0.6); font-size: 12px; margin-left: 5px;">середній рейтинг</span>
+                            </div>
+                            <div style="font-size: 12px; color: rgba(255,255,255,0.8);">
+                                <div>👤 player2 (4.5)</div>
+                                <div>👤 player4 (4.0)</div>
+                                <div>👤 currentUser (4.2)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Match Control -->
+                <div>
+                    <h3 style="color: white; font-size: 16px; margin-bottom: 12px;">⚙️ Управління матчем</h3>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <button onclick="startMatch('${match.id}')" style="background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; border: none; padding: 10px 16px; border-radius: 8px; cursor: pointer; font-weight: 600;">
+                            ▶️ Почати матч
+                        </button>
+                        <button onclick="finishMatch('${match.id}')" style="background: linear-gradient(135deg, #ff9800, #ffc107); color: white; border: none; padding: 10px 16px; border-radius: 8px; cursor: pointer; font-weight: 600;">
+                            🏁 Завершити матч
+                        </button>
+                        <button onclick="cancelMatch('${match.id}')" style="background: linear-gradient(135deg, #f44336, #ef5350); color: white; border: none; padding: 10px 16px; border-radius: 8px; cursor: pointer; font-weight: 600;">
+                            ❌ Скасувати
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.add('show');
+        }
+
+        function closeManageMatch() {
+            document.getElementById('manageMatchModal').classList.remove('show');
+        }
+
+        function acceptPlayer(playerId) {
+            showToast(`✅ Гравця ${getPlayer(playerId).name} прийнято!`, 'success');
+            // Update match data
+        }
+
+        function rejectPlayer(playerId) {
+            showToast(`❌ Заявку гравця ${getPlayer(playerId).name} відхилено.`, 'error');
+            // Update match data
+        }
+
+        function removePlayer(playerId) {
+            showToast(`🚫 Гравця ${getPlayer(playerId).name} видалено з матчу.`, 'error');
+            // Update match data
+        }
+
+        function shuffleTeams() {
+            showToast('🔄 Команди перемішано!', 'success');
+            // Regenerate team balance with new shuffle
+            manageMatch(document.querySelector('#manageMatchModal .modal-title').textContent.includes('Мій матч') ? 'mymatch1' : 'match1');
+        }
+
+        function startMatch(matchId) {
+            showToast('▶️ Матч розпочато! Удачі!', 'success');
+            closeManageMatch();
+        }
+
+        function finishMatch(matchId) {
+            showToast('🏁 Відкриваємо форму завершення матчу...', 'success');
+            // Open finish match modal with score input and player ratings
+        }
+
+        function cancelMatch(matchId) {
+            if (confirm('Ви впевнені, що хочете скасувати матч?')) {
+                showToast('❌ Матч скасовано.', 'error');
+                closeManageMatch();
+            }
         }
 
         function showCreateMatchModal() {
-            showToast('➕ Відкриваємо створення матчу...', 'success');
+            const modal = document.getElementById('createMatchModal');
+            modal.classList.add('show');
+            
+            // Set default date to today
+            const today = new Date();
+            document.getElementById('matchDate').value = today.toISOString().split('T')[0];
         }
+
+        function closeCreateMatch() {
+            document.getElementById('createMatchModal').classList.remove('show');
+        }
+
+        // Create match form handler
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('createMatchForm');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const matchData = {
+                        title: document.getElementById('matchName').value,
+                        date: document.getElementById('matchDate').value,
+                        time: document.getElementById('matchTime').value,
+                        location: document.getElementById('matchLocation').value,
+                        maxPlayers: parseInt(document.getElementById('matchPlayers').value),
+                        level: document.getElementById('matchLevel').value,
+                        cost: document.getElementById('matchCost').value ? `${document.getElementById('matchCost').value} грн` : 'Безкоштовно',
+                        description: document.getElementById('matchDescription').value || 'Деталі будуть додані пізніше.',
+                        autoBalance: document.getElementById('autoBalance').checked,
+                        private: document.getElementById('privateMatch').checked
+                    };
+                    
+                    showToast('✅ Матч успішно створено!', 'success');
+                    closeCreateMatch();
+                    
+                    // Add to matches and regenerate
+                    const newMatch = {
+                        id: 'match_' + Date.now(),
+                        ...matchData,
+                        organizer: 'currentUser',
+                        players: 1,
+                        status: 'open',
+                        city: 'Київ',
+                        participants: ['currentUser']
+                    };
+                    allMatches.unshift(newMatch);
+                    generateMatchFeed();
+                    
+                    // Reset form
+                    form.reset();
+                });
+            }
+        });
 
         // Navigation functions
         function switchToVideo() {
