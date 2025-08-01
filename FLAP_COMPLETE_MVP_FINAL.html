@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLAP - Feel Like A Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(180deg, #1e7d32 0%, #2e7d32 100%);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Screen Management System */
+        .screen {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            min-height: 100vh;
+            width: 100%;
+            overflow-y: auto;
+        }
+
+        .screen.active {
+            display: block !important;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Welcome Screen Styles */
+        .welcome-screen {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            text-align: center;
+            min-height: 100vh;
+            background: linear-gradient(180deg, #1e7d32 0%, #2e7d32 100%);
+        }
+
+        .welcome-logo {
+            width: 120px;
+            height: 120px;
+            background: url('https://raw.githubusercontent.com/manatea25/manatea/design-options/Bold%20Graphic%20Design%20With%20Dynamic%20Logo%20On%20Green%20Background.png.jpg') center/cover;
+            border-radius: 30px;
+            border: 4px solid #fff;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            margin-bottom: 30px;
+            animation: logoBounce 2s infinite;
+        }
+
+        @keyframes logoBounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .welcome-title {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .welcome-subtitle {
+            font-size: 18px;
+            opacity: 0.9;
+            margin-bottom: 40px;
+            line-height: 1.5;
+        }
+
+        .auth-buttons {
+            width: 100%;
+            max-width: 300px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .auth-btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .auth-btn.primary {
+            background: #fff;
+            color: #1e7d32;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .auth-btn.primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.3);
+        }
+
+        .auth-btn.secondary {
+            background: transparent;
+            color: #fff;
+            border: 2px solid #fff;
+        }
+
+        .auth-btn.secondary:hover {
+            background: #fff;
+            color: #1e7d32;
+            transform: translateY(-3px);
+        }
+
+        .social-btn {
+            background: #fff;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .social-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        /* Login/Register Forms */
+        .form-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .form-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .form-subtitle {
+            opacity: 0.8;
+            font-size: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 12px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #fff;
+            background: rgba(255,255,255,0.15);
+        }
+
+        .form-input::placeholder {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 40px;
+            left: 20px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 12px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.1);
+        }
+
+        /* Mode Selection Screen */
+        .mode-selection {
+            min-height: 100vh;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #1e7d32 0%, #2e7d32 50%, #388e3c 100%);
+        }
+
+        .user-greeting {
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .user-avatar-large {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            border: 3px solid #fff;
+            object-fit: cover;
+        }
+
+        .greeting-text {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .user-rating {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+
+        .mode-sections {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            height: calc(100vh - 250px);
+        }
+
+        .mode-section {
+            background: rgba(255,255,255,0.1);
+            border-radius: 25px;
+            padding: 30px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.2);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .mode-section:hover {
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.15);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        .mode-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .mode-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .mode-functions {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .mode-function {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        /* Video Section Styles */
+        .video-container {
+            background: linear-gradient(135deg, #0d1421 0%, #1a252f 50%, #2c3e50 100%);
+            min-height: 100vh;
+        }
+
+        .video-header {
+            background: linear-gradient(135deg, #0d1421, #1a252f);
+            padding: 15px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 900;
+            background: linear-gradient(45deg, #4CAF50, #66bb6a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .coins-btn {
+            background: rgba(255,215,0,0.1);
+            border: 1px solid rgba(255,215,0,0.3);
+            color: #ffd700;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .coins-btn:hover {
+            background: rgba(255,215,0,0.2);
+            transform: translateY(-2px);
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            object-fit: cover;
+        }
+
+        .user-avatar:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(76,175,80,0.4);
+        }
+
+        /* Matches Section Styles */
+        .matches-container {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+        }
+
+        .matches-header {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            padding: 15px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            background: rgba(255,255,255,0.05);
+            margin: 0 20px;
+            border-radius: 15px;
+            padding: 5px;
+            gap: 5px;
+            margin-top: 20px;
+        }
+
+        .nav-tab {
+            flex: 1;
+            background: transparent;
+            color: rgba(255,255,255,0.6);
+            border: none;
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .nav-tab.active {
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            color: white;
+            box-shadow: 0 4px 15px rgba(76,175,80,0.3);
+        }
+
+        /* Common Styles */
+        .fab {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(76,175,80,0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .fab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 35px rgba(76,175,80,0.6);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 15000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 90%;
+            max-height: 90%;
+            overflow-y: auto;
+            position: relative;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: rgba(255,255,255,0.6);
+            font-size: 24px;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+
+        /* Toast Notifications */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            z-index: 20000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            box-shadow: 0 8px 25px rgba(76,175,80,0.3);
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.error {
+            background: linear-gradient(135deg, #f44336, #ef5350);
+            box-shadow: 0 8px 25px rgba(244,67,54,0.3);
+        }
+
+        .toast.warning {
+            background: linear-gradient(135deg, #ff9800, #ffb74d);
+            box-shadow: 0 8px 25px rgba(255,152,0,0.3);
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.9);
+            backdrop-filter: blur(10px);
+            padding: 10px 0;
+            display: flex;
+            justify-content: space-around;
+            z-index: 1000;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 8px 12px;
+            color: rgba(255,255,255,0.6);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 10px;
+        }
+
+        .nav-item.active {
+            color: #4CAF50;
+            background: rgba(76,175,80,0.1);
+        }
+
+        .nav-item:hover {
+            color: #4CAF50;
+            background: rgba(76,175,80,0.1);
+        }
+
+        .nav-icon {
+            font-size: 20px;
+        }
+
+        .nav-label {
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        /* Profile Modal */
+        .profile-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 15000;
+            backdrop-filter: blur(5px);
+        }
+
+        .profile-modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-card {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border-radius: 25px;
+            padding: 30px;
+            max-width: 400px;
+            width: 90%;
+            position: relative;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            border: 3px solid #4CAF50;
+            object-fit: cover;
+        }
+
+        .profile-name {
+            font-size: 22px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        .profile-position {
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 5px;
+        }
+
+        .profile-city {
+            color: rgba(255,255,255,0.6);
+            font-size: 14px;
+        }
+
+        .profile-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .profile-stat-item {
+            text-align: center;
+            padding: 15px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+        }
+
+        .profile-stat-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: #4CAF50;
+            margin-bottom: 5px;
+        }
+
+        .profile-stat-label {
+            font-size: 12px;
+            color: rgba(255,255,255,0.6);
+        }
+
+        .profile-recent-matches {
+            margin-bottom: 20px;
+        }
+
+        .profile-matches-title {
+            font-size: 14px;
+            color: white;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .profile-match-results {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .profile-match-result {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .profile-match-result.W {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .profile-match-result.L {
+            background: #f44336;
+            color: white;
+        }
+
+        .profile-match-result.D {
+            background: #FFC107;
+            color: #333;
+        }
+
+        .profile-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .profile-action-btn {
+            flex: 1;
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .profile-action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(76,175,80,0.4);
+        }
+
+        .profile-action-btn.full-width {
+            margin-top: 10px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .mode-sections {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .mode-section {
+                padding: 20px 15px;
+            }
+            
+            .modal-content {
+                max-width: 95%;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Welcome Screen -->
+    <div id="welcomeScreen" class="screen active">
+        <div class="welcome-screen">
+            <div class="welcome-logo"></div>
+            <h1 class="welcome-title">FLAP</h1>
+            <p class="welcome-subtitle">Feel Like A Pro<br>Твій футбольний всесвіт</p>
+            <div class="auth-buttons">
+                <button class="auth-btn primary" onclick="showLogin()">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Увійти
+                </button>
+                <button class="auth-btn secondary" onclick="showRegister()">
+                    <i class="fas fa-user-plus"></i>
+                    Реєстрація
+                </button>
+                <button class="auth-btn social-btn" onclick="loginWithGoogle()">
+                    <i class="fab fa-google"></i>
+                    Увійти через Google
+                </button>
+                <button class="auth-btn social-btn" onclick="loginWithFacebook()">
+                    <i class="fab fa-facebook-f"></i>
+                    Увійти через Facebook
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Screen -->
+    <div id="loginScreen" class="screen">
+        <button class="back-btn" onclick="showWelcome()">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        <div class="form-container">
+            <div class="form-header">
+                <h2 class="form-title">Вхід</h2>
+                <p class="form-subtitle">Вітаємо знову!</p>
+            </div>
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" placeholder="your@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Пароль</label>
+                    <input type="password" class="form-input" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="auth-btn primary" style="width: 100%; margin-top: 20px;">
+                    Увійти
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Screen -->
+    <div id="registerScreen" class="screen">
+        <button class="back-btn" onclick="showWelcome()">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        <div class="form-container">
+            <div class="form-header">
+                <h2 class="form-title">Реєстрація</h2>
+                <p class="form-subtitle">Створи свій профіль</p>
+            </div>
+            <form onsubmit="handleRegister(event)">
+                <div class="form-group">
+                    <label class="form-label">Ім'я</label>
+                    <input type="text" class="form-input" placeholder="Ваше ім'я" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" placeholder="your@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Пароль</label>
+                    <input type="password" class="form-input" placeholder="••••••••" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Позиція</label>
+                    <select class="form-input" required>
+                        <option value="">Оберіть позицію</option>
+                        <option value="goalkeeper">Воротар</option>
+                        <option value="defender">Захисник</option>
+                        <option value="midfielder">Півзахисник</option>
+                        <option value="forward">Нападник</option>
+                    </select>
+                </div>
+                <button type="submit" class="auth-btn primary" style="width: 100%; margin-top: 20px;">
+                    Створити акаунт
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Mode Selection Screen -->
+    <div id="modeSelectionScreen" class="screen">
+        <div class="mode-selection">
+            <div class="user-greeting">
+                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face" 
+                     alt="User Avatar" class="user-avatar-large" onclick="showProfile()">
+                <div class="greeting-text" id="greetingText">Привіт, Олексій! 👋</div>
+                <div class="user-rating">⭐ Рейтинг: 4.2 • 🏆 23 матчі</div>
+                <div style="font-size: 14px; opacity: 0.8;">Обери режим і почни грати!</div>
+            </div>
+
+            <div class="mode-sections">
+                <div class="mode-section" onclick="showVideoSection()">
+                    <div>
+                        <div class="mode-icon">🎥</div>
+                        <div class="mode-title">Відео</div>
+                        <div class="mode-functions">
+                            <div class="mode-function">
+                                <i class="fas fa-video"></i>
+                                <span>Завантажуй відео</span>
+                            </div>
+                            <div class="mode-function">
+                                <i class="fas fa-trophy"></i>
+                                <span>Створюй челенджі</span>
+                            </div>
+                            <div class="mode-function">
+                                <i class="fas fa-star"></i>
+                                <span>Оцінюй інших</span>
+                            </div>
+                            <div class="mode-function">
+                                <i class="fas fa-coins"></i>
+                                <span>Заробляй монети</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mode-section" onclick="showMatchesSection()">
+                    <div>
+                        <div class="mode-icon">⚽</div>
+                        <div class="mode-title">Матчі</div>
+                        <div class="mode-functions">
+                            <div class="mode-function">
+                                <i class="fas fa-search"></i>
+                                <span>Знаходь матчі</span>
+                            </div>
+                            <div class="mode-function">
+                                <i class="fas fa-plus"></i>
+                                <span>Створюй матчі</span>
+                            </div>
+                            <div class="mode-function">
+                                <i class="fas fa-users"></i>
+                                <span>Грай з друзями</span>
+                            </div>
+                            <div class="mode-function">
+                                <i class="fas fa-chart-line"></i>
+                                <span>Покращуй рейтинг</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Video Section Screen -->
+    <div id="videoSectionScreen" class="screen">
+        <div class="video-container">
+            <div class="video-header">
+                <div class="header-content">
+                    <div class="logo">FLAP</div>
+                    <div class="header-actions">
+                        <button class="coins-btn" onclick="showCoinsMenu()">
+                            <i class="fas fa-coins"></i>
+                            <span id="userCoins">125</span>
+                        </button>
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face" 
+                             alt="Profile" class="user-avatar" onclick="showProfile()">
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-tabs">
+                <button class="nav-tab active" onclick="showVideoTab('feed')">Стрічка</button>
+                <button class="nav-tab" onclick="showVideoTab('trending')">Тренди</button>
+                <button class="nav-tab" onclick="showVideoTab('challenges')">Челенджі</button>
+                <button class="nav-tab" onclick="showVideoTab('myVideos')">Мої відео</button>
+            </div>
+
+            <div id="videoContent" style="padding: 20px; min-height: calc(100vh - 200px);">
+                <!-- Video content will be loaded here -->
+            </div>
+
+            <button class="fab" onclick="showUploadModal()">
+                <i class="fas fa-plus"></i>
+            </button>
+
+            <!-- Switch to Matches Button -->
+            <button onclick="showMatchesSection()" 
+                    style="position: fixed; bottom: 150px; right: 20px; background: linear-gradient(135deg, #1a1a2e, #16213e); color: white; border: 2px solid #4CAF50; padding: 12px; border-radius: 50%; width: 48px; height: 48px; cursor: pointer; box-shadow: 0 8px 25px rgba(26,26,46,0.4); transition: all 0.3s ease; z-index: 999;"
+                    onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 12px 35px rgba(26,26,46,0.6)'"
+                    onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 8px 25px rgba(26,26,46,0.4)'">
+                <i class="fas fa-futbol"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Matches Section Screen -->
+    <div id="matchesSectionScreen" class="screen">
+        <div class="matches-container">
+            <div class="matches-header">
+                <div class="header-content">
+                    <div class="logo">FLAP</div>
+                    <div class="header-actions">
+                        <button class="coins-btn" onclick="showCoinsMenu()">
+                            <i class="fas fa-coins"></i>
+                            <span id="userCoinsMatches">125</span>
+                        </button>
+                        <button onclick="showCreateMatchModal()" 
+                                style="background: linear-gradient(135deg, #4caf50, #66bb6a); color: white; border: none; padding: 10px; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face" 
+                             alt="Profile" class="user-avatar" onclick="showProfile()">
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-tabs">
+                <button class="nav-tab active" onclick="showMatchTab('find')">Знайти матч</button>
+                <button class="nav-tab" onclick="showMatchTab('my')">Мої матчі</button>
+                <button class="nav-tab" onclick="showMatchTab('history')">Історія</button>
+                <button class="nav-tab" onclick="showMatchTab('ratings')">Рейтинги</button>
+            </div>
+
+            <div id="matchContent" style="padding: 20px; min-height: calc(100vh - 200px);">
+                <!-- Match content will be loaded here -->
+            </div>
+
+            <button class="fab" onclick="showCreateMatchModal()">
+                <i class="fas fa-plus"></i>
+            </button>
+
+            <!-- Switch to Video Button -->
+            <button onclick="showVideoSection()" 
+                    style="position: fixed; bottom: 150px; right: 20px; background: linear-gradient(135deg, #0d1421, #1a252f); color: white; border: 2px solid #4CAF50; padding: 12px; border-radius: 50%; width: 48px; height: 48px; cursor: pointer; box-shadow: 0 8px 25px rgba(13,20,33,0.4); transition: all 0.3s ease; z-index: 999;"
+                    onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 12px 35px rgba(13,20,33,0.6)'"
+                    onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 8px 25px rgba(13,20,33,0.4)'">
+                <i class="fas fa-video"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Profile Modal -->
+    <div id="profileModal" class="profile-modal">
+        <div class="profile-card">
+            <button class="modal-close" onclick="closeProfile()">×</button>
+            <div class="profile-header">
+                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face" 
+                     alt="Profile" class="profile-avatar">
+                <div class="profile-name">Олексій Петренко</div>
+                <div class="profile-position">Півзахисник</div>
+                <div class="profile-city">📍 Київ</div>
+            </div>
+
+            <div class="profile-stats">
+                <div class="profile-stat-item">
+                    <div class="profile-stat-value">4.2</div>
+                    <div class="profile-stat-label">Рейтинг</div>
+                </div>
+                <div class="profile-stat-item">
+                    <div class="profile-stat-value">23</div>
+                    <div class="profile-stat-label">Матчі зіграно</div>
+                </div>
+                <div class="profile-stat-item">
+                    <div class="profile-stat-value">4.1</div>
+                    <div class="profile-stat-label">Середня оцінка</div>
+                </div>
+                <div class="profile-stat-item">
+                    <div class="profile-stat-value">65%</div>
+                    <div class="profile-stat-label">Win Rate</div>
+                </div>
+            </div>
+
+            <div class="profile-recent-matches">
+                <div class="profile-matches-title">🏆 Останні матчі</div>
+                <div class="profile-match-results">
+                    <div class="profile-match-result W">W</div>
+                    <div class="profile-match-result L">L</div>
+                    <div class="profile-match-result D">D</div>
+                    <div class="profile-match-result W">W</div>
+                    <div class="profile-match-result W">W</div>
+                </div>
+            </div>
+
+            <div class="profile-actions">
+                <button class="profile-action-btn" onclick="showUserVideos()">
+                    <i class="fas fa-video"></i>
+                    Відео
+                </button>
+                <button class="profile-action-btn full-width" onclick="showChallengeInvite()">
+                    <i class="fas fa-trophy"></i>
+                    Запросити на челендж
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <div class="nav-item" onclick="showModeSelection()">
+            <div class="nav-icon"><i class="fas fa-home"></i></div>
+            <div class="nav-label">Головна</div>
+        </div>
+        <div class="nav-item" onclick="showVideoSection()">
+            <div class="nav-icon"><i class="fas fa-video"></i></div>
+            <div class="nav-label">Відео</div>
+        </div>
+        <div class="nav-item" onclick="showMatchesSection()">
+            <div class="nav-icon"><i class="fas fa-futbol"></i></div>
+            <div class="nav-label">Матчі</div>
+        </div>
+        <div class="nav-item" onclick="showProfile()">
+            <div class="nav-icon"><i class="fas fa-user"></i></div>
+            <div class="nav-label">Профіль</div>
+        </div>
+    </div>
+
+    <script>
+        // Screen Management
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        function showWelcome() {
+            showScreen('welcomeScreen');
+        }
+
+        function showLogin() {
+            showScreen('loginScreen');
+        }
+
+        function showRegister() {
+            showScreen('registerScreen');
+        }
+
+        function showModeSelection() {
+            showScreen('modeSelectionScreen');
+            updateGreeting();
+        }
+
+        function showVideoSection() {
+            showScreen('videoSectionScreen');
+            showVideoTab('feed');
+            updateBottomNav('video');
+        }
+
+        function showMatchesSection() {
+            showScreen('matchesSectionScreen');
+            showMatchTab('find');
+            updateBottomNav('matches');
+        }
+
+        // Authentication
+        function handleLogin(event) {
+            event.preventDefault();
+            showToast('Успішний вхід! Вітаємо!', 'success');
+            setTimeout(() => {
+                showModeSelection();
+            }, 1000);
+        }
+
+        function handleRegister(event) {
+            event.preventDefault();
+            showToast('Акаунт створено! Вітаємо в FLAP!', 'success');
+            setTimeout(() => {
+                showModeSelection();
+            }, 1000);
+        }
+
+        function loginWithGoogle() {
+            showToast('Вхід через Google...', 'success');
+            setTimeout(() => {
+                showModeSelection();
+            }, 1000);
+        }
+
+        function loginWithFacebook() {
+            showToast('Вхід через Facebook...', 'success');
+            setTimeout(() => {
+                showModeSelection();
+            }, 1000);
+        }
+
+        // Random Greetings
+        const greetings = [
+            "Привіт, Олексій! 👋 Готовий показати клас?",
+            "Вітаю, чемпіоне! ⭐ Час для нових перемог!",
+            "Привіт, Олексій! 🔥 Сьогодні твій день!",
+            "Вітаю, зірко! 🌟 Покажи всім свою майстерність!",
+            "Привіт, Олексій! ⚽ Час грати і перемагати!",
+            "Вітаю, легендо! 🏆 Новий день - нові досягнення!",
+            "Привіт, Олексій! 💪 Сьогодні будеш неперевершений!",
+            "Вітаю, майстре! 🎯 Час показати свій талант!",
+            "Привіт, Олексій! 🚀 Готовий до нових висот?",
+            "Вітаю, чемпіон! 👑 Твоя гра завжди на висоті!"
+        ];
+
+        function updateGreeting() {
+            const greetingElement = document.getElementById('greetingText');
+            if (greetingElement) {
+                const lastGreeting = localStorage.getItem('lastGreeting');
+                const lastTime = localStorage.getItem('lastGreetingTime');
+                const now = Date.now();
+                const fourHours = 4 * 60 * 60 * 1000;
+
+                let greeting;
+                if (!lastTime || (now - parseInt(lastTime)) > fourHours) {
+                    do {
+                        greeting = greetings[Math.floor(Math.random() * greetings.length)];
+                    } while (greeting === lastGreeting && greetings.length > 1);
+                    
+                    localStorage.setItem('lastGreeting', greeting);
+                    localStorage.setItem('lastGreetingTime', now.toString());
+                } else {
+                    greeting = lastGreeting || greetings[0];
+                }
+
+                greetingElement.textContent = greeting;
+            }
+        }
+
+        // Video Section Functions
+        function showVideoTab(tab) {
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            const content = document.getElementById('videoContent');
+            
+            switch(tab) {
+                case 'feed':
+                    content.innerHTML = `
+                        <div style="text-align: center; padding: 40px 20px;">
+                            <i class="fas fa-video" style="font-size: 48px; color: #4CAF50; margin-bottom: 20px;"></i>
+                            <h3 style="color: white; margin-bottom: 10px;">Стрічка відео</h3>
+                            <p style="color: rgba(255,255,255,0.7);">Дивись найкращі відео від спільноти</p>
+                        </div>
+                    `;
+                    break;
+                case 'trending':
+                    content.innerHTML = `
+                        <div style="text-align: center; padding: 40px 20px;">
+                            <i class="fas fa-fire" style="font-size: 48px; color: #FF5722; margin-bottom: 20px;"></i>
+                            <h3 style="color: white; margin-bottom: 10px;">Популярні відео</h3>
+                            <p style="color: rgba(255,255,255,0.7);">Топ відео цього тижня</p>
+                        </div>
+                    `;
+                    break;
+                case 'challenges':
+                    content.innerHTML = `
+                        <div style="text-align: center; padding: 40px 20px;">
+                            <i class="fas fa-trophy" style="font-size: 48px; color: #FFC107; margin-bottom: 20px;"></i>
+                            <h3 style="color: white; margin-bottom: 10px;">Челенджі</h3>
+                            <p style="color: rgba(255,255,255,0.7);">Приймай виклики та створюй свої</p>
+                        </div>
+                    `;
+                    break;
+                case 'myVideos':
+                    content.innerHTML = `
+                        <div style="text-align: center; padding: 40px 20px;">
+                            <i class="fas fa-user-circle" style="font-size: 48px; color: #2196F3; margin-bottom: 20px;"></i>
+                            <h3 style="color: white; margin-bottom: 10px;">Мої відео</h3>
+                            <p style="color: rgba(255,255,255,0.7);">Твої завантажені відео</p>
+                        </div>
+                    `;
+                    break;
+            }
+        }
+
+        // Matches Section Functions
+        function showMatchTab(tab) {
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            const content = document.getElementById('matchContent');
+            
+            switch(tab) {
+                case 'find':
+                    content.innerHTML = `
+                        <div style="text-align: center; padding: 40px 20px;">
+                            <i class="fas fa-search" style="font-size: 48px; color: #4CAF50; margin-bottom: 20px;"></i>
+                            <h3 style="color: white; margin-bottom: 10px;">Знайти матч</h3>
+                            <p style="color: rgba(255,255,255,0.7);">Приєднуйся до існуючих матчів</p>
+                        </div>
+                    `;
+                    break;
+                case 'my':
+                    content.innerHTML = `
+                        <div style="text-align: center; padding: 40px 20px;">
+                            <i class="fas fa-user-friends" style="font-size: 48px; color: #2196F3; margin-bottom: 20px;"></i>
+                            <h3 style="color: white; margin-bottom: 10px;">Мої матчі</h3>
+                            <p style="color: rgba(255,255,255,0.7);">Матчі, які ти створив або в яких береш участь</p>
+                        </div>
+                    `;
+                    break;
+                case 'history':
+                    content.innerHTML = `
+                        <div style="text-align: center; padding: 40px 20px;">
+                            <i class="fas fa-history" style="font-size: 48px; color: #FF9800; margin-bottom: 20px;"></i>
+                            <h3 style="color: white; margin-bottom: 10px;">Історія матчів</h3>
+                            <p style="color: rgba(255,255,255,0.7);">Твої попередні матчі та результати</p>
+                        </div>
+                    `;
+                    break;
+                case 'ratings':
+                    content.innerHTML = `
+                        <div style="text-align: center; padding: 40px 20px;">
+                            <i class="fas fa-star" style="font-size: 48px; color: #FFC107; margin-bottom: 20px;"></i>
+                            <h3 style="color: white; margin-bottom: 10px;">Рейтинги</h3>
+                            <p style="color: rgba(255,255,255,0.7);">Топ гравці та твоя позиція</p>
+                        </div>
+                    `;
+                    break;
+            }
+        }
+
+        // Profile Functions
+        function showProfile() {
+            document.getElementById('profileModal').classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeProfile() {
+            document.getElementById('profileModal').classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+
+        function showUserVideos() {
+            showToast('Відкриваємо відео користувача...', 'success');
+            closeProfile();
+        }
+
+        function showChallengeInvite() {
+            showToast('Запрошуємо на челендж...', 'success');
+            closeProfile();
+        }
+
+        // Modal Functions
+        function showUploadModal() {
+            showToast('Відкриваємо завантаження відео...', 'success');
+        }
+
+        function showCreateMatchModal() {
+            showToast('Відкриваємо створення матчу...', 'success');
+        }
+
+        function showCoinsMenu() {
+            showToast('Відкриваємо меню монет...', 'success');
+        }
+
+        // Bottom Navigation
+        function updateBottomNav(section) {
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            if (section === 'video') {
+                document.querySelectorAll('.nav-item')[1].classList.add('active');
+            } else if (section === 'matches') {
+                document.querySelectorAll('.nav-item')[2].classList.add('active');
+            }
+        }
+
+        // Toast Notifications
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => toast.classList.add('show'), 100);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => document.body.removeChild(toast), 300);
+            }, 3000);
+        }
+
+        // Initialize App
+        document.addEventListener('DOMContentLoaded', function() {
+            showWelcome();
+        });
+    </script>
+</body>
+</html>
