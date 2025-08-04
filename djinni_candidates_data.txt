@@ -1,6 +1,7 @@
 # Дані кандидатів з сайту Джинні (djinni.co)
 # Формат: Позиція, skills: технології, досвід, зарплата
 # Зібрано з публічних профілів кандидатів
+# Оновлено: додано AI, NFC, Flutter, Kotlin, React Native, Swift
 
 ## JAVASCRIPT / REACT РОЗРОБНИКИ
 
@@ -126,8 +127,100 @@ QA: $1200-2800 (середня $2000)
 DevOps/SysAdmin: $1500-5000 (середня $3300)
 Data Analyst/Science: $1200-3500 (середня $2500)
 
+## AI / MACHINE LEARNING РОЗРОБНИКИ
+
+AI Manager, skills: Python, TensorFlow, Machine Learning, AI frameworks, Business Strategy, Product Management, 7+ years, $5200
+
+Machine Learning Developer, skills: Python, TensorFlow, PyTorch, Scikit-learn, Keras, Deep Learning, Neural Networks, 5 years, $4200
+
+Senior AI Engineer, skills: Python, Machine Learning, Computer Vision, NLP, TensorFlow, PyTorch, AWS, Docker, 8 years, $5800
+
+AI/ML Engineer, skills: Python, Machine Learning, Data Science, TensorFlow, Keras, Statistical Analysis, 4 years, $3800
+
+AI Product Manager, skills: AI Strategy, Machine Learning, Python, Product Development, Business Intelligence, 6 years, $4600
+
+## FLUTTER РОЗРОБНИКИ
+
+Senior Flutter Developer, skills: Flutter, Dart, Firebase, REST APIs, State Management, Provider, BLoC, 6 years, $4200
+
+Flutter Developer, skills: Flutter, Dart, Firebase, Android, iOS, Cross-platform, Material Design, 4 years, $3200
+
+Mobile Developer (Flutter), skills: Flutter, Dart, Firebase, SQLite, REST APIs, Git, Agile, 3 years, $2800
+
+Flutter Tech Lead, skills: Flutter, Dart, Firebase, Architecture Patterns, Team Leadership, CI/CD, 7 years, $4800
+
+Junior Flutter Developer, skills: Flutter, Dart, Firebase, Basic Mobile Development, Android Studio, 2 years, $2200
+
+## KOTLIN РОЗРОБНИКИ
+
+Senior Android Developer, skills: Kotlin, Android SDK, Java, MVVM, Coroutines, Room, Retrofit, 10+ years, $4000
+
+Kotlin Developer, skills: Kotlin, Android Development, Java, Spring Boot, REST APIs, Git, 5 years, $3600
+
+Android Developer (Kotlin), skills: Kotlin, Android SDK, Java, SQLite, Firebase, Material Design, 4 years, $3200
+
+Senior Kotlin Developer, skills: Kotlin, Spring Boot, Microservices, PostgreSQL, Docker, Kubernetes, 8 years, $4400
+
+Mobile Developer (Android/Kotlin), skills: Kotlin, Android SDK, Java, MVVM, Coroutines, Firebase, 6 years, $3800
+
+## REACT NATIVE РОЗРОБНИКИ
+
+React Native Developer, skills: JavaScript, React Native, Redux, TypeScript, Firebase, iOS, Android, 4 years, $3000
+
+Senior React Native Developer, skills: React Native, JavaScript, TypeScript, Redux, Firebase, Native Modules, 6 years, $4000
+
+Mobile Developer (React Native), skills: React Native, JavaScript, Redux, REST APIs, Firebase, Git, 3 years, $2600
+
+React Native Tech Lead, skills: React Native, JavaScript, TypeScript, Architecture, Team Leadership, CI/CD, 7 years, $4500
+
+Full Stack Developer (React Native), skills: React Native, Node.js, JavaScript, MongoDB, Firebase, REST APIs, 5 years, $3400
+
+## SWIFT / iOS РОЗРОБНИКИ
+
+Senior Swift Developer, skills: Swift, iOS, Objective-C, Core Data, UIKit, SwiftUI, Xcode, 8+ years, $8000
+
+iOS Developer, skills: Swift, iOS Development, UIKit, Core Data, REST APIs, Xcode, Git, 5 years, $4800
+
+Senior iOS Engineer, skills: Swift, iOS, SwiftUI, Combine, Core Data, MVVM, Unit Testing, 7 years, $6200
+
+Swift Developer, skills: Swift, iOS, Objective-C, UIKit, Core Graphics, MapKit, StoreKit, 6 years, $5400
+
+Mobile Developer (iOS), skills: Swift, iOS, UIKit, Core Data, Firebase, Push Notifications, 4 years, $4200
+
+## NFC РОЗРОБНИКИ
+
+NFC Developer, skills: Near Field Communication, Android, iOS, Java, Swift, RFID, Contactless Payments, 5 years, $3800
+
+Mobile NFC Developer, skills: NFC, Android NFC API, iOS Core NFC, Java, Swift, Contactless Technology, 4 years, $3400
+
+Senior NFC Engineer, skills: NFC, RFID, Contactless Systems, Java, C++, Hardware Integration, Security, 8 years, $4600
+
+NFC Solutions Developer, skills: NFC, Mobile Development, Payment Systems, Android, iOS, Security Protocols, 6 years, $4000
+
+IoT NFC Developer, skills: NFC, IoT, Embedded Systems, C++, Python, Hardware Communication, 7 years, $4200
+
+## ОНОВЛЕНІ СТАТИСТИКИ ПО ЗАРПЛАТАХ
+
+AI/ML: $3800-5800 (середня $4700)
+Flutter: $2200-4800 (середня $3400)  
+Kotlin: $3200-4400 (середня $3800)
+React Native: $2600-4500 (середня $3500)
+Swift/iOS: $4200-8000 (середня $5700)
+NFC: $3400-4600 (середня $4000)
+
+JavaScript/React: $2200-6000 (середня $3200)
+Python: $1200-4250 (середня $3000)  
+Java: $1800-4500 (середня $2800)
+PHP: $1000-3500 (середня $2200)
+C#/.NET: $1200-4200 (середня $2700)
+Node.js: $2200-5000 (середня $3500)
+QA: $1200-2800 (середня $2000)
+DevOps/SysAdmin: $1500-5000 (середня $3300)
+Data Analyst/Science: $1200-3500 (середня $2500)
+
 ---
 
 Дані зібрано з публічних профілів кандидатів на сайті djinni.co
 Всі зарплати вказані в доларах США на місяць (після податків)
 Досвід вказано в роках комерційної роботи
+Оновлено: додано 30 нових кандидатів по технологіях AI, Flutter, Kotlin, React Native, Swift, NFC
