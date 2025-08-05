@@ -1,0 +1,226 @@
+# Дані кандидатів з сайту Джинні (djinni.co)
+# Формат: Позиція, skills: технології, досвід, зарплата
+# Зібрано з публічних профілів кандидатів
+# Оновлено: додано AI, NFC, Flutter, Kotlin, React Native, Swift
+
+## JAVASCRIPT / REACT РОЗРОБНИКИ
+
+Senior Front End Developer, skills: JavaScript, React, Redux, TypeScript, HTML5, CSS3, Angular, Bootstrap, Jest, 9 years, $6000
+
+Frontend Developer (React/Typescript/Next.js), skills: JavaScript, TypeScript, React, Redux, Next.js, Node.js, HTML, CSS, 5 years, $2300
+
+Front End developer, skills: JavaScript, React, TypeScript, Redux, HTML5, CSS3, Figma, Webpack, GraphQL, 7 years, $4000
+
+Front-end Developer / React Developer / Software Engineer, skills: JavaScript, TypeScript, React, Next.js, Redux, HTML, CSS, Web3, 8 years, $3000
+
+Frontend Developer, skills: JavaScript, TypeScript, React, Vue, Next.js, Gatsby, HTML, CSS, GraphQL, 4 years, $3000
+
+Front-end Developer (React.js/Next.js), skills: JavaScript, TypeScript, React, Redux, Next.js, PHP, Symfony, HTML, CSS, 2 years, $800
+
+## PYTHON РОЗРОБНИКИ
+
+Middle/Senior Python Developer, skills: Python, Django, PostgreSQL, Bootstrap, Jinja, Docker, Git, 3+ years, $4250
+
+Senior Python Developer, skills: Python, Django, Flask, PostgreSQL, Redis, Docker, AWS, Linux, Git, 5+ years, $4000
+
+Python Developer, skills: Python, Django, PostgreSQL, Elasticsearch, Redis, Docker, GitHub, 2+ years, $3000
+
+Junior Python Developer, skills: Python, Django, Flask, PostgreSQL, MySQL, HTML, CSS, JavaScript, 1 year, $1200
+
+Mid Python Developer, skills: Python, FastAPI, Django, PostgreSQL, Docker, AWS, Redis, 3 years, $2800
+
+## JAVA РОЗРОБНИКИ
+
+Senior Java Developer, skills: Java, Spring, REST API, PostgreSQL, Hibernate, JPA, Maven, AWS, Git, 10+ years, $4500
+
+Java Developer, skills: Java, Spring Boot, MySQL, Hibernate, Maven, Gradle, Git, JUnit, 5 years, $3200
+
+Middle Java Developer, skills: Java, Spring, PostgreSQL, Maven, Git, REST API, Docker, 3 years, $2500
+
+Junior Java Developer, skills: Java, Spring Boot, MySQL, Maven, Git, HTML, CSS, 1.5 years, $1800
+
+Scala/Java Developer, skills: Java, Scala, JavaScript, Spring, MySQL, Redis, Git, Maven, 1.5 years, $2000
+
+## PHP РОЗРОБНИКИ
+
+Senior PHP Developer, skills: PHP, Laravel, MySQL, PostgreSQL, Redis, Docker, Git, Nginx, 8+ years, $3500
+
+PHP Developer, skills: PHP, Laravel, Symfony, MySQL, Docker, Git, HTML, CSS, JavaScript, 4 years, $2200
+
+Middle PHP Developer, skills: PHP, Laravel, PostgreSQL, Docker, Git, REST API, 3 years, $1800
+
+Junior PHP Developer, skills: PHP, MySQL, HTML, CSS, JavaScript, Git, 1 year, $1000
+
+Full Stack PHP Developer, skills: PHP, Laravel, Vue.js, MySQL, Docker, Git, JavaScript, 5 years, $2800
+
+## C# / .NET РОЗРОБНИКИ
+
+Senior C# Developer (WPF), skills: C#, .NET, WPF, XAML, Windows, SQL Server, Git, 6+ years, $3800
+
+.NET Developer, skills: C#, ASP.NET, Entity Framework, SQL Server, Azure, Git, 4 years, $2500
+
+Middle .NET Developer, skills: C#, .NET Core, ASP.NET, PostgreSQL, Docker, Git, 3 years, $2000
+
+Junior C# Developer, skills: C#, .NET, SQL Server, HTML, CSS, JavaScript, 1 year, $1200
+
+Senior .NET Developer, skills: C#, ASP.NET Core, Azure, SQL Server, Docker, Kubernetes, 7+ years, $4200
+
+## NODE.JS РОЗРОБНИКИ
+
+Node.js Engineer, skills: Node.js, TypeScript, NestJS, PostgreSQL, MongoDB, Redis, Docker, AWS, 6 years, $4000
+
+Senior Node.js Developer, skills: Node.js, Express.js, MongoDB, PostgreSQL, Docker, AWS, Git, 5+ years, $3500
+
+Full Stack Node.js Developer, skills: Node.js, React, TypeScript, PostgreSQL, Docker, AWS, Git, 4 years, $3000
+
+Middle Node.js Developer, skills: Node.js, Express.js, MySQL, MongoDB, Docker, Git, 3 years, $2200
+
+JavaScript Developer, skills: Node.js, React, Angular, Vue, MySQL, MongoDB, Docker, AWS, 5 years, $5000
+
+## QA СПЕЦІАЛІСТИ
+
+Senior QA Engineer, skills: Selenium, Java, TestNG, Cucumber, JIRA, Git, API Testing, 6+ years, $2800
+
+QA Engineer, skills: Selenium, Java, MySQL, PostgreSQL, JIRA, Git, Manual Testing, 3 years, $1500
+
+QA Automation Engineer, skills: Selenium, Python, pytest, Jenkins, Git, REST API, 4 years, $2200
+
+Manual QA Engineer, skills: Manual Testing, JIRA, TestRail, SQL, API Testing, 2 years, $1200
+
+Senior QA Automation, skills: Selenium, Java, Cypress, Docker, Jenkins, Git, 5+ years, $2500
+
+## DEVOPS / SYSADMIN СПЕЦІАЛІСТИ
+
+Senior DevOps Engineer, skills: Kubernetes, Docker, AWS, Terraform, Ansible, Linux, Git, 5+ years, $3500
+
+DevOps Engineer, skills: Docker, Kubernetes, AWS, Jenkins, Terraform, Linux, Git, 4 years, $2800
+
+System Administrator, skills: Linux, Windows, Docker, AWS, Nginx, MySQL, Git, 3 years, $1500
+
+SysAdmin / DevOps, skills: Linux, Docker, Kubernetes, AWS, Ansible, Python, Git, 10+ years, $3500
+
+Technical Operations (DevOps) Engineer, skills: Linux, Docker, MongoDB, MySQL, Chef, Ruby, 5 years, $5000
+
+## DATA ANALYST / DATA SCIENCE
+
+Senior Data Analyst, skills: Python, SQL, Tableau, R, PostgreSQL, Excel, Statistics, 5+ years, $3200
+
+Data Scientist, skills: Python, R, Machine Learning, SQL, TensorFlow, Pandas, Jupyter, 4 years, $2800
+
+Data Analyst, skills: SQL, Python, Tableau, Excel, PostgreSQL, Statistics, 3 years, $2000
+
+Junior Data Analyst, skills: SQL, Python, Excel, Power BI, PostgreSQL, 1 year, $1200
+
+ML Engineer, skills: Python, TensorFlow, PyTorch, Kubernetes, Docker, AWS, Git, 3+ years, $3500
+
+---
+
+## СТАТИСТИКА ПО ТЕХНОЛОГІЯХ (середні зарплати):
+
+JavaScript/React: $2200-6000 (середня $3200)
+Python: $1200-4250 (середня $3000)  
+Java: $1800-4500 (середня $2800)
+PHP: $1000-3500 (середня $2200)
+C#/.NET: $1200-4200 (середня $2700)
+Node.js: $2200-5000 (середня $3500)
+QA: $1200-2800 (середня $2000)
+DevOps/SysAdmin: $1500-5000 (середня $3300)
+Data Analyst/Science: $1200-3500 (середня $2500)
+
+## AI / MACHINE LEARNING РОЗРОБНИКИ
+
+AI Manager, skills: Python, TensorFlow, Machine Learning, AI frameworks, Business Strategy, Product Management, 7+ years, $5200
+
+Machine Learning Developer, skills: Python, TensorFlow, PyTorch, Scikit-learn, Keras, Deep Learning, Neural Networks, 5 years, $4200
+
+Senior AI Engineer, skills: Python, Machine Learning, Computer Vision, NLP, TensorFlow, PyTorch, AWS, Docker, 8 years, $5800
+
+AI/ML Engineer, skills: Python, Machine Learning, Data Science, TensorFlow, Keras, Statistical Analysis, 4 years, $3800
+
+AI Product Manager, skills: AI Strategy, Machine Learning, Python, Product Development, Business Intelligence, 6 years, $4600
+
+## FLUTTER РОЗРОБНИКИ
+
+Senior Flutter Developer, skills: Flutter, Dart, Firebase, REST APIs, State Management, Provider, BLoC, 6 years, $4200
+
+Flutter Developer, skills: Flutter, Dart, Firebase, Android, iOS, Cross-platform, Material Design, 4 years, $3200
+
+Mobile Developer (Flutter), skills: Flutter, Dart, Firebase, SQLite, REST APIs, Git, Agile, 3 years, $2800
+
+Flutter Tech Lead, skills: Flutter, Dart, Firebase, Architecture Patterns, Team Leadership, CI/CD, 7 years, $4800
+
+Junior Flutter Developer, skills: Flutter, Dart, Firebase, Basic Mobile Development, Android Studio, 2 years, $2200
+
+## KOTLIN РОЗРОБНИКИ
+
+Senior Android Developer, skills: Kotlin, Android SDK, Java, MVVM, Coroutines, Room, Retrofit, 10+ years, $4000
+
+Kotlin Developer, skills: Kotlin, Android Development, Java, Spring Boot, REST APIs, Git, 5 years, $3600
+
+Android Developer (Kotlin), skills: Kotlin, Android SDK, Java, SQLite, Firebase, Material Design, 4 years, $3200
+
+Senior Kotlin Developer, skills: Kotlin, Spring Boot, Microservices, PostgreSQL, Docker, Kubernetes, 8 years, $4400
+
+Mobile Developer (Android/Kotlin), skills: Kotlin, Android SDK, Java, MVVM, Coroutines, Firebase, 6 years, $3800
+
+## REACT NATIVE РОЗРОБНИКИ
+
+React Native Developer, skills: JavaScript, React Native, Redux, TypeScript, Firebase, iOS, Android, 4 years, $3000
+
+Senior React Native Developer, skills: React Native, JavaScript, TypeScript, Redux, Firebase, Native Modules, 6 years, $4000
+
+Mobile Developer (React Native), skills: React Native, JavaScript, Redux, REST APIs, Firebase, Git, 3 years, $2600
+
+React Native Tech Lead, skills: React Native, JavaScript, TypeScript, Architecture, Team Leadership, CI/CD, 7 years, $4500
+
+Full Stack Developer (React Native), skills: React Native, Node.js, JavaScript, MongoDB, Firebase, REST APIs, 5 years, $3400
+
+## SWIFT / iOS РОЗРОБНИКИ
+
+Senior Swift Developer, skills: Swift, iOS, Objective-C, Core Data, UIKit, SwiftUI, Xcode, 8+ years, $8000
+
+iOS Developer, skills: Swift, iOS Development, UIKit, Core Data, REST APIs, Xcode, Git, 5 years, $4800
+
+Senior iOS Engineer, skills: Swift, iOS, SwiftUI, Combine, Core Data, MVVM, Unit Testing, 7 years, $6200
+
+Swift Developer, skills: Swift, iOS, Objective-C, UIKit, Core Graphics, MapKit, StoreKit, 6 years, $5400
+
+Mobile Developer (iOS), skills: Swift, iOS, UIKit, Core Data, Firebase, Push Notifications, 4 years, $4200
+
+## NFC РОЗРОБНИКИ
+
+NFC Developer, skills: Near Field Communication, Android, iOS, Java, Swift, RFID, Contactless Payments, 5 years, $3800
+
+Mobile NFC Developer, skills: NFC, Android NFC API, iOS Core NFC, Java, Swift, Contactless Technology, 4 years, $3400
+
+Senior NFC Engineer, skills: NFC, RFID, Contactless Systems, Java, C++, Hardware Integration, Security, 8 years, $4600
+
+NFC Solutions Developer, skills: NFC, Mobile Development, Payment Systems, Android, iOS, Security Protocols, 6 years, $4000
+
+IoT NFC Developer, skills: NFC, IoT, Embedded Systems, C++, Python, Hardware Communication, 7 years, $4200
+
+## ОНОВЛЕНІ СТАТИСТИКИ ПО ЗАРПЛАТАХ
+
+AI/ML: $3800-5800 (середня $4700)
+Flutter: $2200-4800 (середня $3400)  
+Kotlin: $3200-4400 (середня $3800)
+React Native: $2600-4500 (середня $3500)
+Swift/iOS: $4200-8000 (середня $5700)
+NFC: $3400-4600 (середня $4000)
+
+JavaScript/React: $2200-6000 (середня $3200)
+Python: $1200-4250 (середня $3000)  
+Java: $1800-4500 (середня $2800)
+PHP: $1000-3500 (середня $2200)
+C#/.NET: $1200-4200 (середня $2700)
+Node.js: $2200-5000 (середня $3500)
+QA: $1200-2800 (середня $2000)
+DevOps/SysAdmin: $1500-5000 (середня $3300)
+Data Analyst/Science: $1200-3500 (середня $2500)
+
+---
+
+Дані зібрано з публічних профілів кандидатів на сайті djinni.co
+Всі зарплати вказані в доларах США на місяць (після податків)
+Досвід вказано в роках комерційної роботи
+Оновлено: додано 30 нових кандидатів по технологіях AI, Flutter, Kotlin, React Native, Swift, NFC
