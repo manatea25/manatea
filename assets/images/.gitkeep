@@ -1,0 +1,6 @@
+# This file ensures the assets/images directory is tracked by git
+# Add your app images here:
+# - logo.png
+# - splash_screen.png
+# - default_avatar.png
+# etc.
