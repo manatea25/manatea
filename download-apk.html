@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📱 FLAP Flutter APK - Завантаження</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        .container {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .logo {
+            font-size: 4em;
+            margin-bottom: 10px;
+        }
+        .download-section {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .download-btn {
+            display: inline-block;
+            background: #4CAF50;
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+            margin: 10px 5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .download-btn:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .info-card {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .warning {
+            background: rgba(255,193,7,0.2);
+            border: 1px solid rgba(255,193,7,0.5);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .code-block {
+            background: rgba(0,0,0,0.3);
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+        .steps {
+            counter-reset: step-counter;
+        }
+        .step {
+            counter-increment: step-counter;
+            margin: 15px 0;
+            padding-left: 40px;
+            position: relative;
+        }
+        .step::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #4CAF50;
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">⚽📱🏆</div>
+            <h1>FLAP Flutter APK</h1>
+            <h2>Feel Like A Pro - Завантаження</h2>
+        </div>
+
+        <div class="warning">
+            <h3>⚠️ ВАЖЛИВО!</h3>
+            <p>GitHub не підтримує файли більше 100MB без Git LFS. APK файл має розмір 160MB.</p>
+        </div>
+
+        <div class="info-grid">
+            <div class="info-card">
+                <h3>📊 Інформація про файл</h3>
+                <p><strong>Розмір:</strong> 160MB</p>
+                <p><strong>Тип:</strong> Android APK</p>
+                <p><strong>Версія:</strong> Debug Build</p>
+                <p><strong>Min Android:</strong> 5.0+ (API 21)</p>
+            </div>
+            <div class="info-card">
+                <h3>📅 Дата створення</h3>
+                <p>5 серпня 2025</p>
+                <p>07:31 UTC</p>
+            </div>
+        </div>
+
+        <div class="download-section">
+            <h3>🚀 Способи завантаження:</h3>
+            
+            <h4>1️⃣ GitHub Repository</h4>
+            <a href="https://github.com/manatea25/manatea" class="download-btn" target="_blank">
+                🔗 Відкрити GitHub
+            </a>
+            <p><strong>Шлях:</strong> <code>FLAP_Flutter/build/app/outputs/flutter-apk/app-debug.apk</code></p>
+            <p><strong>Гілка:</strong> <code>cursor/build-and-prepare-flutter-apk-for-distribution-cc4d</code></p>
+
+            <h4>2️⃣ Прямий лінк (якщо доступний)</h4>
+            <a href="https://github.com/manatea25/manatea/raw/cursor/build-and-prepare-flutter-apk-for-distribution-cc4d/FLAP_Flutter/build/app/outputs/flutter-apk/app-debug.apk" 
+               class="download-btn" target="_blank">
+                ⬇️ Завантажити APK
+            </a>
+
+            <h4>3️⃣ Командний рядок</h4>
+            <div class="code-block">
+curl -L -o flap-app.apk "https://github.com/manatea25/manatea/raw/cursor/build-and-prepare-flutter-apk-for-distribution-cc4d/FLAP_Flutter/build/app/outputs/flutter-apk/app-debug.apk"
+            </div>
+        </div>
+
+        <div class="download-section">
+            <h3>🔧 Інструкція з встановлення:</h3>
+            <div class="steps">
+                <div class="step">Завантажте APK файл на ваш Android пристрій</div>
+                <div class="step">Перейдіть в Налаштування → Безпека → Увімкніть "Невідомі джерела"</div>
+                <div class="step">Відкрийте завантажений APK файл через файловий менеджер</div>
+                <div class="step">Натисніть "Встановити" та дочекайтесь завершення</div>
+                <div class="step">Запустіть додаток FLAP та насолоджуйтесь грою! ⚽</div>
+            </div>
+        </div>
+
+        <div class="download-section">
+            <h3>✨ Що включено в додаток:</h3>
+            <ul>
+                <li>🔐 Система авторизації (Google, Facebook, Phone)</li>
+                <li>📹 Завантаження та перегляд відео</li>
+                <li>⚽ Створення та пошук матчів</li>
+                <li>🏆 Система челенджів та змагань</li>
+                <li>👤 Профіль користувача зі статистикою</li>
+                <li>🛒 Магазин монет та підписок</li>
+                <li>📊 Система рейтингів</li>
+                <li>🔥 Firebase інтеграція</li>
+            </ul>
+        </div>
+
+        <div class="header">
+            <p><strong>FLAP - Feel Like A Pro!</strong></p>
+            <p>Готовий до гри? Завантажуйте та тестуйте! 🚀</p>
+        </div>
+    </div>
+</body>
+</html>
