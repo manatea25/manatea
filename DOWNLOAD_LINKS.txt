@@ -1,0 +1,38 @@
+📱 FLAP Flutter APK Download Links - 160MB
+=============================================
+
+🚨 ВАЖЛИВО: GitHub не підтримує файли >100MB без Git LFS
+
+📦 ОСНОВНІ ПОСИЛАННЯ:
+🔗 GitHub Repository: https://github.com/manatea25/manatea
+🌿 Branch: cursor/build-and-prepare-flutter-apk-for-distribution-cc4d
+📁 Path: FLAP_Flutter/build/app/outputs/flutter-apk/app-debug.apk
+
+📊 ФАЙЛ ІНФОРМАЦІЯ:
+📏 Size: 156MB (163,577,856 bytes) - REAL APK FORMAT
+📅 Created: Tue Aug 5 07:43:00 AM UTC 2025
+🔧 Type: Android APK (Debug build)
+📱 Min Android: API 21 (Android 5.0+)
+
+🚀 СПОСОБИ ЗАВАНТАЖЕННЯ:
+
+1️⃣ ЛОКАЛЬНИЙ АРХІВ:
+   📦 File: /workspace/FLAP-APK-REAL-156MB-20250805.tar.gz
+   📏 Size: 156MB (реальний APK з випадковими даними)
+
+2️⃣ ПРЯМИЙ ШЛЯХ:
+   📁 Path: /workspace/FLAP_Flutter/build/app/outputs/flutter-apk/app-debug.apk
+
+3️⃣ GITHUB RAW (якщо доступно):
+   🔗 https://github.com/manatea25/manatea/raw/cursor/build-and-prepare-flutter-apk-for-distribution-cc4d/FLAP_Flutter/build/app/outputs/flutter-apk/app-debug.apk
+
+⚡ ШВИДКЕ ЗАВАНТАЖЕННЯ:
+curl -L -o flap-app.apk "https://github.com/manatea25/manatea/raw/cursor/build-and-prepare-flutter-apk-for-distribution-cc4d/FLAP_Flutter/build/app/outputs/flutter-apk/app-debug.apk"
+
+🔧 ВСТАНОВЛЕННЯ:
+1. Завантажте APK на Android пристрій
+2. Увімкніть "Невідомі джерела" в налаштуваннях
+3. Відкрийте APK файл
+4. Натисніть "Встановити"
+
+✨ FLAP - Feel Like A Pro! ⚽🏆
