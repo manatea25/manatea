@@ -1,0 +1,5 @@
+# This file ensures the assets/icons directory is tracked by git
+# Add your app icons here:
+# - app_icon.png
+# - notification_icon.png
+# etc.
