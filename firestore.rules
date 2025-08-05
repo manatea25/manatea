@@ -1,0 +1,305 @@
+// 🔐 FLAP - Firebase Firestore Security Rules
+// Захищені правила доступу для всіх колекцій
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // =============================================================================
+    // 👤 USERS COLLECTION
+    // =============================================================================
+    match /users/{userId} {
+      // Users can read and write their own profile
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+      
+      // Users with subscription can read other profiles (for rating visibility)
+      allow read: if request.auth != null && 
+                     hasSubscription(request.auth.uid);
+      
+      // Allow reading basic profile info for match participants
+      allow read: if request.auth != null && 
+                     resource.data.keys().hasAny(['name', 'avatar', 'rating', 'position']);
+    }
+
+    // =============================================================================
+    // 🎥 VIDEOS COLLECTION
+    // =============================================================================
+    match /videos/{videoId} {
+      // Anyone authenticated can read videos
+      allow read: if request.auth != null;
+      
+      // Only video owner can create/update their videos
+      allow create: if request.auth != null && 
+                       request.auth.uid == request.resource.data.userId &&
+                       validateVideoData(request.resource.data);
+      
+      allow update: if request.auth != null && 
+                       request.auth.uid == resource.data.userId &&
+                       validateVideoUpdate(request.resource.data, resource.data);
+      
+      // Only video owner can delete
+      allow delete: if request.auth != null && 
+                       request.auth.uid == resource.data.userId;
+    }
+
+    // =============================================================================
+    // 📊 VIDEO RATINGS COLLECTION
+    // =============================================================================
+    match /video_ratings/{ratingId} {
+      // Users can read all ratings
+      allow read: if request.auth != null;
+      
+      // Users can only create/update their own ratings
+      allow create, update: if request.auth != null && 
+                               request.auth.uid == request.resource.data.userId &&
+                               validateRating(request.resource.data);
+      
+      // Users can only delete their own ratings
+      allow delete: if request.auth != null && 
+                       request.auth.uid == resource.data.userId;
+    }
+
+    // =============================================================================
+    // ⚽ MATCHES COLLECTION
+    // =============================================================================
+    match /matches/{matchId} {
+      // Anyone authenticated can read open matches
+      allow read: if request.auth != null;
+      
+      // Only authenticated users can create matches
+      allow create: if request.auth != null && 
+                       request.auth.uid == request.resource.data.creatorId &&
+                       validateMatchData(request.resource.data);
+      
+      // Match creator and participants can update
+      allow update: if request.auth != null && 
+                       (request.auth.uid == resource.data.creatorId ||
+                        isMatchParticipant(request.auth.uid, resource.data)) &&
+                       validateMatchUpdate(request.resource.data, resource.data);
+      
+      // Only match creator can delete
+      allow delete: if request.auth != null && 
+                       request.auth.uid == resource.data.creatorId;
+    }
+
+    // =============================================================================
+    // 🏆 CHALLENGES COLLECTION
+    // =============================================================================
+    match /challenges/{challengeId} {
+      // Anyone authenticated can read challenges
+      allow read: if request.auth != null;
+      
+      // Only authenticated users can create challenges
+      allow create: if request.auth != null && 
+                       request.auth.uid == request.resource.data.creatorId &&
+                       validateChallengeData(request.resource.data);
+      
+      // Challenge creator and participants can update
+      allow update: if request.auth != null && 
+                       (request.auth.uid == resource.data.creatorId ||
+                        isChallengeParticipant(request.auth.uid, resource.data)) &&
+                       validateChallengeUpdate(request.resource.data, resource.data);
+      
+      // Only challenge creator can delete
+      allow delete: if request.auth != null && 
+                       request.auth.uid == resource.data.creatorId;
+    }
+
+    // =============================================================================
+    // 💰 TRANSACTIONS COLLECTION
+    // =============================================================================
+    match /transactions/{transactionId} {
+      // Users can only read their own transactions
+      allow read: if request.auth != null && 
+                     request.auth.uid == resource.data.userId;
+      
+      // Only system can create transactions (via Cloud Functions)
+      allow create: if false; // Handled by Cloud Functions only
+      
+      // No updates or deletes allowed
+      allow update, delete: if false;
+    }
+
+    // =============================================================================
+    // 📊 RATING HISTORY COLLECTION
+    // =============================================================================
+    match /rating_history/{historyId} {
+      // Users can read their own rating history
+      allow read: if request.auth != null && 
+                     request.auth.uid == resource.data.userId;
+      
+      // Only system can create rating history (via Cloud Functions)
+      allow create: if false; // Handled by Cloud Functions only
+      
+      // No updates or deletes allowed
+      allow update, delete: if false;
+    }
+
+    // =============================================================================
+    // 🔔 NOTIFICATIONS COLLECTION
+    // =============================================================================
+    match /notifications/{notificationId} {
+      // Users can read their own notifications
+      allow read: if request.auth != null && 
+                     request.auth.uid == resource.data.userId;
+      
+      // Users can update their own notifications (mark as read)
+      allow update: if request.auth != null && 
+                       request.auth.uid == resource.data.userId &&
+                       onlyUpdatingReadStatus(request.resource.data, resource.data);
+      
+      // Only system can create notifications
+      allow create: if false; // Handled by Cloud Functions only
+      
+      // Users can delete their own notifications
+      allow delete: if request.auth != null && 
+                       request.auth.uid == resource.data.userId;
+    }
+
+    // =============================================================================
+    // 👥 FRIENDSHIPS COLLECTION
+    // =============================================================================
+    match /friendships/{friendshipId} {
+      // Users can read friendships they're part of
+      allow read: if request.auth != null && 
+                     (request.auth.uid == resource.data.userId1 ||
+                      request.auth.uid == resource.data.userId2);
+      
+      // Users can create friendship requests
+      allow create: if request.auth != null && 
+                       request.auth.uid == request.resource.data.userId1 &&
+                       validateFriendshipData(request.resource.data);
+      
+      // Users can update friendship status
+      allow update: if request.auth != null && 
+                       (request.auth.uid == resource.data.userId1 ||
+                        request.auth.uid == resource.data.userId2) &&
+                       validateFriendshipUpdate(request.resource.data, resource.data);
+      
+      // Users can delete friendships they're part of
+      allow delete: if request.auth != null && 
+                       (request.auth.uid == resource.data.userId1 ||
+                        request.auth.uid == resource.data.userId2);
+    }
+
+    // =============================================================================
+    // 🔧 HELPER FUNCTIONS
+    // =============================================================================
+    
+    // Check if user has active subscription
+    function hasSubscription(userId) {
+      return exists(/databases/$(database)/documents/users/$(userId)) &&
+             get(/databases/$(database)/documents/users/$(userId)).data.subscription.type != 'free';
+    }
+    
+    // Check if user is match participant
+    function isMatchParticipant(userId, matchData) {
+      return userId in matchData.players.accepted.map(['userId']) ||
+             userId in matchData.players.pending.map(['userId']);
+    }
+    
+    // Check if user is challenge participant
+    function isChallengeParticipant(userId, challengeData) {
+      return userId in challengeData.participants;
+    }
+    
+    // Validate video data
+    function validateVideoData(data) {
+      return data.keys().hasAll(['userId', 'title', 'videoUrl', 'category']) &&
+             data.title is string && data.title.size() > 0 && data.title.size() <= 100 &&
+             data.category in ['goals', 'skills', 'training', 'saves', 'freestyle'] &&
+             data.videoUrl is string && data.videoUrl.size() > 0;
+    }
+    
+    // Validate video update
+    function validateVideoUpdate(newData, oldData) {
+      return newData.userId == oldData.userId && // Can't change owner
+             newData.videoUrl == oldData.videoUrl; // Can't change video URL
+    }
+    
+    // Validate rating data
+    function validateRating(data) {
+      return data.keys().hasAll(['userId', 'videoId', 'rating']) &&
+             data.rating is number && data.rating >= 0.0 && data.rating <= 5.0;
+    }
+    
+    // Validate match data
+    function validateMatchData(data) {
+      return data.keys().hasAll(['creatorId', 'title', 'date', 'maxPlayers', 'level']) &&
+             data.title is string && data.title.size() > 0 && data.title.size() <= 100 &&
+             data.maxPlayers is int && data.maxPlayers >= 2 && data.maxPlayers <= 22 &&
+             data.level in ['beginner', 'intermediate', 'advanced', 'pro'] &&
+             data.date is timestamp && data.date > request.time;
+    }
+    
+    // Validate match update
+    function validateMatchUpdate(newData, oldData) {
+      return newData.creatorId == oldData.creatorId && // Can't change creator
+             newData.date == oldData.date; // Can't change date after creation
+    }
+    
+    // Validate challenge data
+    function validateChallengeData(data) {
+      return data.keys().hasAll(['creatorId', 'title', 'category', 'entryFee']) &&
+             data.title is string && data.title.size() > 0 && data.title.size() <= 100 &&
+             data.category in ['goals', 'skills', 'training', 'saves', 'freestyle'] &&
+             data.entryFee is int && data.entryFee >= 0 && data.entryFee <= 100;
+    }
+    
+    // Validate challenge update
+    function validateChallengeUpdate(newData, oldData) {
+      return newData.creatorId == oldData.creatorId && // Can't change creator
+             newData.entryFee == oldData.entryFee; // Can't change entry fee
+    }
+    
+    // Validate friendship data
+    function validateFriendshipData(data) {
+      return data.keys().hasAll(['userId1', 'userId2', 'status']) &&
+             data.userId1 != data.userId2 && // Can't befriend yourself
+             data.status in ['pending', 'accepted', 'declined'];
+    }
+    
+    // Validate friendship update
+    function validateFriendshipUpdate(newData, oldData) {
+      return newData.userId1 == oldData.userId1 &&
+             newData.userId2 == oldData.userId2 &&
+             newData.status in ['accepted', 'declined'];
+    }
+    
+    // Check if only read status is being updated
+    function onlyUpdatingReadStatus(newData, oldData) {
+      return newData.diff(oldData).affectedKeys().hasOnly(['read']) &&
+             newData.read is bool;
+    }
+  }
+}
+
+// =============================================================================
+// 📁 FIREBASE STORAGE SECURITY RULES
+// =============================================================================
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Users can upload their own avatars
+    match /avatars/{userId}.jpg {
+      allow read: if true; // Avatars are public
+      allow write: if request.auth != null && request.auth.uid == userId &&
+                      request.resource.size < 5 * 1024 * 1024 && // Max 5MB
+                      request.resource.contentType.matches('image/.*');
+    }
+    
+    // Users can upload their own videos
+    match /videos/{userId}/{videoId} {
+      allow read: if request.auth != null; // Videos require authentication
+      allow write: if request.auth != null && request.auth.uid == userId &&
+                      request.resource.size < 100 * 1024 * 1024 && // Max 100MB
+                      request.resource.contentType.matches('video/.*');
+    }
+    
+    // Users can upload video thumbnails
+    match /thumbnails/{userId}/{videoId}.jpg {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && request.auth.uid == userId &&
+                      request.resource.size < 2 * 1024 * 1024 && // Max 2MB
+                      request.resource.contentType.matches('image/.*');
+    }
+  }
+}
