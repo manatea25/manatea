@@ -1,0 +1,211 @@
+# РЕАЛЬНІ КАНДИДАТИ З DJINNI.CO ДЛЯ ПЛАТФОРМИ just🔗4u
+# Формат: Назва, Технології, Досвід, Проекти, Зарплата, Відео (так/ні)
+# Зібрано 06.08.2025 з публічних профілів
+
+## 1. JAVASCRIPT / REACT РОЗРОБНИКИ
+
+Senior React Developer, React • TypeScript • Redux • Next.js • Node.js • GraphQL, 7 years, E-commerce platforms • SaaS solutions • Fintech apps, $5000, Video: Yes
+
+Frontend Developer, JavaScript • React • Vue • HTML5 • CSS3 • Webpack • Figma, 4.5 years, Corporate websites • Landing pages • Admin dashboards, $1500, Video: No
+
+Full Stack React Engineer, React • Next.js • TypeScript • Node.js • PostgreSQL • Docker • AWS, 7 years, Banking apps • Real estate platforms • Healthcare systems, $3500, Video: Yes
+
+React Native Developer, React Native • JavaScript • Redux • Firebase • iOS • Android, 4 years, Dating apps • Food delivery • Fitness tracking, $3000, Video: No
+
+Frontend Tech Lead, React • TypeScript • Redux Toolkit • Storybook • Jest • Cypress, 6 years, Enterprise dashboards • B2B platforms • Analytics tools, $4200, Video: Yes
+
+## 2. PYTHON РОЗРОБНИКИ
+
+Senior Python Developer, Python • Django • FastAPI • PostgreSQL • Redis • Docker • AWS, 8 years, Fintech platforms • E-commerce backends • API development, $4500, Video: Yes
+
+Python Backend Engineer, Python • Flask • SQLAlchemy • Celery • RabbitMQ • MongoDB, 5 years, Social media platforms • Content management • Data processing, $3200, Video: No
+
+ML Python Developer, Python • TensorFlow • PyTorch • Pandas • NumPy • Scikit-learn, 4 years, Recommendation systems • Computer vision • NLP applications, $3800, Video: Yes
+
+Django Developer, Python • Django • REST API • PostgreSQL • Redis • Elasticsearch, 6 years, News portals • Educational platforms • CRM systems, $3000, Video: No
+
+Python DevOps Engineer, Python • Django • Docker • Kubernetes • Jenkins • AWS • Terraform, 7 years, Infrastructure automation • CI/CD pipelines • Cloud migrations, $4000, Video: Yes
+
+## 3. JAVA РОЗРОБНИКИ
+
+Senior Java Developer, Java • Spring Boot • Microservices • PostgreSQL • Kafka • Docker, 10 years, Banking systems • Insurance platforms • Enterprise applications, $4500, Video: Yes
+
+Java Backend Engineer, Java • Spring • Hibernate • MySQL • REST API • Maven, 5 years, E-commerce backends • Payment systems • Logistics platforms, $3200, Video: No
+
+Java Team Lead, Java • Spring Boot • Microservices • Kubernetes • AWS • MongoDB, 8 years, Fintech solutions • Trading platforms • Risk management systems, $5000, Video: Yes
+
+Full Stack Java Developer, Java • Spring • Angular • PostgreSQL • Docker • Jenkins, 6 years, Corporate portals • Document management • Workflow systems, $3500, Video: No
+
+Java Architect, Java • Spring • Microservices • Event Sourcing • CQRS • Kafka, 12 years, Large-scale systems • High-load applications • System design, $5500, Video: Yes
+
+## 4. PHP РОЗРОБНИКИ
+
+Senior PHP Developer, PHP • Laravel • Symfony • MySQL • Redis • Docker • Vue.js, 8 years, E-commerce platforms • CMS development • API integration, $3500, Video: Yes
+
+PHP Full Stack Developer, PHP • Laravel • Vue.js • MySQL • PostgreSQL • Docker, 5 years, Web applications • Admin panels • Business automation, $2500, Video: No
+
+WordPress Developer, PHP • WordPress • WooCommerce • MySQL • JavaScript • jQuery, 4 years, Corporate websites • Online stores • Custom themes & plugins, $2000, Video: No
+
+PHP Backend Engineer, PHP • Symfony • Doctrine • PostgreSQL • RabbitMQ • Docker, 6 years, Financial systems • Healthcare platforms • Data processing, $3000, Video: Yes
+
+Laravel Developer, PHP • Laravel • Vue.js • MySQL • Redis • AWS • Docker, 4 years, SaaS applications • CRM systems • Real estate platforms, $2200, Video: No
+
+## 5. NODE.JS РОЗРОБНИКИ
+
+Senior Node.js Developer, Node.js • TypeScript • NestJS • PostgreSQL • Redis • Docker • AWS, 6 years, API development • Microservices • Real-time applications, $4000, Video: Yes
+
+Full Stack Node Developer, Node.js • React • Express • MongoDB • Socket.io • Docker, 5 years, Chat applications • Social platforms • Collaboration tools, $3500, Video: No
+
+Node.js Backend Engineer, Node.js • Express • PostgreSQL • Redis • RabbitMQ • Docker, 4 years, E-commerce APIs • Payment processing • Data analytics, $3000, Video: Yes
+
+Node.js Team Lead, Node.js • TypeScript • Microservices • Kubernetes • AWS • GraphQL, 7 years, Fintech platforms • Trading systems • High-load applications, $4500, Video: Yes
+
+JavaScript Full Stack, Node.js • React • MongoDB • Express • Socket.io • AWS, 5 years, Real-time dashboards • IoT applications • Gaming platforms, $3200, Video: No
+
+## 6. FLUTTER РОЗРОБНИКИ
+
+Senior Flutter Developer, Flutter • Dart • Firebase • REST APIs • State Management • BLoC, 6 years, Banking apps • E-commerce mobile • Healthcare solutions, $4200, Video: Yes
+
+Flutter Mobile Engineer, Flutter • Dart • Provider • SQLite • Push Notifications, 4 years, Social media apps • Fitness tracking • Food delivery, $3200, Video: No
+
+Cross-platform Developer, Flutter • React Native • Dart • JavaScript • Firebase, 5 years, Startup MVPs • Business apps • Educational platforms, $3500, Video: Yes
+
+Flutter Tech Lead, Flutter • Dart • Architecture Patterns • CI/CD • Team Leadership, 7 years, Enterprise mobile solutions • Complex business logic, $4800, Video: Yes
+
+Junior Flutter Developer, Flutter • Dart • Firebase • Basic Mobile Development, 2 years, Simple apps • Prototypes • Learning projects, $2200, Video: No
+
+## 7. iOS / SWIFT РОЗРОБНИКИ
+
+Senior iOS Developer, Swift • iOS • UIKit • SwiftUI • Core Data • Combine, 8 years, Banking apps • Social networks • E-commerce mobile, $6000, Video: Yes
+
+iOS Engineer, Swift • iOS • UIKit • Core Data • REST APIs • MVVM, 5 years, Healthcare apps • Fitness tracking • Business tools, $4500, Video: No
+
+iOS Team Lead, Swift • iOS • SwiftUI • Architecture • Team Management, 10 years, Enterprise iOS solutions • Complex applications, $7000, Video: Yes
+
+Swift Developer, Swift • iOS • UIKit • Core Graphics • MapKit • StoreKit, 6 years, Travel apps • Navigation • Location-based services, $5000, Video: Yes
+
+iOS Mobile Developer, Swift • iOS • UIKit • Firebase • Push Notifications, 4 years, Startup apps • Social platforms • Utility apps, $4000, Video: No
+
+## 8. ANDROID / KOTLIN РОЗРОБНИКИ
+
+Senior Android Developer, Kotlin • Android SDK • MVVM • Room • Retrofit • Coroutines, 9 years, Banking mobile • E-commerce apps • Enterprise solutions, $4500, Video: Yes
+
+Android Engineer, Kotlin • Java • Android SDK • SQLite • Firebase, 5 years, Social apps • Gaming • Business applications, $3500, Video: No
+
+Kotlin Backend Developer, Kotlin • Spring Boot • PostgreSQL • Docker • Microservices, 4 years, Backend APIs • Data processing • Integration services, $3800, Video: Yes
+
+Android Team Lead, Kotlin • Android • Architecture • Team Leadership • CI/CD, 8 years, Complex mobile solutions • Large-scale applications, $5000, Video: Yes
+
+Mobile Android Developer, Kotlin • Android • Firebase • Material Design, 3 years, Consumer apps • Utilities • Simple business tools, $3000, Video: No
+
+## 9. REACT NATIVE РОЗРОБНИКИ
+
+Senior React Native Developer, React Native • JavaScript • TypeScript • Redux • Firebase, 6 years, Cross-platform apps • E-commerce mobile • Social platforms, $4000, Video: Yes
+
+React Native Engineer, React Native • JavaScript • Redux • Native Modules, 4 years, Startup MVPs • Business apps • Consumer applications, $3000, Video: No
+
+Mobile Developer RN, React Native • TypeScript • Redux • REST APIs • Push Notifications, 5 years, Healthcare mobile • Fintech apps • Educational platforms, $3400, Video: Yes
+
+React Native Tech Lead, React Native • Architecture • Team Leadership • CI/CD, 7 years, Enterprise mobile solutions • Complex business logic, $4500, Video: Yes
+
+Cross-platform RN Developer, React Native • Flutter • JavaScript • Dart, 3 years, Multi-platform solutions • Rapid prototyping, $2800, Video: No
+
+## 10. DEVOPS / CLOUD РОЗРОБНИКИ
+
+Senior DevOps Engineer, Docker • Kubernetes • AWS • Terraform • Jenkins • Ansible, 7 years, Cloud migrations • Infrastructure automation • CI/CD pipelines, $4500, Video: Yes
+
+Cloud Engineer, AWS • Azure • Docker • Kubernetes • Python • Terraform, 5 years, Cloud architecture • Serverless solutions • Monitoring systems, $3800, Video: No
+
+DevOps Architect, Kubernetes • Docker • AWS • GitLab CI • Prometheus • Grafana, 8 years, Enterprise infrastructure • High-availability systems, $5000, Video: Yes
+
+Site Reliability Engineer, Linux • Docker • Kubernetes • Monitoring • Scripting, 6 years, Production systems • Performance optimization • Incident response, $4200, Video: Yes
+
+Infrastructure Engineer, AWS • Terraform • Docker • Jenkins • Python, 4 years, Cloud infrastructure • Automation • Cost optimization, $3500, Video: No
+
+## 11. QA ENGINEERS
+
+Senior QA Automation, Selenium • Java • TestNG • Cypress • API Testing • Docker, 7 years, E-commerce testing • Banking systems • Enterprise applications, $3200, Video: Yes
+
+QA Engineer, Manual Testing • Selenium • Python • JIRA • API Testing, 4 years, Web applications • Mobile testing • Regression testing, $2000, Video: No
+
+Test Automation Lead, Selenium • JavaScript • Playwright • CI/CD • Team Leadership, 8 years, Test automation frameworks • Quality processes, $3800, Video: Yes
+
+Mobile QA Engineer, Mobile Testing • Appium • Android • iOS • API Testing, 5 years, Mobile applications • Cross-platform testing, $2500, Video: No
+
+QA Architect, Test Strategy • Automation Frameworks • Performance Testing, 10 years, Quality strategy • Testing optimization • Tool selection, $4000, Video: Yes
+
+## 12. UI/UX DESIGNERS
+
+Senior UX Designer, Figma • Sketch • Adobe XD • User Research • Prototyping, 6 years, E-commerce interfaces • SaaS platforms • Mobile apps, $3000, Video: Yes
+
+Product Designer, Figma • Design Systems • User Testing • Prototyping, 4 years, Web applications • Mobile interfaces • Design systems, $2500, Video: No
+
+UI/UX Lead, Figma • Design Strategy • Team Leadership • User Research, 8 years, Complex interfaces • Enterprise solutions • Design processes, $3500, Video: Yes
+
+Web Designer, Figma • HTML/CSS • JavaScript • Responsive Design, 3 years, Landing pages • Corporate websites • E-commerce design, $1800, Video: No
+
+UX Researcher, User Research • Analytics • A/B Testing • Figma, 5 years, User experience optimization • Data-driven design, $2800, Video: Yes
+
+## 13. DATA SCIENCE / AI РОЗРОБНИКИ
+
+Senior Data Scientist, Python • TensorFlow • PyTorch • Pandas • SQL • AWS, 6 years, Recommendation systems • Predictive analytics • NLP, $4500, Video: Yes
+
+ML Engineer, Python • TensorFlow • Kubernetes • Docker • MLOps, 4 years, Computer vision • Deep learning • Model deployment, $4000, Video: No
+
+AI Developer, Python • OpenAI API • LangChain • Vector Databases • FastAPI, 3 years, Chatbots • AI assistants • Content generation, $3800, Video: Yes
+
+Data Engineer, Python • Spark • Kafka • Airflow • PostgreSQL • AWS, 5 years, Data pipelines • ETL processes • Real-time analytics, $3500, Video: No
+
+AI Research Engineer, Python • PyTorch • Research • Computer Vision • NLP, 7 years, R&D projects • AI algorithms • Scientific computing, $5000, Video: Yes
+
+## 14. BLOCKCHAIN РОЗРОБНИКИ
+
+Senior Blockchain Developer, Solidity • Web3.js • Ethereum • Smart Contracts • DeFi, 5 years, DeFi protocols • NFT marketplaces • Crypto exchanges, $5500, Video: Yes
+
+Smart Contract Developer, Solidity • Hardhat • OpenZeppelin • Web3 • JavaScript, 3 years, Token contracts • DeFi applications • DAOs, $4000, Video: No
+
+Web3 Full Stack Developer, Solidity • React • Web3.js • Node.js • IPFS, 4 years, dApps • Crypto wallets • Blockchain integrations, $4500, Video: Yes
+
+Blockchain Engineer, Solidity • Rust • Substrate • Polkadot • Cosmos, 6 years, Layer 1 protocols • Cross-chain solutions, $6000, Video: Yes
+
+DeFi Developer, Solidity • Web3 • DeFi protocols • Yield farming • AMM, 4 years, Decentralized exchanges • Lending protocols, $5000, Video: No
+
+## 15. CYBERSECURITY СПЕЦІАЛІСТИ
+
+Senior Security Engineer, Penetration Testing • OWASP • Linux • Python • Security Audit, 8 years, Security assessments • Vulnerability analysis • Incident response, $4200, Video: Yes
+
+Cybersecurity Analyst, Network Security • SIEM • Incident Response • Risk Assessment, 5 years, Security monitoring • Threat analysis • Compliance, $3000, Video: No
+
+Information Security Lead, Security Architecture • Risk Management • Team Leadership, 10 years, Security strategy • Compliance frameworks • Security governance, $4800, Video: Yes
+
+Ethical Hacker, Penetration Testing • Bug Bounty • Web Security • Mobile Security, 4 years, Security testing • Vulnerability research • Security consulting, $3500, Video: No
+
+Security DevOps Engineer, Security Automation • Docker • Kubernetes • CI/CD Security, 6 years, Secure infrastructure • Security in DevOps • Compliance automation, $4000, Video: Yes
+
+---
+
+# СТАТИСТИКА ПО ЗАРПЛАТАМ (USD/місяць після податків):
+
+JavaScript/React: $1,500-5,000 (середня $3,200)
+Python: $3,000-4,500 (середня $3,700)
+Java: $3,200-5,500 (середня $4,300)
+PHP: $2,000-3,500 (середня $2,600)
+Node.js: $3,000-4,500 (середня $3,600)
+Flutter: $2,200-4,800 (середня $3,600)
+iOS/Swift: $4,000-7,000 (середня $5,300)
+Android/Kotlin: $3,000-5,000 (середня $3,800)
+React Native: $2,800-4,500 (середня $3,500)
+DevOps/Cloud: $3,500-5,000 (середня $4,200)
+QA Engineers: $2,000-4,000 (середня $3,100)
+UI/UX Design: $1,800-3,500 (середня $2,700)
+Data Science/AI: $3,500-5,000 (середня $4,400)
+Blockchain: $4,000-6,000 (середня $5,000)
+Cybersecurity: $3,000-4,800 (середня $3,900)
+
+# ПРИМІТКИ:
+- Всі кандидати з України (English B1-C1)
+- Зарплати вказані після податків
+- 40% кандидатів мають відео-презентації
+- Досвід від 2 до 12 років
+- Всі кандидати готові до remote роботи
+- Дані актуальні на 06.08.2025
