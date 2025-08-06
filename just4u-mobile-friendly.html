@@ -1,0 +1,1314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>just🔗4u - Find Developers Instantly</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Floating particles animation */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            padding: 15px 20px;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .header-stats {
+            display: flex;
+            gap: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            opacity: 0.9;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 80px;
+            min-height: 100vh;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 40px 20px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+            animation: slideInDown 1s ease-out;
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 30px;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Quick Stats */
+        .quick-stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 30px 0;
+            animation: bounceIn 1s ease-out 0.5s both;
+        }
+
+        @keyframes bounceIn {
+            from {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .stat {
+            text-align: center;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .stat:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 800;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Search Section */
+        .search-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            margin: 30px 20px;
+            padding: 30px 20px;
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: slideInUp 1s ease-out 0.7s both;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .search-title {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .search-box {
+            position: relative;
+            margin-bottom: 25px;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 18px 50px 18px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            outline: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .search-input:focus {
+            transform: scale(1.02);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .search-btn:hover {
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        /* Tech Filter Buttons */
+        .tech-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+
+        .tech-btn {
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 25px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            font-size: 14px;
+        }
+
+        .tech-btn:hover,
+        .tech-btn.active {
+            background: rgba(255, 255, 255, 0.9);
+            color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Quick Filters */
+        .quick-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .filter-chip {
+            padding: 8px 16px;
+            background: rgba(72, 187, 120, 0.2);
+            border: 1px solid rgba(72, 187, 120, 0.4);
+            border-radius: 20px;
+            color: white;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-chip:hover,
+        .filter-chip.active {
+            background: #48bb78;
+            transform: scale(1.05);
+        }
+
+        /* Results Section */
+        .results-section {
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            margin: 30px 20px;
+            border-radius: 25px 25px 0 0;
+            min-height: 60vh;
+            animation: slideInUp 1s ease-out 1s both;
+        }
+
+        .results-header {
+            padding: 25px 20px 15px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .results-count {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .sort-select {
+            padding: 8px 15px;
+            border: 2px solid #eee;
+            border-radius: 20px;
+            background: white;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .sort-select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        /* Developer Cards */
+        .developers-grid {
+            padding: 20px;
+            display: grid;
+            gap: 20px;
+        }
+
+        .dev-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dev-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .dev-card:hover::before {
+            left: 100%;
+        }
+
+        .dev-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            border-color: #667eea;
+        }
+
+        .dev-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .dev-info h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+
+        .dev-meta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            color: #718096;
+        }
+
+        .video-badge {
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 600;
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 0 5px rgba(255, 107, 107, 0.5); }
+            to { box-shadow: 0 0 15px rgba(255, 107, 107, 0.8); }
+        }
+
+        .dev-salary {
+            text-align: right;
+        }
+
+        .salary-amount {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #48bb78;
+            line-height: 1;
+        }
+
+        .salary-period {
+            font-size: 0.8rem;
+            color: #718096;
+        }
+
+        .dev-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin: 15px 0;
+        }
+
+        .skill {
+            background: #f7fafc;
+            color: #4a5568;
+            padding: 5px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .skill.primary {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .skill:hover {
+            transform: scale(1.05);
+        }
+
+        .dev-projects {
+            margin: 15px 0;
+            font-size: 0.9rem;
+            color: #718096;
+            line-height: 1.4;
+        }
+
+        .hire-btn {
+            width: 100%;
+            background: linear-gradient(45deg, #48bb78, #38a169);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 15px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hire-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .hire-btn:hover::before {
+            left: 100%;
+        }
+
+        .hire-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(72, 187, 120, 0.4);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 25px;
+            max-width: 90%;
+            width: 400px;
+            position: relative;
+            animation: modalSlideIn 0.3s ease-out;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.7) translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #999;
+            transition: color 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: #333;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #2d3748;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: #4a5568;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Mobile Optimizations */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .quick-stats {
+                flex-direction: column;
+                gap: 15px;
+                align-items: center;
+            }
+
+            .stat {
+                width: 200px;
+            }
+
+            .tech-filters {
+                gap: 8px;
+            }
+
+            .tech-btn {
+                padding: 10px 16px;
+                font-size: 13px;
+            }
+
+            .dev-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .dev-salary {
+                text-align: left;
+            }
+
+            .results-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .header-stats {
+                display: none;
+            }
+
+            .search-section {
+                margin: 20px 15px;
+                padding: 20px 15px;
+            }
+
+            .results-section {
+                margin: 20px 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .quick-stats {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .stat {
+                width: 140px;
+                padding: 12px;
+            }
+
+            .stat-number {
+                font-size: 1.4rem;
+            }
+
+            .stat-label {
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Success Animation */
+        .success-animation {
+            animation: successBounce 0.6s ease-out;
+        }
+
+        @keyframes successBounce {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Header -->
+    <div class="header">
+        <div class="header-content">
+            <div class="logo">just🔗4u</div>
+            <div class="header-stats">
+                <div class="stat-item">
+                    <span>⚡</span>
+                    <span>123 Devs</span>
+                </div>
+                <div class="stat-item">
+                    <span>🚀</span>
+                    <span>24h Response</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Hero Section -->
+        <div class="hero">
+            <h1>Find Developers<br>Instantly ⚡</h1>
+            <p>Top talent ready to start. No interviews, no waiting.</p>
+            
+            <div class="quick-stats">
+                <div class="stat">
+                    <span class="stat-number">123</span>
+                    <span class="stat-label">Ready Developers</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">$1.5K-7K</span>
+                    <span class="stat-label">Monthly Rate</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">45%</span>
+                    <span class="stat-label">With Video</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search Section -->
+        <div class="search-section">
+            <div class="search-title">What do you need? 🤔</div>
+            
+            <div class="search-box">
+                <input type="text" class="search-input" placeholder="React developer, AI expert..." id="searchInput">
+                <button class="search-btn" onclick="performSearch()">🔍</button>
+            </div>
+
+            <div class="tech-filters">
+                <div class="tech-btn active" onclick="filterTech('all')">All</div>
+                <div class="tech-btn" onclick="filterTech('react')">React</div>
+                <div class="tech-btn" onclick="filterTech('python')">Python</div>
+                <div class="tech-btn" onclick="filterTech('mobile')">Mobile</div>
+                <div class="tech-btn" onclick="filterTech('ai')">AI/ML</div>
+                <div class="tech-btn" onclick="filterTech('java')">Java</div>
+                <div class="tech-btn" onclick="filterTech('blockchain')">Web3</div>
+            </div>
+
+            <div class="quick-filters">
+                <div class="filter-chip" onclick="filterQuick('video')">📹 With Video</div>
+                <div class="filter-chip" onclick="filterQuick('senior')">👑 Senior</div>
+                <div class="filter-chip" onclick="filterQuick('budget')">💰 Budget</div>
+                <div class="filter-chip" onclick="filterQuick('available')">🟢 Available</div>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div class="results-section">
+            <div class="results-header">
+                <div class="results-count" id="resultsCount">123 developers found</div>
+                <select class="sort-select" id="sortSelect" onchange="sortResults()">
+                    <option value="relevance">Best Match</option>
+                    <option value="salary-high">💰 Highest Paid</option>
+                    <option value="salary-low">💸 Budget Friendly</option>
+                    <option value="experience">🏆 Most Experience</option>
+                </select>
+            </div>
+
+            <div class="developers-grid" id="developersGrid">
+                <!-- Developers will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Modal -->
+    <div class="modal" id="contactModal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <h3 class="modal-title" id="modalTitle">Get This Developer 🚀</h3>
+            <form id="contactForm">
+                <div class="form-group">
+                    <label class="form-label">Your Name</label>
+                    <input type="text" class="form-input" required placeholder="John Smith">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" required placeholder="john@company.com">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Company</label>
+                    <input type="text" class="form-input" placeholder="Your Company">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Project Details</label>
+                    <textarea class="form-input form-textarea" required placeholder="Tell us about your project..."></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">Send Request ⚡</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Sample developers data (first 20 for demo)
+        const developers = [
+            {
+                name: "Senior React Developer",
+                technologies: ["React", "TypeScript", "Next.js", "Node.js", "GraphQL", "AWS"],
+                experience: 7,
+                projects: "E-commerce platforms • SaaS solutions • Fintech apps",
+                salary: 5000,
+                video: true,
+                category: "react",
+                level: "senior"
+            },
+            {
+                name: "iOS Team Lead",
+                technologies: ["Swift", "iOS", "SwiftUI", "Architecture", "Team Management"],
+                experience: 10,
+                projects: "Banking apps • Social networks • Enterprise solutions",
+                salary: 7000,
+                video: true,
+                category: "mobile",
+                level: "senior"
+            },
+            {
+                name: "Senior AI Engineer",
+                technologies: ["Python", "TensorFlow", "PyTorch", "MLOps", "AWS", "Docker"],
+                experience: 6,
+                projects: "Recommendation systems • NLP solutions • Computer vision",
+                salary: 4500,
+                video: true,
+                category: "ai",
+                level: "senior"
+            },
+            {
+                name: "Full Stack React Engineer",
+                technologies: ["React", "Node.js", "PostgreSQL", "Docker", "AWS"],
+                experience: 7,
+                projects: "Banking apps • Healthcare systems • Real estate platforms",
+                salary: 3500,
+                video: true,
+                category: "react",
+                level: "senior"
+            },
+            {
+                name: "Senior Android Developer",
+                technologies: ["Kotlin", "Android SDK", "MVVM", "Room", "Retrofit"],
+                experience: 9,
+                projects: "E-commerce apps • Enterprise solutions • Banking mobile",
+                salary: 4500,
+                video: true,
+                category: "mobile",
+                level: "senior"
+            },
+            {
+                name: "Blockchain Engineer",
+                technologies: ["Solidity", "Web3.js", "Ethereum", "DeFi", "Smart Contracts"],
+                experience: 5,
+                projects: "DeFi protocols • NFT marketplaces • Crypto exchanges",
+                salary: 5500,
+                video: true,
+                category: "blockchain",
+                level: "senior"
+            },
+            {
+                name: "Python Backend Engineer",
+                technologies: ["Python", "Django", "FastAPI", "PostgreSQL", "Redis", "AWS"],
+                experience: 8,
+                projects: "Fintech platforms • API development • E-commerce backends",
+                salary: 4500,
+                video: true,
+                category: "python",
+                level: "senior"
+            },
+            {
+                name: "Flutter Developer",
+                technologies: ["Flutter", "Dart", "Firebase", "BLoC", "REST APIs"],
+                experience: 6,
+                projects: "Healthcare solutions • E-commerce mobile • Banking apps",
+                salary: 4200,
+                video: true,
+                category: "mobile",
+                level: "senior"
+            },
+            {
+                name: "Java Architect",
+                technologies: ["Java", "Spring", "Microservices", "Kafka", "Docker", "AWS"],
+                experience: 12,
+                projects: "Large-scale systems • High-load applications • System design",
+                salary: 5500,
+                video: true,
+                category: "java",
+                level: "senior"
+            },
+            {
+                name: "ML Engineer",
+                technologies: ["Python", "TensorFlow", "Kubernetes", "MLflow", "Airflow"],
+                experience: 4,
+                projects: "Computer vision • Deep learning • Model deployment",
+                salary: 4000,
+                video: false,
+                category: "ai",
+                level: "mid"
+            },
+            {
+                name: "Frontend Developer",
+                technologies: ["JavaScript", "React", "Vue", "HTML5", "CSS3", "Figma"],
+                experience: 4.5,
+                projects: "Corporate websites • Admin dashboards • Landing pages",
+                salary: 1500,
+                video: false,
+                category: "react",
+                level: "mid"
+            },
+            {
+                name: "React Native Engineer",
+                technologies: ["React Native", "JavaScript", "Redux", "Firebase"],
+                experience: 4,
+                projects: "Dating apps • Food delivery • Fitness tracking",
+                salary: 3000,
+                video: false,
+                category: "mobile",
+                level: "mid"
+            },
+            {
+                name: "DevOps Architect",
+                technologies: ["Kubernetes", "Docker", "AWS", "Terraform", "Jenkins"],
+                experience: 8,
+                projects: "Enterprise infrastructure • High-availability systems",
+                salary: 5000,
+                video: true,
+                category: "devops",
+                level: "senior"
+            },
+            {
+                name: "Smart Contract Developer",
+                technologies: ["Solidity", "Hardhat", "Web3", "JavaScript", "OpenZeppelin"],
+                experience: 3,
+                projects: "Token contracts • DeFi applications • DAOs",
+                salary: 4000,
+                video: false,
+                category: "blockchain",
+                level: "mid"
+            },
+            {
+                name: "Senior Python Engineer",
+                technologies: ["Python", "Django", "GraphQL", "PostgreSQL", "Redis"],
+                experience: 9,
+                projects: "Complex web systems • API architecture • Performance optimization",
+                salary: 4600,
+                video: true,
+                category: "python",
+                level: "senior"
+            },
+            {
+                name: "NFC Mobile Developer",
+                technologies: ["Android", "iOS", "NFC", "Kotlin", "Swift", "Payment Systems"],
+                experience: 5,
+                projects: "Payment apps • Access control • NFC-enabled solutions",
+                salary: 4400,
+                video: true,
+                category: "mobile",
+                level: "senior"
+            },
+            {
+                name: "AI Research Engineer",
+                technologies: ["Python", "PyTorch", "Computer Vision", "NLP", "Research"],
+                experience: 7,
+                projects: "R&D projects • AI algorithms • Scientific computing",
+                salary: 5000,
+                video: true,
+                category: "ai",
+                level: "senior"
+            },
+            {
+                name: "Java Team Lead",
+                technologies: ["Java", "Spring Boot", "Microservices", "Kubernetes", "AWS"],
+                experience: 8,
+                projects: "Fintech solutions • Trading platforms • Risk management",
+                salary: 5000,
+                video: true,
+                category: "java",
+                level: "senior"
+            },
+            {
+                name: "Computer Vision Engineer",
+                technologies: ["Python", "OpenCV", "TensorFlow", "PyTorch", "CUDA"],
+                experience: 5,
+                projects: "Image processing • Object detection • Medical imaging",
+                salary: 4200,
+                video: true,
+                category: "ai",
+                level: "senior"
+            },
+            {
+                name: "Web3 Full Stack Developer",
+                technologies: ["Solidity", "React", "Web3.js", "Node.js", "IPFS"],
+                experience: 4,
+                projects: "dApps • Crypto wallets • Blockchain integrations",
+                salary: 4500,
+                video: true,
+                category: "blockchain",
+                level: "mid"
+            }
+        ];
+
+        let filteredDevelopers = [...developers];
+        let currentTechFilter = 'all';
+        let currentQuickFilter = null;
+
+        // Initialize particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Filter by technology
+        function filterTech(tech) {
+            currentTechFilter = tech;
+            currentQuickFilter = null;
+            
+            // Update active button
+            document.querySelectorAll('.tech-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Clear quick filters
+            document.querySelectorAll('.filter-chip').forEach(chip => chip.classList.remove('active'));
+            
+            applyFilters();
+        }
+
+        // Quick filters
+        function filterQuick(filter) {
+            if (currentQuickFilter === filter) {
+                currentQuickFilter = null;
+                event.target.classList.remove('active');
+            } else {
+                document.querySelectorAll('.filter-chip').forEach(chip => chip.classList.remove('active'));
+                currentQuickFilter = filter;
+                event.target.classList.add('active');
+            }
+            
+            applyFilters();
+        }
+
+        // Apply all filters
+        function applyFilters() {
+            let filtered = developers;
+
+            // Apply tech filter
+            if (currentTechFilter !== 'all') {
+                filtered = filtered.filter(dev => 
+                    dev.category === currentTechFilter || 
+                    dev.technologies.some(tech => tech.toLowerCase().includes(currentTechFilter.toLowerCase()))
+                );
+            }
+
+            // Apply quick filters
+            if (currentQuickFilter) {
+                switch (currentQuickFilter) {
+                    case 'video':
+                        filtered = filtered.filter(dev => dev.video);
+                        break;
+                    case 'senior':
+                        filtered = filtered.filter(dev => dev.level === 'senior');
+                        break;
+                    case 'budget':
+                        filtered = filtered.filter(dev => dev.salary <= 3000);
+                        break;
+                    case 'available':
+                        filtered = filtered.filter(dev => true); // All are available
+                        break;
+                }
+            }
+
+            filteredDevelopers = filtered;
+            displayDevelopers();
+            updateResultsCount();
+        }
+
+        // Search function
+        function performSearch() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            
+            if (!query) {
+                applyFilters();
+                return;
+            }
+
+            filteredDevelopers = developers.filter(dev =>
+                dev.name.toLowerCase().includes(query) ||
+                dev.technologies.some(tech => tech.toLowerCase().includes(query)) ||
+                dev.projects.toLowerCase().includes(query)
+            );
+
+            displayDevelopers();
+            updateResultsCount();
+        }
+
+        // Sort results
+        function sortResults() {
+            const sortBy = document.getElementById('sortSelect').value;
+            
+            filteredDevelopers.sort((a, b) => {
+                switch (sortBy) {
+                    case 'salary-high':
+                        return b.salary - a.salary;
+                    case 'salary-low':
+                        return a.salary - b.salary;
+                    case 'experience':
+                        return b.experience - a.experience;
+                    default:
+                        return 0;
+                }
+            });
+            
+            displayDevelopers();
+        }
+
+        // Display developers
+        function displayDevelopers() {
+            const container = document.getElementById('developersGrid');
+            
+            container.innerHTML = filteredDevelopers.map(dev => `
+                <div class="dev-card" onclick="openModal('${dev.name}', ${dev.salary})">
+                    <div class="dev-header">
+                        <div class="dev-info">
+                            <h3>${dev.name}</h3>
+                            <div class="dev-meta">
+                                <span>${dev.experience} years</span>
+                                ${dev.video ? '<span class="video-badge">📹 VIDEO</span>' : ''}
+                            </div>
+                        </div>
+                        <div class="dev-salary">
+                            <div class="salary-amount">$${dev.salary.toLocaleString()}</div>
+                            <div class="salary-period">per month</div>
+                        </div>
+                    </div>
+                    
+                    <div class="dev-skills">
+                        ${dev.technologies.slice(0, 5).map((tech, i) => 
+                            `<span class="skill ${i < 2 ? 'primary' : ''}">${tech}</span>`
+                        ).join('')}
+                        ${dev.technologies.length > 5 ? `<span class="skill">+${dev.technologies.length - 5}</span>` : ''}
+                    </div>
+                    
+                    <div class="dev-projects">${dev.projects}</div>
+                    
+                    <button class="hire-btn">Get This Developer ⚡</button>
+                </div>
+            `).join('');
+
+            // Add entrance animation to cards
+            setTimeout(() => {
+                document.querySelectorAll('.dev-card').forEach((card, i) => {
+                    card.style.animation = `slideInUp 0.6s ease-out ${i * 0.1}s both`;
+                });
+            }, 100);
+        }
+
+        // Update results count
+        function updateResultsCount() {
+            document.getElementById('resultsCount').textContent = `${filteredDevelopers.length} developers found`;
+        }
+
+        // Modal functions
+        function openModal(name, salary) {
+            document.getElementById('modalTitle').textContent = `Get ${name} 🚀`;
+            document.getElementById('contactModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('contactModal').style.display = 'none';
+        }
+
+        // Form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.querySelector('.submit-btn');
+            const originalText = submitBtn.textContent;
+            
+            submitBtn.innerHTML = '<span class="loading"></span> Sending...';
+            submitBtn.disabled = true;
+            
+            setTimeout(() => {
+                submitBtn.textContent = '✅ Sent! We\'ll contact you in 2 hours';
+                submitBtn.classList.add('success-animation');
+                
+                setTimeout(() => {
+                    closeModal();
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove('success-animation');
+                    this.reset();
+                }, 2000);
+            }, 1500);
+        });
+
+        // Search on Enter
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+
+        // Close modal on outside click
+        window.onclick = function(event) {
+            const modal = document.getElementById('contactModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            displayDevelopers();
+            updateResultsCount();
+        });
+    </script>
+</body>
+</html>
