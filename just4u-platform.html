@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>just🔗4u - Perfect Match Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #2D3748;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+        }
+
+        .logo {
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 28px;
+            font-weight: bold;
+            color: #2D3748;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+
+        .tagline {
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+            margin-top: 5px;
+            font-weight: 300;
+        }
+
+        /* Main Content */
+        .main-content {
+            display: grid;
+            grid-template-columns: 350px 1fr 300px;
+            gap: 30px;
+            padding: 30px 0;
+            min-height: calc(100vh - 120px);
+        }
+
+        /* Filters Panel */
+        .filters-panel {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 25px;
+            height: fit-content;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-group {
+            margin-bottom: 25px;
+        }
+
+        .filter-title {
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #2D3748;
+            font-size: 16px;
+        }
+
+        .filter-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #E2E8F0;
+            border-radius: 12px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .filter-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .tech-tag {
+            background: #F7FAFC;
+            border: 1px solid #E2E8F0;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tech-tag:hover, .tech-tag.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .salary-range {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .range-input {
+            flex: 1;
+        }
+
+        /* Candidates List */
+        .candidates-section {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .candidates-count {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .candidate-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .candidate-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            border-color: #667eea;
+        }
+
+        .candidate-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .candidate-title {
+            font-weight: 600;
+            font-size: 18px;
+            color: #2D3748;
+            margin-bottom: 5px;
+        }
+
+        .candidate-experience {
+            color: #718096;
+            font-size: 14px;
+        }
+
+        .candidate-salary {
+            background: linear-gradient(45deg, #48BB78, #38B2AC);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .candidate-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 15px;
+        }
+
+        .skill-tag {
+            background: #EDF2F7;
+            color: #4A5568;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .skill-tag.primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .match-score {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #F56565;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .match-score.high {
+            background: #48BB78;
+        }
+
+        .match-score.medium {
+            background: #ED8936;
+        }
+
+        /* Ideal Candidate Constructor */
+        .constructor-panel {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 25px;
+            height: fit-content;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .constructor-title {
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #2D3748;
+            text-align: center;
+        }
+
+        .ideal-preview {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .ideal-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .ideal-salary {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 10px 0;
+        }
+
+        .constructor-input {
+            width: 100%;
+            padding: 10px 14px;
+            border: 2px solid #E2E8F0;
+            border-radius: 10px;
+            font-size: 13px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .constructor-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .find-button {
+            width: 100%;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .find-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-item {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid #E2E8F0;
+        }
+
+        .stat-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #718096;
+            margin-top: 5px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .main-content {
+                grid-template-columns: 300px 1fr;
+                gap: 20px;
+            }
+            
+            .constructor-panel {
+                grid-column: 1;
+                grid-row: 2;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .filters-panel, .constructor-panel {
+                order: 2;
+            }
+            
+            .candidates-section {
+                order: 1;
+            }
+        }
+
+        /* Animation */
+        .candidate-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 40px;
+            color: #718096;
+        }
+
+        .no-results {
+            display: none;
+            text-align: center;
+            padding: 60px 20px;
+            color: #718096;
+        }
+
+        .no-results-emoji {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo">just🔗4u</div>
+            <div class="tagline">Perfect match platform</div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+            <!-- Filters Panel -->
+            <div class="filters-panel">
+                <div class="filter-group">
+                    <div class="filter-title">🔍 Пошук по позиції</div>
+                    <input type="text" class="filter-input" id="positionFilter" placeholder="Senior Developer, QA Engineer...">
+                </div>
+
+                <div class="filter-group">
+                    <div class="filter-title">💰 Зарплата ($)</div>
+                    <div class="salary-range">
+                        <input type="number" class="filter-input range-input" id="salaryMin" placeholder="Від" min="0">
+                        <input type="number" class="filter-input range-input" id="salaryMax" placeholder="До" min="0">
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <div class="filter-title">⏱ Досвід (років)</div>
+                    <div class="salary-range">
+                        <input type="number" class="filter-input range-input" id="expMin" placeholder="Від" min="0">
+                        <input type="number" class="filter-input range-input" id="expMax" placeholder="До" min="0">
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <div class="filter-title">🚀 Технології</div>
+                    <div class="tech-tags" id="techTags">
+                        <div class="tech-tag" data-tech="JavaScript">JavaScript</div>
+                        <div class="tech-tag" data-tech="React">React</div>
+                        <div class="tech-tag" data-tech="Python">Python</div>
+                        <div class="tech-tag" data-tech="Java">Java</div>
+                        <div class="tech-tag" data-tech="PHP">PHP</div>
+                        <div class="tech-tag" data-tech="Node.js">Node.js</div>
+                        <div class="tech-tag" data-tech="TypeScript">TypeScript</div>
+                        <div class="tech-tag" data-tech="React Native">React Native</div>
+                        <div class="tech-tag" data-tech="Flutter">Flutter</div>
+                        <div class="tech-tag" data-tech="Swift">Swift</div>
+                        <div class="tech-tag" data-tech="Kotlin">Kotlin</div>
+                        <div class="tech-tag" data-tech="AI">AI/ML</div>
+                        <div class="tech-tag" data-tech="Docker">Docker</div>
+                        <div class="tech-tag" data-tech="AWS">AWS</div>
+                        <div class="tech-tag" data-tech="PostgreSQL">PostgreSQL</div>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <button class="find-button" onclick="applyFilters()">🔍 Знайти кандидатів</button>
+                </div>
+            </div>
+
+            <!-- Candidates Section -->
+            <div class="candidates-section">
+                <div class="section-header">
+                    <h2>Кандидати</h2>
+                    <div class="candidates-count" id="candidatesCount">156 кандидатів</div>
+                </div>
+
+                <div class="loading" id="loading">
+                    <div>🔍 Шукаємо ідеальних кандидатів...</div>
+                </div>
+
+                <div class="no-results" id="noResults">
+                    <div class="no-results-emoji">🤷‍♂️</div>
+                    <div>Кандидатів за такими критеріями не знайдено</div>
+                    <div style="margin-top: 10px; font-size: 14px;">Спробуйте змінити фільтри</div>
+                </div>
+
+                <div id="candidatesList">
+                    <!-- Candidates will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Ideal Candidate Constructor -->
+            <div class="constructor-panel">
+                <div class="constructor-title">🎯 Конструктор ідеального кандидата</div>
+                
+                <div class="ideal-preview">
+                    <div class="ideal-title" id="idealTitle">Senior Full Stack Developer</div>
+                    <div class="ideal-salary" id="idealSalary">$4,500</div>
+                    <div id="idealTechs">React • Node.js • TypeScript</div>
+                </div>
+
+                <input type="text" class="constructor-input" id="idealPosition" placeholder="Позиція" value="Senior Full Stack Developer">
+                <input type="number" class="constructor-input" id="idealSalaryInput" placeholder="Зарплата ($)" value="4500">
+                <input type="number" class="constructor-input" id="idealExperience" placeholder="Досвід (років)" value="5">
+                <input type="text" class="constructor-input" id="idealSkills" placeholder="Ключові навички" value="React, Node.js, TypeScript">
+
+                <button class="find-button" onclick="findIdealCandidates()">🎯 Знайти схожих</button>
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value" id="avgSalary">$3,200</div>
+                        <div class="stat-label">Середня зарплата</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="totalCandidates">156</div>
+                        <div class="stat-label">Всього кандидатів</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="topTech">JavaScript</div>
+                        <div class="stat-label">Топ технологія</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="avgExp">4.2</div>
+                        <div class="stat-label">Середній досвід</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Candidates data from Djinni
+        const candidates = [
+            {
+                title: "Senior Front End Developer",
+                skills: ["JavaScript", "React", "Redux", "TypeScript", "HTML5", "CSS3", "Angular", "Bootstrap", "Jest"],
+                experience: 9,
+                salary: 6000,
+                category: "JavaScript/React"
+            },
+            {
+                title: "Frontend Developer (React/Typescript/Next.js)",
+                skills: ["JavaScript", "TypeScript", "React", "Redux", "Next.js", "Node.js", "HTML", "CSS"],
+                experience: 5,
+                salary: 2300,
+                category: "JavaScript/React"
+            },
+            {
+                title: "Front End developer",
+                skills: ["JavaScript", "React", "TypeScript", "Redux", "HTML5", "CSS3", "Figma", "Webpack", "GraphQL"],
+                experience: 7,
+                salary: 4000,
+                category: "JavaScript/React"
+            },
+            {
+                title: "Front-end Developer / React Developer / Software Engineer",
+                skills: ["JavaScript", "TypeScript", "React", "Next.js", "Redux", "HTML", "CSS", "Web3"],
+                experience: 8,
+                salary: 3000,
+                category: "JavaScript/React"
+            },
+            {
+                title: "Frontend Developer",
+                skills: ["JavaScript", "TypeScript", "React", "Vue", "Next.js", "Gatsby", "HTML", "CSS", "GraphQL"],
+                experience: 4,
+                salary: 3000,
+                category: "JavaScript/React"
+            },
+            {
+                title: "Front-end Developer (React.js/Next.js)",
+                skills: ["JavaScript", "TypeScript", "React", "Redux", "Next.js", "PHP", "Symfony", "HTML", "CSS"],
+                experience: 2,
+                salary: 800,
+                category: "JavaScript/React"
+            },
+            {
+                title: "Middle/Senior Python Developer",
+                skills: ["Python", "Django", "PostgreSQL", "Bootstrap", "Jinja", "Docker", "Git"],
+                experience: 3,
+                salary: 4250,
+                category: "Python"
+            },
+            {
+                title: "Senior Python Developer",
+                skills: ["Python", "Django", "Flask", "PostgreSQL", "Redis", "Docker", "AWS", "Linux", "Git"],
+                experience: 5,
+                salary: 4000,
+                category: "Python"
+            },
+            {
+                title: "Python Developer",
+                skills: ["Python", "Django", "PostgreSQL", "Elasticsearch", "Redis", "Docker", "GitHub"],
+                experience: 2,
+                salary: 3000,
+                category: "Python"
+            },
+            {
+                title: "Junior Python Developer",
+                skills: ["Python", "Django", "Flask", "PostgreSQL", "MySQL", "HTML", "CSS", "JavaScript"],
+                experience: 1,
+                salary: 1200,
+                category: "Python"
+            },
+            {
+                title: "Mid Python Developer",
+                skills: ["Python", "FastAPI", "Django", "PostgreSQL", "Docker", "AWS", "Redis"],
+                experience: 3,
+                salary: 2800,
+                category: "Python"
+            },
+            {
+                title: "Senior Java Developer",
+                skills: ["Java", "Spring", "REST API", "PostgreSQL", "Hibernate", "JPA", "Maven", "AWS", "Git"],
+                experience: 10,
+                salary: 4500,
+                category: "Java"
+            },
+            {
+                title: "Java Developer",
+                skills: ["Java", "Spring Boot", "MySQL", "Hibernate", "Maven", "Gradle", "Git", "JUnit"],
+                experience: 5,
+                salary: 3200,
+                category: "Java"
+            },
+            {
+                title: "Middle Java Developer",
+                skills: ["Java", "Spring", "PostgreSQL", "Maven", "Git", "REST API", "Docker"],
+                experience: 3,
+                salary: 2500,
+                category: "Java"
+            },
+            {
+                title: "Junior Java Developer",
+                skills: ["Java", "Spring Boot", "MySQL", "Maven", "Git", "HTML", "CSS"],
+                experience: 1,
+                salary: 1800,
+                category: "Java"
+            },
+            {
+                title: "Senior PHP Developer",
+                skills: ["PHP", "Laravel", "MySQL", "PostgreSQL", "Redis", "Docker", "Git", "Nginx"],
+                experience: 8,
+                salary: 3500,
+                category: "PHP"
+            },
+            {
+                title: "PHP Developer",
+                skills: ["PHP", "Laravel", "Symfony", "MySQL", "Docker", "Git", "HTML", "CSS", "JavaScript"],
+                experience: 4,
+                salary: 2200,
+                category: "PHP"
+            },
+            {
+                title: "Node.js Engineer",
+                skills: ["Node.js", "TypeScript", "NestJS", "PostgreSQL", "MongoDB", "Redis", "Docker", "AWS"],
+                experience: 6,
+                salary: 4000,
+                category: "Node.js"
+            },
+            {
+                title: "Senior Node.js Developer",
+                skills: ["Node.js", "Express.js", "MongoDB", "PostgreSQL", "Docker", "AWS", "Git"],
+                experience: 5,
+                salary: 3500,
+                category: "Node.js"
+            },
+            {
+                title: "Senior QA Engineer",
+                skills: ["Selenium", "Java", "TestNG", "Cucumber", "JIRA", "Git", "API Testing"],
+                experience: 6,
+                salary: 2800,
+                category: "QA"
+            },
+            {
+                title: "QA Engineer",
+                skills: ["Selenium", "Java", "MySQL", "PostgreSQL", "JIRA", "Git", "Manual Testing"],
+                experience: 3,
+                salary: 1500,
+                category: "QA"
+            },
+            {
+                title: "Senior DevOps Engineer",
+                skills: ["Kubernetes", "Docker", "AWS", "Terraform", "Ansible", "Linux", "Git"],
+                experience: 5,
+                salary: 3500,
+                category: "DevOps"
+            },
+            {
+                title: "DevOps Engineer",
+                skills: ["Docker", "Kubernetes", "AWS", "Jenkins", "Terraform", "Linux", "Git"],
+                experience: 4,
+                salary: 2800,
+                category: "DevOps"
+            },
+            {
+                title: "Senior Data Analyst",
+                skills: ["Python", "SQL", "Tableau", "R", "PostgreSQL", "Excel", "Statistics"],
+                experience: 5,
+                salary: 3200,
+                category: "Data"
+            },
+            {
+                title: "Data Scientist",
+                skills: ["Python", "R", "Machine Learning", "SQL", "TensorFlow", "Pandas", "Jupyter"],
+                experience: 4,
+                salary: 2800,
+                category: "Data"
+            },
+            {
+                title: "AI Manager",
+                skills: ["Python", "TensorFlow", "Machine Learning", "AI frameworks", "Business Strategy", "Product Management"],
+                experience: 7,
+                salary: 5200,
+                category: "AI/ML"
+            },
+            {
+                title: "Machine Learning Developer",
+                skills: ["Python", "TensorFlow", "PyTorch", "Scikit-learn", "Keras", "Deep Learning", "Neural Networks"],
+                experience: 5,
+                salary: 4200,
+                category: "AI/ML"
+            },
+            {
+                title: "Senior AI Engineer",
+                skills: ["Python", "Machine Learning", "Computer Vision", "NLP", "TensorFlow", "PyTorch", "AWS", "Docker"],
+                experience: 8,
+                salary: 5800,
+                category: "AI/ML"
+            },
+            {
+                title: "Senior Flutter Developer",
+                skills: ["Flutter", "Dart", "Firebase", "REST APIs", "State Management", "Provider", "BLoC"],
+                experience: 6,
+                salary: 4200,
+                category: "Flutter"
+            },
+            {
+                title: "Flutter Developer",
+                skills: ["Flutter", "Dart", "Firebase", "Android", "iOS", "Cross-platform", "Material Design"],
+                experience: 4,
+                salary: 3200,
+                category: "Flutter"
+            },
+            {
+                title: "Senior Android Developer",
+                skills: ["Kotlin", "Android SDK", "Java", "MVVM", "Coroutines", "Room", "Retrofit"],
+                experience: 10,
+                salary: 4000,
+                category: "Kotlin"
+            },
+            {
+                title: "Kotlin Developer",
+                skills: ["Kotlin", "Android Development", "Java", "Spring Boot", "REST APIs", "Git"],
+                experience: 5,
+                salary: 3600,
+                category: "Kotlin"
+            },
+            {
+                title: "React Native Developer",
+                skills: ["JavaScript", "React Native", "Redux", "TypeScript", "Firebase", "iOS", "Android"],
+                experience: 4,
+                salary: 3000,
+                category: "React Native"
+            },
+            {
+                title: "Senior React Native Developer",
+                skills: ["React Native", "JavaScript", "TypeScript", "Redux", "Firebase", "Native Modules"],
+                experience: 6,
+                salary: 4000,
+                category: "React Native"
+            },
+            {
+                title: "Senior Swift Developer",
+                skills: ["Swift", "iOS", "Objective-C", "Core Data", "UIKit", "SwiftUI", "Xcode"],
+                experience: 8,
+                salary: 8000,
+                category: "Swift/iOS"
+            },
+            {
+                title: "iOS Developer",
+                skills: ["Swift", "iOS Development", "UIKit", "Core Data", "REST APIs", "Xcode", "Git"],
+                experience: 5,
+                salary: 4800,
+                category: "Swift/iOS"
+            },
+            {
+                title: "NFC Developer",
+                skills: ["Near Field Communication", "Android", "iOS", "Java", "Swift", "RFID", "Contactless Payments"],
+                experience: 5,
+                salary: 3800,
+                category: "NFC"
+            },
+            {
+                title: "Senior NFC Engineer",
+                skills: ["NFC", "RFID", "Contactless Systems", "Java", "C++", "Hardware Integration", "Security"],
+                experience: 8,
+                salary: 4600,
+                category: "NFC"
+            }
+        ];
+
+        let filteredCandidates = [...candidates];
+        let selectedTechs = [];
+
+        // Initialize the page
+        function initializePage() {
+            displayCandidates(candidates);
+            updateStats();
+            updateIdealPreview();
+            
+            // Add event listeners
+            document.getElementById('positionFilter').addEventListener('input', applyFilters);
+            document.getElementById('salaryMin').addEventListener('input', applyFilters);
+            document.getElementById('salaryMax').addEventListener('input', applyFilters);
+            document.getElementById('expMin').addEventListener('input', applyFilters);
+            document.getElementById('expMax').addEventListener('input', applyFilters);
+            
+            // Constructor inputs
+            document.getElementById('idealPosition').addEventListener('input', updateIdealPreview);
+            document.getElementById('idealSalaryInput').addEventListener('input', updateIdealPreview);
+            document.getElementById('idealSkills').addEventListener('input', updateIdealPreview);
+            
+            // Tech tags
+            document.querySelectorAll('.tech-tag').forEach(tag => {
+                tag.addEventListener('click', function() {
+                    const tech = this.dataset.tech;
+                    if (this.classList.contains('active')) {
+                        this.classList.remove('active');
+                        selectedTechs = selectedTechs.filter(t => t !== tech);
+                    } else {
+                        this.classList.add('active');
+                        selectedTechs.push(tech);
+                    }
+                    applyFilters();
+                });
+            });
+        }
+
+        function displayCandidates(candidatesToShow) {
+            const container = document.getElementById('candidatesList');
+            
+            if (candidatesToShow.length === 0) {
+                document.getElementById('noResults').style.display = 'block';
+                container.innerHTML = '';
+                return;
+            }
+            
+            document.getElementById('noResults').style.display = 'none';
+            
+            container.innerHTML = candidatesToShow.map((candidate, index) => {
+                const matchScore = calculateMatchScore(candidate);
+                const matchClass = matchScore >= 80 ? 'high' : matchScore >= 60 ? 'medium' : '';
+                
+                return `
+                    <div class="candidate-card" onclick="selectCandidate(${index})">
+                        <div class="match-score ${matchClass}">${matchScore}%</div>
+                        <div class="candidate-header">
+                            <div>
+                                <div class="candidate-title">${candidate.title}</div>
+                                <div class="candidate-experience">${candidate.experience} ${candidate.experience === 1 ? 'рік' : candidate.experience < 5 ? 'роки' : 'років'} досвіду</div>
+                            </div>
+                            <div class="candidate-salary">$${candidate.salary.toLocaleString()}</div>
+                        </div>
+                        <div class="candidate-skills">
+                            ${candidate.skills.slice(0, 3).map(skill => `<span class="skill-tag primary">${skill}</span>`).join('')}
+                            ${candidate.skills.slice(3, 8).map(skill => `<span class="skill-tag">${skill}</span>`).join('')}
+                            ${candidate.skills.length > 8 ? `<span class="skill-tag">+${candidate.skills.length - 8} більше</span>` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            document.getElementById('candidatesCount').textContent = `${candidatesToShow.length} кандидатів`;
+        }
+
+        function calculateMatchScore(candidate) {
+            let score = 50; // Base score
+            
+            // Check tech stack match
+            const idealSkills = document.getElementById('idealSkills').value.split(',').map(s => s.trim().toLowerCase());
+            const candidateSkills = candidate.skills.map(s => s.toLowerCase());
+            
+            let matchedSkills = 0;
+            idealSkills.forEach(skill => {
+                if (candidateSkills.some(cs => cs.includes(skill) || skill.includes(cs))) {
+                    matchedSkills++;
+                }
+            });
+            
+            if (idealSkills.length > 0) {
+                score += (matchedSkills / idealSkills.length) * 30;
+            }
+            
+            // Check experience match
+            const idealExp = parseInt(document.getElementById('idealExperience').value) || 5;
+            const expDiff = Math.abs(candidate.experience - idealExp);
+            if (expDiff <= 1) score += 15;
+            else if (expDiff <= 2) score += 10;
+            else if (expDiff <= 3) score += 5;
+            
+            // Check salary match
+            const idealSalary = parseInt(document.getElementById('idealSalaryInput').value) || 4500;
+            const salaryDiff = Math.abs(candidate.salary - idealSalary) / idealSalary;
+            if (salaryDiff <= 0.2) score += 5;
+            
+            return Math.min(100, Math.round(score));
+        }
+
+        function applyFilters() {
+            const position = document.getElementById('positionFilter').value.toLowerCase();
+            const salaryMin = parseInt(document.getElementById('salaryMin').value) || 0;
+            const salaryMax = parseInt(document.getElementById('salaryMax').value) || 999999;
+            const expMin = parseInt(document.getElementById('expMin').value) || 0;
+            const expMax = parseInt(document.getElementById('expMax').value) || 999;
+            
+            filteredCandidates = candidates.filter(candidate => {
+                // Position filter
+                if (position && !candidate.title.toLowerCase().includes(position)) {
+                    return false;
+                }
+                
+                // Salary filter
+                if (candidate.salary < salaryMin || candidate.salary > salaryMax) {
+                    return false;
+                }
+                
+                // Experience filter
+                if (candidate.experience < expMin || candidate.experience > expMax) {
+                    return false;
+                }
+                
+                // Tech filter
+                if (selectedTechs.length > 0) {
+                    const hasRequiredTech = selectedTechs.some(tech => 
+                        candidate.skills.some(skill => 
+                            skill.toLowerCase().includes(tech.toLowerCase()) || 
+                            tech.toLowerCase().includes(skill.toLowerCase())
+                        )
+                    );
+                    if (!hasRequiredTech) {
+                        return false;
+                    }
+                }
+                
+                return true;
+            });
+            
+            // Sort by match score
+            filteredCandidates.sort((a, b) => calculateMatchScore(b) - calculateMatchScore(a));
+            
+            displayCandidates(filteredCandidates);
+            updateStats();
+        }
+
+        function updateIdealPreview() {
+            const position = document.getElementById('idealPosition').value || 'Senior Developer';
+            const salary = document.getElementById('idealSalaryInput').value || '4500';
+            const skills = document.getElementById('idealSkills').value || 'JavaScript, React';
+            
+            document.getElementById('idealTitle').textContent = position;
+            document.getElementById('idealSalary').textContent = `$${parseInt(salary).toLocaleString()}`;
+            document.getElementById('idealTechs').textContent = skills.split(',').map(s => s.trim()).slice(0, 3).join(' • ');
+        }
+
+        function findIdealCandidates() {
+            applyFilters(); // This will automatically sort by match score
+            
+            // Highlight the constructor panel briefly
+            const panel = document.querySelector('.constructor-panel');
+            panel.style.transform = 'scale(1.02)';
+            setTimeout(() => {
+                panel.style.transform = 'scale(1)';
+            }, 200);
+        }
+
+        function updateStats() {
+            const currentCandidates = filteredCandidates.length > 0 ? filteredCandidates : candidates;
+            
+            // Average salary
+            const avgSalary = Math.round(currentCandidates.reduce((sum, c) => sum + c.salary, 0) / currentCandidates.length);
+            document.getElementById('avgSalary').textContent = `$${avgSalary.toLocaleString()}`;
+            
+            // Total candidates
+            document.getElementById('totalCandidates').textContent = currentCandidates.length;
+            
+            // Top technology
+            const techCount = {};
+            currentCandidates.forEach(candidate => {
+                candidate.skills.forEach(skill => {
+                    techCount[skill] = (techCount[skill] || 0) + 1;
+                });
+            });
+            const topTech = Object.entries(techCount).sort(([,a], [,b]) => b - a)[0];
+            document.getElementById('topTech').textContent = topTech ? topTech[0] : 'N/A';
+            
+            // Average experience
+            const avgExp = (currentCandidates.reduce((sum, c) => sum + c.experience, 0) / currentCandidates.length).toFixed(1);
+            document.getElementById('avgExp').textContent = avgExp;
+        }
+
+        function selectCandidate(index) {
+            const candidate = filteredCandidates[index];
+            alert(`🎯 Ви вибрали: ${candidate.title}\n💰 Зарплата: $${candidate.salary}\n🚀 Навички: ${candidate.skills.slice(0, 5).join(', ')}\n\n🔗 just4u знайшов ідеальний матч!`);
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', initializePage);
+    </script>
+</body>
+</html>
