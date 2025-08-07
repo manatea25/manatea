@@ -265,6 +265,132 @@ CI/CD Engineer | 4 years | $3600 | Jenkins • GitLab CI • Docker • Kubernet
 
 Junior DevOps Engineer | 2 years | $2400 | Docker • Linux • Git • Basic CI/CD • AWS | Pre-Intermediate | Junior DevOps engineer with academic and internship experience. Strong motivation to learn infrastructure and automation technologies. | 5 | 2.8 | 4.7
 
+## 9. .NET / C# DEVELOPERS (12 candidates)
+
+Senior .NET Developer | 8 years | $4200 | C# • .NET Core • ASP.NET • Entity Framework • SQL Server • Azure | Upper-Intermediate | Senior .NET developer with enterprise application experience. Expert in modern .NET ecosystem and cloud integration. | 24 | 4.7 | 4.9
+
+.NET Full Stack Developer | 6 years | $3600 | C# • ASP.NET • React • SQL Server • Azure • Docker | Upper-Intermediate | Full-stack .NET developer with modern web application expertise. Strong background in both backend and frontend development. | 17 | 4.1 | 4.9
+
+C# Backend Engineer | 5 years | $3200 | C# • .NET Core • Web API • PostgreSQL • RabbitMQ | Intermediate | Backend C# engineer with API development focus. Experience in microservices and message-driven architecture. | 14 | 3.6 | 4.8
+
+.NET Architect | 10 years | $5000 | C# • .NET • Architecture • Microservices • Azure • Design Patterns | Advanced | .NET architect with large-scale system design experience. Expert in enterprise patterns and cloud architecture. | 30 | 5.0 | 5.0
+
+Xamarin Developer | 5 years | $3800 | C# • Xamarin • .NET MAUI • iOS • Android • Azure | Upper-Intermediate | Cross-platform mobile developer with Microsoft stack expertise. Experience in business and consumer mobile applications. | 15 | 3.9 | 4.8
+
+WPF Developer | 6 years | $3400 | C# • WPF • XAML • MVVM • SQL Server • Desktop Apps | Upper-Intermediate | Desktop application developer with WPF expertise. Strong background in complex UI development and data binding. | 16 | 4.0 | 4.9
+
+ASP.NET Developer | 4 years | $2800 | C# • ASP.NET MVC • Entity Framework • SQL Server | Intermediate | Web developer with ASP.NET focus. Good understanding of web development patterns and database integration. | 11 | 3.3 | 4.8
+
+.NET Cloud Engineer | 7 years | $4400 | C# • .NET • Azure • Kubernetes • Microservices | Upper-Intermediate | Cloud-focused .NET engineer with Azure expertise. Strong background in serverless and container-based solutions. | 21 | 4.5 | 4.9
+
+Unity Developer | 5 years | $3600 | C# • Unity • Game Development • Mobile • VR/AR | Intermediate | Game developer with Unity expertise. Experience in mobile games, VR applications, and interactive experiences. | 13 | 3.7 | 4.8
+
+Junior .NET Developer | 2 years | $2000 | C# • ASP.NET • SQL Server • Basic Development | Pre-Intermediate | Junior .NET developer with academic and internship experience. Strong foundation in C# programming and web development. | 5 | 2.6 | 4.7
+
+Blazor Developer | 3 years | $3000 | C# • Blazor • ASP.NET Core • SignalR • Azure | Intermediate | Modern web developer with Blazor expertise. Experience in SPA development using C# and .NET ecosystem. | 8 | 3.1 | 4.8
+
+.NET DevOps Engineer | 6 years | $4000 | C# • .NET • Azure DevOps • Docker • Kubernetes | Upper-Intermediate | DevOps engineer with .NET development background. Expert in Microsoft technology stack and CI/CD automation. | 18 | 4.2 | 4.9
+
+## 10. GOLANG DEVELOPERS (10 candidates)
+
+Senior Go Developer | 6 years | $4600 | Go • Docker • Kubernetes • PostgreSQL • gRPC • Microservices | Upper-Intermediate | Senior Go developer with microservices expertise. Strong background in high-performance backend systems and container orchestration. | 18 | 4.3 | 4.9
+
+Go Backend Engineer | 4 years | $3400 | Go • Gin • PostgreSQL • Redis • Docker • AWS | Intermediate | Backend engineer specializing in Go web services. Experience in API development and distributed systems architecture. | 12 | 3.5 | 4.8
+
+Go Microservices Developer | 5 years | $4000 | Go • gRPC • Kubernetes • Consul • Prometheus | Upper-Intermediate | Microservices specialist with Go expertise. Strong understanding of service mesh and monitoring in distributed systems. | 15 | 3.9 | 4.8
+
+Cloud Go Engineer | 7 years | $4800 | Go • AWS • Docker • Terraform • Serverless | Upper-Intermediate | Cloud engineer with Go development focus. Expert in serverless architectures and infrastructure as code. | 22 | 4.6 | 4.9
+
+Go Full Stack Developer | 5 years | $3800 | Go • React • PostgreSQL • Docker • GraphQL | Intermediate | Full-stack developer with Go backend expertise. Experience in modern web applications and API development. | 14 | 3.7 | 4.8
+
+DevOps Go Engineer | 6 years | $4200 | Go • Kubernetes • Docker • Jenkins • Monitoring Tools | Upper-Intermediate | DevOps engineer with Go programming skills. Strong background in automation tools and infrastructure development. | 17 | 4.1 | 4.9
+
+Go API Developer | 3 years | $3000 | Go • REST API • PostgreSQL • Redis • Docker | Intermediate | API developer with Go specialization. Good understanding of web services and database integration patterns. | 9 | 3.2 | 4.8
+
+Senior Go Architect | 8 years | $5200 | Go • System Design • Microservices • Performance Optimization | Advanced | Go architect with system design expertise. Expert in high-load applications and performance optimization strategies. | 26 | 4.8 | 5.0
+
+Junior Go Developer | 2 years | $2200 | Go • Basic Web Development • PostgreSQL • Docker | Pre-Intermediate | Junior Go developer with academic and project experience. Strong foundation in Go programming and web development basics. | 5 | 2.7 | 4.7
+
+Go Blockchain Developer | 4 years | $4400 | Go • Blockchain • Ethereum • Smart Contracts • Cryptography | Upper-Intermediate | Blockchain developer with Go expertise. Experience in cryptocurrency platforms and decentralized applications. | 11 | 3.8 | 4.8
+
+## 11. RUBY / RAILS DEVELOPERS (8 candidates)
+
+Senior Ruby Developer | 7 years | $4000 | Ruby • Rails • PostgreSQL • Redis • Sidekiq • AWS | Upper-Intermediate | Senior Ruby developer with web application expertise. Strong background in Rails ecosystem and scalable web development. | 21 | 4.4 | 4.9
+
+Ruby on Rails Engineer | 5 years | $3200 | Ruby • Rails • MySQL • Redis • Docker • Heroku | Intermediate | Rails engineer with full-stack web development experience. Good understanding of MVC patterns and database optimization. | 14 | 3.6 | 4.8
+
+Full Stack Ruby Developer | 6 years | $3600 | Ruby • Rails • React • PostgreSQL • Docker • AWS | Upper-Intermediate | Full-stack developer with Ruby backend and React frontend expertise. Experience in SaaS platforms and API development. | 17 | 4.0 | 4.9
+
+Ruby Backend Engineer | 4 years | $2800 | Ruby • Rails • API Development • PostgreSQL • Background Jobs | Intermediate | Backend engineer with Ruby specialization. Strong understanding of web services and asynchronous processing. | 11 | 3.3 | 4.8
+
+Senior Rails Developer | 8 years | $4200 | Ruby • Rails • PostgreSQL • Redis • Elasticsearch • TDD | Upper-Intermediate | Senior Rails developer with enterprise application experience. Expert in testing practices and search integration. | 24 | 4.6 | 4.9
+
+Ruby DevOps Engineer | 5 years | $3800 | Ruby • Rails • Docker • Kubernetes • CI/CD • Monitoring | Intermediate | DevOps engineer with Ruby development background. Experience in deployment automation and infrastructure management. | 13 | 3.7 | 4.8
+
+Junior Ruby Developer | 2 years | $2000 | Ruby • Rails • PostgreSQL • Basic Web Development | Pre-Intermediate | Junior Ruby developer with bootcamp and project experience. Strong motivation to learn Rails best practices. | 4 | 2.5 | 4.7
+
+Ruby API Specialist | 4 years | $3400 | Ruby • Rails API • GraphQL • PostgreSQL • OAuth | Intermediate | API specialist with Ruby expertise. Experience in RESTful and GraphQL API development with authentication systems. | 10 | 3.4 | 4.8
+
+## 12. RUST DEVELOPERS (6 candidates)
+
+Senior Rust Developer | 5 years | $5000 | Rust • Actix-web • PostgreSQL • Docker • WebAssembly | Upper-Intermediate | Senior Rust developer with systems programming expertise. Strong background in high-performance applications and memory safety. | 16 | 4.2 | 4.9
+
+Rust Systems Engineer | 6 years | $4800 | Rust • System Programming • Linux • Performance Optimization | Upper-Intermediate | Systems engineer with Rust specialization. Expert in low-level programming and performance-critical applications. | 18 | 4.4 | 4.9
+
+Rust Web Developer | 4 years | $4200 | Rust • Actix • Rocket • PostgreSQL • Redis • Docker | Intermediate | Web developer with Rust backend expertise. Experience in building fast and reliable web services. | 12 | 3.6 | 4.8
+
+Blockchain Rust Developer | 4 years | $4600 | Rust • Blockchain • Solana • Smart Contracts • Cryptography | Upper-Intermediate | Blockchain developer with Rust expertise. Strong background in cryptocurrency platforms and DeFi applications. | 11 | 3.8 | 4.8
+
+Rust Backend Engineer | 3 years | $3800 | Rust • Tokio • PostgreSQL • gRPC • Microservices | Intermediate | Backend engineer with async Rust expertise. Experience in concurrent programming and distributed systems. | 9 | 3.3 | 4.8
+
+Junior Rust Developer | 2 years | $3000 | Rust • Basic Web Development • PostgreSQL • Docker | Pre-Intermediate | Junior Rust developer with systems programming interest. Strong foundation in Rust language and memory management. | 5 | 2.8 | 4.7
+
+## 13. SCALA DEVELOPERS (5 candidates)
+
+Senior Scala Developer | 7 years | $4800 | Scala • Akka • Spark • Kafka • PostgreSQL • Functional Programming | Upper-Intermediate | Senior Scala developer with big data expertise. Strong background in functional programming and distributed systems. | 22 | 4.6 | 4.9
+
+Scala Backend Engineer | 5 years | $4000 | Scala • Play Framework • PostgreSQL • Redis • Docker | Upper-Intermediate | Backend engineer with Scala web development expertise. Experience in reactive programming and microservices architecture. | 15 | 3.9 | 4.8
+
+Big Data Scala Engineer | 6 years | $4400 | Scala • Apache Spark • Kafka • Hadoop • Data Processing | Upper-Intermediate | Big data engineer with Scala specialization. Expert in large-scale data processing and analytics pipelines. | 17 | 4.1 | 4.9
+
+Scala Functional Developer | 4 years | $3600 | Scala • Cats • Functional Programming • PostgreSQL • Docker | Intermediate | Functional programming specialist with Scala expertise. Strong understanding of category theory and type systems. | 11 | 3.4 | 4.8
+
+Junior Scala Developer | 2 years | $2800 | Scala • Basic Functional Programming • PostgreSQL • SBT | Pre-Intermediate | Junior Scala developer with functional programming interest. Academic background in computer science and mathematics. | 4 | 2.6 | 4.7
+
+## 14. BLOCKCHAIN / WEB3 DEVELOPERS (8 candidates)
+
+Senior Blockchain Developer | 6 years | $5200 | Solidity • Ethereum • Web3.js • Smart Contracts • DeFi | Upper-Intermediate | Senior blockchain developer with DeFi expertise. Strong background in smart contract development and security auditing. | 18 | 4.4 | 4.9
+
+Smart Contract Developer | 4 years | $4600 | Solidity • Ethereum • Hardhat • OpenZeppelin • Security | Upper-Intermediate | Smart contract specialist with security focus. Experience in token development and decentralized applications. | 13 | 3.8 | 4.8
+
+Web3 Full Stack Developer | 5 years | $4800 | Solidity • React • Web3.js • IPFS • MetaMask Integration | Upper-Intermediate | Full-stack Web3 developer with dApp expertise. Strong background in blockchain frontend and backend integration. | 15 | 4.0 | 4.8
+
+DeFi Developer | 4 years | $5000 | Solidity • DeFi Protocols • Yield Farming • Liquidity Pools | Upper-Intermediate | DeFi specialist with protocol development expertise. Experience in automated market makers and lending platforms. | 12 | 3.9 | 4.8
+
+Blockchain Backend Engineer | 5 years | $4400 | Node.js • Blockchain APIs • Cryptocurrency • Payment Processing | Intermediate | Backend engineer with blockchain integration expertise. Strong understanding of cryptocurrency payments and wallet systems. | 14 | 3.7 | 4.8
+
+NFT Developer | 3 years | $4000 | Solidity • ERC-721 • ERC-1155 • IPFS • Marketplace Development | Intermediate | NFT specialist with marketplace development expertise. Experience in digital asset creation and trading platforms. | 9 | 3.3 | 4.8
+
+Crypto Trading Bot Developer | 4 years | $4200 | Python • Trading Algorithms • Binance API • Risk Management | Intermediate | Algorithmic trading specialist with cryptocurrency focus. Strong background in quantitative analysis and automated trading. | 11 | 3.5 | 4.8
+
+Junior Blockchain Developer | 2 years | $3200 | Solidity • Basic Smart Contracts • Web3.js • Ethereum | Pre-Intermediate | Junior blockchain developer with academic blockchain background. Strong interest in decentralized technologies and cryptography. | 5 | 2.9 | 4.7
+
+## 15. GAME DEVELOPERS (7 candidates)
+
+Senior Unity Developer | 7 years | $4400 | C# • Unity • Mobile Games • Monetization • Analytics | Upper-Intermediate | Senior Unity developer with mobile game expertise. Strong background in game mechanics, user retention, and revenue optimization. | 21 | 4.5 | 4.9
+
+Unreal Engine Developer | 6 years | $4800 | C++ • Unreal Engine • 3D Graphics • VR/AR • Performance Optimization | Upper-Intermediate | Unreal Engine specialist with AAA game experience. Expert in high-performance graphics and immersive technologies. | 18 | 4.3 | 4.9
+
+Game Backend Developer | 5 years | $3800 | Node.js • Multiplayer • Real-time • WebSocket • Game Analytics | Upper-Intermediate | Backend engineer with multiplayer game expertise. Strong background in real-time systems and player data management. | 15 | 3.8 | 4.8
+
+Mobile Game Developer | 4 years | $3400 | Unity • C# • iOS • Android • In-App Purchases • AdMob | Intermediate | Mobile game developer with monetization expertise. Experience in casual games and user acquisition strategies. | 12 | 3.5 | 4.8
+
+Indie Game Developer | 5 years | $3000 | Unity • C# • Steam • Game Design • Solo Development | Intermediate | Independent game developer with full-cycle experience. Strong background in game design, development, and publishing. | 13 | 3.6 | 4.8
+
+VR Game Developer | 4 years | $4200 | Unity • C# • VR SDKs • Oculus • HTC Vive • Spatial Computing | Upper-Intermediate | VR specialist with immersive game development expertise. Experience in virtual reality interactions and user experience design. | 11 | 3.7 | 4.8
+
+Junior Game Developer | 2 years | $2400 | Unity • C# • Basic Game Development • 2D Games | Pre-Intermediate | Junior game developer with indie game experience. Strong passion for game development and interactive entertainment. | 4 | 2.7 | 4.7
+
 # SALARY STATISTICS BY CATEGORY (USD/month):
 # JavaScript/React: $1200-6000 (average $3400)
 # Python: $1200-4800 (average $3200)  
@@ -274,16 +400,25 @@ Junior DevOps Engineer | 2 years | $2400 | Docker • Linux • Git • Basic CI
 # PHP: $1400-3800 (average $2800)
 # Node.js: $1800-4800 (average $3400)
 # DevOps/Cloud: $2400-5400 (average $4000)
+# .NET/C#: $2000-5000 (average $3500)
+# Golang: $2200-5200 (average $3900)
+# Ruby/Rails: $2000-4200 (average $3400)
+# Rust: $3000-5000 (average $4300)
+# Scala: $2800-4800 (average $3900)
+# Blockchain/Web3: $3200-5200 (average $4400)
+# Game Development: $2400-4800 (average $3800)
+
+# TOTAL: 179 DEVELOPERS ACROSS 15 CATEGORIES
 
 # TECH LEVEL DISTRIBUTION:
-# 2.0-2.9: Junior level (18 candidates)
-# 3.0-3.9: Mid level (42 candidates) 
-# 4.0-4.9: Senior level (52 candidates)
+# 2.0-2.9: Junior level (25 candidates)
+# 3.0-3.9: Mid level (61 candidates) 
+# 4.0-4.9: Senior level (82 candidates)
 # 5.0: Lead/Architect level (11 candidates)
 
 # PERFORMANCE RATING DISTRIBUTION:
 # 4.6: 0-2 projects (8 candidates)
-# 4.7: 3-4 projects (12 candidates)
-# 4.8: 5-10 projects (45 candidates)
-# 4.9: 11-20 projects (48 candidates)
-# 5.0: 20+ projects (10 candidates)
+# 4.7: 3-4 projects (17 candidates)
+# 4.8: 5-10 projects (65 candidates)
+# 4.9: 11-20 projects (76 candidates)
+# 5.0: 20+ projects (13 candidates)
