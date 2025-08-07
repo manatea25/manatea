@@ -328,7 +328,7 @@
                 <div class="tech-category category-tier3">
                     <div class="category-header">
                         <span class="category-title">💚 Supporting Technologies</span>
-                        <span class="category-points">1.0 point each</span>
+                        <span class="category-points">0.1 points each</span>
                     </div>
                     <div class="tech-grid" id="tier3Tech">
                         <!-- Will be populated by JavaScript -->
@@ -349,15 +349,16 @@
                 <!-- Example -->
                 <div class="example-box">
                     <div class="example-title">📝 Example Calculation:</div>
-                    <div style="font-size: 14px; color: #4a5568;">
-                        <strong>Senior React Developer:</strong><br>
-                        • Primary: React (1.5 points)<br>
-                        • Secondary: TypeScript, Node.js (1.2 × 2 = 2.4 points)<br>
-                        • Additional: 8 skills (0.1 × 8 = 0.8 points)<br>
-                        • Experience: 8 years (0.2 × 8 = 1.6 points)<br>
-                        • Senior level: +0.5 bonus<br>
-                        <strong>Total: 4.7★</strong>
-                    </div>
+                                         <div style="font-size: 14px; color: #4a5568;">
+                         <strong>Senior React Developer:</strong><br>
+                         • Primary: React (1.5 points)<br>
+                         • Advanced: TypeScript, Node.js (1.2 × 2 = 2.4 points)<br>
+                         • Supporting: HTML5, CSS3, Git, etc. (0.1 × 8 = 0.8 points)<br>
+                         • Additional: Agile, Leadership, etc. (0.1 × 8 = 0.8 points)<br>
+                         • Experience: 8 years (0.2 × 8 = 1.6 points)<br>
+                         • Senior level: +0.5 bonus<br>
+                         <strong>Total: 7.6 → Cap at 5.0★</strong>
+                     </div>
                 </div>
             </div>
 
@@ -471,37 +472,47 @@
             });
         }
 
-        function toggleTechnology(element, tier, tech) {
-            const checkbox = element.querySelector('input');
-            const isSelected = element.classList.contains('selected');
-            
-            if (tier === 'tier1') {
-                // Only one primary technology allowed
-                document.querySelectorAll('#tier1Tech .tech-checkbox').forEach(el => {
-                    el.classList.remove('selected');
-                    el.querySelector('input').checked = false;
-                });
-                selectedTechnologies.tier1 = [];
-                
-                if (!isSelected) {
-                    element.classList.add('selected');
-                    checkbox.checked = true;
-                    selectedTechnologies.tier1.push(tech);
-                }
-            } else {
-                if (isSelected) {
-                    element.classList.remove('selected');
-                    checkbox.checked = false;
-                    selectedTechnologies[tier] = selectedTechnologies[tier].filter(t => t !== tech);
-                } else {
-                    element.classList.add('selected');
-                    checkbox.checked = true;
-                    selectedTechnologies[tier].push(tech);
-                }
-            }
-            
-            calculateRating();
-        }
+                 function toggleTechnology(element, tier, tech) {
+             const checkbox = element.querySelector('input');
+             const isSelected = element.classList.contains('selected');
+             
+             // Check if this technology is already selected in another tier
+             const isInOtherTier = Object.keys(selectedTechnologies).some(otherTier => 
+                 otherTier !== tier && selectedTechnologies[otherTier].includes(tech)
+             );
+             
+             if (isInOtherTier && !isSelected) {
+                 alert(`⚠️ "${tech}" is already selected in another category. Please remove it from there first.`);
+                 return;
+             }
+             
+             if (tier === 'tier1') {
+                 // Only one primary technology allowed
+                 document.querySelectorAll('#tier1Tech .tech-checkbox').forEach(el => {
+                     el.classList.remove('selected');
+                     el.querySelector('input').checked = false;
+                 });
+                 selectedTechnologies.tier1 = [];
+                 
+                 if (!isSelected) {
+                     element.classList.add('selected');
+                     checkbox.checked = true;
+                     selectedTechnologies.tier1.push(tech);
+                 }
+             } else {
+                 if (isSelected) {
+                     element.classList.remove('selected');
+                     checkbox.checked = false;
+                     selectedTechnologies[tier] = selectedTechnologies[tier].filter(t => t !== tech);
+                 } else {
+                     element.classList.add('selected');
+                     checkbox.checked = true;
+                     selectedTechnologies[tier].push(tech);
+                 }
+             }
+             
+             calculateRating();
+         }
 
         function selectLevel(element) {
             document.querySelectorAll('.level-option').forEach(el => el.classList.remove('selected'));
@@ -517,10 +528,10 @@
             const experience = parseInt(document.getElementById('experience').value) || 0;
             
             // Calculate points
-            const primaryPoints = selectedTechnologies.tier1.length * 1.5;
-            const tier2Points = selectedTechnologies.tier2.length * 1.2;
-            const tier3Points = selectedTechnologies.tier3.length * 1.0;
-            const additionalPoints = selectedTechnologies.additional.length * 0.1;
+                         const primaryPoints = selectedTechnologies.tier1.length * 1.5;
+             const tier2Points = selectedTechnologies.tier2.length * 1.2;
+             const tier3Points = selectedTechnologies.tier3.length * 0.1;
+             const additionalPoints = selectedTechnologies.additional.length * 0.1;
             const experiencePoints = experience * 0.2;
             const seniorityPoints = selectedLevel ? selectedLevel.bonus : 0;
             
