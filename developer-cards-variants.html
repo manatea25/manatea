@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developer Cards Variants - just🔗4u</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #2d3748;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 60px;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .variant-section {
+            margin-bottom: 80px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        }
+
+        .variant-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .variant-description {
+            text-align: center;
+            color: #718096;
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        /* Variant 1: Minimalist Business Card */
+        .v1 .card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .v1 .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .v1 .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .v1 .role-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1a202c;
+            line-height: 1.3;
+        }
+
+        .v1 .developer-id {
+            background: #667eea;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .v1 .experience-salary {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            font-size: 14px;
+            color: #4a5568;
+        }
+
+        .v1 .salary {
+            font-weight: 700;
+            color: #48bb78;
+        }
+
+        .v1 .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 16px;
+        }
+
+        .v1 .tech-tag {
+            background: #edf2f7;
+            color: #4a5568;
+            padding: 4px 8px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .v1 .highlights {
+            font-size: 13px;
+            color: #718096;
+            margin-bottom: 16px;
+            line-height: 1.4;
+        }
+
+        .v1 .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .v1 .badge {
+            padding: 4px 8px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .v1 .badge.video { background: #c6f6d5; color: #22543d; }
+        .v1 .badge.available { background: #bee3f8; color: #1a365d; }
+        .v1 .badge.verified { background: #fef5e7; color: #744210; }
+
+        /* Variant 2: Stats-Focused Card */
+        .v2 .card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            padding: 28px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .v2 .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transform: translate(30px, -30px);
+        }
+
+        .v2 .role-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .v2 .developer-id {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .v2 .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin: 20px 0;
+        }
+
+        .v2 .stat {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 12px;
+        }
+
+        .v2 .stat-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            display: block;
+        }
+
+        .v2 .stat-label {
+            font-size: 11px;
+            opacity: 0.8;
+            text-transform: uppercase;
+        }
+
+        .v2 .specialization {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 16px;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+        /* Variant 3: Project-Focused Card */
+        .v3 .card {
+            background: white;
+            border-radius: 16px;
+            padding: 0;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+            overflow: hidden;
+        }
+
+        .v3 .card-header {
+            background: linear-gradient(135deg, #48bb78, #38a169);
+            color: white;
+            padding: 20px 24px;
+            position: relative;
+        }
+
+        .v3 .role-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .v3 .experience-info {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .v3 .developer-id {
+            position: absolute;
+            top: 16px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .v3 .card-body {
+            padding: 24px;
+        }
+
+        .v3 .projects-section {
+            margin-bottom: 20px;
+        }
+
+        .v3 .section-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .v3 .project-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .v3 .project-tag {
+            background: #e6fffa;
+            color: #234e52;
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .v3 .salary-experience {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 16px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .v3 .salary {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #48bb78;
+        }
+
+        /* Variant 4: Testimonial Card */
+        .v4 .card {
+            background: white;
+            border-radius: 20px;
+            padding: 28px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #667eea;
+        }
+
+        .v4 .card-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .v4 .avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 800;
+            font-size: 18px;
+        }
+
+        .v4 .role-info h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 4px;
+        }
+
+        .v4 .role-info .meta {
+            color: #718096;
+            font-size: 14px;
+        }
+
+        .v4 .developer-id {
+            background: #667eea;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-left: auto;
+        }
+
+        .v4 .testimonial {
+            font-style: italic;
+            color: #4a5568;
+            margin-bottom: 16px;
+            line-height: 1.5;
+            font-size: 14px;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .v4 .testimonial::before {
+            content: '"';
+            position: absolute;
+            left: 0;
+            top: -5px;
+            font-size: 24px;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .v4 .skills-rating {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .v4 .rating {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .v4 .stars {
+            color: #feca57;
+            font-size: 16px;
+        }
+
+        /* Variant 5: Compact Info Card */
+        .v5 .card {
+            background: white;
+            border-radius: 14px;
+            padding: 20px;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .v5 .card:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .v5 .top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .v5 .role-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1a202c;
+            flex: 1;
+            margin-right: 12px;
+        }
+
+        .v5 .developer-id {
+            background: #f7fafc;
+            color: #4a5568;
+            padding: 4px 8px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            border: 1px solid #e2e8f0;
+        }
+
+        .v5 .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .v5 .info-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: #4a5568;
+        }
+
+        .v5 .info-icon {
+            width: 16px;
+            height: 16px;
+            background: #667eea;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8px;
+            color: white;
+        }
+
+        .v5 .quick-skills {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 12px;
+        }
+
+        .v5 .skill {
+            background: #edf2f7;
+            color: #4a5568;
+            padding: 2px 6px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 500;
+        }
+
+        .v5 .bottom-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 12px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .v5 .salary {
+            font-weight: 700;
+            color: #48bb78;
+            font-size: 16px;
+        }
+
+        .v5 .status {
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        .v5 .status.available {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+
+        /* Variant 6: Achievement-Focused Card */
+        .v6 .card {
+            background: linear-gradient(145deg, #f8fafc, #edf2f7);
+            border-radius: 18px;
+            padding: 26px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            position: relative;
+        }
+
+        .v6 .achievement-badge {
+            position: absolute;
+            top: -8px;
+            right: 20px;
+            background: linear-gradient(135deg, #feca57, #ff9f43);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .v6 .role-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #1a202c;
+            margin-bottom: 8px;
+        }
+
+        .v6 .developer-id {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .v6 .achievements {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .v6 .achievement {
+            background: white;
+            padding: 12px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .v6 .achievement-value {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #667eea;
+            display: block;
+        }
+
+        .v6 .achievement-label {
+            font-size: 10px;
+            color: #718096;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .v6 .specialization {
+            background: white;
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            font-size: 13px;
+            color: #4a5568;
+            line-height: 1.4;
+        }
+
+        /* Variant 7: Modern Glassmorphism Card */
+        .v7 .card {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 22px;
+            padding: 30px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .v7 .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #48bb78);
+        }
+
+        .v7 .role-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .v7 .developer-id {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 8px 14px;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .v7 .expertise-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .v7 .pill {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .v7 .highlight-text {
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 16px;
+            opacity: 0.9;
+        }
+
+        .v7 .bottom-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .v7 .salary {
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .v7 .experience {
+            opacity: 0.8;
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .variant-section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>7 Developer Card Variants</h1>
+            <p>Different approaches to presenting anonymous, business-focused developer profiles</p>
+        </div>
+
+        <!-- Variant 1: Minimalist Business Card -->
+        <div class="variant-section v1">
+            <h2 class="variant-title">1. Minimalist Business Card</h2>
+            <p class="variant-description">Clean, professional design focusing on essential business information</p>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="role-title">Senior React Developer</h3>
+                        <div class="developer-id">#0002</div>
+                    </div>
+                    
+                    <div class="experience-salary">
+                        <span>8 years experience</span>
+                        <span class="salary">$5,500/mo</span>
+                    </div>
+                    
+                    <div class="tech-stack">
+                        <span class="tech-tag">React</span>
+                        <span class="tech-tag">TypeScript</span>
+                        <span class="tech-tag">Redux</span>
+                        <span class="tech-tag">Next.js</span>
+                        <span class="tech-tag">GraphQL</span>
+                    </div>
+                    
+                    <div class="highlights">
+                        Specialized in e-commerce platforms and SaaS dashboards. Led 15+ projects from concept to production.
+                    </div>
+                    
+                    <div class="badges">
+                        <span class="badge video">📹 Video</span>
+                        <span class="badge available">⚡ Available</span>
+                        <span class="badge verified">✅ Verified</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="role-title">Python Backend Architect</h3>
+                        <div class="developer-id">#0005</div>
+                    </div>
+                    
+                    <div class="experience-salary">
+                        <span>6 years experience</span>
+                        <span class="salary">$4,200/mo</span>
+                    </div>
+                    
+                    <div class="tech-stack">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Django</span>
+                        <span class="tech-tag">FastAPI</span>
+                        <span class="tech-tag">PostgreSQL</span>
+                        <span class="tech-tag">Docker</span>
+                    </div>
+                    
+                    <div class="highlights">
+                        Expert in API development and high-load systems. Built ML backends for 20+ companies.
+                    </div>
+                    
+                    <div class="badges">
+                        <span class="badge available">⚡ Available</span>
+                        <span class="badge verified">✅ Verified</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Variant 2: Stats-Focused Card -->
+        <div class="variant-section v2">
+            <h2 class="variant-title">2. Stats-Focused Card</h2>
+            <p class="variant-description">Emphasizes performance metrics and achievements with visual impact</p>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="developer-id">#0007</div>
+                    <h3 class="role-title">Full-Stack Node.js Engineer</h3>
+                    
+                    <div class="stats-grid">
+                        <div class="stat">
+                            <span class="stat-value">5</span>
+                            <span class="stat-label">Years</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">28</span>
+                            <span class="stat-label">Projects</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">4.7★</span>
+                            <span class="stat-label">Rating</span>
+                        </div>
+                    </div>
+                    
+                    <div class="specialization">
+                        <strong>Specialization:</strong> Real-time applications, microservices architecture, cloud deployments. Average response time: 1 hour.
+                    </div>
+                    
+                    <div style="text-align: center; font-size: 1.3rem; font-weight: 800;">
+                        $4,800/month
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="developer-id">#0013</div>
+                    <h3 class="role-title">Java Enterprise Architect</h3>
+                    
+                    <div class="stats-grid">
+                        <div class="stat">
+                            <span class="stat-value">10</span>
+                            <span class="stat-label">Years</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">63</span>
+                            <span class="stat-label">Projects</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">4.9★</span>
+                            <span class="stat-label">Rating</span>
+                        </div>
+                    </div>
+                    
+                    <div class="specialization">
+                        <strong>Specialization:</strong> Enterprise systems, banking platforms, high-load applications. Team leadership experience.
+                    </div>
+                    
+                    <div style="text-align: center; font-size: 1.3rem; font-weight: 800;">
+                        $6,000/month
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Variant 3: Project-Focused Card -->
+        <div class="variant-section v3">
+            <h2 class="variant-title">3. Project-Focused Card</h2>
+            <p class="variant-description">Highlights project types and domain expertise</p>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <h3 class="role-title">iOS Swift Developer</h3>
+                            <div class="experience-info">4 years • Mid-Level</div>
+                        </div>
+                        <div class="developer-id">#0011</div>
+                    </div>
+                    
+                    <div class="card-body">
+                        <div class="projects-section">
+                            <div class="section-title">Project Domains</div>
+                            <div class="project-list">
+                                <span class="project-tag">Mobile Apps</span>
+                                <span class="project-tag">iOS Games</span>
+                                <span class="project-tag">Enterprise Solutions</span>
+                                <span class="project-tag">AR/VR</span>
+                            </div>
+                        </div>
+                        
+                        <div class="projects-section">
+                            <div class="section-title">Core Technologies</div>
+                            <div class="project-list">
+                                <span class="project-tag">Swift</span>
+                                <span class="project-tag">SwiftUI</span>
+                                <span class="project-tag">Core Data</span>
+                                <span class="project-tag">Firebase</span>
+                            </div>
+                        </div>
+                        
+                        <div class="salary-experience">
+                            <div class="salary">$4,000/mo</div>
+                            <div>📹 Video Available</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Variant 4: Testimonial Card -->
+        <div class="variant-section v4">
+            <h2 class="variant-title">4. Testimonial Card</h2>
+            <p class="variant-description">Features client feedback and personal approach</p>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="avatar">R</div>
+                        <div class="role-info">
+                            <h3>Senior React Developer</h3>
+                            <div class="meta">8 years • E-commerce Expert</div>
+                        </div>
+                        <div class="developer-id">#0002</div>
+                    </div>
+                    
+                    <div class="testimonial">
+                        Delivered our e-commerce platform 2 weeks ahead of schedule. Exceptional code quality and communication. Always available for questions and provided valuable suggestions for UX improvements.
+                    </div>
+                    
+                    <div class="skills-rating">
+                        <div>React • TypeScript • Redux • Next.js</div>
+                        <div class="rating">
+                            <span class="stars">★★★★★</span>
+                            <span>4.9</span>
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 16px; font-weight: 700; color: #48bb78; font-size: 1.2rem;">
+                        $5,500/month
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Variant 5: Compact Info Card -->
+        <div class="variant-section v5">
+            <h2 class="variant-title">5. Compact Info Card</h2>
+            <p class="variant-description">Maximum information in minimal space</p>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="top-row">
+                        <h3 class="role-title">Python Backend Specialist</h3>
+                        <div class="developer-id">#0005</div>
+                    </div>
+                    
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-icon">⏱</div>
+                            <span>4h response</span>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon">📊</div>
+                            <span>32 projects</span>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon">⭐</div>
+                            <span>4.8 rating</span>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon">🎓</div>
+                            <span>6 years exp</span>
+                        </div>
+                    </div>
+                    
+                    <div class="quick-skills">
+                        <span class="skill">Python</span>
+                        <span class="skill">Django</span>
+                        <span class="skill">FastAPI</span>
+                        <span class="skill">PostgreSQL</span>
+                        <span class="skill">Docker</span>
+                        <span class="skill">+3 more</span>
+                    </div>
+                    
+                    <div class="bottom-row">
+                        <div class="salary">$4,200</div>
+                        <div class="status available">Available</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Variant 6: Achievement-Focused Card -->
+        <div class="variant-section v6">
+            <h2 class="variant-title">6. Achievement-Focused Card</h2>
+            <p class="variant-description">Showcases accomplishments and success metrics</p>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="achievement-badge">Top Performer</div>
+                    
+                    <h3 class="role-title">Java Enterprise Architect</h3>
+                    <div class="developer-id">#0013</div>
+                    
+                    <div class="achievements">
+                        <div class="achievement">
+                            <span class="achievement-value">63</span>
+                            <span class="achievement-label">Projects</span>
+                        </div>
+                        <div class="achievement">
+                            <span class="achievement-value">4.9★</span>
+                            <span class="achievement-label">Rating</span>
+                        </div>
+                        <div class="achievement">
+                            <span class="achievement-value">10</span>
+                            <span class="achievement-label">Years</span>
+                        </div>
+                        <div class="achievement">
+                            <span class="achievement-value">3h</span>
+                            <span class="achievement-label">Response</span>
+                        </div>
+                    </div>
+                    
+                    <div class="specialization">
+                        <strong>Key Achievement:</strong> Architected banking platform serving 2M+ users. Led team of 8 developers. Reduced system response time by 60%.
+                    </div>
+                    
+                    <div style="text-align: center; font-weight: 800; color: #48bb78; font-size: 1.3rem;">
+                        $6,000/month • Available Now
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Variant 7: Modern Glassmorphism Card -->
+        <div class="variant-section v7">
+            <h2 class="variant-title">7. Modern Glassmorphism Card</h2>
+            <p class="variant-description">Cutting-edge design with transparency effects</p>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="developer-id">#0007</div>
+                    <h3 class="role-title">Full-Stack Node.js Engineer</h3>
+                    
+                    <div class="expertise-pills">
+                        <span class="pill">Node.js</span>
+                        <span class="pill">Express</span>
+                        <span class="pill">MongoDB</span>
+                        <span class="pill">Vue.js</span>
+                        <span class="pill">AWS</span>
+                    </div>
+                    
+                    <div class="highlight-text">
+                        <strong>Expertise:</strong> Real-time applications, microservices architecture, cloud deployments. Built scalable systems for 500K+ concurrent users.
+                    </div>
+                    
+                    <div class="bottom-info">
+                        <div class="salary">$4,800</div>
+                        <div class="experience">5 years • 28 projects • 4.7★</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
