@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>just🔗4u - Tech Level Platform</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #2d3748;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .top-nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #4a5568;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .mobile-nav {
+            display: none;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 20px;
+        }
+
+        .section {
+            display: none;
+            padding: 40px 20px;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero-section {
+            text-align: center;
+            color: white;
+            padding: 60px 20px;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .search-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px 0;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        }
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .filter-group {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .filter-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #2d3748;
+        }
+
+        .range-container {
+            margin-bottom: 15px;
+        }
+
+        .range-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #4a5568;
+        }
+
+        .range-slider-container {
+            position: relative;
+            margin: 15px 0;
+        }
+
+        .range-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 8px;
+            border-radius: 5px;
+            background: linear-gradient(90deg, #e2e8f0 0%, #cbd5e0 100%);
+            outline: none;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+
+        .range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            cursor: pointer;
+            border: 3px solid white;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .range-values {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #718096;
+            margin-top: 5px;
+        }
+
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tech-tag {
+            background: #edf2f7;
+            color: #4a5568;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tech-tag.selected {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .developers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .developer-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .developer-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
+            border-color: #667eea;
+        }
+
+        .developer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .developer-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1a202c;
+            line-height: 1.3;
+        }
+
+        .developer-id {
+            background: #667eea;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .developer-meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: #4a5568;
+        }
+
+        .ratings-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 12px;
+            background: #f7fafc;
+            border-radius: 10px;
+        }
+
+        .tech-level {
+            text-align: center;
+        }
+
+        .tech-level-label {
+            font-size: 11px;
+            color: #718096;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .tech-level-value {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #667eea;
+        }
+
+        .performance-rating {
+            text-align: center;
+        }
+
+        .performance-label {
+            font-size: 11px;
+            color: #718096;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .performance-value {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #48bb78;
+        }
+
+        .tech-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 15px;
+        }
+
+        .skill-tag {
+            background: #edf2f7;
+            color: #4a5568;
+            padding: 4px 8px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .skill-tag.primary {
+            background: #fed7d7;
+            color: #742a2a;
+        }
+
+        .experience-description {
+            font-size: 13px;
+            color: #718096;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .salary-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .salary-amount {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #48bb78;
+        }
+
+        .hire-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .hire-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #718096;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #2d3748;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .mobile-nav.active {
+                display: block;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .developers-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filters-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="top-nav">
+        <div class="nav-container">
+            <div class="logo">just🔗4u</div>
+            <div class="nav-links">
+                <a href="#" class="nav-link active" onclick="showSection('home')">🏠 Home</a>
+                <a href="#" class="nav-link" onclick="showSection('search')">🔍 Find Developers</a>
+                <a href="#" class="nav-link" onclick="showSection('top3')">🏆 Top 3</a>
+                <a href="#" class="nav-link" onclick="showSection('constructor')">⚡ Constructor</a>
+                <a href="#" class="nav-link" onclick="showSection('admin')">⚙️ Admin</a>
+            </div>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+        </div>
+        <div class="mobile-nav" id="mobileNav">
+            <div class="nav-links" style="flex-direction: column; gap: 10px;">
+                <a href="#" class="nav-link" onclick="showSection('home'); toggleMobileMenu()">🏠 Home</a>
+                <a href="#" class="nav-link" onclick="showSection('search'); toggleMobileMenu()">🔍 Find Developers</a>
+                <a href="#" class="nav-link" onclick="showSection('top3'); toggleMobileMenu()">🏆 Top 3</a>
+                <a href="#" class="nav-link" onclick="showSection('constructor'); toggleMobileMenu()">⚡ Constructor</a>
+                <a href="#" class="nav-link" onclick="showSection('admin'); toggleMobileMenu()">⚙️ Admin</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Section -->
+    <section class="section active" id="homeSection">
+        <div class="hero-section">
+            <div class="container">
+                <h1 class="hero-title">Find Your Perfect Developer</h1>
+                <p class="hero-subtitle">Tech Level & Performance Rating System - 123 Verified Developers</p>
+                
+                <div class="stats-bar">
+                    <div class="stat-card">
+                        <div class="stat-number">123</div>
+                        <div class="stat-label">Active Developers</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">8</div>
+                        <div class="stat-label">Tech Categories</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">24h</div>
+                        <div class="stat-label">Response Time</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">4.8★</div>
+                        <div class="stat-label">Avg Performance</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <section class="section" id="searchSection">
+        <div class="container">
+            <div class="search-section">
+                <h2 style="text-align: center; font-size: 2rem; margin-bottom: 30px; color: #1a202c;">🔍 Find Developers</h2>
+                
+                <div class="filters-grid">
+                    <div class="filter-group">
+                        <h3 class="filter-title">💰 Budget Range</h3>
+                        <div class="range-container">
+                            <label class="range-label">Monthly Budget: <span id="salaryDisplay">$2,000 - $6,000</span></label>
+                            <div class="range-slider-container">
+                                <input type="range" class="range-slider" id="salaryMin" min="1000" max="8000" value="2000" oninput="updateSalaryRange(); filterDevelopers()">
+                                <input type="range" class="range-slider" id="salaryMax" min="1000" max="8000" value="6000" oninput="updateSalaryRange(); filterDevelopers()">
+                            </div>
+                            <div class="range-values"><span>$1K</span><span>$8K</span></div>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <h3 class="filter-title">🎓 Experience Range</h3>
+                        <div class="range-container">
+                            <label class="range-label">Years: <span id="experienceDisplay">2 - 10 years</span></label>
+                            <div class="range-slider-container">
+                                <input type="range" class="range-slider" id="experienceMin" min="1" max="15" value="2" oninput="updateExperienceRange(); filterDevelopers()">
+                                <input type="range" class="range-slider" id="experienceMax" min="1" max="15" value="10" oninput="updateExperienceRange(); filterDevelopers()">
+                            </div>
+                            <div class="range-values"><span>1yr</span><span>15yr</span></div>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <h3 class="filter-title">⭐ Tech Level</h3>
+                        <div class="range-container">
+                            <label class="range-label">Level: <span id="techLevelDisplay">2.0 - 5.0★</span></label>
+                            <div class="range-slider-container">
+                                <input type="range" class="range-slider" id="techLevelMin" min="2.0" max="5.0" step="0.1" value="2.0" oninput="updateTechLevelRange(); filterDevelopers()">
+                                <input type="range" class="range-slider" id="techLevelMax" min="2.0" max="5.0" step="0.1" value="5.0" oninput="updateTechLevelRange(); filterDevelopers()">
+                            </div>
+                            <div class="range-values"><span>2.0★</span><span>5.0★</span></div>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <h3 class="filter-title">🚀 Technologies</h3>
+                        <div class="tech-tags" id="techFilter">
+                            <div class="tech-tag" onclick="toggleTechFilter(this)">React</div>
+                            <div class="tech-tag" onclick="toggleTechFilter(this)">Python</div>
+                            <div class="tech-tag" onclick="toggleTechFilter(this)">Java</div>
+                            <div class="tech-tag" onclick="toggleTechFilter(this)">Node.js</div>
+                            <div class="tech-tag" onclick="toggleTechFilter(this)">TypeScript</div>
+                            <div class="tech-tag" onclick="toggleTechFilter(this)">Flutter</div>
+                            <div class="tech-tag" onclick="toggleTechFilter(this)">Swift</div>
+                            <div class="tech-tag" onclick="toggleTechFilter(this)">Kotlin</div>
+                            <div class="tech-tag" onclick="toggleTechFilter(this)">PHP</div>
+                            <div class="tech-tag" onclick="toggleTechFilter(this)">Docker</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <span id="resultsCount" style="color: #4a5568; font-weight: 600;">Found 123 developers</span>
+                </div>
+
+                <div class="developers-grid" id="developersGrid">
+                    <!-- Developers will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Top 3 Section -->
+    <section class="section" id="top3Section">
+        <div class="container">
+            <div class="search-section">
+                <h2 style="text-align: center; font-size: 2rem; margin-bottom: 30px; color: #1a202c;">🏆 Top 3 Developers</h2>
+                <p style="text-align: center; color: #4a5568; margin-bottom: 40px;">Highest Tech Level & Performance Rating</p>
+                
+                <div class="developers-grid" id="top3Grid">
+                    <!-- Top 3 developers will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Constructor Section -->
+    <section class="section" id="constructorSection">
+        <div class="container">
+            <div class="search-section">
+                <h2 style="text-align: center; font-size: 2rem; margin-bottom: 30px; color: #1a202c;">⚡ Ideal Developer Constructor</h2>
+                
+                <form id="constructorForm">
+                    <div class="filters-grid">
+                        <div class="filter-group">
+                            <h3 class="filter-title">💼 Project Details</h3>
+                            <div class="form-group">
+                                <label class="form-label">Project Type</label>
+                                <select class="form-input" name="projectType" required>
+                                    <option value="">Select project type</option>
+                                    <option value="web">Web Application</option>
+                                    <option value="mobile">Mobile App</option>
+                                    <option value="api">API Development</option>
+                                    <option value="ai">AI/ML Solution</option>
+                                    <option value="ecommerce">E-commerce</option>
+                                    <option value="fintech">Fintech</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="filter-group">
+                            <h3 class="filter-title">🎯 Requirements</h3>
+                            <div class="form-group">
+                                <label class="form-label">Required Technologies</label>
+                                <input type="text" class="form-input" name="technologies" placeholder="e.g. React, Node.js, PostgreSQL" required>
+                            </div>
+                        </div>
+
+                        <div class="filter-group">
+                            <h3 class="filter-title">💰 Budget & Timeline</h3>
+                            <div class="form-group">
+                                <label class="form-label">Budget Range</label>
+                                <select class="form-input" name="budget" required>
+                                    <option value="">Select budget</option>
+                                    <option value="1000-2000">$1,000 - $2,000</option>
+                                    <option value="2000-4000">$2,000 - $4,000</option>
+                                    <option value="4000-6000">$4,000 - $6,000</option>
+                                    <option value="6000+">$6,000+</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="filter-group">
+                            <h3 class="filter-title">📧 Contact Info</h3>
+                            <div class="form-group">
+                                <label class="form-label">Your Email</label>
+                                <input type="email" class="form-input" name="email" placeholder="your@company.com" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 30px;">
+                        <button type="submit" class="btn" style="font-size: 1.1rem; padding: 15px 40px;">
+                            🚀 Find My Ideal Developer
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admin Section -->
+    <section class="section" id="adminSection">
+        <div class="container">
+            <div class="search-section">
+                <h2 style="text-align: center; font-size: 2rem; margin-bottom: 30px; color: #1a202c;">⚙️ Admin Panel</h2>
+                <p style="text-align: center; color: #4a5568; margin-bottom: 40px;">Password required for access</p>
+                
+                <div style="text-align: center;">
+                    <button class="btn" onclick="checkAdminAccess()" style="font-size: 1.1rem; padding: 15px 40px;">
+                        🔐 Access Admin Panel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Modal -->
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 style="margin-bottom: 20px; color: #1a202c;">🚀 Contact Developer</h2>
+            <p style="margin-bottom: 20px; color: #4a5568;">We'll send you full details and arrange contact within 24 hours.</p>
+            <form id="contactForm">
+                <div class="form-group">
+                    <label class="form-label">📧 Your Email</label>
+                    <input type="email" class="form-input" name="clientEmail" placeholder="your@company.com" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">💼 Company Name</label>
+                    <input type="text" class="form-input" name="company" placeholder="Your Company" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">📝 Project Description</label>
+                    <textarea class="form-input" name="projectDescription" placeholder="Brief project description..." required style="min-height: 80px;"></textarea>
+                </div>
+                <button type="submit" class="btn" style="width: 100%;">📩 Send Request</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Sample developers data (first 20 from our database)
+        let allDevelopers = [
+            {
+                id: 1, developerId: "0001", position: "Senior React Developer", experience: 7, salary: 5000,
+                technologies: ["React", "TypeScript", "Redux", "Next.js", "Node.js", "GraphQL"],
+                englishLevel: "Upper-Intermediate", techLevel: 4.6, performanceRating: 4.9, projects: 18,
+                description: "Experienced in building scalable e-commerce platforms and SaaS solutions. Led frontend development for fintech applications with 100K+ users."
+            },
+            {
+                id: 2, developerId: "0002", position: "Frontend Developer", experience: 3, salary: 1800,
+                technologies: ["JavaScript", "React", "Vue", "HTML5", "CSS3", "Webpack"],
+                englishLevel: "Intermediate", techLevel: 2.9, performanceRating: 4.8, projects: 8,
+                description: "Focused on creating responsive corporate websites and admin dashboards. Experience with component libraries and design systems."
+            },
+            {
+                id: 3, developerId: "0003", position: "Full Stack React Engineer", experience: 6, salary: 3800,
+                technologies: ["React", "Next.js", "TypeScript", "Node.js", "PostgreSQL", "Docker", "AWS"],
+                englishLevel: "Upper-Intermediate", techLevel: 4.2, performanceRating: 4.9, projects: 15,
+                description: "Full-stack development of banking applications and healthcare systems. Experience with cloud deployment and microservices architecture."
+            },
+            {
+                id: 4, developerId: "0004", position: "Senior Python Developer", experience: 8, salary: 4500,
+                technologies: ["Python", "Django", "FastAPI", "PostgreSQL", "Redis", "Docker", "AWS"],
+                englishLevel: "Upper-Intermediate", techLevel: 4.7, performanceRating: 4.9, projects: 24,
+                description: "Senior backend developer with expertise in fintech platforms and e-commerce systems. Strong experience in API development."
+            },
+            {
+                id: 5, developerId: "0005", position: "Python Backend Engineer", experience: 5, salary: 3200,
+                technologies: ["Python", "Flask", "SQLAlchemy", "Celery", "RabbitMQ", "MongoDB"],
+                englishLevel: "Intermediate", techLevel: 3.7, performanceRating: 4.8, projects: 14,
+                description: "Backend engineer specializing in social media platforms and content management systems. Experience with asynchronous processing."
+            },
+            {
+                id: 6, developerId: "0006", position: "Senior Java Developer", experience: 10, salary: 4800,
+                technologies: ["Java", "Spring Boot", "Microservices", "PostgreSQL", "Kafka", "Docker"],
+                englishLevel: "Advanced", techLevel: 5.0, performanceRating: 5.0, projects: 32,
+                description: "Senior Java developer with extensive experience in banking systems and enterprise applications. Expert in microservices architecture."
+            },
+            {
+                id: 7, developerId: "0007", position: "Senior AI Engineer", experience: 6, salary: 5000,
+                technologies: ["Python", "TensorFlow", "PyTorch", "Pandas", "SQL", "AWS", "MLOps"],
+                englishLevel: "Upper-Intermediate", techLevel: 4.5, performanceRating: 4.9, projects: 17,
+                description: "Senior AI engineer with expertise in recommendation systems and predictive analytics. Strong background in machine learning operations."
+            },
+            {
+                id: 8, developerId: "0008", position: "Senior iOS Developer", experience: 8, salary: 6000,
+                technologies: ["Swift", "iOS", "UIKit", "SwiftUI", "Core Data", "Combine"],
+                englishLevel: "Upper-Intermediate", techLevel: 4.8, performanceRating: 5.0, projects: 26,
+                description: "Senior iOS developer with expertise in banking and social network applications. Strong background in iOS architecture patterns."
+            },
+            {
+                id: 9, developerId: "0009", position: "Senior Android Developer", experience: 9, salary: 4800,
+                technologies: ["Kotlin", "Android SDK", "MVVM", "Room", "Retrofit", "Coroutines"],
+                englishLevel: "Upper-Intermediate", techLevel: 4.9, performanceRating: 5.0, projects: 29,
+                description: "Senior Android developer with enterprise application experience. Expert in modern Android development and architectural patterns."
+            },
+            {
+                id: 10, developerId: "0010", position: "Flutter Developer", experience: 6, salary: 4200,
+                technologies: ["Flutter", "Dart", "Firebase", "REST APIs", "State Management", "BLoC"],
+                englishLevel: "Upper-Intermediate", techLevel: 4.3, performanceRating: 4.9, projects: 18,
+                description: "Flutter specialist with cross-platform development expertise. Experience in banking, e-commerce, and healthcare mobile solutions."
+            },
+            {
+                id: 11, developerId: "0011", position: "Senior PHP Developer", experience: 8, salary: 3800,
+                technologies: ["PHP", "Laravel", "Symfony", "MySQL", "Redis", "Docker", "Vue.js"],
+                englishLevel: "Upper-Intermediate", techLevel: 4.7, performanceRating: 4.9, projects: 25,
+                description: "Senior PHP developer with e-commerce and CMS development expertise. Strong background in modern PHP frameworks."
+            },
+            {
+                id: 12, developerId: "0012", position: "Senior Node.js Developer", experience: 6, salary: 4200,
+                technologies: ["Node.js", "TypeScript", "NestJS", "PostgreSQL", "Redis", "Docker", "AWS"],
+                englishLevel: "Upper-Intermediate", techLevel: 4.4, performanceRating: 4.9, projects: 18,
+                description: "Senior Node.js developer with API development and microservices expertise. Strong background in real-time applications."
+            },
+            {
+                id: 13, developerId: "0013", position: "Senior DevOps Engineer", experience: 7, salary: 4800,
+                technologies: ["Docker", "Kubernetes", "AWS", "Terraform", "Jenkins", "Ansible"],
+                englishLevel: "Upper-Intermediate", techLevel: 4.6, performanceRating: 4.9, projects: 22,
+                description: "Senior DevOps engineer with cloud migration and infrastructure automation expertise. Strong background in CI/CD pipelines."
+            },
+            {
+                id: 14, developerId: "0014", position: "React Native Developer", experience: 4, salary: 3200,
+                technologies: ["React Native", "JavaScript", "Redux", "Firebase", "iOS", "Android"],
+                englishLevel: "Intermediate", techLevel: 3.4, performanceRating: 4.8, projects: 12,
+                description: "Specialized in cross-platform mobile applications. Built dating apps, food delivery platforms, and fitness tracking solutions."
+            },
+            {
+                id: 15, developerId: "0015", position: "ML Engineer", experience: 4, salary: 3800,
+                technologies: ["Python", "TensorFlow", "Kubernetes", "Docker", "MLflow", "Airflow"],
+                englishLevel: "Intermediate", techLevel: 3.7, performanceRating: 4.8, projects: 12,
+                description: "Machine learning engineer specializing in computer vision and deep learning. Experience with model deployment and infrastructure automation."
+            },
+            {
+                id: 16, developerId: "0016", position: "Java Backend Engineer", experience: 5, salary: 3200,
+                technologies: ["Java", "Spring", "Hibernate", "MySQL", "REST API", "Maven"],
+                englishLevel: "Intermediate", techLevel: 3.6, performanceRating: 4.8, projects: 14,
+                description: "Backend engineer specializing in e-commerce and payment systems. Strong understanding of ORM frameworks and database integration."
+            },
+            {
+                id: 17, developerId: "0017", position: "iOS Team Lead", experience: 10, salary: 7000,
+                technologies: ["Swift", "iOS", "SwiftUI", "Architecture", "Team Management"],
+                englishLevel: "Advanced", techLevel: 5.0, performanceRating: 5.0, projects: 35,
+                description: "iOS team leader with enterprise solution experience. Expert in complex application development and technical team management."
+            },
+            {
+                id: 18, developerId: "0018", position: "Frontend Tech Lead", experience: 8, salary: 4500,
+                technologies: ["React", "TypeScript", "Redux Toolkit", "Storybook", "Jest", "Cypress"],
+                englishLevel: "Advanced", techLevel: 4.8, performanceRating: 5.0, projects: 25,
+                description: "Technical leadership in enterprise dashboard development. Experience in mentoring teams and establishing frontend architecture standards."
+            },
+            {
+                id: 19, developerId: "0019", position: "Junior React Developer", experience: 2, salary: 1200,
+                technologies: ["React", "JavaScript", "HTML", "CSS", "Git"],
+                englishLevel: "Pre-Intermediate", techLevel: 2.7, performanceRating: 4.7, projects: 4,
+                description: "Recent graduate with passion for frontend development. Experience in building simple web applications and component libraries."
+            },
+            {
+                id: 20, developerId: "0020", position: "AI Solutions Architect", experience: 9, salary: 5600,
+                technologies: ["Python", "TensorFlow", "AWS", "Azure", "System Design"],
+                englishLevel: "Advanced", techLevel: 4.9, performanceRating: 5.0, projects: 28,
+                description: "AI solutions architect with enterprise experience. Expert in AI architecture, technical consulting, and large-scale AI system design."
+            }
+        ];
+
+        let filteredDevelopers = [...allDevelopers];
+        let selectedTechnologies = [];
+        let currentDeveloper = null;
+
+        function showSection(sectionName) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active class from all nav links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionName + 'Section').classList.add('active');
+            
+            // Add active class to clicked nav link
+            event.target.classList.add('active');
+            
+            // Load section-specific data
+            if (sectionName === 'search') {
+                displayDevelopers();
+            } else if (sectionName === 'top3') {
+                displayTop3();
+            }
+        }
+
+        function toggleMobileMenu() {
+            const mobileNav = document.getElementById('mobileNav');
+            mobileNav.classList.toggle('active');
+        }
+
+        function updateSalaryRange() {
+            const min = document.getElementById('salaryMin').value;
+            const max = document.getElementById('salaryMax').value;
+            document.getElementById('salaryDisplay').textContent = `$${parseInt(min).toLocaleString()} - $${parseInt(max).toLocaleString()}`;
+        }
+
+        function updateExperienceRange() {
+            const min = document.getElementById('experienceMin').value;
+            const max = document.getElementById('experienceMax').value;
+            document.getElementById('experienceDisplay').textContent = `${min} - ${max} years`;
+        }
+
+        function updateTechLevelRange() {
+            const min = document.getElementById('techLevelMin').value;
+            const max = document.getElementById('techLevelMax').value;
+            document.getElementById('techLevelDisplay').textContent = `${min} - ${max}★`;
+        }
+
+        function toggleTechFilter(element) {
+            element.classList.toggle('selected');
+            const tech = element.textContent;
+            
+            if (selectedTechnologies.includes(tech)) {
+                selectedTechnologies = selectedTechnologies.filter(t => t !== tech);
+            } else {
+                selectedTechnologies.push(tech);
+            }
+            
+            filterDevelopers();
+        }
+
+        function filterDevelopers() {
+            const salaryMin = parseInt(document.getElementById('salaryMin').value);
+            const salaryMax = parseInt(document.getElementById('salaryMax').value);
+            const expMin = parseInt(document.getElementById('experienceMin').value);
+            const expMax = parseInt(document.getElementById('experienceMax').value);
+            const techLevelMin = parseFloat(document.getElementById('techLevelMin').value);
+            const techLevelMax = parseFloat(document.getElementById('techLevelMax').value);
+
+            filteredDevelopers = allDevelopers.filter(dev => {
+                const salaryMatch = dev.salary >= salaryMin && dev.salary <= salaryMax;
+                const expMatch = dev.experience >= expMin && dev.experience <= expMax;
+                const techLevelMatch = dev.techLevel >= techLevelMin && dev.techLevel <= techLevelMax;
+                const techMatch = selectedTechnologies.length === 0 || 
+                    selectedTechnologies.some(tech => dev.technologies.some(devTech => devTech.includes(tech)));
+                
+                return salaryMatch && expMatch && techLevelMatch && techMatch;
+            });
+
+            displayDevelopers();
+        }
+
+        function displayDevelopers() {
+            const container = document.getElementById('developersGrid');
+            const resultsCount = document.getElementById('resultsCount');
+            
+            resultsCount.textContent = `Found ${filteredDevelopers.length} developers`;
+            
+            container.innerHTML = filteredDevelopers.map(dev => `
+                <div class="developer-card">
+                    <div class="developer-header">
+                        <h3 class="developer-title">${dev.position}</h3>
+                        <div class="developer-id">#${dev.developerId}</div>
+                    </div>
+                    
+                    <div class="developer-meta">
+                        <span>${dev.experience} years</span>
+                        <span>${dev.englishLevel}</span>
+                        <span>${dev.projects} projects</span>
+                    </div>
+                    
+                    <div class="ratings-section">
+                        <div class="tech-level">
+                            <div class="tech-level-label">Tech Level</div>
+                            <div class="tech-level-value">${dev.techLevel}★</div>
+                        </div>
+                        <div class="performance-rating">
+                            <div class="performance-label">Performance</div>
+                            <div class="performance-value">${dev.performanceRating}★</div>
+                        </div>
+                    </div>
+                    
+                    <div class="tech-skills">
+                        ${dev.technologies.slice(0, 6).map((tech, i) => 
+                            `<span class="skill-tag ${i < 2 ? 'primary' : ''}">${tech}</span>`
+                        ).join('')}
+                        ${dev.technologies.length > 6 ? `<span class="skill-tag">+${dev.technologies.length - 6}</span>` : ''}
+                    </div>
+                    
+                    <div class="experience-description">
+                        ${dev.description}
+                    </div>
+                    
+                    <div class="salary-info">
+                        <div class="salary-amount">$${dev.salary.toLocaleString()}/mo</div>
+                        <button class="hire-btn" onclick="openContactModal('${dev.developerId}', '${dev.position}')">
+                            💎 Hire Now
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function displayTop3() {
+            const top3Devs = [...allDevelopers]
+                .sort((a, b) => (b.techLevel + b.performanceRating) - (a.techLevel + a.performanceRating))
+                .slice(0, 3);
+            
+            const container = document.getElementById('top3Grid');
+            container.innerHTML = top3Devs.map((dev, index) => `
+                <div class="developer-card" style="border-color: ${index === 0 ? '#feca57' : index === 1 ? '#c0c0c0' : '#cd7f32'};">
+                    <div class="developer-header">
+                        <h3 class="developer-title">${index === 0 ? '🥇' : index === 1 ? '🥈' : '🥉'} ${dev.position}</h3>
+                        <div class="developer-id">#${dev.developerId}</div>
+                    </div>
+                    
+                    <div class="developer-meta">
+                        <span>${dev.experience} years</span>
+                        <span>${dev.englishLevel}</span>
+                        <span>${dev.projects} projects</span>
+                    </div>
+                    
+                    <div class="ratings-section">
+                        <div class="tech-level">
+                            <div class="tech-level-label">Tech Level</div>
+                            <div class="tech-level-value">${dev.techLevel}★</div>
+                        </div>
+                        <div class="performance-rating">
+                            <div class="performance-label">Performance</div>
+                            <div class="performance-value">${dev.performanceRating}★</div>
+                        </div>
+                    </div>
+                    
+                    <div class="tech-skills">
+                        ${dev.technologies.slice(0, 6).map((tech, i) => 
+                            `<span class="skill-tag ${i < 2 ? 'primary' : ''}">${tech}</span>`
+                        ).join('')}
+                    </div>
+                    
+                    <div class="experience-description">
+                        ${dev.description}
+                    </div>
+                    
+                    <div class="salary-info">
+                        <div class="salary-amount">$${dev.salary.toLocaleString()}/mo</div>
+                        <button class="hire-btn" onclick="openContactModal('${dev.developerId}', '${dev.position}')">
+                            💎 Hire Top Developer
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openContactModal(developerId, position) {
+            currentDeveloper = allDevelopers.find(dev => dev.developerId === developerId);
+            document.getElementById('contactModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('contactModal').style.display = 'none';
+        }
+
+        function checkAdminAccess() {
+            const password = prompt("🔐 Enter admin password:");
+            if (password === "admin2025") {
+                alert("✅ Admin access granted! (Demo mode - full functionality would be here)");
+            } else {
+                alert("❌ Incorrect password!");
+            }
+        }
+
+        // Form handlers
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            
+            // Simulate email sending
+            console.log('Sending email to stant1605@gmail.com:', {
+                developer: currentDeveloper.position,
+                client: formData.get('clientEmail'),
+                company: formData.get('company'),
+                project: formData.get('projectDescription')
+            });
+            
+            alert('✅ Request sent! We\'ll contact you within 24 hours.');
+            closeModal();
+            e.target.reset();
+        });
+
+        document.getElementById('constructorForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            
+            // Simulate email sending
+            console.log('Sending constructor request to stant1605@gmail.com:', {
+                projectType: formData.get('projectType'),
+                technologies: formData.get('technologies'),
+                budget: formData.get('budget'),
+                email: formData.get('email')
+            });
+            
+            alert('✅ Constructor request sent! We\'ll find your ideal developer and contact you soon.');
+            e.target.reset();
+        });
+
+        // Initialize
+        updateSalaryRange();
+        updateExperienceRange();
+        updateTechLevelRange();
+        displayDevelopers();
+    </script>
+</body>
+</html>

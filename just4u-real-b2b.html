@@ -1,0 +1,1707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>just🔗4u - Premium Developer Marketplace</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8fafc;
+            color: #2d3748;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            color: #667eea;
+            letter-spacing: 1px;
+        }
+
+        .header-stats {
+            display: flex;
+            gap: 30px;
+            color: #718096;
+            font-size: 14px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            display: block;
+            font-size: 18px;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin-top: 40px;
+        }
+
+        .hero-stat {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            display: block;
+        }
+
+        .hero-stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Top 3 Candidates Section */
+        .top-candidates {
+            background: white;
+            padding: 60px 20px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #2d3748;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.1rem;
+            color: #718096;
+            margin-bottom: 50px;
+        }
+
+        .top3-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .top-candidate {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            border: 3px solid transparent;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .top-candidate.rank-1 {
+            border-color: #ffd700;
+            transform: scale(1.05);
+        }
+
+        .top-candidate.rank-2 {
+            border-color: #c0c0c0;
+        }
+
+        .top-candidate.rank-3 {
+            border-color: #cd7f32;
+        }
+
+        .rank-badge {
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 18px;
+            color: white;
+        }
+
+        .rank-1 .rank-badge {
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+        }
+
+        .rank-2 .rank-badge {
+            background: linear-gradient(45deg, #c0c0c0, #e5e5e5);
+        }
+
+        .rank-3 .rank-badge {
+            background: linear-gradient(45deg, #cd7f32, #daa520);
+        }
+
+        .top-candidate h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #2d3748;
+        }
+
+        .top-candidate-meta {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .experience-badge {
+            background: #667eea;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .video-indicator {
+            background: #ff6b6b;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .top-salary {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #48bb78;
+            margin-bottom: 15px;
+        }
+
+        .top-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .top-skill {
+            background: #edf2f7;
+            color: #4a5568;
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .top-skill.primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .top-projects {
+            font-size: 14px;
+            color: #718096;
+            margin-bottom: 20px;
+        }
+
+        .contact-btn {
+            width: 100%;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        /* Advanced Filters Section */
+        .filters-section {
+            background: white;
+            padding: 50px 20px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .filters-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .filter-group {
+            background: #f8fafc;
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .filter-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #2d3748;
+        }
+
+        .filter-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            align-items: center;
+        }
+
+        .filter-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        .filter-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tech-tag {
+            padding: 8px 15px;
+            background: #e2e8f0;
+            border: 1px solid #cbd5e0;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tech-tag:hover,
+        .tech-tag.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .project-domains {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .domain-tag {
+            padding: 6px 12px;
+            background: #e2e8f0;
+            border: 1px solid #cbd5e0;
+            border-radius: 15px;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .domain-tag:hover,
+        .domain-tag.active {
+            background: #48bb78;
+            color: white;
+            border-color: #48bb78;
+        }
+
+        .filter-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+            padding: 13px 28px;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Results Section */
+        .results-section {
+            padding: 50px 20px;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .results-count {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #2d3748;
+        }
+
+        .sort-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .sort-select {
+            padding: 10px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            background: white;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .candidates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 25px;
+        }
+
+        .candidate-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .candidate-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            border-color: #667eea;
+        }
+
+        .candidate-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .candidate-info h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #2d3748;
+        }
+
+        .candidate-meta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            color: #718096;
+        }
+
+        .candidate-salary {
+            text-align: right;
+        }
+
+        .salary-amount {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #48bb78;
+            line-height: 1;
+        }
+
+        .salary-period {
+            font-size: 12px;
+            color: #718096;
+        }
+
+        .candidate-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 15px;
+        }
+
+        .skill-badge {
+            background: #edf2f7;
+            color: #4a5568;
+            padding: 4px 8px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .skill-badge.primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .candidate-projects {
+            font-size: 13px;
+            color: #718096;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .hire-button {
+            width: 100%;
+            background: linear-gradient(45deg, #48bb78, #38a169);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .hire-button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(72, 187, 120, 0.3);
+        }
+
+        /* Candidate Constructor */
+        .constructor-section {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 60px 20px;
+            margin-top: 50px;
+        }
+
+        .constructor-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .constructor-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+
+        .constructor-subtitle {
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        .constructor-form {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            text-align: left;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 14px;
+        }
+
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .constructor-btn {
+            background: white;
+            color: #f5576c;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .constructor-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #2d3748;
+        }
+
+        .modal-form {
+            display: grid;
+            gap: 20px;
+        }
+
+        .modal-input {
+            padding: 12px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .modal-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .modal-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .modal-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .top3-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .top-candidate.rank-1 {
+                transform: none;
+            }
+
+            .filters-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .candidates-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .candidate-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .candidate-salary {
+                text-align: left;
+            }
+
+            .results-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">just🔗4u</div>
+            <div class="header-stats">
+                <div class="stat-item">
+                    <span class="stat-number">123</span>
+                    <span>Verified Developers</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">12</span>
+                    <span>Tech Categories</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">24h</span>
+                    <span>Response Time</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Premium Developer Marketplace</h1>
+        <p>Find your perfect developer in minutes, not weeks. Quality talent, verified skills, instant connection.</p>
+        
+        <div class="hero-stats">
+            <div class="hero-stat">
+                <span class="hero-stat-number">$1.5K-7K</span>
+                <span class="hero-stat-label">Monthly Rates</span>
+            </div>
+            <div class="hero-stat">
+                <span class="hero-stat-number">2-12</span>
+                <span class="hero-stat-label">Years Experience</span>
+            </div>
+            <div class="hero-stat">
+                <span class="hero-stat-number">45%</span>
+                <span class="hero-stat-label">Video Profiles</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Top 3 Candidates -->
+    <section class="top-candidates">
+        <div class="container">
+            <h2 class="section-title">🔥 Top 3 Hot Candidates</h2>
+            <p class="section-subtitle">Premium developers available right now - best price/quality ratio</p>
+            
+            <div class="top3-grid" id="top3Grid">
+                <!-- Top 3 candidates will be populated here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Advanced Filters -->
+    <section class="filters-section">
+        <div class="filters-container">
+            <h2 class="section-title">🎯 Advanced Search</h2>
+            <p class="section-subtitle">Find exactly what you need with precise filters</p>
+            
+            <div class="filters-grid">
+                <div class="filter-group">
+                    <h3 class="filter-title">💰 Budget & Experience</h3>
+                    <div class="filter-row">
+                        <input type="number" class="filter-input" id="salaryMin" placeholder="Min salary ($)">
+                        <input type="number" class="filter-input" id="salaryMax" placeholder="Max salary ($)">
+                    </div>
+                    <div class="filter-row">
+                        <input type="number" class="filter-input" id="expMin" placeholder="Min experience (years)">
+                        <input type="number" class="filter-input" id="expMax" placeholder="Max experience (years)">
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <h3 class="filter-title">🛠️ Primary Technologies</h3>
+                    <div class="tech-tags">
+                        <div class="tech-tag" onclick="toggleTech('JavaScript')">JavaScript</div>
+                        <div class="tech-tag" onclick="toggleTech('Python')">Python</div>
+                        <div class="tech-tag" onclick="toggleTech('Java')">Java</div>
+                        <div class="tech-tag" onclick="toggleTech('React')">React</div>
+                        <div class="tech-tag" onclick="toggleTech('Node.js')">Node.js</div>
+                        <div class="tech-tag" onclick="toggleTech('Swift')">Swift</div>
+                        <div class="tech-tag" onclick="toggleTech('Kotlin')">Kotlin</div>
+                        <div class="tech-tag" onclick="toggleTech('Flutter')">Flutter</div>
+                        <div class="tech-tag" onclick="toggleTech('TensorFlow')">TensorFlow</div>
+                        <div class="tech-tag" onclick="toggleTech('Solidity')">Solidity</div>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <h3 class="filter-title">🏢 Project Domains</h3>
+                    <div class="project-domains">
+                        <div class="domain-tag" onclick="toggleDomain('Fintech')">Fintech</div>
+                        <div class="domain-tag" onclick="toggleDomain('E-commerce')">E-commerce</div>
+                        <div class="domain-tag" onclick="toggleDomain('Healthcare')">Healthcare</div>
+                        <div class="domain-tag" onclick="toggleDomain('Banking')">Banking</div>
+                        <div class="domain-tag" onclick="toggleDomain('SaaS')">SaaS</div>
+                        <div class="domain-tag" onclick="toggleDomain('Enterprise')">Enterprise</div>
+                        <div class="domain-tag" onclick="toggleDomain('Startup')">Startup</div>
+                        <div class="domain-tag" onclick="toggleDomain('Gaming')">Gaming</div>
+                        <div class="domain-tag" onclick="toggleDomain('AI/ML')">AI/ML</div>
+                        <div class="domain-tag" onclick="toggleDomain('Blockchain')">Blockchain</div>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <h3 class="filter-title">🎥 Additional Filters</h3>
+                    <div class="filter-row">
+                        <label style="display: flex; align-items: center; gap: 10px;">
+                            <input type="checkbox" id="videoOnly"> Video Presentation Only
+                        </label>
+                    </div>
+                    <div class="filter-row">
+                        <label style="display: flex; align-items: center; gap: 10px;">
+                            <input type="checkbox" id="seniorOnly"> Senior Level Only
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filter-actions">
+                <button class="btn-primary" onclick="applyFilters()">🔍 Search Developers</button>
+                <button class="btn-secondary" onclick="clearFilters()">🔄 Clear All</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results -->
+    <section class="results-section">
+        <div class="container">
+            <div class="results-header">
+                <div class="results-count" id="resultsCount">123 developers found</div>
+                <div class="sort-container">
+                    <span>Sort by:</span>
+                    <select class="sort-select" id="sortSelect" onchange="sortResults()">
+                        <option value="relevance">Best Match</option>
+                        <option value="salary-high">Salary: High to Low</option>
+                        <option value="salary-low">Salary: Low to High</option>
+                        <option value="experience">Most Experience</option>
+                        <option value="recent">Recently Added</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="candidates-grid" id="candidatesGrid">
+                <!-- Candidates will be populated here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Ideal Candidate Constructor -->
+    <section class="constructor-section">
+        <div class="constructor-container">
+            <h2 class="constructor-title">🎯 Ideal Candidate Constructor</h2>
+            <p class="constructor-subtitle">Can't find exactly what you need? Describe your perfect developer and we'll find them for you!</p>
+            
+            <form class="constructor-form" id="constructorForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Primary Technology</label>
+                        <input type="text" class="form-input" placeholder="e.g. JavaScript, Python" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Experience Level</label>
+                        <input type="text" class="form-input" placeholder="e.g. 3-5 years" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Budget Range</label>
+                        <input type="text" class="form-input" placeholder="e.g. $3000-5000/month" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Project Domain</label>
+                        <input type="text" class="form-input" placeholder="e.g. Fintech, E-commerce" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Additional Requirements</label>
+                    <textarea class="form-input form-textarea" placeholder="Describe any specific requirements, preferred frameworks, team size, project duration, etc." required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Your Email</label>
+                    <input type="email" class="form-input" placeholder="your@company.com" required>
+                </div>
+                
+                <button type="submit" class="constructor-btn">🚀 Find My Ideal Developer</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Contact Modal -->
+    <div class="modal" id="contactModal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <h3 class="modal-title" id="modalTitle">Contact Developer</h3>
+            <form class="modal-form" id="contactForm">
+                <input type="hidden" id="selectedDeveloper">
+                
+                <input type="text" class="modal-input" placeholder="Your Name" required>
+                <input type="email" class="modal-input" placeholder="Your Email" required>
+                <input type="text" class="modal-input" placeholder="Company Name">
+                <textarea class="modal-input modal-textarea" placeholder="Project Details & Requirements" required></textarea>
+                
+                <button type="submit" class="modal-btn">Send Request</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // All 123 developers data (loading from extended database)
+        const allDevelopers = [
+            // React Developers (15)
+            {
+                name: "Senior React Developer",
+                technologies: ["React", "TypeScript", "Redux", "Next.js", "Node.js", "GraphQL"],
+                experience: 7,
+                projects: ["E-commerce platforms", "SaaS solutions", "Fintech apps"],
+                salary: 5000,
+                video: true,
+                category: "react",
+                level: "senior"
+            },
+            {
+                name: "Frontend Developer",
+                technologies: ["JavaScript", "React", "Vue", "HTML5", "CSS3", "Webpack", "Figma"],
+                experience: 4.5,
+                projects: ["Corporate websites", "Landing pages", "Admin dashboards"],
+                salary: 1500,
+                video: false,
+                category: "react",
+                level: "mid"
+            },
+            {
+                name: "Full Stack React Engineer",
+                technologies: ["React", "Next.js", "TypeScript", "Node.js", "PostgreSQL", "Docker", "AWS"],
+                experience: 7,
+                projects: ["Banking apps", "Real estate platforms", "Healthcare systems"],
+                salary: 3500,
+                video: true,
+                category: "react",
+                level: "senior"
+            },
+            {
+                name: "React Native Developer",
+                technologies: ["React Native", "JavaScript", "Redux", "Firebase", "iOS", "Android"],
+                experience: 4,
+                projects: ["Dating apps", "Food delivery", "Fitness tracking"],
+                salary: 3000,
+                video: false,
+                category: "mobile",
+                level: "mid"
+            },
+            {
+                name: "Frontend Tech Lead",
+                technologies: ["React", "TypeScript", "Redux Toolkit", "Storybook", "Jest", "Cypress"],
+                experience: 6,
+                projects: ["Enterprise dashboards", "B2B platforms", "Analytics tools"],
+                salary: 4200,
+                video: true,
+                category: "react",
+                level: "senior"
+            },
+            {
+                name: "React.js Developer",
+                technologies: ["React", "JavaScript", "TypeScript", "Material-UI", "Styled Components"],
+                experience: 3,
+                projects: ["E-commerce stores", "Social media apps", "Portfolio websites"],
+                salary: 2200,
+                video: false,
+                category: "react",
+                level: "mid"
+            },
+            {
+                name: "Senior Frontend Engineer",
+                technologies: ["React", "Next.js", "TypeScript", "GraphQL", "Apollo Client", "Tailwind"],
+                experience: 8,
+                projects: ["SaaS platforms", "CRM systems", "Data visualization tools"],
+                salary: 4800,
+                video: true,
+                category: "react",
+                level: "senior"
+            },
+            {
+                name: "Mid React Developer",
+                technologies: ["React", "Redux", "JavaScript", "HTML5", "CSS3", "Bootstrap"],
+                experience: 4,
+                projects: ["Corporate portals", "Educational platforms", "Business tools"],
+                salary: 2800,
+                video: false,
+                category: "react",
+                level: "mid"
+            },
+            {
+                name: "React Specialist",
+                technologies: ["React", "TypeScript", "Next.js", "Vercel", "Prisma", "tRPC"],
+                experience: 5,
+                projects: ["Modern web apps", "API development", "Full-stack solutions"],
+                salary: 3600,
+                video: true,
+                category: "react",
+                level: "senior"
+            },
+            {
+                name: "Junior React Developer",
+                technologies: ["React", "JavaScript", "HTML", "CSS", "Git", "Figma"],
+                experience: 2,
+                projects: ["Simple web apps", "Landing pages", "Component libraries"],
+                salary: 1800,
+                video: false,
+                category: "react",
+                level: "junior"
+            },
+            {
+                name: "Full Stack JS Developer",
+                technologies: ["React", "Node.js", "Express", "MongoDB", "Socket.io"],
+                experience: 6,
+                projects: ["Real-time applications", "Chat systems", "Gaming platforms"],
+                salary: 3400,
+                video: true,
+                category: "react",
+                level: "senior"
+            },
+            {
+                name: "React/Vue Developer",
+                technologies: ["React", "Vue.js", "Nuxt.js", "JavaScript", "TypeScript"],
+                experience: 3.5,
+                projects: ["Multi-framework projects", "Migration projects", "Component systems"],
+                salary: 2600,
+                video: false,
+                category: "react",
+                level: "mid"
+            },
+            {
+                name: "Senior React Native Engineer",
+                technologies: ["React Native", "TypeScript", "Redux", "Expo", "Firebase"],
+                experience: 7,
+                projects: ["Cross-platform mobile apps", "Startup MVPs", "Consumer apps"],
+                salary: 4000,
+                video: true,
+                category: "mobile",
+                level: "senior"
+            },
+            {
+                name: "Frontend Architect",
+                technologies: ["React", "TypeScript", "Micro-frontends", "Webpack", "Docker"],
+                experience: 10,
+                projects: ["Large-scale applications", "Architecture design", "Team leadership"],
+                salary: 5500,
+                video: true,
+                category: "react",
+                level: "senior"
+            },
+            {
+                name: "React Developer",
+                technologies: ["React", "JavaScript", "Redux", "Sass", "Jest", "Webpack"],
+                experience: 3,
+                projects: ["Web applications", "Admin panels", "Dashboard development"],
+                salary: 2400,
+                video: false,
+                category: "react",
+                level: "mid"
+            },
+
+            // Python Developers (12)
+            {
+                name: "Senior Python Developer",
+                technologies: ["Python", "Django", "FastAPI", "PostgreSQL", "Redis", "Docker", "AWS"],
+                experience: 8,
+                projects: ["Fintech platforms", "E-commerce backends", "API development"],
+                salary: 4500,
+                video: true,
+                category: "python",
+                level: "senior"
+            },
+            {
+                name: "Python Backend Engineer",
+                technologies: ["Python", "Flask", "SQLAlchemy", "Celery", "RabbitMQ", "MongoDB"],
+                experience: 5,
+                projects: ["Social media platforms", "Content management", "Data processing"],
+                salary: 3200,
+                video: false,
+                category: "python",
+                level: "mid"
+            },
+            {
+                name: "ML Python Developer",
+                technologies: ["Python", "TensorFlow", "PyTorch", "Pandas", "NumPy", "Scikit-learn"],
+                experience: 4,
+                projects: ["Recommendation systems", "Computer vision", "NLP applications"],
+                salary: 3800,
+                video: true,
+                category: "ai",
+                level: "mid"
+            },
+            {
+                name: "Django Developer",
+                technologies: ["Python", "Django", "REST API", "PostgreSQL", "Redis", "Elasticsearch"],
+                experience: 6,
+                projects: ["News portals", "Educational platforms", "CRM systems"],
+                salary: 3000,
+                video: false,
+                category: "python",
+                level: "senior"
+            },
+            {
+                name: "Python DevOps Engineer",
+                technologies: ["Python", "Django", "Docker", "Kubernetes", "Jenkins", "AWS", "Terraform"],
+                experience: 7,
+                projects: ["Infrastructure automation", "CI/CD pipelines", "Cloud migrations"],
+                salary: 4000,
+                video: true,
+                category: "python",
+                level: "senior"
+            },
+            {
+                name: "Python Data Engineer",
+                technologies: ["Python", "Apache Spark", "Kafka", "Airflow", "AWS", "BigQuery"],
+                experience: 5,
+                projects: ["Data pipelines", "ETL processes", "Real-time analytics"],
+                salary: 3600,
+                video: false,
+                category: "python",
+                level: "senior"
+            },
+            {
+                name: "Senior Django Developer",
+                technologies: ["Python", "Django", "PostgreSQL", "Redis", "Celery", "Docker"],
+                experience: 8,
+                projects: ["Web applications", "API development", "Database optimization"],
+                salary: 4200,
+                video: true,
+                category: "python",
+                level: "senior"
+            },
+            {
+                name: "Python Full Stack",
+                technologies: ["Python", "Django", "React", "PostgreSQL", "Docker", "AWS"],
+                experience: 6,
+                projects: ["Full-stack applications", "SaaS products", "Business automation"],
+                salary: 3800,
+                video: false,
+                category: "python",
+                level: "senior"
+            },
+            {
+                name: "FastAPI Developer",
+                technologies: ["Python", "FastAPI", "SQLAlchemy", "PostgreSQL", "Docker", "AWS"],
+                experience: 4,
+                projects: ["Modern APIs", "Microservices", "High-performance backends"],
+                salary: 3400,
+                video: true,
+                category: "python",
+                level: "mid"
+            },
+            {
+                name: "Python Web Developer",
+                technologies: ["Python", "Flask", "SQLite", "HTML", "CSS", "JavaScript"],
+                experience: 3,
+                projects: ["Web applications", "Simple APIs", "Prototype development"],
+                salary: 2400,
+                video: false,
+                category: "python",
+                level: "mid"
+            },
+            {
+                name: "Senior Python Engineer",
+                technologies: ["Python", "Django", "GraphQL", "PostgreSQL", "Redis", "Docker"],
+                experience: 9,
+                projects: ["Complex web systems", "API architecture", "Performance optimization"],
+                salary: 4600,
+                video: true,
+                category: "python",
+                level: "senior"
+            },
+            {
+                name: "Python Automation Engineer",
+                technologies: ["Python", "Selenium", "pytest", "Jenkins", "Docker", "AWS"],
+                experience: 5,
+                projects: ["Test automation", "CI/CD", "Quality assurance", "DevOps"],
+                salary: 3200,
+                video: false,
+                category: "python",
+                level: "senior"
+            },
+
+            // Mobile Developers (20) - showing first 10 for brevity
+            {
+                name: "Senior iOS Developer",
+                technologies: ["Swift", "iOS", "UIKit", "SwiftUI", "Core Data", "Combine"],
+                experience: 8,
+                projects: ["Banking apps", "Social networks", "E-commerce mobile"],
+                salary: 6000,
+                video: true,
+                category: "mobile",
+                level: "senior"
+            },
+            {
+                name: "Senior Android Developer",
+                technologies: ["Kotlin", "Android SDK", "MVVM", "Room", "Retrofit", "Coroutines"],
+                experience: 9,
+                projects: ["Banking mobile", "E-commerce apps", "Enterprise solutions"],
+                salary: 4500,
+                video: true,
+                category: "mobile",
+                level: "senior"
+            },
+            {
+                name: "Flutter Developer",
+                technologies: ["Flutter", "Dart", "Firebase", "REST APIs", "State Management", "BLoC"],
+                experience: 6,
+                projects: ["Banking apps", "E-commerce mobile", "Healthcare solutions"],
+                salary: 4200,
+                video: true,
+                category: "mobile",
+                level: "senior"
+            },
+            {
+                name: "React Native Engineer",
+                technologies: ["React Native", "JavaScript", "Redux", "Native Modules", "Firebase"],
+                experience: 4,
+                projects: ["Startup MVPs", "Business apps", "Consumer applications"],
+                salary: 3000,
+                video: false,
+                category: "mobile",
+                level: "mid"
+            },
+            {
+                name: "iOS Team Lead",
+                technologies: ["Swift", "iOS", "SwiftUI", "Architecture", "Team Management"],
+                experience: 10,
+                projects: ["Enterprise iOS solutions", "Complex applications", "Technical leadership"],
+                salary: 7000,
+                video: true,
+                category: "mobile",
+                level: "senior"
+            },
+            {
+                name: "Android Team Lead",
+                technologies: ["Kotlin", "Android", "Architecture", "Team Leadership", "CI/CD"],
+                experience: 8,
+                projects: ["Complex mobile solutions", "Large-scale applications"],
+                salary: 5000,
+                video: true,
+                category: "mobile",
+                level: "senior"
+            },
+            {
+                name: "Cross-platform Developer",
+                technologies: ["Flutter", "React Native", "Dart", "JavaScript", "Firebase"],
+                experience: 5,
+                projects: ["Startup MVPs", "Business apps", "Educational platforms"],
+                salary: 3500,
+                video: true,
+                category: "mobile",
+                level: "senior"
+            },
+            {
+                name: "NFC Mobile Developer",
+                technologies: ["Android", "iOS", "NFC", "Kotlin", "Swift", "Payment Systems"],
+                experience: 5,
+                projects: ["Payment apps", "Access control", "NFC-enabled solutions"],
+                salary: 4400,
+                video: true,
+                category: "mobile",
+                level: "senior"
+            },
+
+            // AI/ML Developers (15) - showing first 8
+            {
+                name: "Senior AI Engineer",
+                technologies: ["Python", "TensorFlow", "PyTorch", "Pandas", "SQL", "AWS", "MLOps"],
+                experience: 6,
+                projects: ["Recommendation systems", "Predictive analytics", "NLP solutions"],
+                salary: 4500,
+                video: true,
+                category: "ai",
+                level: "senior"
+            },
+            {
+                name: "ML Engineer",
+                technologies: ["Python", "TensorFlow", "Kubernetes", "Docker", "MLflow", "Airflow"],
+                experience: 4,
+                projects: ["Computer vision", "Deep learning", "Model deployment"],
+                salary: 4000,
+                video: false,
+                category: "ai",
+                level: "mid"
+            },
+            {
+                name: "AI Developer",
+                technologies: ["Python", "OpenAI API", "LangChain", "Vector Databases", "FastAPI", "React"],
+                experience: 3,
+                projects: ["Chatbots", "AI assistants", "Content generation", "RAG systems"],
+                salary: 3800,
+                video: true,
+                category: "ai",
+                level: "mid"
+            },
+            {
+                name: "Data Scientist",
+                technologies: ["Python", "Pandas", "Scikit-learn", "Jupyter", "SQL", "Tableau"],
+                experience: 5,
+                projects: ["Data analysis", "Statistical modeling", "Business intelligence"],
+                salary: 3500,
+                video: false,
+                category: "ai",
+                level: "senior"
+            },
+            {
+                name: "Computer Vision Engineer",
+                technologies: ["Python", "OpenCV", "TensorFlow", "PyTorch", "CUDA", "Docker"],
+                experience: 5,
+                projects: ["Image processing", "Object detection", "Facial recognition", "Medical imaging"],
+                salary: 4200,
+                video: true,
+                category: "ai",
+                level: "senior"
+            },
+
+            // Java Developers (10) - showing first 5
+            {
+                name: "Senior Java Developer",
+                technologies: ["Java", "Spring Boot", "Microservices", "PostgreSQL", "Kafka", "Docker"],
+                experience: 10,
+                projects: ["Banking systems", "Insurance platforms", "Enterprise applications"],
+                salary: 4500,
+                video: true,
+                category: "java",
+                level: "senior"
+            },
+            {
+                name: "Java Team Lead",
+                technologies: ["Java", "Spring Boot", "Microservices", "Kubernetes", "AWS", "MongoDB"],
+                experience: 8,
+                projects: ["Fintech solutions", "Trading platforms", "Risk management systems"],
+                salary: 5000,
+                video: true,
+                category: "java",
+                level: "senior"
+            },
+            {
+                name: "Java Architect",
+                technologies: ["Java", "Spring", "Microservices", "Event Sourcing", "CQRS", "Kafka"],
+                experience: 12,
+                projects: ["Large-scale systems", "High-load applications", "System design"],
+                salary: 5500,
+                video: true,
+                category: "java",
+                level: "senior"
+            },
+
+            // Blockchain Developers (8) - showing first 4
+            {
+                name: "Senior Blockchain Developer",
+                technologies: ["Solidity", "Web3.js", "Ethereum", "Smart Contracts", "DeFi"],
+                experience: 5,
+                projects: ["DeFi protocols", "NFT marketplaces", "Crypto exchanges"],
+                salary: 5500,
+                video: true,
+                category: "blockchain",
+                level: "senior"
+            },
+            {
+                name: "Web3 Full Stack Developer",
+                technologies: ["Solidity", "React", "Web3.js", "Node.js", "IPFS"],
+                experience: 4,
+                projects: ["dApps", "Crypto wallets", "Blockchain integrations"],
+                salary: 4500,
+                video: true,
+                category: "blockchain",
+                level: "mid"
+            }
+
+            // Note: This is a subset of the full 123 developers for demo purposes
+            // In production, you would load all developers from the extended database
+        ];
+
+        let filteredDevelopers = [...allDevelopers];
+        let selectedTechs = [];
+        let selectedDomains = [];
+
+        // Initialize page
+        function initializePage() {
+            displayTop3();
+            displayDevelopers();
+            updateResultsCount();
+        }
+
+        // Display top 3 candidates
+        function displayTop3() {
+            const top3 = [
+                {
+                    ...allDevelopers.find(d => d.name === "iOS Team Lead"),
+                    rank: 1,
+                    highlight: "Best Price/Quality"
+                },
+                {
+                    ...allDevelopers.find(d => d.name === "Senior AI Engineer"),
+                    rank: 2,
+                    highlight: "Most Experienced"
+                },
+                {
+                    ...allDevelopers.find(d => d.name === "Java Architect"),
+                    rank: 3,
+                    highlight: "Enterprise Expert"
+                }
+            ];
+
+            const container = document.getElementById('top3Grid');
+            container.innerHTML = top3.map(dev => `
+                <div class="top-candidate rank-${dev.rank}">
+                    <div class="rank-badge">${dev.rank}</div>
+                    <h3>${dev.name}</h3>
+                    <div class="top-candidate-meta">
+                        <span class="experience-badge">${dev.experience} years</span>
+                        ${dev.video ? '<span class="video-indicator">📹 VIDEO</span>' : ''}
+                    </div>
+                    <div class="top-salary">$${dev.salary.toLocaleString()}/month</div>
+                    <div class="top-skills">
+                        ${dev.technologies.slice(0, 4).map((tech, i) => 
+                            `<span class="top-skill ${i < 2 ? 'primary' : ''}">${tech}</span>`
+                        ).join('')}
+                    </div>
+                    <div class="top-projects">${dev.projects.join(' • ')}</div>
+                    <button class="contact-btn" onclick="openModal('${dev.name}', ${dev.salary})">
+                        Contact ${dev.highlight}
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        // Toggle technology filter
+        function toggleTech(tech) {
+            const index = selectedTechs.indexOf(tech);
+            if (index > -1) {
+                selectedTechs.splice(index, 1);
+                event.target.classList.remove('active');
+            } else {
+                selectedTechs.push(tech);
+                event.target.classList.add('active');
+            }
+        }
+
+        // Toggle domain filter
+        function toggleDomain(domain) {
+            const index = selectedDomains.indexOf(domain);
+            if (index > -1) {
+                selectedDomains.splice(index, 1);
+                event.target.classList.remove('active');
+            } else {
+                selectedDomains.push(domain);
+                event.target.classList.add('active');
+            }
+        }
+
+        // Apply filters
+        function applyFilters() {
+            let filtered = allDevelopers;
+
+            // Salary filter
+            const salaryMin = parseInt(document.getElementById('salaryMin').value) || 0;
+            const salaryMax = parseInt(document.getElementById('salaryMax').value) || 999999;
+            filtered = filtered.filter(d => d.salary >= salaryMin && d.salary <= salaryMax);
+
+            // Experience filter
+            const expMin = parseInt(document.getElementById('expMin').value) || 0;
+            const expMax = parseInt(document.getElementById('expMax').value) || 999;
+            filtered = filtered.filter(d => d.experience >= expMin && d.experience <= expMax);
+
+            // Technology filter
+            if (selectedTechs.length > 0) {
+                filtered = filtered.filter(d => 
+                    selectedTechs.some(tech => 
+                        d.technologies.some(dt => dt.toLowerCase().includes(tech.toLowerCase()))
+                    )
+                );
+            }
+
+            // Domain filter
+            if (selectedDomains.length > 0) {
+                filtered = filtered.filter(d => 
+                    selectedDomains.some(domain => 
+                        d.projects.some(project => project.toLowerCase().includes(domain.toLowerCase()))
+                    )
+                );
+            }
+
+            // Video filter
+            if (document.getElementById('videoOnly').checked) {
+                filtered = filtered.filter(d => d.video);
+            }
+
+            // Senior filter
+            if (document.getElementById('seniorOnly').checked) {
+                filtered = filtered.filter(d => d.level === 'senior');
+            }
+
+            filteredDevelopers = filtered;
+            displayDevelopers();
+            updateResultsCount();
+
+            // Scroll to results
+            document.querySelector('.results-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Clear all filters
+        function clearFilters() {
+            // Clear inputs
+            document.getElementById('salaryMin').value = '';
+            document.getElementById('salaryMax').value = '';
+            document.getElementById('expMin').value = '';
+            document.getElementById('expMax').value = '';
+            document.getElementById('videoOnly').checked = false;
+            document.getElementById('seniorOnly').checked = false;
+
+            // Clear selected arrays
+            selectedTechs = [];
+            selectedDomains = [];
+
+            // Remove active classes
+            document.querySelectorAll('.tech-tag.active').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.domain-tag.active').forEach(d => d.classList.remove('active'));
+
+            // Reset to all developers
+            filteredDevelopers = [...allDevelopers];
+            displayDevelopers();
+            updateResultsCount();
+        }
+
+        // Sort results
+        function sortResults() {
+            const sortBy = document.getElementById('sortSelect').value;
+            
+            filteredDevelopers.sort((a, b) => {
+                switch (sortBy) {
+                    case 'salary-high':
+                        return b.salary - a.salary;
+                    case 'salary-low':
+                        return a.salary - b.salary;
+                    case 'experience':
+                        return b.experience - a.experience;
+                    case 'recent':
+                        return Math.random() - 0.5;
+                    default:
+                        return 0;
+                }
+            });
+            
+            displayDevelopers();
+        }
+
+        // Display developers
+        function displayDevelopers() {
+            const container = document.getElementById('candidatesGrid');
+            
+            container.innerHTML = filteredDevelopers.map(dev => `
+                <div class="candidate-card" onclick="openModal('${dev.name}', ${dev.salary})">
+                    <div class="candidate-header">
+                        <div class="candidate-info">
+                            <h3>${dev.name}</h3>
+                            <div class="candidate-meta">
+                                <span>${dev.experience} years experience</span>
+                                ${dev.video ? '<span class="video-indicator">📹 VIDEO</span>' : ''}
+                            </div>
+                        </div>
+                        <div class="candidate-salary">
+                            <div class="salary-amount">$${dev.salary.toLocaleString()}</div>
+                            <div class="salary-period">per month</div>
+                        </div>
+                    </div>
+                    
+                    <div class="candidate-skills">
+                        ${dev.technologies.slice(0, 6).map((tech, i) => 
+                            `<span class="skill-badge ${i < 3 ? 'primary' : ''}">${tech}</span>`
+                        ).join('')}
+                        ${dev.technologies.length > 6 ? `<span class="skill-badge">+${dev.technologies.length - 6}</span>` : ''}
+                    </div>
+                    
+                    <div class="candidate-projects">
+                        <strong>Projects:</strong> ${dev.projects.join(' • ')}
+                    </div>
+                    
+                    <button class="hire-button">Contact Developer</button>
+                </div>
+            `).join('');
+        }
+
+        // Update results count
+        function updateResultsCount() {
+            document.getElementById('resultsCount').textContent = `${filteredDevelopers.length} developers found`;
+        }
+
+        // Modal functions
+        function openModal(name, salary) {
+            document.getElementById('modalTitle').textContent = `Contact ${name}`;
+            document.getElementById('selectedDeveloper').value = `${name} - $${salary}`;
+            document.getElementById('contactModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('contactModal').style.display = 'none';
+        }
+
+        // Form submissions
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('🎉 Request sent! We\'ll connect you within 2 hours.');
+            closeModal();
+            this.reset();
+        });
+
+        document.getElementById('constructorForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('🎯 Perfect! We\'ll find your ideal developer and contact you within 24 hours.');
+            this.reset();
+        });
+
+        // Close modal on outside click
+        window.onclick = function(event) {
+            const modal = document.getElementById('contactModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', initializePage);
+    </script>
+</body>
+</html>
