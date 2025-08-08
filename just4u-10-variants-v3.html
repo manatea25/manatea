@@ -313,13 +313,17 @@ function filterList(arr){
 }
 function pick(vid){ const data = loadDevs(); const ids=picks[vid]; return filterList(ids.map(id=>data.find(x=>x.id===id)||data[0])).slice(0,3); }
 
-function card(d){
+function card(d, variantId){
+  const CTA = {
+    1:'Отримати CV', 2:'Запросити CV', 3:'Надіслати CV', 4:'Звʼязати зі мною', 5:'Отримати контакти',
+    6:'Попросити CV', 7:'Побачити CV', 8:'Взяти в роботу', 9:'Запитати CV', 10:'Підтвердити запит'
+  }[variantId||1];
   const el=document.createElement('div'); el.className='card';
   el.innerHTML = `
     <div class="row"><div><div class="name">${d.name}</div><div class="meta"><span class="tag">${d.cat}</span><span class="tag">${d.exp} років</span><span class="tag">${d.proj} проєктів</span><span class="tag salary">${money(d.salary)}/міс</span></div></div><div class="score"><span class="badge ok">Tech ${star(d.tech)}</span><span class="badge gold">Perf ${star(d.perf??PERF(d.proj))}</span></div></div>
     <div class="meta">${d.skills.slice(0,6).map(s=>`<span class='tag'>${s}</span>`).join('')}</div>
     <div class="meta"><span class="video-tag">🎬 Video: ${d.video? `<a href='${d.video}' target='_blank' style='color:#93c5fd'>переглянути</a>`:'soon'}</span></div>
-    <div class="cta"><button class="btn ok" data-id="${d.id}" data-act="request">Запросити CV</button></div>`;
+    <div class="cta"><button class="btn ok" data-id="${d.id}" data-act="request">${CTA}</button></div>`;
   return el;
 }
 
@@ -333,16 +337,16 @@ function renderTable(list){
 function attach(scope){ scope.querySelectorAll('[data-act="request"]').forEach(b=> b.onclick=()=>{ const d=(loadDevs().find(x=>x.id===b.dataset.id)); openModal(d); }); }
 
 // Variant renders
-function R1(){ const box=$('#v1'); box.innerHTML=''; pick(1).forEach(d=>box.appendChild(card(d))); attach(box); }
-function R2(){ const box=$('#v2'); box.innerHTML=''; pick(2).forEach(d=>box.appendChild(card(d))); attach(box); }
+function R1(){ const box=$('#v1'); box.innerHTML=''; pick(1).forEach(d=>box.appendChild(card(d,1))); attach(box); }
+function R2(){ const box=$('#v2'); box.innerHTML=''; pick(2).forEach(d=>box.appendChild(card(d,2))); attach(box); }
 function R3(){ const w=$('#v3'); w.innerHTML=''; const t=renderTable(pick(3)); w.appendChild(t); attach(w); }
-function R4(){ const host=$('#v4'); host.innerHTML=''; const cols=[document.createElement('div'),document.createElement('div'),document.createElement('div')]; cols.forEach(c=>{c.className='col'; c.innerHTML='<div class="title">Колонка</div>'; host.appendChild(c);}); const arr=pick(4); arr.forEach((d,i)=>{ const c=card(d); cols[i].appendChild(c); }); attach(host); }
-function R5(){ const box=$('#v5'); box.innerHTML=''; pick(5).forEach(d=>{ const b=document.createElement('div'); b.className='bubble'; b.appendChild(card(d)); box.appendChild(b); }); attach(box); }
-function R6(){ const box=$('#v6'); box.innerHTML=''; pick(6).forEach(d=>{ const it=document.createElement('div'); it.className='t-item'; it.appendChild(card(d)); box.appendChild(it); }); attach(box); }
-function R7(){ const host=$('#v7'); host.innerHTML=''; const left=document.createElement('div'); left.className='list-pane'; const right=document.createElement('div'); right.className='detail-pane'; host.appendChild(left); host.appendChild(right); const arr=pick(7); arr.forEach((d,i)=>{ const li=document.createElement('div'); li.className='list-item'+(i===0?' active':''); li.textContent = `${d.name} • ${star(d.tech)} / ${star(d.perf??PERF(d.proj))}`; li.onclick=()=>{ $$('#v7 .list-item').forEach(n=>n.classList.remove('active')); li.classList.add('active'); right.innerHTML=''; right.appendChild(card(d)); attach(right); }; left.appendChild(li); }); right.innerHTML=''; right.appendChild(card(arr[0])); attach(right); }
-function R8(){ const host=$('#v8'); const arr=pick(8); let idx=0; const draw=()=>{ host.innerHTML=''; const c=card(arr[idx]); host.appendChild(c); attach(host); }; draw(); $('#cPrev').onclick=()=>{idx=(idx-1+arr.length)%arr.length; draw();}; $('#cNext').onclick=()=>{idx=(idx+1)%arr.length; draw();}; }
-function R9(){ const box=$('#v9'); box.innerHTML=''; pick(9).forEach(d=>{ const c=card(d); const sal=c.querySelector('.tag.salary'); if(sal) sal.style.fontSize='28px'; box.appendChild(c); }); attach(box); }
-function R10(){ const box=$('#v10'); box.innerHTML=''; pick(10).forEach(d=>box.appendChild(card(d))); attach(box); }
+function R4(){ const host=$('#v4'); host.innerHTML=''; const cols=[document.createElement('div'),document.createElement('div'),document.createElement('div')]; cols.forEach(c=>{c.className='col'; c.innerHTML='<div class="title">Колонка</div>'; host.appendChild(c);}); const arr=pick(4); arr.forEach((d,i)=>{ const c=card(d,4); cols[i].appendChild(c); }); attach(host); }
+function R5(){ const box=$('#v5'); box.innerHTML=''; pick(5).forEach(d=>{ const b=document.createElement('div'); b.className='bubble'; b.appendChild(card(d,5)); box.appendChild(b); }); attach(box); }
+function R6(){ const box=$('#v6'); box.innerHTML=''; pick(6).forEach(d=>{ const it=document.createElement('div'); it.className='t-item'; it.appendChild(card(d,6)); box.appendChild(it); }); attach(box); }
+function R7(){ const host=$('#v7'); host.innerHTML=''; const left=document.createElement('div'); left.className='list-pane'; const right=document.createElement('div'); right.className='detail-pane'; host.appendChild(left); host.appendChild(right); const arr=pick(7); arr.forEach((d,i)=>{ const li=document.createElement('div'); li.className='list-item'+(i===0?' active':''); li.textContent = `${d.name} • ${star(d.tech)} / ${star(d.perf??PERF(d.proj))}`; li.onclick=()=>{ $$('#v7 .list-item').forEach(n=>n.classList.remove('active')); li.classList.add('active'); right.innerHTML=''; right.appendChild(card(d,7)); attach(right); }; left.appendChild(li); }); right.innerHTML=''; right.appendChild(card(arr[0],7)); attach(right); }
+function R8(){ const host=$('#v8'); const arr=pick(8); let idx=0; const draw=()=>{ host.innerHTML=''; const c=card(arr[idx],8); host.appendChild(c); attach(host); }; draw(); $('#cPrev').onclick=()=>{idx=(idx-1+arr.length)%arr.length; draw();}; $('#cNext').onclick=()=>{idx=(idx+1)%arr.length; draw();}; }
+function R9(){ const box=$('#v9'); box.innerHTML=''; pick(9).forEach(d=>{ const c=card(d,9); const sal=c.querySelector('.tag.salary'); if(sal) sal.style.fontSize='28px'; box.appendChild(c); }); attach(box); }
+function R10(){ const box=$('#v10'); box.innerHTML=''; pick(10).forEach(d=>box.appendChild(card(d,10))); attach(box); }
 
 function renderAll(){
   $('#salaryMinT').textContent = money(S.salaryMin);
@@ -356,7 +360,7 @@ function renderAll(){
 
 // Tabs
 function tabs(){ const t=$('#variantTabs'); t.innerHTML=''; for(let i=1;i<=10;i++){ const b=document.createElement('button'); b.className='tab'+(i===1?' active':''); b.textContent=i; b.onclick=()=>activate(i); t.appendChild(b);} }
-function activate(i){ ACTIVE_VARIANT=i; $$('.tab').forEach((x,idx)=>x.classList.toggle('active', idx===i-1)); $$('.v').forEach(v=>v.classList.remove('active')); const cur=document.querySelector(`.v[data-variant="${i}"]`); if(cur) cur.classList.add('active'); }
+function activate(i){ ACTIVE_VARIANT=i; $$('.tab').forEach((x,idx)=>x.classList.toggle('active', idx===i-1)); $$('.v').forEach(v=>v.classList.remove('active')); const cur=document.querySelector(`.v[data-variant="${i}"]`); if(cur) cur.classList.add('active'); document.body.className = document.body.className.replace(/theme-\d+/,'').trim(); document.body.classList.add(`theme-${i}`); }
 
 // Modal + Email
 let REQ=null;
