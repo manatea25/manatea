@@ -56,6 +56,7 @@
   .ok{border-color:#0a6b56;background:rgba(16,185,129,.12);color:#c8ffe9}
   .gold{border-color:#8f6c00;background:rgba(245,158,11,.12);color:#ffe5ad}
   .cta{display:flex;gap:8px}
+  .video-tag{font-size:12px;background:#0e1534;border:1px dashed var(--stroke);border-radius:8px;padding:6px 8px;color:#c8d1ea}
 
   /* VARIANT THEMES — radically different */
   /* 1 Minimal Newspaper */
@@ -140,7 +141,11 @@
       </div>
     </div>
     <nav class="tabs" id="variantTabs"></nav>
-    <button class="admin-btn" id="openAdmin">Admin</button>
+    <div class="row" style="gap:8px">
+      <button class="admin-btn" id="prevVar">◀</button>
+      <button class="admin-btn" id="nextVar">▶</button>
+      <button class="admin-btn" id="openAdmin">Admin</button>
+    </div>
   </div>
 </header>
 
@@ -149,8 +154,8 @@
     <div class="f-h">Фільтри</div>
     <div class="f-row"><div class="row"><label>Категорії</label><button class="btn flat" id="resetFilters">Скинути</button></div><div id="categoryChips" class="chips"></div></div>
     <div class="f-row"><label>Зарплата</label><div class="range"><input type="range" id="salaryMin" min="800" max="7000" step="100" value="800"><span id="salaryMinT" class="pill">$800</span></div><div class="range"><input type="range" id="salaryMax" min="800" max="7000" step="100" value="7000"><span id="salaryMaxT" class="pill">$7000+</span></div></div>
-    <div class="f-row"><label>Досвід (роки)</label><div class="range"><input type="range" id="expYears" min="0" max="15" step="1" value="0"><span id="expYearsT" class="pill">0+</span></div></div>
-    <div class="f-row"><label>Min Tech Level</label><div class="range"><input type="range" id="techLevelMin" min="2" max="5" step="0.1" value="2"><span id="techLevelMinT" class="pill">2.0★+</span></div></div>
+    <div class="f-row"><label>Досвід (роки)</label><div class="range"><input type="range" id="expMin" min="0" max="15" step="1" value="0"><span id="expMinT" class="pill">0</span></div><div class="range"><input type="range" id="expMax" min="0" max="15" step="1" value="15"><span id="expMaxT" class="pill">15</span></div></div>
+    <div class="f-row"><label>Min Tech Level</label><div class="range"><input type="range" id="techLevelMin" min="2" max="7" step="0.1" value="2"><span id="techLevelMinT" class="pill">2.0★+</span></div></div>
     <div class="f-row"><label>Пошук за скілами</label><input class="txt" id="skillSearch" placeholder="React, Java, AWS ..." /></div>
     <div class="f-row"><label>Сортування</label><select class="sel" id="sortBy"><option value="relevance">Релевантність</option><option value="tech">Tech</option><option value="perf">Perf</option><option value="salary">Зарплата (↑)</option><option value="salaryDesc">Зарплата (↓)</option><option value="exp">Досвід</option></select></div>
     <button class="btn ok" id="apply">Застосувати</button>
@@ -233,8 +238,25 @@
 <div class="admin" id="admin">
   <div class="abox">
     <div class="row"><div class="name">Admin • Запити</div><div class="row" style="gap:8px"><button class="btn flat" id="export">Export CSV</button><button class="btn" id="aClose">Закрити</button></div></div>
-    <div style="margin-top:10px;max-height:64vh;overflow:auto">
+    <div style="margin-top:10px;max-height:36vh;overflow:auto">
       <table id="tbl"><thead><tr><th>Час</th><th>Тип</th><th>Кандидат/Запит</th><th>Контакт</th><th>Деталі</th></tr></thead><tbody></tbody></table>
+    </div>
+    <hr style="border:none;border-top:1px solid var(--stroke);margin:12px 0" />
+    <div class="row" style="justify-content:space-between;align-items:center"><div class="name">Кандидати (CRUD)</div><button class="btn flat" id="saveDevs">Зберегти зміни</button></div>
+    <div class="f-row" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
+      <input class="txt" id="dName" placeholder="Імʼя/Роль" />
+      <input class="txt" id="dCat" placeholder="Категорія" />
+      <input class="txt" id="dExp" placeholder="Роки" />
+      <input class="txt" id="dProj" placeholder="Проєкти" />
+      <input class="txt" id="dSalary" placeholder="Зарплата" />
+      <input class="txt" id="dTech" placeholder="Tech Level" />
+      <input class="txt" id="dPerf" placeholder="Performance" />
+      <input class="txt" id="dSkills" placeholder="Скіли (через кому)" />
+      <input class="txt" id="dVideo" placeholder="Video URL (опц.)" />
+      <button class="btn ok" id="addDev">Додати</button>
+    </div>
+    <div style="margin-top:8px;max-height:24vh;overflow:auto">
+      <table id="devTbl"><thead><tr><th>Імʼя</th><th>Категорія</th><th>Exp</th><th>Proj</th><th>Salary</th><th>Tech</th><th>Perf</th><th>Video</th><th></th></tr></thead><tbody></tbody></table>
     </div>
   </div>
 </div>
@@ -265,23 +287,38 @@ const DEV = [
 ];
 const CATS = ['JavaScript/React','Python','Java','AI/ML','Mobile','PHP','Node.js','DevOps/Cloud','.NET/C#','Golang','Ruby/Rails','Rust','Scala','Blockchain/Web3','Game Dev'];
 
-const S = {cat:null, salaryMin:800, salaryMax:7000, exp:0, techMin:2, sort:'relevance', skill:''};
+function loadDevs(){
+  const s = localStorage.getItem('devs_v3');
+  if(!s) return DEV.slice();
+  try{ const arr = JSON.parse(s); return Array.isArray(arr)&&arr.length? arr : DEV.slice(); }catch(e){ return DEV.slice(); }
+}
+function saveDevs(arr){ localStorage.setItem('devs_v3', JSON.stringify(arr)); }
+
+let ACTIVE_VARIANT = 1;
+
+const S = {cat:null, salaryMin:800, salaryMax:7000, expMin:0, expMax:15, techMin:2, sort:'relevance', skill:''};
 const picks = { 1:['u1','u8','u3'], 2:['u2','u7','u9'], 3:['u10','u6','u11'], 4:['u5','u15','u1'], 5:['u13','u14','u12'], 6:['u4','u8','u2'], 7:['u3','u10','u11'], 8:['u7','u9','u6'], 9:['u12','u13','u14'], 10:['u5','u4','u15'] };
 
 const $ = s => document.querySelector(s); const $$ = s => Array.from(document.querySelectorAll(s));
 
 function filterList(arr){
-  let r = arr.filter(d => (!S.cat || d.cat===S.cat) && d.salary>=S.salaryMin && d.salary<=S.salaryMax && d.exp>=S.exp && d.tech>=S.techMin && (!S.skill || d.skills.join(' ').toLowerCase().includes(S.skill)));
+  let r = arr.filter(d => (!S.cat || d.cat===S.cat)
+    && d.salary>=S.salaryMin && d.salary<=S.salaryMax
+    && d.exp>=S.expMin && d.exp<=S.expMax
+    && d.tech>=S.techMin
+    && (!S.skill || d.skills.join(' ').toLowerCase().includes(S.skill))
+  );
   switch(S.sort){ case 'tech': r.sort((a,b)=>b.tech-a.tech); break; case 'perf': r.sort((a,b)=> (b.perf??PERF(b.proj)) - (a.perf??PERF(a.proj))); break; case 'salary': r.sort((a,b)=>a.salary-b.salary); break; case 'salaryDesc': r.sort((a,b)=>b.salary-a.salary); break; case 'exp': r.sort((a,b)=>b.exp-a.exp); break; default: break; }
   return r;
 }
-function pick(vid){ const ids=picks[vid]; return filterList(ids.map(id=>DEV.find(x=>x.id===id))).slice(0,3); }
+function pick(vid){ const data = loadDevs(); const ids=picks[vid]; return filterList(ids.map(id=>data.find(x=>x.id===id)||data[0])).slice(0,3); }
 
 function card(d){
   const el=document.createElement('div'); el.className='card';
   el.innerHTML = `
     <div class="row"><div><div class="name">${d.name}</div><div class="meta"><span class="tag">${d.cat}</span><span class="tag">${d.exp} років</span><span class="tag">${d.proj} проєктів</span><span class="tag salary">${money(d.salary)}/міс</span></div></div><div class="score"><span class="badge ok">Tech ${star(d.tech)}</span><span class="badge gold">Perf ${star(d.perf??PERF(d.proj))}</span></div></div>
     <div class="meta">${d.skills.slice(0,6).map(s=>`<span class='tag'>${s}</span>`).join('')}</div>
+    <div class="meta"><span class="video-tag">🎬 Video: ${d.video? `<a href='${d.video}' target='_blank' style='color:#93c5fd'>переглянути</a>`:'soon'}</span></div>
     <div class="cta"><button class="btn ok" data-id="${d.id}" data-act="request">Запросити CV</button></div>`;
   return el;
 }
@@ -293,7 +330,7 @@ function renderTable(list){
   list.forEach(d=>{ const tr=document.createElement('tr'); tr.innerHTML=`<td>${d.name}</td><td>${d.cat}</td><td>${d.exp}</td><td>${d.proj}</td><td>${money(d.salary)}</td><td>${star(d.tech)}</td><td>${star(d.perf??PERF(d.proj))}</td><td>${d.skills.slice(0,4).join(', ')}</td><td><button class='btn ok' data-id='${d.id}' data-act='request'>CV</button></td>`; tb.appendChild(tr); }); t.appendChild(tb); return t;
 }
 
-function attach(scope){ scope.querySelectorAll('[data-act="request"]').forEach(b=> b.onclick=()=>openModal(DEV.find(x=>x.id===b.dataset.id))); }
+function attach(scope){ scope.querySelectorAll('[data-act="request"]').forEach(b=> b.onclick=()=>{ const d=(loadDevs().find(x=>x.id===b.dataset.id)); openModal(d); }); }
 
 // Variant renders
 function R1(){ const box=$('#v1'); box.innerHTML=''; pick(1).forEach(d=>box.appendChild(card(d))); attach(box); }
@@ -308,20 +345,18 @@ function R9(){ const box=$('#v9'); box.innerHTML=''; pick(9).forEach(d=>{ const 
 function R10(){ const box=$('#v10'); box.innerHTML=''; pick(10).forEach(d=>box.appendChild(card(d))); attach(box); }
 
 function renderAll(){
-  // sync labels
   $('#salaryMinT').textContent = money(S.salaryMin);
   $('#salaryMaxT').textContent = `${money(S.salaryMax)}${S.salaryMax>=7000?'+':''}`;
-  $('#expYearsT').textContent = `${S.exp}+`;
+  $('#expMinT').textContent = `${S.expMin}`;
+  $('#expMaxT').textContent = `${S.expMax}`;
   $('#techLevelMinT').textContent = `${S.techMin.toFixed(1)}★+`;
-  // chips
   const box=$('#categoryChips'); box.innerHTML=''; const all=document.createElement('div'); all.className='chip'+(S.cat? '':' sel'); all.textContent='Всі'; all.onclick=()=>{S.cat=null; renderAll();}; box.appendChild(all); CATS.forEach(c=>{ const el=document.createElement('div'); el.className='chip'+(S.cat===c?' sel':''); el.textContent=c; el.onclick=()=>{S.cat=(S.cat===c? null : c); renderAll();}; box.appendChild(el); });
-  // variants
   R1(); R2(); R3(); R4(); R5(); R6(); R7(); R8(); R9(); R10();
 }
 
 // Tabs
 function tabs(){ const t=$('#variantTabs'); t.innerHTML=''; for(let i=1;i<=10;i++){ const b=document.createElement('button'); b.className='tab'+(i===1?' active':''); b.textContent=i; b.onclick=()=>activate(i); t.appendChild(b);} }
-function activate(i){ $$('.tab').forEach((x,idx)=>x.classList.toggle('active', idx===i-1)); $$('.v').forEach(v=>v.classList.remove('active')); const cur=document.querySelector(`.v[data-variant="${i}"]`); if(cur) cur.classList.add('active'); }
+function activate(i){ ACTIVE_VARIANT=i; $$('.tab').forEach((x,idx)=>x.classList.toggle('active', idx===i-1)); $$('.v').forEach(v=>v.classList.remove('active')); const cur=document.querySelector(`.v[data-variant="${i}"]`); if(cur) cur.classList.add('active'); }
 
 // Modal + Email
 let REQ=null;
@@ -337,13 +372,19 @@ $('#modal').addEventListener('click', e=>{ if(e.target.id==='modal') $('#modal')
 $('#idealAsk').onclick=()=>{ const q={cat:$('#idealCat').value, salary:$('#idealSalary').value, exp:$('#idealExp').value, skills:$('#idealSkills').value}; REQ={type:'ideal', data:q}; $('#mBody').innerHTML = `<span class='tag'>Категорія: ${q.cat||'-'}</span><span class='tag'>Зарплата: ${q.salary||'-'}</span><span class='tag'>Досвід: ${q.exp||'-'}</span><span class='tag'>Технології: ${q.skills||'-'}</span>`; $('#modal').style.display='block'; $('#mSend').onclick=()=>{ const c=$('#mContact').value.trim(); if(!c){ alert('Вкажіть email або @telegram'); return;} const note=$('#mNote').value.trim(); const subject='just4u: Запит — Ідеальний кандидат'; const body = `ІДЕАЛЬНИЙ КАНДИДАТ\nКатегорія: ${q.cat||'-'}\nЗарплата: ${q.salary||'-'}\nДосвід: ${q.exp||'-'}\nТехнології: ${q.skills||'-'}\nНадіслати контакти сюди: ${c}\nКоментар: ${note||'-'}\nЧас: ${now()}`; saveReq({ts:now(), type:'ideal', title:`Ideal / ${q.cat}`, contact:c, details:body}); sendEmail(subject, body); $('#modal').style.display='none'; }; };
 
 // Admin
-$('#openAdmin').onclick=()=>{ const pwd=prompt('Пароль admin'); if(pwd!=='admin2025') return; const tb=$('#tbl tbody'); tb.innerHTML=''; const rows=JSON.parse(localStorage.getItem('requests_v3')||'[]'); rows.forEach(r=>{ const tr=document.createElement('tr'); tr.innerHTML=`<td>${r.ts}</td><td>${r.type}</td><td>${r.title||'-'}</td><td>${r.contact}</td><td style='white-space:pre-wrap'>${(r.details||'').slice(0,200)}...</td>`; tb.appendChild(tr); }); $('#admin').style.display='block'; };
+$('#openAdmin').onclick=()=>{ const pwd=prompt('Пароль admin'); if(pwd!=='admin2025') return; const tb=$('#tbl tbody'); tb.innerHTML=''; const rows=JSON.parse(localStorage.getItem('requests_v3')||'[]'); rows.forEach(r=>{ const tr=document.createElement('tr'); tr.innerHTML=`<td>${r.ts}</td><td>${r.type}</td><td>${r.title||'-'}</td><td>${r.contact}</td><td style='white-space:pre-wrap'>${(r.details||'').slice(0,200)}...</td>`; tb.appendChild(tr); });
+  // load candidates
+  const devT=$('#devTbl tbody'); devT.innerHTML=''; const arr=loadDevs(); arr.forEach((d,idx)=>{ const tr=document.createElement('tr'); tr.innerHTML=`<td contenteditable data-k='name'>${d.name}</td><td contenteditable data-k='cat'>${d.cat}</td><td contenteditable data-k='exp'>${d.exp}</td><td contenteditable data-k='proj'>${d.proj}</td><td contenteditable data-k='salary'>${d.salary}</td><td contenteditable data-k='tech'>${d.tech}</td><td contenteditable data-k='perf'>${d.perf??PERF(d.proj)}</td><td contenteditable data-k='video'>${d.video||''}</td><td><button class='btn flat' data-i='${idx}' data-act='del'>Видалити</button></td>`; devT.appendChild(tr); });
+  devT.onclick = e=>{ if(e.target.dataset.act==='del'){ const i=+e.target.dataset.i; const arr=loadDevs(); arr.splice(i,1); saveDevs(arr); e.target.closest('tr').remove(); }};
+  $('#addDev').onclick=()=>{ const nd={ id:'u'+Math.random().toString(36).slice(2,7), name:$('#dName').value.trim(), cat:$('#dCat').value.trim(), exp:+$('#dExp').value||0, proj:+$('#dProj').value||0, salary:+$('#dSalary').value||0, tech:+$('#dTech').value||0, perf:+$('#dPerf').value||null, skills:($('#dSkills').value||'').split(',').map(s=>s.trim()).filter(Boolean), video:$('#dVideo').value.trim()||'' }; if(!nd.name||!nd.cat){alert('Імʼя та категорія обовʼязкові'); return;} const arr=loadDevs(); arr.unshift(nd); saveDevs(arr); alert('Додано'); };
+  $('#saveDevs').onclick=()=>{ const rows=[...$('#devTbl tbody').children]; const arr=loadDevs(); rows.forEach((tr,i)=>{ const cells=tr.querySelectorAll('[data-k]'); cells.forEach(td=>{ const k=td.dataset.k; let v=td.textContent.trim(); if(['exp','proj','salary','tech','perf'].includes(k)) v=+v||0; if(k==='skills'){ v=v.split(',').map(s=>s.trim()).filter(Boolean);} if(k in arr[i]) arr[i][k]=v; else arr[i][k]=v; });}); saveDevs(arr); alert('Збережено'); };
+  $('#admin').style.display='block'; };
 $('#aClose').onclick=()=> $('#admin').style.display='none';
 $('#admin').addEventListener('click', e=>{ if(e.target.id==='admin') $('#admin').style.display='none'; });
 $('#export').onclick=()=>{ const rows=JSON.parse(localStorage.getItem('requests_v3')||'[]'); const csv=['time,type,title,contact,details'].concat(rows.map(r=>`${r.ts},${r.type},"${(r.title||'').replaceAll('"','\"')}",${r.contact},"${(r.details||'').replaceAll('"','\"')}"`)).join('\n'); const blob=new Blob([csv],{type:'text/csv'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='requests.csv'; a.click(); URL.revokeObjectURL(url); };
 
 // Filters
-function bind(){ $('#salaryMin').oninput=e=>{S.salaryMin=+e.target.value; if(S.salaryMin>S.salaryMax) S.salaryMax=S.salaryMin; renderAll();}; $('#salaryMax').oninput=e=>{S.salaryMax=+e.target.value; if(S.salaryMax<S.salaryMin) S.salaryMin=S.salaryMax; renderAll();}; $('#expYears').oninput=e=>{S.exp=+e.target.value; renderAll();}; $('#techLevelMin').oninput=e=>{S.techMin=+e.target.value; renderAll();}; $('#sortBy').onchange=e=>{S.sort=e.target.value; renderAll();}; $('#skillSearch').oninput=e=>{S.skill=e.target.value.trim().toLowerCase(); renderAll();}; $('#apply').onclick=()=>renderAll(); $('#resetFilters').onclick=()=>{S.cat=null; S.salaryMin=800; S.salaryMax=7000; S.exp=0; S.techMin=2; S.sort='relevance'; S.skill=''; $('#salaryMin').value=800; $('#salaryMax').value=7000; $('#expYears').value=0; $('#techLevelMin').value=2; $('#sortBy').value='relevance'; $('#skillSearch').value=''; renderAll();}; }
+function bind(){ $('#salaryMin').oninput=e=>{S.salaryMin=+e.target.value; if(S.salaryMin>S.salaryMax) S.salaryMax=S.salaryMin; renderAll();}; $('#salaryMax').oninput=e=>{S.salaryMax=+e.target.value; if(S.salaryMax<S.salaryMin) S.salaryMin=S.salaryMax; renderAll();}; $('#expMin').oninput=e=>{S.expMin=+e.target.value; if(S.expMin>S.expMax) S.expMax=S.expMin; renderAll();}; $('#expMax').oninput=e=>{S.expMax=+e.target.value; if(S.expMax<S.expMin) S.expMin=S.expMax; renderAll();}; $('#techLevelMin').oninput=e=>{S.techMin=+e.target.value; renderAll();}; $('#sortBy').onchange=e=>{S.sort=e.target.value; renderAll();}; $('#skillSearch').oninput=e=>{S.skill=e.target.value.trim().toLowerCase(); renderAll();}; $('#apply').onclick=()=>renderAll(); $('#resetFilters').onclick=()=>{S.cat=null; S.salaryMin=800; S.salaryMax=7000; S.expMin=0; S.expMax=15; S.techMin=2; S.sort='relevance'; S.skill=''; $('#salaryMin').value=800; $('#salaryMax').value=7000; $('#expMin').value=0; $('#expMax').value=15; $('#techLevelMin').value=2; $('#sortBy').value='relevance'; $('#skillSearch').value=''; renderAll();}; $('#prevVar').onclick=()=>{ACTIVE_VARIANT = ACTIVE_VARIANT<=1?10:ACTIVE_VARIANT-1; activate(ACTIVE_VARIANT);}; $('#nextVar').onclick=()=>{ACTIVE_VARIANT = ACTIVE_VARIANT>=10?1:ACTIVE_VARIANT+1; activate(ACTIVE_VARIANT);}; }
 
 (function init(){
   // tabs
