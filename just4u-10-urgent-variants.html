@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JUST4U - 10 Urgent UX Variants</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+        
+        .variant-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #000;
+            color: white;
+            padding: 10px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+        }
+        
+        .variant-btn {
+            background: #333;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            white-space: nowrap;
+            font-size: 12px;
+        }
+        
+        .variant-btn.active { background: #007bff; }
+        
+        .variant {
+            display: none;
+            min-height: 100vh;
+            padding-top: 60px;
+        }
+        
+        .variant.active { display: block; }
+        
+        /* VARIANT 1: INSTANT SEARCH */
+        .v1 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+        }
+        
+        .v1 h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+        
+        .v1 .subtitle {
+            font-size: 18px;
+            opacity: 0.9;
+            margin-bottom: 40px;
+        }
+        
+        .v1 .search-box {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .v1 input {
+            width: 100%;
+            padding: 20px 60px 20px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 50px;
+            outline: none;
+        }
+        
+        .v1 .search-btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+        }
+        
+        .v1 .quick-tags {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .v1 .tag {
+            background: rgba(255,255,255,0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        /* VARIANT 2: EMERGENCY BOARD */
+        .v2 {
+            background: #f8f9fa;
+            padding: 20px;
+        }
+        
+        .v2 .header {
+            background: #dc3545;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .v2 .urgent-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        
+        .v2 .dev-card {
+            background: white;
+            border-left: 5px solid #28a745;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .v2 .dev-name {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .v2 .dev-role {
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .v2 .dev-salary {
+            background: #28a745;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            display: inline-block;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        
+        .v2 .contact-btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            width: 100%;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        
+        /* VARIANT 3: MINIMAL DASHBOARD */
+        .v3 {
+            background: white;
+            padding: 20px;
+        }
+        
+        .v3 .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .v3 .logo { font-size: 24px; font-weight: bold; }
+        
+        .v3 .status { 
+            background: #28a745; 
+            color: white; 
+            padding: 5px 15px; 
+            border-radius: 15px; 
+            font-size: 12px;
+        }
+        
+        .v3 .filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .v3 select {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        .v3 .dev-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .v3 .dev-row {
+            display: grid;
+            grid-template-columns: 1fr 150px 120px 100px 120px;
+            align-items: center;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            gap: 15px;
+        }
+        
+        .v3 .hire-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        /* VARIANT 4: CARD STACK */
+        .v4 {
+            background: #1a1a1a;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .v4 .stack-container {
+            position: relative;
+            width: 400px;
+            height: 500px;
+        }
+        
+        .v4 .card {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: white;
+            color: black;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: transform 0.3s;
+        }
+        
+        .v4 .card.top { z-index: 3; }
+        .v4 .card.middle { z-index: 2; transform: scale(0.95) translateY(10px); }
+        .v4 .card.bottom { z-index: 1; transform: scale(0.9) translateY(20px); }
+        
+        .v4 .card-content {
+            text-align: center;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .v4 .actions {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .v4 .action-btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        
+        .v4 .pass { background: #ff4757; color: white; }
+        .v4 .hire { background: #2ed573; color: white; }
+        
+        /* VARIANT 5: SPLIT SCREEN */
+        .v5 {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            height: 100vh;
+        }
+        
+        .v5 .sidebar {
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+        }
+        
+        .v5 .main {
+            background: white;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .v5 .filter-group {
+            margin-bottom: 20px;
+        }
+        
+        .v5 .filter-group h3 {
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        
+        .v5 .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .v5 .checkbox-group label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .v5 .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+        }
+        
+        .v5 .result-card {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            transition: box-shadow 0.3s;
+        }
+        
+        .v5 .result-card:hover {
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        /* VARIANT 6: TIMELINE */
+        .v6 {
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .v6 .timeline-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .v6 .timeline {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .v6 .timeline-item {
+            display: flex;
+            margin-bottom: 30px;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .v6 .timeline-dot {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #007bff;
+            flex-shrink: 0;
+        }
+        
+        .v6 .timeline-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            flex: 1;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        /* VARIANT 7: MOBILE FIRST */
+        .v7 {
+            background: white;
+            padding: 10px;
+        }
+        
+        .v7 .mobile-header {
+            background: #007bff;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        
+        .v7 .swipe-cards {
+            display: flex;
+            overflow-x: auto;
+            gap: 15px;
+            padding: 10px 0;
+            scroll-snap-type: x mandatory;
+        }
+        
+        .v7 .swipe-card {
+            min-width: 280px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            scroll-snap-align: start;
+        }
+        
+        .v7 .floating-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #ff4757;
+            color: white;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        
+        /* VARIANT 8: COMMAND LINE */
+        .v8 {
+            background: #0a0a0a;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .v8 .terminal {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .v8 .prompt {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .v8 .prompt::before {
+            content: "user@just4u:~$ ";
+            color: #00ff00;
+        }
+        
+        .v8 input {
+            background: transparent;
+            border: none;
+            color: #00ff00;
+            font-family: inherit;
+            font-size: 16px;
+            outline: none;
+            flex: 1;
+        }
+        
+        .v8 .output {
+            margin-bottom: 20px;
+            white-space: pre-line;
+        }
+        
+        /* VARIANT 9: MARKETPLACE */
+        .v9 {
+            background: #f8f9fa;
+        }
+        
+        .v9 .marketplace-header {
+            background: white;
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .v9 .cart {
+            background: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+        
+        .v9 .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        
+        .v9 .product {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .v9 .product-image {
+            height: 150px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+        }
+        
+        .v9 .product-info {
+            padding: 15px;
+        }
+        
+        .v9 .add-to-cart {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        /* VARIANT 10: MESSENGER */
+        .v10 {
+            background: #e5ddd5;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .v10 .chat-header {
+            background: #075e54;
+            color: white;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .v10 .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .v10 .message {
+            max-width: 70%;
+            margin-bottom: 15px;
+            padding: 10px 15px;
+            border-radius: 18px;
+            position: relative;
+        }
+        
+        .v10 .message.bot {
+            background: white;
+            margin-right: auto;
+        }
+        
+        .v10 .message.user {
+            background: #dcf8c6;
+            margin-left: auto;
+        }
+        
+        .v10 .chat-input {
+            background: white;
+            padding: 15px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .v10 .chat-input input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            outline: none;
+        }
+        
+        .v10 .send-btn {
+            background: #075e54;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .v3 .dev-row { grid-template-columns: 1fr; text-align: center; }
+            .v5 { grid-template-columns: 1fr; }
+            .v5 .sidebar { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <div class="variant-nav">
+        <button class="variant-btn active" onclick="showVariant(1)">1. Instant</button>
+        <button class="variant-btn" onclick="showVariant(2)">2. Emergency</button>
+        <button class="variant-btn" onclick="showVariant(3)">3. Dashboard</button>
+        <button class="variant-btn" onclick="showVariant(4)">4. Cards</button>
+        <button class="variant-btn" onclick="showVariant(5)">5. Split</button>
+        <button class="variant-btn" onclick="showVariant(6)">6. Timeline</button>
+        <button class="variant-btn" onclick="showVariant(7)">7. Mobile</button>
+        <button class="variant-btn" onclick="showVariant(8)">8. Terminal</button>
+        <button class="variant-btn" onclick="showVariant(9)">9. Shop</button>
+        <button class="variant-btn" onclick="showVariant(10)">10. Chat</button>
+    </div>
+
+    <!-- VARIANT 1: INSTANT SEARCH -->
+    <div class="variant v1 active">
+        <h1>179 devs ready</h1>
+        <div class="subtitle">Type what you need. Get contacts instantly.</div>
+        <div class="search-box">
+            <input type="text" placeholder="React developer $3000+" id="searchInput">
+            <button class="search-btn" onclick="instantSearch()">→</button>
+        </div>
+        <div class="quick-tags">
+            <div class="tag" onclick="quickSearch('React')">React</div>
+            <div class="tag" onclick="quickSearch('Python')">Python</div>
+            <div class="tag" onclick="quickSearch('Mobile')">Mobile</div>
+            <div class="tag" onclick="quickSearch('AI')">AI/ML</div>
+            <div class="tag" onclick="quickSearch('Senior')">Senior</div>
+        </div>
+        <div id="instantResults" style="margin-top: 40px;"></div>
+    </div>
+
+    <!-- VARIANT 2: EMERGENCY BOARD -->
+    <div class="variant v2">
+        <div class="header">
+            <h2>🚨 URGENT HIRE BOARD</h2>
+            <div>3 developers available RIGHT NOW</div>
+        </div>
+        <div class="urgent-grid">
+            <div class="dev-card">
+                <div class="dev-name">Олександр К.</div>
+                <div class="dev-role">Senior React Developer</div>
+                <div class="dev-salary">$4,500/month</div>
+                <div style="margin-bottom: 15px;">
+                    <span style="background: #007bff; color: white; padding: 3px 8px; border-radius: 10px; font-size: 12px; margin-right: 5px;">React</span>
+                    <span style="background: #28a745; color: white; padding: 3px 8px; border-radius: 10px; font-size: 12px; margin-right: 5px;">TypeScript</span>
+                </div>
+                <div style="font-size: 14px; color: #666; margin-bottom: 15px;">Tech Level: 4.5★ | Performance: 4.8★</div>
+                <button class="contact-btn" onclick="getContact('alex')">GET CONTACT NOW</button>
+            </div>
+            <div class="dev-card">
+                <div class="dev-name">Марія П.</div>
+                <div class="dev-role">Python ML Engineer</div>
+                <div class="dev-salary">$4,200/month</div>
+                <div style="margin-bottom: 15px;">
+                    <span style="background: #007bff; color: white; padding: 3px 8px; border-radius: 10px; font-size: 12px; margin-right: 5px;">Python</span>
+                    <span style="background: #28a745; color: white; padding: 3px 8px; border-radius: 10px; font-size: 12px; margin-right: 5px;">TensorFlow</span>
+                </div>
+                <div style="font-size: 14px; color: #666; margin-bottom: 15px;">Tech Level: 4.2★ | Performance: 4.9★</div>
+                <button class="contact-btn" onclick="getContact('maria')">GET CONTACT NOW</button>
+            </div>
+            <div class="dev-card">
+                <div class="dev-name">Андрій М.</div>
+                <div class="dev-role">Mobile Developer</div>
+                <div class="dev-salary">$3,800/month</div>
+                <div style="margin-bottom: 15px;">
+                    <span style="background: #007bff; color: white; padding: 3px 8px; border-radius: 10px; font-size: 12px; margin-right: 5px;">Flutter</span>
+                    <span style="background: #28a745; color: white; padding: 3px 8px; border-radius: 10px; font-size: 12px; margin-right: 5px;">Kotlin</span>
+                </div>
+                <div style="font-size: 14px; color: #666; margin-bottom: 15px;">Tech Level: 4.0★ | Performance: 4.7★</div>
+                <button class="contact-btn" onclick="getContact('andrii')">GET CONTACT NOW</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- VARIANT 3: MINIMAL DASHBOARD -->
+    <div class="variant v3">
+        <div class="top-bar">
+            <div class="logo">JUST4U</div>
+            <div class="status">179 active</div>
+        </div>
+        <div class="filters">
+            <select>
+                <option>All Categories</option>
+                <option>JavaScript/React</option>
+                <option>Python</option>
+                <option>Mobile</option>
+                <option>AI/ML</option>
+            </select>
+            <select>
+                <option>Any Salary</option>
+                <option>$2000-3000</option>
+                <option>$3000-4000</option>
+                <option>$4000+</option>
+            </select>
+            <select>
+                <option>Any Level</option>
+                <option>Junior</option>
+                <option>Middle</option>
+                <option>Senior</option>
+            </select>
+        </div>
+        <div class="dev-list">
+            <div class="dev-row">
+                <div>
+                    <strong>Олександр К.</strong><br>
+                    <small>Senior React Dev, 7 years</small>
+                </div>
+                <div>Tech: 4.5★</div>
+                <div>Perf: 4.8★</div>
+                <div>$4,500</div>
+                <button class="hire-btn" onclick="getContact('alex')">HIRE</button>
+            </div>
+            <div class="dev-row">
+                <div>
+                    <strong>Марія П.</strong><br>
+                    <small>Python ML Engineer, 5 years</small>
+                </div>
+                <div>Tech: 4.2★</div>
+                <div>Perf: 4.9★</div>
+                <div>$4,200</div>
+                <button class="hire-btn" onclick="getContact('maria')">HIRE</button>
+            </div>
+            <div class="dev-row">
+                <div>
+                    <strong>Андрій М.</strong><br>
+                    <small>Mobile Developer, 4 years</small>
+                </div>
+                <div>Tech: 4.0★</div>
+                <div>Perf: 4.7★</div>
+                <div>$3,800</div>
+                <button class="hire-btn" onclick="getContact('andrii')">HIRE</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- VARIANT 4: CARD STACK -->
+    <div class="variant v4">
+        <div class="stack-container">
+            <div class="card top" id="card1">
+                <div class="card-content">
+                    <h2>Олександр К.</h2>
+                    <p>Senior React Developer</p>
+                    <div style="margin: 20px 0;">
+                        <div>Tech Level: 4.5★</div>
+                        <div>Performance: 4.8★</div>
+                        <div>Salary: $4,500/mo</div>
+                    </div>
+                    <p>7 years experience, 15+ projects</p>
+                </div>
+            </div>
+            <div class="card middle" id="card2">
+                <div class="card-content">
+                    <h2>Марія П.</h2>
+                    <p>Python ML Engineer</p>
+                    <div style="margin: 20px 0;">
+                        <div>Tech Level: 4.2★</div>
+                        <div>Performance: 4.9★</div>
+                        <div>Salary: $4,200/mo</div>
+                    </div>
+                    <p>5 years experience, 20+ projects</p>
+                </div>
+            </div>
+            <div class="card bottom" id="card3">
+                <div class="card-content">
+                    <h2>Андрій М.</h2>
+                    <p>Mobile Developer</p>
+                    <div style="margin: 20px 0;">
+                        <div>Tech Level: 4.0★</div>
+                        <div>Performance: 4.7★</div>
+                        <div>Salary: $3,800/mo</div>
+                    </div>
+                    <p>4 years experience, 12+ projects</p>
+                </div>
+            </div>
+        </div>
+        <div class="actions">
+            <button class="action-btn pass" onclick="nextCard()">PASS</button>
+            <button class="action-btn hire" onclick="hireCard()">HIRE</button>
+        </div>
+    </div>
+
+    <!-- VARIANT 5: SPLIT SCREEN -->
+    <div class="variant v5">
+        <div class="sidebar">
+            <h3>Filters</h3>
+            <div class="filter-group">
+                <h3>Category</h3>
+                <div class="checkbox-group">
+                    <label><input type="checkbox"> JavaScript/React</label>
+                    <label><input type="checkbox"> Python</label>
+                    <label><input type="checkbox"> Mobile</label>
+                    <label><input type="checkbox"> AI/ML</label>
+                </div>
+            </div>
+            <div class="filter-group">
+                <h3>Level</h3>
+                <div class="checkbox-group">
+                    <label><input type="checkbox"> Junior</label>
+                    <label><input type="checkbox"> Middle</label>
+                    <label><input type="checkbox"> Senior</label>
+                </div>
+            </div>
+            <div class="filter-group">
+                <h3>Salary</h3>
+                <div class="checkbox-group">
+                    <label><input type="checkbox"> $2000-3000</label>
+                    <label><input type="checkbox"> $3000-4000</label>
+                    <label><input type="checkbox"> $4000+</label>
+                </div>
+            </div>
+        </div>
+        <div class="main">
+            <div class="results-grid">
+                <div class="result-card">
+                    <h3>Олександр К.</h3>
+                    <p>Senior React Developer</p>
+                    <p>Tech: 4.5★ | Performance: 4.8★</p>
+                    <p>$4,500/month</p>
+                    <button style="background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;" onclick="getContact('alex')">Contact</button>
+                </div>
+                <div class="result-card">
+                    <h3>Марія П.</h3>
+                    <p>Python ML Engineer</p>
+                    <p>Tech: 4.2★ | Performance: 4.9★</p>
+                    <p>$4,200/month</p>
+                    <button style="background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;" onclick="getContact('maria')">Contact</button>
+                </div>
+                <div class="result-card">
+                    <h3>Андрій М.</h3>
+                    <p>Mobile Developer</p>
+                    <p>Tech: 4.0★ | Performance: 4.7★</p>
+                    <p>$3,800/month</p>
+                    <button style="background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;" onclick="getContact('andrii')">Contact</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- VARIANT 6: TIMELINE -->
+    <div class="variant v6">
+        <div class="timeline-header">
+            <h2>Developer Timeline</h2>
+            <p>Sorted by relevance and availability</p>
+        </div>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h3>Олександр К. - Senior React Developer</h3>
+                    <p>Available now | Tech: 4.5★ | Performance: 4.8★ | $4,500/mo</p>
+                    <button style="background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;" onclick="getContact('alex')">Get Contact</button>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h3>Марія П. - Python ML Engineer</h3>
+                    <p>Available now | Tech: 4.2★ | Performance: 4.9★ | $4,200/mo</p>
+                    <button style="background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;" onclick="getContact('maria')">Get Contact</button>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h3>Андрій М. - Mobile Developer</h3>
+                    <p>Available now | Tech: 4.0★ | Performance: 4.7★ | $3,800/mo</p>
+                    <button style="background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;" onclick="getContact('andrii')">Get Contact</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- VARIANT 7: MOBILE FIRST -->
+    <div class="variant v7">
+        <div class="mobile-header">
+            <h2>Find Dev Fast</h2>
+            <div>Swipe → to explore</div>
+        </div>
+        <div class="swipe-cards">
+            <div class="swipe-card">
+                <h3>Олександр К.</h3>
+                <p>Senior React Dev</p>
+                <div style="margin: 15px 0;">
+                    <div>⭐ Tech: 4.5</div>
+                    <div>🚀 Performance: 4.8</div>
+                    <div>💰 $4,500/mo</div>
+                </div>
+                <button style="background: white; color: #667eea; border: none; padding: 10px 20px; border-radius: 20px; width: 100%; cursor: pointer;" onclick="getContact('alex')">Contact</button>
+            </div>
+            <div class="swipe-card">
+                <h3>Марія П.</h3>
+                <p>Python ML Engineer</p>
+                <div style="margin: 15px 0;">
+                    <div>⭐ Tech: 4.2</div>
+                    <div>🚀 Performance: 4.9</div>
+                    <div>💰 $4,200/mo</div>
+                </div>
+                <button style="background: white; color: #667eea; border: none; padding: 10px 20px; border-radius: 20px; width: 100%; cursor: pointer;" onclick="getContact('maria')">Contact</button>
+            </div>
+            <div class="swipe-card">
+                <h3>Андрій М.</h3>
+                <p>Mobile Developer</p>
+                <div style="margin: 15px 0;">
+                    <div>⭐ Tech: 4.0</div>
+                    <div>🚀 Performance: 4.7</div>
+                    <div>💰 $3,800/mo</div>
+                </div>
+                <button style="background: white; color: #667eea; border: none; padding: 10px 20px; border-radius: 20px; width: 100%; cursor: pointer;" onclick="getContact('andrii')">Contact</button>
+            </div>
+        </div>
+        <button class="floating-btn">+</button>
+    </div>
+
+    <!-- VARIANT 8: COMMAND LINE -->
+    <div class="variant v8">
+        <div class="terminal">
+            <div class="output">JUST4U Developer Search System v2.0
+Connected to database: 179 developers
+Type 'help' for commands</div>
+            <div class="prompt">
+                <input type="text" id="terminalInput" placeholder="search react senior" onkeypress="handleTerminal(event)">
+            </div>
+            <div id="terminalOutput"></div>
+        </div>
+    </div>
+
+    <!-- VARIANT 9: MARKETPLACE -->
+    <div class="variant v9">
+        <div class="marketplace-header">
+            <h2>Developer Marketplace</h2>
+            <div class="cart">Cart (0)</div>
+        </div>
+        <div class="products">
+            <div class="product">
+                <div class="product-image">👨‍💻</div>
+                <div class="product-info">
+                    <h3>Senior React Dev</h3>
+                    <p>Олександр К.</p>
+                    <div style="margin: 10px 0;">
+                        <div>Tech: 4.5★</div>
+                        <div>Performance: 4.8★</div>
+                    </div>
+                    <div style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">$4,500/mo</div>
+                    <button class="add-to-cart" onclick="addToCart('alex')">Add to Cart</button>
+                </div>
+            </div>
+            <div class="product">
+                <div class="product-image">👩‍💻</div>
+                <div class="product-info">
+                    <h3>Python ML Engineer</h3>
+                    <p>Марія П.</p>
+                    <div style="margin: 10px 0;">
+                        <div>Tech: 4.2★</div>
+                        <div>Performance: 4.9★</div>
+                    </div>
+                    <div style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">$4,200/mo</div>
+                    <button class="add-to-cart" onclick="addToCart('maria')">Add to Cart</button>
+                </div>
+            </div>
+            <div class="product">
+                <div class="product-image">👨‍💻</div>
+                <div class="product-info">
+                    <h3>Mobile Developer</h3>
+                    <p>Андрій М.</p>
+                    <div style="margin: 10px 0;">
+                        <div>Tech: 4.0★</div>
+                        <div>Performance: 4.7★</div>
+                    </div>
+                    <div style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">$3,800/mo</div>
+                    <button class="add-to-cart" onclick="addToCart('andrii')">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- VARIANT 10: MESSENGER -->
+    <div class="variant v10">
+        <div class="chat-header">
+            <div style="width: 40px; height: 40px; border-radius: 50%; background: #25d366; display: flex; align-items: center; justify-content: center;">🤖</div>
+            <div>
+                <div style="font-weight: bold;">JUST4U Bot</div>
+                <div style="font-size: 12px; opacity: 0.8;">Online</div>
+            </div>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="message bot">Hi! I found 179 developers. What do you need?</div>
+            <div class="message bot">
+                Quick options:<br>
+                • React developer<br>
+                • Python ML engineer<br>
+                • Mobile developer<br>
+                Or just tell me what you're looking for!
+            </div>
+        </div>
+        <div class="chat-input">
+            <input type="text" placeholder="Type your requirements..." id="chatInput" onkeypress="handleChat(event)">
+            <button class="send-btn" onclick="sendMessage()">→</button>
+        </div>
+    </div>
+
+    <script>
+        // Navigation
+        function showVariant(num) {
+            // Hide all variants
+            document.querySelectorAll('.variant').forEach(v => v.classList.remove('active'));
+            document.querySelectorAll('.variant-btn').forEach(b => b.classList.remove('active'));
+            
+            // Show selected variant
+            document.querySelector('.v' + num).classList.add('active');
+            document.querySelectorAll('.variant-btn')[num-1].classList.add('active');
+        }
+
+        // Contact functionality
+        function getContact(dev) {
+            const contacts = {
+                alex: 'telegram: @alex_react | email: alex.k@example.com | phone: +380501234567',
+                maria: 'telegram: @maria_ml | email: maria.p@example.com | phone: +380501234568',
+                andrii: 'telegram: @andrii_mobile | email: andrii.m@example.com | phone: +380501234569'
+            };
+            
+            alert('Contact info for ' + dev + ':\n\n' + contacts[dev] + '\n\nNotification sent to stant1605@gmail.com');
+        }
+
+        // Variant 1: Instant Search
+        function instantSearch() {
+            const query = document.getElementById('searchInput').value;
+            const results = document.getElementById('instantResults');
+            results.innerHTML = `
+                <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; text-align: left;">
+                    <h3>Found 3 matches for "${query}":</h3>
+                    <div style="margin-top: 15px;">
+                        <div style="margin-bottom: 10px; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 5px;">
+                            <strong>Олександр К.</strong> - Senior React Developer - $4,500/mo
+                            <button style="float: right; background: #ff6b6b; color: white; border: none; padding: 5px 15px; border-radius: 15px; cursor: pointer;" onclick="getContact('alex')">Contact</button>
+                        </div>
+                        <div style="margin-bottom: 10px; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 5px;">
+                            <strong>Марія П.</strong> - Python ML Engineer - $4,200/mo
+                            <button style="float: right; background: #ff6b6b; color: white; border: none; padding: 5px 15px; border-radius: 15px; cursor: pointer;" onclick="getContact('maria')">Contact</button>
+                        </div>
+                        <div style="margin-bottom: 10px; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 5px;">
+                            <strong>Андрій М.</strong> - Mobile Developer - $3,800/mo
+                            <button style="float: right; background: #ff6b6b; color: white; border: none; padding: 5px 15px; border-radius: 15px; cursor: pointer;" onclick="getContact('andrii')">Contact</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function quickSearch(tech) {
+            document.getElementById('searchInput').value = tech;
+            instantSearch();
+        }
+
+        // Variant 4: Card Stack
+        let currentCard = 1;
+        function nextCard() {
+            currentCard++;
+            if (currentCard > 3) currentCard = 1;
+            updateCardStack();
+        }
+
+        function hireCard() {
+            const cards = ['alex', 'maria', 'andrii'];
+            getContact(cards[currentCard - 1]);
+        }
+
+        function updateCardStack() {
+            const cards = ['card1', 'card2', 'card3'];
+            cards.forEach((cardId, index) => {
+                const card = document.getElementById(cardId);
+                card.className = 'card';
+                if (index === currentCard - 1) card.classList.add('top');
+                else if (index === currentCard % 3) card.classList.add('middle');
+                else card.classList.add('bottom');
+            });
+        }
+
+        // Variant 8: Terminal
+        function handleTerminal(event) {
+            if (event.key === 'Enter') {
+                const input = document.getElementById('terminalInput');
+                const output = document.getElementById('terminalOutput');
+                const command = input.value.toLowerCase();
+                
+                let response = '';
+                if (command.includes('search') || command.includes('find')) {
+                    response = `user@just4u:~$ ${input.value}
+Found 3 developers matching your criteria:
+
+1. alex_k - Senior React Developer - $4500/mo - [HIRE]
+2. maria_p - Python ML Engineer - $4200/mo - [HIRE]  
+3. andrii_m - Mobile Developer - $3800/mo - [HIRE]
+
+Type 'hire [name]' to get contact details.`;
+                } else if (command.includes('hire')) {
+                    const name = command.split(' ')[1];
+                    if (name) {
+                        getContact(name === 'alex_k' ? 'alex' : name === 'maria_p' ? 'maria' : 'andrii');
+                        response = `user@just4u:~$ ${input.value}
+Contact details sent to your email.`;
+                    }
+                } else if (command === 'help') {
+                    response = `user@just4u:~$ ${input.value}
+Available commands:
+- search [technology] [level] - Find developers
+- hire [name] - Get contact details
+- list - Show all developers`;
+                } else {
+                    response = `user@just4u:~$ ${input.value}
+Command not found. Type 'help' for available commands.`;
+                }
+                
+                output.innerHTML += response + '\n\n';
+                input.value = '';
+            }
+        }
+
+        // Variant 9: Marketplace
+        let cart = 0;
+        function addToCart(dev) {
+            cart++;
+            document.querySelector('.cart').textContent = `Cart (${cart})`;
+            getContact(dev);
+        }
+
+        // Variant 10: Chat
+        function handleChat(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const messages = document.getElementById('chatMessages');
+            
+            if (input.value.trim()) {
+                // Add user message
+                messages.innerHTML += `<div class="message user">${input.value}</div>`;
+                
+                // Add bot response
+                setTimeout(() => {
+                    let response = '';
+                    const query = input.value.toLowerCase();
+                    
+                    if (query.includes('react')) {
+                        response = `Found React developer: Олександр К. - Senior level, $4,500/mo. Want his contact?`;
+                    } else if (query.includes('python') || query.includes('ml')) {
+                        response = `Found Python ML engineer: Марія П. - $4,200/mo, 5 years exp. Contact her?`;
+                    } else if (query.includes('mobile')) {
+                        response = `Found mobile developer: Андрій М. - Flutter/Kotlin, $3,800/mo. Get contact?`;
+                    } else {
+                        response = `I found several matches! React dev ($4,500), Python ML ($4,200), Mobile dev ($3,800). Which interests you?`;
+                    }
+                    
+                    messages.innerHTML += `<div class="message bot">${response}</div>`;
+                    messages.scrollTop = messages.scrollHeight;
+                }, 1000);
+                
+                input.value = '';
+                messages.scrollTop = messages.scrollHeight;
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Auto-focus search input in variant 1
+            setTimeout(() => {
+                const searchInput = document.getElementById('searchInput');
+                if (searchInput) searchInput.focus();
+            }, 500);
+        });
+    </script>
+</body>
+</html>
