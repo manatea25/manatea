@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>just🔗4u — 10 різних UX варіантів (v2)</title>
+<style>
+  :root{
+    --bg:#0b1020; --surface:#0f1737; --ink:#e9edf7; --muted:#99a2bd; --stroke:#22306a;
+    --brand:#7c5cff; --brand2:#22d3ee; --ok:#10b981; --gold:#f59e0b;
+    --chip:#141e4d; --chip2:#182455; --card:#0f1533;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:linear-gradient(180deg,#0b1020,#0b1326);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  a,button,input,select{font:inherit}
+  .wrap{max-width:1200px;margin:0 auto;padding:16px}
+  .hdr{position:sticky;top:0;z-index:50;background:rgba(11,16,32,.85);backdrop-filter:blur(8px);border-bottom:1px solid var(--stroke)}
+  .hdr-in{display:flex;align-items:center;justify-content:space-between;padding:12px 16px}
+  .brand{display:flex;gap:10px;align-items:center}
+  .b-badge{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--brand),#4f46e5);display:grid;place-items:center;font-weight:900}
+  .b-text{font-weight:900;letter-spacing:.2px}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap}
+  .tab{background:#0e1534;border:1px solid var(--stroke);border-radius:10px;color:var(--ink);padding:8px 10px;cursor:pointer}
+  .tab.active{background:linear-gradient(135deg,#1a2453,#121d46)}
+  .admin-btn{background:#0e1534;border:1px solid var(--stroke);color:#cfe1ff;border-radius:10px;padding:8px 10px;cursor:pointer}
+
+  .panel{display:grid;grid-template-columns:300px 1fr;gap:16px;margin-top:16px}
+  .filters{background:var(--surface);border:1px solid var(--stroke);border-radius:14px;padding:14px;position:sticky;top:72px;align-self:start}
+  .f-h{font-weight:900;margin-bottom:12px}
+  .f-row{margin-bottom:14px}
+  .chips{display:flex;gap:8px;flex-wrap:wrap}
+  .chip{background:var(--chip);border:1px solid var(--stroke);border-radius:999px;color:#cbd5f7;padding:8px 10px;cursor:pointer}
+  .chip.sel{background:rgba(34,211,238,.12);border-color:var(--brand2);color:#e7fbff}
+  .range{display:flex;align-items:center;gap:8px}
+  .range input[type=range]{flex:1}
+  .pill{background:#0e1534;border:1px solid var(--stroke);border-radius:999px;padding:6px 10px;color:#c0c9ea}
+  .sel, .txt{width:100%;background:#0e1534;border:1px solid var(--stroke);color:var(--ink);border-radius:10px;padding:10px}
+  .btn{background:linear-gradient(135deg,var(--brand),#5b8cff);color:white;border:none;border-radius:10px;padding:10px 12px;cursor:pointer}
+  .btn.flat{background:#0e1534;border:1px solid var(--stroke)}
+  .btn.ok{background:linear-gradient(135deg,#10b981,#06b6d4)}
+
+  /* Variants */
+  .variants{min-height:60vh}
+  .v{display:none}
+  .v.active{display:block}
+
+  /* Cards */
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .card{background:var(--card);border:1px solid var(--stroke);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:10px}
+  .row{display:flex;justify-content:space-between;align-items:center;gap:10px}
+  .name{font-weight:900}
+  .meta{display:flex;gap:10px;flex-wrap:wrap}
+  .tag{font-size:12px;background:#0e1534;border:1px solid var(--stroke);border-radius:8px;padding:6px 8px;color:#c8d1ea}
+  .score{display:flex;gap:8px;align-items:center}
+  .badge{padding:6px 8px;border-radius:8px;border:1px solid var(--stroke);background:#0e1534;font-weight:800}
+  .ok{border-color:#0a6b56;background:rgba(16,185,129,.12);color:#c8ffe9}
+  .gold{border-color:#8f6c00;background:rgba(245,158,11,.12);color:#ffe5ad}
+  .cta{display:flex;gap:8px}
+
+  /* Variant style modifiers */
+  .glass .card{background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));backdrop-filter:blur(8px)}
+  .outline .card{background:transparent;border-style:dashed}
+  .flat .card{background:#0d1230;border-color:#1a2558}
+  .minimal .card{padding:10px}
+  .list .card{flex-direction:row;align-items:center}
+  .hero{display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,#101a44,#0e1739);border:1px solid var(--stroke);border-radius:14px;padding:14px;margin-bottom:12px}
+  .hero .big{font-size:22px;font-weight:900}
+
+  /* Admin panel */
+  .admin{position:fixed;inset:0;display:none;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:60}
+  .admin-box{max-width:900px;margin:6vh auto;background:var(--surface);border:1px solid var(--stroke);border-radius:14px;padding:16px}
+  table{width:100%;border-collapse:collapse}
+  th,td{border:1px solid var(--stroke);padding:8px;text-align:left;font-size:13px}
+
+  /* Modal */
+  .modal{position:fixed;inset:0;display:none;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:55}
+  .modal-box{max-width:520px;margin:10vh auto;background:var(--surface);border:1px solid var(--stroke);border-radius:14px;padding:16px}
+
+  /* Mobile */
+  @media (max-width: 960px){
+    .panel{grid-template-columns:1fr}
+    .grid{grid-template-columns:1fr}
+    .tabs{overflow:auto}
+    .list .card{flex-direction:column;align-items:flex-start}
+  }
+</style>
+</head>
+<body>
+<header class="hdr">
+  <div class="hdr-in wrap">
+    <div class="brand">
+      <div class="b-badge">🦭</div>
+      <div>
+        <div class="b-text">just🔗4u</div>
+        <div style="font-size:12px;color:var(--muted)">Профілі розробників • 10 різних подач</div>
+      </div>
+    </div>
+    <nav class="tabs" id="variantTabs"></nav>
+    <button class="admin-btn" id="openAdmin">Admin</button>
+  </div>
+</header>
+
+<main class="wrap panel">
+  <!-- Filters + Ideal Constructor -->
+  <aside class="filters">
+    <div class="f-h">Фільтри</div>
+    <div class="f-row">
+      <div class="row"><label>Категорії</label><button class="btn flat" id="resetFilters">Скинути</button></div>
+      <div class="chips" id="categoryChips"></div>
+    </div>
+    <div class="f-row">
+      <label>Зарплата (USD/міс)</label>
+      <div class="range"><input type="range" id="salaryMin" min="800" max="7000" step="100" value="800"><span id="salaryMinT" class="pill">$800</span></div>
+      <div class="range"><input type="range" id="salaryMax" min="800" max="7000" step="100" value="7000"><span id="salaryMaxT" class="pill">$7000+</span></div>
+    </div>
+    <div class="f-row">
+      <label>Досвід (роки)</label>
+      <div class="range"><input type="range" id="expYears" min="0" max="15" step="1" value="0"><span id="expYearsT" class="pill">0+</span></div>
+    </div>
+    <div class="f-row">
+      <label>Min Tech Level</label>
+      <div class="range"><input type="range" id="techLevelMin" min="2" max="5" step="0.1" value="2"><span id="techLevelMinT" class="pill">2.0★+</span></div>
+    </div>
+    <div class="f-row">
+      <label>Пошук по технологіях</label>
+      <input class="txt" id="skillSearch" placeholder="React, Java, AWS ..." />
+    </div>
+    <div class="f-row">
+      <label>Сортування</label>
+      <select class="sel" id="sortBy">
+        <option value="relevance">Релевантність</option>
+        <option value="tech">Tech Level</option>
+        <option value="perf">Performance</option>
+        <option value="salary">Зарплата (↑)</option>
+        <option value="salaryDesc">Зарплата (↓)</option>
+        <option value="exp">Досвід</option>
+      </select>
+    </div>
+    <button class="btn ok" id="apply">Застосувати</button>
+
+    <hr style="border:none;border-top:1px solid var(--stroke);margin:16px 0" />
+    <div class="f-h">Ідеальний кандидат</div>
+    <div class="f-row"><label>Категорія</label><select class="sel" id="idealCat"></select></div>
+    <div class="f-row"><label>Зарплата (USD)</label><input class="txt" id="idealSalary" placeholder="до 4000" /></div>
+    <div class="f-row"><label>Досвід (роки)</label><input class="txt" id="idealExp" placeholder="від 5" /></div>
+    <div class="f-row"><label>Технології (через кому)</label><input class="txt" id="idealSkills" placeholder="React, Node.js, AWS" /></div>
+    <button class="btn" id="idealAsk">Дай мені такого кандидата</button>
+  </aside>
+
+  <!-- Variants container -->
+  <section class="variants" id="variants">
+    <!-- 1. Big Cards (Glass) -->
+    <div class="v glass" data-variant="1">
+      <div class="hero"><div class="big">1) Big Glass Cards</div><span class="pill">Велика картка • 1 кнопка</span></div>
+      <div class="grid" id="v1"></div>
+    </div>
+    <!-- 2. Dense Grid (Flat) -->
+    <div class="v flat" data-variant="2">
+      <div class="hero"><div class="big">2) Dense Grid</div><span class="pill">Щільно, без зайвого</span></div>
+      <div class="grid" id="v2"></div>
+    </div>
+    <!-- 3. Table Compare -->
+    <div class="v" data-variant="3">
+      <div class="hero"><div class="big">3) Таблиця</div><span class="pill">Швидке порівняння</span></div>
+      <div id="v3"></div>
+    </div>
+    <!-- 4. Swipe Focus -->
+    <div class="v minimal" data-variant="4">
+      <div class="hero"><div class="big">4) Swipe</div><span class="pill">Ліво/Право → Запросити CV</span></div>
+      <div class="row" style="gap:10px;justify-content:center">
+        <button class="btn flat" id="swPrev">◀</button>
+        <div id="swHost" style="width:min(560px,100%)"></div>
+        <button class="btn flat" id="swNext">▶</button>
+      </div>
+    </div>
+    <!-- 5. List Rows -->
+    <div class="v list" data-variant="5">
+      <div class="hero"><div class="big">5) List Rows</div><span class="pill">Список з правим CTA</span></div>
+      <div id="v5" class="grid" style="grid-template-columns:1fr"></div>
+    </div>
+    <!-- 6. Mosaic Tiles -->
+    <div class="v outline" data-variant="6">
+      <div class="hero"><div class="big">6) Mosaic</div><span class="pill">Контрастні плитки</span></div>
+      <div class="grid" id="v6"></div>
+    </div>
+    <!-- 7. Stacked Focus -->
+    <div class="v" data-variant="7">
+      <div class="hero"><div class="big">7) Stacked</div><span class="pill">Один за одним</span></div>
+      <div id="v7" class="grid" style="grid-template-columns:1fr"></div>
+    </div>
+    <!-- 8. Category First (2 cols) -->
+    <div class="v" data-variant="8">
+      <div class="hero"><div class="big">8) Category‑first</div><span class="pill">Спочатку напрям</span></div>
+      <div class="grid" style="grid-template-columns:1fr 1fr;gap:12px">
+        <div id="v8cats" class="card">
+          <div class="f-h">Категорії</div>
+          <div id="v8chips" class="chips"></div>
+        </div>
+        <div id="v8list" class="grid" style="grid-template-columns:1fr"></div>
+      </div>
+    </div>
+    <!-- 9. Carousel 3-up -->
+    <div class="v flat" data-variant="9">
+      <div class="hero"><div class="big">9) Carousel 3‑up</div><span class="pill">Гортай блоки</span></div>
+      <div id="v9" class="grid"></div>
+    </div>
+    <!-- 10. 3‑Step Wizard -->
+    <div class="v" data-variant="10">
+      <div class="hero"><div class="big">10) 3‑Step Wizard</div><span class="pill">Категорія → Кандидат → Запит</span></div>
+      <div id="v10" class="grid" style="grid-template-columns:1fr"></div>
+    </div>
+  </section>
+</main>
+
+<!-- Request Modal -->
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <div class="row"><div class="name">Запит на кандидата</div><button class="btn flat" id="mClose">Закрити</button></div>
+    <div id="mBody" class="meta" style="margin:10px 0 8px"></div>
+    <div class="f-row"><label>Куди надіслати CV?</label><input class="txt" id="mContact" placeholder="your@email.com або @telegram" /></div>
+    <div class="f-row"><label>Коментар (опціонально)</label><input class="txt" id="mNote" placeholder="коротко про задачу" /></div>
+    <button class="btn ok" id="mSend">Надіслати</button>
+  </div>
+</div>
+
+<!-- Admin Panel -->
+<div class="admin" id="admin">
+  <div class="admin-box">
+    <div class="row"><div class="name">Admin • Запити</div><div class="row" style="gap:8px"><button class="btn flat" id="export">Export CSV</button><button class="btn" id="aClose">Закрити</button></div></div>
+    <div style="margin-top:10px;max-height:60vh;overflow:auto">
+      <table id="tbl"><thead><tr><th>Час</th><th>Тип</th><th>Кандидат/Запит</th><th>Контакт</th><th>Деталі</th></tr></thead><tbody></tbody></table>
+    </div>
+  </div>
+</div>
+
+<script>
+// Config
+const OWNER_EMAIL = 'stant1605@gmail.com';
+const PERF = p => p>=20?5.0:p>=11?4.9:p>=5?4.8:p>=3?4.7:4.6;
+const star = t => `${t.toFixed(1)}★`;
+const money = n => `$${n.toLocaleString()}`;
+
+// Demo data — 15+ to cover categories; show 3 per variant
+const DEV = [
+  {id:'u1', name:'Senior React Dev', cat:'JavaScript/React', exp:7, salary:5000, proj:18, tech:4.6, perf:4.9, skills:['React','TypeScript','Next.js']},
+  {id:'u2', name:'Python Backend', cat:'Python', exp:5, salary:3200, proj:14, tech:3.7, perf:4.8, skills:['Django','FastAPI','PostgreSQL']},
+  {id:'u3', name:'Senior Java', cat:'Java', exp:9, salary:4600, proj:27, tech:4.9, perf:5.0, skills:['Spring','Kafka','PostgreSQL']},
+  {id:'u4', name:'ML Engineer', cat:'AI/ML', exp:4, salary:3800, proj:12, tech:3.6, perf:4.8, skills:['PyTorch','TensorFlow','MLOps']},
+  {id:'u5', name:'iOS Senior', cat:'Mobile', exp:8, salary:6000, proj:26, tech:4.8, perf:5.0, skills:['Swift','SwiftUI','Combine']},
+  {id:'u6', name:'Laravel Senior', cat:'PHP', exp:8, salary:3800, proj:25, tech:4.7, perf:4.9, skills:['Laravel','MySQL','Redis']},
+  {id:'u7', name:'Node.js Lead', cat:'Node.js', exp:6, salary:4200, proj:18, tech:4.4, perf:4.9, skills:['Node','NestJS','Redis']},
+  {id:'u8', name:'DevOps Sr', cat:'DevOps/Cloud', exp:7, salary:4800, proj:22, tech:4.6, perf:4.9, skills:['Kubernetes','AWS','Terraform']},
+  {id:'u9', name:'.NET Senior', cat:'.NET/C#', exp:8, salary:4200, proj:24, tech:4.7, perf:4.9, skills:['C#','.NET','Azure']},
+  {id:'u10', name:'Go Backend', cat:'Golang', exp:4, salary:3400, proj:12, tech:3.5, perf:4.8, skills:['Go','gRPC','Docker']},
+  {id:'u11', name:'Rails Dev', cat:'Ruby/Rails', exp:5, salary:3000, proj:13, tech:3.7, perf:4.8, skills:['Rails','PostgreSQL','Redis']},
+  {id:'u12', name:'Rust Systems', cat:'Rust', exp:5, salary:4200, proj:16, tech:4.0, perf:4.9, skills:['Rust','Tokio','Actix']},
+  {id:'u13', name:'Scala Backend', cat:'Scala', exp:6, salary:4000, proj:18, tech:4.1, perf:4.9, skills:['Scala','Akka','Kafka']},
+  {id:'u14', name:'Blockchain Eng', cat:'Blockchain/Web3', exp:5, salary:4200, proj:16, tech:4.2, perf:4.9, skills:['Solidity','Web3','Hardhat']},
+  {id:'u15', name:'Unity Game', cat:'Game Dev', exp:4, salary:3600, proj:12, tech:3.6, perf:4.8, skills:['Unity','C#','Mobile']},
+];
+
+const CATS = ['JavaScript/React','Python','Java','AI/ML','Mobile','PHP','Node.js','DevOps/Cloud','.NET/C#','Golang','Ruby/Rails','Rust','Scala','Blockchain/Web3','Game Dev'];
+
+// State
+const S = {cat:null, salaryMin:800, salaryMax:7000, exp:0, techMin:2, sort:'relevance', skill:''};
+const picks = {
+  1:['u1','u8','u3'], 2:['u2','u7','u9'], 3:['u10','u11','u6'], 4:['u5','u15','u1'], 5:['u13','u14','u12'],
+  6:['u4','u8','u2'], 7:['u3','u10','u11'], 8:['u7','u9','u6'], 9:['u12','u13','u14'], 10:['u5','u4','u15']
+};
+
+// Utils
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+
+function filterList(arr){
+  let r = arr.filter(d => (!S.cat || d.cat===S.cat)
+    && d.salary>=S.salaryMin && d.salary<=S.salaryMax
+    && d.exp>=S.exp && d.tech>=S.techMin
+    && (!S.skill || d.skills.join(' ').toLowerCase().includes(S.skill))
+  );
+  switch(S.sort){
+    case 'tech': r.sort((a,b)=>b.tech-a.tech); break;
+    case 'perf': r.sort((a,b)=> (b.perf??PERF(b.proj)) - (a.perf??PERF(a.proj))); break;
+    case 'salary': r.sort((a,b)=>a.salary-b.salary); break;
+    case 'salaryDesc': r.sort((a,b)=>b.salary-a.salary); break;
+    case 'exp': r.sort((a,b)=>b.exp-a.exp); break;
+    default: break;
+  }
+  return r;
+}
+
+function card(d){
+  const el = document.createElement('div');
+  el.className = 'card';
+  el.innerHTML = `
+    <div class="row">
+      <div>
+        <div class="name">${d.name}</div>
+        <div class="meta">
+          <span class="tag">${d.cat}</span>
+          <span class="tag">${d.exp} років</span>
+          <span class="tag">${d.proj} проєктів</span>
+          <span class="tag">${money(d.salary)}/міс</span>
+        </div>
+      </div>
+      <div class="score">
+        <span class="badge ok">Tech ${star(d.tech)}</span>
+        <span class="badge gold">Perf ${star(d.perf??PERF(d.proj))}</span>
+      </div>
+    </div>
+    <div class="meta">${d.skills.slice(0,6).map(s=>`<span class='tag'>${s}</span>`).join('')}</div>
+    <div class="cta">
+      <button class="btn ok" data-id="${d.id}" data-act="request">Запросити CV</button>
+    </div>
+  `;
+  return el;
+}
+
+function table3(list){
+  const t=document.createElement('table');
+  t.innerHTML = `<thead><tr><th>Імʼя</th><th>Категорія</th><th>Exp</th><th>Proj</th><th>Salary</th><th>Tech</th><th>Perf</th><th>Технології</th><th></th></tr></thead>`;
+  const tb=document.createElement('tbody');
+  list.forEach(d=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${d.name}</td><td>${d.cat}</td><td>${d.exp}</td><td>${d.proj}</td><td>${money(d.salary)}</td><td>${star(d.tech)}</td><td>${star(d.perf??PERF(d.proj))}</td><td>${d.skills.slice(0,4).join(', ')}</td><td><button class='btn ok' data-id='${d.id}' data-act='request'>CV</button></td>`;
+    tb.appendChild(tr);
+  });
+  t.appendChild(tb); return t;
+}
+
+// Variant Renders
+function pick(vid){ const ids=picks[vid]; return filterList(ids.map(id=>DEV.find(x=>x.id===id))).slice(0,3); }
+
+function renderV1(){ const box=$('#v1'); box.innerHTML=''; pick(1).forEach(d=>{ const c=card(d); box.appendChild(c); }); attach(box); }
+function renderV2(){ const box=$('#v2'); box.innerHTML=''; pick(2).forEach(d=>{ const c=card(d); box.appendChild(c); }); attach(box); }
+function renderV3(){ const host=$('#v3'); host.innerHTML=''; const t=table3(pick(3)); host.appendChild(t); attach(host); }
+function renderV4(){ const host=$('#swHost'); const arr=pick(4); let i=0; const draw=()=>{ host.innerHTML=''; const c=card(arr[i]); host.appendChild(c); attach(host); }; draw(); $('#swPrev').onclick=()=>{i=(i-1+arr.length)%arr.length; draw()}; $('#swNext').onclick=()=>{i=(i+1)%arr.length; draw()}; }
+function renderV5(){ const box=$('#v5'); box.innerHTML=''; pick(5).forEach(d=>{ const c=card(d); c.style.display='grid'; c.style.gridTemplateColumns='1fr auto'; box.appendChild(c); }); attach(box); }
+function renderV6(){ const box=$('#v6'); box.innerHTML=''; pick(6).forEach(d=>{ const c=card(d); box.appendChild(c); }); attach(box); }
+function renderV7(){ const box=$('#v7'); box.innerHTML=''; pick(7).forEach(d=>{ const c=card(d); box.appendChild(c); }); attach(box); }
+function renderV8(){ const chips=$('#v8chips'); const list=$('#v8list'); chips.innerHTML=''; list.innerHTML=''; CATS.forEach(c=>{ const b=document.createElement('button'); b.className='chip'+(S.cat===c?' sel':''); b.textContent=c; b.onclick=()=>{S.cat=(S.cat===c?null:c); renderAll(); activate(8);}; chips.appendChild(b); }); pick(8).forEach(d=>{ const c=card(d); list.appendChild(c); }); attach(list); }
+function renderV9(){ const box=$('#v9'); box.innerHTML=''; pick(9).forEach(d=>{ const c=card(d); box.appendChild(c); }); attach(box); }
+function renderV10(){ const host=$('#v10'); host.innerHTML='';
+  // Step 1 category
+  const s1=document.createElement('div'); s1.className='card'; s1.innerHTML='<div class="name">Крок 1: Категорія</div>'; const chips=document.createElement('div'); chips.className='chips'; CATS.forEach(c=>{ const el=document.createElement('div'); el.className='chip'+(S.cat===c?' sel':''); el.textContent=c; el.onclick=()=>{ S.cat=c; renderV10(); }; chips.appendChild(el); }); s1.appendChild(chips); host.appendChild(s1);
+  // Step 2 list
+  const s2=document.createElement('div'); s2.className='card'; s2.innerHTML='<div class="name">Крок 2: Обери кандидата</div>'; const g=document.createElement('div'); g.className='grid'; pick(10).forEach(d=>{ g.appendChild(card(d)); }); s2.appendChild(g); host.appendChild(s2); attach(host);
+}
+
+function renderAll(){
+  // sync labels
+  $('#salaryMinT').textContent = money(S.salaryMin);
+  $('#salaryMaxT').textContent = `${money(S.salaryMax)}${S.salaryMax>=7000?'+':''}`;
+  $('#expYearsT').textContent = `${S.exp}+`;
+  $('#techLevelMinT').textContent = `${S.techMin.toFixed(1)}★+`;
+  // chips
+  const box=$('#categoryChips'); box.innerHTML='';
+  const all=document.createElement('div'); all.className='chip'+(S.cat? '':' sel'); all.textContent='Всі'; all.onclick=()=>{S.cat=null; renderAll();}; box.appendChild(all);
+  CATS.forEach(c=>{ const el=document.createElement('div'); el.className='chip'+(S.cat===c?' sel':''); el.textContent=c; el.onclick=()=>{S.cat=(S.cat===c? null : c); renderAll();}; box.appendChild(el); });
+  // renders
+  renderV1(); renderV2(); renderV3(); renderV4(); renderV5(); renderV6(); renderV7(); renderV8(); renderV9(); renderV10();
+}
+
+// Variant tabs
+function tabs(){ const t=$('#variantTabs'); for(let i=1;i<=10;i++){ const b=document.createElement('button'); b.className='tab'+(i===1?' active':''); b.textContent=i; b.onclick=()=>activate(i); t.appendChild(b);} }
+function activate(i){ $$('.tab').forEach((x,idx)=>x.classList.toggle('active', idx===i-1)); $$('.v').forEach(v=>v.classList.remove('active')); const cur=document.querySelector(`.v[data-variant="${i}"]`); if(cur) cur.classList.add('active'); }
+
+// Request flow
+let REQ_CTX = null;
+function attach(scope){ scope.querySelectorAll('[data-act="request"]').forEach(b=>{ b.onclick=()=>{ const d=DEV.find(x=>x.id===b.dataset.id); REQ_CTX={type:'candidate', data:d}; openModal(d); }; }); }
+function openModal(d){ $('#mContact').value=''; $('#mNote').value=''; $('#mBody').innerHTML = `
+  <span class='tag'>${d.name}</span>
+  <span class='tag'>${d.cat}</span>
+  <span class='tag'>${d.exp} років</span>
+  <span class='tag'>${d.proj} проєктів</span>
+  <span class='tag'>${money(d.salary)}</span>
+  <span class='tag'>Tech ${star(d.tech)}</span>
+  <span class='tag'>Perf ${star(d.perf??PERF(d.proj))}</span>`; $('#modal').style.display='block'; }
+
+function sendEmail(subject, body){
+  const url = `mailto:${OWNER_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  window.location.href = url;
+}
+
+function now(){ return new Date().toISOString().replace('T',' ').slice(0,19); }
+function saveRequest(entry){ const key='requests_v2'; const arr=JSON.parse(localStorage.getItem(key)||'[]'); arr.unshift(entry); localStorage.setItem(key, JSON.stringify(arr)); }
+
+$('#mSend').onclick = () => {
+  const contact=$('#mContact').value.trim(); if(!contact){ alert('Вкажіть email або @telegram'); return; }
+  const note=$('#mNote').value.trim();
+  let subject='just4u: Запит на кандидата'; let body='';
+  if(REQ_CTX?.type==='candidate'){
+    const d=REQ_CTX.data; body = `Кандидат: ${d.name} / ${d.cat}\nExp: ${d.exp} років, Proj: ${d.proj}\nSalary: ${money(d.salary)}\nTech ${star(d.tech)}, Perf ${star(d.perf??PERF(d.proj))}\nSkills: ${d.skills.join(', ')}\n\nНадіслати CV сюди: ${contact}\nКоментар: ${note||'-'}\nЧас: ${now()}`;
+  } else if(REQ_CTX?.type==='ideal'){
+    const q=REQ_CTX.data; subject='just4u: Запит — Ідеальний кандидат'; body = `ІДЕАЛЬНИЙ КАНДИДАТ\nКатегорія: ${q.cat||'-'}\nЗарплата: ${q.salary||'-'}\nДосвід: ${q.exp||'-'}\nТехнології: ${q.skills||'-'}\nНадіслати контакти сюди: ${contact}\nКоментар: ${note||'-'}\nЧас: ${now()}`;
+  }
+  // save and send
+  saveRequest({ts:now(), type:REQ_CTX?.type||'candidate', title:REQ_CTX?.type==='ideal'?'Ideal':'Candidate '+REQ_CTX?.data?.name, contact, details:body});
+  sendEmail(subject, body);
+  $('#modal').style.display='none';
+};
+$('#mClose').onclick=()=> $('#modal').style.display='none';
+$('#modal').addEventListener('click', e=>{ if(e.target.id==='modal') $('#modal').style.display='none'; });
+
+// Ideal constructor
+$('#idealAsk').onclick = () => {
+  const q = { cat:$('#idealCat').value, salary:$('#idealSalary').value, exp:$('#idealExp').value, skills:$('#idealSkills').value };
+  REQ_CTX = { type:'ideal', data:q };
+  $('#mBody').innerHTML = `<span class='tag'>Категорія: ${q.cat||'-'}</span><span class='tag'>Зарплата: ${q.salary||'-'}</span><span class='tag'>Досвід: ${q.exp||'-'}</span><span class='tag'>Технології: ${q.skills||'-'}</span>`;
+  $('#modal').style.display='block';
+};
+
+// Admin
+$('#openAdmin').onclick=()=>{
+  const pwd = prompt('Пароль admin'); if(pwd!=='admin2025') return alert('Невірно');
+  const rows = JSON.parse(localStorage.getItem('requests_v2')||'[]');
+  const tb = $('#tbl tbody'); tb.innerHTML=''; rows.forEach(r=>{ const tr=document.createElement('tr'); tr.innerHTML=`<td>${r.ts}</td><td>${r.type}</td><td>${r.title}</td><td>${r.contact}</td><td style='white-space:pre-wrap'>${r.details.slice(0,160)}...</td>`; tb.appendChild(tr); });
+  $('#admin').style.display='block';
+};
+$('#aClose').onclick=()=> $('#admin').style.display='none';
+$('#admin').addEventListener('click', e=>{ if(e.target.id==='admin') $('#admin').style.display='none'; });
+$('#export').onclick=()=>{
+  const rows = JSON.parse(localStorage.getItem('requests_v2')||'[]');
+  const csv = ['time,type,title,contact,details'].concat(rows.map(r=>`${r.ts},${r.type},"${(r.title||'').replaceAll('"','\"')}",${r.contact},"${(r.details||'').replaceAll('"','\"')}"`)).join('\n');
+  const blob = new Blob([csv],{type:'text/csv'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='requests.csv'; a.click(); URL.revokeObjectURL(url);
+};
+
+// Filters bindings
+function bind(){
+  $('#salaryMin').oninput=e=>{S.salaryMin=+e.target.value; if(S.salaryMin>S.salaryMax) S.salaryMax=S.salaryMin; renderAll();};
+  $('#salaryMax').oninput=e=>{S.salaryMax=+e.target.value; if(S.salaryMax<S.salaryMin) S.salaryMin=S.salaryMax; renderAll();};
+  $('#expYears').oninput=e=>{S.exp=+e.target.value; renderAll();};
+  $('#techLevelMin').oninput=e=>{S.techMin=+e.target.value; renderAll();};
+  $('#sortBy').onchange=e=>{S.sort=e.target.value; renderAll();};
+  $('#skillSearch').oninput=e=>{S.skill=e.target.value.trim().toLowerCase(); renderAll();};
+  $('#apply').onclick=()=>renderAll();
+  $('#resetFilters').onclick=()=>{S.cat=null; S.salaryMin=800; S.salaryMax=7000; S.exp=0; S.techMin=2; S.sort='relevance'; S.skill='';
+    $('#salaryMin').value=800; $('#salaryMax').value=7000; $('#expYears').value=0; $('#techLevelMin').value=2; $('#sortBy').value='relevance'; $('#skillSearch').value=''; renderAll();};
+}
+
+// Init
+(function init(){
+  tabs();
+  // ideal cats
+  const sel=$('#idealCat'); CATS.forEach(c=>{ const o=document.createElement('option'); o.value=c; o.textContent=c; sel.appendChild(o); })
+  bind();
+  renderAll();
+  activate(1);
+})();
+</script>
+</body>
+</html>

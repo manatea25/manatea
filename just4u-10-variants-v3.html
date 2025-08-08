@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>just🔗4u — 10 абсолютно різних варіантів (v3)</title>
+<style>
+  :root{
+    --bg:#0b1020; --ink:#e9edf7; --muted:#a3acc4; --stroke:#22306a;
+    --brand:#7c5cff; --ok:#10b981; --gold:#f59e0b; --surface:#0f1737;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:linear-gradient(180deg,#0b1020,#0b1326);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  a,button,input,select{font:inherit}
+  .wrap{max-width:1200px;margin:0 auto;padding:16px}
+  .hdr{position:sticky;top:0;z-index:50;background:rgba(11,16,32,.85);backdrop-filter:blur(8px);border-bottom:1px solid var(--stroke)}
+  .hdr-in{display:flex;align-items:center;gap:12px;justify-content:space-between;padding:12px 16px}
+  .brand{display:flex;gap:10px;align-items:center}
+  .b-badge{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#7c5cff,#4f46e5);display:grid;place-items:center;font-weight:900}
+  .b-text{font-weight:900}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap}
+  .tab{background:#0e1534;border:1px solid var(--stroke);border-radius:10px;color:#cfe1ff;padding:8px 10px;cursor:pointer}
+  .tab.active{background:linear-gradient(135deg,#1a2453,#121d46)}
+  .admin-btn{background:#0e1534;border:1px solid var(--stroke);color:#cfe1ff;border-radius:10px;padding:8px 10px;cursor:pointer}
+
+  .panel{display:grid;grid-template-columns:310px 1fr;gap:16px;margin-top:16px}
+  .filters{background:#0f1737;border:1px solid var(--stroke);border-radius:14px;padding:14px;position:sticky;top:72px;align-self:start}
+  .f-h{font-weight:900;margin-bottom:12px}
+  .f-row{margin-bottom:14px}
+  .chips{display:flex;gap:8px;flex-wrap:wrap}
+  .chip{background:#141e4d;border:1px solid var(--stroke);border-radius:999px;color:#cbd5f7;padding:8px 10px;cursor:pointer}
+  .chip.sel{background:rgba(124,92,255,.15);border-color:#7c5cff;color:#efe8ff}
+  .range{display:flex;align-items:center;gap:8px}
+  .range input[type=range]{flex:1}
+  .pill{background:#0e1534;border:1px solid var(--stroke);border-radius:999px;padding:6px 10px;color:#c0c9ea}
+  .sel, .txt{width:100%;background:#0e1534;border:1px solid var(--stroke);color:var(--ink);border-radius:10px;padding:10px}
+  .btn{background:linear-gradient(135deg,#7c5cff,#5b8cff);color:white;border:none;border-radius:10px;padding:10px 12px;cursor:pointer}
+  .btn.flat{background:#0e1534;border:1px solid var(--stroke)}
+  .btn.ok{background:linear-gradient(135deg,#10b981,#06b6d4)}
+
+  .variants{min-height:60vh}
+  .v{display:none}
+  .v.active{display:block}
+  .hero{display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,#101a44,#0e1739);border:1px solid var(--stroke);border-radius:14px;padding:14px;margin-bottom:12px}
+  .hero .big{font-size:22px;font-weight:900}
+
+  /* Card base */
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .card{background:#0f1533;border:1px solid var(--stroke);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:10px}
+  .row{display:flex;justify-content:space-between;align-items:center;gap:10px}
+  .name{font-weight:900}
+  .meta{display:flex;gap:10px;flex-wrap:wrap}
+  .tag{font-size:12px;background:#0e1534;border:1px solid var(--stroke);border-radius:8px;padding:6px 8px;color:#c8d1ea}
+  .score{display:flex;gap:8px;align-items:center}
+  .badge{padding:6px 8px;border-radius:8px;border:1px solid var(--stroke);background:#0e1534;font-weight:800}
+  .ok{border-color:#0a6b56;background:rgba(16,185,129,.12);color:#c8ffe9}
+  .gold{border-color:#8f6c00;background:rgba(245,158,11,.12);color:#ffe5ad}
+  .cta{display:flex;gap:8px}
+  .video-tag{font-size:12px;background:#0e1534;border:1px dashed var(--stroke);border-radius:8px;padding:6px 8px;color:#c8d1ea}
+
+  /* VARIANT THEMES — radically different */
+  /* 1 Minimal Newspaper */
+  .v1-theme{background:#0b1020}
+  .v1-theme .card{background:#0b1020;border-color:#2b375f}
+  .v1-theme .name{font-family: "Georgia", serif; font-weight:700; letter-spacing:.3px}
+  .v1-theme .tag{background:#0b1020;color:#cdd5f8;border-style:dashed}
+  .v1-theme .btn.ok{background:#e5e7eb;color:#111827; font-weight:800}
+
+  /* 2 Neon Glow */
+  .v2-theme .grid{gap:18px}
+  .v2-theme .card{background:radial-gradient(1200px circle at 0 0, rgba(124,92,255,.15), transparent), #0c0f2b; box-shadow:0 0 0 1px rgba(124,92,255,.25), 0 8px 24px rgba(124,92,255,.15)}
+  .v2-theme .name{font-size:20px; text-shadow:0 0 12px rgba(124,92,255,.6)}
+  .v2-theme .btn.ok{background:linear-gradient(90deg,#22d3ee,#7c5cff)}
+
+  /* 3 Data Table (Zebra) */
+  .table-wrap{overflow:auto;border:1px solid var(--stroke);border-radius:12px}
+  table{width:100%;border-collapse:collapse}
+  th,td{border-bottom:1px solid var(--stroke);padding:10px;text-align:left;font-size:13px}
+  tr:nth-child(even){background:#0e1534}
+
+  /* 4 Kanban */
+  .kanban{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .col{background:#0e1534;border:1px solid var(--stroke);border-radius:12px;padding:10px}
+  .col .title{font-weight:800;margin-bottom:8px}
+
+  /* 5 Chat Bubbles */
+  .chat{display:grid;gap:12px}
+  .bubble{border:1px solid var(--stroke);background:#0d1434;border-radius:16px;padding:12px;max-width:680px}
+  .bubble .cta{justify-content:flex-end}
+
+  /* 6 Timeline */
+  .timeline{position:relative}
+  .timeline:before{content:'';position:absolute;left:12px;top:0;bottom:0;width:2px;background:#26356f}
+  .t-item{position:relative;margin:0 0 14px 32px}
+  .t-item:before{content:'';position:absolute;left:-28px;top:10px;width:12px;height:12px;border-radius:50%;background:#7c5cff}
+
+  /* 7 Split View */
+  .split{display:grid;grid-template-columns:360px 1fr;gap:12px}
+  .list-pane{border:1px solid var(--stroke);border-radius:12px;overflow:auto;max-height:62vh}
+  .list-item{padding:10px;border-bottom:1px solid var(--stroke);cursor:pointer}
+  .list-item.active{background:#121a44}
+  .detail-pane{border:1px solid var(--stroke);border-radius:12px;padding:12px}
+
+  /* 8 Fullscreen Carousel */
+  .carousel{display:grid;place-items:center}
+  .bigcard{width:min(720px,100%);}
+
+  /* 9 Big Numbers */
+  .bignums .name{font-size:24px}
+  .bignums .tag.salary{font-size:28px;font-weight:900;background:transparent;border:none;color:#9ad8ff}
+
+  /* 10 Brutalist */
+  .brutal .card{background:#0b1020;border:3px solid #eab308}
+  .brutal .name{font-weight:900;text-transform:uppercase;letter-spacing:.04em}
+  .brutal .tag{background:#0b1020;border:2px solid #334155}
+  .brutal .btn.ok{background:#eab308;color:#0b1020;font-weight:900}
+
+  /* Modal / Admin */
+  .modal,.admin{position:fixed;inset:0;display:none;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:60}
+  .box{max-width:520px;margin:10vh auto;background:#0f1737;border:1px solid var(--stroke);border-radius:14px;padding:16px}
+  .abox{max-width:920px;margin:8vh auto;background:#0f1737;border:1px solid var(--stroke);border-radius:14px;padding:16px}
+
+  /* Mobile */
+  @media (max-width: 980px){
+    .panel{grid-template-columns:1fr}
+    .grid{grid-template-columns:1fr}
+    .kanban{grid-template-columns:1fr}
+    .split{grid-template-columns:1fr}
+    .tabs{overflow:auto}
+  }
+</style>
+</head>
+<body>
+<header class="hdr">
+  <div class="hdr-in wrap">
+    <div class="brand">
+      <div class="b-badge">🦭</div>
+      <div>
+        <div class="b-text">just🔗4u</div>
+        <div style="font-size:12px;color:var(--muted)">10 абсолютно різних підходів</div>
+      </div>
+    </div>
+    <nav class="tabs" id="variantTabs"></nav>
+    <div class="row" style="gap:8px">
+      <button class="admin-btn" id="prevVar">◀</button>
+      <button class="admin-btn" id="nextVar">▶</button>
+      <button class="admin-btn" id="openAdmin">Admin</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap panel">
+  <aside class="filters">
+    <div class="f-h">Фільтри</div>
+    <div class="f-row"><div class="row"><label>Категорії</label><button class="btn flat" id="resetFilters">Скинути</button></div><div id="categoryChips" class="chips"></div></div>
+    <div class="f-row"><label>Зарплата</label><div class="range"><input type="range" id="salaryMin" min="800" max="7000" step="100" value="800"><span id="salaryMinT" class="pill">$800</span></div><div class="range"><input type="range" id="salaryMax" min="800" max="7000" step="100" value="7000"><span id="salaryMaxT" class="pill">$7000+</span></div></div>
+    <div class="f-row"><label>Досвід (роки)</label><div class="range"><input type="range" id="expMin" min="0" max="15" step="1" value="0"><span id="expMinT" class="pill">0</span></div><div class="range"><input type="range" id="expMax" min="0" max="15" step="1" value="15"><span id="expMaxT" class="pill">15</span></div></div>
+    <div class="f-row"><label>Min Tech Level</label><div class="range"><input type="range" id="techLevelMin" min="2" max="7" step="0.1" value="2"><span id="techLevelMinT" class="pill">2.0★+</span></div></div>
+    <div class="f-row"><label>Пошук за скілами</label><input class="txt" id="skillSearch" placeholder="React, Java, AWS ..." /></div>
+    <div class="f-row"><label>Сортування</label><select class="sel" id="sortBy"><option value="relevance">Релевантність</option><option value="tech">Tech</option><option value="perf">Perf</option><option value="salary">Зарплата (↑)</option><option value="salaryDesc">Зарплата (↓)</option><option value="exp">Досвід</option></select></div>
+    <button class="btn ok" id="apply">Застосувати</button>
+
+    <hr style="border:none;border-top:1px solid var(--stroke);margin:16px 0" />
+    <div class="f-h">Ідеальний кандидат</div>
+    <div class="f-row"><label>Категорія</label><select class="sel" id="idealCat"></select></div>
+    <div class="f-row"><label>Зарплата (USD)</label><input class="txt" id="idealSalary" placeholder="до 4000" /></div>
+    <div class="f-row"><label>Досвід (роки)</label><input class="txt" id="idealExp" placeholder="від 5" /></div>
+    <div class="f-row"><label>Технології</label><input class="txt" id="idealSkills" placeholder="React, Node.js, AWS" /></div>
+    <button class="btn" id="idealAsk">Дай мені такого кандидата</button>
+  </aside>
+
+  <section class="variants" id="variants">
+    <!-- 1 Minimal Newspaper -->
+    <div class="v v1-theme" data-variant="1">
+      <div class="hero"><div class="big">1) Minimal Newspaper</div><span class="pill">Чорно-біло. Суть і одна кнопка</span></div>
+      <div class="grid" id="v1"></div>
+    </div>
+    <!-- 2 Neon Glow -->
+    <div class="v v2-theme" data-variant="2">
+      <div class="hero"><div class="big">2) Neon Glow</div><span class="pill">Світяться картки, швидкий фокус</span></div>
+      <div class="grid" id="v2"></div>
+    </div>
+    <!-- 3 Data Table -->
+    <div class="v" data-variant="3">
+      <div class="hero"><div class="big">3) Data Table</div><span class="pill">Зебра-рядки, колонки, CV-кнопка</span></div>
+      <div class="table-wrap" id="v3"></div>
+    </div>
+    <!-- 4 Kanban -->
+    <div class="v" data-variant="4">
+      <div class="hero"><div class="big">4) Kanban</div><span class="pill">По колонках — вибір одним кліком</span></div>
+      <div class="kanban" id="v4"></div>
+    </div>
+    <!-- 5 Chat Bubbles -->
+    <div class="v" data-variant="5">
+      <div class="hero"><div class="big">5) Chat Bubbles</div><span class="pill">Наче листування з кандидатами</span></div>
+      <div class="chat" id="v5"></div>
+    </div>
+    <!-- 6 Timeline -->
+    <div class="v" data-variant="6">
+      <div class="hero"><div class="big">6) Timeline</div><span class="pill">Вертикальна лінія часу</span></div>
+      <div class="timeline" id="v6"></div>
+    </div>
+    <!-- 7 Split View -->
+    <div class="v" data-variant="7">
+      <div class="hero"><div class="big">7) Split View</div><span class="pill">Список зліва → Деталі справа</span></div>
+      <div class="split" id="v7"></div>
+    </div>
+    <!-- 8 Fullscreen Carousel -->
+    <div class="v" data-variant="8">
+      <div class="hero"><div class="big">8) Fullscreen Carousel</div><span class="pill">Стрілки/тапи → Запросити CV</span></div>
+      <div class="carousel"><div class="bigcard" id="v8"></div><div class="row" style="gap:8px;margin-top:10px"><button class="btn flat" id="cPrev">◀</button><button class="btn flat" id="cNext">▶</button></div></div>
+    </div>
+    <!-- 9 Big Numbers -->
+    <div class="v bignums" data-variant="9">
+      <div class="hero"><div class="big">9) Big Numbers</div><span class="pill">Головні цифри на першому плані</span></div>
+      <div class="grid" id="v9"></div>
+    </div>
+    <!-- 10 Brutalist -->
+    <div class="v brutal" data-variant="10">
+      <div class="hero"><div class="big">10) Brutalist</div><span class="pill">Грубо. Контрастно. Миттєво.</span></div>
+      <div class="grid" id="v10"></div>
+    </div>
+  </section>
+</main>
+
+<!-- Request Modal -->
+<div class="modal" id="modal">
+  <div class="box">
+    <div class="row"><div class="name">Запит на кандидата</div><button class="btn flat" id="mClose">Закрити</button></div>
+    <div id="mBody" class="meta" style="margin:10px 0 8px"></div>
+    <div class="f-row"><label>Куди надіслати CV?</label><input class="txt" id="mContact" placeholder="your@email.com або @telegram" /></div>
+    <div class="f-row"><label>Коментар (опціонально)</label><input class="txt" id="mNote" placeholder="коротко про задачу" /></div>
+    <button class="btn ok" id="mSend">Надіслати</button>
+  </div>
+</div>
+
+<!-- Admin -->
+<div class="admin" id="admin">
+  <div class="abox">
+    <div class="row"><div class="name">Admin • Запити</div><div class="row" style="gap:8px"><button class="btn flat" id="export">Export CSV</button><button class="btn" id="aClose">Закрити</button></div></div>
+    <div style="margin-top:10px;max-height:36vh;overflow:auto">
+      <table id="tbl"><thead><tr><th>Час</th><th>Тип</th><th>Кандидат/Запит</th><th>Контакт</th><th>Деталі</th></tr></thead><tbody></tbody></table>
+    </div>
+    <hr style="border:none;border-top:1px solid var(--stroke);margin:12px 0" />
+    <div class="row" style="justify-content:space-between;align-items:center"><div class="name">Кандидати (CRUD)</div><button class="btn flat" id="saveDevs">Зберегти зміни</button></div>
+    <div class="f-row" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
+      <input class="txt" id="dName" placeholder="Імʼя/Роль" />
+      <input class="txt" id="dCat" placeholder="Категорія" />
+      <input class="txt" id="dExp" placeholder="Роки" />
+      <input class="txt" id="dProj" placeholder="Проєкти" />
+      <input class="txt" id="dSalary" placeholder="Зарплата" />
+      <input class="txt" id="dTech" placeholder="Tech Level" />
+      <input class="txt" id="dPerf" placeholder="Performance" />
+      <input class="txt" id="dSkills" placeholder="Скіли (через кому)" />
+      <input class="txt" id="dVideo" placeholder="Video URL (опц.)" />
+      <button class="btn ok" id="addDev">Додати</button>
+    </div>
+    <div style="margin-top:8px;max-height:24vh;overflow:auto">
+      <table id="devTbl"><thead><tr><th>Імʼя</th><th>Категорія</th><th>Exp</th><th>Proj</th><th>Salary</th><th>Tech</th><th>Perf</th><th>Video</th><th></th></tr></thead><tbody></tbody></table>
+    </div>
+  </div>
+</div>
+
+<script>
+// Config
+const OWNER_EMAIL = 'stant1605@gmail.com';
+const PERF = p => p>=20?5.0:p>=11?4.9:p>=5?4.8:p>=3?4.7:4.6;
+const star = t => `${t.toFixed(1)}★`;
+const money = n => `$${n.toLocaleString()}`;
+
+const DEV = [
+  {id:'u1', name:'Senior React Dev', cat:'JavaScript/React', exp:7, proj:18, salary:5000, tech:4.6, perf:4.9, skills:['React','TypeScript','Next.js','Redux','Node.js']},
+  {id:'u2', name:'Python Backend', cat:'Python', exp:5, proj:14, salary:3200, tech:3.7, perf:4.8, skills:['Django','FastAPI','PostgreSQL','Redis']},
+  {id:'u3', name:'Senior Java', cat:'Java', exp:9, proj:27, salary:4600, tech:4.9, perf:5.0, skills:['Spring','Kafka','PostgreSQL','Docker']},
+  {id:'u4', name:'ML Engineer', cat:'AI/ML', exp:4, proj:12, salary:3800, tech:3.6, perf:4.8, skills:['PyTorch','TensorFlow','MLOps']},
+  {id:'u5', name:'iOS Senior', cat:'Mobile', exp:8, proj:26, salary:6000, tech:4.8, perf:5.0, skills:['Swift','SwiftUI','Combine']},
+  {id:'u6', name:'Laravel Senior', cat:'PHP', exp:8, proj:25, salary:3800, tech:4.7, perf:4.9, skills:['Laravel','MySQL','Redis']},
+  {id:'u7', name:'Node.js Lead', cat:'Node.js', exp:6, proj:18, salary:4200, tech:4.4, perf:4.9, skills:['Node','NestJS','Redis']},
+  {id:'u8', name:'DevOps Sr', cat:'DevOps/Cloud', exp:7, proj:22, salary:4800, tech:4.6, perf:4.9, skills:['Kubernetes','AWS','Terraform']},
+  {id:'u9', name:'.NET Senior', cat:'.NET/C#', exp:8, proj:24, salary:4200, tech:4.7, perf:4.9, skills:['C#','.NET','Azure']},
+  {id:'u10', name:'Go Backend', cat:'Golang', exp:4, proj:12, salary:3400, tech:3.5, perf:4.8, skills:['Go','gRPC','Docker']},
+  {id:'u11', name:'Rails Dev', cat:'Ruby/Rails', exp:5, proj:13, salary:3000, tech:3.7, perf:4.8, skills:['Rails','PostgreSQL','Redis']},
+  {id:'u12', name:'Rust Systems', cat:'Rust', exp:5, proj:16, salary:4200, tech:4.0, perf:4.9, skills:['Rust','Tokio','Actix']},
+  {id:'u13', name:'Scala Backend', cat:'Scala', exp:6, proj:18, salary:4000, tech:4.1, perf:4.9, skills:['Scala','Akka','Kafka']},
+  {id:'u14', name:'Blockchain Eng', cat:'Blockchain/Web3', exp:5, proj:16, salary:4200, tech:4.2, perf:4.9, skills:['Solidity','Web3','Hardhat']},
+  {id:'u15', name:'Unity Game', cat:'Game Dev', exp:4, proj:12, salary:3600, tech:3.6, perf:4.8, skills:['Unity','C#','Mobile']},
+];
+const CATS = ['JavaScript/React','Python','Java','AI/ML','Mobile','PHP','Node.js','DevOps/Cloud','.NET/C#','Golang','Ruby/Rails','Rust','Scala','Blockchain/Web3','Game Dev'];
+
+function loadDevs(){
+  const s = localStorage.getItem('devs_v3');
+  if(!s) return DEV.slice();
+  try{ const arr = JSON.parse(s); return Array.isArray(arr)&&arr.length? arr : DEV.slice(); }catch(e){ return DEV.slice(); }
+}
+function saveDevs(arr){ localStorage.setItem('devs_v3', JSON.stringify(arr)); }
+
+let ACTIVE_VARIANT = 1;
+
+const S = {cat:null, salaryMin:800, salaryMax:7000, expMin:0, expMax:15, techMin:2, sort:'relevance', skill:''};
+const picks = { 1:['u1','u8','u3'], 2:['u2','u7','u9'], 3:['u10','u6','u11'], 4:['u5','u15','u1'], 5:['u13','u14','u12'], 6:['u4','u8','u2'], 7:['u3','u10','u11'], 8:['u7','u9','u6'], 9:['u12','u13','u14'], 10:['u5','u4','u15'] };
+
+const $ = s => document.querySelector(s); const $$ = s => Array.from(document.querySelectorAll(s));
+
+function filterList(arr){
+  let r = arr.filter(d => (!S.cat || d.cat===S.cat)
+    && d.salary>=S.salaryMin && d.salary<=S.salaryMax
+    && d.exp>=S.expMin && d.exp<=S.expMax
+    && d.tech>=S.techMin
+    && (!S.skill || d.skills.join(' ').toLowerCase().includes(S.skill))
+  );
+  switch(S.sort){ case 'tech': r.sort((a,b)=>b.tech-a.tech); break; case 'perf': r.sort((a,b)=> (b.perf??PERF(b.proj)) - (a.perf??PERF(a.proj))); break; case 'salary': r.sort((a,b)=>a.salary-b.salary); break; case 'salaryDesc': r.sort((a,b)=>b.salary-a.salary); break; case 'exp': r.sort((a,b)=>b.exp-a.exp); break; default: break; }
+  return r;
+}
+function pick(vid){ const data = loadDevs(); const ids=picks[vid]; return filterList(ids.map(id=>data.find(x=>x.id===id)||data[0])).slice(0,3); }
+
+function card(d, variantId){
+  const CTA = {
+    1:'Отримати CV', 2:'Запросити CV', 3:'Надіслати CV', 4:'Звʼязати зі мною', 5:'Отримати контакти',
+    6:'Попросити CV', 7:'Побачити CV', 8:'Взяти в роботу', 9:'Запитати CV', 10:'Підтвердити запит'
+  }[variantId||1];
+  const el=document.createElement('div'); el.className='card';
+  el.innerHTML = `
+    <div class="row"><div><div class="name">${d.name}</div><div class="meta"><span class="tag">${d.cat}</span><span class="tag">${d.exp} років</span><span class="tag">${d.proj} проєктів</span><span class="tag salary">${money(d.salary)}/міс</span></div></div><div class="score"><span class="badge ok">Tech ${star(d.tech)}</span><span class="badge gold">Perf ${star(d.perf??PERF(d.proj))}</span></div></div>
+    <div class="meta">${d.skills.slice(0,6).map(s=>`<span class='tag'>${s}</span>`).join('')}</div>
+    <div class="meta"><span class="video-tag">🎬 Video: ${d.video? `<a href='${d.video}' target='_blank' style='color:#93c5fd'>переглянути</a>`:'soon'}</span></div>
+    <div class="cta"><button class="btn ok" data-id="${d.id}" data-act="request">${CTA}</button></div>`;
+  return el;
+}
+
+function renderTable(list){
+  const t=document.createElement('table');
+  t.innerHTML = `<thead><tr><th>Імʼя</th><th>Категорія</th><th>Exp</th><th>Proj</th><th>Salary</th><th>Tech</th><th>Perf</th><th>Технології</th><th></th></tr></thead>`;
+  const tb=document.createElement('tbody');
+  list.forEach(d=>{ const tr=document.createElement('tr'); tr.innerHTML=`<td>${d.name}</td><td>${d.cat}</td><td>${d.exp}</td><td>${d.proj}</td><td>${money(d.salary)}</td><td>${star(d.tech)}</td><td>${star(d.perf??PERF(d.proj))}</td><td>${d.skills.slice(0,4).join(', ')}</td><td><button class='btn ok' data-id='${d.id}' data-act='request'>CV</button></td>`; tb.appendChild(tr); }); t.appendChild(tb); return t;
+}
+
+function attach(scope){ scope.querySelectorAll('[data-act="request"]').forEach(b=> b.onclick=()=>{ const d=(loadDevs().find(x=>x.id===b.dataset.id)); openModal(d); }); }
+
+// Variant renders
+function R1(){ const box=$('#v1'); box.innerHTML=''; pick(1).forEach(d=>box.appendChild(card(d,1))); attach(box); }
+function R2(){ const box=$('#v2'); box.innerHTML=''; pick(2).forEach(d=>box.appendChild(card(d,2))); attach(box); }
+function R3(){ const w=$('#v3'); w.innerHTML=''; const t=renderTable(pick(3)); w.appendChild(t); attach(w); }
+function R4(){ const host=$('#v4'); host.innerHTML=''; const cols=[document.createElement('div'),document.createElement('div'),document.createElement('div')]; cols.forEach(c=>{c.className='col'; c.innerHTML='<div class="title">Колонка</div>'; host.appendChild(c);}); const arr=pick(4); arr.forEach((d,i)=>{ const c=card(d,4); cols[i].appendChild(c); }); attach(host); }
+function R5(){ const box=$('#v5'); box.innerHTML=''; pick(5).forEach(d=>{ const b=document.createElement('div'); b.className='bubble'; b.appendChild(card(d,5)); box.appendChild(b); }); attach(box); }
+function R6(){ const box=$('#v6'); box.innerHTML=''; pick(6).forEach(d=>{ const it=document.createElement('div'); it.className='t-item'; it.appendChild(card(d,6)); box.appendChild(it); }); attach(box); }
+function R7(){ const host=$('#v7'); host.innerHTML=''; const left=document.createElement('div'); left.className='list-pane'; const right=document.createElement('div'); right.className='detail-pane'; host.appendChild(left); host.appendChild(right); const arr=pick(7); arr.forEach((d,i)=>{ const li=document.createElement('div'); li.className='list-item'+(i===0?' active':''); li.textContent = `${d.name} • ${star(d.tech)} / ${star(d.perf??PERF(d.proj))}`; li.onclick=()=>{ $$('#v7 .list-item').forEach(n=>n.classList.remove('active')); li.classList.add('active'); right.innerHTML=''; right.appendChild(card(d,7)); attach(right); }; left.appendChild(li); }); right.innerHTML=''; right.appendChild(card(arr[0],7)); attach(right); }
+function R8(){ const host=$('#v8'); const arr=pick(8); let idx=0; const draw=()=>{ host.innerHTML=''; const c=card(arr[idx],8); host.appendChild(c); attach(host); }; draw(); $('#cPrev').onclick=()=>{idx=(idx-1+arr.length)%arr.length; draw();}; $('#cNext').onclick=()=>{idx=(idx+1)%arr.length; draw();}; }
+function R9(){ const box=$('#v9'); box.innerHTML=''; pick(9).forEach(d=>{ const c=card(d,9); const sal=c.querySelector('.tag.salary'); if(sal) sal.style.fontSize='28px'; box.appendChild(c); }); attach(box); }
+function R10(){ const box=$('#v10'); box.innerHTML=''; pick(10).forEach(d=>box.appendChild(card(d,10))); attach(box); }
+
+function renderAll(){
+  $('#salaryMinT').textContent = money(S.salaryMin);
+  $('#salaryMaxT').textContent = `${money(S.salaryMax)}${S.salaryMax>=7000?'+':''}`;
+  $('#expMinT').textContent = `${S.expMin}`;
+  $('#expMaxT').textContent = `${S.expMax}`;
+  $('#techLevelMinT').textContent = `${S.techMin.toFixed(1)}★+`;
+  const box=$('#categoryChips'); box.innerHTML=''; const all=document.createElement('div'); all.className='chip'+(S.cat? '':' sel'); all.textContent='Всі'; all.onclick=()=>{S.cat=null; renderAll();}; box.appendChild(all); CATS.forEach(c=>{ const el=document.createElement('div'); el.className='chip'+(S.cat===c?' sel':''); el.textContent=c; el.onclick=()=>{S.cat=(S.cat===c? null : c); renderAll();}; box.appendChild(el); });
+  R1(); R2(); R3(); R4(); R5(); R6(); R7(); R8(); R9(); R10();
+}
+
+// Tabs
+function tabs(){ const t=$('#variantTabs'); t.innerHTML=''; for(let i=1;i<=10;i++){ const b=document.createElement('button'); b.className='tab'+(i===1?' active':''); b.textContent=i; b.onclick=()=>activate(i); t.appendChild(b);} }
+function activate(i){ ACTIVE_VARIANT=i; $$('.tab').forEach((x,idx)=>x.classList.toggle('active', idx===i-1)); $$('.v').forEach(v=>v.classList.remove('active')); const cur=document.querySelector(`.v[data-variant="${i}"]`); if(cur) cur.classList.add('active'); document.body.className = document.body.className.replace(/theme-\d+/,'').trim(); document.body.classList.add(`theme-${i}`); }
+
+// Modal + Email
+let REQ=null;
+function openModal(d){ REQ={type:'candidate', data:d}; $('#mContact').value=''; $('#mNote').value=''; $('#mBody').innerHTML = `<span class='tag'>${d.name}</span><span class='tag'>${d.cat}</span><span class='tag'>${d.exp} років</span><span class='tag'>${d.proj} проєктів</span><span class='tag'>${money(d.salary)}</span><span class='tag'>Tech ${star(d.tech)}</span><span class='tag'>Perf ${star(d.perf??PERF(d.proj))}</span>`; $('#modal').style.display='block'; }
+function now(){ return new Date().toISOString().replace('T',' ').slice(0,19); }
+function sendEmail(subject, body){ const url=`mailto:${OWNER_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`; window.location.href=url; }
+function saveReq(entry){ const k='requests_v3'; const arr=JSON.parse(localStorage.getItem(k)||'[]'); arr.unshift(entry); localStorage.setItem(k, JSON.stringify(arr)); }
+$('#mSend').onclick=()=>{ const c=$('#mContact').value.trim(); if(!c){ alert('Вкажіть email або @telegram'); return;} const note=$('#mNote').value.trim(); let subject='just4u: Запит на кандидата', body=''; if(REQ?.type==='candidate'){ const d=REQ.data; body = `Кандидат: ${d.name} / ${d.cat}\nExp: ${d.exp} років, Proj: ${d.proj}\nSalary: ${money(d.salary)}\nTech ${star(d.tech)}, Perf ${star(d.perf??PERF(d.proj))}\nSkills: ${d.skills.join(', ')}\n\nНадіслати CV сюди: ${c}\nКоментар: ${note||'-'}\nЧас: ${now()}`; } saveReq({ts:now(), type:'candidate', title:d?.name||REQ?.data?.name, contact:c, details:body}); sendEmail(subject, body); $('#modal').style.display='none'; };
+$('#mClose').onclick=()=> $('#modal').style.display='none';
+$('#modal').addEventListener('click', e=>{ if(e.target.id==='modal') $('#modal').style.display='none'; });
+
+// Ideal constructor
+$('#idealAsk').onclick=()=>{ const q={cat:$('#idealCat').value, salary:$('#idealSalary').value, exp:$('#idealExp').value, skills:$('#idealSkills').value}; REQ={type:'ideal', data:q}; $('#mBody').innerHTML = `<span class='tag'>Категорія: ${q.cat||'-'}</span><span class='tag'>Зарплата: ${q.salary||'-'}</span><span class='tag'>Досвід: ${q.exp||'-'}</span><span class='tag'>Технології: ${q.skills||'-'}</span>`; $('#modal').style.display='block'; $('#mSend').onclick=()=>{ const c=$('#mContact').value.trim(); if(!c){ alert('Вкажіть email або @telegram'); return;} const note=$('#mNote').value.trim(); const subject='just4u: Запит — Ідеальний кандидат'; const body = `ІДЕАЛЬНИЙ КАНДИДАТ\nКатегорія: ${q.cat||'-'}\nЗарплата: ${q.salary||'-'}\nДосвід: ${q.exp||'-'}\nТехнології: ${q.skills||'-'}\nНадіслати контакти сюди: ${c}\nКоментар: ${note||'-'}\nЧас: ${now()}`; saveReq({ts:now(), type:'ideal', title:`Ideal / ${q.cat}`, contact:c, details:body}); sendEmail(subject, body); $('#modal').style.display='none'; }; };
+
+// Admin
+$('#openAdmin').onclick=()=>{ const pwd=prompt('Пароль admin'); if(pwd!=='admin2025') return; const tb=$('#tbl tbody'); tb.innerHTML=''; const rows=JSON.parse(localStorage.getItem('requests_v3')||'[]'); rows.forEach(r=>{ const tr=document.createElement('tr'); tr.innerHTML=`<td>${r.ts}</td><td>${r.type}</td><td>${r.title||'-'}</td><td>${r.contact}</td><td style='white-space:pre-wrap'>${(r.details||'').slice(0,200)}...</td>`; tb.appendChild(tr); });
+  // load candidates
+  const devT=$('#devTbl tbody'); devT.innerHTML=''; const arr=loadDevs(); arr.forEach((d,idx)=>{ const tr=document.createElement('tr'); tr.innerHTML=`<td contenteditable data-k='name'>${d.name}</td><td contenteditable data-k='cat'>${d.cat}</td><td contenteditable data-k='exp'>${d.exp}</td><td contenteditable data-k='proj'>${d.proj}</td><td contenteditable data-k='salary'>${d.salary}</td><td contenteditable data-k='tech'>${d.tech}</td><td contenteditable data-k='perf'>${d.perf??PERF(d.proj)}</td><td contenteditable data-k='video'>${d.video||''}</td><td><button class='btn flat' data-i='${idx}' data-act='del'>Видалити</button></td>`; devT.appendChild(tr); });
+  devT.onclick = e=>{ if(e.target.dataset.act==='del'){ const i=+e.target.dataset.i; const arr=loadDevs(); arr.splice(i,1); saveDevs(arr); e.target.closest('tr').remove(); }};
+  $('#addDev').onclick=()=>{ const nd={ id:'u'+Math.random().toString(36).slice(2,7), name:$('#dName').value.trim(), cat:$('#dCat').value.trim(), exp:+$('#dExp').value||0, proj:+$('#dProj').value||0, salary:+$('#dSalary').value||0, tech:+$('#dTech').value||0, perf:+$('#dPerf').value||null, skills:($('#dSkills').value||'').split(',').map(s=>s.trim()).filter(Boolean), video:$('#dVideo').value.trim()||'' }; if(!nd.name||!nd.cat){alert('Імʼя та категорія обовʼязкові'); return;} const arr=loadDevs(); arr.unshift(nd); saveDevs(arr); alert('Додано'); };
+  $('#saveDevs').onclick=()=>{ const rows=[...$('#devTbl tbody').children]; const arr=loadDevs(); rows.forEach((tr,i)=>{ const cells=tr.querySelectorAll('[data-k]'); cells.forEach(td=>{ const k=td.dataset.k; let v=td.textContent.trim(); if(['exp','proj','salary','tech','perf'].includes(k)) v=+v||0; if(k==='skills'){ v=v.split(',').map(s=>s.trim()).filter(Boolean);} if(k in arr[i]) arr[i][k]=v; else arr[i][k]=v; });}); saveDevs(arr); alert('Збережено'); };
+  $('#admin').style.display='block'; };
+$('#aClose').onclick=()=> $('#admin').style.display='none';
+$('#admin').addEventListener('click', e=>{ if(e.target.id==='admin') $('#admin').style.display='none'; });
+$('#export').onclick=()=>{ const rows=JSON.parse(localStorage.getItem('requests_v3')||'[]'); const csv=['time,type,title,contact,details'].concat(rows.map(r=>`${r.ts},${r.type},"${(r.title||'').replaceAll('"','\"')}",${r.contact},"${(r.details||'').replaceAll('"','\"')}"`)).join('\n'); const blob=new Blob([csv],{type:'text/csv'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='requests.csv'; a.click(); URL.revokeObjectURL(url); };
+
+// Filters
+function bind(){ $('#salaryMin').oninput=e=>{S.salaryMin=+e.target.value; if(S.salaryMin>S.salaryMax) S.salaryMax=S.salaryMin; renderAll();}; $('#salaryMax').oninput=e=>{S.salaryMax=+e.target.value; if(S.salaryMax<S.salaryMin) S.salaryMin=S.salaryMax; renderAll();}; $('#expMin').oninput=e=>{S.expMin=+e.target.value; if(S.expMin>S.expMax) S.expMax=S.expMin; renderAll();}; $('#expMax').oninput=e=>{S.expMax=+e.target.value; if(S.expMax<S.expMin) S.expMin=S.expMax; renderAll();}; $('#techLevelMin').oninput=e=>{S.techMin=+e.target.value; renderAll();}; $('#sortBy').onchange=e=>{S.sort=e.target.value; renderAll();}; $('#skillSearch').oninput=e=>{S.skill=e.target.value.trim().toLowerCase(); renderAll();}; $('#apply').onclick=()=>renderAll(); $('#resetFilters').onclick=()=>{S.cat=null; S.salaryMin=800; S.salaryMax=7000; S.expMin=0; S.expMax=15; S.techMin=2; S.sort='relevance'; S.skill=''; $('#salaryMin').value=800; $('#salaryMax').value=7000; $('#expMin').value=0; $('#expMax').value=15; $('#techLevelMin').value=2; $('#sortBy').value='relevance'; $('#skillSearch').value=''; renderAll();}; $('#prevVar').onclick=()=>{ACTIVE_VARIANT = ACTIVE_VARIANT<=1?10:ACTIVE_VARIANT-1; activate(ACTIVE_VARIANT);}; $('#nextVar').onclick=()=>{ACTIVE_VARIANT = ACTIVE_VARIANT>=10?1:ACTIVE_VARIANT+1; activate(ACTIVE_VARIANT);}; }
+
+(function init(){
+  // tabs
+  const t=$('#variantTabs'); for(let i=1;i<=10;i++){ const b=document.createElement('button'); b.className='tab'+(i===1?' active':''); b.textContent=i; b.onclick=()=>activate(i); t.appendChild(b);} activate(1);
+  // ideal cats
+  const sel=$('#idealCat'); CATS.forEach(c=>{ const o=document.createElement('option'); o.value=c; o.textContent=c; sel.appendChild(o); });
+  // filters chips
+  const box=$('#categoryChips'); const all=document.createElement('div'); all.className='chip sel'; all.textContent='Всі'; all.onclick=()=>{S.cat=null; renderAll();}; box.appendChild(all); CATS.forEach(c=>{ const el=document.createElement('div'); el.className='chip'; el.textContent=c; el.onclick=()=>{S.cat=(S.cat===c? null : c); renderAll();}; box.appendChild(el); });
+  bind(); renderAll();
+})();
+</script>
+</body>
+</html>
