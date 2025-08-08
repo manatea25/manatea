@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>just🔗4u — 10 абсолютно різних варіантів (v4)</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:#0b0f1a;color:#e5e7eb}
+  .container{max-width:1200px;margin:0 auto;padding:20px}
+  .section{padding:48px 0;border-bottom:4px solid rgba(255,255,255,.06)}
+  .title{font-size:28px;font-weight:900;margin:0 0 8px}
+  .desc{opacity:.8;margin:0 0 24px}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .card{border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px}
+  .row{display:flex;justify-content:space-between;gap:10px;align-items:center}
+  .name{font-weight:900}
+  .meta{display:flex;flex-wrap:wrap;gap:8px}
+  .tag{font-size:12px;padding:6px 8px;border-radius:8px}
+  .cta{display:flex;gap:8px}
+  .btn{border:none;border-radius:12px;padding:12px;cursor:pointer;font-weight:800}
+  .video{font-size:12px;opacity:.9}
+  @media (max-width: 960px){.grid{grid-template-columns:1fr}}
+
+  /* 1. Apple-like Airy */
+  .v1{background:linear-gradient(180deg,#f8fafc,#eef2f7);color:#1f2937}
+  .v1 .title{color:#111827}
+  .v1 .card{background:#ffffff;border:1px solid #f3f4f6}
+  .v1 .tag{background:#f3f4f6;color:#374151}
+  .v1 .btn{background:#111827;color:#fff}
+
+  /* 2. Tesla Bold Black */
+  .v2{background:#000;color:#fff}
+  .v2 .card{background:#0b0b0b;border:1px solid #222}
+  .v2 .tag{background:#111;color:#ddd}
+  .v2 .btn{background:linear-gradient(90deg,#667eea,#764ba2);color:#fff;letter-spacing:.04em;text-transform:uppercase}
+
+  /* 3. Neon Gradient Glass */
+  .v3{background:linear-gradient(135deg,#1e3a8a,#6d28d9)}
+  .v3 .card{background:rgba(255,255,255,.1);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.25)}
+  .v3 .tag{background:rgba(255,255,255,.15)}
+  .v3 .btn{background:#22d3ee;color:#0b1020}
+
+  /* 4. Corporate Navy */
+  .v4{background:#0b1228}
+  .v4 .card{background:#0f1737;border-left:6px solid #3b82f6}
+  .v4 .tag{background:#0b1228;border:1px solid #1e3a8a}
+  .v4 .btn{background:#3b82f6;color:#fff}
+
+  /* 5. Creative Color Splash */
+  .v5{background:linear-gradient(45deg,#ff6b6b,#ffd166,#06d6a0,#118ab2);background-size:400% 400%;animation:shift 15s ease infinite}
+  @keyframes shift{0%{background-position:0 50%}50%{background-position:100% 50%}100%{background-position:0 50%}}
+  .v5 .card{background:#ffffff;color:#222;transform:rotate(1deg);box-shadow:0 16px 40px rgba(0,0,0,.2)}
+  .v5 .tag{background:#f3f4f6;color:#374151}
+  .v5 .btn{background:#111827;color:#fff}
+
+  /* 6. Fintech Blue */
+  .v6{background:linear-gradient(180deg,#e3f2fd,#f8fbff);color:#0b1b2e}
+  .v6 .card{background:#fff;border:1px solid #cfe8ff}
+  .v6 .tag{background:#eef6ff;color:#0b1b2e}
+  .v6 .btn{background:#1565c0;color:#fff}
+
+  /* 7. Gaming Matrix */
+  .v7{background:#0d1117;color:#c9d1d9}
+  .v7 .card{background:#161b22;border:1px solid #30363d}
+  .v7 .tag{background:#0d1117;border:1px solid #30363d}
+  .v7 .btn{background:#58a6ff;color:#0d1117}
+
+  /* 8. Editorial Serif */
+  .v8{background:#faf8f5;color:#1f1d1a;font-family: "Georgia",serif}
+  .v8 .title{letter-spacing:.02em}
+  .v8 .card{background:#fff;border:1px solid #e6e2da}
+  .v8 .tag{background:#f4f1eb;color:#4b463f}
+  .v8 .btn{background:#1f1d1a;color:#fff;border-radius:4px}
+
+  /* 9. Minimal Monochrome */
+  .v9{background:#111;color:#eaeaea}
+  .v9 .card{background:#0d0d0d;border:1px dashed #2a2a2a}
+  .v9 .tag{background:#151515;color:#c9c9c9}
+  .v9 .btn{background:#eaeaea;color:#111}
+
+  /* 10. Brutalist Yellow */
+  .v10{background:#0b0b0b;color:#fafaf9}
+  .v10 .card{background:#0b0b0b;border:3px solid #eab308}
+  .v10 .tag{background:#0b0b0b;border:2px solid #334155}
+  .v10 .btn{background:#eab308;color:#0b0b0b;box-shadow:4px 4px 0 #fde68a}
+</style>
+</head>
+<body>
+  <!-- Variant 1 -->
+  <section class="section v1">
+    <div class="container">
+      <h2 class="title">1) Airy Minimal</h2>
+      <p class="desc">Мінімалізм, легкість, акцент на суть</p>
+      <div class="grid">
+        <div class="card">
+          <div class="row"><div class="name">Senior React Architect</div><div class="name">$5,500</div></div>
+          <div class="meta"><span class="tag">8 років</span><span class="tag">18 проєктів</span><span class="tag">Tech 4.8★</span><span class="tag">Perf 4.9★</span></div>
+          <div class="meta"><span class="tag">React</span><span class="tag">TypeScript</span><span class="tag">Next.js</span></div>
+          <div class="video">🎬 Video: soon</div>
+          <div class="cta"><button class="btn">Отримати CV</button></div>
+        </div>
+        <div class="card">
+          <div class="row"><div class="name">Python Backend Lead</div><div class="name">$4,200</div></div>
+          <div class="meta"><span class="tag">6 років</span><span class="tag">15 проєктів</span><span class="tag">Tech 4.2★</span><span class="tag">Perf 4.8★</span></div>
+          <div class="meta"><span class="tag">Django</span><span class="tag">FastAPI</span><span class="tag">PostgreSQL</span></div>
+          <div class="video">🎬 Video: soon</div>
+          <div class="cta"><button class="btn">Отримати CV</button></div>
+        </div>
+        <div class="card">
+          <div class="row"><div class="name">DevOps Senior</div><div class="name">$4,800</div></div>
+          <div class="meta"><span class="tag">7 років</span><span class="tag">22 проєкти</span><span class="tag">Tech 4.6★</span><span class="tag">Perf 4.9★</span></div>
+          <div class="meta"><span class="tag">Kubernetes</span><span class="tag">AWS</span><span class="tag">Terraform</span></div>
+          <div class="video">🎬 Video: soon</div>
+          <div class="cta"><button class="btn">Отримати CV</button></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Variant 2 -->
+  <section class="section v2">
+    <div class="container">
+      <h2 class="title">2) Tesla Bold</h2>
+      <p class="desc">Чорно-білий контраст, сильні заголовки, швидке рішення</p>
+      <div class="grid">
+        <div class="card"><div class="row"><div class="name">Senior Java</div><div class="name">$4,600</div></div><div class="meta"><span class="tag">9 років</span><span class="tag">27 проєктів</span><span class="tag">Tech 4.9★</span><span class="tag">Perf 5.0★</span></div><div class="meta"><span class="tag">Spring</span><span class="tag">Kafka</span><span class="tag">Docker</span></div><div class="video">🎬 Video: soon</div><div class="cta"><button class="btn">Запросити CV</button></div></div>
+        <div class="card"><div class="row"><div class="name">Node.js Lead</div><div class="name">$4,200</div></div><div class="meta"><span class="tag">6 років</span><span class="tag">18 проєктів</span><span class="tag">Tech 4.4★</span><span class="tag">Perf 4.9★</span></div><div class="meta"><span class="tag">NestJS</span><span class="tag">Redis</span></div><div class="video">🎬 Video: soon</div><div class="cta"><button class="btn">Запросити CV</button></div></div>
+        <div class="card"><div class="row"><div class="name">Mobile iOS</div><div class="name">$6,000</div></div><div class="meta"><span class="tag">8 років</span><span class="tag">26 проєктів</span><span class="tag">Tech 4.8★</span><span class="tag">Perf 5.0★</span></div><div class="meta"><span class="tag">Swift</span><span class="tag">SwiftUI</span></div><div class="video">🎬 Video: soon</div><div class="cta"><button class="btn">Запросити CV</button></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Variant 3 -->
+  <section class="section v3">
+    <div class="container">
+      <h2 class="title">3) Neon Glass</h2>
+      <p class="desc">Напівпрозорі картки, градієнти, сучасність</p>
+      <div class="grid">
+        <div class="card"><div class="row"><div class="name">Python Backend</div><div class="name">$3,200</div></div><div class="meta"><span class="tag">5 років</span><span class="tag">14 проєктів</span><span class="tag">Tech 3.7★</span><span class="tag">Perf 4.8★</span></div><div class="meta"><span class="tag">Django</span><span class="tag">FastAPI</span></div><div class="video">🎬 Video: soon</div><div class="cta"><button class="btn">Надіслати CV</button></div></div>
+        <div class="card"><div class="row"><div class="name">Golang Backend</div><div class="name">$3,400</div></div><div class="meta"><span class="tag">4 роки</span><span class="tag">12 проєктів</span><span class="tag">Tech 3.5★</span><span class="tag">Perf 4.8★</span></div><div class="meta"><span class="tag">Go</span><span class="tag">gRPC</span></div><div class="video">🎬 Video: soon</div><div class="cta"><button class="btn">Надіслати CV</button></div></div>
+        <div class="card"><div class="row"><div class="name">Rust Systems</div><div class="name">$4,200</div></div><div class="meta"><span class="tag">5 років</span><span class="tag">16 проєктів</span><span class="tag">Tech 4.0★</span><span class="tag">Perf 4.9★</span></div><div class="meta"><span class="tag">Rust</span><span class="tag">Tokio</span></div><div class="video">🎬 Video: soon</div><div class="cta"><button class="btn">Надіслати CV</button></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Variant 4 -->
+  <section class="section v4">
+    <div class="container">
+      <h2 class="title">4) Corporate Navy</h2>
+      <p class="desc">Діловий стиль, стримані акценти, чітка структура</p>
+      <div class="grid">
+        <div class="card"><div class="row"><div class="name">.NET Senior</div><div class="name">$4,200</div></div><div class="meta"><span class="tag">8 років</span><span class="tag">24 проєкти</span><span class="tag">Tech 4.7★</span><span class="tag">Perf 4.9★</span></div><div class="meta"><span class="tag">C#</span><span class="tag">Azure</span></div><div class="video">🎬 Video: soon</div><div class="cta"><button class="btn">Звʼязати</button></div></div>
+        <div class="card"><div class="row"><div class="name">React Architect</div><div class="name">$5,500</div></div><div class="meta"><span class="tag">8 років</span><span class="tag">18 проєктів</span><span class="tag">Tech 4.8★</span><span class="tag">Perf 4.9★</span></div><div class="meta"><span class="tag">React</span><span class="tag">TS</span></div><div class="video">🎬 Video: soon</div><div class="cta"><button class="btn">Звʼязати</button></div></div>
+        <div class="card"><div class="row"><div class="name">DevOps Sr</div><div class="name">$4,800</div></div><div class="meta"><span class="tag">7 років</span><span class="tag">22 проєкти</span><span class="tag">Tech 4.6★</span><span class="tag">Perf 4.9★</span></div><div class="meta"><span class="tag">K8s</span><span class="tag">AWS</span></div><div class="video">🎬 Video: soon</div><div class="cta"><button class="btn">Звʼязати</button></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Variant 5 -->
+  <section class="section v5">
+    <div class="container">
+      <h2 class="title">5) Creative Splash</h2>
+      <p class="desc">Живі кольори, емоція та помітні CTA</p>
+      <div class="grid">
+        <div class="card"><div class="row"><div class="name">Rails Dev</div><div class="name">$3,000</div></div><div class="meta"><span class="tag">5 років</span><span class="tag">13 проєктів</span><span class="tag">Tech 3.7★</span><span class="tag">Perf 4.8★</span></div><div class="meta"><span class="tag">Rails</span><span class="tag">PostgreSQL</span></div><div class="video">🎬 Video: soon</div><div class="cta"><button class="btn">Отримати контакти</button></div></div>
+        <div class="card"><div class="row"><div class="name">Blockchain Eng</div><div class="name">$4,200</div></div><div class="meta"><span class="tag">5 років</span><span class="tag">16 проєктів</span><span class="tag">Tech 4.2★</span><span class="tag">Perf 4.9★</span></div><div class="meta"><span class="tag">Solidity</span><span class="tag">Web3</span></div><div class="video">🎬 Video: soon</div><div class="cta"><button class="btn">Отримати контакти</button></div></div>
+        <div class="card"><div class="row"><div class="name">Unity Game</div><div class="name">$3,600</div></div><div class="meta"><span class="tag">4 роки</span><span class="tag">12 проєктів</span><span class="tag">Tech 3.6★</span><span class="tag">Perf 4.8★</span></div><div class="meta"><span class="tag">Unity</span><span class="tag">C#</span></div><div class="video">🎬 Video: soon</div><div class="cta"><button class="btn">Отримати контакти</button></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Variant 6 -->
+  <section class="section v6">
+    <div class="container">
+      <h2 class="title">6) Fintech Clean</h2>
+      <p class="desc">Чисто, без зайвого — фінтех‑естетика</p>
+      <div class="grid">
+        <div class="card"><div class="row"><div class="name">Python Data</div><div class="name">$3,800</div></div><div class="meta"><span class="tag">6 років</span><span class="tag">18 проєктів</span><span class="tag">Tech 4.3★</span><span class="tag">Perf 4.9★</span></div><div class="meta"><span class="tag">Airflow</span><span class="tag">Spark</span></div><div class="video">🎬 Video: soon</div><div class="cta"><button class="btn">Попросити CV</button></div></div>
+        <div class="card"><div class="row"><div class="name">ML Engineer</div><div class="name">$4,000</div></div><div class="meta"><span class="tag">4 роки</span><span class="tag">12 проєктів</span><span class="tag">Tech 3.6★</span><span class="tag">Perf 4.8★</span></div><div class="meta"><span class="tag">PyTorch</span><span class="tag">MLOps</span></div><div class="video">🎬 Video: soon</div><div class="cta"><button class="btn">Попросити CV</button></div></div>
+        <div class="card"><div class="row"><div class="name">DevOps Sr</div><div class="name">$5,000</div></div><div class="meta"><span class="tag">9 років</span><span class="tag">30 проєктів</span><span class="tag">Tech 4.9★</span><span class="tag">Perf 5.0★</span></div><div class="meta"><span class="tag">K8s</span><span class="tag">IaC</span></div><div class="video">🎬 Video: soon</div><div class="cta"><button class="btn">Попросити CV</button></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Variant 7 -->
+  <section class="section v7">
+    <div class="container">
+      <h2 class="title">7) Gaming Matrix</h2>
+      <p class="desc">Темна тема, сяючі акценти</p>
+      <div class="grid">
+        <div class="card"><div class="row"><div class="name">React Senior</div><div class="name">$5,200</div></div><div class="meta"><span class="tag">7 років</span><span class="tag">20 проєктів</span><span class="tag">Tech 4.6★</span><span class="tag">Perf 4.9★</span></div><div class="meta"><span class="tag">React</span><span class="tag">TS</span></div><div class="video">🎬 Video: soon</div><div class="cta"><button class="btn">Побачити CV</button></div></div>
+        <div class="card"><div class="row"><div class="name">Java Architect</div><div class="name">$5,800</div></div><div class="meta"><span class="tag">12 років</span><span class="tag">38 проєктів</span><span class="tag">Tech 5.6★</span><span class="tag">Perf 5.0★</span></div><div class="meta"><span class="tag">Java</span><span class="tag">Microservices</span></div><div class="video">🎬 Video: soon</div><div class="cta"><button class="btn">Побачити CV</button></div></div>
+        <div class="card"><div class="row"><div class="name">.NET Senior</div><div class="name">$4,400</div></div><div class="meta"><span class="tag">8 років</span><span class="tag">24 проєкти</span><span class="tag">Tech 4.7★</span><span class="tag">Perf 4.9★</span></div><div class="meta"><span class="tag">C#</span><span class="tag">Azure</span></div><div class="video">🎬 Video: soon</div><div class="cta"><button class="btn">Побачити CV</button></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Variant 8 -->
+  <section class="section v8">
+    <div class="container">
+      <h2 class="title">8) Editorial Serif</h2>
+      <p class="desc">Редакційний стиль, серіфна типографіка</p>
+      <div class="grid">
+        <div class="card"><div class="row"><div class="name">Scala Backend</div><div class="name">$4,000</div></div><div class="meta"><span class="tag">6 років</span><span class="tag">18 проєктів</span><span class="tag">Tech 4.1★</span><span class="tag">Perf 4.9★</span></div><div class="meta"><span class="tag">Scala</span><span class="tag">Akka</span></div><div class="video">🎬 Video: soon</div><div class="cta"><button class="btn">Взяти в роботу</button></div></div>
+        <div class="card"><div class="row"><div class="name">Rust Systems</div><div class="name">$4,300</div></div><div class="meta"><span class="tag">5 років</span><span class="tag">16 проєктів</span><span class="tag">Tech 4.0★</span><span class="tag">Perf 4.9★</span></div><div class="meta"><span class="tag">Rust</span><span class="tag">Tokio</span></div><div class="video">🎬 Video: soon</div><div class="cta"><button class="btn">Взяти в роботу</button></div></div>
+        <div class="card"><div class="row"><div class="name">React Native</div><div class="name">$3,200</div></div><div class="meta"><span class="tag">4 роки</span><span class="tag">11 проєктів</span><span class="tag">Tech 3.4★</span><span class="tag">Perf 4.8★</span></div><div class="meta"><span class="tag">RN</span><span class="tag">Expo</span></div><div class="video">🎬 Video: soon</div><div class="cta"><button class="btn">Взяти в роботу</button></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Variant 9 -->
+  <section class="section v9">
+    <div class="container">
+      <h2 class="title">9) Minimal Mono</h2>
+      <p class="desc">Монохром, увага до цифр</p>
+      <div class="grid">
+        <div class="card"><div class="row"><div class="name">Python Senior</div><div class="name">$4,500</div></div><div class="meta"><span class="tag">10 років</span><span class="tag">28 проєктів</span><span class="tag">Tech 5.1★</span><span class="tag">Perf 5.0★</span></div><div class="meta"><span class="tag">Django</span><span class="tag">GraphQL</span></div><div class="video">🎬 Video: soon</div><div class="cta"><button class="btn">Запитати CV</button></div></div>
+        <div class="card"><div class="row"><div class="name">Golang Senior</div><div class="name">$4,600</div></div><div class="meta"><span class="tag">7 років</span><span class="tag">20 проєктів</span><span class="tag">Tech 4.6★</span><span class="tag">Perf 4.9★</span></div><div class="meta"><span class="tag">Go</span><span class="tag">K8s</span></div><div class="video">🎬 Video: soon</div><div class="cta"><button class="btn">Запитати CV</button></div></div>
+        <div class="card"><div class="row"><div class="name">Frontend Lead</div><div class="name">$5,000</div></div><div class="meta"><span class="tag">9 років</span><span class="tag">25 проєктів</span><span class="tag">Tech 4.9★</span><span class="tag">Perf 5.0★</span></div><div class="meta"><span class="tag">React</span><span class="tag">Micro‑frontends</span></div><div class="video">🎬 Video: soon</div><div class="cta"><button class="btn">Запитати CV</button></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Variant 10 -->
+  <section class="section v10">
+    <div class="container">
+      <h2 class="title">10) Brutalist</h2>
+      <p class="desc">Грубі лінії, сильний контраст, миттєвий CTA</p>
+      <div class="grid">
+        <div class="card"><div class="row"><div class="name">Java Architect</div><div class="name">$5,800</div></div><div class="meta"><span class="tag">12 років</span><span class="tag">38 проєктів</span><span class="tag">Tech 5.6★</span><span class="tag">Perf 5.0★</span></div><div class="meta"><span class="tag">Java</span><span class="tag">DDD</span></div><div class="video">🎬 Video: soon</div><div class="cta"><button class="btn">Підтвердити запит</button></div></div>
+        <div class="card"><div class="row"><div class="name">AI Engineer</div><div class="name">$5,000</div></div><div class="meta"><span class="tag">6 років</span><span class="tag">17 проєктів</span><span class="tag">Tech 4.5★</span><span class="tag">Perf 4.9★</span></div><div class="meta"><span class="tag">PyTorch</span><span class="tag">NLP</span></div><div class="video">🎬 Video: soon</div><div class="cta"><button class="btn">Підтвердити запит</button></div></div>
+        <div class="card"><div class="row"><div class="name">PHP Laravel</div><div class="name">$3,800</div></div><div class="meta"><span class="tag">8 років</span><span class="tag">25 проєктів</span><span class="tag">Tech 4.7★</span><span class="tag">Perf 4.9★</span></div><div class="meta"><span class="tag">Laravel</span><span class="tag">MySQL</span></div><div class="video">🎬 Video: soon</div><div class="cta"><button class="btn">Підтвердити запит</button></div></div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
