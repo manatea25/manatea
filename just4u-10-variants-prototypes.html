@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>just🔗4u — 10 варіантів платформи (UX прототипи)</title>
+<style>
+  :root{
+    --bg: #0b1020; --card: #111834; --ink: #e9edf7; --muted:#98a2b3; --brand:#7c5cff; --brand2:#2dd4bf; --ok:#10b981; --warn:#f59e0b; --danger:#ef4444;
+    --chip:#1b2350; --chip-on:#2dd4bf; --chip-t:#a0a8c5; --stroke:#22306a;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:linear-gradient(180deg,#0b1020,#0b1428 40%,#0b1020 100%);color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  a,button,input,select{font:inherit}
+  .wrap{max-width:1200px;margin:0 auto;padding:16px}
+  .hdr{position:sticky;top:0;z-index:50;background:rgba(11,16,32,.8);backdrop-filter:blur(8px);border-bottom:1px solid var(--stroke)}
+  .hdr-inner{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:12px 16px}
+  .logo{display:flex;gap:10px;align-items:center}
+  .logo-badge{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--brand),#4f46e5);display:grid;place-items:center;font-weight:800}
+  .logo-t{font-weight:800;letter-spacing:.2px}
+  .variant-tabs{display:flex;gap:8px;flex-wrap:wrap}
+  .tab{border:1px solid var(--stroke);color:var(--ink);background:#0c1531;border-radius:10px;padding:8px 10px;cursor:pointer}
+  .tab.active{background:linear-gradient(135deg,#1f295a,#162149);border-color:#394584}
+
+  .panel{display:grid;grid-template-columns:280px 1fr;gap:16px;margin-top:16px}
+  .filters{background:var(--card);border:1px solid var(--stroke);border-radius:14px;padding:14px;position:sticky;top:68px;align-self:start}
+  .f-h{font-weight:800;margin-bottom:10px}
+  .f-row{margin-bottom:14px}
+  .chips{display:flex;gap:8px;flex-wrap:wrap}
+  .chip{background:var(--chip);border:1px solid var(--stroke);color:var(--chip-t);padding:8px 10px;border-radius:999px;cursor:pointer}
+  .chip.selected{background:rgba(45,212,191,.15);border-color:var(--chip-on);color:#ccf7ee}
+  .range{display:flex;gap:8px;align-items:center}
+  .range input[type=range]{flex:1}
+  .sel{width:100%;background:#0c1531;border:1px solid var(--stroke);color:var(--ink);border-radius:10px;padding:10px}
+  .btn{background:linear-gradient(135deg,var(--brand),#5b8cff);color:white;border:none;border-radius:10px;padding:10px 12px;cursor:pointer}
+  .btn.flat{background:#0c1531;border:1px solid var(--stroke)}
+  .btn.ok{background:linear-gradient(135deg,#10b981,#06b6d4)}
+
+  .variants{min-height:60vh}
+  .v{display:none}
+  .v.active{display:block}
+
+  /* Cards */
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .card{background:var(--card);border:1px solid var(--stroke);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:10px}
+  .row{display:flex;justify-content:space-between;gap:10px;align-items:center}
+  .role{font-weight:800}
+  .cat{font-size:12px;color:var(--muted)}
+  .meta{display:flex;gap:10px;flex-wrap:wrap}
+  .tag{font-size:12px;background:#0c1531;border:1px solid var(--stroke);padding:6px 8px;border-radius:8px;color:#c8d1ea}
+  .score{display:flex;gap:8px;align-items:center}
+  .badge{padding:6px 8px;border-radius:8px;border:1px solid var(--stroke);background:#0c1531;font-weight:700}
+  .badge.ok{border-color:#0a6b56;background:rgba(16,185,129,.12);color:#c9ffef}
+  .badge.gold{border-color:#8f6c00;background:rgba(245,158,11,.12);color:#ffe9b5}
+  .cta{display:flex;gap:8px;margin-top:6px}
+
+  /* Variant-specific helpers */
+  .hero{display:flex;gap:12px;align-items:center;justify-content:space-between;background:linear-gradient(135deg,#101a44,#0e1739);border:1px solid var(--stroke);border-radius:14px;padding:14px;margin-bottom:14px}
+  .hero .big{font-size:22px;font-weight:900}
+  .pill{background:#0c1531;border:1px solid var(--stroke);border-radius:999px;padding:8px 12px}
+  .cols-2{display:grid;grid-template-columns:1.2fr .8fr;gap:14px}
+  .stack{display:grid;gap:10px}
+  .list .card{flex-direction:row;align-items:center;gap:14px}
+  .col{display:flex;flex-direction:column;gap:10px}
+  .compare{width:100%;border-collapse:collapse;border:1px solid var(--stroke)}
+  .compare th,.compare td{border:1px solid var(--stroke);padding:10px;text-align:left}
+  .center{display:grid;place-items:center}
+
+  /* Mobile */
+  @media (max-width: 960px){
+    .panel{grid-template-columns:1fr}
+    .filters{position:static}
+    .grid{grid-template-columns:1fr}
+    .list .card{flex-direction:column;align-items:flex-start}
+    .cols-2{grid-template-columns:1fr}
+    .variant-tabs{overflow:auto}
+  }
+</style>
+</head>
+<body>
+  <header class="hdr">
+    <div class="hdr-inner wrap">
+      <div class="logo">
+        <div class="logo-badge">🦭</div>
+        <div>
+          <div class="logo-t">just🔗4u</div>
+          <div style="font-size:12px;color:var(--muted)">10 швидких прототипів платформи</div>
+        </div>
+      </div>
+      <nav class="variant-tabs" id="variantTabs"></nav>
+    </div>
+  </header>
+
+  <main class="wrap panel">
+    <!-- Filters -->
+    <aside class="filters">
+      <div class="f-h">Фільтри</div>
+      <div class="f-row">
+        <div class="row">
+          <label>Категорії</label>
+          <button class="btn flat" id="resetFilters">Скинути</button>
+        </div>
+        <div class="chips" id="categoryChips"></div>
+      </div>
+      <div class="f-row">
+        <label>Зарплата (USD/міс)</label>
+        <div class="range">
+          <input type="range" id="salaryMin" min="800" max="7000" step="100" value="800" />
+          <span id="salaryMinT" class="pill">$800</span>
+        </div>
+        <div class="range">
+          <input type="range" id="salaryMax" min="800" max="7000" step="100" value="7000" />
+          <span id="salaryMaxT" class="pill">$7000+</span>
+        </div>
+      </div>
+      <div class="f-row">
+        <label>Досвід (роки)</label>
+        <div class="range">
+          <input type="range" id="expYears" min="0" max="15" step="1" value="0" />
+          <span id="expYearsT" class="pill">0+</span>
+        </div>
+      </div>
+      <div class="f-row">
+        <label>Tech Level</label>
+        <div class="range">
+          <input type="range" id="techLevelMin" min="2" max="5" step="0.1" value="2" />
+          <span id="techLevelMinT" class="pill">2.0★+</span>
+        </div>
+      </div>
+      <div class="f-row">
+        <label>Сортування</label>
+        <select class="sel" id="sortBy">
+          <option value="relevance">За релевантністю</option>
+          <option value="tech">Tech Level</option>
+          <option value="perf">Performance</option>
+          <option value="salary">Зарплата (зрост.)</option>
+          <option value="salaryDesc">Зарплата (спад.)</option>
+          <option value="exp">Досвід</option>
+        </select>
+      </div>
+      <button class="btn ok" id="apply">Застосувати</button>
+    </aside>
+
+    <!-- Variants -->
+    <section class="variants" id="variants">
+      <!-- VARIANT 1: One-Tap Hire -->
+      <div class="v" data-variant="1">
+        <div class="hero">
+          <div class="big">1) One‑Tap Hire</div>
+          <div class="row" style="gap:8px">
+            <span class="pill">1 клік → контакти</span>
+            <span class="pill">0 зайвого тексту</span>
+          </div>
+        </div>
+        <div class="grid" id="v1Grid"></div>
+      </div>
+
+      <!-- VARIANT 2: Instant Grid -->
+      <div class="v" data-variant="2">
+        <div class="hero"><div class="big">2) Instant Grid</div><span class="pill">Все перед очима</span></div>
+        <div class="grid" id="v2Grid"></div>
+      </div>
+
+      <!-- VARIANT 3: Compare 3 -->
+      <div class="v" data-variant="3">
+        <div class="hero"><div class="big">3) Compare 3</div><span class="pill">Порівняй і обери</span></div>
+        <div class="stack" id="v3Tbl"></div>
+      </div>
+
+      <!-- VARIANT 4: Swipe Cards -->
+      <div class="v" data-variant="4">
+        <div class="hero"><div class="big">4) Swipe</div><span class="pill">Ліво/Право → контакти</span></div>
+        <div class="center" style="gap:12px">
+          <div id="v4Card" style="width:min(560px,100%);"></div>
+          <div class="row">
+            <button class="btn flat" id="v4Prev">◀</button>
+            <button class="btn ok" id="v4Hire">Зв’язатися</button>
+            <button class="btn flat" id="v4Next">▶</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- VARIANT 5: Minimal List -->
+      <div class="v" data-variant="5">
+        <div class="hero"><div class="big">5) Minimal List</div><span class="pill">Список з CTA справа</span></div>
+        <div class="list stack" id="v5List"></div>
+      </div>
+
+      <!-- VARIANT 6: Tiles + Quick Actions -->
+      <div class="v" data-variant="6">
+        <div class="hero"><div class="big">6) Tiles</div><span class="pill">Швидкі дії на картці</span></div>
+        <div class="grid" id="v6Grid"></div>
+      </div>
+
+      <!-- VARIANT 7: Stacked Focus -->
+      <div class="v" data-variant="7">
+        <div class="hero"><div class="big">7) Focus Stack</div><span class="pill">Один за іншим</span></div>
+        <div class="stack" id="v7Stack"></div>
+      </div>
+
+      <!-- VARIANT 8: Category‑first -->
+      <div class="v" data-variant="8">
+        <div class="hero"><div class="big">8) Category‑first</div><span class="pill">Спочатку обери напрям</span></div>
+        <div class="cols-2">
+          <div class="stack" id="v8Cats"></div>
+          <div class="stack" id="v8List"></div>
+        </div>
+      </div>
+
+      <!-- VARIANT 9: Carousel → Contact -->
+      <div class="v" data-variant="9">
+        <div class="hero"><div class="big">9) Carousel</div><span class="pill">Гортай → контакти</span></div>
+        <div class="center" style="gap:12px">
+          <div id="v9Carousel" style="display:grid;gap:12px;grid-template-columns:repeat(3, minmax(0,1fr));width:100%"></div>
+        </div>
+      </div>
+
+      <!-- VARIANT 10: 3‑Step Wizard -->
+      <div class="v" data-variant="10">
+        <div class="hero"><div class="big">10) 3‑Step Wizard</div><span class="pill">Категорія → Дев → Контакти</span></div>
+        <div class="stack" id="v10"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal Contacts -->
+  <div id="modal" style="position:fixed;inset:0;display:none;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:60">
+    <div style="max-width:520px;margin:8vh auto;background:var(--card);border:1px solid var(--stroke);border-radius:14px;padding:16px">
+      <div class="row"><div style="font-weight:800">Контакти</div><button class="btn flat" id="closeModal">Закрити</button></div>
+      <div id="modalBody" class="stack" style="margin-top:10px"></div>
+    </div>
+  </div>
+
+<script>
+// Data
+const categories = [
+  'JavaScript/React','Python','Java','AI/ML','Mobile','PHP','Node.js','DevOps/Cloud','NET/C#','.NET/C#','Golang','Ruby/Rails','Rust','Scala','Blockchain/Web3','Game Dev'
+].map(c=>c.replace('NET','NET')); // normalize
+
+const devs = [
+  {id:'d1', role:'Senior React Developer', cat:'JavaScript/React', salary:5000, exp:7, tech:4.6, perf:4.9, eng:'Upper-Intermediate', proj:18, skills:['React','TS','Next.js'], contact:{email:'react.senior@just4u.dev', tg:'@sr_react'},},
+  {id:'d2', role:'ML Engineer', cat:'AI/ML', salary:3800, exp:4, tech:3.6, perf:4.8, eng:'Upper-Intermediate', proj:12, skills:['PyTorch','TensorFlow','MLOps'], contact:{email:'ml.eng@just4u.dev', tg:'@ml_fast'},},
+  {id:'d3', role:'Senior DevOps Engineer', cat:'DevOps/Cloud', salary:4800, exp:7, tech:4.6, perf:4.9, eng:'Upper-Intermediate', proj:22, skills:['K8s','AWS','Terraform'], contact:{email:'devops.sr@just4u.dev', tg:'@k8s_master'},},
+  {id:'d4', role:'Senior Java Developer', cat:'Java', salary:4600, exp:9, tech:4.9, perf:5.0, eng:'Advanced', proj:27, skills:['Spring','Kafka','PostgreSQL'], contact:{email:'java.sr@just4u.dev', tg:'@spring_boot'},},
+  {id:'d5', role:'Golang Engineer', cat:'Golang', salary:3400, exp:4, tech:3.5, perf:4.8, eng:'Intermediate', proj:12, skills:['Go','gRPC','Docker'], contact:{email:'go.eng@just4u.dev', tg:'@go_fast'},},
+  {id:'d6', role:'Ruby on Rails Dev', cat:'Ruby/Rails', salary:3000, exp:5, tech:3.7, perf:4.8, eng:'Upper-Intermediate', proj:13, skills:['Rails','PostgreSQL','Redis'], contact:{email:'rails@just4u.dev', tg:'@rails_dev'},},
+  {id:'d7', role:'Rust Systems Dev', cat:'Rust', salary:4200, exp:5, tech:4.0, perf:4.9, eng:'Upper-Intermediate', proj:16, skills:['Rust','Tokio','Actix'], contact:{email:'rustacean@just4u.dev', tg:'@rust_sys'},},
+  {id:'d8', role:'Scala Backend', cat:'Scala', salary:4000, exp:6, tech:4.1, perf:4.9, eng:'Upper-Intermediate', proj:18, skills:['Scala','Akka','Kafka'], contact:{email:'scala@just4u.dev', tg:'@akka_streams'},},
+  {id:'d9', role:'Blockchain Engineer', cat:'Blockchain/Web3', salary:4200, exp:5, tech:4.2, perf:4.9, eng:'Upper-Intermediate', proj:16, skills:['Solidity','Web3','Hardhat'], contact:{email:'web3@just4u.dev', tg:'@chain_wizard'},},
+  {id:'d10', role:'Game Dev (Unity)', cat:'Game Dev', salary:3600, exp:4, tech:3.6, perf:4.8, eng:'Intermediate', proj:12, skills:['Unity','C#','Mobile'], contact:{email:'unity@just4u.dev', tg:'@game_ready'},},
+  {id:'d11', role:'Senior .NET Engineer', cat:'.NET/C#', salary:4200, exp:8, tech:4.7, perf:4.9, eng:'Upper-Intermediate', proj:24, skills:['C#','.NET','Azure'], contact:{email:'dotnet@just4u.dev', tg:'@net_core'},},
+  {id:'d12', role:'Python Backend', cat:'Python', salary:3200, exp:5, tech:3.7, perf:4.8, eng:'Intermediate', proj:14, skills:['Django','FastAPI','Postgres'], contact:{email:'python@just4u.dev', tg:'@fastapi_pro'},},
+  {id:'d13', role:'Node.js Senior', cat:'Node.js', salary:4200, exp:6, tech:4.4, perf:4.9, eng:'Upper-Intermediate', proj:18, skills:['Node','NestJS','Redis'], contact:{email:'node@just4u.dev', tg:'@nest_ready'},},
+  {id:'d14', role:'Senior iOS', cat:'Mobile', salary:6000, exp:8, tech:4.8, perf:5.0, eng:'Upper-Intermediate', proj:26, skills:['Swift','SwiftUI','Combine'], contact:{email:'ios@just4u.dev', tg:'@swift_hero'},},
+  {id:'d15', role:'Senior PHP (Laravel)', cat:'PHP', salary:3800, exp:8, tech:4.7, perf:4.9, eng:'Upper-Intermediate', proj:25, skills:['Laravel','MySQL','Redis'], contact:{email:'php@just4u.dev', tg:'@laravel_sr'},},
+];
+
+// Helpers
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+const fmtMoney = n => `$${n.toLocaleString()}`;
+const star = t => `${t.toFixed(1)}★`;
+
+const PERF = p => p>=20?5.0:p>=11?4.9:p>=5?4.8:p>=3?4.7:4.6;
+
+function renderCard(d, options={compact:false}){
+  const root = document.createElement('div');
+  root.className = 'card';
+  root.innerHTML = `
+    <div class="row">
+      <div>
+        <div class="role">${d.role}</div>
+        <div class="cat">${d.cat} • ${d.eng}</div>
+      </div>
+      <div class="score">
+        <span class="badge ok">Tech ${star(d.tech)}</span>
+        <span class="badge gold">Perf ${star(d.perf ?? PERF(d.proj))}</span>
+      </div>
+    </div>
+    <div class="meta">
+      <span class="tag">${fmtMoney(d.salary)}/міс</span>
+      <span class="tag">${d.exp} років</span>
+      ${d.skills.slice(0,3).map(s=>`<span class="tag">${s}</span>`).join('')}
+    </div>
+    <div class="cta">
+      <button class="btn ok" data-id="${d.id}" data-act="contact">Контакти</button>
+      <button class="btn flat" data-id="${d.id}" data-act="save">Зберегти</button>
+    </div>
+  `;
+  return root;
+}
+
+function renderCompare(devs){
+  const tbl = document.createElement('table');
+  tbl.className='compare';
+  const head = `<tr><th>Роль</th><th>Категорія</th><th>Tech</th><th>Perf</th><th>Зарплата</th><th>Досвід</th><th>Топ скіли</th><th></th></tr>`;
+  const rows = devs.map(d=>`
+    <tr>
+      <td>${d.role}</td>
+      <td>${d.cat}</td>
+      <td>${star(d.tech)}</td>
+      <td>${star(d.perf ?? PERF(d.proj))}</td>
+      <td>${fmtMoney(d.salary)}</td>
+      <td>${d.exp}y</td>
+      <td>${d.skills.slice(0,3).join(', ')}</td>
+      <td><button class="btn ok" data-id="${d.id}" data-act="contact">Контакти</button></td>
+    </tr>`).join('');
+  tbl.innerHTML = `<thead>${head}</thead><tbody>${rows}</tbody>`;
+  return tbl;
+}
+
+function openModal(d){
+  $('#modalBody').innerHTML = `
+    <div class="row"><div class="role">${d.role}</div><span class="badge ok">Tech ${star(d.tech)}</span></div>
+    <div class="meta"><span class="tag">${d.cat}</span><span class="tag">${fmtMoney(d.salary)}</span><span class="tag">${d.exp} років</span></div>
+    <div class="stack">
+      <div>✉️ Email: <strong>${d.contact.email}</strong></div>
+      <div>🟣 Telegram: <strong>${d.contact.tg}</strong></div>
+    </div>
+  `;
+  $('#modal').style.display='block';
+}
+
+function attachCTAs(scope){
+  scope.querySelectorAll('[data-act="contact"]').forEach(btn=>{
+    btn.onclick = () => {
+      const d = devs.find(x=>x.id===btn.dataset.id);
+      openModal(d);
+    };
+  });
+}
+
+// Filters state
+const state = { cat:null, salaryMin:800, salaryMax:7000, exp:0, techMin:2, sort:'relevance' };
+
+function applyFilters(list){
+  let r = list.filter(d => (!state.cat || d.cat===state.cat)
+    && d.salary>=state.salaryMin && d.salary<=state.salaryMax
+    && d.exp>=state.exp && d.tech>=state.techMin);
+  switch(state.sort){
+    case 'tech': r.sort((a,b)=>b.tech-a.tech); break;
+    case 'perf': r.sort((a,b)=>(b.perf??PERF(b.proj))-(a.perf??PERF(a.proj))); break;
+    case 'salary': r.sort((a,b)=>a.salary-b.salary); break;
+    case 'salaryDesc': r.sort((a,b)=>b.salary-a.salary); break;
+    case 'exp': r.sort((a,b)=>b.exp-a.exp); break;
+    default: break;
+  }
+  return r;
+}
+
+// Variant dev picks (ensure cover all categories across variants)
+const variantPicks = {
+  1:['d1','d3','d4'], 2:['d12','d13','d11'], 3:['d5','d6','d15'], 4:['d14','d10','d1'], 5:['d8','d9','d7'],
+  6:['d2','d3','d12'], 7:['d4','d5','d6'], 8:['d13','d11','d15'], 9:['d7','d8','d9'], 10:['d14','d2','d10'],
+};
+
+function pickDevs(variant){
+  const ids = variantPicks[variant]||devs.slice(0,3).map(d=>d.id);
+  const list = ids.map(id=>devs.find(d=>d.id===id));
+  return applyFilters(list).slice(0,3);
+}
+
+// Render categories chips
+function renderChips(){
+  const box = $('#categoryChips');
+  box.innerHTML = '';
+  const all = document.createElement('div');
+  all.className='chip'+(state.cat? '':' selected');
+  all.textContent='Всі';
+  all.onclick=()=>{state.cat=null; renderAllVariants()};
+  box.appendChild(all);
+  // ensure unique categories
+  const unique = Array.from(new Set(categories));
+  unique.forEach(c=>{
+    const el=document.createElement('div');
+    el.className='chip'+(state.cat===c?' selected':'');
+    el.textContent=c;
+    el.onclick=()=>{state.cat = (state.cat===c? null : c); renderAllVariants(); activateVariant(8); };
+    box.appendChild(el);
+  })
+}
+
+// Render tabs
+function renderTabs(){
+  const tabs = $('#variantTabs');
+  tabs.innerHTML = '';
+  for(let i=1;i<=10;i++){
+    const t=document.createElement('button');
+    t.className='tab'+(i===1?' active':'');
+    t.textContent = i.toString();
+    t.onclick=()=>activateVariant(i);
+    tabs.appendChild(t);
+  }
+}
+
+function activateVariant(i){
+  $$('.tab').forEach((x,idx)=> x.classList.toggle('active', idx===i-1));
+  $$('.v').forEach(v=> v.classList.remove('active'));
+  const v = document.querySelector(`.v[data-variant="${i}"]`);
+  if(v){ v.classList.add('active'); }
+}
+
+function renderV1(){
+  const box = $('#v1Grid'); box.innerHTML='';
+  pickDevs(1).forEach(d=>{ const c = renderCard(d); box.appendChild(c); attachCTAs(c); });
+}
+function renderV2(){
+  const box = $('#v2Grid'); box.innerHTML='';
+  pickDevs(2).forEach(d=>{ const c = renderCard(d); box.appendChild(c); attachCTAs(c); });
+}
+function renderV3(){
+  const box = $('#v3Tbl'); box.innerHTML='';
+  const tbl = renderCompare(pickDevs(3));
+  box.appendChild(tbl); attachCTAs(box);
+}
+function renderV4(){
+  const picks = pickDevs(4);
+  let idx = 0; const host = $('#v4Card');
+  const draw = ()=>{ host.innerHTML=''; const c=renderCard(picks[idx]); host.appendChild(c); attachCTAs(host); };
+  draw();
+  $('#v4Prev').onclick=()=>{ idx=(idx-1+3)%3; draw(); };
+  $('#v4Next').onclick=()=>{ idx=(idx+1)%3; draw(); };
+  $('#v4Hire').onclick=()=>{ openModal(picks[idx]); };
+}
+function renderV5(){
+  const box = $('#v5List'); box.innerHTML='';
+  pickDevs(5).forEach(d=>{ const c=renderCard(d); box.appendChild(c); attachCTAs(c); });
+}
+function renderV6(){
+  const box = $('#v6Grid'); box.innerHTML='';
+  pickDevs(6).forEach(d=>{ const c=renderCard(d); const act=document.createElement('div'); act.className='row'; act.innerHTML=`
+    <button class='btn ok' data-id='${d.id}' data-act='contact'>Взяти</button>
+    <button class='btn flat' data-id='${d.id}' data-act='save'>Порівняти</button>`; c.appendChild(act); box.appendChild(c); attachCTAs(c); });
+}
+function renderV7(){
+  const box = $('#v7Stack'); box.innerHTML='';
+  pickDevs(7).forEach(d=>{ const c=renderCard(d); box.appendChild(c); attachCTAs(c); });
+}
+function renderV8(){
+  const catsBox = $('#v8Cats'); const listBox = $('#v8List');
+  catsBox.innerHTML=''; listBox.innerHTML='';
+  const unique = Array.from(new Set(categories));
+  unique.forEach(c=>{
+    const b=document.createElement('button'); b.className='btn flat'; b.textContent=c;
+    b.onclick=()=>{ state.cat=c; renderChips(); renderAllVariants(); activateVariant(8); };
+    catsBox.appendChild(b);
+  });
+  pickDevs(8).forEach(d=>{ const c=renderCard(d); listBox.appendChild(c); attachCTAs(c); });
+}
+function renderV9(){
+  const box = $('#v9Carousel'); box.innerHTML='';
+  pickDevs(9).forEach(d=>{ const c=renderCard(d); box.appendChild(c); attachCTAs(c); });
+}
+function renderV10(){
+  const host = $('#v10'); host.innerHTML='';
+  // Step 1: category
+  const s1=document.createElement('div'); s1.className='card'; s1.innerHTML=`<div class='row'><div class='role'>Крок 1: Категорія</div></div>`;
+  const chips=document.createElement('div'); chips.className='chips';
+  Array.from(new Set(categories)).forEach(c=>{ const ch=document.createElement('div'); ch.className='chip'+(state.cat===c?' selected':''); ch.textContent=c; ch.onclick=()=>{state.cat=c; renderV10()}; chips.appendChild(ch); });
+  s1.appendChild(chips);
+  host.appendChild(s1);
+  // Step 2: pick dev
+  const picks = pickDevs(10);
+  const s2=document.createElement('div'); s2.className='card'; s2.innerHTML=`<div class='row'><div class='role'>Крок 2: Обери девелопера</div></div>`;
+  const g=document.createElement('div'); g.className='grid';
+  picks.forEach(d=>{ const c=renderCard(d); g.appendChild(c); }); s2.appendChild(g); host.appendChild(s2);
+  attachCTAs(host);
+}
+
+function renderAllVariants(){
+  // sync filter labels
+  $('#salaryMinT').textContent = `$${state.salaryMin}`;
+  $('#salaryMaxT').textContent = `$${state.salaryMax}${state.salaryMax>=7000?'+':''}`;
+  $('#expYearsT').textContent = `${state.exp}+`;
+  $('#techLevelMinT').textContent = `${state.techMin.toFixed(1)}★+`;
+  renderChips();
+  renderV1(); renderV2(); renderV3(); renderV4(); renderV5(); renderV6(); renderV7(); renderV8(); renderV9(); renderV10();
+}
+
+function bindFilters(){
+  $('#salaryMin').oninput = e=>{ state.salaryMin = +e.target.value; if(state.salaryMin>state.salaryMax) state.salaryMax=state.salaryMin; renderAllVariants(); };
+  $('#salaryMax').oninput = e=>{ state.salaryMax = +e.target.value; if(state.salaryMax<state.salaryMin) state.salaryMin=state.salaryMax; renderAllVariants(); };
+  $('#expYears').oninput = e=>{ state.exp = +e.target.value; renderAllVariants(); };
+  $('#techLevelMin').oninput = e=>{ state.techMin = +e.target.value; renderAllVariants(); };
+  $('#sortBy').onchange = e=>{ state.sort = e.target.value; renderAllVariants(); };
+  $('#apply').onclick = ()=> renderAllVariants();
+  $('#resetFilters').onclick = ()=>{ state.cat=null; state.salaryMin=800; state.salaryMax=7000; state.exp=0; state.techMin=2; state.sort='relevance';
+    $('#salaryMin').value=800; $('#salaryMax').value=7000; $('#expYears').value=0; $('#techLevelMin').value=2; $('#sortBy').value='relevance'; renderAllVariants(); };
+}
+
+// Init
+renderTabs();
+renderChips();
+bindFilters();
+renderAllVariants();
+activateVariant(1);
+
+// Modal
+$('#closeModal').onclick=()=> $('#modal').style.display='none';
+$('#modal').addEventListener('click', e=>{ if(e.target.id==='modal') $('#modal').style.display='none'; });
+</script>
+</body>
+</html>
