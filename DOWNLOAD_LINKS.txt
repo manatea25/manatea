@@ -1,0 +1,6 @@
+📱 FLAP Flutter APK Download Links:
+
+🔗 GitHub: /FLAP_Flutter/build/app/outputs/flutter-apk/app-debug.apk
+📦 Archive: /FLAP-APK-20250805.tar.gz
+📊 Size: 50MB
+📅 Created: Tue Aug  5 07:23:41 AM UTC 2025
